@@ -1,0 +1,26 @@
+#!/usr/bin/perl -CSD
+# Purpose: template toolkit helper script
+################################################################################
+
+use strict;
+use warnings;
+
+use YAML qw/LoadFile/;
+use Template;
+use Hash::Merge qw(merge);
+
+my $tt = Template->new({ ABSOLUTE => 1, RELATIVE => 1, EVAL_PERL => 1 });
+my $template = shift(@ARGV);
+
+my $config = {};
+foreach my $file (@ARGV) {
+  $config = merge($config, LoadFile($file) || die $!);
+}
+
+# NOTE: we can't rely on "$tt->process($template, $config)" because the config
+# file is UTF8 encoded but is then being read as a binary 8bit file and written
+# as UTF8 file again, causing wide characters getting encoded twice
+open my $fh, '<', $template or die "Unable to open file for reading: $!";
+$tt->process($fh, $config) or die $tt->error;
+
+## END OF FILE #################################################################

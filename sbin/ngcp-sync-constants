@@ -1,0 +1,308 @@
+#!/usr/bin/perl -w
+#----------------------------------------------------------------------
+# Syncronizes passwords from constants.yml with MySQL
+#----------------------------------------------------------------------
+use strict;
+use DBI;
+use YAML::Tiny;
+use Getopt::Long;
+use Data::Dumper;
+#----------------------------------------------------------------------
+use constant CONSTANTS_YML => "/etc/ngcp-config/constants.yml";
+use constant MYSQL_CREDENTIALS => "/etc/mysql/sipwise.cnf";
+use constant MYSQL_DATA => {
+						voisniff     => { dbuser => 'dbpassword' },
+						cleanuptools => { dbuser => 'dbpassword' },
+						rsyslog      => { dbuser => 'dbpassword' },
+						sems 		 => { dbuser => 'dbpassword', 
+											prepaid_dbuser => 'prepaid_dbpassword' },
+						rateomat 	 => { accountingdb => { user => 'pass' } },
+						faxserver    => { hylafax => { db_user => 'db_pass' } },
+						cdrexport 	 => { dbuser => 'dbpassword' },
+						checktools 	 => { dbuser => 'dbpassword' },
+						mysql 		 => { repuser => 'reppassword' },
+						kamailio 	 => { proxy => { dbrwuser => 'dbrwpw', 
+												     dbrouser => 'dbropw' } },
+						mediator 	 => { dbuser => 'dbpassword' },
+						asterisk	 => { odbc => { dbuser => 'dbpassword' } },
+						ossbss		 => { provisioning => { 
+											billingdb => { user => 'pass' } } },
+							 };
+use constant COPY_PASSWORDS => [ # pairs of from/to
+						{ rateomat => { accountingdb => { user => 'pass' }}},
+						{ rateomat => { billingdb    => { user => 'pass' }}}, 
+
+						{ kamailio => { proxy => { dbrwuser => 'dbrwpw' }}},
+						{ kamailio => { lb 	  => { dbrwuser => 'dbrwpw' }}},
+
+						{ kamailio => { proxy => { dbrouser => 'dbropw' }}},
+						{ kamailio => { lb 	  => { dbrouser => 'dbropw' }}},
+
+						{ ossbss   => { provisioning => { billingdb => { user => 'pass' }}}},
+						{ ossbss   => { provisioning => { database  => { user => 'pass' }}}},
+
+						{ ossbss   => { provisioning => { billingdb => { user => 'pass' }}}},
+						{ ossbss   => { provisioning => { openserdb => { user => 'pass' }}}},
+
+						{ ossbss   => { provisioning => { billingdb => { user => 'pass' }}}},
+						{ reminder => { dbuser => 'dbpassword' }}
+
+								];
+
+sub Usage {
+	print <<USAGE;
+==
+	Syncronizes passwords from constants.yml with MySQL 
+==
+$0 [options] 
+Options:
+	-help|-h|-?		-- this help
+	-init-passwords|-i	-- generate new passwords (constants.yml is updated)
+	-test|-t		-- test mode (no updates)
+	-verbose|-v 		-- verbose mode
+USAGE
+	exit 0;
+}
+my $dbh;
+my $mysql_db   = 'mysql';
+my $mysql_host = 'localhost';
+my $mysql_port = 3360;
+my $mysql_user = 'sipwise';
+my $mysql_pass = '';
+
+my $yml 			= {};
+my $yml_ref 		= {};
+my $password_length = 20;
+my $init_passwords  = 0;
+my $debug 			= 0;
+my $test_mode 		= 0;
+
+GetOptions("h|?|help" 		  => \&Usage,
+		   "i|init-passwords" => \$init_passwords,
+		   "t|test" 		  => \$test_mode,
+		   "v|verbose" 		  => \$debug);
+#----------------------------------------------------------------------
+sub pwgen {
+	my @list = ("a".."z",0..9,"A".."Z");
+	my @randoms;
+	for (1..$password_length) {
+		push @randoms, $list[int(rand($#list))];
+	}
+	return join "", @randoms;
+}
+
+sub get_mysql_credentials {
+	open(my $fh, "<", MYSQL_CREDENTIALS)
+		or die "Can't open ".MYSQL_CREDENTIALS.": ".$!;
+	($mysql_pass = <$fh>) =~ s/^.+='(.+?)'\s*$/$1/;
+	close $fh;
+}
+
+sub connect_db {
+	get_mysql_credentials();
+	$dbh = DBI->connect("DBI:mysql:database=$mysql_db;
+							       host=$mysql_host;
+								   port=$mysql_port", 
+								   $mysql_user, $mysql_pass,
+						 { PrintError => 0, AutoCommit => 0 })
+		or die "Can't connect to MySQL database $mysql_db: ". $DBI::errstr;
+}
+
+sub sync_mysql_data {
+
+	my $sth_sel = $dbh->prepare(<<SQL);
+SELECT count(*) from user
+ WHERE User = ?
+SQL
+	my $sth_upd = $dbh->prepare(<<SQL);
+UPDATE user 
+   SET Password=PASSWORD(?)
+ WHERE User = ?
+SQL
+
+	foreach my $key (keys %{MYSQL_DATA()}) {
+		$yml_ref = $yml->[0]->{$key};
+		print $key." => " if $debug;
+		my $opts = { init_passwords => $key eq "mysql" ? 0 : $init_passwords };
+		my $data = get_user_pass(MYSQL_DATA->{$key}, $opts); 
+		foreach my $pair (@$data) {
+			my $user = $pair->{'user'};
+			my $pass = $pair->{'pass'};
+			next unless ($user && $pass);
+			$sth_sel->execute($user);
+			(my $count) = $sth_sel->fetchrow_array();
+			if ($count) {
+				print "	---> updating $user => $pass\n" if $debug;
+				$sth_upd->execute($pass, $user) unless $test_mode;
+			}
+		}
+	}
+
+	$sth_sel->finish;
+	$sth_upd->finish;
+
+	return if $test_mode;
+
+	$dbh->do('FLUSH PRIVILEGES') 
+		or die "Can't flush MySQL privileges: ". $DBI::errstr;
+}
+
+sub get_user_pass {
+	my $h_ref = shift || "No data passed to fetch_mysql_data";
+	my $opts = shift;
+
+	my @data;
+	foreach my $ref (keys %$h_ref) {
+		if (ref($ref) eq 'HASH') {
+			return get_user_pass($ref, $opts);
+		} elsif (ref($h_ref->{$ref}) eq 'HASH') {
+			print $ref." => " if $debug;
+			$yml_ref = $yml_ref->{$ref};	
+			return get_user_pass($h_ref->{$ref}, $opts);
+		} else {
+			print " ".$ref." -- ".$h_ref->{$ref} if $debug;
+			$opts->{'init_passwords'} and $yml_ref->{$h_ref->{$ref}} = pwgen();
+			my %pair;
+			$pair{'user'} = $yml_ref->{$ref};
+			$pair{'pass'} = $yml_ref->{$h_ref->{$ref}};	
+			$pair{'user_key'}  = $ref;
+			$pair{'pass_key'}  = $h_ref->{$ref};
+			push @data, \%pair;
+		}
+	}
+	print "\n" if $debug;
+	return \@data;	
+}
+
+sub copy_passwords {
+	print "Copying internal passwords\n" if $debug;
+	my $saved_init_passwords = $init_passwords;
+	$init_passwords = 0;
+	my $pairs_count = $#{+COPY_PASSWORDS};
+	for (my $idx=0;$idx<$pairs_count+1;$idx++) {
+		next if $idx % 2;
+		die "Incorrect from/to pair" if $idx+1 >= $pairs_count+1;
+		$yml_ref = $yml->[0];
+		print "from	=> " if $debug;
+		my $from_data = get_user_pass(COPY_PASSWORDS->[$idx]);
+		die "No 'from' user/pass data available" if $#$from_data == -1;
+		$yml_ref = $yml->[0];
+		print "to	=> " if $debug;
+		my $to_data = get_user_pass(COPY_PASSWORDS->[$idx+1]);
+		die "No 'from' user/pass data available" if $#$to_data == -1;
+		my $user = $from_data->[0]{'user'};
+		my $pass = $from_data->[0]{'pass'};
+		my $user_key = $to_data->[0]{'user_key'};
+		my $pass_key = $to_data->[0]{'pass_key'};
+		if ($user && $pass && $user_key && $pass_key) {
+			print "	---> updating $user => $pass\n" if $debug;
+			$yml_ref->{$user_key} = $user;
+			$yml_ref->{$pass_key} = $pass;
+		}
+	}
+	$init_passwords = $saved_init_passwords;
+}
+
+sub main {
+	$yml = new YAML::Tiny;
+	$yml = YAML::Tiny->read(CONSTANTS_YML) 
+		or die "Can't read constants file: $!\n";
+
+	if ($init_passwords and not $test_mode and not -w CONSTANTS_YML) {
+		die CONSTANTS_YML . " is not writable";	
+	}		
+
+	print "[TEST MODE]\n" if $test_mode;
+
+	connect_db();
+	eval {
+		$dbh->begin_work;
+		print "Syncing ".CONSTANTS_YML." -> MySQL ... ";
+		print "\n" if $debug;
+		sync_mysql_data();
+	};	
+	if ($@) {
+		$dbh->rollback;
+		die "\nError during syncronization: " . $@;
+	} else {
+		$test_mode ? $dbh->rollback : $dbh->commit;
+	}
+	$dbh->disconnect if $dbh;
+
+	print "Done.\n";
+	
+	return unless $init_passwords;
+
+	copy_passwords();
+
+	return if $test_mode;
+
+	print "Writing new passwords into ".CONSTANTS_YML." ... ";
+	$yml->write(CONSTANTS_YML);
+	print "Done\n";
+
+#	print Data::Dumper->Dumpxs([$yml]),"\n";
+}
+#----------------------------------------------------------------------
+main();
+
+exit 0;
+
+__END__
+
+=pod
+
+=head1 NAME
+
+ngcp-sync-constants - syncronizes passwords from constants.yml with MySQL
+
+=head1 SYNOPSIS
+
+ngcp-sync-constants [ options ... ]
+
+=over 8
+
+=item B<--init-passwords>
+New passwords are generated (passwords for "mysql" is not generated to avoid replication problems)
+
+=item B<--test>
+No real updates, only for checks
+
+=item B<--verbose>
+Verbose mode where all changes are written to STDOUT
+
+=back
+
+=head1 DESCRIPTION
+
+B<This program> reads constants.yml file, parses it and syncronizes all required passwords with MySQL
+
+=head1 EXIT STATUS
+
+=over 8
+
+=item B<exit code 0>
+Everything is ok
+
+=item B<exit code != 0>
+Something is wrong, an error message raises
+
+=back
+
+=head1 INCOMPATIBILITIES
+
+No known at this time.
+
+=head1 BUGS AND LIMITATIONS
+
+Please report problems you notice to the Sipwise Development Team <support@sipwise.com>.
+
+=head1 AUTHOR
+
+Kirill Solomko <ksolomko@sipwise.com>
+
+=head1 LICENSE AND COPYRIGHT
+
+GPL-3+, Sipwise GmbH, Austria
+
+=cut

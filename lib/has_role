@@ -1,0 +1,15 @@
+[%
+  # Checks whether a given host has a given role
+  #
+  # @param argv.host	The hostname to check the role for
+  # @param argv.role	The role of the node to process
+  #			One of: proxy, lb, mgmt
+  # @return out		0 if false, 1 if true
+-%]
+[% IF !hosts.${argv.host}.defined -%]
+[% argv.host = 'self' -%]
+[% END -%]
+[% out = 0 -%]
+[% IF hosts.${argv.host}.role.grep('^' _ argv.role _ '$').size() -%]
+[% out = 1 -%]
+[% END -%]

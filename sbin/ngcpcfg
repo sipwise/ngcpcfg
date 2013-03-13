@@ -1,0 +1,147 @@
+#!/bin/bash
+# Purpose: user interface for configuration management system
+################################################################################
+
+set -e
+set -u
+
+# support for testsuite
+if [ -z "${FUNCTIONS:-}" ] ; then
+  FUNCTIONS='/usr/share/ngcp-ngcpcfg/functions/'
+fi
+
+if [ -z "${SCRIPTS:-}" ] ; then
+  SCRIPTS='/usr/share/ngcp-ngcpcfg/scripts/'
+fi
+
+if ! [ -r "${FUNCTIONS}/main" ] ; then
+  printf "Error: ${FUNCTIONS}/main could not be read. Exiting.\n" >&2
+  exit 1
+fi
+
+if [[ "${1:-}" == "decrypt" ]] ; then
+  # do NOT source ${FUNCTIONS}/main but just provide
+  # the part we need for executing ngcpcfg itself
+  log_debug() {
+    if [ -n "${DEBUG:-}" ] ; then
+      logger -t ngcpcfg -- "Debug: $*"
+      echo ; echo "DEBUG: $*" ; echo # newlines to avoid messup with cmdline output
+    fi
+  }
+else
+  . ${FUNCTIONS}/main
+fi
+
+# helper functions
+initialise() {
+  log_debug "${SCRIPTS}/initialise $*"
+  "${SCRIPTS}"/initialise $*
+}
+
+build() {
+  log_debug "${SCRIPTS}/build $*"
+  "${SCRIPTS}"/build $*
+}
+
+services() {
+  log_debug "${SCRIPTS}/services $*"
+  "${SCRIPTS}"/services $*
+}
+
+encrypt() {
+  log_debug "${SCRIPTS}/encrypt $*"
+  "${SCRIPTS}"/encrypt $*
+}
+
+decrypt() {
+  log_debug "${SCRIPTS}/decrypt $*"
+  "${SCRIPTS}"/decrypt $*
+}
+
+diff() {
+  log_debug "${SCRIPTS}/diff $*"
+  "${SCRIPTS}"/diff $*
+}
+
+etckeeper() {
+  log_debug "${SCRIPTS}/etckeeper $*"
+  "${SCRIPTS}"/etckeeper $*
+}
+
+commit() {
+  log_debug "${SCRIPTS}/commit $*"
+  "${SCRIPTS}"/commit $*
+}
+
+status() {
+  log_debug "${SCRIPTS}/status $*"
+  "${SCRIPTS}"/status $*
+}
+
+usage() {
+  # make sure to output errors on stderr
+  [ "${1:-}" = "1" ] && exec >&2
+
+  printf "%s - Configuration Management System\n\n" "$PN"
+  printf "Usage:
+
+  $PN build [opts]    - generate/update configuration files
+  $PN commit [msg]    - commit and record changes (without pushing)
+  $PN diff [opts]     - display pending configuration changes
+  $PN help            - display this help screen and exit
+  $PN version         - display program version and exit
+  $PN initialise      - initialise setup (to be executed only once on setup)
+"
+
+  # display only if ngcp-ngcpcfg-ha is available
+  if [ -r /usr/share/ngcp-ngcpcfg/functions/ha_features ] ; then
+    printf "  $PN push [opts]     - push modifications to other systems (shared storage setup only)\n"
+    printf "  $PN pull            - retrieve modifications from shared storage (shared storage setup only)\n"
+#    printf "  $PN upgrade         - upgrade all systems [WIP - do not use unless you know what you are doing!]\n"
+  fi
+
+  # display only if ngcp-ngcpcfg-locker is available
+  if [ -r /usr/share/ngcp-ngcpcfg/scripts/encrypt ] ; then
+    printf "  $PN encrypt         - encrypt /etc/ngcp-config and all resulting configuration files\n"
+    printf "  $PN decrypt         - decrypt /etc/ngcp-config-crypted.tgz.gpg and restore config files\n"
+  fi
+
+  # display only if ngcp-ngcpcfg-carrier is available
+  if [ -r /usr/share/ngcp-ngcpcfg/scripts/init-mgmt ] ; then
+    printf "  $PN init-mgmt <srv> - set up mgmgt server for carrier environment (to be executed only once)\n"
+  fi
+
+  printf "  $PN services [opts] - execute service handlers for modified configuration files
+  $PN apply           - a short-cut for build-services-commit-etckeeper
+  $PN status          - display status of configuration file\n\n"
+
+  printf "For further usage information and options visit the ngcpcfg manpage.\n"
+}
+
+version() {
+  versinfo=$(dpkg --list ngcp-ngcpcfg 2>/dev/null | awk '/^ii/ {print $3}')
+  [ -n "${versinfo:-}" ] || versinfo='information not available'
+  printf "ngcpcfg, version ${versinfo}\n"
+}
+
+case ${1:-} in
+  build)      shift ; build "$*" ;;
+  commit)     shift ; commit "$*" ;;
+  initialise) initialise;;
+  push)       shift ; push "$*" ;;
+  pull)       shift ; pull "$*" ;;
+  services)   shift ; services "$*" ;;
+  status)     status;;
+  apply)      shift ; build && services && commit "$*" && etckeeper ;;
+  encrypt)    shift ; encrypt "$*" ;;
+  decrypt)    shift ; decrypt "$*" ;;
+  upgrade)    shift ; upgrade "$*" ;;
+  diff)       shift ; diff "$*" ;;
+  init-mgmt)  shift ; init-mgmt "$*" ;;
+  --debug)    export DEBUG=1 ; shift ; $0 $* ;;
+  -h|--help|help)       usage   ; exit 0;;
+  -v|--version|version) version ; exit 0;;
+  *)          usage 1; exit 1;;
+esac
+
+## END OF FILE #################################################################

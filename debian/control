@@ -1,0 +1,60 @@
+Source: ngcp-ngcpcfg
+Section: admin
+Priority: extra
+Maintainer: Sipwise Development Team <support@sipwise.com>
+Build-Depends: asciidoc,
+               debhelper (>= 5),
+               docbook-xsl,
+               libdata-validate-ip-perl,
+               libdbd-mysql-perl,
+               libhash-merge-perl,
+               libio-interface-perl,
+               liblist-moreutils-perl,
+               libnet-netmask-perl,
+               libregexp-ipv6-perl,
+               libtemplate-perl,
+               libyaml-perl,
+               libyaml-tiny-perl,
+               xsltproc
+Standards-Version: 3.9.4
+Homepage: http://sipwise.com/
+
+Package: ngcp-ngcpcfg
+Architecture: all
+Depends: etckeeper,
+         file,
+         git-core,
+         libdata-validate-ip-perl,
+         libdbd-mysql-perl,
+         libhash-merge-perl,
+         libio-interface-perl,
+         liblist-moreutils-perl,
+         libnet-netmask-perl,
+         libregexp-ipv6-perl,
+         libtemplate-perl,
+         libyaml-perl,
+         libyaml-tiny-perl,
+         ${misc:Depends},
+         ${perl:Depends}
+Description: central and templated based Configuration Management System for NGCP platforms
+ ngcp-ngcpcfg is a Configuration Management System providing central
+ configuration and template based handling of configuration
+ files, featuring handling of local configuration changes and
+ updates as well as synchronisation between servers.
+
+Package: ngcp-ngcpcfg-locker
+Architecture: all
+Depends: gnupg,
+         ngcp-ngcpcfg,
+         ${misc:Depends}
+Description: Encrypt and decrypt feature for ngcp-ngcpcfg
+ This package provides the encrypt and decrypt options for
+ usage via ngcpcfg.
+
+Package: ngcp-ngcpcfg-testsuite
+Architecture: all
+Depends: ngcp-ngcpcfg,
+         ${misc:Depends}
+Description: testsuite for ngcpcfg
+ This package provides a testsuite to automatically test ngcpcfg
+ features and detect any possible breakages.

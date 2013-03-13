@@ -1,0 +1,98 @@
+#!/bin/bash
+# Purpose: detect modified files in config tree and execute
+#          any defined service modifications
+################################################################################
+
+set -e
+set -u
+
+if ! [ -r /usr/share/ngcp-ngcpcfg/functions/main ] ; then
+  printf "Error: /usr/share/ngcp-ngcpcfg/functions/main could not be read. Exiting.\n" >&2
+  exit 1
+fi
+
+. /usr/share/ngcp-ngcpcfg/functions/main
+
+# main script
+
+cd "$CONFIG_POOL"
+
+DRYRUN='false'
+if [[ "${1:-}" == "test" ]] || [[ "${1:-}" == "--dry-run" ]]; then
+  DRYRUN='true'
+elif [[ -n "${1:-}" ]] ; then
+  log_error "Unsupported option(s) given: $*"
+  log_info  "Did you mean '--dry-run'?"
+  exit 1
+fi
+log_debug "DRYRUN = $DRYRUN"
+
+TMPFILE="$(mktemp)"
+
+# unify service calls
+unifyer() {
+  file="$1"
+
+  # make sure services are listed just once to
+  # avoid re-execution of services (which will
+  # happen if /etc/foo/ngcpcfg.services exists
+  # and several file inside /etc/foo are modified)
+  if ! grep -q "^${file}$" "$TMPFILE" ; then
+    echo "$file" >> $TMPFILE
+  fi
+}
+
+# NOTES:
+# * 'git ls-files -o' also shows ignored files
+# * 'git status --porcelain |grep '^?? ' not available in git 1.5
+
+# The 'git diff' command fixes a strange race condition where 'git diff-index'
+# lists *all* generated file(s) where the time stamp differs, resulting in a
+# list of *all* generated files (which is not what we want).
+# After running 'git diff' the following 'git diff-index ...' command lists
+# only the modified files as we want and need it. See BTS #211 for bugreport.
+git diff &>/dev/null
+
+for file in $(git diff-index --name-only HEAD) ; do
+  if [ -r "$file" ] && [ -r "${SERVICES_POOL}/${file}".services ] ; then
+    log_debug "unifyer ${SERVICES_POOL}/${file}.services"
+    unifyer "${SERVICES_POOL}/${file}".services
+  elif [ -r "$file" ] && [ -r $SERVICES_POOL/"$(dirname $file)"/ngcpcfg.services ] ; then
+    log_debug "unifyer ${SERVICES_POOL}/$(dirname $file)/ngcpcfg.services"
+    unifyer "${SERVICES_POOL}"/"$(dirname $file)/ngcpcfg.services"
+  fi
+done
+
+exec_wrapper() {
+  # normalize path (get rid of "./" and "//")
+  line="$(echo $1 | sed -e 's/\.\///g ; s/\/\//\//g')"
+
+  if $DRYRUN ; then
+    log_info "TEST MODE: Would execute action for ${line}"
+    return 0
+  fi
+
+  log_info "Executing action for $line"
+  if [ -x "$line" ] ; then
+    log_debug "$line"
+    if ! "$line" ; then
+      log_warn "$line returned with error code, continuing anyway."
+    fi
+  elif [ -r "$line" ] ; then
+    log_debug "bash $line"
+    if ! bash "$line" ; then
+      log_warn "$line returned with error code, continuing anyway."
+    fi
+  else
+    log_error "Error: $line could not be read."
+    exit 1
+  fi
+}
+
+for line in $(cat $TMPFILE) ; do
+  exec_wrapper "$line"
+done
+
+rm -f "$TMPFILE"
+
+## END OF FILE #################################################################

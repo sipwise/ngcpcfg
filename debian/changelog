@@ -1,0 +1,357 @@
+ngcp-ngcpcfg (0.16.0) unstable; urgency=low
+
+  * New release splitting of ha/carrier features.
+
+ -- Michael Prokop <mprokop@sipwise.com>  Wed, 13 Mar 2013 14:21:25 +0100
+
+ngcp-ngcpcfg (0.15.3) unstable; urgency=low
+
+  * ngcp-sync-constants takes MySQL credentials from /etc/mysql/sipwise.cnf
+
+ -- Kirill Solomko <ksolomko@sipwise.com>  Wed, 15 Jan 2013 16:32:11 +0100
+
+ngcp-ngcpcfg (0.15.2) unstable; urgency=low
+
+  * Fix sync for asterisk ODBC credentials.
+
+ -- Andrew Pogrebennyk <apogrebennyk@sipwise.com>  Wed, 02 Jan 2013 11:27:23 +0100
+
+ngcp-ngcpcfg (0.15.1) unstable; urgency=low
+
+  * Make sure to sync both sems and sems_prepaid passwords.
+
+ -- Andrew Pogrebennyk <apogrebennyk@sipwise.com>  Fri, 21 Dec 2012 21:47:51 +0100
+
+ngcp-ngcpcfg (0.15.0) unstable; urgency=low
+
+  * Implement ngcp-network command-line tool.
+  * Implement ngcp-ngcpcfg-carrier package.
+  * Add helper functions for network.yml transition.
+  * support configuration directory /etc/ngcp-config/ngcpcfg.d
+  * provide carton/cpanfile integration for running testsuite on Jenkins
+  * Check the fax_gateways defined or not
+  * Add support to netmask for the fax_gateways
+
+ -- Andrew Pogrebennyk <apogrebennyk@sipwise.com>  Fri, 21 Dec 2012 11:27:15 +0100
+
+ngcp-ngcpcfg (0.14.1) unstable; urgency=low
+
+  [ mwang ]
+  * sync-db: Check the fax_gateways defined or not
+
+ -- Jon Bonilla <jbonilla@sipwise.com>  Wed, 22 Aug 2012 12:50:01 +0200
+
+ngcp-ngcpcfg (0.14.0) unstable; urgency=low
+
+  [ Michael Prokop ]
+  * Adjust configuration file handling to properly work with UTF-8 input
+  * Run etckeeper when invoking "ngcpcfg commit"
+  * Adjust detection of new configuration files that are not yet tracked
+  * Bump Standards-Version to 3.9.3
+  * etckeeper: check for etckeeper binary and initialised .git repo
+  * commit: do not exit on errors during sync-db
+  * services option: run inside a function so --dry-run option works
+    correct
+  * wrap and sort items in Debian packaging files
+
+  [ Andreas Granig ]
+  * On commit, also sync various options with db using helper/sync-db
+
+  [ Min Wang ]
+  * helper/sync-db related changes:
+    - Add sync fax_gateways for kamailio dispatcher table
+    - Add reloading dispatcher once fax_gateways changes
+    - Print out the reload dispatcher return status
+
+ -- Michael Prokop <mprokop@sipwise.com>  Fri, 10 Aug 2012 18:33:19 +0200
+
+ngcp-ngcpcfg (0.13.1) unstable; urgency=low
+
+  * Do not rely on TTL but instead use timeout when checking other host(s)
+  * pull: no need to run fetch check in subshell
+  * pull: avoid diverging branches if changes take place on both sides.
+    Thanks to Andrew Pogrebennyk for catching the bug + providing
+    instructions to reproduce it
+  * pull: exit with return code of pull command
+
+ -- Michael Prokop <mprokop@sipwise.com>  Mon, 14 May 2012 15:27:05 +0200
+
+ngcp-ngcpcfg (0.13.0) unstable; urgency=low
+
+  [ Michael Prokop ]
+  * Install ngcpcfg manpage in main ngcp-ngcpcfg package
+
+  [ Andrew Pogrebennyk ]
+  * Add yml upgrade scripts for 2.5
+  * Add testfiles for 2.5 ce and pro
+  * Add yml update helper scripts
+
+ -- Michael Prokop <mprokop@sipwise.com>  Tue, 03 Apr 2012 16:24:30 +0200
+
+ngcp-ngcpcfg (0.12.4) unstable; urgency=low
+
+  [ Michael Prokop ]
+  * perlcheck: invoke perl with -CSD option
+
+ -- Michael Prokop <mprokop@sipwise.com>  Thu, 26 Jan 2012 17:38:19 +0100
+
+ngcp-ngcpcfg (0.12.3) unstable; urgency=low
+
+  [ Richard Fuchs ]
+  * Fix handling of utf8 files
+
+  [ Michael Prokop ]
+  * Config builder: do not output error message, provide
+    debugging instructions instead
+
+ -- Michael Prokop <mprokop@sipwise.com>  Thu, 26 Jan 2012 16:51:51 +0100
+
+ngcp-ngcpcfg (0.12.2) unstable; urgency=low
+
+  * provide force-reload in ngcpcfg-status init script
+  * diff command: drop --addremove option and make it the
+    default behaviour
+
+ -- Michael Prokop <mprokop@sipwise.com>  Thu, 26 Jan 2012 12:36:56 +0100
+
+ngcp-ngcpcfg (0.12.1) unstable; urgency=low
+
+  * upgrade scripts:
+    - update internal file format information
+    - bump fileversion of cdrexport to 003
+
+ -- Michael Prokop <mprokop@sipwise.com>  Fri, 02 Dec 2011 22:23:58 +0100
+
+ngcp-ngcpcfg (0.12.0) unstable; urgency=low
+
+  [ Michael Prokop ]
+  * Add simple sort-file script for easier comparison of upgrade script output
+  * Provide upgrade scripts for recent sip:provider releases
+  * Update configuration files according to recent development
+  * Add fileformat_version helper script for usage inside upgrade scripts
+  * Error out if encoding of a central configuration file isn't ASCII nor UTF-8
+  * tt2-wrapper: explicitely set utf8 mode for stdout
+  * Run xsltproc with --nonet option
+  * Add config.yml/constants.yml testfiles for new sip:provider releases
+
+  [ Jon Bonilla ]
+  * Adapt upgrade scripts to recent development
+  * Adapt testfile to recent development
+
+ -- Michael Prokop <mprokop@sipwise.com>  Tue, 29 Nov 2011 17:49:45 +0100
+
+ngcp-ngcpcfg (0.11.1) unstable; urgency=low
+
+  * Bugfixes:
+    - ngcpcfg: fix usage instructions regarding --debug switch
+
+  * Debian packaging:
+    - rework debian/rules to use generic rule to build packages
+    - use team as entry in Maintainer field of debian/control
+
+  * Testsuite improvements:
+    - test tt2 processing + precedence of files
+    - validate ngcpcfg without any arguments, with --version
+      and with --help
+
+  * High Availability Setup:
+    - pull: add further debug statements
+    - push: use 'ngcpcfg apply' in default action and support
+      --noapply for disabling the behaviour
+    - push: use ngcpcfg pull instead of native git commands
+    - push: if ssh login does not work report it with specific
+      error message
+
+ -- Michael Prokop <mprokop@sipwise.com>  Thu, 22 Sep 2011 01:34:04 +0200
+
+ngcp-ngcpcfg (0.11.0) unstable; urgency=low
+
+  * Bugfixes:
+    - Do not strip $CONFIG_POOL variable from provided file/directory
+      arguments when generating file list
+    - Get rid of files *.tt2.sp{1,2} where a *.customtt.tt2.sp{1,2}
+      exists as well
+
+  * New features:
+    - Build option: support generation of modified files only when
+      using --modified-only option
+    - Diff: support --addremove option to list new/removed files
+    - Provide version information through -v, --version + version options
+    - Push: be more verbose when operation fails
+    - Services: support --dry-run as alternative to 'test' option,
+      error out on unknown options
+    - Support --debug option to run actions in debug mode
+    - Support new option "diff" to show pending modifications in
+      configuration pool
+
+  * Improvements:
+    - Do not remove temporary filelist files in debug mode
+    - Extend package description of ngcp-ngcpcfg-ha
+    - Redesign code for generating the file list
+    - Update ngcpcfg manpage (document new options, clarify
+      precedence of configuration files,...)
+
+  * High Availability Setup:
+    - Do not add host to host list if build operation was successfull
+    - Fix typo in warning message (registerted<->registered)
+    - Support --nobuild option to skip build process when pushing
+      changes
+    - When pushing changes then execute 'build' on all pushed hosts
+
+ -- Michael Prokop <mprokop@sipwise.com>  Mon, 29 Aug 2011 13:42:23 +0200
+
+ngcp-ngcpcfg (0.10.0) unstable; urgency=low
+
+  * Add further logic and user information for validating YAML syntax.
+  * Make sure customtt.tt2 template files are preferred over
+    non-customtt.tt2 files in non-HA setups.
+  * encrypt/decrypt: get rid of ngcpcfg-share on glusterfs and
+    local cache on encrypt and try to restore it iff possible or otherwis
+  * Fix unset variable if calling ngcpcfg without any options
+    and having ngcpcfg-locker installed.
+  * Usage text: correctly indent optional features.
+  * Add build-arch/build-indep targets to debian/rules to make lintian happy.
+  * Drop essential package tar from Depends of ngcp-ngcpcfg-locker.
+  * Drop essential package bsdutils from Depends.
+
+ -- Michael Prokop <mprokop@sipwise.com>  Sat, 20 Aug 2011 00:20:34 +0200
+
+ngcp-ngcpcfg (0.9.0) unstable; urgency=low
+
+  * Before generating new configuration files from templates
+    test known .yml files for valid syntax.
+  * New package ngcp-ngcpcfg-locker: support encrypting/decrypting
+    ngcpcfg configuration files.
+  * Initial version of an upgrade script to support safe upgrades.
+
+ -- Michael Prokop <mprokop@sipwise.com>  Mon, 04 Jul 2011 15:49:36 +0200
+
+ngcp-ngcpcfg (0.8.0) unstable; urgency=low
+
+  [ Michael Prokop ]
+  * Adjust package description.
+  * Upgrade script:
+    - Add clir and block-override VSC.
+    - Add www_admin.peer with preference_features flag.
+    - Add preference_features switch for domains in www-admin.
+  * Fix gitignore configuration of ngcpcfg.
+  * Bump Standards-Version to 3.9.2.
+  * HA features:
+    - Store node name in /etc/ngcp_ha_node.
+    - Use glusterfs share as default remote target and make setup
+      consistent between involved nodes.
+
+  [ Andreas Granig ]
+  * Aligned to x.y.z versioning scheme.
+
+ -- Michael Prokop <mprokop@sipwise.com>  Sat, 11 Jun 2011 01:44:46 +0200
+
+ngcp-ngcpcfg (0.7.0) unstable; urgency=low
+
+  [ Michael Prokop ]
+  * Bugfix:
+    - Make sure we switch to $NGCPCTL_MAIN before marking host as
+      initialised.
+  * Features:
+    - Support shared setup (via ngcp-ngcpcfg-ha).
+    - Support .sp1 and .sp2 files for shared setup (ngcp-ngcpcfg-ha).
+    - Provide debugging option through environment variable DEBUG.
+    - Send status messages to syslog.
+    - Check for Debian package versions of templates on all nodes and do
+      NOT push in case of different package versions (applies only
+      to files that are going to be pushed and not to all templates,
+      ngcp-ngcpcfg-ha only).
+    - Provide upgrade package ngcp-ngcpcfg-upgrade to apply schema
+      changes when upgrading from 2.1 to 2.2.
+    - Support {pre,post}build scripts within template directory.
+    - Initial testsuite to check for regressions.
+    - Provide validate-yml script to validate configuration file.
+    - Provide sort-yml script to sort configuration file for easier
+      comparison with other configuration files.
+    - Provide warning message if a service script did not return
+      with exit code 0.
+    - Support {pre,post}build scripts within template directory.
+  * Changes:
+    - Refactor code to minimise user interface script and provide
+      options (build/commit/...) through separate scripts.
+    - Drop HELPER configuration variable from ngcpcfg.cfg.
+    - Slightly improve /etc/ngcp-config/ngcpcfg.cfg (description and
+      sorting of variables.
+  * Debian packaging:
+    - Drop shlibs:Depends from Depends, we do not have any libraries.
+    - Fix typo in long description.
+    - Add debian/source/format (1.0 format).
+    - Provide syntaxchecks for bash and perl scripts as Q/A mechanism
+      in build process.
+    - Add perl packages to Build-Depends.
+    - Drop unnecessary libtemplate-plugin-yaml-perl from Depends.
+    - Run syntax checks for code while building, therefore add
+      libhash-merge-perl, libtemplate-perl and libyaml-perl to
+      Build-Depends.
+
+  [ Richard Fuchs ]
+  * Add libyaml-tiny-perl to Build-Depends.
+
+  [ Jon Bonilla ]
+  * Add support to ngcpcfg.{pre|post}build directory generic files.
+
+ -- Andreas Granig <agranig@sipwise.com>  Fri, 29 Apr 2011 12:10:13 +0200
+
+ngcp-ngcpcfg (0.6) unstable; urgency=low
+
+  [ Jon Bonilla ]
+  * Add constants.yaml file handling so the user can configure
+    just configurable options.
+
+  [ Andreas Granig ]
+  * Added "apply" as a short-cut for build, then services, then commit.
+
+  [ Michael Prokop ]
+  * Iff a directory does not exist yet create it with permissions 755.
+  * Update stderr printf handling.
+  * Integrate etckeeper commit in "apply" shortcut.
+  * Update copyright (GPL-3+).
+  * Work around a git index issue with generated files for use with
+    the service command.
+
+ -- Michael Prokop <mprokop@sipwise.com>  Tue, 30 Nov 2010 11:52:19 +0100
+
+ngcp-ngcpcfg (0.5) unstable; urgency=low
+
+  * Support .prebuild and .postbuild scripts inside template pool
+    which are executre before/after generation of output file.
+  * Support building of specific files/directories only so it's
+    possible to execute e.g. 'ngcpcfg build /etc/apache2' to
+    skip generation of any files besides the ones inside /etc/apache2.
+
+ -- Michael Prokop <mprokop@sipwise.com>  Tue, 16 Nov 2010 18:27:28 +0100
+
+ngcp-ngcpcfg (0.4) unstable; urgency=low
+
+  * Support additional config.local.yml config file.
+  * Support .customtt.tt2 files for local configuration.
+  * Provide service files through same directory as templates.
+  * Unify service executions.
+  * Make generated files r/o.
+  * Inform if config has changed and is not "build" yet.
+  * Show which files have been modified.
+
+ -- Michael Prokop <mprokop@sipwise.com>  Wed, 10 Nov 2010 13:04:56 +0100
+
+ngcp-ngcpcfg (0.3) unstable; urgency=low
+
+  * Unify directory names, configuration files,...
+
+ -- Michael Prokop <mprokop@sipwise.com>  Wed, 20 Oct 2010 14:03:01 +0200
+
+ngcp-ngcpcfg (0.2) unstable; urgency=low
+
+  * Support non-shared setup.
+
+ -- Michael Prokop <mprokop@sipwise.com>  Tue, 12 Oct 2010 18:02:10 +0200
+
+ngcp-ngcpcfg (0.1) unstable; urgency=low
+
+  * Initial release.
+
+ -- Michael Prokop <mprokop@sipwise.com>  Thu, 26 Aug 2010 17:19:32 +0200

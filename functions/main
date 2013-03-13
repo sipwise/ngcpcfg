@@ -1,0 +1,192 @@
+# Filename:      /usr/share/ngcp-ngcpcfg/functions/main
+# Purpose:       helper functions for ngcpcfg
+################################################################################
+
+## logging functions {{{
+log_info() {
+  logger -t ngcpcfg -- "$*"
+  echo "$*"
+}
+
+# info without ending newline
+log_info_n() {
+  logger -t ngcpcfg -- "$*"
+  printf -- "$*"
+}
+
+log_warn() {
+  logger -t ngcpcfg -- "Warning: $*"
+  echo "Warning: $*"
+}
+
+log_error() {
+  logger -t ngcpcfg -- "Error: $*"
+  echo "Error: $*" >&2
+}
+
+log_debug() {
+  if [ -n "${DEBUG:-}" ] ; then
+    logger -t ngcpcfg -- "Debug: $*"
+    echo ; echo "DEBUG: $*" ; echo # newlines to avoid messup with cmdline output
+  fi
+}
+## }}}
+
+## important variables we depend on to operate successfully {{{
+# support test suite which requires system independent configuration
+if [ -r ngcpcfg-testsuite.cfg ] ; then
+  . ngcpcfg-testsuite.cfg
+else
+  if [ -r /etc/ngcp-config/ngcpcfg.cfg ] ; then
+    log_debug "sourcing configuration file /etc/ngcp-config/ngcpcfg.cfg"
+    . /etc/ngcp-config/ngcpcfg.cfg
+
+    if [ -d /etc/ngcp-config/ngcpcfg.d ] ; then
+      for file in /etc/ngcp-config/ngcpcfg.d/*.cfg ; do
+        if test -r $file ; then
+          log_debug "sourcing configuration file $file"
+          . $file
+        fi
+      done
+    fi
+  elif [ -r /etc/ngcp-config-crypted.tgz.gpg ] ; then
+    log_error "Configuration pool locked. Please contact your distributor. Exiting."
+    exit 1
+  else
+    log_error "Could not read configuration file /etc/ngcp-config/ngcpcfg.cfg. Exiting."
+    exit 1
+  fi
+fi
+
+if ! [ -r "$NGCPCTL_CONFIG" ] ; then
+  log_error "Configuration file ${NGCPCTL_CONFIG} does not exist (unconfigured?) - exiting."
+  exit 1
+fi
+
+if ! [ -r "$CONSTANTS_CONFIG" ] ; then
+  log_error "Constants file ${CONSTANTS_CONFIG} does not exist (unconfigured?) - exiting."
+  exit 1
+fi
+
+if ! [ -n "${NETWORK_CONFIG:-}" ] ; then
+  log_warn "NETWORK_CONFIG is not configured in $NGCPCTL_CONFIG - continuing anyway."
+elif ! [ -r "$NETWORK_CONFIG" ] ; then
+  log_error "Constants file ${NETWORK_CONFIG} does not exist (unconfigured?) - exiting."
+  exit 1
+fi
+
+if ! [ -d "$TEMPLATE_POOL" ] ; then
+  log_error "No template directory (${TEMPLATE_POOL}) found - exiting."
+  exit 1
+fi
+## }}}
+
+## environment variables {{{
+export PN="ngcpcfg"
+export HNAME="$(hostname)"
+
+# avoid warnings by perl script complaining about locales
+export LANG=C
+export LC_ALL=C
+
+# make sure it's available in all helper scripts
+[ -n "${DEBUG:-}" ] && export DEBUG
+
+# export for access via build_config etc
+export CONFIG_POOL
+export HOST_CONFIG
+export LOCAL_CONFIG
+export NGCPCTL_CONFIG
+export CONSTANTS_CONFIG
+export NETWORK_CONFIG
+## }}}
+
+## HA / carrier features {{{
+if [ -r /usr/share/ngcp-ngcpcfg/functions/ha_features ] ; then
+  . /usr/share/ngcp-ngcpcfg/functions/ha_features
+  set_ha_file # set $HA_FILE for usage in generate_template_list
+fi
+
+if [ -r /usr/share/ngcp-ngcpcfg/functions/carrier_features ] ; then
+  . /usr/share/ngcp-ngcpcfg/functions/carrier_features
+fi
+## }}}
+
+## functions {{{
+generate_template_list() {
+  [ -n "$TEMPLATE_POOL" ] || return 1
+
+  local filelist_prepared=$(mktemp)
+  local filelist_final=$(mktemp)
+
+  # iterate over all files
+  for file in $(find "$TEMPLATE_POOL" -name \*.tt2 -o -name \*.tt2"${HA_FILE:-}") ; do
+    # *NO* arguments provided via cmdline
+    if [ -z "${1:-}" ] ; then
+      echo "$file" >> "${filelist_prepared}"
+    else
+      # arguments (file list/pattern) provided via cmdline
+      for arg in $* ; do
+        if echo $file | grep -q "${arg}" ; then
+          echo "$file" >> "${filelist_prepared}"
+        fi
+      done
+    fi
+  done
+
+  # remove all filenames where a preferred filename exists
+  # foo.customtt.tt2.spX > foo.customtt.tt2 > foo.tt2.spX > foo.tt2
+  for line in $(cat ${filelist_prepared}); do
+
+    # reduce filenames from "foo.*" to "foo"
+    if [ -n "${HA_FILE:-}" ] ; then
+      normalized_filename="${line%${HA_FILE}}"
+    else
+      normalized_filename="${line}"
+    fi
+    normalized_filename="${normalized_filename%.customtt.tt2}"
+    normalized_filename="${normalized_filename%.tt2}"
+
+    # foo.customtt.tt2.sp{1,2}
+    if [ -n "${HA_FILE:-}" ] ; then
+      if grep -q "^${normalized_filename}.customtt.tt2${HA_FILE:-}" "${filelist_prepared}" ; then
+        echo "${normalized_filename}.customtt.tt2${HA_FILE:-}" >> "${filelist_final}"
+        continue
+      fi
+    fi
+
+    # foo.customtt.tt2
+    if grep -q "^${normalized_filename}.customtt.tt2$" "${filelist_prepared}" ; then
+      echo "${normalized_filename}.customtt.tt2" >> "${filelist_final}"
+      continue
+    fi
+
+    # foo.tt2.sp{1,2}
+    if [ -n "${HA_FILE:-}" ] ; then
+      if grep -q "^${normalized_filename}.tt2${HA_FILE}" "${filelist_prepared}" ; then
+        echo "${normalized_filename}.tt2${HA_FILE}" >> "${filelist_final}"
+        continue
+      fi
+    fi
+
+    # file should be used, so list it
+    echo "$line" >> "${filelist_final}"
+  done
+
+  # output file list, make sure we provide the file names just once
+  sort -u ${filelist_final}
+
+  if [ -n "${DEBUG:-}" ] ; then
+    # send to stderr since stdout is used from outside
+    log_debug "Not removing temporary filelist files since we are in debug mode:" >&2
+    log_debug "  filelist_prepared = ${filelist_prepared}" >&2
+    log_debug "  filelist_final    = ${filelist_final}" >&2
+  else
+    rm -f "${filelist_prepared}" "${filelist_final}"
+  fi
+
+  unset filelist_prepared filelist_final
+}
+## }}}
+
+## END OF FILE #################################################################

@@ -1,0 +1,22 @@
+[%
+  # Return an array of IPs for a given host. The order is iface1_sharedip_1,
+  # iface1_sharedip_n, iface1_ip, iface2_sharedip_1, ...
+  #
+  # @param argv.host	The host to get all IPs for.
+  # @param argv.type	The interface type or empty string for all types.
+  # @return out		The array of ips.
+-%]
+[% IF !hosts.${argv.host}.defined -%][% argv.host = 'self' -%][% END -%]
+[% out = [] -%]
+[% IF !argv.type.length -%][% argv.type = '.*' -%][% END -%]
+[% FOREACH iface IN hosts.${argv.host}.interfaces -%]
+[% FOREACH realiface IN hosts.${argv.host}.keys -%]
+[% IF realiface == iface -%]
+[% IF hosts.${argv.host}.$realiface.type.grep('^' _ argv.type _ '$').size() -%]
+[% IF hosts.${argv.host}.$realiface.v6ip.defined -%]
+[% out.push(hosts.${argv.host}.$realiface.v6ip) -%]
+[% END -%]
+[% END -%]
+[% END -%]
+[% END -%]
+[% END -%]

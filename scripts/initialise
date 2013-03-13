@@ -1,0 +1,78 @@
+#!/bin/bash
+# Purpose: initialise ngcpcfg setup
+################################################################################
+
+set -e
+set -u
+
+if ! [ -r /usr/share/ngcp-ngcpcfg/functions/main ] ; then
+  printf "Error: /usr/share/ngcp-ngcpcfg/functions/main could not be read. Exiting.\n" >&2
+  exit 1
+fi
+
+. /usr/share/ngcp-ngcpcfg/functions/main
+
+# main script
+
+log_debug "cd $NGCPCTL_MAIN"
+cd "$NGCPCTL_MAIN"
+
+if [ -d .git ] ; then
+  log_info "Git directory in $NGCPCTL_MAIN exists already, skipping creation."
+else
+  log_debug "git init"
+  git init >/dev/null
+fi
+
+# ignore files we do not consider as valid template files
+if ! grep -qs '^# begin section managed by ngcpcfg' .gitignore ; then
+  echo '# begin section managed by ngcpcfg (do not edit this section by hand)
+# new and old versions of conffiles, stored by dpkg
+*.dpkg-*
+# new and old versions of conffiles, stored by ucf
+*.ucf-*
+
+# old versions of files
+*.old
+
+# editor temp files
+*~
+.*.sw?
+.sw?
+\#*\#
+DEADJOE
+
+# end section managed by ngcpcfg' >> .gitignore
+fi
+
+log_debug "git add ."
+git add .
+
+if ! git status | grep -q 'working directory clean' ; then
+  log_debug "git commit -a -m \"initial version of ngcpcfg on $HNAME\""
+  git commit -a -m "initial version of ngcpcfg on $HNAME" >/dev/null
+fi
+
+if type -p init_ha &>/dev/null ; then
+  log_debug "init_ha function"
+  init_ha
+fi
+
+if ! [ -r /etc/.gitignore ] ; then
+  log_info "etckeeper not present, ignoring request to add ngcp-config to /etc/.gitignore."
+else
+  log_debug 'grep -q ngcp-config /etc/.gitignore'
+  if ! grep -q ngcp-config /etc/.gitignore ; then
+    log_info_n "etckeeper seems to be present, adding "$NGCPCTL_MAIN" to ignore list: "
+    echo "ngcp-config" >> /etc/.gitignore
+    log_debug 'cd /etc ; git add .gitignore ; git commit -m "add ngcp-config directory to .gitignore"'
+    cd /etc
+    git add .gitignore
+    git commit -m 'add ngcp-config directory to .gitignore' >/dev/null
+    log_info "OK"
+  fi
+fi
+
+log_info "Successfully finished setup."
+
+## END OF FILE #################################################################

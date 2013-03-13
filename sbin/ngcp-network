@@ -1,0 +1,781 @@
+#!/usr/bin/perl -CSD
+
+use warnings;
+use strict;
+
+use Carp;
+use Data::Validate::IP;
+use English qw( -no_match_vars );
+use Getopt::Long;
+use IO::Interface;
+use IO::Socket;
+use IPC::Open3;
+use List::MoreUtils qw{ any };
+use Net::Netmask;
+use Pod::Usage;
+use Regexp::IPv6 qw($IPv6_re);
+use Socket;
+use Sys::Hostname;
+use YAML::Tiny;
+
+our $VERSION = 'UNRELEASED';
+
+# defaults / option handling {{{
+open my $hh, '<', '/etc/hostname'
+  or croak "Error opening /etc/hostname: $ERRNO";
+my $host = <$hh>;
+close $hh or croak 'Error closing file handling for /etc/hostname';
+chomp $host;
+length $host or croak "Fatal error retrieving hostname [$host]";
+
+my $advertised_ip;
+my $bond_miimon;
+my $bond_mode;
+my $bond_slaves;
+my $broadcast;
+my @dns_nameservers;
+my $gateway;
+my $help;
+my $hwaddr;
+my $inputfile = '/etc/ngcp-config/network.yml';
+my $internal_iface;
+my $ip;
+my $ip_v6;
+my $man;
+my $move_from;
+my $move_to;
+my $netmask;
+my $outputfile = $inputfile;
+my $peer;
+my @remove_host;
+my @remove_interface;
+my @roles;
+my @set_interface;
+my $shared_ip;
+my $shared_ip_v6;
+my @type;
+my $verbose;
+my $version;
+my $vlan_raw_device;
+
+GetOptions(
+    'advertised-ip=s'    => \$advertised_ip,
+    'bond-miimon=s'      => \$bond_miimon,
+    'bond-mode=s'        => \$bond_mode,
+    'bond-slaves=s'      => \$bond_slaves,
+    'broadcast=s'        => \$broadcast,
+    'dns=s'              => \@dns_nameservers,
+    'gateway=s'          => \$gateway,
+    'help'               => \$help,
+    'host=s'             => \$host,
+    'hwaddr=s'           => \$hwaddr,
+    'input-file=s'       => \$inputfile,
+    'internal-iface=s'   => \$internal_iface,
+    'ip=s'               => \$ip,
+    'ipv6=s'             => \$ip_v6,
+    'man'                => \$man,
+    'move-from=s'        => \$move_from,
+    'move-to=s'          => \$move_to,
+    'netmask=s'          => \$netmask,
+    'output-file=s'      => \$outputfile,
+    'peer=s'             => \$peer,
+    'remove-host=s'      => \@remove_host,
+    'remove-interface=s' => \@remove_interface,
+    'role=s'             => \@roles,
+    'set-interface=s'    => \@set_interface,
+    'shared-ip=s'        => \$shared_ip,
+    'shared-ipv6=s'      => \$shared_ip_v6,
+    'type=s'             => \@type,
+    'verbose'            => \$verbose,
+    'version'            => \$version,
+    'vlan-raw-device=s'  => \$vlan_raw_device,
+) or pod2usage(2);
+
+if ($help) {
+    pod2usage(0);
+}
+
+if ($version) {
+    print "$PROGRAM_NAME, v$version\n";
+    exit 0;
+}
+
+if ($man) {
+    pod2usage( -exitstatus => 0, -verbose => 2 );
+}
+
+# validate input
+if ($ip) {
+    logger("validating specified IP address $ip");
+    if ( is_ipv4($ip) || $ip =~ /^(auto|none|delete)$/msx ) {
+        logger('valid IPv4 address');
+    }
+    else {
+        croak "Specified IP $ip is not a valid IPv4 address";
+    }
+}
+
+if ($ip_v6) {
+    logger("validating specified IP address $ip_v6");
+    if ( is_ipv6($ip_v6) || $ip_v6 =~ /^(auto|none|delete)$/msx ) {
+        logger('valid IPv6 address');
+    }
+    else {
+        croak "Specified IP $ip_v6 is not a valid IPv6 address";
+    }
+}
+
+foreach my $opt (
+    $bond_miimon,      $bond_mode,     $broadcast, @dns_nameservers,
+    $gateway,          @set_interface, $host,      $hwaddr,
+    $internal_iface,   $ip,            $ip_v6,     $move_from,
+    $move_to,          $netmask,       $peer,      @remove_host,
+    @remove_interface, @roles,         @type,      $vlan_raw_device
+  )
+{
+    if ( defined $opt && $opt =~ /\s/msx ) {
+        logger("invalid option argument $opt");
+        croak "Command line option does not accept whitespace in '$opt'.";
+    }
+}
+
+# }}}
+
+my $yaml = YAML::Tiny->new;
+logger("reading input file $inputfile");
+$yaml = YAML::Tiny->read($inputfile)
+  or croak "File $inputfile could not be read";
+
+if ( -e "$outputfile" && !-w "$outputfile" ) {
+    croak "Could not open $outputfile for writing (are you user root?)";
+}
+
+my $spce;
+if ( defined $yaml->[0]->{hosts}->{self} ) {
+    logger('host "self" identified and set, assuming spce system');
+    $host = 'self';
+    $spce = 1;
+}
+
+# helper functions {{{
+sub logger {
+    if ($verbose) {
+        print "@_\n" or croak 'Error sending log output';
+    }
+    return;
+}
+
+sub get_interface_details {
+    my $interface = shift or croak "Usage: $PROGRAM_NAME <interface> <setting>";
+    my $setting   = shift or croak "Usage: $PROGRAM_NAME <interface> <setting>";
+
+    my $s = IO::Socket::INET->new( Proto => 'tcp' );
+    return $s->$setting($interface);
+}
+
+sub get_ip6_addr {
+
+    my $interface = shift or croak 'Usage: runcmd <interface>';
+    my $cmd = 'ip';
+    my @args = ( '-6', 'addr', 'show', 'dev', $interface, 'scope', 'global' );
+
+    logger("get_ip6_addr for device $interface");
+    logger("$cmd @args");
+
+    my $childpid = open3 'HIS_WRITE', 'HIS_OUT', 'HIS_ERR', $cmd, @args;
+    my @stderr   = <HIS_ERR>;
+    my @stdout   = <HIS_OUT>;
+
+    logger("stdout: @stdout");
+    logger("stderr: @stderr");
+
+    close HIS_OUT or croak 'Failed to close stdout';
+    close HIS_ERR or croak 'Failed to close stderr';
+
+    waitpid $childpid, 0;
+    if ($CHILD_ERROR) {
+        croak "Problem with execution [return code $CHILD_ERROR]:\n@stderr";
+    }
+
+    foreach my $line (@stdout) {
+        if ( $line =~ /^\s*inet6\s+($IPv6_re)\/\d+.*scope.*global.*$/msx ) {
+            return $1;
+        }
+    }
+
+    return;
+}
+
+sub set_interface {
+    my $iface = shift;
+
+    logger("set_interface: interface = $iface");
+    logger("set_interface: host = $host");
+
+    if ( defined $ip && $ip =~ /^auto$/msx ) {
+        logger("get_interface_details( $iface, 'if_addr' );");
+        $ip = get_interface_details( $iface, 'if_addr' );
+    }
+
+    if ( defined $ip_v6 && $ip_v6 =~ /^auto$/msx ) {
+        logger("get_interface_details( $iface, 'if_addr' );");
+        $ip_v6 = get_ip6_addr($iface);
+    }
+
+    if ( defined $netmask && $netmask =~ /^auto$/msx ) {
+        logger("get_interface_details( $iface, 'if_netmask' );");
+        $netmask = get_interface_details( $iface, 'if_netmask' );
+    }
+
+    if ( defined $hwaddr && $hwaddr =~ /^auto$/msx ) {
+        logger("get_interface_details( $iface, 'if_hwaddr' );");
+        $hwaddr = get_interface_details( $iface, 'if_hwaddr' );
+    }
+
+    my $settings = {
+        'advertised_ip'   => $advertised_ip,
+        'bond_miimon'     => $bond_miimon,
+        'bond_mode'       => $bond_mode,
+        'bond_slaves'     => $bond_slaves,
+        'broadcast'       => $broadcast,
+        'gateway'         => $gateway,
+        'hwaddr'          => $hwaddr,
+        'ip'              => $ip,
+        'netmask'         => $netmask,
+        'shared_ip'       => $shared_ip,
+        'shared_v6ip'     => $shared_ip_v6,
+        'v6ip'            => $ip_v6,
+        'vlan_raw_device' => $vlan_raw_device,
+    };
+
+    foreach my $k ( keys %{$settings} ) {
+        if ( defined $settings->{$k} ) {
+            if ( $settings->{$k} =~ /^none$/msx ) {
+                logger("unsetting entry $k");
+                undef $yaml->[0]->{hosts}->{$host}->{$iface}->{$k};
+            }
+            elsif ( $settings->{$k} =~ /^delete$/msx ) {
+                logger("deleting entry $k");
+                delete $yaml->[0]->{hosts}->{$host}->{$iface}->{$k};
+            }
+            else {
+                logger("$k: $settings->{$k}");
+                if($k eq 'shared_ip' || $k eq 'shared_v6ip' || $k eq 'advertised_ip') {
+                    push @{ $yaml->[0]->{hosts}->{$host}->{$iface}->{$k} }, $settings->{$k};
+                }
+                else {
+                    $yaml->[0]->{hosts}->{$host}->{$iface}->{$k} = $settings->{$k};
+                }
+            }
+        }
+    }
+
+    if (@dns_nameservers) {
+        foreach my $dns (@dns_nameservers) {
+            logger("set_iface_config( $iface, 'dns_nameservers', $dns)");
+            set_iface_config( $iface, 'dns_nameservers', $dns );
+        }
+    }
+
+    if (@type) {
+        foreach my $type (@type) {
+            logger("set_iface_config( $iface, 'type', $type)");
+            set_iface_config( $iface, 'type', $type );
+        }
+    }
+
+    # add interface to list of available interfaces
+    my $ifaces = $yaml->[0]->{hosts}->{$host}->{interfaces};
+    if ( !defined $ifaces ) {
+        logger("no interfaces defined yet, adding interface $iface");
+        $yaml->[0]->{hosts}->{$host}->{interfaces}->[0] = "$iface";
+    }
+    else {
+        logger("interface = $iface");
+
+        if ( any { /^${iface}$/msx } @{$ifaces} ) {
+            logger("interface $iface already listed on host $host");
+        }
+        else {
+            push @{$ifaces}, $iface;
+            logger("adding $iface to list of interfaces on host $host");
+        }
+    }
+
+    return;
+}
+
+sub remove_interface {
+    my $rem_iface = shift or croak 'Usage: remove_interface <interface>';
+
+    delete $yaml->[0]->{hosts}->{$host}->{$rem_iface};
+
+    my $ifaces = $yaml->[0]->{hosts}->{$host}->{interfaces};
+    if ( defined $ifaces ) {
+        logger("removing interface @$ifaces as requested");
+        undef @{$ifaces};
+    }
+    return;
+}
+
+sub set_yml_config {
+    my $setting = shift or croak 'Usage: set_yml_config <setting> <value>';
+    my $value   = shift or croak 'Usage: set_yml_config <setting> <value>';
+
+    $yaml->[0]->{hosts}->{$host}->{$setting} = "$value";
+    logger("\$yaml->[0]->{hosts}->{\$host}->{$setting} = $value");
+    return;
+}
+
+sub set_iface_config {
+    my $iface = shift
+      or croak 'Usage: set_iface_config <iface> <setting> <value>';
+    my $setting = shift
+      or croak 'Usage: set_iface_config <iface> <setting> <value>';
+    my $value = shift
+      or croak 'Usage: set_iface_config <iface> <setting> <value>';
+
+    if ( any { /^${value}$/msx }
+        @{ $yaml->[0]->{hosts}->{$host}->{$iface}->{$setting} } )
+    {
+        logger("$value for $setting on $iface already defined in host $host");
+    }
+    else {
+        push @{ $yaml->[0]->{hosts}->{$host}->{$iface}->{$setting} }, $value;
+        logger(
+            "\$yaml->[0]->{hosts}->{\$host}->{$iface}->{$setting} => $value");
+    }
+
+    return;
+}
+
+sub set_role {
+    my $new_role = shift or croak 'Usage: set_role <value>';
+
+    if ( any { /^${new_role}$/msx } @{ $yaml->[0]->{hosts}->{$host}->{role} } )
+    {
+        logger("role $new_role already defined in host $host");
+    }
+    else {
+        push @{ $yaml->[0]->{hosts}->{$host}->{role} }, $new_role;
+        logger("\$yaml->[0]->{hosts}->{\$host}->{role} => $new_role");
+    }
+
+    return;
+}
+
+sub move_settings {
+    my $from = shift;
+    my $to   = shift;
+
+    if ( defined $from && !defined $to ) {
+        croak '--move-from option must be used with --move-to option together';
+    }
+
+    if ( !defined $from && defined $to ) {
+        croak '--move-to option must be used with --move-from option together';
+    }
+
+    # ha, nothing to do for us
+    if ( !defined $from && !defined $to ) {
+        return;
+    }
+
+    logger("from = $from");
+    logger("to = $to");
+
+    if (@roles) {
+        foreach my $role (@roles) {
+            logger("role = $role");
+
+            # get rid of the entry from the old section
+            my @tmp =
+              grep { !/^${role}$/msx }
+              @{ $yaml->[0]->{hosts}->{$from}->{role} };
+            $yaml->[0]->{hosts}->{$from}->{role} = [];
+            push @{ $yaml->[0]->{hosts}->{$from}->{role} }, @tmp;
+
+            # add it to its new place
+            push @{ $yaml->[0]->{hosts}->{$to}->{role} }, $role;
+        }
+    }
+
+    if (@type) {
+        foreach my $type (@type) {
+            logger("type = $type");
+
+            # get rid of the entry from the old section
+            my @tmp =
+              grep { !/^${type}$/msx }
+              @{ $yaml->[0]->{hosts}->{$host}->{$from}->{type} };
+            $yaml->[0]->{hosts}->{$host}->{$from}->{type} = [];
+            push @{ $yaml->[0]->{hosts}->{$host}->{$from}->{type} }, @tmp;
+
+            # add it to its new place, but only if not already defined yet
+            if ( any { /^${type}$/msx }
+                @{ $yaml->[0]->{hosts}->{$host}->{$to}->{type} } )
+            {
+                logger("type $type is already defined on host $host, interface $to");
+            }
+            else {
+                push @{ $yaml->[0]->{hosts}->{$host}->{$to}->{type} }, $type;
+            }
+        }
+    }
+
+    return;
+}
+
+# }}}
+
+# main execution {{{
+if (@set_interface) {
+    foreach my $interface (@set_interface) {
+        logger("set_interface($interface)");
+        set_interface($interface);
+    }
+}
+
+if (@remove_host) {
+    foreach my $rhost (@remove_host) {
+        logger("removing host $rhost");
+        delete $yaml->[0]->{hosts}->{$rhost};
+    }
+}
+
+if (@remove_interface) {
+    foreach my $riface (@remove_interface) {
+        logger("remove_interface($riface)");
+        remove_interface($riface);
+    }
+}
+
+if ( @roles && ( !defined $move_from || !defined $move_to ) ) {
+    foreach my $role (@roles) {
+        logger("set_role($role)");
+        set_role($role);
+    }
+}
+
+if ( defined $peer && ( !defined $move_from || !defined $move_to ) ) {
+    logger("set_yml_config('peer', $peer)");
+    set_yml_config( 'peer', $peer );
+}
+
+if ( defined $internal_iface
+    && ( !defined $move_from || !defined $move_to ) )
+{
+    logger("set_yml_config('internal_iface', $internal_iface)");
+    set_yml_config( 'internal_iface', $internal_iface );
+}
+
+move_settings( $move_from, $move_to );
+
+open my $fh, '>', "$outputfile"
+  or croak "Could not open $outputfile for writing";
+logger("writing output file $outputfile");
+print {$fh} $yaml->write_string()
+  or croak "Could not write YAML to $outputfile";
+close $fh or croak "Couldn't close '$fh': $OS_ERROR";
+
+# }}}
+
+__END__
+
+=head1 NAME
+ngcp-network - command line interface to ngcp's network configuration settings
+
+=head1 SYNOPSIS
+ngcp-network <options ...>
+
+=head1 OPTIONS
+
+=over 8
+
+=item B<--advertised-ip=<IP>>
+
+Set advertised_ip configuration to specified argument.
+
+=item B<--bond-miimon=<setting>>
+
+Set bond_miimon configuration to specified argument.
+
+=item B<--bond-mode=<mode>>
+
+Set bond_mode configuration to specified argument.
+
+=item B<--bond-slaves=<slaves>>
+
+Set bond_slaves configuration to specified argument.
+
+=item B<--broadcast=<IP>>
+
+Set broadcast configuration to specified argument.
+
+=item B<--dns=<nameserver>>
+
+Set dns_nameservers configuration to specified argument.
+Can be specified multiple times in one single command line.
+
+=item B<--gateway=<IP>>
+
+Set gateway configuration to specified argument.
+
+=item B<--help>
+
+Print the help message and exit.
+
+=item B<--host=<name>>
+
+Apply configuration changes for specified host entry instead of using the
+hostname of the currently running system.  NOTE: If running the sip:provider CE
+edition this configuration option can't be changed as the only configured host
+is set to and supposed to be 'self' there.
+
+=item B<--hwaddr=<MAC_address>>
+
+Set hwaddr configuration (MAC address of network device) to specified argument.
+
+=item B<--input-file=<filename>>
+
+Use specified file as input, defaults to /etc/ngcp-config/network.yml if unset.
+
+=item B<--internal-iface=<name>>
+
+Set internal-iface configuration to specified argument.
+
+=item B<--ip=<IP>>
+
+Set ip configuration (IPv4 address) to specified argument.  If set to 'auto' and
+the selected interface is available on the running host then the IP address will
+be determined based on its current settings.
+
+=item B<--ipv6=<IP>>
+
+Set ip configuration (IPv6 address) to specified argument.  If set to 'auto' and
+the selected interface is available on the running host then the IP address will
+be determined based on its current settings.
+
+=item B<--man>
+
+Prints the manual page and exits.
+
+=item B<--move-from=<source>>
+
+Move item from specified level (being host for --role and interface for --type).
+The item needs to be chosen via --type or --role. To be used in combination with
+--move-to=....
+
+=item B<--move-to=<target>>
+
+Move item to specified level (being host for --role and interface for --type).
+The item needs to be chosen via --type or --role. To be used in combination with
+--move-to=....
+
+=item B<--netmask=<IP>>
+
+Set netmask configuration to specified argument.
+
+=item B<--output-file=<filename>>
+
+Store resulting file under specified argument. If unset defaults to
+/etc/ngcp-config/network.yml.
+
+=item B<--peer=<nodename>>
+
+Set peer configuration (being the corresponding other node in a PRO setup) to
+specified argument.
+
+=item B<--remove-host=<host>>
+
+Remove the specified host from the configuration file.
+Can be specified multiple times (--remove-host=sp1 --remove-host=sp2 ...).
+
+=item B<--remove-interface=<interface>>
+
+Remove the specified interface from the configuration file.
+Can be specified multiple times (--remove-interface=eth5 --remove-interface=eth6 ...).
+
+=item B<--role=<role>>
+
+Set role configuration for host to specified argument.
+Can be specified multiple times (--role=lb --role=proxy ...).
+
+=item B<--set-interface=<name>>
+
+Add specified network interface. Can be combined with options like --hwaddr,
+--ip, --netmask,... to set specified arguments as configuration options for the
+given network interface.
+
+NOTE: If multiple --set-interface options are specified in one command line
+(e.g. '--set-interface=lo --set-interface=eth0 --set-interface=eth1') then
+options like --hwaddr can't be sanely combined with different settings on
+multiple interfaces. Instead invoke ngcp-network with the --set-interface option
+mulitple times.
+
+=item B<--shared-ip=<IP>>
+
+Set shared_ip configuration to specified argument.
+
+=item B<--shared-ipv6=<IP>>
+
+Set shared_v6ip configuration to specified argument.
+
+=item B<--type=<name>>
+
+Set type configuration to specified argument.
+Can be specified multiple times in one single command line.
+
+=item B<--verbose>
+
+Be more verbose about execution.
+
+=item B<--version>
+
+Display program version and exit.
+
+=item B<--vlan-raw-device=<device>>
+
+Set vlan_raw_device configuration to specified argument.
+
+=back
+
+=head1 DESCRIPTION
+
+B<This program> will read the given input file(s) and do something
+useful with the contents thereof.
+
+=head1 USAGE
+
+Usage examples useful especially on sip:provider CE systems:
+
+  ngcp-network --set-interface=eth0 --ip=192.168.23.42 --netmask=255.25.255.248
+  ngcp-network --set-interface=eth1 --ip=auto --netmask=auto
+
+Usage examples useful especially on sip:provider PRO systems:
+
+  ngcp-network --set-interface=lo --set-interface=eth0 --set-interface=eth1 --ip=auto --netmask=auto
+
+  ngcp-network --peer=sp2
+  ngcp-network --host=sp2 --peer=sp1
+
+  ngcp-network --set-interface=eth1 --ip=auto --netmask=auto
+  ngcp-network --move-from=lo --move-to=eth1 --type=ha_int
+
+  ngcp-network --set-interface=eth1 --host=sp2 --ip=192.168.255.252 --netmask=255.255.255.248 --type=ha_int
+
+Usage examples useful especially on sip:carrier systems:
+
+  ngcp-network --host=proxy2 --set-interface=eth0 --ip=192.168.10.42 --netmask=255.255.255.0
+
+=head1 REQUIRED ARGUMENTS
+
+Depending on the setting you are trying to apply there are different sets of
+required arguments. Some examples:
+
+  --move-from=INTERFACE1 --move-to=INTERFACE2 --type=XXX
+
+Move specified type setting XXX from INTERFACE1 section to INTERFACE2.
+
+  --move-from=HOST1 --move-to=HOST2 --role=XXX
+
+Move specified role setting XXX from HOST1 to HOST2.
+
+  --set-interface=INTERFACE --ip=[1.2.3.4|auto|none|delete] --netmask=[255.25.255.0|auto|none|delete] ...
+
+Configure IP, netmask,... on specified INTERFACE.
+
+=head1 DIAGNOSTICS
+
+=head2 Unknown option: ...
+
+The specified command line option is not support.
+
+=head2 File ... could not be read ...
+
+The specified input file doesn't exist or can't be read.
+
+=head2 Error opening /etc/hostname: ...
+
+The file /etc/hostname couldn't be read, either because the file doesn't exist
+or having wrong file permissions.
+
+=head2 Fatal error retrieving hostname [...]
+
+No valid hostname could not be retrieved from /etc/hostname.
+
+=head2 Specified IP ... is not a valid IPv4 address
+
+The specified IP address is not considered a valid IPv4 address.
+
+=head2 Specified IP ... is not a valid IPv6 address
+
+The specified IP address is not considered a valid IPv6 address.
+
+=head2 Command line option does not accept whitespace in ...
+
+An argument to a command line option contains whitespace(s),
+which isn't supported to avoid problems with the YAML file format.
+
+=head2 Could not open [...] for writing (are you user root?)
+
+The configuration file couldn't be stored, usually caused by user executing the
+program not having write permissions on the file.
+
+=head2 Error sending log output
+
+Using the --verbose option the more detailed information couldn't be printed to
+the console.
+
+=head2 --move-from option must be used with --move-to option together
+
+The --move-from option was specified in the command line but the --move-to
+option is missing.
+
+=head2 --move-to option must be used with --move-from option together
+
+The --move-to option was specified in the command line but the  --move-from
+option is missing.
+
+=head2 Could not open ... for writing
+
+The file can't be written, usually caused because the user doesn't have write
+permissions on the file.
+
+=head2 Could not write YAML to ...
+
+There is an error in storing the configuration in the YAML format.
+
+=head1 EXIT STATUS
+
+Exit code 0 means that everything should have went fine.
+Exit code 2 means something with the command line options or retrieving default settings went wrong.
+Exit code 9 means the specified argument to a command line option is not valid.
+
+=head1 CONFIGURATION
+
+There's no configuration file for the ngcp-network script itself supported at the moment.
+The main configuration file ngcp-network operates on is /etc/ngcp-config/network.yml.
+
+=head1 DEPENDENCIES
+
+ngcp-network relies on a bunch of Perl modules, all of them specified as dependencies
+through the ngcp-ngcpcfg Debian package.
+
+=head1 INCOMPATIBILITIES
+
+No known at this time.
+
+=head1 BUGS AND LIMITATIONS
+
+Please report problems you notice to the Sipwise Development Team <support@sipwise.com>.
+
+=head1 AUTHOR
+
+Michael Prokop <mprokop@sipwise.com>
+
+=head1 LICENSE AND COPYRIGHT
+
+GPL-3+, Sipwise GmbH, Austria
+
+=cut

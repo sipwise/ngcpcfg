@@ -1,0 +1,6 @@
+#!/bin/bash
+
+/etc/init.d/mysql restart
+sleep 2
+
+# vim: ft=sh

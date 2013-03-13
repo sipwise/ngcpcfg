@@ -1,0 +1,467 @@
+ngcpcfg(8)
+==========
+
+Name
+----
+ngcpcfg - central and template based Configuration Management
+
+Synopsis
+--------
+ngcpcfg <action> [ options ]
+
+Introduction
+------------
+
+ngcpcfg is a Configuration Management System, developed for the Sipwise Next
+Generation Platform. It provides a central mechanism for handling configuration
+changes, updates and synchronisation between servers through a main
+configuration which is simple and easy to read and modify.
+
+tl;dr? - ngcpcfg for the impatient
+----------------------------------
+
+The main system configuration is done in the file _/etc/ngcp-config/config.yml_.
+After modifying the file execute 'ngcpcfg apply' to build the accordingly
+configurations file.
+
+Taxonomy
+--------
+
+*central yml files*:: *.yml files inside _/etc/ngcp-config/_
+
+*High Availability setup*:: ngcpcfg running in a cluster setup (e.g.
+sip:providerPRO or sip:carrier), depends on Debian package ngcp-ngcpcfg-ha.
+
+*local repository*:: the directory _/etc/ngcp-config/_, being a Git repository
+
+*remote systems*:: the other nodes inside a High Availability setup, as defined
+in _/etc/ngcp-config/systems.cfg_
+
+*shared repository*:: Git repository shared amongst nodes inside a High
+Availability setup, as defined by the GLUSTERFS setting in
+/etc/ngcp-config/ngcpcfg.d/shared_storage.cfg (requires ngcp-ngcpcfg-ha) and
+being _/mnt/glusterfs_ by default
+
+*templates*:: template toolkit files with .tt2 suffix, found in
+_/etc/ngcp-config/templates/etc/_
+
+[[configfiles]]
+Configuration files
+-------------------
+
+Main configuration files
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+* _/etc/ngcp-config/config.yml_: central configuration file, to be configured with
+$EDITOR, webfrontend,...
+
+* _/etc/ngcp-config/config.$HOSTNAME.yml_: host specific configuration file,
+depending on the hostname (:= $HOSTNAME) of the system.
+
+* _/etc/ngcp-config/config.local.yml_: local configuration, not being host
+specific.
+
+* _/etc/ngcp-config/constants.yml_: configuration file that has precedence over
+any other .yml file _/etc/ngcp-config/_, defining important constant settings.
+This file is *not* supposed to be modified by the user (without having a very
+good reason).
+
+* _/etc/ngcp-config/ngcpcfg.cfg_: main configuration file for ngcpcfg itself,
+provides global variables used inside ngcpcfg and its helper scripts. This file
+is *not* supposed to be modified by the user (without having a very good
+reason).
+
+* _/etc/ngcp-config/ngcpcfg.d/_: configuration directory for ngcpcfg itself.
+Files with suffix '.cfg' inside this directory are sourced after
+/etc/ngcp-config/ngcpcfg.cfg has been read. Files inside this directory are
+*not* supposed to be modified by the user (without having a very good reason).
+
+[IMPORTANT]
+Configuration file priority: constants.yml takes precedence over
+config.local.yml, over config.$HOSTNAME.yml, over config.yml.
+
+High Availability setup specific configuration files
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* _/etc/ngcp_ha_node_: defines node name in the High Availability setup, usually
+being _sp1_ for the first node and _sp2_ for the second node.
+
+* _/etc/ngcp-config/systems.cfg_: configuration file that specifies to which
+hosts changes should be pushed to.
+
+Supported template files
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Example for generating a configuration file named_/etc/foobar/baz_:
+
+* _/etc/ngcp-config/templates/etc/foobar/baz.tt2_: main and default template
+file, used by template-handler for generating /etc/foobar/baz. Configuration
+file is usually provided by a Debian package.
+
+* _/etc/ngcp-config/templates/etc/foobar/baz.customtt.tt2_: system specific
+template file, but configuration usually isn't provided by a Debian package and
+can be modified independent from any Debian package mechanism.
+
+* _/etc/ngcp-config/templates/etc/foobar/baz.tt2.$HA_NODE_: node specific
+template file. $HA_NODE is determined using the content of /etc/ngcp_ha_node
+(usually being _sp1_ for the first node and _sp2_ for the second node on the
+Sipwise Next Generation Platform). Wheras _*customtt.tt2_ files are used on all
+nodes in a High Availability setup the _*.tt2.$HA_NODE*_ file is specific for
+the single node only. A common usage case is master vs. slave configuration of a
+service. Configuration file is usually provided by a Debian package. Note:
+Feature is available in the High Availability setup only.
+
+* _/etc/ngcp-config/templates/etc/foobar/baz.customtt.tt2.$HA_NODE_: node
+specific template file. Regarding $HA_NODE the same as for _baz.tt2.$HA_NODE_
+applies (see previous bullet), but the configuration file usually isn't provided
+by a Debian package but can be modified independent from any Debian package
+mechanism. Note: Feature is available in the High Availability setup only.
+
+[IMPORTANT]
+Configuration file priority: *.customtt.tt2.$HA_NODE takes precedence over
+*.customtt.tt2, over *.tt2.$HA_NODE, over *.tt2.
+
+Support action related files
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Example for handling a configuration file named _/etc/foobar/baz_:
+
+* _/etc/ngcp-config/templates/etc/foobar/baz.services_: service file, defining
+actions that have to be executed when file /etc/foobar/baz was modified.
+
+* _/etc/ngcp-config/templates/etc/foobar/ngcpcfg.services_: service file,
+defining actions that have to be executed whenever *any* file inside /etc/foobar
+was modified.
+
+* _/etc/ngcp-config/templates/etc/foobar/baz.postbuild_: script which is
+executed *after* a configuration file (/etc/foobar/baz) has been generated. The
+environment variable "$output_file" containing the file name of the generated
+configuration file (/etc/foobar/baz) is available within the postbuild script. A
+common usage case for postbuild files is adjusting file permissions.
+
+* _/etc/ngcp-config/templates/etc/foobar/baz.prebuild_: script which is
+executed *before* a configuration file (/etc/foobar/baz) is generated. The
+environment variable "$output_file" containing the file name of the generated
+configuration file (/etc/foobar/baz) is available within the postbuild script.
+
+Syntax and layout of configuration files
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* _/etc/ngcp-config/ngcpcfg.cfg_: plain shell syntax style "key=value" entries
+
+* _/etc/ngcp-config/systems.cfg_: one hostname or IP address per line
+
+* _central yml files_ (*.yml): YAML configuration syntax (see http://yaml.org/)
+
+* _template files_ (*.tt2): whatever the according software (Kamailio,
+MySQL,...) needs. Any variables that should be replaced by the configuration
+management system (based on the main configuration files *.yml inside
+/etc/ngcp-config/) have to be written in the YAML syntax (see http://yaml.org/)
+
+* _service files_ (*.services) and _build files_ ({post,pre}build): file will be
+executed under "bash $FILE", so you can use commands e.g. like
+"/etc/init.d/foobar restart" and any further shell scripting syntax inside the
+services files
+
+Options
+-------
+
+  **--debug** <action> [<further_options>]::
+
+Run actions (see next section) in verbose mode, useful for debugging.
+
+  **--help**::
+
+Display usage information and exit.
+
+  **--version**::
+
+Display ngcpcfg version and exit.
+
+Actions
+-------
+
+  **apply**::
+
+Executes the _build_, _services_ and _commit_ commands in a batch (assuming each
+command worked as expected). This option serves as a shortcut for the most
+commonly executed commands.
+
+  **build** [--modified-only] [<files_or_directories>|<pattern>]::
+
+Generate configuration files, based on values defined the central yml files and
+based on the templates in the configuration tree (/etc/ngcp-config/templates by
+default). The *--modified-only* option checks for _modified_ and _uncommitted_
+configuration files (central yml files and templates) and builds the relevant
+files only. If a central yml file is modified it builds all configuration files.
+If changes are in template files only just the according template files are
+considered for rebuild. If a file (e.g. _/etc/rsyslog.conf_) or directory (e.g.
+_/etc/mysql/_) is provided as argument to the _build_ option only the specified
+file / files inside the directory will be generated. If the argument doesn't
+start with the /etc prefix the argument is considered as pattern, matching all
+files/directories which include the specified pattern. The pattern can include
+shell globbing patterns - so argument 'mo..t' will match the files
+/etc/ngcp-monitoring-tools/collective-check.conf, /etc/monit/monitrc,
+/etc/ha.d/resource.d/monit-services and /etc/default/monit iff they are present.
+You can combine _<files_or_directories>_ and _<pattern>_ and use multiple
+arguments.
+
+  **commit** [<commit_message>]::
+
+Commit all modified files in _/etc/ngcp-config_ and record changes in _/etc_ by
+executing the etckeeper(8) command through
+'/usr/share/ngcp-ngcpcfg/scripts/etckeeper'. To check whether there are any
+pending changes to be committed execute 'ngcpcfg status'.
+
+  **decrypt**::
+
+Decrypt /etc/ngcp-config-crypted.tgz.gpg and restore configuration files,
+doing the reverse operation of the _encrypt_ option.
+Note: This feature is only available if the ngcp-ngcpcfg-locker package is
+installed.
+
+  **diff** [<options_for_git_diff>]::
+
+Show changes between ngcpcfg's Git repository and the working tree inside
+_/etc/ngcp-config_. You can specify options for the underlying 'git diff'
+command, e.g. 'ngcpcfg diff HEAD^' will show all changes that have been recorded
+with the last _commit_ operation (see manpage git-rev-parse(1) for details how
+to specify revisions). If the tool doesn't report anything it means that there
+are neither any uncommited changes nor any new or removed files (files which are
+not yet (un)registered to the repository).
+
+  **encrypt**::
+
+Encrypt /etc/ngcp-config and all resulting configuration files with a user
+defined password and save the result as /etc/ngcp-config-crypted.tgz.gpg.
+Note: This feature is only available if the ngcp-ngcpcfg-locker package is
+installed.
+
+  **help**::
+
+Display usage information and exit.
+
+  **initialise**::
+
+If ngcpcfg was installed but isn't configured yet the 'initialise' option sets
+up ngcpcfg accordingly. Follow the instructions from the <<setup_instructions,
+Setup instructions>> section.
+
+  **init-mgmt** <server>::
+
+Set up specified '<server>' for usage as shared repository whereas '<server>'
+usually corresponds to the IP/hostname of the central management system in a
+sip:carrier environment. Further details about the details of the setup
+are available in the <<init-mgmt>> section.
+Note: This feature is only available if the ngcp-ngcpcfg-carrier package is installed.
+
+  **pull**::
+
+Retrieve modifications from shared repository.
+Note: This option is available in the High Availability setup only.
+
+  **push** [--nobuild] [--noapply] [--shared-only] [<host(s)>]::
+
+Push modifications to shared repository and remote systems. After changes have been
+pushed to the node the _apply_ operation will be executed on each remote system
+to rebuild the configuration files (unless the '--noapply' operation has been
+specified, then only the _build_ operation will be executed). To skip building
+any configuration files at all the '--nobuild' option can be specified (implying
+to also skip the _apply_ operation).  If the '--shared-only' option is set then
+the any pending commits will be pushed only to the shared repository only, any
+foreign hosts will be skipped then.  If hostname(s) or IP address(es) is given
+as argument then the changes will be pushed to the shared repository and to the
+given hosts only. If no host has has been specified then the hosts specified in
+_/etc/ngcp-config/systems.cfg_ are used.
+Note: This option is available in the High Availability setup only.
+
+  **services** [--dry-run]::
+
+Execute any defined service actions for modified configuration files. If the
+_--dry-run_ option is present the services won't be executed but you'll be
+noticed which service files would be executed if being invoked without the
+_--dry-run__ option.
+
+  **status**::
+
+Display the current state of the configuration system, like modified
+configuration files and pending actions.
+
+
+Usage examples
+--------------
+
+The main workflow *without* High Availability setup is:
+
+  ngcpcfg status                      # check for pending operations
+  $EDITOR /etc/ngcp-config/config.yml # adjust/extend configuration
+  ngcpcfg apply "summary of changes"  # build configs, run services + commit changes
+
+If you do not want to execute the _apply_ shortcut command but instead run the
+single actions, then you can execute:
+
+  ngcpcfg status                      # check for pending operations
+  $EDITOR /etc/ngcp-config/config.yml # adjust/extend configuration
+  ngcpcfg build                       # generate/update configuration files
+  ngcpcfg services                    # restart services for modified configs
+  ngcpcfg commit "summary of changes" # register changes
+
+The main workflow *with* High Availability setup is:
+
+  ngcpcfg status                      # check for pending operations
+  ngcpcfg pull                        # retrieve possibly pending updates
+  $EDITOR /etc/ngcp-config/config.yml # adjust/extend configuration
+  ngcpcfg build                       # generate/update configuration files
+  ngcpcfg services                    # restart services for modified configs
+  ngcpcfg commit "summary of changes" # register changes
+  ngcpcfg push                        # upload changes to shared storage + remote systems
+  ngcpcfg status                      # check for possibly outstanding issues
+
+[[faq]]
+Frequently asked questions
+--------------------------
+
+What does ngcpcfg mean?
+~~~~~~~~~~~~~~~~~~~~~~~
+
+'ngcp' is the http://www.sipwise.com/[Sipwise Next Generation Communication
+Platform] and 'cfg' stands for the ConFiGuration management system of the
+ngcp system.
+
+Does ngcpcfg require a shared storage?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Only if you are using ngcpcfg in a High Availability setup and using the 'push'
+functionality (which is highly recommended in a HA Setup).
+
+How does the configuration management system work?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+ngcpcfg takes the central yml files (/etc/ngcp-config/*.yml) as input for
+configuration, searches for supported templates files (*.tt2) in the template
+pool (_/etc/ngcp-config/templates/etc/_) and builds the resulting configuration
+files in _/etc_.
+
+[[errorhandling]]
+Error handling - what does this error message mean?
+---------------------------------------------------
+
+Error message:
+
+  Error: Failed hosts:  hostname (down)
+
+Background: The system "hostname" is not reachable via ICMP, which means it's
+not reachable for the ngcpcfg system.
+
+How to fix: Make sure the system is up and running and reachable via ssh from
+the system where you are running the "pull" action.
+
+Error message:
+
+  error: Your local changes to 'config.yml' would be overwritten by merge. Aborting.
+
+Background: the file 'config.yml' (in this example) on the system where you are
+pushing to contains local modifications which are uncommitted yet. To avoid data
+damage the system can't resolve this situation automatically.
+
+How to fix:
+
+1) Throw away the changes on the remote system (where you are pushing to,
+important: your changes on the system where you are executing the commands will
+be gone!):
+
+  cd /etc/ngcp-config ; git checkout -- config.yml
+
+To get rid of *any* modified files (included added/removed files) the following
+commands will do the job (use with care and only execute it if you're aware of
+the consequences):
+
+  cd /etc/ngcp-config
+  git checkout -- .
+  git clean -xdf
+
+2) Resolve the merge conflict:
+
+  cd /etc/ngcp-config
+  git pull
+  $EDITOR config.yml # resolve conflict
+  ngcpcfg commit 'merge conflict on system sp2'
+  ngcpcfg pull # just to make sure
+  ngcpcfg push # push changes back to the other systems
+
+[[init-mgmt]]
+init-mgmt setup
+---------------
+
+This section documents the 'ngcpcfg init-mgmt' feature in more detail.
+The feature is provided through the ngcp-ngcpcfg-carrier package.
+
+The script deprecates the shared repository /mnt/glusterfs/ngcpcfg-share of the
+local system by renaming it to /mnt/glusterfs/ngcpcfg-share.unused. It then
+registers the two according nodes (the local system plus the second node which
+makes the PRO pair) in /etc/ngcp-config/systems.cfg. It sets the 'mgmgt_server'
+variable in /etc/ngcp-config/carrier.cfg to '<server>'. Then it makes sure that
+the automated login via SSH between the two according nodes as well as the
+<server> works. It clones the local shared repository to the '<server>'. Finally
+it updates the remote origin for the shared repository on both nodes to point to
+'<server>:/mnt/glusterfs/ngcpcfg_<role>' whereas '<role>' corresponds to the
+system's hostname without the trailing 'a' and 'b' suffix.
+
+[NOTE]
+To check which remote repository is in use execute
+'cd /etc/ngcp-config; git remote show origin | grep URL'.
+
+[[setup_instructions]]
+Setup instructions
+------------------
+
+Requirements for High Availability setup:
+
+* glusterfs is supposed to be set up working and deployed at /mnt/glusterfs
+  (as defined via /etc/ngcp-config/ngcpcfg.cfg)
+
+* hosts are expected to be set up for automatic ssh login (ssh-keygen && ssh-copy-id)
+
+* node names are expected to be sp1 and sp2 so the .tt2.sp1 and .tt2.sp2
+template files are supported
+
+Configuration on sp1 (expected to be master node in initial setup):
+
+ ngcpcfg initialise
+ ngcpcfg build
+ printf "sp1\nsp2\n" > /etc/ngcp-config/systems.cfg
+ ngcpcfg commit "provide systems.cfg"
+
+Configuration on sp2 (and any further existing system):
+
+ ngcpcfg initialise
+ ngcpcfg build
+
+Please note that you do not have to run this steps if you are using the Sipwise
+Next Generation Platform since the installation steps are fully automated.
+
+Involved frameworks
+-------------------
+
+* git: Distributed Version Control system
+* tt2: Template Toolkit
+* make: Utility for Directing compilation
+* yaml: Generic data serialization language
+
+Limitations
+-----------
+
+ngcpcfg was designed specifically for the Sipwise Next Generation Platform,
+though with being as generic as possible in mind. The system is supposed to be
+useful for configuration management on other systems/platforms and it's possible
+to adapt it for different needs through a variety of configuration parameters,
+though keep in mind that ngcpcfg was implemented for some very specific use
+cases.
+
+Author
+------
+Michael Prokop <mprokop@sipwise.com>
+
+/////////////////////////////
+// vim: ft=asciidoc tw=80 ai
+/////////////////////////////

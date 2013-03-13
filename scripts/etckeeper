@@ -1,0 +1,41 @@
+#!/bin/bash
+# Purpose: wrapper around etckeeper for usage inside ngcpcfg
+################################################################################
+
+set -e
+set -u
+
+if ! [ -r /usr/share/ngcp-ngcpcfg/functions/main ] ; then
+  printf "Error: /usr/share/ngcp-ngcpcfg/functions/main could not be read. Exiting.\n" >&2
+  exit 1
+fi
+
+. /usr/share/ngcp-ngcpcfg/functions/main
+
+# main script
+
+log_debug "cd /etc"
+cd /etc
+
+log_debug "type -p etckeeper"
+if ! type -p etckeeper &>/dev/null ; then
+  log_warn "etckeeper is not available, skipping etckeeper execution"
+  exit 0
+fi
+
+log_debug "test -d .git"
+if ! [ -d .git ] ; then
+  log_warn "etckeeper has not been initialized yet, skipping etckeeper execution"
+  exit 0
+fi
+
+log_info "Checking state of /etc files"
+log_debug 'git status | grep -q "working directory clean"'
+if git status | grep -q 'working directory clean' ; then
+  log_info "OK:   nothing to commit."
+else
+  log_debug 'etckeeper commit "ngcpcfg apply on $(date)"'
+  etckeeper commit "ngcpcfg apply on $(date)"
+fi
+
+## END OF FILE #################################################################

@@ -1,0 +1,69 @@
+#!/bin/bash
+# Purpose: display state of ngcpcfg setup and pending/recommended actions
+################################################################################
+
+set -e
+set -u
+
+if ! [ -r /usr/share/ngcp-ngcpcfg/functions/main ] ; then
+  printf "Error: /usr/share/ngcp-ngcpcfg/functions/main could not be read. Exiting.\n" >&2
+  exit 1
+fi
+
+. /usr/share/ngcp-ngcpcfg/functions/main
+
+# main script
+
+if ! [ -d "${NGCPCTL_MAIN:-}" ] ; then
+  log_error "Directory ${NGCPCTL_MAIN:-} does not exist yet. Execute 'ngcpcfg initialise'."
+  exit 1
+fi
+
+log_debug "cd $NGCPCTL_MAIN"
+cd "$NGCPCTL_MAIN"
+
+log_info "Checking state of ngcpcfg:"
+if ! [ -r /etc/ngcp-config/.git/HEAD ] ; then
+  log_warn "ngcpcfg has not been initialised yet. Execute 'ngcpcfg initialise'."
+  exit 0
+fi
+
+log_info "OK:   has been initialised already "
+
+log_info "Checking state of configuration files:"
+log_debug "git status | grep -q 'working directory clean'"
+if git status | grep -q 'working directory clean' ; then
+  log_info "OK:   nothing to commit."
+else
+  if git diff-index --name-only HEAD | grep -q . ; then
+    log_info "ACTION_NEEDED: configuration files have been modified:"
+    log_debug "git diff-index --name-only HEAD | sed \"s;^;${NGCPCTL_MAIN}/;\""
+    git diff-index --name-only HEAD | sed "s;^;${NGCPCTL_MAIN}/;"
+  fi
+
+  if git ls-files --other --exclude-standard | grep -q . ; then
+    log_info "ACTION_NEEDED: configuration files have been added:"
+    log_debug "git ls-files --other --exclude-standard | sed \"s;^;${NGCPCTL_MAIN}/;\""
+    git ls-files --other --exclude-standard | sed "s;^;${NGCPCTL_MAIN}/;"
+  fi
+
+  log_info "-> execute 'ngcpcfg build' and 'ngcpcfg commit'"
+fi
+
+if which status_ha &>/dev/null ; then
+  log_debug "status_ha function"
+  status_ha
+fi
+
+log_debug "cd /etc"
+cd /etc
+
+log_info "Checking state of /etc files"
+log_debug "git status | grep -q 'working directory clean'"
+if git status | grep -q 'working directory clean' ; then
+  log_info "OK:   nothing to commit."
+else
+  log_info "ACTION_NEEDED: configuration files changed (execute 'etckeeper commit [message]')."
+fi
+
+## END OF FILE #################################################################

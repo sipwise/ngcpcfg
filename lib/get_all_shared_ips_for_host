@@ -1,0 +1,21 @@
+[%
+  # Return an array of shared IPs for a given host
+  #
+  # @param argv.host	The host to get all shared IPs for.
+  # @param argv.type	The interface type or empty string for all types.
+  # @return out		The array of shared ips.
+-%]
+[% IF !hosts.${argv.host}.defined -%][% argv.host = 'self' -%][% END -%]
+[% out = [] -%]
+[% IF !argv.type.length -%][% argv.type = '.*' -%][% END -%]
+[% FOREACH iface IN hosts.${argv.host}.interfaces -%]
+[% FOREACH realiface IN hosts.${argv.host}.keys -%]
+[% IF realiface == iface -%]
+[% IF hosts.${argv.host}.$realiface.type.grep('^' _ argv.type _ '$').size() -%]
+[% FOREACH ip IN hosts.${argv.host}.$realiface.shared_ip -%]
+[% out.push(ip) -%]
+[% END -%]
+[% END -%]
+[% END -%]
+[% END -%]
+[% END -%]

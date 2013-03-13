@@ -1,0 +1,120 @@
+#!/bin/bash
+
+# defaults
+if [ -d local ] ; then # running with carton
+  CMD="perl -Ilocal/lib/perl5 -CSD ../sbin/ngcp-network"
+else
+  CMD="perl -CSD ../sbin/ngcp-network"
+fi
+
+count=0
+RC=0
+
+OUTPUT=$(mktemp) || exit 1
+
+# generated files
+rm -rf testfiles
+mkdir testfiles
+
+bailout() {
+  rm -f "$OUTPUT"
+}
+
+trap bailout 1 2 3 3 6 9 14 15
+
+OK() {
+    printf "ok ${1}           ${2}\n"
+}
+
+FAIL() {
+    printf "not ok ${1}        ${2}\n"
+    RC=1
+}
+
+assertEqualFiles() {
+  [ "$#" -eq 2 ] || return 1
+
+  (( count++ ))
+
+  if cmp "$1" "$2" 2>/dev/null ; then
+    OK "$count" "$2" >> "$OUTPUT"
+  else
+    echo "files $1 and $2 do not match" >&2
+    FAIL "$count" "$2 # $2 differs from $1" >> "$OUTPUT"
+    return 1
+  fi
+}
+
+
+# make sure ip/netmask/interface can be set on exisiting host
+${CMD} --input-file=network-config/network_pro.yml --output-file=testfiles/eth42.yml \
+       --host=sp1 --set-interface=eth42 --ip=1.2.3.4 --netmask=255.255.255.248
+assertEqualFiles testfiles/eth42.yml network-config/eth42.yml
+
+# verify deployment steps
+ROLE=sp1; PEER=sp2; DEFAULT_INSTALL_DEV=eth0; INTERNAL_DEV=eth1;
+
+in_counter=1; out_counter=1 # do not hardcode input/output files
+
+${CMD} --host=$ROLE --set-interface=lo --ip=127.0.0.1 --netmask=255.0.0.0 \
+       --hwaddr=00:00:00:00:00:00 --ipv6='::1' --type=web_int \
+       --input-file=network-config/network_pro.yml --output-file=testfiles/deploy_${out_counter}.yml
+((out_counter++))
+
+${CMD} --host=$ROLE --set-interface=lo --shared-ip=none --shared-ipv6=none \
+       --input-file=testfiles/deploy_${in_counter}.yml --output-file=testfiles/deploy_${out_counter}.yml
+((out_counter++)) ; ((in_counter++))
+
+${CMD} --host=$ROLE --set-interface=$DEFAULT_INSTALL_DEV --ip=1.2.3.4 \
+       --netmask=255.255.255.0 --hwaddr=de:ad:be:ef:23:42 --dns=2.3.4.5 --dns=3.4.5.6 \
+       --gateway=1.2.3.1 \
+       --input-file=testfiles/deploy_${in_counter}.yml --output-file=testfiles/deploy_${out_counter}.yml
+((out_counter++)) ; ((in_counter++))
+
+${CMD} --host=$ROLE --set-interface=$INTERNAL_DEV --ip=192.168.255.251 \
+       --netmask=255.255.255.248 --hwaddr=de:ad:be:ef:42:23 \
+       --input-file=testfiles/deploy_${in_counter}.yml --output-file=testfiles/deploy_${out_counter}.yml
+((out_counter++)) ; ((in_counter++))
+
+${CMD} --host=$ROLE --peer=$PEER \
+       --input-file=testfiles/deploy_${in_counter}.yml --output-file=testfiles/deploy_${out_counter}.yml
+((out_counter++)) ; ((in_counter++))
+
+${CMD} --host=$ROLE --move-from=lo --move-to=$INTERNAL_DEV --type=ha_int \
+       --input-file=testfiles/deploy_${in_counter}.yml --output-file=testfiles/deploy_${out_counter}.yml
+((out_counter++)) ; ((in_counter++))
+
+${CMD} --host=$PEER --peer=$ROLE \
+       --input-file=testfiles/deploy_${in_counter}.yml --output-file=testfiles/deploy_${out_counter}.yml
+((out_counter++)) ; ((in_counter++))
+
+${CMD} --host=$PEER --set-interface=lo --shared-ip=none --shared-ipv6=none \
+       --input-file=testfiles/deploy_${in_counter}.yml --output-file=testfiles/deploy_${out_counter}.yml
+((out_counter++)) ; ((in_counter++))
+
+${CMD} --host=$PEER --set-interface=lo --ipv6='::1' --ip=127.0.0.1 --netmask=255.0.0.0 --hwaddr=00:00:00:00:00:00 \
+       --input-file=testfiles/deploy_${in_counter}.yml --output-file=testfiles/deploy_${out_counter}.yml
+((out_counter++)) ; ((in_counter++))
+
+${CMD} --host=$PEER --set-interface=eth1 --ip=192.168.255.252 --netmask=255.255.255.248 --type=ha_int \
+       --input-file=testfiles/deploy_${in_counter}.yml --output-file=testfiles/deploy_${out_counter}.yml
+((out_counter++)) ; ((in_counter++))
+
+${CMD} --host=$PEER --role=proxy --role=lb --role=mgmt \
+       --input-file=testfiles/deploy_${in_counter}.yml --output-file=testfiles/deploy_${out_counter}.yml
+((out_counter++)) ; ((in_counter++))
+
+${CMD} --host=$PEER --set-interface=lo --type=sip_int --type=web_ext --type=sip_ext \
+       --type=rtp_ext --type=ssh_ext --type=mon_ext --type=web_int \
+       --input-file=testfiles/deploy_${in_counter}.yml --output-file=testfiles/deployment.yml
+
+assertEqualFiles testfiles/deployment.yml network-config/deployment.yml
+
+
+# TAP output
+printf "1..$count\n"
+cat "$OUTPUT"
+
+bailout
+
+exit $RC

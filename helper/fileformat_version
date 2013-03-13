@@ -1,0 +1,21 @@
+#!/usr/bin/perl
+# Purpose: report internal->fileformat setting of /etc/ngcp-config/config.yml
+################################################################################
+
+use strict;
+use warnings;
+
+use YAML::Tiny;
+my $yaml = YAML::Tiny->new;
+$yaml = YAML::Tiny->read("/etc/ngcp-config/config.yml");
+my $fileformat = $yaml->[0]->{internal}->{fileformat};
+
+if (defined $fileformat) {
+  print "$fileformat\n";
+  exit 0;
+} else {
+  print "undefined\n";
+  exit 1;
+}
+
+## END OF FILE #################################################################

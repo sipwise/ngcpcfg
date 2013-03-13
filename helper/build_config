@@ -1,0 +1,102 @@
+#!/bin/bash
+# Filename:      /usr/share/ngcp-ngcpcfg/helper/build_config
+# Purpose:       builds output configuration file based on tt2 template file
+#                using /usr/share/ngcp-ngcpcfg/helper/tt2-wrapper
+################################################################################
+
+set -e
+set -u
+
+if [ "${#:-}" -ne 1 ] ; then
+  echo "Usage: /usr/share/ngcp-ngcpcfg/helper/build_config <input_file>" >&2
+  exit 1
+fi
+
+if [ -z "${CONFIG_POOL:-}" ] ; then
+  echo "Error: $CONFIG_POOL is not set." >&2
+  exit 1
+fi
+
+# support for testsuite
+if [ -z "${FUNCTIONS:-}" ] ; then
+  FUNCTIONS='/usr/share/ngcp-ngcpcfg/functions/'
+fi
+
+if [ -z "${HELPER:-}" ] ; then
+  HELPER='/usr/share/ngcp-ngcpcfg/helper/'
+fi
+
+. ${FUNCTIONS}/main
+
+# main script
+
+input_file="$1"       # like /etc/ngcp-config/templates/etc/mysql/my.cnf.tt2
+# calculate output file {{{
+  x=${input_file##${NGCPCTL_MAIN}/templates/}     # drop leading /etc/ngcp-config
+  y=${x%%.tt2}                                    # drop trailing suffix '.tt2'
+  [ -n "${HA_FILE:-}" ] && y=${y%%.tt2${HA_FILE}} # drop trailing suffix '.tt2.sp{1,2}'
+  y=${y%%.customtt}                               # drop trailing suffix '.customtt'
+# }}}
+export output_file="${y}" # like /etc/mysql/my.cnf, export variable
+                          # for usage within {pre,post}build scripts
+
+# pre-execution script in template store:
+if [ -r "${NGCPCTL_MAIN}/templates/${output_file}.prebuild" ] ; then
+  log_info "Executing prebuild for ${output_file}"
+  bash "${NGCPCTL_MAIN}/templates/${output_file}.prebuild"
+elif [ -r "${NGCPCTL_MAIN}/templates/$(dirname ${output_file})/ngcpcfg.prebuild" ] ; then
+  log_info "Executing prebuild for ${output_file}"
+  bash "${NGCPCTL_MAIN}/templates/$(dirname ${output_file})/ngcpcfg.prebuild"
+fi
+
+# if output directory does not exist yet, create it
+if ! [ -d "$(dirname ${output_file})" ] ; then
+  umask 0022 # directory permissions should be '755'
+  mkdir -p "$(dirname ${output_file})"
+fi
+
+# assume safe defaults
+umask 0077
+
+# read host specific configuration file only if it exists
+[ -r "${HOST_CONFIG:-}" ] && host_conf="$HOST_CONFIG"
+
+# read local config only if it exists
+[ -r "${LOCAL_CONFIG:-}" ] && local_conf="$LOCAL_CONFIG"
+
+TT_WRAPPER="${HELPER}/tt2-wrapper"
+
+log_debug "Output file ${output_file} based on ${input_file}"
+log_debug "Executing: $TT_WRAPPER ${input_file} ${host_conf:-} ${local_conf:-} $NGCPCTL_CONFIG ${NETWORK_CONFIG:-} $CONSTANTS_CONFIG > ${output_file}"
+if "$TT_WRAPPER" "${input_file}" ${host_conf:-} ${local_conf:-} "$NGCPCTL_CONFIG" "${NETWORK_CONFIG:-}" "$CONSTANTS_CONFIG" > "${output_file}" 2>/dev/null ; then
+  log_info "Generating ${output_file}: OK"
+  RC=0
+else
+  log_error "Generating ${output_file} based on ${input_file}: FAILED"
+  RC=1
+
+  log_info "NOTE: Check those files for valid syntax and encoding:"
+  for f in "${input_file}" ${host_conf:-} ${local_conf:-} "$NGCPCTL_CONFIG" "${NETWORK_CONFIG:-}" "$CONSTANTS_CONFIG" ; do
+    [ -r "$f" ] && log_info "$f"
+  done
+  log_info "Running /usr/share/ngcp-ngcpcfg/helper/tt2-wrapper <file> should provide more details."
+
+fi
+
+# set permissions for generated config based on the ones of the template
+chmod --reference="${input_file}" "${output_file}"
+# finally drop all write permissions
+chmod a-w "${output_file}"
+
+# post-execution script in template store:
+if [ -r "${NGCPCTL_MAIN}/templates/${output_file}.postbuild" ] ; then
+  log_info "Executing postbuild for ${output_file}"
+  bash "${NGCPCTL_MAIN}/templates/${output_file}.postbuild"
+elif [ -r "${NGCPCTL_MAIN}/templates/$(dirname ${output_file})/ngcpcfg.postbuild" ] ; then
+  log_info "Executing postbuild for ${output_file}"
+  bash "${NGCPCTL_MAIN}/templates/$(dirname ${output_file})/ngcpcfg.postbuild"
+fi
+
+exit $RC
+
+## END OF FILE #################################################################

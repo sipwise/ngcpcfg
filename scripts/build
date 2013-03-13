@@ -1,0 +1,129 @@
+#!/bin/bash
+# Purpose: search for existing .tt2 (template toolkit) files
+#          and generate configuration files based on ngcpcfg's config
+################################################################################
+
+set -e
+set -u
+
+# support testsuite
+if [ -z "${FUNCTIONS:-}" ] ; then
+  FUNCTIONS='/usr/share/ngcp-ngcpcfg/functions/'
+fi
+
+if [ -z "${HELPER:-}" ] ; then
+  HELPER='/usr/share/ngcp-ngcpcfg/helper/'
+fi
+
+if ! [ -r ${FUNCTIONS}/main ] ; then
+  printf "Error: ${FUNCTIONS}/main could not be read. Exiting.\n" >&2
+  exit 1
+fi
+
+. ${FUNCTIONS}/main
+
+MODIFIED_ONLY=false
+if [ -n "${1:-}" ] ; then
+  case "$1" in
+    *--modified-only*) MODIFIED_ONLY=true ; shift ;;
+  esac
+fi
+
+# make sure encoding is OK
+for f in ${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG:-} ${CONSTANTS_CONFIG:-} ; do
+  if [ -r "$f" ] && ! file "$f" | grep -qe "UTF-8" -qe "ASCII" ; then
+    log_error "Encoding check of ${f} fails: neither ASCII nor UTF-8."
+    log_error "Please convert ${f} to UTF-8."
+    log_info
+    log_info  "NOTE:"
+    log_info  "* Check encoding via:"
+    log_info  "  # file ${f}"
+    log_info  "* To convert ISO-8859/latin1 to UTF-8 execute:"
+    log_info  "  # iconv -f latin1 -t utf8 < ${f} > ${f}.tmp && mv ${f}.tmp ${f}"
+    exit 1
+  fi
+done
+
+# check for valid YAML syntax
+for f in ${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG:-} ${CONSTANTS_CONFIG:-} ; do
+  if [ -r "$f" ] ; then
+    # use YAML::Tiny for checking
+    log_debug "Validating main YAML syntax of ${f}"
+    if ! "${HELPER}/validate-yml" "${f}" 2>/dev/null ; then
+      log_error "Invalid file syntax in ${f}:"
+      "${HELPER}/validate-yml" "${f}"
+      exit 1
+    fi
+  fi
+done
+
+build_config_files() {
+  for file in $(generate_template_list $*) ; do
+    log_debug "${HELPER}/build_config $file"
+    "${HELPER}/build_config" "${file}"
+    RC=$(($RC + $?))
+  done
+}
+
+# main script
+RC=0
+
+if ! $MODIFIED_ONLY ; then
+  build_config_files "$*"
+else
+  log_info "Considering modified files only due to --modified-only option."
+
+  if git status | grep -q 'working directory clean' ; then
+    log_info "No changes found, nothing to do."
+    exit 0
+  fi
+
+  if git diff-index --name-only HEAD | grep \
+         -qe "$(basename $NGCPCTL_CONFIG)" \
+         -qe "$(basename $HOST_CONFIG)" \
+         -qe "$(basename $LOCAL_CONFIG)" \
+         -qe "$(basename $NETWORK_CONFIG)" \
+         -qe "$(basename $CONSTANTS_CONFIG)" ; then
+     log_info "Main configuation files has been changed, running full rebuild."
+     log_debug "Executing: build_config_files $*"
+     build_config_files "$*"
+  fi
+
+  if git diff-index --name-only HEAD | grep -q templates/ || \
+     git status --porcelain | awk '/^\?\? / {print $2}' 2>/dev/null | grep -q templates/ ; then
+     log_debug "Template config changed, identifying files."
+     for file in $(git diff-index --name-only HEAD) \
+                 $(git status --porcelain | awk '/^\?\? / {print $2}') ; do
+        build_file="${file##templates/}"
+        build_file="${build_file%%.services}"
+        build_file="${build_file%%.customtt}"
+
+        # drop HA file suffix of all registered nodes
+        if [ -r /etc/ngcp-config/systems.cfg ] ; then
+          for host in $(cat /etc/ngcp-config/systems.cfg) ; do
+             build_file="${build_file%%.${host}}"
+           done
+        fi
+
+        build_file="${build_file%%.tt2}"
+        build_file="/${build_file}"
+
+        # generate file list
+        case "${file_list:-}" in
+          # avoid duplicates
+          *"${build_file}"*) # do nothing
+            ;;
+          # append to file list
+          *) file_list=" ${file_list:-} $build_file"
+            ;;
+        esac
+     done
+
+     log_debug "Executing: build_config_files ${file_list}"
+     build_config_files ${file_list}
+  fi
+fi
+
+exit "$RC"
+
+## END OF FILE #################################################################

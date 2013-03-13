@@ -1,0 +1,67 @@
+#!/bin/bash
+# Purpose: commit pending changes
+################################################################################
+
+set -e
+set -u
+
+if ! [ -r /usr/share/ngcp-ngcpcfg/functions/main ] ; then
+  printf "Error: /usr/share/ngcp-ngcpcfg/functions/main could not be read. Exiting.\n" >&2
+  exit 1
+fi
+
+. /usr/share/ngcp-ngcpcfg/functions/main
+
+if [ -z "${HELPER:-}" ] ; then
+  HELPER='/usr/share/ngcp-ngcpcfg/helper/'
+fi
+
+# main script
+
+cd "$NGCPCTL_MAIN"
+
+"${HELPER}/sync-db" "$NGCPCTL_CONFIG" "$CONSTANTS_CONFIG" || true
+
+
+if ! git config user.name >/dev/null ; then
+  log_debug 'git config user.name ngcp-config'
+  git config user.name "ngcp-config"
+fi
+if ! git config user.email >/dev/null ; then
+  log_debug 'git config user.email "root@$(hostname)"'
+  git config user.email "root@$(hostname)"
+fi
+
+if ! git config --global user.name >/dev/null ; then
+  log_debug 'git config --global user.name "git user on $(hostname)"'
+  git config --global user.name "git user on $(hostname)"
+fi
+if ! git config --global user.email >/dev/null ; then
+  log_debug 'git config --global user.email "root@$(hostname)"'
+  git config --global user.email "root@$(hostname)"
+fi
+
+# commit message
+if [ -z "${1:-}" ] ; then
+  msg="commiting uncommented changes"
+else
+  msg="$*"
+fi
+
+log_debug "git status | grep -q 'working directory clean'"
+if git status | grep -q 'working directory clean' ; then
+   log_info "OK:   nothing to commit."
+else
+  log_debug 'git add . ; git commit -a -m "$msg [$(date --rfc-3339=ns)]"'
+  git add .
+  git commit -a -m "$msg [$(date --rfc-3339=ns)]" >/dev/null
+  log_info "OK"
+fi
+
+log_debug "/usr/share/ngcp-ngcpcfg/scripts/etckeeper"
+/usr/share/ngcp-ngcpcfg/scripts/etckeeper >/dev/null
+
+log_info "Synchronizing data from ${CONSTANTS_CONFIG}"
+ngcp-sync-constants >/dev/null
+
+## END OF FILE #################################################################

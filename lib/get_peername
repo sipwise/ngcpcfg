@@ -1,0 +1,10 @@
+[%
+  # Returns the peer name of a given host
+  #
+  # @param argv.host	The hostname to get the peername for.
+  # @return out		The peername.
+-%]
+[% IF !hosts.${argv.host}.defined -%]
+[% argv.host = 'self' -%]
+[% END -%]
+[% out = hosts.${argv.host}.peer -%]

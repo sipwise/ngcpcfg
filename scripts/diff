@@ -1,0 +1,36 @@
+#!/bin/bash
+# Purpose: show changes in configuration pool
+################################################################################
+
+set -e
+set -u
+
+if ! [ -r /usr/share/ngcp-ngcpcfg/functions/main ] ; then
+  printf "Error: /usr/share/ngcp-ngcpcfg/functions/main could not be read. Exiting.\n" >&2
+  exit 1
+fi
+
+. /usr/share/ngcp-ngcpcfg/functions/main
+
+# main script
+log_debug "cd $NGCPCTL_MAIN"
+cd "$NGCPCTL_MAIN"
+
+log_debug "git diff $*"
+git diff $*
+
+# added files
+log_debug "git status --porcelain | awk '/^\?\? / {print \$2}'"
+if git status --porcelain | awk '/^\?\? / {print $2}' | grep -q . ; then
+  log_info "* New but not yet registered files inside ${NGCPCTL_MAIN}:"
+  git status --porcelain | awk '/^\?\? / {print $2}'
+fi
+
+# deleted files
+log_debug "git status --porcelain | awk '/^D / {print \$2}'"
+if git status --porcelain | awk '/^D / {print $2}' | grep -q . ; then
+  log_info "* Removed but not yet unregistered files inside ${NGCPCTL_MAIN}:"
+  git status --porcelain | awk '/^D / {print $2}'
+fi
+
+## END OF FILE #################################################################
