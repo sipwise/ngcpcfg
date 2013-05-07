@@ -12,19 +12,10 @@ if [ "${#:-}" -ne 1 ] ; then
   exit 1
 fi
 
-if [ -z "${CONFIG_POOL:-}" ] ; then
-  echo "Error: $CONFIG_POOL is not set." >&2
-  exit 1
-fi
-
-# support for testsuite
-if [ -z "${FUNCTIONS:-}" ] ; then
-  FUNCTIONS='/usr/share/ngcp-ngcpcfg/functions/'
-fi
-
-if [ -z "${HELPER:-}" ] ; then
-  HELPER='/usr/share/ngcp-ngcpcfg/helper/'
-fi
+# support for testsuite, assume defaults if unset
+CONFIG_POOL="${CONFIG_POOL:-/etc}"
+FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
+HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
 
 . ${FUNCTIONS}/main
 

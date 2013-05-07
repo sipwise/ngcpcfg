@@ -12,10 +12,7 @@ fi
 
 . /usr/share/ngcp-ngcpcfg/functions/main
 
-if [ -z "${HELPER:-}" ] ; then
-  HELPER='/usr/share/ngcp-ngcpcfg/helper/'
-fi
-
+HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
 # main script
 
 cd "$NGCPCTL_MAIN"

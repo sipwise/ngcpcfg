@@ -6,13 +6,8 @@ set -e
 set -u
 
 # support testsuite
-if [ -z "${FUNCTIONS:-}" ] ; then
-  FUNCTIONS='/usr/share/ngcp-ngcpcfg/functions/'
-fi
-
-if [ -z "${HELPER:-}" ] ; then
-  HELPER='/usr/share/ngcp-ngcpcfg/helper/'
-fi
+FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
+HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
 
 if ! [ -r ${FUNCTIONS}/main ] ; then
   printf "Error: ${FUNCTIONS}/main could not be read. Exiting.\n" >&2
