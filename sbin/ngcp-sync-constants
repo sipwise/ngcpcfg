@@ -155,12 +155,12 @@ SQL
 				if(-f $minfo) {
 					my $mfh;
 					unless(open $mfh, '<', $minfo) {
-						print "Failed to open $minfo for syncing, replication not synced!\n";
+						print STDERR "Failed to open $minfo for syncing, replication not synced!\n";
 						next;
 					}
 					my @minfo_content = <$mfh>;
 					close $mfh;
-					unless(grep {/^${pass}\s*/} @minfo_content) {
+					unless(grep {/^${pass}\s*$/} @minfo_content) {
 						print " ---> update master info to master_host='$mhost', master_user='$user', master_password='$pass'\n" if $debug;
 						$dbh->do('SLAVE STOP') unless $test_mode; 
 						$sth_master->execute($mhost, $user, $pass) unless $test_mode;
