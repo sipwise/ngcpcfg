@@ -6,6 +6,7 @@ use strict;
 use DBI;
 use YAML::Tiny;
 use Getopt::Long;
+use Sys::Hostname::Long;
 use Data::Dumper;
 #----------------------------------------------------------------------
 use constant CONSTANTS_YML => "/etc/ngcp-config/constants.yml";
@@ -25,6 +26,7 @@ use constant MYSQL_DATA => {
 												     dbrouser => 'dbropw' } },
 						mediator 	 => { dbuser => 'dbpassword' },
 						asterisk	 => { odbc => { dbuser => 'dbpassword' } },
+						mysql            => { repuser => 'reppassword' },
 						ossbss		 => { provisioning => { 
 											billingdb => { user => 'pass' } } },
 							 };
@@ -119,6 +121,12 @@ UPDATE user
    SET Password=PASSWORD(?)
  WHERE User = ?
 SQL
+	my $sth_master = $dbh->prepare(<<SQL);
+CHANGE MASTER TO
+   MASTER_HOST=?,
+   MASTER_USER=?,
+   MASTER_PASSWORD=?
+SQL
 
 	foreach my $key (keys %{MYSQL_DATA()}) {
 		$yml_ref = $yml->[0]->{$key};
@@ -129,6 +137,42 @@ SQL
 			my $user = $pair->{'user'};
 			my $pass = $pair->{'pass'};
 			next unless ($user && $pass);
+
+			# special handling for getting replication set up or in sync
+			if($user eq 'replicator') {
+				my $minfo = '/var/lib/mysql/master.info';
+				my $mhost = hostname_long();
+				if($mhost eq 'sp1') {
+					$mhost = 'sp2';
+				} elsif($mhost eq 'sp2') {
+					$mhost = 'sp1';
+				} else {
+					print " --> skipping '$user' for unknown hostname '$mhost'\n" if $debug;
+					next;
+				}
+				print " --> syncing replication user '$user' for master host '$mhost'\n" if $debug;
+				if(-f $minfo) {
+					my $mfh;
+					unless(open $mfh, '<', $minfo) {
+						print "Failed to open $minfo for syncing, replication not synced!\n";
+						next;
+					}
+					my @minfo_content = <$mfh>;
+					close $mfh;
+					unless(grep {/^${pass}\s*/} @minfo_content) {
+						print " ---> update master info to master_host='$mhost', master_user='$user', master_password='$pass'\n" if $debug;
+						$dbh->do('SLAVE STOP') unless $test_mode; 
+						$sth_master->execute($mhost, $user, $pass) unless $test_mode;
+						$dbh->do('SLAVE START') unless $test_mode; 
+					} else {
+						print " --> replication password in master.info already in sync for '$user' at master '$mhost'\n" if $debug;
+					}
+				} else {
+					print " ---> initialize master info to master_host='$mhost', master_user='$user', master_password='$pass'\n";
+					$sth_master->execute($mhost, $user, $pass) unless $test_mode;
+					$dbh->do('SLAVE START') unless $test_mode; 
+				}
+			}
 			$sth_sel->execute($user);
 			(my $count) = $sth_sel->fetchrow_array();
 			if ($count) {

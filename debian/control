@@ -15,6 +15,7 @@ Build-Depends: asciidoc,
                libtemplate-perl,
                libyaml-perl,
                libyaml-tiny-perl,
+               libsys-hostname-long-perl,
                xsltproc
 Standards-Version: 3.9.4
 Homepage: http://sipwise.com/
@@ -34,6 +35,7 @@ Depends: etckeeper,
          libtemplate-perl,
          libyaml-perl,
          libyaml-tiny-perl,
+         libsys-hostname-long-perl,
          ${misc:Depends},
          ${perl:Depends}
 Description: central and templated based Configuration Management System for NGCP platforms
