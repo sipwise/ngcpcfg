@@ -59,6 +59,7 @@ sub Usage {
 $0 [options] 
 Options:
 	-help|-h|-?		-- this help
+	-root|-r		-- use mysql root user without password as DB credentials
 	-init-passwords|-i	-- generate new passwords (constants.yml is updated)
 	-test|-t		-- test mode (no updates)
 	-verbose|-v 		-- verbose mode
@@ -72,6 +73,8 @@ my $mysql_port = 3360;
 my $mysql_user = 'sipwise';
 my $mysql_pass = '';
 
+my $mysql_root;
+
 my $yml 			= {};
 my $yml_ref 		= {};
 my $password_length = 20;
@@ -80,7 +83,8 @@ my $debug 			= 0;
 my $test_mode 		= 0;
 
 GetOptions("h|?|help" 		  => \&Usage,
-		   "i|init-passwords" => \$init_passwords,
+		   "i|init-passwords"     => \$init_passwords,
+		   "r|root"               => \$mysql_root,
 		   "t|test" 		  => \$test_mode,
 		   "v|verbose" 		  => \$debug);
 #----------------------------------------------------------------------
@@ -94,6 +98,10 @@ sub pwgen {
 }
 
 sub get_mysql_credentials {
+	if(defined $mysql_root) {
+		$mysql_user='root';
+		return;
+	}
 	open(my $fh, "<", MYSQL_CREDENTIALS)
 		or die "Can't open ".MYSQL_CREDENTIALS.": ".$!;
 	($mysql_pass = <$fh>) =~ s/^.+='(.+?)'\s*$/$1/;
@@ -306,6 +314,9 @@ ngcp-sync-constants - syncronizes passwords from constants.yml with MySQL
 ngcp-sync-constants [ options ... ]
 
 =over 8
+
+=item B<--root>
+Use mysql root user without password as DB credentials
 
 =item B<--init-passwords>
 New passwords are generated (passwords for "mysql" is not generated to avoid replication problems)
