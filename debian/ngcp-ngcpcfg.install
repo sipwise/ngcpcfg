@@ -8,8 +8,8 @@ helper/tt2-wrapper          usr/share/ngcp-ngcpcfg/helper/
 helper/validate-yml         usr/share/ngcp-ngcpcfg/helper/
 lib/*                       usr/lib/ngcp-ngcpcfg/
 sbin/ngcp-network           usr/sbin/
-sbin/ngcpcfg                usr/sbin/
 sbin/ngcp-sync-constants    usr/sbin/
+sbin/ngcpcfg                usr/sbin/
 scripts/build               usr/share/ngcp-ngcpcfg/scripts/
 scripts/commit              usr/share/ngcp-ngcpcfg/scripts/
 scripts/diff                usr/share/ngcp-ngcpcfg/scripts/

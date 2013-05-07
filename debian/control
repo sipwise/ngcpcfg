@@ -12,10 +12,10 @@ Build-Depends: asciidoc,
                liblist-moreutils-perl,
                libnet-netmask-perl,
                libregexp-ipv6-perl,
+               libsys-hostname-long-perl,
                libtemplate-perl,
                libyaml-perl,
                libyaml-tiny-perl,
-               libsys-hostname-long-perl,
                xsltproc
 Standards-Version: 3.9.4
 Homepage: http://sipwise.com/
@@ -32,10 +32,10 @@ Depends: etckeeper,
          liblist-moreutils-perl,
          libnet-netmask-perl,
          libregexp-ipv6-perl,
+         libsys-hostname-long-perl,
          libtemplate-perl,
          libyaml-perl,
          libyaml-tiny-perl,
-         libsys-hostname-long-perl,
          ${misc:Depends},
          ${perl:Depends}
 Description: central and templated based Configuration Management System for NGCP platforms
