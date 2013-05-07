@@ -71,6 +71,12 @@ provides global variables used inside ngcpcfg and its helper scripts. This file
 is *not* supposed to be modified by the user (without having a very good
 reason).
 
+* _/etc/ngcp-config/config.d/_: optional configuration directory with additional
+yml configuration files. Files inside this directory aren't supposed to be
+added or modified by the user. The purpose of this configuration directory is
+that software packages can enable/disable certain features through configuration
+options on demand.
+
 * _/etc/ngcp-config/ngcpcfg.d/_: configuration directory for ngcpcfg itself.
 Files with suffix '.cfg' inside this directory are sourced after
 /etc/ngcp-config/ngcpcfg.cfg has been read. Files inside this directory are
@@ -78,7 +84,8 @@ Files with suffix '.cfg' inside this directory are sourced after
 
 [IMPORTANT]
 Configuration file priority: constants.yml takes precedence over
-config.local.yml, over config.$HOSTNAME.yml, over config.yml.
+all files in _/etc/ngcp-config/config.d/_, over config.local.yml,
+over config.$HOSTNAME.yml, over config.yml.
 
 High Availability setup specific configuration files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -67,8 +67,8 @@ umask 0077
 TT_WRAPPER="${HELPER}/tt2-wrapper"
 
 log_debug "Output file ${output_file} based on ${input_file}"
-log_debug "Executing: $TT_WRAPPER ${input_file} ${host_conf:-} ${local_conf:-} $NGCPCTL_CONFIG ${NETWORK_CONFIG:-} $CONSTANTS_CONFIG > ${output_file}"
-if "$TT_WRAPPER" "${input_file}" ${host_conf:-} ${local_conf:-} "$NGCPCTL_CONFIG" "${NETWORK_CONFIG:-}" "$CONSTANTS_CONFIG" > "${output_file}" 2>/dev/null ; then
+log_debug "Executing: $TT_WRAPPER ${input_file} ${host_conf:-} ${local_conf:-} $NGCPCTL_CONFIG ${NETWORK_CONFIG:-} ${EXTRA_CONFIG_FILES:-} $CONSTANTS_CONFIG > ${output_file}"
+if "$TT_WRAPPER" "${input_file}" ${host_conf:-} ${local_conf:-} "$NGCPCTL_CONFIG" "${NETWORK_CONFIG:-}" ${EXTRA_CONFIG_FILES:-} "$CONSTANTS_CONFIG" > "${output_file}" 2>/dev/null ; then
   log_info "Generating ${output_file}: OK"
   RC=0
 else
@@ -76,7 +76,7 @@ else
   RC=1
 
   log_info "NOTE: Check those files for valid syntax and encoding:"
-  for f in "${input_file}" ${host_conf:-} ${local_conf:-} "$NGCPCTL_CONFIG" "${NETWORK_CONFIG:-}" "$CONSTANTS_CONFIG" ; do
+  for f in "${input_file}" ${host_conf:-} ${local_conf:-} "$NGCPCTL_CONFIG" "${NETWORK_CONFIG:-}" ${EXTRA_CONFIG_FILES:-} "$CONSTANTS_CONFIG" ; do
     [ -r "$f" ] && log_info "$f"
   done
   log_info "Running /usr/share/ngcp-ngcpcfg/helper/tt2-wrapper <file> should provide more details."

@@ -79,6 +79,12 @@ if ! [ -d "$TEMPLATE_POOL" ] ; then
   log_error "No template directory (${TEMPLATE_POOL}) found - exiting."
   exit 1
 fi
+
+if [ -d "${EXTRA_CONFIG_DIR:-}" ] && ls ${EXTRA_CONFIG_DIR}/*.yml &>/dev/null ; then
+  log_debug "EXTRA_CONFIG_DIR is configured and *.yml files are present, setting EXTRA_CONFIG_FILES"
+  EXTRA_CONFIG_FILES=${EXTRA_CONFIG_DIR}/*.yml
+fi
+
 ## }}}
 
 ## environment variables {{{
@@ -99,6 +105,8 @@ export LOCAL_CONFIG
 export NGCPCTL_CONFIG
 export CONSTANTS_CONFIG
 export NETWORK_CONFIG
+export EXTRA_CONFIG_DIR
+export EXTRA_CONFIG_FILES
 ## }}}
 
 ## HA / carrier features {{{

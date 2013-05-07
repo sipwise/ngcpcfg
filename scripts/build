@@ -30,7 +30,7 @@ if [ -n "${1:-}" ] ; then
 fi
 
 # make sure encoding is OK
-for f in ${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG:-} ${CONSTANTS_CONFIG:-} ; do
+for f in ${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG:-} ${EXTRA_CONFIG_FILES:-} ${CONSTANTS_CONFIG:-} ; do
   if [ -r "$f" ] && ! file "$f" | grep -qe "UTF-8" -qe "ASCII" ; then
     log_error "Encoding check of ${f} fails: neither ASCII nor UTF-8."
     log_error "Please convert ${f} to UTF-8."
@@ -45,7 +45,7 @@ for f in ${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG
 done
 
 # check for valid YAML syntax
-for f in ${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG:-} ${CONSTANTS_CONFIG:-} ; do
+for f in ${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG:-} ${EXTRA_CONFIG_FILES:-} ${CONSTANTS_CONFIG:-} ; do
   if [ -r "$f" ] ; then
     # use YAML::Tiny for checking
     log_debug "Validating main YAML syntax of ${f}"
@@ -78,15 +78,32 @@ else
     exit 0
   fi
 
+  trigger_rebuild=false
+
+  if [ -n "${EXTRA_CONFIG_FILES:-}" ] ; then
+    for file in $EXTRA_CONFIG_FILES ; do
+      if git diff-index --name-only HEAD | grep -qe "$(basename $file)" ; then
+	log_debug "modification in EXTRA_CONFIG_FILES file $file found"
+        trigger_rebuild=true
+        break # no reason for further checks
+      fi
+    done
+  fi
+
   if git diff-index --name-only HEAD | grep \
          -qe "$(basename $NGCPCTL_CONFIG)" \
          -qe "$(basename $HOST_CONFIG)" \
          -qe "$(basename $LOCAL_CONFIG)" \
          -qe "$(basename $NETWORK_CONFIG)" \
          -qe "$(basename $CONSTANTS_CONFIG)" ; then
-     log_info "Main configuation files has been changed, running full rebuild."
-     log_debug "Executing: build_config_files $*"
-     build_config_files "$*"
+    log_debug "modification in main configuration file found"
+    trigger_rebuild=true
+  fi
+
+  if $trigger_rebuild ; then
+    log_info "Main configuation file(s) has been changed, running full rebuild."
+    log_debug "Executing: build_config_files $*"
+    build_config_files "$*"
   fi
 
   if git diff-index --name-only HEAD | grep -q templates/ || \
