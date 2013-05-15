@@ -70,15 +70,21 @@ case "${output_file}" in
   */ngcp-www-csc/*.conf | \
   */ngcp-www-admin/*.conf | \
   */ngcp-ossbss/*.conf) 
-    comment_open_tag='<!--';
+    comment_open_tag='<!--'
     comment_close_tag='-->'
+  ;;
+  */init.d/* || \
+  */kamailio/lb/db/*)
+    comment_open_tag=''
   ;;
 esac
 
 log_debug "Output file ${output_file} based on ${input_file}"
 log_debug "Executing: $TT_WRAPPER ${input_file} ${host_conf:-} ${local_conf:-} $NGCPCTL_CONFIG ${NETWORK_CONFIG:-} ${EXTRA_CONFIG_FILES:-} $CONSTANTS_CONFIG > ${output_file}"
 if "$TT_WRAPPER" "${input_file}" ${host_conf:-} ${local_conf:-} "$NGCPCTL_CONFIG" "${NETWORK_CONFIG:-}" ${EXTRA_CONFIG_FILES:-} "$CONSTANTS_CONFIG" > "${output_file}" 2>/dev/null ; then
-  sed -i "1i ${comment_open_tag} WARNING: this file is auto-generated from ${input_file} ${comment_close_tag}\n\n" ${output_file}
+  if [ -n "${comment_open_tag}"]; then
+    sed -i "1i ${comment_open_tag} WARNING: this file is auto-generated from ${input_file} ${comment_close_tag}\n\n" ${output_file}
+  fi
   log_info "Generating ${output_file}: OK"
   RC=0
 else
