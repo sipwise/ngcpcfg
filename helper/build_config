@@ -73,7 +73,7 @@ case "${output_file}" in
     comment_open_tag='<!--'
     comment_close_tag='-->'
   ;;
-  */init.d/* || \
+  */init.d/* | \
   */kamailio/lb/db/*)
     comment_open_tag=''
   ;;
