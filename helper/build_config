@@ -57,17 +57,28 @@ umask 0077
 
 TT_WRAPPER="${HELPER}/tt2-wrapper"
 
-output_extension=${output_file##*.}
-comment_tag='#'
-case "${output_extension}" in
-  lua) comment_tag='--' ;;
-  dsm) comment_tag='--' ;;
+comment_open_tag='#'
+comment_close_tag=''
+case "${output_file}" in
+  *.lua | \
+  *.dsm) 
+    comment_open_tag='--'  
+  ;;
+  */asterisk/*.conf) 
+    comment_open_tag=';' 
+  ;;
+  */ngcp-www-csc/*.conf | \
+  */ngcp-www-admin/*.conf | \
+  */ngcp-ossbss/*.conf) 
+    comment_open_tag='<!--';
+    comment_close_tag='-->'
+  ;;
 esac
 
 log_debug "Output file ${output_file} based on ${input_file}"
 log_debug "Executing: $TT_WRAPPER ${input_file} ${host_conf:-} ${local_conf:-} $NGCPCTL_CONFIG ${NETWORK_CONFIG:-} ${EXTRA_CONFIG_FILES:-} $CONSTANTS_CONFIG > ${output_file}"
 if "$TT_WRAPPER" "${input_file}" ${host_conf:-} ${local_conf:-} "$NGCPCTL_CONFIG" "${NETWORK_CONFIG:-}" ${EXTRA_CONFIG_FILES:-} "$CONSTANTS_CONFIG" > "${output_file}" 2>/dev/null ; then
-  sed -i "1i ${comment_tag} WARNING: this file is auto-generated from ${input_file}\n\n" ${output_file}
+  sed -i "1i ${comment_open_tag} WARNING: this file is auto-generated from ${input_file} ${comment_close_tag}\n\n" ${output_file}
   log_info "Generating ${output_file}: OK"
   RC=0
 else
