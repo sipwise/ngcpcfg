@@ -1,3 +1,18 @@
+ngcp-ngcpcfg (0.17.0) unstable; urgency=low
+
+  [ Michael Prokop ]
+  * Support additional configuration yml files via configuration directory
+  * Simplify default configuration code
+
+  [ Andreas Granig ]
+  * Initialize and sync replication information.
+  * Also set commit-retry, it's not in my.cnf anymore.
+  * Fix grep passwd in master.info, log err to stderr.
+  * Properly wrap-and-sort debian files.
+  * Add option to run as mysql root without pass.
+
+ -- Michael Prokop <mprokop@sipwise.com>  Fri, 26 Jul 2013 10:12:16 +0200
+
 ngcp-ngcpcfg (0.16.0) unstable; urgency=low
 
   * New release splitting of ha/carrier features.
