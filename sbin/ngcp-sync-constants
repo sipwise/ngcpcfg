@@ -8,6 +8,7 @@ use YAML::Tiny;
 use Getopt::Long;
 use Sys::Hostname::Long;
 use Data::Dumper;
+use IPC::System::Simple qw(system);
 #----------------------------------------------------------------------
 use constant CONSTANTS_YML => "/etc/ngcp-config/constants.yml";
 use constant MYSQL_CREDENTIALS => "/etc/mysql/sipwise.cnf";
@@ -266,6 +267,8 @@ sub main {
 	}		
 
 	print "[TEST MODE]\n" if $test_mode;
+
+	system("/usr/share/ngcp-ngcpcfg/helper/check-for-mysql");
 
 	connect_db();
 	eval {

@@ -1,12 +1,12 @@
 etc/ngcp-config/ngcpcfg.cfg etc/ngcp-config/
 functions/main              usr/share/ngcp-ngcpcfg/functions/
 helper/build_config         usr/share/ngcp-ngcpcfg/helper/
+helper/check-for-mysql      usr/share/ngcp-ngcpcfg/helper/
 helper/fileformat_version   usr/share/ngcp-ngcpcfg/helper/
 helper/sort-yml             usr/share/ngcp-ngcpcfg/helper/
 helper/sync-db              usr/share/ngcp-ngcpcfg/helper/
 helper/tt2-wrapper          usr/share/ngcp-ngcpcfg/helper/
 helper/validate-yml         usr/share/ngcp-ngcpcfg/helper/
-helper/check-for-mysql      usr/share/ngcp-ngcpcfg/helper/
 lib/*                       usr/lib/ngcp-ngcpcfg/
 sbin/ngcp-network           usr/sbin/
 sbin/ngcp-sync-constants    usr/sbin/
