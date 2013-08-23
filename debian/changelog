@@ -1,3 +1,10 @@
+ngcp-ngcpcfg (0.17.1) unstable; urgency=low
+
+  * [6421b18] Helper script to check for mysql service in service scripts
+  * [9b4ca0e] Integrate check-for-mysql in ngcp-sync-constants
+
+ -- Michael Prokop <mprokop@sipwise.com>  Fri, 23 Aug 2013 14:35:22 +0200
+
 ngcp-ngcpcfg (0.17.0) unstable; urgency=low
 
   [ Michael Prokop ]
