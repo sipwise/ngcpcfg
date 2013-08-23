@@ -1,0 +1,58 @@
+#!/bin/bash
+
+if [ $# -gt 0 ] ; then
+  COUNT=$1
+else
+  COUNT=60
+fi
+
+if ! [ $COUNT -ge 0 2>/dev/null ] ; then
+  echo "Usage: $0 <number_of_seconds>"
+  exit 1
+fi
+
+if ! [ -x /usr/sbin/mysqld ] || ! [ -x /usr/bin/mysqladmin ] ; then
+  echo "Error: mysqld or mysqladmin not present. Exiting." >&2
+  exit 1
+fi
+
+mysqld_get_param() {
+  /usr/sbin/mysqld --print-defaults 2>/dev/null \
+    | tr " " "\n" \
+    | grep -- "--$1" \
+    | tail -n 1 \
+    | cut -d= -f2
+}
+
+mysqld_status () {
+  ping_output=$(/usr/bin/mysqladmin --defaults-file=/etc/mysql/debian.cnf ping 2>&1)
+  ping_alive=$(( ! $? ))
+
+  ps_alive=0
+  pidfile=$(mysqld_get_param pid-file)
+
+  if [ -f "$pidfile" ] && ps $(cat $pidfile) &>/dev/null ; then
+    ps_alive=1
+  fi
+
+  if [ "$1" = "check_alive" -a $ping_alive = 1 ] ||
+     [ "$1" = "check_dead"  -a $ping_alive = 0 -a $ps_alive = 0 ]; then
+    return 0
+  fi
+
+  return 1
+}
+
+printf "Checking MySQL service status (for a maximum of %s seconds): " "$COUNT"
+for i in $(seq 1 $COUNT) ; do
+  if mysqld_status check_alive warn; then
+    printf "available.\n"
+    exit 0
+  else
+    printf "."
+  fi
+  sleep 1
+done
+
+printf "still not available, giving up.\n"
+exit 1

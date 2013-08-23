@@ -6,6 +6,7 @@ helper/sort-yml             usr/share/ngcp-ngcpcfg/helper/
 helper/sync-db              usr/share/ngcp-ngcpcfg/helper/
 helper/tt2-wrapper          usr/share/ngcp-ngcpcfg/helper/
 helper/validate-yml         usr/share/ngcp-ngcpcfg/helper/
+helper/check-for-mysql      usr/share/ngcp-ngcpcfg/helper/
 lib/*                       usr/lib/ngcp-ngcpcfg/
 sbin/ngcp-network           usr/sbin/
 sbin/ngcp-sync-constants    usr/sbin/
