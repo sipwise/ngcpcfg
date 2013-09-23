@@ -1,2 +1,2 @@
 Tests: compile
-Depends: @ devscripts
+Depends: @, devscripts
