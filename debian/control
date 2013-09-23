@@ -19,6 +19,7 @@ Build-Depends: asciidoc,
                libyaml-tiny-perl,
                xsltproc
 Standards-Version: 3.9.4
+XS-Testsuite: autopkgtest
 Homepage: http://sipwise.com/
 
 Package: ngcp-ngcpcfg

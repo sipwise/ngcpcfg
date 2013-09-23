@@ -1,0 +1,33 @@
+#!/bin/bash
+
+PERL_SCRIPTS="/usr/sbin/ngcp-sync-constants /usr/sbin/ngcp-network /usr/share/ngcp-ngcpcfg/helper/tt2-wrapper /usr/share/ngcp-ngcpcfg/helper/sort-yml /usr/share/ngcp-ngcpcfg/helper/sync-db /usr/share/ngcp-ngcpcfg/helper/validate-yml /usr/share/ngcp-ngcpcfg/helper/fileformat_version"
+SHELL_SCRIPTS="/usr/sbin/ngcpcfg /usr/share/ngcp-ngcpcfg/functions/main /usr/share/ngcp-ngcpcfg/helper/build_config /usr/share/ngcp-ngcpcfg/helper/check-for-mysql /usr/share/ngcp-ngcpcfg/scripts/build /usr/share/ngcp-ngcpcfg/scripts/commit /usr/share/ngcp-ngcpcfg/scripts/diff /usr/share/ngcp-ngcpcfg/scripts/etckeeper /usr/share/ngcp-ngcpcfg/scripts/initialise /usr/share/ngcp-ngcpcfg/scripts/services /usr/share/ngcp-ngcpcfg/scripts/status"
+# scripts/decrypt scripts/encrypt
+
+printf "Checking for bashisms: "
+for script in ${SHELL_SCRIPTS}; do
+  test -r ${script} || continue
+  rc=0
+  checkbashisms -x ${script} || ec=$?
+  if [ ${rc} -ne 0 ] && [ ${rc} -ne 2 ] ; then
+    exit ${rc}
+  fi
+  echo -n "."
+done
+echo " done."
+
+printf "Checking for shell syntax errors: "
+for script in ${SHELL_SCRIPTS}; do
+  test -r ${script} || continue
+  bash -n ${script} || exit 1
+  echo -n "."
+done
+echo " done."
+
+echo "Checking for perl syntax errors: "
+for script in ${PERL_SCRIPTS}; do
+        test -r ${script} || continue
+        perl -w -c -CSD ${script} || exit 1
+done
+echo "-> perl check done."; \
+
