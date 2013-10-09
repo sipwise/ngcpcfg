@@ -7,9 +7,13 @@
 set -e
 set -u
 
-if [ "${#:-}" -ne 1 ] ; then
-  echo "Usage: /usr/share/ngcp-ngcpcfg/helper/build_config <input_file>" >&2
+usage() {
+  echo "Usage: /usr/share/ngcp-ngcpcfg/helper/build_config [--reuse <file>] <input_file>" >&2
   exit 1
+}
+
+if [ "${#:-}" -lt 1 ] ; then
+  usage
 fi
 
 # support for testsuite, assume defaults if unset
@@ -20,6 +24,20 @@ HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
 . ${FUNCTIONS}/main
 
 # main script
+
+if [ -n "${1:-}" ] ; then
+  case "$1" in
+    *--reuse*)
+      shift
+      if [ -z "${1:-}" ] ; then
+	usage
+      else
+        TT_WRAPER_ARGS="--reuse $1"
+	shift
+      fi
+      ;;
+  esac
+fi
 
 input_file="$1"       # like /etc/ngcp-config/templates/etc/mysql/my.cnf.tt2
 # calculate output file {{{
@@ -58,8 +76,8 @@ umask 0077
 TT_WRAPPER="${HELPER}/tt2-wrapper"
 
 log_debug "Output file ${output_file} based on ${input_file}"
-log_debug "Executing: $TT_WRAPPER ${input_file} ${host_conf:-} ${local_conf:-} $NGCPCTL_CONFIG ${NETWORK_CONFIG:-} ${EXTRA_CONFIG_FILES:-} $CONSTANTS_CONFIG > ${output_file}"
-if "$TT_WRAPPER" "${input_file}" ${host_conf:-} ${local_conf:-} "$NGCPCTL_CONFIG" "${NETWORK_CONFIG:-}" ${EXTRA_CONFIG_FILES:-} "$CONSTANTS_CONFIG" > "${output_file}" 2>/dev/null ; then
+log_debug "Executing: $TT_WRAPPER ${TT_WRAPER_ARGS:-} ${input_file} ${host_conf:-} ${local_conf:-} $NGCPCTL_CONFIG ${NETWORK_CONFIG:-} ${EXTRA_CONFIG_FILES:-} $CONSTANTS_CONFIG > ${output_file}"
+if "$TT_WRAPPER" ${TT_WRAPER_ARGS:-} "${input_file}" ${host_conf:-} ${local_conf:-} "$NGCPCTL_CONFIG" "${NETWORK_CONFIG:-}" ${EXTRA_CONFIG_FILES:-} "$CONSTANTS_CONFIG" > "${output_file}" 2>/dev/null ; then
   log_info "Generating ${output_file}: OK"
   RC=0
 else

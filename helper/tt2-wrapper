@@ -5,16 +5,39 @@
 use strict;
 use warnings;
 
-use YAML qw/LoadFile/;
-use Template;
+use Getopt::Long;
 use Hash::Merge qw(merge);
+use Storable;
+use Template;
+use YAML qw/LoadFile/;
+
+my $help;
+my $reuse;
+
+GetOptions(
+    'help'    => \$help,
+    'reuse=s' => \$reuse,
+) or die "Usage: $0 [--reuse <file>] <template> <config.yml> [<another.yml>]";
 
 my $tt = Template->new({ ABSOLUTE => 1, RELATIVE => 1, EVAL_PERL => 1 });
-my $template = shift(@ARGV);
+my $template = shift(@ARGV) or die "Usage: $0 [--reuse <file>] <template> <config.yml> [<another.yml>]";
 
 my $config = {};
-foreach my $file (@ARGV) {
-  $config = merge($config, LoadFile($file) || die $!);
+
+if ($reuse) {
+  if (-e $reuse) {
+    $config = retrieve($reuse);
+  } else {
+    foreach my $file (@ARGV) {
+      $config = merge($config, LoadFile($file) || die $!);
+    }
+
+    store($config, $reuse);
+  }
+} else {
+  foreach my $file (@ARGV) {
+    $config = merge($config, LoadFile($file) || die $!);
+  }
 }
 
 # NOTE: we can't rely on "$tt->process($template, $config)" because the config
