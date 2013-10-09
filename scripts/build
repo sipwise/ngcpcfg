@@ -77,7 +77,7 @@ else
 
   if [ -n "${EXTRA_CONFIG_FILES:-}" ] ; then
     for file in $EXTRA_CONFIG_FILES ; do
-      if git diff-index --name-only HEAD | grep -qe "$(basename $file)" ; then
+      if git diff-index --name-only HEAD | grep -qe -- "$(basename $file)" ; then
 	log_debug "modification in EXTRA_CONFIG_FILES file $file found"
         trigger_rebuild=true
         break # no reason for further checks

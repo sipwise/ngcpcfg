@@ -135,7 +135,7 @@ generate_template_list() {
     else
       # arguments (file list/pattern) provided via cmdline
       for arg in $* ; do
-        if echo $file | grep -q "${arg}" ; then
+        if echo $file | grep -q -- "${arg}" ; then
           echo "$file" >> "${filelist_prepared}"
         fi
       done
@@ -157,21 +157,21 @@ generate_template_list() {
 
     # foo.customtt.tt2.sp{1,2}
     if [ -n "${HA_FILE:-}" ] ; then
-      if grep -q "^${normalized_filename}.customtt.tt2${HA_FILE:-}" "${filelist_prepared}" ; then
+      if grep -q -- "^${normalized_filename}.customtt.tt2${HA_FILE:-}" "${filelist_prepared}" ; then
         echo "${normalized_filename}.customtt.tt2${HA_FILE:-}" >> "${filelist_final}"
         continue
       fi
     fi
 
     # foo.customtt.tt2
-    if grep -q "^${normalized_filename}.customtt.tt2$" "${filelist_prepared}" ; then
+    if grep -q -- "^${normalized_filename}.customtt.tt2$" "${filelist_prepared}" ; then
       echo "${normalized_filename}.customtt.tt2" >> "${filelist_final}"
       continue
     fi
 
     # foo.tt2.sp{1,2}
     if [ -n "${HA_FILE:-}" ] ; then
-      if grep -q "^${normalized_filename}.tt2${HA_FILE}" "${filelist_prepared}" ; then
+      if grep -q -- "^${normalized_filename}.tt2${HA_FILE}" "${filelist_prepared}" ; then
         echo "${normalized_filename}.tt2${HA_FILE}" >> "${filelist_final}"
         continue
       fi
