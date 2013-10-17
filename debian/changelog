@@ -1,3 +1,16 @@
+ngcp-ngcpcfg (0.18.0) unstable; urgency=low
+
+  [ Jon Bonilla ]
+  * [bf9515e] Add helper script get_all_ifaces_for_host
+
+  [ Michael Prokop ]
+  * [f2e9a5e] MT#4295 Be more strict with option handling when passing
+    file names to grep
+  * [335d53c] MT#4141 Speed up 'build' runs by loading YAML files only
+    once. Thanks to Alexander Lutay for the initial patch and idea
+
+ -- Michael Prokop <mprokop@sipwise.com>  Thu, 17 Oct 2013 14:11:02 +0200
+
 ngcp-ngcpcfg (0.17.1) unstable; urgency=low
 
   * [6421b18] Helper script to check for mysql service in service scripts
