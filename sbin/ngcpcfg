@@ -92,7 +92,6 @@ usage() {
   if [ -r /usr/share/ngcp-ngcpcfg/functions/ha_features ] ; then
     printf "  $PN push [opts]     - push modifications to other systems (shared storage setup only)\n"
     printf "  $PN pull            - retrieve modifications from shared storage (shared storage setup only)\n"
-#    printf "  $PN upgrade         - upgrade all systems [WIP - do not use unless you know what you are doing!]\n"
   fi
 
   # display only if ngcp-ngcpcfg-locker is available
@@ -130,7 +129,6 @@ case ${1:-} in
   apply)      shift ; build && services && commit "$*" && etckeeper ;;
   encrypt)    shift ; encrypt "$*" ;;
   decrypt)    shift ; decrypt "$*" ;;
-  upgrade)    shift ; upgrade "$*" ;;
   diff)       shift ; diff "$*" ;;
   init-mgmt)  shift ; init-mgmt "$*" ;;
   --debug)    export DEBUG=1 ; shift ; $0 $* ;;
