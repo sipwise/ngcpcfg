@@ -1,0 +1,11 @@
+[%
+  # Returns a list of IPs to ping.
+  #
+  # @return out		list of pingnodes.
+-%]
+[% PERL -%]
+my $gateway = (split(" ", `ip route | grep default`))[2];
+my @nodes = (split(" ", `grep nameserver /etc/resolv.conf | cut -f2 -d' '|xargs`));
+push(@nodes, $gateway);
+$stash->set(out => \@nodes);
+[% END -%]
