@@ -97,6 +97,7 @@ export LC_ALL=C
 
 # make sure it's available in all helper scripts
 [ -n "${DEBUG:-}" ] && export DEBUG
+[ -n "${NO_DB_SYNC:-}" ] && export NO_DB_SYNC
 
 # export for access via build_config etc
 export CONFIG_POOL

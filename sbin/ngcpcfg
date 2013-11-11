@@ -131,7 +131,8 @@ case ${1:-} in
   decrypt)    shift ; decrypt "$*" ;;
   diff)       shift ; diff "$*" ;;
   init-mgmt)  shift ; init-mgmt "$*" ;;
-  --debug)    export DEBUG=1 ; shift ; $0 $* ;;
+  --debug)         export DEBUG=1 ;      shift ; $0 $* ;;
+  --no-db-sync)    export NO_DB_SYNC=1 ; shift ; $0 $* ;;
   -h|--help|help)       usage   ; exit 0;;
   -v|--version|version) version ; exit 0;;
   *)          usage 1; exit 1;;
