@@ -1,0 +1,76 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+use Carp;
+use POSIX qw( setsid );
+use IO::Socket;
+use Hash::Merge qw(merge);
+use Template;
+use YAML qw/LoadFile/;
+
+my $server_port = get_server_port();
+
+daemonize();
+
+handle_connections( $server_port );
+
+exit;
+
+sub daemonize {
+    chdir '/'                 or croak "Can't chdir to /: $!";
+    open STDIN, '/dev/null'   or croak "Can't read /dev/null: $!";
+    open STDOUT, '>/dev/null' or croak "Can't write to /dev/null: $!";
+    defined(my $pid = fork)   or croak "Can't fork: $!";
+    exit if $pid;
+    setsid                    or croak "Can't start a new session: $!";
+    open STDERR, '>&STDOUT'   or croak "Can't dup stdout: $!";
+}
+
+sub get_server_port {
+    my $server = IO::Socket::INET->new(
+        'Proto'     => 'tcp',
+        'LocalPort' => 42042,
+        'Listen'    => SOMAXCONN,
+        'Reuse'     => 1,
+    );
+    die "can't setup server" unless $server;
+
+    binmode $server => ":encoding(utf8)";
+
+    return $server;
+}
+
+sub handle_connections {
+    my $port = shift;
+    my $config = {};
+    my %loaded_ymls = ();
+    my $reuse;
+
+    while ( my $client = $port->accept() ) {
+    chomp ( my $input = <$client> );
+
+    my $tt = Template->new({ ABSOLUTE => 1, RELATIVE => 1, EVAL_PERL => 1 });
+    my @ARGV = split(' ', $input) or
+        print $client "Usage: echo '<template> [<config.yml> [<another.yml>]]' | netcat localhost 42042 \n";
+    my $template =  shift(@ARGV);
+
+    if (scalar @ARGV) {
+        foreach my $file (@ARGV)
+        {
+            next if(exists $loaded_ymls{$file});
+            $loaded_ymls{$file} = undef;
+            print $client "Loading $file in memory :";
+            $config = merge($config, LoadFile($file) || die $!);
+            print $client " OK \n";
+        };
+    };
+
+    open my $fh, '<', $template or print $client "Unable to open file '$template' for reading: $!\n";
+    $tt->process($fh, $config, $client) or print $client $tt->error;
+    close $fh;
+
+    close $client;
+    }
+
+    return;
+}

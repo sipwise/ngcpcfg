@@ -1,8 +1,8 @@
 # for syntax checks
-BASH_SCRIPTS =	scripts/* functions/* etc/ngcp-config/ngcpcfg.cfg helper/build_config sbin/ngcpcfg
+BASH_SCRIPTS =	scripts/* functions/* etc/ngcp-config/ngcpcfg.cfg helper/build_config sbin/ngcpcfg helper/tt2-wrapper
 PERL_SCRIPTS =	helper/sort-yml \
 		helper/sync-db \
-		helper/tt2-wrapper \
+		helper/tt2-daemon \
 		helper/validate-yml helper/fileformat_version \
 		sbin/ngcp-network \
 		sbin/ngcp-sync-constants
