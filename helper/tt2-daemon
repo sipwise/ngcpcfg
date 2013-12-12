@@ -45,7 +45,6 @@ sub handle_connections {
     my $port = shift;
     my $config = {};
     my %loaded_ymls = ();
-    my $reuse;
 
     while ( my $client = $port->accept() ) {
     chomp ( my $input = <$client> );
