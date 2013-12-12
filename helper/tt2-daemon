@@ -60,7 +60,7 @@ sub handle_connections {
         {
             next if(exists $loaded_ymls{$file});
             $loaded_ymls{$file} = undef;
-            print $client "Loading $file in memory :";
+            print $client "Loading $file in memory:";
             $config = merge($config, LoadFile($file) || die $!);
             print $client " OK \n";
         };
