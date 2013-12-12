@@ -17,13 +17,13 @@ handle_connections( $server_port );
 exit;
 
 sub daemonize {
-    chdir '/'                 or croak "Can't chdir to /: $!";
-    open STDIN, '/dev/null'   or croak "Can't read /dev/null: $!";
-    open STDOUT, '>/dev/null' or croak "Can't write to /dev/null: $!";
-    defined(my $pid = fork)   or croak "Can't fork: $!";
+    chdir '/'                      or croak "Can't chdir to /: $!";
+    open(STDIN,  '<', '/dev/null') or croak "Can't read /dev/null: $!";
+    open(STDOUT, '>', '/dev/null') or croak "Can't write to /dev/null: $!";
+    defined(my $pid = fork)        or croak "Can't fork: $!";
     exit if $pid;
-    setsid                    or croak "Can't start a new session: $!";
-    open STDERR, '>&STDOUT'   or croak "Can't dup stdout: $!";
+    setsid                         or croak "Can't start a new session: $!";
+    open(STDERR, '>', '&STDOUT')   or croak "Can't dup stdout: $!";
 }
 
 sub get_server_port {
