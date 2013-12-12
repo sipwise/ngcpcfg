@@ -29,6 +29,7 @@ sub daemonize {
 sub get_server_port {
     my $server = IO::Socket::INET->new(
         'Proto'     => 'tcp',
+        'LocalAddr' => 'localhost',
         'LocalPort' => 42042,
         'Listen'    => SOMAXCONN,
         'Reuse'     => 1,
