@@ -1,3 +1,21 @@
+ngcp-ngcpcfg (0.19.0) unstable; urgency=low
+
+  [ Michael Prokop ]
+  * [8dcef64] MT#5371 Add libdbi-perl to (Build-)Depends
+  * [5c31bec] MT#5027 Add netcat to Depends
+  * [30cd8a6] MT#5027 Sort debian/ngcp-ngcpcfg.install file
+  * [25103ee] MT#5027 Use three-argument form of `open' function
+  * [d3c54e4] MT#5027 Bind dd2-daemon to localhost only
+  * [b4a03d5] MT#5027 Drop white-space before trailing ":"
+  * [92f833c] MT#5027 Remove unused variable
+
+  [ Alexander Lutay ]
+  * [9206aa8] Revert "MT#4141 Speed up 'build' runs by loading
+    YAML files only once"
+  * [e3eda0c] MT#5027 Speed up 'build' runs by using Perl daemon
+
+ -- Michael Prokop <mprokop@sipwise.com>  Fri, 13 Dec 2013 11:12:52 +0100
+
 ngcp-ngcpcfg (0.18.2) unstable; urgency=low
 
   [ Victor Seva ]
