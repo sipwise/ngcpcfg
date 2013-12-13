@@ -3,6 +3,7 @@
   #
   # @param argv.host	The host to get all shared IPs for.
   # @param argv.type    The interface type or empty string for all types.
+  # @param argv.format  Optional reformatting of IPv6 addresses
   # @return out		The array of shared ips
 -%]
 [% IF !hosts.${argv.host}.defined -%][% argv.host = 'self' -%][% END -%]
@@ -13,6 +14,14 @@
 [% IF realiface == iface -%]
 [% IF hosts.${argv.host}.$realiface.type.grep('^' _ argv.type _ '$').size() -%]
 [% FOREACH ip IN hosts.${argv.host}.$realiface.shared_v6ip -%]
+[% IF argv.format == 'expand' -%]
+[% WHILE ip.match('::') && ip.match(':', 1).size < 8 -%]
+[% ip = ip.replace('::', '::0:') -%]
+[% END -%]
+[% ip = ip.replace('::', ':') -%]
+[% ip = ip.replace('^:', '0:') -%]
+[% ip = ip.replace(':$', ':0') -%]
+[% END -%]
 [% out.push(ip) -%]
 [% END -%]
 [% END -%]

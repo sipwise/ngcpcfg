@@ -7,6 +7,7 @@
   # @param argv.type	The interface type of a node to extract
   #			the shared ip from
   #			One of: web_int, web_ext, sip_int, sip_ext, ...
+  # @param argv.format  Optional reformatting of IPv6 addresses
   # @return out		The array of shared IPv6 addresses
 -%]
 [% blktmp.processed_hosts = {} -%]
@@ -20,6 +21,14 @@
 [% peer = hosts.$host.peer -%]
 [% blktmp.processed_hosts.$peer = 1 -%]
 [% FOREACH ip IN hosts.$host.$realiface.shared_v6ip -%]
+[% IF argv.format == 'expand' -%]
+[% WHILE ip.match('::') && ip.match(':', 1).size < 8 -%]
+[% ip = ip.replace('::', '::0:') -%]
+[% END -%]
+[% ip = ip.replace('::', ':') -%]
+[% ip = ip.replace('^:', '0:') -%]
+[% ip = ip.replace(':$', ':0') -%]
+[% END -%]
 [% out.push(ip) -%]
 [% END -%]
 [% END -%]
