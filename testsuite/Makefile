@@ -1,7 +1,10 @@
 all: prepare test
 
+# use our own cpan mirror
+export PERL_CARTON_MIRROR=http://deb.sipwise.com/cpan/
+
 prepare:
-	carton install
+	carton --verbose install
 
 test:
 	mkdir -p ../reports/
