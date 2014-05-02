@@ -5,6 +5,11 @@
 set -e
 set -u
 
+if [ "$UID" -ne 0 ] ; then
+  echo "This script should be run using sudo or as the root user. Exiting."
+  exit 1
+fi
+
 # support for testsuite
 FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
 SCRIPTS="${SCRIPTS:-/usr/share/ngcp-ngcpcfg/scripts/}"
