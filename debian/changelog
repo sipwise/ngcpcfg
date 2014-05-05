@@ -1,3 +1,14 @@
+ngcp-ngcpcfg (0.17.2) unstable; urgency=medium
+
+  [ Michael Prokop ]
+  * [a072278] MT#5371 Add libdbi-perl to (Build-)Depends
+  * [daaf0f7] MT#6511 Bump Standards-Version to 3.9.5
+
+  [ Victor Seva ]
+  * [831ae57] MT#6919 add mysql prosody info
+
+ -- Victor Seva <vseva@sipwise.com>  Mon, 05 May 2014 17:54:18 +0200
+
 ngcp-ngcpcfg (0.17.1) unstable; urgency=low
 
   * [6421b18] Helper script to check for mysql service in service scripts
