@@ -1,3 +1,14 @@
+ngcp-ngcpcfg (0.18.3) unstable; urgency=medium
+
+  [ Michael Prokop ]
+  * [a0c50b7] MT#5371 Add libdbi-perl to (Build-)Depends
+  * [5388142] MT#6511 Bump Standards-Version to 3.9.5
+
+  [ Victor Seva ]
+  * [0413a3c] MT#6919 add mysql prosody info
+
+ -- Victor Seva <vseva@sipwise.com>  Mon, 05 May 2014 17:56:37 +0200
+
 ngcp-ngcpcfg (0.18.2) unstable; urgency=low
 
   [ Victor Seva ]
