@@ -30,6 +30,7 @@ use constant MYSQL_DATA => {
 						mysql            => { repuser => 'reppassword' },
 						ossbss		 => { provisioning => { 
 											billingdb => { user => 'pass' } } },
+						prosody		 => { dbuser => 'dbpassword' },
 							 };
 use constant COPY_PASSWORDS => [ # pairs of from/to
 						{ rateomat => { accountingdb => { user => 'pass' }}},
