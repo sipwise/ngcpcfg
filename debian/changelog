@@ -1,3 +1,12 @@
+ngcp-ngcpcfg (0.19.0.2+0~mr3.2.1.2) unstable; urgency=low
+
+  [ Victor Seva ]
+  * [bda6c4e] MT#6919 add mysql prosody info
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 07 May 2014 09:53:05 +0200
+
 ngcp-ngcpcfg (0.19.0.1+0~mr3.2.1.1) unstable; urgency=low
 
   * New release.
