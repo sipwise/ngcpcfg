@@ -27,10 +27,10 @@ use constant MYSQL_DATA => {
 												     dbrouser => 'dbropw' } },
 						mediator 	 => { dbuser => 'dbpassword' },
 						asterisk	 => { odbc => { dbuser => 'dbpassword' } },
-						mysql            => { repuser => 'reppassword' },
 						ossbss		 => { provisioning => { 
 											billingdb => { user => 'pass' } } },
 						prosody		 => { dbuser => 'dbpassword' },
+						database	 => { debian => { dbuser => 'dbpassword' } },
 							 };
 use constant COPY_PASSWORDS => [ # pairs of from/to
 						{ rateomat => { accountingdb => { user => 'pass' }}},
