@@ -1,3 +1,21 @@
+ngcp-ngcpcfg (0.20.1.0+0~mr3.3.1.0) unstable; urgency=low
+
+  [ Michael Prokop ]
+  * [b6f5dfa] MT#6261 Use Sipwise internal cpan mirror with carton
+  * [c5adf03] MT#6511 Bump Standards-Version to 3.9.5
+  * [bd834ef] MT#6895 Send error message WRT root permissions to stderr
+
+  [ Alexander Lutay ]
+  * [f1809ad] MT#6895 Check user before running the script (requires root/sudo)
+
+  [ Victor Seva ]
+  * [4a801be] MT#6919 add mysql prosody info
+  * [71a8abb] MT#6907 add debian mysql info
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 26 May 2014 15:56:10 +0200
+
 ngcp-ngcpcfg (0.20.0.0+0~mr3.3.0.0) unstable; urgency=low
 
   [ Richard Fuchs ]
