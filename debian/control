@@ -26,7 +26,7 @@ Package: ngcp-ngcpcfg
 Architecture: all
 Depends: etckeeper,
          file,
-         git-core,
+         git (>= 1:1.7.2.5-3~),
          libdata-validate-ip-perl,
          libdbd-mysql-perl,
          libdbi-perl,
