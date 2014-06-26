@@ -42,18 +42,7 @@ unifyer() {
   fi
 }
 
-# NOTES:
-# * 'git ls-files -o' also shows ignored files
-# * 'git status --porcelain |grep '^?? ' not available in git 1.5
-
-# The 'git diff' command fixes a strange race condition where 'git diff-index'
-# lists *all* generated file(s) where the time stamp differs, resulting in a
-# list of *all* generated files (which is not what we want).
-# After running 'git diff' the following 'git diff-index ...' command lists
-# only the modified files as we want and need it. See BTS #211 for bugreport.
-git diff &>/dev/null
-
-for file in $(git diff-index --name-only HEAD) ; do
+for file in $(git status --porcelain | sed 's/^...//') ; do
   if [ -r "$file" ] && [ -r "${SERVICES_POOL}/${file}".services ] ; then
     log_debug "unifyer ${SERVICES_POOL}/${file}.services"
     unifyer "${SERVICES_POOL}/${file}".services
