@@ -289,10 +289,13 @@ _--dry-run_ option is present the services won't be executed but you'll be
 noticed which service files would be executed if being invoked without the
 _--dry-run__ option.
 
-  **status**::
+  **status** [--local-only]::
 
 Display the current state of the configuration system, like modified
 configuration files and pending actions.
+Note: The _--local-only_ option is available in the High Availability setup
+only and disables checking any remote systems (useful when the remote
+system isn't available).
 
 
 Usage examples

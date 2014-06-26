@@ -130,7 +130,7 @@ case ${1:-} in
   push)       shift ; push "$*" ;;
   pull)       shift ; pull "$*" ;;
   services)   shift ; services "$*" ;;
-  status)     status;;
+  status)     shift ; status "$*" ;;
   apply)      shift ; build && services && commit "$*" && etckeeper ;;
   encrypt)    shift ; encrypt "$*" ;;
   decrypt)    shift ; decrypt "$*" ;;
