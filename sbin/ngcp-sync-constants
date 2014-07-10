@@ -6,9 +6,8 @@ use strict;
 use DBI;
 use YAML::Tiny;
 use Getopt::Long;
-use Sys::Hostname::Long;
 use Data::Dumper;
-use IPC::System::Simple qw(system);
+use IPC::System::Simple qw(system capturex);
 #----------------------------------------------------------------------
 use constant CONSTANTS_YML => "/etc/ngcp-config/constants.yml";
 use constant MYSQL_CREDENTIALS => "/etc/mysql/sipwise.cnf";
@@ -52,6 +51,7 @@ use constant COPY_PASSWORDS => [ # pairs of from/to
 						{ reminder => { dbuser => 'dbpassword' }}
 
 								];
+use constant NGCP_NODENAME => "/etc/ngcp_ha_node";
 
 sub Usage {
 	print <<USAGE;
@@ -110,6 +110,14 @@ sub get_mysql_credentials {
 	close $fh;
 }
 
+sub get_nodename {
+	my @lines = capturex( [ 0 ], "/usr/sbin/ngcp-nodename");
+    my $l = shift @lines;
+    chomp $l;
+    print "nodename=>$l\n" if $debug;
+    return $l;
+}
+
 sub connect_db {
 	get_mysql_credentials();
 	$dbh = DBI->connect("DBI:mysql:database=$mysql_db;
@@ -152,7 +160,7 @@ SQL
 			# special handling for getting replication set up or in sync
 			if($user eq 'replicator') {
 				my $minfo = '/var/lib/mysql/master.info';
-				my $mhost = hostname_long();
+				my $mhost = get_nodename();
 				if($mhost eq 'sp1') {
 					$mhost = 'sp2';
 				} elsif($mhost eq 'sp2') {
