@@ -41,6 +41,7 @@ Depends: etckeeper,
          libyaml-perl,
          libyaml-tiny-perl,
          netcat | netcat-traditional,
+         ngcp-system-tools,
          ${misc:Depends},
          ${perl:Depends}
 Description: central and templated based Configuration Management System for NGCP platforms
