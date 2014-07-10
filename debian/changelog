@@ -1,3 +1,13 @@
+ngcp-ngcpcfg (0.22.0.0+0~mr3.5.0.0) unstable; urgency=low
+
+  [ Michael Prokop ]
+  * [fc5af3b] MT#7577 services: check for newly added config files
+  * [def862d] MT#2231 status option: check for pull/push + check state of remote host(s)
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 10 Jul 2014 15:33:54 +0200
+
 ngcp-ngcpcfg (0.21.0.0+0~mr3.4.0.0) unstable; urgency=low
 
   [ Michael Prokop ]
