@@ -90,6 +90,7 @@ fi
 ## environment variables {{{
 export PN="ngcpcfg"
 export HNAME="$(hostname)"
+export NNAME="$(ngcp-nodename)"
 
 # avoid warnings by perl script complaining about locales
 export LANG=C

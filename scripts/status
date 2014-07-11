@@ -57,8 +57,8 @@ remote_check() {
   log_debug "hostlist = $hostlist"
 
   for host in $hostlist ; do
-    log_debug "check $host == $HNAME"
-    if [[ "$host" == "$HNAME" ]] ; then
+    log_debug "check $host == $NNAME"
+    if [[ "$host" == "$NNAME" ]] ; then
        continue
     fi
 
