@@ -10,6 +10,7 @@ use Data::Dumper;
 use IPC::System::Simple qw(system capturex);
 #----------------------------------------------------------------------
 use constant CONSTANTS_YML => "/etc/ngcp-config/constants.yml";
+use constant CONFIG_YML => "/etc/ngcp-config/config.yml";
 use constant MYSQL_CREDENTIALS => "/etc/mysql/sipwise.cnf";
 use constant MYSQL_DATA => {
 						voisniff     => { dbuser => 'dbpassword' },
@@ -79,6 +80,7 @@ my $mysql_root;
 
 my $yml 			= {};
 my $yml_ref 		= {};
+my $config = {};
 my $password_length = 20;
 my $init_passwords  = 0;
 my $debug 			= 0;
@@ -120,6 +122,7 @@ sub get_nodename {
 
 sub connect_db {
 	get_mysql_credentials();
+	print "mysql_host=>$mysql_host mysql_port=>$mysql_port\n" if $debug;
 	$dbh = DBI->connect("DBI:mysql:database=$mysql_db;
 							       host=$mysql_host;
 								   port=$mysql_port", 
@@ -270,6 +273,13 @@ sub main {
 	$yml = new YAML::Tiny;
 	$yml = YAML::Tiny->read(CONSTANTS_YML) 
 		or die "Can't read constants file: $!\n";
+        $config = new YAML::Tiny;
+        $config = YAML::Tiny->read(CONFIG_YML) 
+		or die "Can't read config file: $!\n";
+
+        print "database config:" . Dumper($config->[0]->{database})."\n" if $debug;
+        $mysql_host = $config->[0]->{database}->{pair}->{dbhost};
+        $mysql_port = $config->[0]->{database}->{pair}->{dbport};
 
 	if ($init_passwords and not $test_mode and not -w CONSTANTS_YML) {
 		die CONSTANTS_YML . " is not writable";	
