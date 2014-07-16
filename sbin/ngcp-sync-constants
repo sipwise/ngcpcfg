@@ -3,14 +3,16 @@
 # Syncronizes passwords from constants.yml with MySQL
 #----------------------------------------------------------------------
 use strict;
-use DBI;
+use DBI qw(:sql_types);
 use YAML::Tiny;
 use Getopt::Long;
+use Sys::Hostname::Long;
 use Data::Dumper;
 use IPC::System::Simple qw(system capturex);
 #----------------------------------------------------------------------
 use constant CONSTANTS_YML => "/etc/ngcp-config/constants.yml";
 use constant CONFIG_YML => "/etc/ngcp-config/config.yml";
+use constant NETWORK_YML => "/etc/ngcp-config/network.yml";
 use constant MYSQL_CREDENTIALS => "/etc/mysql/sipwise.cnf";
 use constant MYSQL_DATA => {
 						voisniff     => { dbuser => 'dbpassword' },
@@ -64,14 +66,16 @@ Options:
 	-help|-h|-?		-- this help
 	-root|-r		-- use mysql root user without password as DB credentials
 	-init-passwords|-i	-- generate new passwords (constants.yml is updated)
+	-slave|-s  -- sync repuser and replication on slave cluster instance
 	-test|-t		-- test mode (no updates)
 	-verbose|-v 		-- verbose mode
 USAGE
 	exit 0;
 }
 
-my $mysql_root;
+my $mysql_root = 0;
 my $db_users = 'mysql';
+my $slave = 0;
 
 my $yml 			= {};
 my $config = {};
@@ -83,6 +87,7 @@ my $test_mode 		= 0;
 GetOptions("h|?|help" 		  => \&Usage,
 		   "i|init-passwords"     => \$init_passwords,
 		   "r|root"               => \$mysql_root,
+		   "s|slave" => \$slave,
 		   "t|test" 		  => \$test_mode,
 		   "v|verbose" 		  => \$debug);
 #----------------------------------------------------------------------
@@ -96,10 +101,11 @@ sub pwgen {
 }
 
 sub get_mysql_credentials {
+	my $force_root = shift || 0;
 	my $mysql_user = 'sipwise';
 	my $mysql_pass;
 
-	if(defined $mysql_root) {
+	if($force_root) {
 		$mysql_user='root';
 		return ($mysql_user,);
 	}
@@ -119,15 +125,14 @@ sub get_nodename {
 }
 
 sub connect_db {
-	my ($dbhost, $dbport) = @_;
-	my ($mysql_user, $mysql_pass) = get_mysql_credentials();
+	my ($dbhost, $dbport, $force_root) = @_;
+	my ($mysql_user, $mysql_pass) = get_mysql_credentials($force_root);
 
-	my $dbh = DBI->connect("DBI:mysql:database=$db_users;
-							       host=$dbhost;
-								   port=$dbport",
-								   $mysql_user, $mysql_pass,
-						 { PrintError => 0, AutoCommit => 0 })
+	my $dbh = DBI->connect("DBI:mysql:database=$db_users;host=$dbhost;port=$dbport",
+							$mysql_user, $mysql_pass,
+						 	{ PrintError => 1 })
 		or die "Can't connect to MySQL database $db_users: ". $DBI::errstr;
+	print "--> connected to $dbhost:$dbport as $mysql_user\n" if $debug;
 	return $dbh;
 }
 
@@ -138,7 +143,6 @@ sub set_master {
 	my $mport = $args{port} || 3306;
 	my $user = $args{user};
 	my $pass = $args{pass};
-	my $stop = $args{stop};
 
 	my $sth_master = $dbh->prepare(<<SQL);
 CHANGE MASTER TO
@@ -146,13 +150,17 @@ CHANGE MASTER TO
    MASTER_PORT=?,
    MASTER_USER=?,
    MASTER_PASSWORD=?,
-   MASTER_CONNECT_RETRY=10
+   MASTER_CONNECT_RETRY=10;
 SQL
 	print " ---> update master info to master_host='$mhost:$mport', master_user='$user', master_password='$pass'\n" if $debug;
-	if ($stop != 0 ) {
-		$dbh->do('SLAVE STOP') unless $test_mode;
-	}
-	$sth_master->execute($mhost, $mport, $user, $pass) unless $test_mode;
+	$dbh->do('SLAVE STOP') unless $test_mode;
+	unless($test_mode) {
+		$sth_master->bind_param(1, $mhost);
+		$sth_master->bind_param(2, $mport,  { TYPE => SQL_INTEGER });
+		$sth_master->bind_param(3, $user);
+		$sth_master->bind_param(4, $pass);
+		$sth_master->execute();
+	};
 	$dbh->do('SLAVE START') unless $test_mode;
 	$sth_master->finish;
 }
@@ -176,7 +184,8 @@ sub sync_repuser {
 	my $dbh = $args{dbh};
 	my $user = $args{user};
 	my $pass = $args{pass};
-	my $minfo = "/var/lib/mysql/master.info";
+	my $dbid = $args{dbid} || '';
+	my $minfo = "/var/lib/mysql$dbid/master.info";
 	my $mhost = $args{mhost};
 	my $mport = $args{mport} || 3306;
 
@@ -193,8 +202,7 @@ sub sync_repuser {
 			set_master(
 				dbh => $dbh,
 				host => $mhost,
-				user => $user, pass => $pass,
-				stop => 1
+				user => $user, pass => $pass
 			);
 		} else {
 			print " --> replication password in master.info already in sync for '$user' at master '$mhost'\n" if $debug;
@@ -203,16 +211,151 @@ sub sync_repuser {
 		set_master(
 			dbh => $dbh,
 			host => $mhost,
-			user => $user, pass => $pass,
-			stop => 0
+			user => $user, pass => $pass
 		);
 	}
 }
 
 sub do_flush {
 	my $dbh = shift;
+	print "--> flush priveleges\n" if $debug;
 	$dbh->do('FLUSH PRIVILEGES')
 		or die "Can't flush MySQL privileges: ". $DBI::errstr;
+}
+
+sub grant_user {
+	my %args = @_;
+	my $dbh = $args{dbh};
+	my $user = $args{user};
+	my @hosts = @{ $args{hosts} };
+	my $repuser = $args{repuser} || 0;
+	my @grant;
+
+	if ($repuser) {
+		push @grant, "SUPER,REPLICATION CLIENT,REPLICATION SLAVE,RELOAD";
+		push @grant, "";
+	}
+	else {
+		push @grant, "ALL";
+		push @grant, "WITH GRANT OPTION"
+	}
+	#print "--> hosts:".Dumper(\@hosts)."\n" if $debug;
+	foreach my $host (@hosts) {
+		print "--> grant user $user ${grant[0]} from $host\n" if $debug;
+		$dbh->do("GRANT ${grant[0]} ON *.* TO '$user'\@'$host' ${grant[1]};") unless $test_mode;
+	}
+}
+
+sub copy_grants_user
+{
+	my %args = @_;
+	my $dbh = $args{dbh};
+	my $user = $args{user};
+	my $pass = $args{pass};
+	my @hosts = @{ $args{hosts} };
+	my $host_orig = $args{host_orig} || 'localhost';
+	my $force = $args{force} || 0;
+	my $count;
+
+	# Select user
+	my $sth_sel = $dbh->prepare(<<SQL);
+SELECT count(*) from user
+ WHERE User = ? and Host = ?
+SQL
+	# Create user
+	my $sth_cu = $dbh->prepare(<<SQL);
+CREATE USER ?@? IDENTIFIED BY ?;
+SQL
+
+	# Copy db's privileges
+	my $sth_cd = $dbh->prepare(<<SQL);
+INSERT INTO mysql.db
+SELECT ?, Db, User, Select_priv, Insert_priv, Update_priv, Delete_priv, Create_priv,
+  Drop_priv, Grant_priv, References_priv, Index_priv, Alter_priv,
+  Create_tmp_table_priv, Lock_tables_priv, Create_view_priv,
+  Show_view_priv, Create_routine_priv, Alter_routine_priv, Execute_priv,
+  Event_priv, Trigger_priv
+FROM mysql.db
+WHERE User = ? AND Host = ?;
+SQL
+
+	# Copy table's privileges
+	my $sth_ct = $dbh->prepare(<<SQL);
+INSERT INTO mysql.tables_priv
+SELECT ?, db, user, table_name, grantor, timestamp, table_priv, column_priv
+FROM mysql.tables_priv
+WHERE user = ? AND host = ?;
+SQL
+
+	# Copy routine's privileges
+	my $sth_cr = $dbh->prepare(<<SQL);
+INSERT INTO mysql.procs_priv
+SELECT ?, db, user, routine_name, routine_type, grantor, proc_priv, timestamp
+FROM mysql.procs_priv
+WHERE user = ? AND host = ?;
+SQL
+
+	foreach my $host (@hosts) {
+		if ($force) {
+			print "--> revoke and delete '${user}'\@'${host}'\n" if $debug;
+			$dbh->do("REVOKE ALL PRIVILEGES, GRANT OPTION FROM '${user}'\@'${host}';") unless $test_mode;
+			$dbh->do("DROP USER '${user}'\@'${host}';") unless $test_mode;
+		}
+
+		$sth_sel->execute($user, $host);
+		$count = $sth_sel->fetchrow_array();
+		if ($count == 0) {
+			print "--> create user '${user}'\@'${host}'\n" if $debug;
+			$sth_cu->execute($user, $host, $pass) unless $test_mode;
+			print "--> copy grants of user '${user}'\@'${host_orig}' to ${host}\n" if $debug;
+			$sth_cd->execute($host, $user, $host_orig) unless $test_mode;
+			$sth_ct->execute($host, $user, $host_orig) unless $test_mode;
+			$sth_cr->execute($host, $user, $host_orig) unless $test_mode;
+		}
+		else {
+			print "--> user ${user} already created\n" if $debug;
+		}
+	}
+	$sth_sel->finish;
+	$sth_cu->finish;
+	$sth_cd->finish;
+	$sth_ct->finish;
+	$sth_cr->finish;
+}
+
+sub copy_grants {
+	my %args = @_;
+	my $dbh = $args{dbh};
+	my @hosts = @{ $args{hosts} };
+	my $host_orig = $args{host_orig} || 'localhost';
+	my $force = $args{force} || 0;
+	my $yml_ref;
+
+	foreach my $key (keys %{MYSQL_DATA()}) {
+		# skip repuser
+		next if($key eq "mysql");
+		print $key." => " if $debug;
+		$yml_ref = $yml->[0]->{$key};
+		my $opts = { init_passwords => 0 };
+		my $data = get_user_pass(MYSQL_DATA->{$key}, $opts, $yml_ref);
+		#print "**data:".Dumper($data)."\n" if $debug;
+		foreach my $pair (@$data) {
+			my $user = $pair->{'user'};
+			my $pass = $pair->{'pass'};
+			next unless($user && $pass);
+			print "user:$user\n" if $debug;
+			copy_grants_user(
+				dbh => $dbh,
+				user => $user, pass => $pass,
+				hosts => \@hosts,
+				host_orig => $host_orig,
+				force => $force
+			);
+		}
+	}
+
+	return if $test_mode;
+	do_flush($dbh);
 }
 
 sub sync_user {
@@ -249,6 +392,7 @@ sub sync_mysql_data {
 	my $dbh = shift;
 	my $yml_ref;
 	my $mhost = get_master_node();
+	my @hosts = ( $mhost, );
 
 	foreach my $key (keys %{MYSQL_DATA()}) {
 		$yml_ref = $yml->[0]->{$key};
@@ -267,6 +411,12 @@ sub sync_mysql_data {
 						dbh => $dbh,
 						mhost => $mhost,
 						user => $user, pass => $pass
+					);
+					grant_user(
+						dbh => $dbh,
+						user => $user,
+						hosts => \@hosts,
+						repuser => 1
 					);
 				}
 				else {
@@ -291,7 +441,7 @@ sub get_user_pass {
 		} elsif (ref($h_ref->{$ref}) eq 'HASH') {
 			print $ref." => " if $debug;
 			$yml_ref = $yml_ref->{$ref};
-			return get_user_pass($h_ref->{$ref}, $opts);
+			return get_user_pass($h_ref->{$ref}, $opts, $yml_ref);
 		} else {
 			print " ".$ref." -- ".$h_ref->{$ref} if $debug;
 			$opts->{'init_passwords'} and $yml_ref->{$h_ref->{$ref}} = pwgen();
@@ -344,12 +494,108 @@ sub do_pair_sync {
 
 	system("/usr/share/ngcp-ngcpcfg/helper/check-for-mysql");
 
-	my $dbh = connect_db($dbhost, $dbport);
+	my $dbh = connect_db($dbhost, $dbport, $mysql_root);
 	eval {
 		$dbh->begin_work;
 		print "Syncing ".CONSTANTS_YML." -> MySQL ... ";
 		print "\n" if $debug;
 		sync_mysql_data($dbh);
+	};
+	if ($@) {
+		$dbh->rollback;
+		die "\nError during syncronization: " . $@;
+	} else {
+		$test_mode ? $dbh->rollback : $dbh->commit;
+	}
+	$dbh->disconnect if $dbh;
+
+	print "Done.\n";
+}
+
+sub get_slave_hosts {
+	my $self = shift;
+	my $network = new YAML::Tiny;
+	$network = YAML::Tiny->read(NETWORK_YML)
+		or die "Can't read network file: $!\n";
+	my @hosts;
+
+	foreach my $host (keys %{$network->[0]->{hosts}})
+	{
+		push @hosts, $host unless($host =~ '^db\d+[ab]$');
+	}
+	return @hosts;
+}
+
+sub do_grant_slaves
+{
+	my $dbhost = $config->[0]->{database}->{pair}->{dbhost};
+	my $dbport = $config->[0]->{database}->{pair}->{dbport};
+	my $user = $yml->[0]->{mysql}->{repuser};
+	my $hostname = hostname_long();
+	my @hosts;
+
+	return unless($hostname =~ '^db\d+[ab]$');
+	@hosts = get_slave_hosts($hostname);
+	print "--> db cluster node $hostname detected. grant repo user\n" if $debug;
+
+	my $dbh = connect_db($dbhost, $dbport, $mysql_root);
+	eval {
+		$dbh->begin_work;
+		grant_user(dbh => $dbh, user => $user, hosts => \@hosts, repuser => 1 );
+		# mysql sipwise user
+		my ($mysql_user, $mysql_pass) = get_mysql_credentials();
+		grant_user(dbh => $dbh, user => $mysql_user, hosts => \@hosts, repuser => 0 );
+		sync_user( dbh => $dbh, user => $mysql_user, pass => $mysql_pass );
+		# all mysql users except repuser
+		copy_grants(dbh => $dbh, hosts => \@hosts);
+	};
+	if ($@) {
+		$dbh->rollback;
+		die "\nError during syncronization: " . $@;
+	} else {
+		$test_mode ? $dbh->rollback : $dbh->commit;
+	}
+	$dbh->disconnect if $dbh;
+}
+
+sub do_slave_sync
+{
+	my $dbhost = $yml->[0]->{database}->{dbhost};
+	my $dbport = $yml->[0]->{database}->{dbport};
+	my $mhost = $config->[0]->{database}->{central}->{dbhost};
+	my $mport = $config->[0]->{database}->{central}->{dbport};
+	my $user = $yml->[0]->{mysql}->{repuser};
+	my $pass = $yml->[0]->{mysql}->{reppassword};
+	my $hostname = hostname_long();
+
+	if ( $mhost eq "localhost" ) {
+		print "database.central.dbhost is localhost. skipping.\n";
+		return
+	}
+	#system('ssh -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" root@'. $mhost ." /usr/share/ngcp-ngcpcfg/helper/check-for-mysql");
+
+	my $dbh = connect_db($dbhost, $dbport, 1);
+	eval {
+		$dbh->begin_work;
+		if($hostname =~ '^db\d+[ab]$') {
+			print "--> db cluster node $hostname detected. skipping slave config\n" if $debug;
+		}
+		else {
+			sync_repuser(
+				dbh => $dbh,
+				mhost => $mhost, mport => $mport,
+				user => $user, pass => $pass,
+				dbid => "2"
+			);
+			# mysql sipwise user
+			my ($mysql_user, $mysql_pass) = get_mysql_credentials();
+			my @hosts = ('localhost');
+			grant_user(dbh => $dbh, user => $mysql_user, hosts => \@hosts, repuser => 0 );
+			sync_user( dbh => $dbh, user => $mysql_user, pass => $mysql_pass );
+			# create localhost users if we need to recreate grants after dump excluding mysql table
+			# copy_grants(dbh => $dbh, hosts => \@hosts, host_orig => 'web1a', force => 1);
+		}
+		sync_user( dbh => $dbh, user => $user, pass => $pass );
 	};
 	if ($@) {
 		$dbh->rollback;
@@ -376,7 +622,13 @@ sub main {
 	}
 
 	print "[TEST MODE]\n" if $test_mode;
+	if($slave) {
+		do_slave_sync();
+		print "Slave node Done\n";
+		return;
+	}
 	do_pair_sync();
+	do_grant_slaves();
 	return unless $init_passwords;
 
 	copy_passwords();
@@ -413,6 +665,9 @@ Use mysql root user without password as DB credentials
 
 =item B<--init-passwords>
 New passwords are generated (passwords for "mysql" is not generated to avoid replication problems)
+
+=item B<--slave>
+Sync repuser and check replication of the read-only dbcluster instance (mysqld2)
 
 =item B<--test>
 No real updates, only for checks
