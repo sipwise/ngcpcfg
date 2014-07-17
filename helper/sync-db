@@ -11,6 +11,8 @@ use Hash::Merge qw(merge);
 use DBI;
 
 sub sync_extra_sockets;
+sub db_connect;
+my $dbh;
 
 my $tt = Template->new({ ABSOLUTE => 1, RELATIVE => 1 });
 
@@ -18,6 +20,9 @@ my $config = {};
 foreach my $file (@ARGV) {
   $config = merge($config, LoadFile($file) || die $!);
 }
+# rw connection to central node
+my $dbhost = $config->{database}->{central}->{dbhost};
+my $dbport = $config->{database}->{central}->{dbport};
 
 open my $SWFH, '<', '/etc/mysql/sipwise.cnf';
 my $dbpass = join ' ', <$SWFH>;
@@ -27,6 +32,14 @@ chomp $dbpass;
 my $dbuser = 'sipwise';
 my $dbname = $config->{ossbss}->{provisioning}->{database}->{name};
 
+unless(defined $dbhost) {
+  print "Could not determine provisioning db hostname\n";
+  exit 1;
+}
+unless(defined $dbport) {
+  print "Could not determine provisioning db port\n";
+  exit 1;
+}
 unless(defined $dbname) {
   print "Could not determine provisioning db name\n";
   exit 1;
@@ -40,13 +53,10 @@ unless(defined $dbpass) {
   exit 1;
 }
 
-my $dbh = DBI->connect('DBI:mysql:'.$dbname, $dbuser, $dbpass);
-unless(defined $dbh) {
-  print "Could not connect to database '$dbname': $DBI::errstr\n";
-  exit 1;
-}
+$dbh = db_connect();
 
-exit 1 unless(sync_extra_sockets());
+exit 1 unless(sync_extra_sockets($dbh,
+  $config->{kamailio}->{lb}->{extra_sockets}));
 
 $dbh->disconnect;
 
@@ -67,19 +77,29 @@ unless(defined $dbpass) {
   exit 1;
 }
 
-$dbh = DBI->connect('DBI:mysql:'.$dbname, $dbuser, $dbpass);
-unless(defined $dbh) {
-  print "Could not connect to database '$dbname': $DBI::errstr\n";
-  exit 1;
-}
+$dbh = db_connect();
 
-exit 1 unless(sync_faxserver_uris());
+exit 1 unless(sync_faxserver_uris($dbh,
+  $config->{faxserver}->{fax_gateways}));
 $dbh->disconnect;
 
 exit 0;
 
+sub db_connect
+{
+	my $dbh = DBI->connect("DBI:mysql:database=${dbname};host=${dbhost};port=${dbport}",
+						$dbuser, $dbpass, { PrintError => 1 });
+	unless(defined $dbh) {
+		print "Could not connect to database '$dbname' at '$dbhost:$dbport' as '${dbuser}': $DBI::errstr\n";
+		exit 1;
+	}
+	return $dbh;
+}
+
 ## kamailio.lb.extra_sockets handling: ##############################
 sub sync_extra_sockets {
+	my $dbh = shift;
+	my $sockets = shift;
 	my $pref_name = 'outbound_socket';
 	my $sth = $dbh->prepare("select id from voip_preferences where attribute=?");
 	$sth->execute($pref_name);
@@ -97,7 +117,6 @@ sub sync_extra_sockets {
 	$sth = $dbh->prepare("select id, label, value from voip_preferences_enum where preference_id=?");
 	$sth->execute($pref_id);
 
-	my $sockets = $config->{kamailio}->{lb}->{extra_sockets};
 	my $dbsockets = $sth->fetchall_hashref('label');
 	$sth->finish;
 
@@ -129,6 +148,8 @@ sub sync_extra_sockets {
 
 ## faxserver.hw_fax_gateways handling: ##############################
 sub sync_faxserver_uris {
+	my $dbh = shift;
+	my $yaml_fax_gateways = shift;
 	my $fax_set_id = 4;
 	my $reload_dispatcher = 0;
 	my $dispatcher_insert_sth = $dbh->prepare("insert into dispatcher (setid, destination, flags, priority, description) values(4, ?, 0, 0, 'Fax2Mail Servers')");
@@ -140,11 +161,10 @@ sub sync_faxserver_uris {
 	$sth->finish;
 
 	# array reference
-	my $yaml_fax_gateways = $config->{faxserver}->{fax_gateways};
 	unless(defined $yaml_fax_gateways) {
 		return 1;
 	}
-        my @tmp_array = @{$yaml_fax_gateways};
+	my @tmp_array = @{$yaml_fax_gateways};
 	# turn the array into hash reference
 	my $fax_gateways = {}; 
 	foreach my $gw (@tmp_array) { 
