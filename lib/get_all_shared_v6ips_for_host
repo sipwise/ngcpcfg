@@ -6,7 +6,6 @@
   # @param argv.format  Optional reformatting of IPv6 addresses
   # @return out		The array of shared ips
 -%]
-[% IF !hosts.${argv.host}.defined -%][% argv.host = 'self' -%][% END -%]
 [% out = [] -%]
 [% IF !argv.type.length -%][% argv.type = '.*' -%][% END -%]
 [% FOREACH iface IN hosts.${argv.host}.interfaces -%]

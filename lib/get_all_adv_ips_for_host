@@ -5,7 +5,6 @@
   # @param argv.type	The interface type or empty string for all types.
   # @return out		The array of advertised ips.
 -%]
-[% IF !hosts.${argv.host}.defined -%][% argv.host = 'self' -%][% END -%]
 [% out = [] -%]
 [% IF !argv.type.length -%][% argv.type = '.*' -%][% END -%]
 [% FOREACH iface IN hosts.${argv.host}.interfaces -%]

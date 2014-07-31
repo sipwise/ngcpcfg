@@ -5,9 +5,6 @@
   # @param argv.host	The hostname to get the first name for.
   # @return out		The alphabetically first name.
 -%]
-[% IF !hosts.${argv.host}.defined -%]
-[% argv.host = 'self' -%]
-[% END -%]
 [% blktmp.hosts = [argv.host] -%]
 [% IF hosts.${argv.host}.peer.defined -%]
 [% blktmp.hosts.push(hosts.${argv.host}.peer) -%]
