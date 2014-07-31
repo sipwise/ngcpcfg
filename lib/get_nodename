@@ -1,0 +1,15 @@
+[%
+  # Returns the nodename of the node calling this function.
+  #
+  # @return out		The nodename of the node calling this function.
+-%]
+[% PERL -%]
+my $filename = '/etc/ngcp_ha_node';
+$filename = '/etc/ngcp_nodename' unless -f $filename;
+open my $hh, '<', $filename or die "Error opening $filename";
+my $nodename = <$hh>;
+close $hh;
+chomp $nodename;
+die "Fatal error retrieving nodename [$nodename]" unless length $nodename;
+$stash->set(out => $nodename);
+[% END -%]
