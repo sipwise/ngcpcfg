@@ -1,0 +1,16 @@
+[%
+  # Return a hash of set_name=>dispatcher_id for a given cluster set type.
+  #
+  # @param argv.type	The type of element we are interested in (rtp, lb)
+  # @return out		The hash
+-%]
+[% 
+  out = {};
+  FOR setname IN cluster_sets.keys;
+    NEXT IF setname == "default_set";
+    set = cluster_sets.$setname;
+    IF set.${argv.type}.defined;
+      out.$setname = set.dispatcher_id;
+    END;
+  END;
+-%]
