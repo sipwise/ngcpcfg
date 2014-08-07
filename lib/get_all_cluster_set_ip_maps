@@ -1,0 +1,29 @@
+[%
+  # Return an array of hashes, each hash containing dispatcher_id and ips, 
+  # which is an array of ips, for a given cluster set type.
+  #
+  # @param argv.type	The type of element we are interested in (rtp, lb)
+  # @return out		The array of hashes
+-%]
+[% 
+  out = [];
+  FOREACH set IN cluster_sets.keys;
+    set = cluster_sets.$set;
+    IF set.${argv.type}.defined;
+      theset = { dispatcher_id = set.dispatcher_id };
+      theset.ips = [];
+      FOREACH entry IN set.${argv.type};
+        iftype = entry.iface;
+        host = entry.host;
+        FOREACH iface IN hosts.$host.interfaces;
+          realiface = hosts.$host.$iface;
+          NEXT UNLESS realiface.type.grep('^' _ iftype _ '$').size();
+          theset.ips.push(realiface.ip);
+        END;
+      END;
+      IF theset.ips.size();
+        out.push(theset);
+      END;
+    END;
+  END;
+-%]
