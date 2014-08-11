@@ -489,8 +489,8 @@ sub copy_passwords {
 }
 
 sub do_pair_sync {
-	my $dbhost = $config->[0]->{database}->{pair}->{dbhost};
-	my $dbport = $config->[0]->{database}->{pair}->{dbport};
+	my $dbhost = $config->[0]->{database}->{pair}->{dbhost} || "127.0.0.1";
+	my $dbport = $config->[0]->{database}->{pair}->{dbport} || 3306;
 
 	system("/usr/share/ngcp-ngcpcfg/helper/check-for-mysql");
 
@@ -528,8 +528,8 @@ sub get_slave_hosts {
 
 sub do_grant_slaves
 {
-	my $dbhost = $config->[0]->{database}->{pair}->{dbhost};
-	my $dbport = $config->[0]->{database}->{pair}->{dbport};
+	my $dbhost = $config->[0]->{database}->{pair}->{dbhost} || "127.0.0.1";
+	my $dbport = $config->[0]->{database}->{pair}->{dbport} || 3306;
 	my $user = $yml->[0]->{mysql}->{repuser};
 	my $hostname = hostname_long();
 	my @hosts;
@@ -562,8 +562,8 @@ sub do_slave_sync
 {
 	my $dbhost = $yml->[0]->{database}->{dbhost};
 	my $dbport = $yml->[0]->{database}->{dbport};
-	my $mhost = $config->[0]->{database}->{central}->{dbhost};
-	my $mport = $config->[0]->{database}->{central}->{dbport};
+	my $mhost = $config->[0]->{database}->{central}->{dbhost} || "127.0.0.1";
+	my $mport = $config->[0]->{database}->{central}->{dbport} || 3306;
 	my $user = $yml->[0]->{mysql}->{repuser};
 	my $pass = $yml->[0]->{mysql}->{reppassword};
 	my $hostname = hostname_long();
