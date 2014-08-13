@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a045101_bc4861cd",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 1
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2014-08-13T14:03:54Z",
+      "side": 1,
+      "message": "As an option (as $network \u003d new YAML::Tiny or read result may not be undefined/empty, just in case)\n\n\n    $network \u003d YAML::Tiny-\u003eread(NETWORK_YML) || do {\n        print \"Can\u0027t read network file: $!\\n\";\n        return;\n    }",
+      "range": {
+        "startLine": 519,
+        "startChar": 1,
+        "endLine": 520,
+        "endChar": 25
+      },
+      "revId": "4031974aa3b57be8bff6bbeffd215ac2e932efdd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
