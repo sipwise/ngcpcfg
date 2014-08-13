@@ -515,8 +515,10 @@ sub do_pair_sync {
 sub get_slave_hosts {
 	my $self = shift;
 	my $network = new YAML::Tiny;
-	$network = YAML::Tiny->read(NETWORK_YML)
-		or die "Can't read network file: $!\n";
+	$network = YAML::Tiny->read(NETWORK_YML) || do {
+		print "Can't read network file: $!\n";
+		return;
+	}
 	my @hosts;
 
 	foreach my $host (keys %{$network->[0]->{hosts}})
@@ -536,6 +538,10 @@ sub do_grant_slaves
 
 	return unless($hostname =~ '^db\d+[ab]$');
 	@hosts = get_slave_hosts($hostname);
+	if (not @hosts) {
+		print "skip do_grant_slaves\n";
+		return;
+	}
 	print "--> db cluster node $hostname detected. grant repo user\n" if $debug;
 
 	my $dbh = connect_db($dbhost, $dbport, $mysql_root);
