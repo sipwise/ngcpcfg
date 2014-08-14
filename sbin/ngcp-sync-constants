@@ -229,11 +229,15 @@ sub grant_user {
 	my $user = $args{user};
 	my @hosts = @{ $args{hosts} };
 	my $repuser = $args{repuser} || 0;
+	my $reppwd = $args{reppwd};
 	my @grant;
 
 	if ($repuser) {
+		if (not $reppwd) {
+			die "No reppwd parameter";
+		}
 		push @grant, "SUPER,REPLICATION CLIENT,REPLICATION SLAVE,RELOAD";
-		push @grant, "";
+		push @grant, "IDENTIFIED BY '$reppwd'";
 	}
 	else {
 		push @grant, "ALL";
@@ -416,7 +420,8 @@ sub sync_mysql_data {
 						dbh => $dbh,
 						user => $user,
 						hosts => \@hosts,
-						repuser => 1
+						repuser => 1,
+						reppwd => $pass
 					);
 				}
 				else {
@@ -533,6 +538,7 @@ sub do_grant_slaves
 	my $dbhost = $config->[0]->{database}->{pair}->{dbhost} || "127.0.0.1";
 	my $dbport = $config->[0]->{database}->{pair}->{dbport} || 3306;
 	my $user = $yml->[0]->{mysql}->{repuser};
+	my $pwd =  $yml->[0]->{mysql}->{reppassword};
 	my $hostname = hostname_long();
 	my @hosts;
 
@@ -547,7 +553,7 @@ sub do_grant_slaves
 	my $dbh = connect_db($dbhost, $dbport, $mysql_root);
 	eval {
 		$dbh->begin_work;
-		grant_user(dbh => $dbh, user => $user, hosts => \@hosts, repuser => 1 );
+		grant_user(dbh => $dbh, user => $user, hosts => \@hosts, repuser => 1, reppwd => $pwd );
 		# mysql sipwise user
 		my ($mysql_user, $mysql_pass) = get_mysql_credentials();
 		grant_user(dbh => $dbh, user => $mysql_user, hosts => \@hosts, repuser => 0 );
