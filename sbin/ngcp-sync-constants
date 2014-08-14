@@ -165,6 +165,28 @@ SQL
 	$sth_master->finish;
 }
 
+sub set_master_pass {
+	my %args = @_;
+	my $dbh = $args{dbh};
+	my $user = $args{user};
+	my $pass = $args{pass};
+
+	my $sth_master = $dbh->prepare(<<SQL);
+CHANGE MASTER TO
+   MASTER_USER=?,
+   MASTER_PASSWORD=?;
+SQL
+	print " ---> update master info to master_user='$user', master_password='$pass'\n" if $debug;
+	$dbh->do('SLAVE STOP') unless $test_mode;
+	unless($test_mode) {
+		$sth_master->bind_param(1, $user);
+		$sth_master->bind_param(2, $pass);
+		$sth_master->execute();
+	};
+	$dbh->do('SLAVE START') unless $test_mode;
+	$sth_master->finish;
+}
+
 sub get_master_node {
 	my $mhost = get_nodename();
 
@@ -199,9 +221,8 @@ sub sync_repuser {
 		my @minfo_content = <$mfh>;
 		close $mfh;
 		unless(grep {/^${pass}\s*$/} @minfo_content) {
-			set_master(
+			set_master_pass(
 				dbh => $dbh,
-				host => $mhost,
 				user => $user, pass => $pass
 			);
 		} else {
