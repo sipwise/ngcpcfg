@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a014df3_7eb64dde",
+        "filename": "scripts/services",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2014-08-22T15:09:11Z",
+      "side": 1,
+      "message": "I would use this as absolute: ${SERVICES_POOL_BASE}/${dir}  to avoid recursions",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 13
+      },
+      "revId": "8a607b44645bebbcb22fdfdcc6394865973707d3",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
