@@ -75,8 +75,8 @@ elif ! [ -r "$NETWORK_CONFIG" ] ; then
   exit 1
 fi
 
-if ! [ -d "$TEMPLATE_POOL" ] ; then
-  log_error "No template directory (${TEMPLATE_POOL}) found - exiting."
+if ! [ -d "$TEMPLATE_POOL_BASE" ] ; then
+  log_error "No template directory (${TEMPLATE_POOL_BASE}) found - exiting."
   exit 1
 fi
 
@@ -124,24 +124,27 @@ fi
 
 ## functions {{{
 generate_template_list() {
-  [ -n "$TEMPLATE_POOL" ] || return 1
+  [ -n "$TEMPLATE_POOL_BASE" ] || return 1
 
   local filelist_prepared=$(mktemp)
   local filelist_final=$(mktemp)
 
-  # iterate over all files
-  for file in $(find "$TEMPLATE_POOL" -name \*.tt2 -o -name \*.tt2"${HA_FILE:-}") ; do
-    # *NO* arguments provided via cmdline
-    if [ -z "${1:-}" ] ; then
-      echo "$file" >> "${filelist_prepared}"
-    else
-      # arguments (file list/pattern) provided via cmdline
-      for arg in $* ; do
-        if echo $file | grep -q -- "${arg}" ; then
-          echo "$file" >> "${filelist_prepared}"
-        fi
-      done
-    fi
+  for dir in ${CONFIG_POOL} ; do
+    [ -n "${dir}" ] || ( echo "${dir} doesn't exist" >&2 ; continue )
+    # iterate over all files
+    for file in $(find "$TEMPLATE_POOL_BASE/${dir}" -name \*.tt2 -o -name \*.tt2"${HA_FILE:-}") ; do
+      # *NO* arguments provided via cmdline
+      if [ -z "${1:-}" ] ; then
+        echo "$file" >> "${filelist_prepared}"
+      else
+        # arguments (file list/pattern) provided via cmdline
+        for arg in $* ; do
+          if echo $file | grep -q -- "${arg}" ; then
+            echo "$file" >> "${filelist_prepared}"
+          fi
+        done
+      fi
+    done
   done
 
   # remove all filenames where a preferred filename exists

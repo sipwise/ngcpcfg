@@ -15,8 +15,6 @@ fi
 
 # main script
 
-cd "$CONFIG_POOL"
-
 DRYRUN='false'
 if [[ "${1:-}" == "test" ]] || [[ "${1:-}" == "--dry-run" ]]; then
   DRYRUN='true'
@@ -42,14 +40,17 @@ unifyer() {
   fi
 }
 
-for file in $(git status --porcelain | sed 's/^...//') ; do
-  if [ -r "$file" ] && [ -r "${SERVICES_POOL}/${file}".services ] ; then
-    log_debug "unifyer ${SERVICES_POOL}/${file}.services"
-    unifyer "${SERVICES_POOL}/${file}".services
-  elif [ -r "$file" ] && [ -r $SERVICES_POOL/"$(dirname $file)"/ngcpcfg.services ] ; then
-    log_debug "unifyer ${SERVICES_POOL}/$(dirname $file)/ngcpcfg.services"
-    unifyer "${SERVICES_POOL}"/"$(dirname $file)/ngcpcfg.services"
-  fi
+for dir in ${CONFIG_POOL} ; do
+  cd "${dir}"
+  for file in $(git status --porcelain | sed 's/^...//') ; do
+    if [ -r "$file" ] && [ -r "${SERVICES_POOL_BASE}/${dir}/${file}".services ] ; then
+      log_debug "unifyer ${SERVICES_POOL_BASE}/${dir}/${file}.services"
+      unifyer "${SERVICES_POOL_BASE}/${dir}/${file}".services
+    elif [ -r "$file" ] && [ -r $SERVICES_POOL_BASE/${dir}/"$(dirname $file)"/ngcpcfg.services ] ; then
+      log_debug "unifyer ${SERVICES_POOL_BASE}/${dir}/$(dirname $file)/ngcpcfg.services"
+      unifyer "${SERVICES_POOL_BASE}/${dir}"/"$(dirname $file)/ngcpcfg.services"
+    fi
+  done
 done
 
 exec_wrapper() {
