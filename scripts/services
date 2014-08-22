@@ -41,7 +41,12 @@ unifyer() {
 }
 
 for dir in ${CONFIG_POOL} ; do
+  (
   cd "${dir}"
+  if [ ! -d .git ] ; then
+    log_info "$dir has no support of .services"
+    continue
+  fi
   for file in $(git status --porcelain | sed 's/^...//') ; do
     if [ -r "$file" ] && [ -r "${SERVICES_POOL_BASE}/${dir}/${file}".services ] ; then
       log_debug "unifyer ${SERVICES_POOL_BASE}/${dir}/${file}.services"
@@ -51,6 +56,7 @@ for dir in ${CONFIG_POOL} ; do
       unifyer "${SERVICES_POOL_BASE}/${dir}"/"$(dirname $file)/ngcpcfg.services"
     fi
   done
+  )
 done
 
 exec_wrapper() {
