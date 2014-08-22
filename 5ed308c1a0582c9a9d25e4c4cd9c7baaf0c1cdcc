@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a014df3_5e94b136",
+        "filename": "scripts/services",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2014-08-22T14:30:51Z",
+      "side": 1,
+      "message": "this will not work... \nif you have \n\u003e ../etc/\n\u003e ../var/\nand you did already in etc... \"cd var\" will fail",
+      "revId": "5ed308c1a0582c9a9d25e4c4cd9c7baaf0c1cdcc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
