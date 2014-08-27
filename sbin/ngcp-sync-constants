@@ -526,6 +526,13 @@ sub do_pair_sync {
 		print "Syncing ".CONSTANTS_YML." -> MySQL ... ";
 		print "\n" if $debug;
 		sync_mysql_data($dbh);
+		if ($mysql_root) {
+			# mysql sipwise user
+			my ($mysql_user, $mysql_pass) = get_mysql_credentials();
+			my @hosts = ('localhost');
+			grant_user(dbh => $dbh, user => $mysql_user, hosts => \@hosts, repuser => 0 );
+			sync_user( dbh => $dbh, user => $mysql_user, pass => $mysql_pass );
+		}
 	};
 	if ($@) {
 		$dbh->rollback;
