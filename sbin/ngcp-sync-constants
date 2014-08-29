@@ -9,11 +9,13 @@ use Getopt::Long;
 use Sys::Hostname::Long;
 use Data::Dumper;
 use IPC::System::Simple qw(system capturex);
+use Tie::File;
 #----------------------------------------------------------------------
 use constant CONSTANTS_YML => "/etc/ngcp-config/constants.yml";
 use constant CONFIG_YML => "/etc/ngcp-config/config.yml";
 use constant NETWORK_YML => "/etc/ngcp-config/network.yml";
 use constant MYSQL_CREDENTIALS => "/etc/mysql/sipwise.cnf";
+use constant MYSQL_DEBIAN_CREDENTIALS => "/etc/mysql/debian.cnf";
 use constant MYSQL_DATA => {
 						voisniff     => { dbuser => 'dbpassword' },
 						cleanuptools => { dbuser => 'dbpassword' },
@@ -114,6 +116,22 @@ sub get_mysql_credentials {
 	($mysql_pass = <$fh>) =~ s/^.+='(.+?)'\s*$/$1/;
 	close $fh;
 	return ($mysql_user, $mysql_pass);
+}
+
+sub set_debian_credentials {
+	my $pwd = shift;
+	my @array;
+	unless($pwd) {
+		print "No password for debian-sys-maint\n";
+		return;
+	}
+	tie @array, 'Tie::File', MYSQL_DEBIAN_CREDENTIALS
+		or die "Can change ".MYSQL_DEBIAN_CREDENTIALS.": ".$!;
+	for (@array)
+	{
+		s/password = .+/password = \Q$pwd\E/;
+	}
+	untie @array;
 }
 
 sub get_nodename {
@@ -669,6 +687,9 @@ sub main {
 	}
 	do_pair_sync();
 	do_grant_slaves();
+	if ($yml->[0]->{database}->{debian}->{dbpassword}) {
+		set_debian_credentials($yml->[0]->{database}->{debian}->{dbpassword});
+	}
 	return unless $init_passwords;
 
 	copy_passwords();
