@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a014df3_41fe166d",
+        "filename": "etc/ngcp-config/ngcpcfg.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2014-08-29T11:37:13Z",
+      "side": 1,
+      "message": "This can be ${CONFIG_POOL} -\u003e /etc",
+      "revId": "c2b8d6be909de49832afd119fe44ea780cd52899",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
