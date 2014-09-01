@@ -6,7 +6,7 @@ use strict;
 use DBI qw(:sql_types);
 use YAML::Tiny;
 use Getopt::Long;
-use Sys::Hostname::Long;
+use Sys::Hostname;
 use Data::Dumper;
 use IPC::System::Simple qw(system capturex);
 #----------------------------------------------------------------------
@@ -567,7 +567,7 @@ sub do_grant_slaves
 	my $dbport = $config->[0]->{database}->{pair}->{dbport} || 3306;
 	my $user = $yml->[0]->{mysql}->{repuser};
 	my $pwd =  $yml->[0]->{mysql}->{reppassword};
-	my $hostname = hostname_long();
+	my $hostname = hostname();
 	my @hosts;
 
 	return unless($hostname =~ '^db\d+[ab]$');
@@ -606,7 +606,7 @@ sub do_slave_sync
 	my $mport = $config->[0]->{database}->{central}->{dbport} || 3306;
 	my $user = $yml->[0]->{mysql}->{repuser};
 	my $pass = $yml->[0]->{mysql}->{reppassword};
-	my $hostname = hostname_long();
+	my $hostname = hostname();
 
 	if ( $mhost eq "localhost" ) {
 		print "database.central.dbhost is localhost. skipping.\n";
