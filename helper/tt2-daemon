@@ -34,7 +34,7 @@ sub get_server_port {
         'Listen'    => SOMAXCONN,
         'Reuse'     => 1,
     );
-    die "can't setup server" unless $server;
+    die "Error: can't setup tt2-daemon!\n$@\n$!\n" unless $server;
 
     binmode $server => ":encoding(utf8)";
 
