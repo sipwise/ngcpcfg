@@ -11,7 +11,6 @@ use Data::Dumper;
 use IPC::System::Simple qw(system capturex);
 #----------------------------------------------------------------------
 use constant CONSTANTS_YML => "/etc/ngcp-config/constants.yml";
-use constant CONFIG_YML => "/etc/ngcp-config/config.yml";
 use constant NETWORK_YML => "/etc/ngcp-config/network.yml";
 use constant MYSQL_CREDENTIALS => "/etc/mysql/sipwise.cnf";
 use constant MYSQL_DATA => {
@@ -78,7 +77,6 @@ my $db_users = 'mysql';
 my $slave = 0;
 
 my $yml 			= {};
-my $config = {};
 my $password_length = 20;
 my $init_passwords  = 0;
 my $debug 			= 0;
@@ -515,8 +513,8 @@ sub copy_passwords {
 }
 
 sub do_pair_sync {
-	my $dbhost = $config->[0]->{database}->{pair}->{dbhost} || "localhost";
-	my $dbport = $config->[0]->{database}->{pair}->{dbport} || 3306;
+	my $dbhost = $yml->[0]->{database}->{pair}->{dbhost} || "localhost";
+	my $dbport = $yml->[0]->{database}->{pair}->{dbport} || 3306;
 
 	system("/usr/share/ngcp-ngcpcfg/helper/check-for-mysql");
 
@@ -563,8 +561,8 @@ sub get_slave_hosts {
 
 sub do_grant_slaves
 {
-	my $dbhost = $config->[0]->{database}->{pair}->{dbhost} || "localhost";
-	my $dbport = $config->[0]->{database}->{pair}->{dbport} || 3306;
+	my $dbhost = $yml->[0]->{database}->{pair}->{dbhost} || "localhost";
+	my $dbport = $yml->[0]->{database}->{pair}->{dbport} || 3306;
 	my $user = $yml->[0]->{mysql}->{repuser};
 	my $pwd =  $yml->[0]->{mysql}->{reppassword};
 	my $hostname = hostname();
@@ -602,8 +600,8 @@ sub do_slave_sync
 {
 	my $dbhost = $yml->[0]->{database}->{dbhost};
 	my $dbport = $yml->[0]->{database}->{dbport};
-	my $mhost = $config->[0]->{database}->{central}->{dbhost} || "localhost";
-	my $mport = $config->[0]->{database}->{central}->{dbport} || 3306;
+	my $mhost = $yml->[0]->{database}->{central}->{dbhost} || "localhost";
+	my $mport = $yml->[0]->{database}->{central}->{dbport} || 3306;
 	my $user = $yml->[0]->{mysql}->{repuser};
 	my $pass = $yml->[0]->{mysql}->{reppassword};
 	my $hostname = hostname();
@@ -652,10 +650,6 @@ sub main {
 	$yml = new YAML::Tiny;
 	$yml = YAML::Tiny->read(CONSTANTS_YML)
 		or die "Can't read constants file: $!\n";
-
-	$config = new YAML::Tiny;
-	$config = YAML::Tiny->read(CONFIG_YML)
-		or die "Can't read config file: $!\n";
 
 	if ($init_passwords and not $test_mode and not -w CONSTANTS_YML) {
 		die CONSTANTS_YML . " is not writable";
