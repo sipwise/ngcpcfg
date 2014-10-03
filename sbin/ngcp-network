@@ -10,7 +10,7 @@ use Getopt::Long;
 use IO::Interface;
 use IO::Socket;
 use IPC::Open3;
-use List::MoreUtils qw{ any };
+use List::MoreUtils qw{ any minmax };
 use Net::Netmask;
 use Pod::Usage;
 use Regexp::IPv6 qw($IPv6_re);
@@ -33,6 +33,7 @@ my $bond_miimon;
 my $bond_mode;
 my $bond_slaves;
 my $broadcast;
+my $dbnode;
 my @dns_nameservers;
 my $gateway;
 my $help;
@@ -64,6 +65,7 @@ GetOptions(
     'bond-mode=s'        => \$bond_mode,
     'bond-slaves=s'      => \$bond_slaves,
     'broadcast=s'        => \$broadcast,
+    'dbnode:i'           => \$dbnode,
     'dns=s'              => \@dns_nameservers,
     'gateway=s'          => \$gateway,
     'help'               => \$help,
@@ -126,7 +128,7 @@ if ($ip_v6) {
 }
 
 foreach my $opt (
-    $bond_miimon,      $bond_mode,     $broadcast, @dns_nameservers,
+    $bond_miimon,      $bond_mode,     $broadcast, $dbnode, @dns_nameservers,
     $gateway,          @set_interface, $host,      $hwaddr,
     $internal_iface,   $ip,            $ip_v6,     $move_from,
     $move_to,          $netmask,       $peer,      @remove_host,
@@ -364,6 +366,29 @@ sub set_role {
     return;
 }
 
+sub set_dbnode {
+    my $new_dbnode = shift;
+    my @nodes = ( 0, );
+
+    foreach my $h (keys $yaml->[0]->{hosts}) {
+        if($h ne $host && defined $yaml->[0]->{hosts}->{$h}->{dbnode}) {
+            push @nodes, $yaml->[0]->{hosts}->{$h}->{dbnode};
+        }
+    }
+    # if no value is given we have 0
+    if($new_dbnode > 0) {
+        if (scalar(@nodes) > 0 && any { $_ == $new_dbnode } @nodes ) {
+            croak "dbnode already in use";
+        }
+    }
+    else {
+        my @temp = minmax @nodes;
+        $new_dbnode = $temp[1] + 1;
+        logger("use $new_dbnode");
+    }
+    set_yml_config('dbnode', $new_dbnode);
+}
+
 sub move_settings {
     my $from = shift;
     my $to   = shift;
@@ -469,6 +494,13 @@ if ( defined $internal_iface
     set_yml_config( 'internal_iface', $internal_iface );
 }
 
+if ( defined $dbnode && ( !defined $move_from || !defined $move_to ) )
+{
+    logger("set_dbnode($dbnode)");
+    set_dbnode($dbnode);
+}
+
+
 move_settings( $move_from, $move_to );
 
 open my $fh, '>', "$outputfile"
@@ -511,6 +543,11 @@ Set bond_slaves configuration to specified argument.
 =item B<--broadcast=<IP>>
 
 Set broadcast configuration to specified argument.
+
+=item B<--dbnode=<ID>>
+
+Set dbnode configuration to specified number argument. If no value
+is provide it will use the next value available ( max + 1 )
 
 =item B<--dns=<nameserver>>
 
