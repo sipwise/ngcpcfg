@@ -598,8 +598,8 @@ sub do_grant_slaves
 
 sub do_slave_sync
 {
-	my $dbhost = $yml->[0]->{database}->{dbhost};
-	my $dbport = $yml->[0]->{database}->{dbport};
+	my $dbhost = $yml->[0]->{database}->{local}->{dbhost};
+	my $dbport = $yml->[0]->{database}->{local}->{dbport};
 	my $mhost = $yml->[0]->{database}->{central}->{dbhost} || "localhost";
 	my $mport = $yml->[0]->{database}->{central}->{dbport} || 3306;
 	my $user = $yml->[0]->{mysql}->{repuser};
