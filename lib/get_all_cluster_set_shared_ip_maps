@@ -1,34 +1,47 @@
 [%
-  # Return an array of hashes, each hash containing dispatcher_id and ips, 
+  # Return an array of hashes, each hash containing dispatcher_id and ips,
   # which is an array of shared ips, for a given cluster set type.
   #
+  # @param argv.host  If the cluster_set type is 'pair; we need to filter by pair
   # @param argv.type	The type of element we are interested in (rtp, lb)
   # @return out		The array of hashes
 -%]
-[% 
-  blktmp.processed_hosts = {};
+[%
+  IF !hosts.${argv.host}.defined;
+    argv.host = 'self';
+  END;
+-%]
+[%
   out = [];
+
+  IF cluster_sets.type = 'pair';
+    set_hosts = [ hosts.$host, hosts.$host.peer ];
+  ELSE;
+    set_hosts = hosts.keys;
+  END;
+
+
   FOREACH set IN cluster_sets.keys;
-    set = cluster_sets.$set;
-    IF set.${argv.type}.defined;
-      theset = { dispatcher_id = set.dispatcher_id };
-      theset.ips = [];
-      FOREACH entry IN set.${argv.type};
-        iftype = entry.iface;
-        host = entry.host;
-        NEXT IF blktmp.processed_hosts.$host.defined;
-        FOREACH iface IN hosts.$host.interfaces;
-          realiface = hosts.$host.$iface;
-          NEXT UNLESS realiface.type.grep('^' _ iftype _ '$').size();
-          blktmp.processed_hosts.$peer = 1;
-          FOREACH ip IN realiface.shared_ip; 
-            theset.ips.push(ip);
-          END;
+    blktmp.processed_hosts = {};
+    theset = { dispatcher_id = set.dispatcher_id };
+    theset.ips = [];
+
+    FOREACH host IN set_hosts;
+      NEXT UNLESS blktmp.processed_hosts.$host.defined;
+      NEXT UNLESS hosts.$host.role.grep('^' _ argv.type _ '$').size();
+      FOREACH iface IN hosts.$host.interfaces;
+        NEXT UNLESS hosts.$host.$iface.cluster_sets.grep('^' _ set _ '$').size();
+        blktmp.processed_hosts.$peer = 1;
+        theset.ips.push(.ip);
+        FOREACH ip IN hosts.$host.$iface.shared_ip;
+          theset.ips.push(ip);
         END;
       END;
-      IF theset.ips.size();
-        out.push(theset);
-      END;
     END;
+
+    IF theset.ips.size();
+      out.push(theset);
+    END;
+
   END;
 -%]
