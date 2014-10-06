@@ -4,13 +4,19 @@
   # @param argv.type	The type of element we are interested in (rtp, lb)
   # @return out		The hash
 -%]
-[% 
+[%
   out = {};
-  FOR setname IN cluster_sets.keys;
-    NEXT IF setname == "default_set";
-    set = cluster_sets.$setname;
-    IF set.${argv.type}.defined;
-      out.$setname = set.dispatcher_id;
+
+  FOREACH set IN cluster_sets.keys;
+    NEXT IF (set == 'default_set' || set == 'type');
+
+    FOREACH host IN hosts.keys;
+      NEXT UNLESS hosts.$host.role.grep('^' _ argv.type _ '$').size();
+      FOREACH iface IN hosts.$host.interfaces;
+        NEXT UNLESS hosts.$host.$iface.cluster_sets.grep('^' _ set _ '$').size();
+        out.$set = cluster_set.$set.dispatcher_id;
+      END;
     END;
+
   END;
 -%]
