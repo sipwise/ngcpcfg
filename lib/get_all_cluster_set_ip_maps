@@ -1,29 +1,42 @@
 [%
-  # Return an array of hashes, each hash containing dispatcher_id and ips, 
+  # Return an array of hashes, each hash containing dispatcher_id and ips,
   # which is an array of ips, for a given cluster set type.
   #
+  # @param argv.host  If the cluster_set type is 'central; we need to filter by pair
   # @param argv.type	The type of element we are interested in (rtp, lb)
   # @return out		The array of hashes
 -%]
-[% 
+[%
+  IF !hosts.${argv.host}.defined;
+    argv.host = 'self';
+  END;
+-%]
+[%
   out = [];
+
+  IF cluster_sets.type == 'central';
+    set_hosts = [ hosts.$host, hosts.$host.peer ];
+  ELSE;
+    set_hosts = hosts.keys;
+  END;
+
+
   FOREACH set IN cluster_sets.keys;
-    set = cluster_sets.$set;
-    IF set.${argv.type}.defined;
-      theset = { dispatcher_id = set.dispatcher_id };
-      theset.ips = [];
-      FOREACH entry IN set.${argv.type};
-        iftype = entry.iface;
-        host = entry.host;
-        FOREACH iface IN hosts.$host.interfaces;
-          realiface = hosts.$host.$iface;
-          NEXT UNLESS realiface.type.grep('^' _ iftype _ '$').size();
-          theset.ips.push(realiface.ip);
-        END;
-      END;
-      IF theset.ips.size();
-        out.push(theset);
+    NEXT IF (set == 'default_set' || set == 'type');
+    theset = { dispatcher_id = cluster_sets.$set.dispatcher_id };
+    theset.ips = [];
+
+    FOREACH host IN set_hosts;
+      NEXT UNLESS hosts.$host.role.grep('^' _ argv.type _ '$').size();
+      FOREACH iface IN hosts.$host.interfaces;
+        NEXT UNLESS hosts.$host.$iface.cluster_sets.grep('^' _ set _ '$').size();
+        theset.ips.push(hosts.$host.$iface.ip);
       END;
     END;
+
+    IF theset.ips.size();
+      out.push(theset);
+    END;
+
   END;
 -%]
