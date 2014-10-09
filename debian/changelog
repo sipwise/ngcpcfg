@@ -1,3 +1,43 @@
+ngcp-ngcpcfg (0.23.0.0+0~mr3.6.0.0) unstable; urgency=low
+
+  [ Victor Seva ]
+  * [cd344a0] MT#8067 use nodename not hostname
+  * [d9e6ba2] MT#8067 check nodename no hostname to exclude ourselves
+  * [9adfa45] MT#8419 add get_nodename
+  * [401019f] MT#8419 get_nodename: return 'self' if not found
+  * [93278dd] MT#8419 fix 401019fe2.
+  * [c34a6b6] MT#8155 initial work to read the proper database config
+  * [67607b5] MT#8155 refactoring ngcp-sync-constants
+  * [5674c0e] MT#8155 start slave instance of dbcluster.
+  * [f505315] MT#8117 sync-db: connect to central db ( rw ) needed.
+  * [b147a80] MT#7505 Add gitreview file
+  * [78685cf] MT#8117 set defaults to localhost:3306 for central/pair
+  * [9ce7a99] MT#7623 MT#8155 don't exit if network.yml doesn't exist
+  * [5c5c4e8] MT#8623 set the repuser password only if the replication is already set
+  * [0f9a116] MT#8127 set password for repuser on slaves in the grant command
+  * [5ed308c] MT#8763 allow multiple config directories on templates not only "/etc"
+  * [7d422b7] MT#8763 check for .git before running the services
+  * [0311a39] MT#8773 ngcp-sync-constants: grant user sipwise on pair when running with '-r' option
+  * [34e2966] MT#8773 [CARRIER] use hostname() instead of hostname_long()
+  * [4c3b62f] MT#9285 ngcp-sync-constants: don't load config.yml
+  * [7065656] MT#9385 ngcp-network: add --dbnode option
+  * [bf6eae2] MT#9385 add get_dbnode helper
+  * [7800b2a] MT#9285 ngcp-sync-constants: use database.local on slave sync
+  * [b196b6b] MT#9281 cluster_set helpers: rework with info split into config.yml and network.yml
+
+  [ Andreas Granig ]
+  * [37b7d7a] MT#8503 Add helper to fetch cluster ips.
+  * [f726fd2] MT#8503 Add helper to fetch dispatcher ids
+
+  [ Alexander Lutay ]
+  * [6c74dde] MT#8117 Swtich defaults from 127.0.0.1 to localhost
+  * [f8326b4] MT#8763 Add backward compatibility for mr3.4->mr3.5 PRO upgrade
+  * [9ed2741] MT#9333 Improve error logging for tt2-daemon
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 09 Oct 2014 16:47:19 +0200
+
 ngcp-ngcpcfg (0.22.0.0+0~mr3.5.0.0) unstable; urgency=low
 
   [ Michael Prokop ]
