@@ -28,12 +28,12 @@
     theset.ips = [];
 
     FOREACH host IN set_hosts;
-      NEXT UNLESS blktmp.processed_hosts.$host.defined;
+      NEXT IF blktmp.processed_hosts.$host.defined;
       NEXT UNLESS hosts.$host.role.grep('^' _ argv.type _ '$').size();
+      peer = hosts.$host.peer;
       FOREACH iface IN hosts.$host.interfaces;
         NEXT UNLESS hosts.$host.$iface.cluster_sets.grep('^' _ set _ '$').size();
         blktmp.processed_hosts.$peer = 1;
-        theset.ips.push(hosts.$host.$iface.ip);
         FOREACH ip IN hosts.$host.$iface.shared_ip;
           theset.ips.push(ip);
         END;
