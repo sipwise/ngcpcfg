@@ -218,6 +218,9 @@ sub sync_repuser {
 		}
 		my @minfo_content = <$mfh>;
 		close $mfh;
+		unless(grep {/^${mhost}\s*$/}@minfo_content) {
+			die "${mhost} not found at $minfo. Fix replication manually";
+		}
 		unless(grep {/^${pass}\s*$/} @minfo_content) {
 			set_master_pass(
 				dbh => $dbh,
