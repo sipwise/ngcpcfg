@@ -602,17 +602,16 @@ sub do_slave_sync
 {
 	my $dbhost = $yml->[0]->{database}->{local}->{dbhost};
 	my $dbport = $yml->[0]->{database}->{local}->{dbport};
-	my $mhost = $yml->[0]->{database}->{central}->{dbhost} || "localhost";
-	my $mport = $yml->[0]->{database}->{central}->{dbport} || 3306;
+	my $mhost = $yml->[0]->{database}->{central}->{dbmaster};
+	my $mport = $yml->[0]->{database}->{central}->{dbport};
 	my $user = $yml->[0]->{mysql}->{repuser};
 	my $pass = $yml->[0]->{mysql}->{reppassword};
 	my $hostname = hostname();
 
-	if ( $mhost eq "localhost" ) {
+	if ( $yml->[0]->{database}->{central}->{dbhost} eq "localhost" ) {
 		print "database.central.dbhost is localhost. skipping.\n";
 		return
 	}
-	#system('ssh -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" root@'. $mhost ." /usr/share/ngcp-ngcpcfg/helper/check-for-mysql");
 
 	my $dbh = connect_db($dbhost, $dbport, 1);
 	eval {
