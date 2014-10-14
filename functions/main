@@ -4,30 +4,35 @@
 
 ## logging functions {{{
 log_info() {
+  local timestamp=$(date "$TIME_FORMAT")
   logger -t ngcpcfg -- "$*"
-  echo "$*"
+  echo "$timestamp: $*"
 }
 
 # info without ending newline
 log_info_n() {
+  local timestamp=$(date "$TIME_FORMAT")
   logger -t ngcpcfg -- "$*"
-  printf -- "$*"
+  printf -- "$timestamp: $*"
 }
 
 log_warn() {
+  local timestamp=$(date "$TIME_FORMAT")
   logger -t ngcpcfg -- "Warning: $*"
-  echo "Warning: $*"
+  echo "$timestamp: Warning: $*"
 }
 
 log_error() {
+  local timestamp=$(date "$TIME_FORMAT")
   logger -t ngcpcfg -- "Error: $*"
-  echo "Error: $*" >&2
+  echo "$timestamp: Error: $*" >&2
 }
 
 log_debug() {
   if [ -n "${DEBUG:-}" ] ; then
+    local timestamp=$(date "$TIME_FORMAT")
     logger -t ngcpcfg -- "Debug: $*"
-    echo ; echo "DEBUG: $*" ; echo # newlines to avoid messup with cmdline output
+    echo ; echo "$timestamp: DEBUG: $*" ; echo # newlines to avoid messup with cmdline output
   fi
 }
 ## }}}
