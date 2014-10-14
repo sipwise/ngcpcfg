@@ -81,6 +81,7 @@ my $password_length = 20;
 my $init_passwords  = 0;
 my $debug 			= 0;
 my $test_mode 		= 0;
+my $error           = 0;
 
 GetOptions("h|?|help" 		  => \&Usage,
 		   "i|init-passwords"     => \$init_passwords,
@@ -214,10 +215,16 @@ sub sync_repuser {
 		my $mfh;
 		unless(open $mfh, '<', $minfo) {
 			print STDERR "Failed to open $minfo for syncing, replication not synced!\n";
-			next;
+			$error = 1;
+			return;
 		}
 		my @minfo_content = <$mfh>;
 		close $mfh;
+		unless(grep {/^${mhost}\s*$/}@minfo_content) {
+			print STDERR "${mhost} not found at $minfo. Fix replication manually";
+			$error = 2;
+			return;
+		}
 		unless(grep {/^${pass}\s*$/} @minfo_content) {
 			set_master_pass(
 				dbh => $dbh,
@@ -673,13 +680,11 @@ sub main {
 	print "Writing new passwords into ".CONSTANTS_YML." ... ";
 	$yml->write(CONSTANTS_YML);
 	print "Done\n";
-
-#	print Data::Dumper->Dumpxs([$yml]),"\n";
 }
 #----------------------------------------------------------------------
 main();
 
-exit 0;
+exit $error;
 
 __END__
 
