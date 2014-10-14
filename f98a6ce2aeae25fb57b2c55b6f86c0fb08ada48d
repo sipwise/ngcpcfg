@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba092121_67047c15",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2014-10-14T20:07:13Z",
+      "side": 1,
+      "message": "I am not sure about die here. IMHO it should be \n\nprint STDERR + non-zero exit code.",
+      "revId": "f98a6ce2aeae25fb57b2c55b6f86c0fb08ada48d",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
