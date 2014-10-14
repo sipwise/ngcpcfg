@@ -4,6 +4,7 @@
 
 set -e
 set -u
+set -o pipefail
 
 # helper functions {{{
 # sadly we can't source ${FUNCTIONS}/main as we are missing a bunch of
@@ -76,7 +77,7 @@ else
     log_info "Shared storage exists already, ignoring request to (re)install it."
   else
     log_info "Copying git repository to shared storage."
-    git clone --bare /etc/ngcp-config /mnt/glusterfs/ngcpcfg-share
+    git clone --bare /etc/ngcp-config /mnt/glusterfs/ngcpcfg-share | sed "s/^/$timestamp_replacementchars/"
   fi
 fi
 
