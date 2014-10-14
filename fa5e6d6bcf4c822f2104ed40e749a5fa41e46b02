@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba092121_ec9f534f",
+        "filename": "functions/main",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2014-10-14T08:57:11Z",
+      "side": 1,
+      "message": "I\u0027d prefer \"timestamp\u003d$(date ...)\" instead.\n\nAlso maybe we should force TZ\u003dUTC here, like:\n\n  timestamp\u003d$(TZ\u003dUTC date ...\n\nor at least make timezone configurable and default to UTC then?",
+      "revId": "fa5e6d6bcf4c822f2104ed40e749a5fa41e46b02",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
