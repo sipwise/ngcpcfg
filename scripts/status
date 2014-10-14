@@ -4,6 +4,7 @@
 
 set -e
 set -u
+set -o pipefail
 
 # support testsuite
 FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
@@ -61,13 +62,13 @@ check_local_state() {
     if git diff-index --name-only HEAD | grep -q . ; then
       log_info "ACTION_NEEDED: configuration files have been modified:"
       log_debug "git diff-index --name-only HEAD | sed \"s;^;${NGCPCTL_MAIN}/;\""
-      git diff-index --name-only HEAD | sed "s;^;${NGCPCTL_MAIN}/;"
+      git diff-index --name-only HEAD | sed "s;^;${NGCPCTL_MAIN}/;" | sed "s/^/$timestamp_replacementchars/"
     fi
 
     if git ls-files --other --exclude-standard | grep -q . ; then
       log_info "ACTION_NEEDED: configuration files have been added:"
       log_debug "git ls-files --other --exclude-standard | sed \"s;^;${NGCPCTL_MAIN}/;\""
-      git ls-files --other --exclude-standard | sed "s;^;${NGCPCTL_MAIN}/;"
+      git ls-files --other --exclude-standard | sed "s;^;${NGCPCTL_MAIN}/;" | sed "s/^/$timestamp_replacementchars/"
     fi
 
     log_info "-> execute 'ngcpcfg build' and 'ngcpcfg commit'"
