@@ -4,6 +4,7 @@
 
 set -e
 set -u
+set -o pipefail
 
 if ! [ -r /usr/share/ngcp-ngcpcfg/functions/main ] ; then
   printf "Error: /usr/share/ngcp-ngcpcfg/functions/main could not be read. Exiting.\n" >&2
@@ -67,7 +68,7 @@ log_debug "/usr/share/ngcp-ngcpcfg/scripts/etckeeper"
 
 if [ -z "${NO_DB_SYNC:-}" ] ; then
     log_info "Synchronizing data from ${CONSTANTS_CONFIG}"
-    ngcp-sync-constants >/dev/null
+    ngcp-sync-constants >/dev/null | sed "s/^/$timestamp_replacementchars/"
 else
     log_debug "no-db-sync: skipping 'ngcp-sync-constants'"
 fi
