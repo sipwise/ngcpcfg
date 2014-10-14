@@ -574,6 +574,8 @@ sub do_grant_slaves
 		print "skip do_grant_slaves\n";
 		return;
 	}
+	push @hosts, 'sp1';
+	push @hosts, 'sp2';
 	print "--> db cluster node $hostname detected. grant repo user\n" if $debug;
 
 	my $dbh = connect_db($dbhost, $dbport, $mysql_root);
@@ -627,7 +629,7 @@ sub do_slave_sync
 			);
 			# mysql sipwise user
 			my ($mysql_user, $mysql_pass) = get_mysql_credentials();
-			my @hosts = ('localhost');
+			my @hosts = ('localhost', 'sp1', 'sp2');
 			grant_user(dbh => $dbh, user => $mysql_user, hosts => \@hosts, repuser => 0 );
 			sync_user( dbh => $dbh, user => $mysql_user, pass => $mysql_pass );
 			# create localhost users if we need to recreate grants after dump excluding mysql table
