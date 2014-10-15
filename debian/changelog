@@ -1,3 +1,14 @@
+ngcp-ngcpcfg (0.22.1.1+0~mr3.5.1.1) unstable; urgency=low
+
+  [ Victor Seva ]
+  * [1e6fed2] MT#9281 fix b196b6b04f2 get_all_cluster_set_shared_ip_maps: don't add non shared ips
+  * [4f73fa1] MT#9573 ngcp-sync-constants: [CARRIER] add sp1, sp2 to the list of hosts to copy perms from localhost
+  * [9aa7037] MT#9579 [CARRIER] use database.central.dbmaster config as MASTER on local MySQL instance
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 15 Oct 2014 10:48:41 +0200
+
 ngcp-ngcpcfg (0.22.1.0+0~mr3.5.1.0) unstable; urgency=low
 
   [ Victor Seva ]
