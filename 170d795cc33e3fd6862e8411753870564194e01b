@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba092121_27aa04d5",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2014-10-15T09:59:54Z",
+      "side": 1,
+      "message": "Maybe use \"$error \u003d 2\" here to be able to distinguish between the different problems from the outside by simply checking exit code?",
+      "revId": "170d795cc33e3fd6862e8411753870564194e01b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
