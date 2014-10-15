@@ -16,6 +16,24 @@
       "revId": "f98a6ce2aeae25fb57b2c55b6f86c0fb08ada48d",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba092121_c74a2855",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2014-10-15T08:54:13Z",
+      "side": 1,
+      "message": "die \"...\" DOES print on STDERR and exit with non-zero.\nDid you mean to do \"print STDERR ... ; next;\" instead?\nFor me the die \"...\" as-is makes sense, AFAICT.",
+      "parentUuid": "ba092121_67047c15",
+      "revId": "f98a6ce2aeae25fb57b2c55b6f86c0fb08ada48d",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
