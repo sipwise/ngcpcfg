@@ -5,12 +5,15 @@
 set -e
 set -u
 
-if ! [ -r /usr/share/ngcp-ngcpcfg/functions/main ] ; then
-  printf "Error: /usr/share/ngcp-ngcpcfg/functions/main could not be read. Exiting.\n" >&2
+# support testsuite
+FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
+
+if ! [ -r ${FUNCTIONS}/main ] ; then
+  printf "Error: ${FUNCTIONS}/main could not be read. Exiting.\n" >&2
   exit 1
 fi
 
-. /usr/share/ngcp-ngcpcfg/functions/main
+. ${FUNCTIONS}/main
 
 # main script
 
@@ -36,113 +39,85 @@ while [ -n "${1:-}" ] ; do
   esac
 done
 
-remote_check() {
-  if ! "$CHECK_REMOTE" ; then
-    log_info "Skipping remote checks as requested via --local-only option."
-    return 0
+check_local_state() {
+  log_debug "check_local_state"
+
+  log_debug "cd $NGCPCTL_MAIN"
+  cd "$NGCPCTL_MAIN"
+
+  log_info "Checking state of ngcpcfg:"
+  if ! [ -r /etc/ngcp-config/.git/HEAD ] ; then
+    log_warn "ngcpcfg has not been initialised yet. Execute 'ngcpcfg initialise'."
+    exit 0
   fi
 
-  if "$REMOTE_INVOKED" ; then
-    log_debug "REMOTE_INVOKED is enabled, skipping remote_check"
-    return 0
-  fi
+  log_info "OK:   has been initialised already"
 
-  if ! [ -r "$NGCPCTL_MAIN/systems.cfg" ] ; then
-    log_error "File $NGCPCTL_MAIN/systems.cfg could not be read, can not check foreign servers."
-    log_error "Either execute 'ngcpcfg status' without --remote option or configure $NGCPCTL_MAIN/systems.cfg."
-    exit 1
-  fi
-
-  hostlist="$(cat $NGCPCTL_MAIN/systems.cfg)"
-  log_debug "hostlist = $hostlist"
-
-  for host in $hostlist ; do
-    log_debug "check $host == $NNAME"
-    if [[ "$host" == "$NNAME" ]] ; then
-       continue
+  log_info "Checking state of configuration files:"
+  log_debug "git status | grep -q 'working directory clean'"
+  if git status | grep -q 'working directory clean' ; then
+    log_info "OK:   nothing to commit"
+  else
+    if git diff-index --name-only HEAD | grep -q . ; then
+      log_info "ACTION_NEEDED: configuration files have been modified:"
+      log_debug "git diff-index --name-only HEAD | sed \"s;^;${NGCPCTL_MAIN}/;\""
+      git diff-index --name-only HEAD | sed "s;^;${NGCPCTL_MAIN}/;"
     fi
 
-    log_info "-----------------------------------------------------------------"
-    log_info "Checking state on remote system ${host}:"
-    log_debug "timeout 30 ssh $host ngcpcfg status --remote"
-    if timeout 30 ssh $host ngcpcfg status --remote ; then
-      log_debug "ssh $host ngcpcfg status returned without error"
-    else
-      log_error "Error while checking state on remote host ${host}."
-      exit 1
+    if git ls-files --other --exclude-standard | grep -q . ; then
+      log_info "ACTION_NEEDED: configuration files have been added:"
+      log_debug "git ls-files --other --exclude-standard | sed \"s;^;${NGCPCTL_MAIN}/;\""
+      git ls-files --other --exclude-standard | sed "s;^;${NGCPCTL_MAIN}/;"
     fi
-    log_info "End of state check on ${host}."
-  done
+
+    log_info "-> execute 'ngcpcfg build' and 'ngcpcfg commit'"
+  fi
 }
 
-log_debug "cd $NGCPCTL_MAIN"
-cd "$NGCPCTL_MAIN"
+check_etc_state() {
+  log_debug "check_etc_state"
 
-log_info "Checking state of ngcpcfg:"
-if ! [ -r /etc/ngcp-config/.git/HEAD ] ; then
-  log_warn "ngcpcfg has not been initialised yet. Execute 'ngcpcfg initialise'."
-  exit 0
-fi
+  log_debug "cd /etc"
+  cd /etc
 
-log_info "OK:   has been initialised already"
-
-log_info "Checking state of configuration files:"
-log_debug "git status | grep -q 'working directory clean'"
-if git status | grep -q 'working directory clean' ; then
-  log_info "OK:   nothing to commit"
-else
-  if git diff-index --name-only HEAD | grep -q . ; then
-    log_info "ACTION_NEEDED: configuration files have been modified:"
-    log_debug "git diff-index --name-only HEAD | sed \"s;^;${NGCPCTL_MAIN}/;\""
-    git diff-index --name-only HEAD | sed "s;^;${NGCPCTL_MAIN}/;"
-  fi
-
-  if git ls-files --other --exclude-standard | grep -q . ; then
-    log_info "ACTION_NEEDED: configuration files have been added:"
-    log_debug "git ls-files --other --exclude-standard | sed \"s;^;${NGCPCTL_MAIN}/;\""
-    git ls-files --other --exclude-standard | sed "s;^;${NGCPCTL_MAIN}/;"
-  fi
-
-  log_info "-> execute 'ngcpcfg build' and 'ngcpcfg commit'"
-fi
-
-if which status_ha &>/dev/null ; then
-  log_debug "status_ha function"
-  status_ha
-fi
-
-log_debug "cd /etc"
-cd /etc
-
-log_info "Checking state of /etc files:"
-log_debug "git status | grep -q 'working directory clean'"
-if git status | grep -q 'working directory clean' ; then
-  log_info "OK:   nothing to commit"
-else
-  log_info "ACTION_NEEDED: configuration files changed (execute 'etckeeper commit [message]')"
-fi
-
-log_debug "cd $NGCPCTL_MAIN"
-cd "$NGCPCTL_MAIN"
-
-if [ -r /usr/share/ngcp-ngcpcfg/functions/ha_features ] ; then
-  log_info "Checking state of shared storage:"
-  log_debug "git push --dry 2>&1 | grep -q 'Everything up-to-date'"
-  if git push --dry 2>&1 | grep -q 'Everything up-to-date' ; then
-    log_info "OK:   nothing to push"
+  log_info "Checking state of /etc files:"
+  log_debug "git status | grep -q 'working directory clean'"
+  if git status | grep -q 'working directory clean' ; then
+    log_info "OK:   nothing to commit"
   else
-    log_info "ACTION_NEEDED: outstanding changes to push (execute 'ngcpcfg push')"
+    log_info "ACTION_NEEDED: configuration files changed (execute 'etckeeper commit [message]')"
   fi
+}
 
-  log_debug "git fetch --dry-run 2>&1 | grep -q From"
-  if ! git fetch --dry-run 2>&1 | grep -q From ; then
-    log_info "OK:   nothing to pull"
-  else
-    log_info "ACTION_NEEDED: outstanding changes to pull (execute 'ngcpcfg pull')"
+check_push() {
+  if which execute_check_push &>/dev/null ; then
+    log_debug "execute_check_push function"
+    execute_check_push
   fi
+}
 
-  log_debug "remote_check"
-  remote_check
+check_shared_storage() {
+  if which execute_check_shared_storage &>/dev/null ; then
+    log_debug "execute_check_shared_storage function"
+    execute_check_shared_storage
+  fi
+}
+
+check_remote() {
+  if which execute_check_remote &>/dev/null ; then
+    log_debug "execute_check_remote function"
+    execute_check_remote
+  fi
+}
+
+
+if [ -z "${1:-}" ] ; then
+  check_local_state
+  check_push
+  check_etc_state
+  check_shared_storage "$@"
 fi
+
+check_remote "$@"
 
 ## END OF FILE #################################################################
