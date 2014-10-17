@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba092121_d2e66444",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2014-10-17T15:42:47Z",
+      "side": 1,
+      "message": "IPv6 will not match it. Isn\u0027t it?",
+      "revId": "f6c92cee0c2e5fc949ed38c7c6c6fc840bfd1b16",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba092121_f2d96884",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2014-10-17T15:42:47Z",
+      "side": 1,
+      "message": "What about to improve debug message here\n\nprint STDERR \"${mhost} and ${mhost_ip} were not found at $minfo. Fix replication manually\";",
+      "revId": "f6c92cee0c2e5fc949ed38c7c6c6fc840bfd1b16",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
