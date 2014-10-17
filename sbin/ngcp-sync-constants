@@ -8,6 +8,8 @@ use YAML::Tiny;
 use Getopt::Long;
 use Sys::Hostname;
 use Data::Dumper;
+use Socket;
+use List::MoreUtils qw(any);
 use IPC::System::Simple qw(system capturex);
 #----------------------------------------------------------------------
 use constant CONSTANTS_YML => "/etc/ngcp-config/constants.yml";
@@ -209,6 +211,12 @@ sub sync_repuser {
 	my $minfo = "/var/lib/mysql$dbid/master.info";
 	my $mhost = $args{mhost};
 	my $mport = $args{mport} || 3306;
+	my $mhost_ip = $args{mhost};
+
+	unless ( $mhost =~ /^[0-9\.:]+$/ ) {
+		$mhost_ip = inet_ntoa(scalar(gethostbyname($mhost)));
+		print " --> $mhost => $mhost_ip\n" if $debug;
+	}
 
 	print " --> syncing replication user '$user' for master host '$mhost'\n" if $debug;
 	if(-f $minfo) {
@@ -220,12 +228,12 @@ sub sync_repuser {
 		}
 		my @minfo_content = <$mfh>;
 		close $mfh;
-		unless(grep {/^${mhost}\s*$/}@minfo_content) {
+		unless(any {/^(${mhost}|${mhost_ip})\s*$/} @minfo_content) {
 			print STDERR "${mhost} not found at $minfo. Fix replication manually";
 			$error = 2;
 			return;
 		}
-		unless(grep {/^${pass}\s*$/} @minfo_content) {
+		unless(any {/^${pass}\s*$/} @minfo_content) {
 			set_master_pass(
 				dbh => $dbh,
 				user => $user, pass => $pass
