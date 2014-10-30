@@ -1,3 +1,20 @@
+ngcp-ngcpcfg (0.24.0.0+0~mr3.7.0.0) unstable; urgency=low
+
+  [ Victor Seva ]
+  * [0e77003] MT#9281 fix b196b6b04f2 get_all_cluster_set_shared_ip_maps: don't add non shared ips
+  * [8afc87d] MT#9573 ngcp-sync-constants: [CARRIER] add sp1, sp2 to the list of hosts to copy perms from localhost
+  * [872ded0] MT#9579 [CARRIER] use database.central.dbmaster config as MASTER on local MySQL instance
+  * [2cabdf5] MT#9579 ngcp-sync-constants: check host on replication
+  * [10ea8ab] MT#9579 ngcp-sync-constants: fix check for master host
+  * [2437330] MT#9709 fix b196b6b04f Using wrong var.
+
+  [ Michael Prokop ]
+  * [fe8b4ad] MT#9287 Implement status logic for usage on carrier systems
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 30 Oct 2014 17:27:08 +0100
+
 ngcp-ngcpcfg (0.23.0.0+0~mr3.6.0.0) unstable; urgency=low
 
   [ Victor Seva ]
