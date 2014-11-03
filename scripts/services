@@ -26,6 +26,7 @@ fi
 log_debug "DRYRUN = $DRYRUN"
 
 TMPFILE="$(mktemp)"
+log_debug "TMPFILE = $TMPFILE"
 
 # unify service calls
 unifyer() {
@@ -36,7 +37,7 @@ unifyer() {
   # happen if /etc/foo/ngcpcfg.services exists
   # and several file inside /etc/foo are modified)
   if ! grep -q "^${file}$" "$TMPFILE" ; then
-    echo "$file" >> $TMPFILE
+    echo "$file" >> "$TMPFILE"
   fi
 }
 
@@ -64,9 +65,6 @@ for dir in ${CONFIG_POOL} ; do
 done
 
 exec_wrapper() {
-  # normalize path (get rid of "./" and "//")
-  line="$(echo $1 | sed -e 's/\.\///g ; s/\/\//\//g')"
-
   if $DRYRUN ; then
     log_info "TEST MODE: Would execute action for ${line}"
     return 0
@@ -89,10 +87,48 @@ exec_wrapper() {
   fi
 }
 
-for line in $(cat $TMPFILE) ; do
-  exec_wrapper "$line"
-done
+if ! [ -s "$TMPFILE" ] ; then
+  log_debug "No services file(s) reported - nothing to do."
+  exit 0
+fi
 
-rm -f "$TMPFILE"
+# get rid of "./" and "//" in file names
+normalize_files() {
+  NORMALIZED_FILES="$(mktemp)"
+  log_debug "NORMALIZED_FILES = $NORMALIZED_FILES"
 
+  while read line ; do
+    echo "$line" | sed -e 's/\.\///g ; s/\/\//\//g' >> "${NORMALIZED_FILES}"
+  done < "$TMPFILE"
+}
+
+# restart HA related services before the rest (see MT#9971)
+sort_service_list() {
+  SORTED_LIST="$(mktemp)"
+  log_debug "SORTED_LIST = $SORTED_LIST"
+
+  grep    '/etc/ngcp-config/templates/etc/monit/.*services' "${NORMALIZED_FILES}" > "${SORTED_LIST}"
+  grep -v '/etc/ngcp-config/templates/etc/monit/.*services' "${NORMALIZED_FILES}" >> "${SORTED_LIST}"
+}
+
+execute() {
+  while read line ; do
+    exec_wrapper "$line"
+  done < "${SORTED_LIST}"
+}
+
+log_debug "normalize_files function"
+normalize_files
+
+log_debug "sort_service_list function"
+sort_service_list
+
+log_debug "execute function"
+execute
+
+if [ -n "${DEBUG:-}" ] ; then
+  log_debug "Not removing temporary files"
+else
+  rm -f "$TMPFILE" "$NORMALIZED_FILES" "$SORTED_LIST"
+fi
 ## END OF FILE #################################################################
