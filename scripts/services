@@ -107,8 +107,8 @@ sort_service_list() {
   SORTED_LIST="$(mktemp)"
   log_debug "SORTED_LIST = $SORTED_LIST"
 
-  grep    '/etc/ngcp-config/templates/etc/monit/.*services' "${NORMALIZED_FILES}" > "${SORTED_LIST}"
-  grep -v '/etc/ngcp-config/templates/etc/monit/.*services' "${NORMALIZED_FILES}" >> "${SORTED_LIST}"
+  grep    '/etc/ngcp-config/templates/etc/monit/.*services' "${NORMALIZED_FILES}" > "${SORTED_LIST}" || true
+  grep -v '/etc/ngcp-config/templates/etc/monit/.*services' "${NORMALIZED_FILES}" >> "${SORTED_LIST}" || true
 }
 
 execute() {
