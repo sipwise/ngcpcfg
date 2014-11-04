@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "7a23299d_b6b8882b",
+        "filename": "scripts/services",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2014-11-04T11:00:17Z",
+      "side": 1,
+      "message": "This should be:\n\necho \"$line\" | sed -e \u0027s_\\./_/_g ; s_//_/_g\u0027 \u003e\u003e \"${NORMALIZED_FILES}\"\n\nthen though.",
+      "parentUuid": "7a23299d_769b10ca",
+      "range": {
+        "startLine": 101,
+        "startChar": 4,
+        "endLine": 101,
+        "endChar": 76
+      },
+      "revId": "959db79baf574bba7b5b34b0a5dcef5a0691d5f3",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a23299d_b661a8d5",
         "filename": "scripts/services",
         "patchSetId": 2
