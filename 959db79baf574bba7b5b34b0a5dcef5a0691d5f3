@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a23299d_965eac11",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2014-11-04T10:43:00Z",
+      "side": 1,
+      "message": "s/HA/monit/g; Isn\u0027t it?\n\nP.S. several times in text",
+      "revId": "959db79baf574bba7b5b34b0a5dcef5a0691d5f3",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a23299d_769b10ca",
+        "filename": "scripts/services",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2014-11-04T10:43:00Z",
+      "side": 1,
+      "message": "IMHO, it is more readable way:\n\necho \"$line\" | sed -e \u0027s_./_/_g ; s_//_/_g\u0027 \u003e\u003e \"${NORMALIZED_FILES}\"\n\nThis is not a problem here, JFYI only.",
+      "range": {
+        "startLine": 101,
+        "startChar": 4,
+        "endLine": 101,
+        "endChar": 76
+      },
+      "revId": "959db79baf574bba7b5b34b0a5dcef5a0691d5f3",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a23299d_b661a8d5",
+        "filename": "scripts/services",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2014-11-04T10:43:00Z",
+      "side": 1,
+      "message": "I think s/HA/monit/; should be here.",
+      "revId": "959db79baf574bba7b5b34b0a5dcef5a0691d5f3",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
