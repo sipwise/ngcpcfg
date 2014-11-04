@@ -15,7 +15,7 @@
   out = [];
 
   IF cluster_sets.type == 'central';
-    set_hosts = [ hosts.${argv.host}, hosts.${argv.host}.peer ];
+    set_hosts = [ argv.host, hosts.${argv.host}.peer ];
   ELSE;
     set_hosts = hosts.keys;
   END;
@@ -30,7 +30,7 @@
       NEXT UNLESS hosts.$host.role.grep('^' _ argv.type _ '$').size();
       FOREACH iface IN hosts.$host.interfaces;
         NEXT UNLESS hosts.$host.$iface.cluster_sets.grep('^' _ set _ '$').size();
-        theset.ips.push(hosts.$host.$iface.ip);
+        theset.ips.push(hosts.$host.$iface.ip) UNLESS theset.ips.defined(hosts.$host.$iface.ip);
       END;
     END;
 
