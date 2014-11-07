@@ -1,11 +1,13 @@
 [%
   # Returns a list of IPs to ping.
+  # @param argv.dns  add dns IPs
   #
   # @return out		list of pingnodes.
 -%]
 [% PERL -%]
 my $gateway = (split(" ", `ip route | grep default`))[2];
 my @nodes = ($gateway);
+[% IF argv.dns == 'yes' %]
 my @dnsnodes = (split(" ", `grep nameserver /etc/resolv.conf | cut -f2 -d' '|xargs`));
 
 foreach my $host (@dnsnodes)
@@ -21,5 +23,6 @@ foreach my $host (@dnsnodes)
     print "# $host error\n";
   }
 }
+[% END %]
 $stash->set(out => \@nodes);
 [% END -%]
