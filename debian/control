@@ -3,7 +3,7 @@ Section: admin
 Priority: extra
 Maintainer: Sipwise Development Team <support@sipwise.com>
 Build-Depends: asciidoc,
-               debhelper (>= 5),
+               debhelper (>= 9~),
                docbook-xsl,
                libdata-validate-ip-perl,
                libdbd-mysql-perl,
