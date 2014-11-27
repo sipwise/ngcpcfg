@@ -70,6 +70,7 @@ Options:
 	-init-passwords|-i	-- generate new passwords (constants.yml is updated)
 	-slave|-s  -- sync repuser and replication on slave cluster instance
 	-test|-t		-- test mode (no updates)
+	-force-grants|-f	-- force grants ( remove and create user if exists )
 	-verbose|-v 		-- verbose mode
 USAGE
 	exit 0;
@@ -85,12 +86,14 @@ my $init_passwords  = 0;
 my $debug 			= 0;
 my $test_mode 		= 0;
 my $error           = 0;
+my $force_grants	= 0;
 
 GetOptions("h|?|help" 		  => \&Usage,
 		   "i|init-passwords"     => \$init_passwords,
 		   "r|root"               => \$mysql_root,
 		   "s|slave" => \$slave,
 		   "t|test" 		  => \$test_mode,
+		   "f|force-grants"		  => \$force_grants,
 		   "v|verbose" 		  => \$debug);
 #----------------------------------------------------------------------
 sub pwgen {
@@ -352,7 +355,8 @@ SQL
 			$sth_cr->execute($host, $user, $host_orig) unless $test_mode;
 		}
 		else {
-			print "--> user ${user} already created\n" if $debug;
+			print "--> user ${user} already created. Set password again\n" if $debug;
+			$dbh->do("SET PASSWORD FOR '${user}'\@'${host}' = PASSWORD('${pass}');") unless $test_mode;
 		}
 	}
 	$sth_sel->finish;
@@ -603,7 +607,7 @@ sub do_grant_slaves
 		grant_user(dbh => $dbh, user => $mysql_user, hosts => \@hosts, repuser => 0 );
 		sync_user( dbh => $dbh, user => $mysql_user, pass => $mysql_pass );
 		# all mysql users except repuser
-		copy_grants(dbh => $dbh, hosts => \@hosts);
+		copy_grants(dbh => $dbh, hosts => \@hosts, force => $force_grants);
 	};
 	if ($@) {
 		$dbh->rollback;
@@ -717,6 +721,9 @@ New passwords are generated (passwords for "mysql" is not generated to avoid rep
 
 =item B<--slave>
 Sync repuser and check replication of the read-only dbcluster instance (mysqld2)
+
+=item B<--force-grants>
+Remove and recreate users for slave hosts
 
 =item B<--test>
 No real updates, only for checks
