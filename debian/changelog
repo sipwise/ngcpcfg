@@ -1,3 +1,12 @@
+ngcp-ngcpcfg (0.23.3.0+0~mr3.6.3.0) unstable; urgency=low
+
+  [ Victor Seva ]
+  * [35a20b2] MT#10021 get_default_pingnodes: add dns parameter
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 28 Nov 2014 16:28:15 +0100
+
 ngcp-ngcpcfg (0.23.2.0+0~mr3.6.2.0) unstable; urgency=low
 
   [ Victor Seva ]
