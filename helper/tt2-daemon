@@ -7,6 +7,7 @@ use IO::Socket;
 use Hash::Merge qw(merge);
 use Template;
 use YAML qw/LoadFile/;
+use Clone 'clone';
 
 my $server_port = get_server_port();
 
@@ -66,7 +67,7 @@ sub handle_connections {
     };
 
     open my $fh, '<', $template or print $client "Unable to open file '$template' for reading: $!\n";
-    $tt->process($fh, $config, $client) or print $client $tt->error;
+    $tt->process($fh, clone($config), $client) or print $client $tt->error;
     close $fh;
 
     close $client;
