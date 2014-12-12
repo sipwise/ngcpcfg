@@ -3,7 +3,8 @@
   # which is an array of ips, for a given cluster set type.
   #
   # @param argv.host  If the cluster_set type is 'central; we need to filter by pair
-  # @param argv.type	The type of element we are interested in (rtp, lb)
+  # @param argv.role	The role of element we are interested in (rtp, lb)
+  # @param argv.type  The type of the interfaces (rtp_int, sip_int...)
   # @return out		The array of hashes
 -%]
 [%
@@ -27,9 +28,10 @@
     theset.ips = [];
 
     FOREACH host IN set_hosts;
-      NEXT UNLESS hosts.$host.role.grep('^' _ argv.type _ '$').size();
+      NEXT UNLESS hosts.$host.role.grep('^' _ argv.role _ '$').size();
       FOREACH iface IN hosts.$host.interfaces;
         NEXT UNLESS hosts.$host.$iface.cluster_sets.grep('^' _ set _ '$').size();
+        NEXT UNLESS hosts.$host.$iface.type.grep('^' _ argv.type _ '$').size();
         theset.ips.push(hosts.$host.$iface.ip) UNLESS theset.ips.defined(hosts.$host.$iface.ip);
       END;
     END;
