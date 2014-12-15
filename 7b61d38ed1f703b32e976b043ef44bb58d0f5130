@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a1d315d_3420f09a",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2014-12-15T23:44:20Z",
+      "side": 1,
+      "message": "Would be nice if that line could be aligned to the surrounding ones WRT the description (the line with -slave is wrongly indented too), then it\u0027s nicer for the user to read :)",
+      "revId": "7b61d38ed1f703b32e976b043ef44bb58d0f5130",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
