@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a23299d_05025c3e",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 3
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2014-12-15T10:03:35Z",
+      "side": 1,
+      "message": "May need \"flush privileges\" after those grants/passwords changes otherwise looks ok.",
+      "range": {
+        "startLine": 359,
+        "startChar": 3,
+        "endLine": 359,
+        "endChar": 82
+      },
+      "revId": "b6d9fa00b038582ec390637635cd050a7c2eb345",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
