@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3a1d315d_f43958d9",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2014-12-15T23:47:31Z",
+      "side": 1,
+      "message": "I personally wouldn\u0027t use the -f short option switch for this one, we might want to use it for something else in the future which enforces actions but not matching -force-grants exactly.",
+      "revId": "b6d9fa00b038582ec390637635cd050a7c2eb345",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a23299d_05025c3e",
         "filename": "sbin/ngcp-sync-constants",
         "patchSetId": 3
