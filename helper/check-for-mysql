@@ -2,12 +2,18 @@
 
 if [ $# -gt 0 ] ; then
   COUNT=$1
+  MYSQLID=$2
 else
   COUNT=60
 fi
 
+if [ "$MYSQLID" = "2" ] ; then
+  # [client2] on /etc/mysql/debian.cnf
+  SUFF="2"
+fi
+
 if ! [ $COUNT -ge 0 2>/dev/null ] ; then
-  echo "Usage: $0 <number_of_seconds>"
+  echo "Usage: $0 <number_of_seconds> <mysqlid>"
   exit 1
 fi
 
@@ -17,7 +23,7 @@ if ! [ -x /usr/sbin/mysqld ] || ! [ -x /usr/bin/mysqladmin ] ; then
 fi
 
 mysqld_get_param() {
-  /usr/sbin/mysqld --print-defaults 2>/dev/null \
+  /usr/sbin/mysqld --defaults-group-suffix=$SUFF --print-defaults 2>/dev/null \
     | tr " " "\n" \
     | grep -- "--$1" \
     | tail -n 1 \
@@ -25,7 +31,8 @@ mysqld_get_param() {
 }
 
 mysqld_status () {
-  ping_output=$(/usr/bin/mysqladmin --defaults-file=/etc/mysql/debian.cnf ping 2>&1)
+  ping_output=$(/usr/bin/mysqladmin --defaults-group-suffix=$SUFF \
+    --defaults-file=/etc/mysql/debian.cnf ping 2>&1)
   ping_alive=$(( ! $? ))
 
   ps_alive=0
