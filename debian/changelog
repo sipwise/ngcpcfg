@@ -1,3 +1,13 @@
+ngcp-ngcpcfg (0.23.2.2+0~mr3.6.2.2) unstable; urgency=low
+
+  [ Victor Seva ]
+  * [ee40712] MT#10591 lib/get_all_cluster_set_[shared]_ip*: add role and type args
+  * [c395f5f] MT#10635 add get_all_cluster_set[_shared]ip_for_host remove argv.host from get_all_cluster_set[_shared]ip
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 16 Dec 2014 13:35:53 +0100
+
 ngcp-ngcpcfg (0.23.2.1+0~mr3.6.2.1) unstable; urgency=low
 
   [ Victor Seva ]
