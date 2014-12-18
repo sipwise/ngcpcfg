@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa3479d7_928c5c81",
+        "filename": "helper/validate-yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2014-12-18T13:47:55Z",
+      "side": 1,
+      "message": "Don\u0027t we want to output this on stderr and exit then? If so I\u0027d go for die \"....\" then.",
+      "revId": "a9a34905b0d460b7128272b39afc7481ea146946",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
