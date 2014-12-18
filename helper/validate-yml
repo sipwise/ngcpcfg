@@ -10,7 +10,7 @@ use File::Temp qw/tempfile/;
 my $yaml = YAML::Tiny->new;
 my $inputfile  = shift or die 'You did not specify an input file name';
 my $outputfile = new File::Temp( UNLINK => 1 );
-$yaml = YAML::Tiny->read($inputfile);
+$yaml = YAML::Tiny->read($inputfile) || die "Could not read $inputfile\n".$yaml->errstr()."\n";
 open(my $fh, '>', "$outputfile") or die "Could not open $outputfile for writing";
 print $fh $yaml->write_string() or die "Could not write YAML to $outputfile";
 
