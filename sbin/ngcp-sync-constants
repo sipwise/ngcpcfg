@@ -72,6 +72,7 @@ Options:
     -no-grant-nodes     -- skip copy grants for external nodes
     -force-grants       -- force grants (remove and create user if exists)
     -test|-t            -- test mode (no updates)
+    -pair-repl          -- set pair replication
     -verbose|-v         -- verbose mode
 USAGE
 	exit 0;
@@ -89,6 +90,7 @@ my $debug 			= 0;
 my $test_mode 		= 0;
 my $error           = 0;
 my $force_grants	= 0;
+my $replication     = 0;
 
 GetOptions("h|?|help" 		  => \&Usage,
 		   "i|init-passwords"     => \$init_passwords,
@@ -97,6 +99,7 @@ GetOptions("h|?|help" 		  => \&Usage,
 		   "no-grant-nodes"   => \$skip_grant_nodes,
 		   "t|test" 		  => \$test_mode,
 		   "force-grants" => \$force_grants,
+		   "pair-repl" => \$replication,
 		   "v|verbose" 		  => \$debug);
 #----------------------------------------------------------------------
 sub pwgen {
@@ -225,8 +228,8 @@ sub sync_repuser {
 		print " --> $mhost => $mhost_ip\n" if $debug;
 	}
 
-	print " --> syncing replication user '$user' for master host '$mhost'\n" if $debug;
 	if(-f $minfo) {
+		print " --> syncing replication user '$user' for master host '$mhost'\n" if $debug;
 		my $mfh;
 		unless(open $mfh, '<', $minfo) {
 			print STDERR "Failed to open $minfo for syncing, replication not synced!\n";
@@ -249,11 +252,15 @@ sub sync_repuser {
 			print " --> replication password in master.info already in sync for '$user' at master '$mhost'\n" if $debug;
 		}
 	} else {
-		set_master(
-			dbh => $dbh,
-			host => $mhost,
-			user => $user, pass => $pass
-		);
+		print "--> no replication detected\n" if $debug;
+		if ($replication)
+		{
+			set_master(
+				dbh => $dbh,
+				host => $mhost,
+				user => $user, pass => $pass
+			);
+		}
 	}
 }
 
@@ -733,6 +740,9 @@ Remove and recreate users for slave hosts
 
 =item B<--test>
 No real updates, only for checks
+
+=item B<--pair-repl>
+Set replication between peers
 
 =item B<--verbose>
 Verbose mode where all changes are written to STDOUT
