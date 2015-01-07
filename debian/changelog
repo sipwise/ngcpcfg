@@ -1,3 +1,30 @@
+ngcp-ngcpcfg (0.24.1.0+0~mr3.7.1.0) unstable; urgency=low
+
+  [ Victor Seva ]
+  * [4d297ff] MT#9709 get_all_cluster_set*: fix 2437330d4e39
+  * [8273b13] MT#9971 fix commit 4733a4c68219. Don't fail by grep output
+  * [fb66d58] MT#10021 get_default_pingnodes: add dns parameter
+  * [86ae8e8] MT#7141 upgrade package to 3.0 style
+  * [a7f8cd1] MT#10093 add get_network_for_host
+  * [73393c3] MT#10493 tt2-daemon: give the client a copy of the config
+  * [b68b1c4] MT#10591 lib/get_all_cluster_set_[shared]_ip*: add role and type args
+  * [dc4093c] MT#10639 [CARRIER] ngcp-sync-constants: add --no-grant-nodes option
+  * [ff80f07] MT#10635 add get_all_cluster_set[_shared]ip_for_host remove argv.host from get_all_cluster_set[_shared]ip
+  * [d67f109] MT#10659 check-for-mysql add mysqlid parameter
+  * [6362892] MT#9285 [CARRIER] ngcp-sync-constants: add --force-grants option.
+  * [1bab9f9] MT#10695 ngcp-sync-constants: add --pair-repl option
+
+  [ Michael Prokop ]
+  * [4733a4c] MT#9971 Restart monit services before any other services
+  * [02d23cd] MT#9127 Bump Standards-Version to 3.9.6
+
+  [ Alexander Lutay ]
+  * [c4a0658] MT#10071 print YAML::Tiny error message if failed to read yml file
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 07 Jan 2015 21:35:03 +0100
+
 ngcp-ngcpcfg (0.24.0.0+0~mr3.7.0.0) unstable; urgency=low
 
   [ Victor Seva ]
