@@ -3,4 +3,4 @@
 set -e
 
 echo "Executing $0"
-test -f /usr/sbin/ngcpcfg # broken by design
+test -f /bin/true # broken by design

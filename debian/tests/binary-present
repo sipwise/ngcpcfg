@@ -3,4 +3,4 @@
 set -e
 
 echo "Executing $0"
-test -f /usr/sbin/ngcpcfg
+test -f /bin/true
