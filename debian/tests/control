@@ -1,2 +1,2 @@
-Tests: binary-present binary-absent binary-executable
+Tests: binary-present binary-absent binary-executable binary-fail
 Depends: 
