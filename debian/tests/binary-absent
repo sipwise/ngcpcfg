@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -e
+set -ex
 
 echo "Executing $0"
-test -f /bin/true # broken by design
+exit 1
