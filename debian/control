@@ -24,6 +24,7 @@ Build-Depends: asciidoc,
                xsltproc
 Standards-Version: 3.9.6
 Homepage: http://sipwise.com/
+XS-Testsuite: autopkgtest
 
 Package: ngcp-ngcpcfg
 Architecture: all

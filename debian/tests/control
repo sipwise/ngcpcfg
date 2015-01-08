@@ -1,0 +1,2 @@
+Tests: binary-present binary-absent binary-executable
+Depends: @
