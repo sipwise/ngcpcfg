@@ -56,7 +56,6 @@ use constant COPY_PASSWORDS => [ # pairs of from/to
 						{ reminder => { dbuser => 'dbpassword' }}
 
 								];
-use constant NGCP_NODENAME => "/etc/ngcp_ha_node";
 
 sub Usage {
 	print <<USAGE;
@@ -73,6 +72,7 @@ Options:
     -force-grants       -- force grants (remove and create user if exists)
     -test|-t            -- test mode (no updates)
     -pair-repl          -- set pair replication
+    -local-repl         -- set local replication
     -verbose|-v         -- verbose mode
 USAGE
 	exit 0;
@@ -90,7 +90,8 @@ my $debug 			= 0;
 my $test_mode 		= 0;
 my $error           = 0;
 my $force_grants	= 0;
-my $replication     = 0;
+my $pair_repl       = 0;
+my $slave_repl      = 0;
 
 GetOptions("h|?|help" 		  => \&Usage,
 		   "i|init-passwords"     => \$init_passwords,
@@ -99,7 +100,8 @@ GetOptions("h|?|help" 		  => \&Usage,
 		   "no-grant-nodes"   => \$skip_grant_nodes,
 		   "t|test" 		  => \$test_mode,
 		   "force-grants" => \$force_grants,
-		   "pair-repl" => \$replication,
+		   "pair-repl" => \$pair_repl,
+		   "local-repl" => \$slave_repl,
 		   "v|verbose" 		  => \$debug);
 #----------------------------------------------------------------------
 sub pwgen {
@@ -222,6 +224,7 @@ sub sync_repuser {
 	my $mhost = $args{mhost};
 	my $mport = $args{mport} || 3306;
 	my $mhost_ip = $args{mhost};
+	my $replication = $args{repl} || 0;
 
 	unless ( is_ipv4($mhost) or is_ipv6($mhost) ) {
 		$mhost_ip = inet_ntoa(scalar(gethostbyname($mhost)));
@@ -457,13 +460,14 @@ sub sync_mysql_data {
 			my $pass = $pair->{'pass'};
 			next unless ($user && $pass);
 
-			# special handling for getting replication set up or in sync
+			# special handling for getting pair replication set up or in sync
 			if($user eq 'replicator') {
 				if ($mhost) {
 					sync_repuser(
 						dbh => $dbh,
 						mhost => $mhost,
-						user => $user, pass => $pass
+						user => $user, pass => $pass,
+						repl => $pair_repl
 					);
 					grant_user(
 						dbh => $dbh,
@@ -654,7 +658,8 @@ sub do_slave_sync
 				dbh => $dbh,
 				mhost => $mhost, mport => $mport,
 				user => $user, pass => $pass,
-				dbid => "2"
+				dbid => "2",
+				repl => $slave_repl
 			);
 			# mysql sipwise user
 			my ($mysql_user, $mysql_pass) = get_mysql_credentials();
@@ -743,6 +748,9 @@ No real updates, only for checks
 
 =item B<--pair-repl>
 Set replication between peers
+
+=item B<--local-repl>
+Set replication between local RO slave and central db
 
 =item B<--verbose>
 Verbose mode where all changes are written to STDOUT
