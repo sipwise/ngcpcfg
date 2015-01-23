@@ -11,8 +11,8 @@
 X_host = argv.host;
 X_format = argv.format;
 
-IF ! X_host.defined;
-	PROCESS '/usr/lib/ngcp-ngcpcfg/get_hostname'
+IF ! X_host.defined || X_host == '';
+	PROCESS '/usr/lib/ngcp-ngcpcfg/get_hostname';
 	X_host = out;
 END;
 
