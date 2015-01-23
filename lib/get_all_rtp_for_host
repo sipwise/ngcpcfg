@@ -1,0 +1,60 @@
+[%
+
+  # Returns a list of RTP-enabled interfaces for rtpengine
+  #
+  # @param argv.host	The host to get interfaces for. If blank, helper
+  #			script will be called.
+  # @param argv.format	"list" for plain list of interfaces, blank or
+  #			"rtpengine" for full CLI options
+  # @return out		The array of interfaces
+
+X_host = argv.host;
+X_format = argv.format;
+
+IF ! X_host.defined;
+	PROCESS '/usr/lib/ngcp-ngcpcfg/get_hostname'
+	X_host = out;
+END;
+
+IF ! X_format.defined || X_format == '';
+	X_format = 'rtpengine';
+END;
+
+IF ! hosts.$X_host.defined;
+	X_host = 'self';
+END;
+
+out = [];
+
+FOREACH X_iface IN hosts.$X_host.interfaces;
+	X_ifc = hosts.$X_host.$X_iface;
+	X_types = X_ifc.type.grep('^rtp_.');
+	IF X_types.size();
+		X_type = X_types.0;
+		X_type = X_type.remove('^rtp_');
+
+		IF X_format == 'list';
+			out.push(X_type);
+			NEXT;
+		END;
+
+		X_ips = X_ifc.shared_ip.list;
+		IF !X_ips.size() || !X_ips.0.defined;
+			X_ips = X_ifc.ip;
+		END;
+		X_adv_ips = X_ifc.advertised_ip.list;
+		FOREACH X_ip IN X_ips;
+			X_adv_ip = X_adv_ips.shift();
+			out.push(X_type _ '/' _ X_ip _ (X_adv_ip ? ('!' _ X_adv_ip) : ''));
+		END;
+
+		X_ips = X_ifc.shared_v6ip.list;
+		IF !X_ips.size() || !X_ips.0.defined;
+			X_ips = X_ifc.v6ip;
+		END;
+		FOREACH X_ip IN X_ips;
+			out.push(X_type _ '/' _ X_ip);
+		END;
+	END;
+END
+-%]

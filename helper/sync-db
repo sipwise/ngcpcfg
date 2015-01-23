@@ -58,6 +58,9 @@ $dbh = db_connect();
 exit 1 unless(sync_extra_sockets($dbh,
   $config->{kamailio}->{lb}->{extra_sockets}));
 
+exit 1 unless(sync_rtp_interfaces($dbh,
+  { map {$_, $_} @{$config->{rtp_interfaces}} } ));
+
 $dbh->disconnect;
 
 # this part sync with kamailio db
@@ -96,11 +99,10 @@ sub db_connect
 	return $dbh;
 }
 
-## kamailio.lb.extra_sockets handling: ##############################
-sub sync_extra_sockets {
+sub generic_enum_sync {
 	my $dbh = shift;
-	my $sockets = shift;
-	my $pref_name = 'outbound_socket';
+	my $config_hash = shift;
+	my $pref_name = shift;
 	my $sth = $dbh->prepare("select id from voip_preferences where attribute=?");
 	$sth->execute($pref_name);
 	my $res = $sth->fetchrow_hashref();
@@ -117,33 +119,43 @@ sub sync_extra_sockets {
 	$sth = $dbh->prepare("select id, label, value from voip_preferences_enum where preference_id=?");
 	$sth->execute($pref_id);
 
-	my $dbsockets = $sth->fetchall_hashref('label');
+	my $db_hash = $sth->fetchall_hashref('label');
 	$sth->finish;
 
-	foreach my $row (keys %{$dbsockets}) {
-	  $row = $dbsockets->{$row};
+	foreach my $row (keys %{$db_hash}) {
+	  $row = $db_hash->{$row};
 	  next if($row->{label} eq 'default');
-	  if(!exists $sockets->{$row->{label}}) {
-	    print "socket $row->{label} does not exist anymore in config, delete from db\n";
+	  if(!exists $config_hash->{$row->{label}}) {
+	    print "$pref_name $row->{label} does not exist anymore in config, delete from db\n";
 	    $enum_delete_sth->execute($row->{id});
-	  } elsif($sockets->{$row->{label}} ne $row->{value}) {
-	    print "update $row->{label}=$row->{value} to $row->{label}=$sockets->{$row->{label}} in db\n";
-	    $enum_update_sth->execute($sockets->{$row->{label}}, $row->{id});
-	    delete $sockets->{$row->{label}};
+	  } elsif($config_hash->{$row->{label}} ne $row->{value}) {
+	    print "update $pref_name $row->{label}=$row->{value} to $row->{label}=$config_hash->{$row->{label}} in db\n";
+	    $enum_update_sth->execute($config_hash->{$row->{label}}, $row->{id});
+	    delete $config_hash->{$row->{label}};
 	  } else {
-	    print "socket $row->{label}=$row->{value} is sync between config and db\n";
-	    delete $sockets->{$row->{label}};
+	    print "$pref_name $row->{label}=$row->{value} is sync between config and db\n";
+	    delete $config_hash->{$row->{label}};
 	  }
 	}
-	foreach my $sock(keys %{$sockets}) {
-	  print "insert new socket $sock=$sockets->{$sock} from config into db\n";
-	  $enum_insert_sth->execute($pref_id, $sock, $sockets->{$sock});
+	foreach my $label(keys %{$config_hash}) {
+	  print "insert new $pref_name $label=$config_hash->{$label} from config into db\n";
+	  $enum_insert_sth->execute($pref_id, $label, $config_hash->{$label});
 	}
 
 	$enum_insert_sth->finish;
 	$enum_update_sth->finish;
 	$enum_delete_sth->finish;
 	return 1;
+}
+
+## kamailio.lb.extra_sockets handling: ##############################
+sub sync_extra_sockets {
+	return generic_enum_sync(@_, 'outbound_socket');
+}
+
+## rtp_* interfaces handling: ##############################
+sub sync_rtp_interfaces {
+	return generic_enum_sync(@_, 'rtp_interface');
 }
 
 ## faxserver.hw_fax_gateways handling: ##############################
