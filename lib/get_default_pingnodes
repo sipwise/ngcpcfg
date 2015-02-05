@@ -8,7 +8,7 @@
 my $gateway = (split(" ", `ip route | grep default`))[2];
 my @nodes = ($gateway);
 [% IF argv.dns == 'yes' %]
-my @dnsnodes = (split(" ", `grep nameserver /etc/resolv.conf | cut -f2 -d' '|xargs`));
+my @dnsnodes = (split(" ", `grep -v '^#' /etc/resolv.conf | grep nameserver | cut -f2 -d' '|xargs`));
 
 foreach my $host (@dnsnodes)
 {
