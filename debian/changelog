@@ -1,3 +1,19 @@
+ngcp-ngcpcfg (0.26.0.0+0~mr4.0.0.0) unstable; urgency=low
+
+  [ Victor Seva ]
+  * [69d4da9] MT#10959 ngcp-sync-constants: add --local-repl option
+  * [488a169] MT#11371 lib/get_default_pingnodes: exclude commented lines at /etc/resolv.conf
+  * [3aa645c] MT#10059 move /etc/ngcp-config/generated.yml to /etc/ngcp-rtpengine-daemon
+
+  [ Richard Fuchs ]
+  * [f42a824] adding gitignore
+  * [3b030ce] MT#10059 support configurable rtp interfaces
+  * [093ac06] MT#10059 fix hostname detection bug
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 18 Mar 2015 14:10:23 +0100
+
 ngcp-ngcpcfg (0.25.0.0+0~mr3.8.0.0) unstable; urgency=low
 
   [ Victor Seva ]
