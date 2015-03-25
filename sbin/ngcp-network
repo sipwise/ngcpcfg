@@ -387,6 +387,7 @@ sub set_dbnode {
         logger("use $new_dbnode");
     }
     set_yml_config('dbnode', $new_dbnode);
+    return;
 }
 
 sub move_settings {
