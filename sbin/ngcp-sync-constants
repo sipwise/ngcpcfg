@@ -1,8 +1,10 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl
 #----------------------------------------------------------------------
 # Syncronizes passwords from constants.yml with MySQL
 #----------------------------------------------------------------------
 use strict;
+use warnings;
+use English qw( -no_match_vars );
 use DBI qw(:sql_types);
 use YAML::Tiny;
 use Getopt::Long;
@@ -13,38 +15,39 @@ use List::MoreUtils qw(any);
 use Data::Validate::IP qw(is_ipv4 is_ipv6);
 use IPC::System::Simple qw(system capturex);
 #----------------------------------------------------------------------
-use constant CONSTANTS_YML => "/etc/ngcp-config/constants.yml";
-use constant NETWORK_YML => "/etc/ngcp-config/network.yml";
-use constant MYSQL_CREDENTIALS => "/etc/mysql/sipwise.cnf";
-use constant MYSQL_DATA => {
+use Readonly;
+Readonly my $CONSTANTS_YML => "/etc/ngcp-config/constants.yml";
+Readonly my $NETWORK_YML => "/etc/ngcp-config/network.yml";
+Readonly my $MYSQL_CREDENTIALS => "/etc/mysql/sipwise.cnf";
+Readonly my $MYSQL_DATA => {
 						voisniff     => { dbuser => 'dbpassword' },
 						cleanuptools => { dbuser => 'dbpassword' },
 						rsyslog      => { dbuser => 'dbpassword' },
-						sems 		 => { dbuser => 'dbpassword',
-											prepaid_dbuser => 'prepaid_dbpassword' },
-						rateomat 	 => { accountingdb => { user => 'pass' } },
+						sems         => { dbuser => 'dbpassword',
+						                  prepaid_dbuser => 'prepaid_dbpassword' },
+						rateomat     => { accountingdb => { user => 'pass' } },
 						faxserver    => { hylafax => { db_user => 'db_pass' } },
-						cdrexport 	 => { dbuser => 'dbpassword' },
-						checktools 	 => { dbuser => 'dbpassword' },
-						mysql 		 => { repuser => 'reppassword' },
-						kamailio 	 => { proxy => { dbrwuser => 'dbrwpw',
+						cdrexport    => { dbuser => 'dbpassword' },
+						checktools   => { dbuser => 'dbpassword' },
+						mysql        => { repuser => 'reppassword' },
+						kamailio     => { proxy => { dbrwuser => 'dbrwpw',
 												     dbrouser => 'dbropw' } },
-						mediator 	 => { dbuser => 'dbpassword' },
-						asterisk	 => { odbc => { dbuser => 'dbpassword' } },
-						ossbss		 => { provisioning => {
+						mediator     => { dbuser => 'dbpassword' },
+						asterisk     => { odbc => { dbuser => 'dbpassword' } },
+						ossbss       => { provisioning => {
 											billingdb => { user => 'pass' } } },
-						prosody		 => { dbuser => 'dbpassword' },
-						database	 => { debian => { dbuser => 'dbpassword' } },
+						prosody      => { dbuser => 'dbpassword' },
+						database     => { debian => { dbuser => 'dbpassword' } },
 							 };
-use constant COPY_PASSWORDS => [ # pairs of from/to
+Readonly my $COPY_PASSWORDS => [ # pairs of from/to
 						{ rateomat => { accountingdb => { user => 'pass' }}},
 						{ rateomat => { billingdb    => { user => 'pass' }}},
 
 						{ kamailio => { proxy => { dbrwuser => 'dbrwpw' }}},
-						{ kamailio => { lb 	  => { dbrwuser => 'dbrwpw' }}},
+						{ kamailio => { lb    => { dbrwuser => 'dbrwpw' }}},
 
 						{ kamailio => { proxy => { dbrouser => 'dbropw' }}},
-						{ kamailio => { lb 	  => { dbrouser => 'dbropw' }}},
+						{ kamailio => { lb    => { dbrouser => 'dbropw' }}},
 
 						{ ossbss   => { provisioning => { billingdb => { user => 'pass' }}}},
 						{ ossbss   => { provisioning => { database  => { user => 'pass' }}}},
@@ -62,7 +65,7 @@ sub Usage {
 ==
 	Syncronizes passwords from constants.yml with MySQL
 ==
-$0 [options]
+$PROGRAM_NAME [options]
 Options:
     -help|-h|-?         -- this help
     -root|-r            -- use mysql root user without password as DB credentials
@@ -83,26 +86,26 @@ my $db_users = 'mysql';
 my $skip_grant_nodes = 0;
 my $slave = 0;
 
-my $yml 			= {};
+my $yml             = {};
 my $password_length = 20;
 my $init_passwords  = 0;
-my $debug 			= 0;
-my $test_mode 		= 0;
+my $debug           = 0;
+my $test_mode       = 0;
 my $error           = 0;
-my $force_grants	= 0;
+my $force_grants    = 0;
 my $pair_repl       = 0;
 my $slave_repl      = 0;
 
-GetOptions("h|?|help" 		  => \&Usage,
-		   "i|init-passwords"     => \$init_passwords,
-		   "r|root"               => \$mysql_root,
-		   "s|slave" => \$slave,
+GetOptions("h|?|help"         => \&Usage,
+		   "i|init-passwords" => \$init_passwords,
+		   "r|root"           => \$mysql_root,
+		   "s|slave"          => \$slave,
 		   "no-grant-nodes"   => \$skip_grant_nodes,
-		   "t|test" 		  => \$test_mode,
-		   "force-grants" => \$force_grants,
-		   "pair-repl" => \$pair_repl,
-		   "local-repl" => \$slave_repl,
-		   "v|verbose" 		  => \$debug);
+		   "t|test"           => \$test_mode,
+		   "force-grants"     => \$force_grants,
+		   "pair-repl"        => \$pair_repl,
+		   "local-repl"       => \$slave_repl,
+		   "v|verbose"        => \$debug);
 #----------------------------------------------------------------------
 sub pwgen {
 	my @list = ("a".."z",0..9,"A".."Z");
@@ -122,8 +125,8 @@ sub get_mysql_credentials {
 		$mysql_user='root';
 		return ($mysql_user,);
 	}
-	open(my $fh, "<", MYSQL_CREDENTIALS)
-		or die "Can't open ".MYSQL_CREDENTIALS.": ".$!;
+	open(my $fh, "<", $MYSQL_CREDENTIALS)
+		or die "Can't open $MYSQL_CREDENTIALS: $ERRNO";
 	($mysql_pass = <$fh>) =~ s/^.+='(.+?)'\s*$/$1/;
 	close $fh;
 	return ($mysql_user, $mysql_pass);
@@ -176,6 +179,7 @@ SQL
 	};
 	$dbh->do('SLAVE START') unless $test_mode;
 	$sth_master->finish;
+	return;
 }
 
 sub set_master_pass {
@@ -198,6 +202,7 @@ SQL
 	};
 	$dbh->do('SLAVE START') unless $test_mode;
 	$sth_master->finish;
+	return;
 }
 
 sub get_master_node {
@@ -265,6 +270,7 @@ sub sync_repuser {
 			);
 		}
 	}
+	return;
 }
 
 sub do_flush {
@@ -272,6 +278,7 @@ sub do_flush {
 	print "--> flush priveleges\n" if $debug;
 	$dbh->do('FLUSH PRIVILEGES')
 		or die "Can't flush MySQL privileges: ". $DBI::errstr;
+	return;
 }
 
 sub grant_user {
@@ -299,6 +306,7 @@ sub grant_user {
 		print "--> grant user $user ${grant[0]} from $host\n" if $debug;
 		$dbh->do("GRANT ${grant[0]} ON *.* TO '$user'\@'$host' ${grant[1]};") unless $test_mode;
 	}
+	return;
 }
 
 sub copy_grants_user
@@ -377,6 +385,7 @@ SQL
 	$sth_cd->finish;
 	$sth_ct->finish;
 	$sth_cr->finish;
+	return;
 }
 
 sub copy_grants {
@@ -387,15 +396,15 @@ sub copy_grants {
 	my $force = $args{force} || 0;
 	my $yml_ref;
 
-	foreach my $key (keys %{MYSQL_DATA()}) {
+	foreach my $key (keys %{$MYSQL_DATA}) {
 		# skip repuser
 		next if($key eq "mysql");
 		print $key." => " if $debug;
 		$yml_ref = $yml->[0]->{$key};
 		my $opts = { init_passwords => 0 };
-		my $data = get_user_pass(MYSQL_DATA->{$key}, $opts, $yml_ref);
+		my $data = get_user_pass($MYSQL_DATA->{$key}, $opts, $yml_ref);
 		#print "**data:".Dumper($data)."\n" if $debug;
-		foreach my $pair (@$data) {
+		foreach my $pair (@{$data}) {
 			my $user = $pair->{'user'};
 			my $pass = $pair->{'pass'};
 			next unless($user && $pass);
@@ -412,6 +421,7 @@ sub copy_grants {
 
 	return if $test_mode;
 	do_flush($dbh);
+	return;
 }
 
 sub sync_user {
@@ -433,7 +443,7 @@ SQL
 	$sth_sel->execute($user);
 	(my $count) = $sth_sel->fetchrow_array();
 	if ($count) {
-		print "	---> updating $user => $pass\n" if $debug;
+		print "\t---> updating $user => $pass\n" if $debug;
 		$sth_upd->execute($pass, $user) unless $test_mode;
 	}
 
@@ -442,6 +452,7 @@ SQL
 
 	return if $test_mode;
 	do_flush($dbh);
+	return;
 }
 
 sub sync_mysql_data {
@@ -450,12 +461,12 @@ sub sync_mysql_data {
 	my $mhost = get_master_node();
 	my @hosts = ( $mhost, );
 
-	foreach my $key (keys %{MYSQL_DATA()}) {
+	foreach my $key (keys %{$MYSQL_DATA}) {
 		$yml_ref = $yml->[0]->{$key};
 		print $key." => " if $debug;
 		my $opts = { init_passwords => $key eq "mysql" ? 0 : $init_passwords };
-		my $data = get_user_pass(MYSQL_DATA->{$key}, $opts, $yml_ref);
-		foreach my $pair (@$data) {
+		my $data = get_user_pass($MYSQL_DATA->{$key}, $opts, $yml_ref);
+		foreach my $pair (@{$data}) {
 			my $user = $pair->{'user'};
 			my $pass = $pair->{'pass'};
 			next unless ($user && $pass);
@@ -485,6 +496,7 @@ sub sync_mysql_data {
 			sync_user( dbh => $dbh, user => $user, pass => $pass );
 		}
 	}
+	return;
 }
 
 sub get_user_pass {
@@ -493,7 +505,7 @@ sub get_user_pass {
 	my $yml_ref = shift;
 
 	my @data;
-	foreach my $ref (keys %$h_ref) {
+	foreach my $ref (keys %{$h_ref}) {
 		if (ref($ref) eq 'HASH') {
 			return get_user_pass($ref, $opts);
 		} elsif (ref($h_ref->{$ref}) eq 'HASH') {
@@ -521,29 +533,30 @@ sub copy_passwords {
 	print "Copying internal passwords\n" if $debug;
 	my $saved_init_passwords = $init_passwords;
 	$init_passwords = 0;
-	my $pairs_count = $#{+COPY_PASSWORDS};
+	my $pairs_count = $#{+$COPY_PASSWORDS};
 	for (my $idx=0;$idx<$pairs_count+1;$idx++) {
 		next if $idx % 2;
 		die "Incorrect from/to pair" if $idx+1 >= $pairs_count+1;
 		$yml_ref = $yml->[0];
-		print "from	=> " if $debug;
-		my $from_data = get_user_pass(COPY_PASSWORDS->[$idx]);
-		die "No 'from' user/pass data available" if $#$from_data == -1;
+		print "from\t=> " if $debug;
+		my $from_data = get_user_pass($COPY_PASSWORDS->[$idx]);
+		die "No 'from' user/pass data available" if $#{$from_data} == -1;
 		$yml_ref = $yml->[0];
-		print "to	=> " if $debug;
-		my $to_data = get_user_pass(COPY_PASSWORDS->[$idx+1]);
-		die "No 'from' user/pass data available" if $#$to_data == -1;
+		print "to\t=> " if $debug;
+		my $to_data = get_user_pass($COPY_PASSWORDS->[$idx+1]);
+		die "No 'from' user/pass data available" if $#{$to_data} == -1;
 		my $user = $from_data->[0]{'user'};
 		my $pass = $from_data->[0]{'pass'};
 		my $user_key = $to_data->[0]{'user_key'};
 		my $pass_key = $to_data->[0]{'pass_key'};
 		if ($user && $pass && $user_key && $pass_key) {
-			print "	---> updating $user => $pass\n" if $debug;
+			print "\t---> updating $user => $pass\n" if $debug;
 			$yml_ref->{$user_key} = $user;
 			$yml_ref->{$pass_key} = $pass;
 		}
 	}
 	$init_passwords = $saved_init_passwords;
+	return;
 }
 
 sub do_pair_sync {
@@ -555,7 +568,7 @@ sub do_pair_sync {
 	my $dbh = connect_db($dbhost, $dbport, $mysql_root);
 	eval {
 		$dbh->begin_work;
-		print "Syncing ".CONSTANTS_YML." -> MySQL ... ";
+		print "Syncing $CONSTANTS_YML -> MySQL ... ";
 		print "\n" if $debug;
 		sync_mysql_data($dbh);
 		if ($mysql_root) {
@@ -566,22 +579,23 @@ sub do_pair_sync {
 			sync_user( dbh => $dbh, user => $mysql_user, pass => $mysql_pass );
 		}
 	};
-	if ($@) {
+	if ($EVAL_ERROR) {
 		$dbh->rollback;
-		die "\nError during syncronization: " . $@;
+		die "\nError during syncronization: $EVAL_ERROR";
 	} else {
 		$test_mode ? $dbh->rollback : $dbh->commit;
 	}
 	$dbh->disconnect if $dbh;
 
 	print "Done.\n";
+	return;
 }
 
 sub get_slave_hosts {
 	my $self = shift;
 	my $network = new YAML::Tiny;
-	$network = YAML::Tiny->read(NETWORK_YML) || do {
-		print "Can't read network file: $!\n";
+	$network = YAML::Tiny->read($NETWORK_YML) || do {
+		print "Can't read network file: $ERRNO\n";
 		return;
 	};
 	my @hosts;
@@ -623,13 +637,14 @@ sub do_grant_nodes
 		# all mysql users except repuser
 		copy_grants(dbh => $dbh, hosts => \@hosts, force => $force_grants);
 	};
-	if ($@) {
+	if ($EVAL_ERROR) {
 		$dbh->rollback;
-		die "\nError during syncronization: " . $@;
+		die "\nError during syncronization: $EVAL_ERROR";
 	} else {
 		$test_mode ? $dbh->rollback : $dbh->commit;
 	}
 	$dbh->disconnect if $dbh;
+	return;
 }
 
 sub do_slave_sync
@@ -663,7 +678,7 @@ sub do_slave_sync
 			);
 			# mysql sipwise user
 			my ($mysql_user, $mysql_pass) = get_mysql_credentials();
-			my @hosts = ('localhost', 'sp1', 'sp2');
+			my @hosts = qw(localhost sp1 sp2);
 			grant_user(dbh => $dbh, user => $mysql_user, hosts => \@hosts, repuser => 0 );
 			sync_user( dbh => $dbh, user => $mysql_user, pass => $mysql_pass );
 			# create localhost users if we need to recreate grants after dump excluding mysql table
@@ -671,24 +686,25 @@ sub do_slave_sync
 		}
 		sync_user( dbh => $dbh, user => $user, pass => $pass );
 	};
-	if ($@) {
+	if ($EVAL_ERROR) {
 		$dbh->rollback;
-		die "\nError during syncronization: " . $@;
+		die "\nError during syncronization: $EVAL_ERROR";
 	} else {
 		$test_mode ? $dbh->rollback : $dbh->commit;
 	}
 	$dbh->disconnect if $dbh;
 
 	print "Done.\n";
+	return;
 }
 
 sub main {
 	$yml = new YAML::Tiny;
-	$yml = YAML::Tiny->read(CONSTANTS_YML)
-		or die "Can't read constants file: $!\n";
+	$yml = YAML::Tiny->read($CONSTANTS_YML)
+		or die "Can't read constants file: $ERRNO\n";
 
-	if ($init_passwords and not $test_mode and not -w CONSTANTS_YML) {
-		die CONSTANTS_YML . " is not writable";
+	if ($init_passwords and not $test_mode and not -w $CONSTANTS_YML) {
+		die "$CONSTANTS_YML is not writable";
 	}
 
 	print "[TEST MODE]\n" if $test_mode;
@@ -705,9 +721,10 @@ sub main {
 
 	return if $test_mode;
 
-	print "Writing new passwords into ".CONSTANTS_YML." ... ";
-	$yml->write(CONSTANTS_YML);
+	print "Writing new passwords into $CONSTANTS_YML ... ";
+	$yml->write($CONSTANTS_YML);
 	print "Done\n";
+	return;
 }
 #----------------------------------------------------------------------
 main();
@@ -722,9 +739,11 @@ __END__
 
 ngcp-sync-constants - syncronizes passwords from constants.yml with MySQL
 
-=head1 SYNOPSIS
+=head1 USAGE
 
 ngcp-sync-constants [ options ... ]
+
+=head1 OPTIONS
 
 =over 8
 
@@ -757,6 +776,10 @@ Verbose mode where all changes are written to STDOUT
 
 =back
 
+=head1 REQUIRED ARGUMENTS
+
+None
+
 =head1 DESCRIPTION
 
 B<This program> reads constants.yml file, parses it and syncronizes all required passwords with MySQL
@@ -772,6 +795,30 @@ Everything is ok
 Something is wrong, an error message raises
 
 =back
+
+=head1 DIAGNOSTICS
+
+TODO
+
+=head1 DEPENDENCIES
+
+from debian/control:
+	libdbd-mysql-perl
+	libdbi-perl
+	libipc-system-simple-perl
+	liblist-moreutils-perl
+	libsocket-perl
+	libsys-hostname-long-perl
+	libtemplate-perl
+	libyaml-perl
+	libyaml-tiny-perl
+    libreadonly-perl
+
+=head1 CONFIGURATION
+
+/etc/ngcp-config/constants.yml
+/etc/ngcp-config/network.yml
+/etc/mysql/sipwise.cnf
 
 =head1 INCOMPATIBILITIES
 
