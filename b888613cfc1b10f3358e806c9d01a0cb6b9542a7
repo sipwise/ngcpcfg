@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5a2585a7_4555ee1b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2015-03-25T11:09:09Z",
+      "side": 1,
+      "message": "The \"clean tap-test\" sounds to me like the tap-test is part of this git repository. Maybe use something like \"MT#11921 Adjust code to satisfy perlcritic/tap-test policies\" or so?",
+      "revId": "b888613cfc1b10f3358e806c9d01a0cb6b9542a7",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a2585a7_a5db72ec",
         "filename": "sbin/ngcp-sync-constants",
         "patchSetId": 3
@@ -13,6 +30,30 @@
       "writtenOn": "2015-03-25T11:01:48Z",
       "side": 1,
       "message": "seems you are mixing spaces with tabs here, just saying :)",
+      "range": {
+        "startLine": 815,
+        "startChar": 16,
+        "endLine": 815,
+        "endChar": 20
+      },
+      "revId": "b888613cfc1b10f3358e806c9d01a0cb6b9542a7",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a2585a7_c572fee4",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 3
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2015-03-25T11:09:09Z",
+      "side": 1,
+      "message": "Also maybe sort the list alphabetically as we\u0027re doing in debian/control already",
+      "parentUuid": "5a2585a7_a5db72ec",
       "range": {
         "startLine": 815,
         "startChar": 16,
