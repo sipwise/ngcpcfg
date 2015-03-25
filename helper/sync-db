@@ -4,7 +4,7 @@
 
 use strict;
 use warnings;
-
+use English;
 use YAML qw/LoadFile/;
 use Template;
 use Hash::Merge qw(merge);
@@ -18,7 +18,7 @@ my $tt = Template->new({ ABSOLUTE => 1, RELATIVE => 1 });
 
 my $config = {};
 foreach my $file (@ARGV) {
-  $config = merge($config, LoadFile($file) || die $!);
+  $config = merge($config, LoadFile($file) || die $ERRNO);
 }
 # rw connection to central node
 my $dbhost = $config->{database}->{central}->{dbhost};
@@ -59,7 +59,7 @@ exit 1 unless(sync_extra_sockets($dbh,
   $config->{kamailio}->{lb}->{extra_sockets}));
 
 exit 1 unless(sync_rtp_interfaces($dbh,
-  { map {$_, $_} @{$config->{rtp_interfaces}} } ));
+  { map {$_ => $_} @{$config->{rtp_interfaces}} } ));
 
 $dbh->disconnect;
 
@@ -178,10 +178,10 @@ sub sync_faxserver_uris {
 	}
 	my @tmp_array = @{$yaml_fax_gateways};
 	# turn the array into hash reference
-	my $fax_gateways = {}; 
-	foreach my $gw (@tmp_array) { 
+	my $fax_gateways = {};
+	foreach my $gw (@tmp_array) {
 		# e.g: sip:127.0.0.1:5070/255.255.255.0, remove /255.255.255.0
-		my @new_gw_parts =  split('/', $gw); 
+		my @new_gw_parts =  split(/\//, $gw);
  		my $gw_sip_parts = $new_gw_parts[0];
 		$fax_gateways->{$gw_sip_parts} = 1 ;
 	}
@@ -207,9 +207,9 @@ sub sync_faxserver_uris {
 	$dispatcher_delete_sth->finish;
 
 	if($reload_dispatcher){
-	    	print "fax gateway changes, need to reload kamailio dispatcher ... \n";
+		print "fax gateway changes, need to reload kamailio dispatcher ... \n";
 		my $result = `ngcp-kamctl proxy  dispatcher reload`;
-	    	print "reload kamailio dispatcher done, status was: $? \n";
+		print "reload kamailio dispatcher done, status was: $CHILD_ERROR \n";
 	}
 
 	return 1;
