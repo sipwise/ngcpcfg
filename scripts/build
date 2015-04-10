@@ -24,34 +24,6 @@ if [ -n "${1:-}" ] ; then
   esac
 fi
 
-# make sure encoding is OK
-for f in ${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG:-} ${EXTRA_CONFIG_FILES:-} ${CONSTANTS_CONFIG:-} ; do
-  if [ -r "$f" ] && ! file "$f" | grep -qe "UTF-8" -qe "ASCII" ; then
-    log_error "Encoding check of ${f} fails: neither ASCII nor UTF-8."
-    log_error "Please convert ${f} to UTF-8."
-    log_info
-    log_info  "NOTE:"
-    log_info  "* Check encoding via:"
-    log_info  "  # file ${f}"
-    log_info  "* To convert ISO-8859/latin1 to UTF-8 execute:"
-    log_info  "  # iconv -f latin1 -t utf8 < ${f} > ${f}.tmp && mv ${f}.tmp ${f}"
-    exit 1
-  fi
-done
-
-# check for valid YAML syntax
-for f in ${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG:-} ${EXTRA_CONFIG_FILES:-} ${CONSTANTS_CONFIG:-} ; do
-  if [ -r "$f" ] ; then
-    # use YAML::Tiny for checking
-    log_debug "Validating main YAML syntax of ${f}"
-    if ! "${HELPER}/validate-yml" "${f}" 2>/dev/null ; then
-      log_error "Invalid file syntax in ${f}:"
-      "${HELPER}/validate-yml" "${f}"
-      exit 1
-    fi
-  fi
-done
-
 # Kill all previous started tt2-daemon Perl processes if they were not stopped properly
 killall tt2-daemon 2>/dev/null || true
 

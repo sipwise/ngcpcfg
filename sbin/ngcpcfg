@@ -78,6 +78,11 @@ status() {
   "${SCRIPTS}"/status $*
 }
 
+check() {
+  log_debug "${SCRIPTS}/check $*"
+  "${SCRIPTS}"/check $*
+}
+
 usage() {
   # make sure to output errors on stderr
   [ "${1:-}" = "1" ] && exec >&2
@@ -91,6 +96,7 @@ usage() {
   $PN help            - display this help screen and exit
   $PN version         - display program version and exit
   $PN initialise      - initialise setup (to be executed only once on setup)
+  $PN check           - validate YAML configuration files
 "
 
   # display only if ngcp-ngcpcfg-ha is available
@@ -111,7 +117,7 @@ usage() {
   fi
 
   printf "  $PN services [opts] - execute service handlers for modified configuration files
-  $PN apply           - a short-cut for build-services-commit-etckeeper
+  $PN apply           - a short-cut for check-build-services-commit-etckeeper
   $PN status          - display status of configuration file\n\n"
 
   printf "For further usage information and options visit the ngcpcfg manpage.\n"
@@ -124,7 +130,8 @@ version() {
 }
 
 case ${1:-} in
-  build)      shift ; build "$*" ;;
+  build)      shift ; check && build "$*" ;;
+  check)      shift ; check "$*" ;;
   commit)     shift ; commit "$*" ;;
   initialise) initialise;;
   push)       shift ; push "$*" ;;
