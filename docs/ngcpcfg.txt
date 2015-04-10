@@ -190,15 +190,20 @@ Actions
 
   **apply**::
 
-Executes the _build_, _services_ and _commit_ commands in a batch (assuming each
-command worked as expected). This option serves as a shortcut for the most
-commonly executed commands.
+Executes the _check_, _build_, _services_ and _commit_ commands in a batch
+(assuming each command worked as expected). This option serves as a shortcut for
+the most commonly executed commands.
+
+  **check** [<config_files_or_directories>|<pattern>]::
+
+Validate YAML files before performing any further actions.
 
   **build** [--modified-only] [<files_or_directories>|<pattern>]::
 
 Generate configuration files, based on values defined the central yml files and
 based on the templates in the configuration tree (/etc/ngcp-config/templates by
-default). The *--modified-only* option checks for _modified_ and _uncommitted_
+default). Central yml files will be validated for integrity before building using
+_check_ action. The *--modified-only* option checks for _modified_ and _uncommitted_
 configuration files (central yml files and templates) and builds the relevant
 files only. If a central yml file is modified it builds all configuration files.
 If changes are in template files only just the according template files are
