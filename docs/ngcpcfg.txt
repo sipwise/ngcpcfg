@@ -190,9 +190,13 @@ Actions
 
   **apply**::
 
-Executes the _build_, _services_ and _commit_ commands in a batch (assuming each
-command worked as expected). This option serves as a shortcut for the most
-commonly executed commands.
+Executes the _check_, _build_, _services_ and _commit_ commands in a batch
+(assuming each command worked as expected). This option serves as a shortcut for
+the most commonly executed commands.
+
+  **check** [<config_files_or_directories>|<pattern>]::
+
+Validate YAML files before performing any further actions.
 
   **build** [--modified-only] [<files_or_directories>|<pattern>]::
 
