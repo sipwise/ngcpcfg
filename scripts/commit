@@ -18,7 +18,11 @@ HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
 cd "$NGCPCTL_MAIN"
 
 if [ -z "${NO_DB_SYNC:-}" ] ; then
+  if [ -f "${RTP_INTERFACES_CONFIG}" ] ; then
     "${HELPER}/sync-db" "$NGCPCTL_CONFIG" "$CONSTANTS_CONFIG" "$RTP_INTERFACES_CONFIG" || true
+  else
+    "${HELPER}/sync-db" "$NGCPCTL_CONFIG" "$CONSTANTS_CONFIG" || true
+  fi
 else
     log_debug "no-db-sync: skipping 'sync-db'"
 fi
