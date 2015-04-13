@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a2585a7_21319f5a",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2015-04-13T08:52:46Z",
+      "side": 1,
+      "message": "Since this is an explict action now can you please mention that in the related \"build\" action docs?",
+      "revId": "30c16636516a840d161974864fd5e3687a36089f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a2585a7_412cab02",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2015-04-13T08:52:46Z",
+      "side": 1,
+      "message": "If \u0027build\u0027 already include the \u0027check\u0027 run then we don\u0027t need the check within the \u0027apply\u0027 here.",
+      "revId": "30c16636516a840d161974864fd5e3687a36089f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
