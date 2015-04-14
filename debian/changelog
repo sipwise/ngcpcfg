@@ -1,3 +1,12 @@
+ngcp-ngcpcfg (0.25.1.2+0~mr3.8.1.2) unstable; urgency=low
+
+  [ Alexander Lutay ]
+  * [26c6aac] MT#12513 Check $RTP_INTERFACES_CONFIG availability for sync-db
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 14 Apr 2015 16:53:14 +0200
+
 ngcp-ngcpcfg (0.25.1.1+0~mr3.8.1.1) unstable; urgency=low
 
   * New release.
