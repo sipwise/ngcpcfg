@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a2585a7_5fd59bb7",
+        "filename": "helper/tt2-wrapper",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2015-04-23T16:29:13Z",
+      "side": 1,
+      "message": "Hm it still says \"Missed\" :)\n\nI\u0027d go for:\n\n  echo \"ERROR: Couldn\u0027t read file /var/run/ngcpcfg.port\" \u003e\u00262\n  exit 1\n\ninstead since we\u0027re actually trying to -r AKA read it.\nOtherwise LGTM, thanks!",
+      "revId": "43baaed9b7cc0cd91eda27fac20c18ce2742a94d",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
