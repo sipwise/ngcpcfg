@@ -54,6 +54,7 @@ done
 
 # Kill all previous started tt2-daemon Perl processes if they were not stopped properly
 killall tt2-daemon 2>/dev/null || true
+rm -f /var/run/ngcpcfg.port
 
 # Start new tt2-daemon Perl process
 ${HELPER}/tt2-daemon
@@ -155,6 +156,7 @@ fi
 
 # Kill all previous started tt2-daemon Perl processes
 killall tt2-daemon 2>/dev/null || true
+rm -f /var/run/ngcpcfg.port
 
 exit "$RC"
 
