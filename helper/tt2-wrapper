@@ -1,5 +1,12 @@
 #!/bin/bash
 
-echo "$@" | netcat localhost 42042
+if [ -r /var/run/ngcpcfg.port ]; then
+  port=$(cat /var/run/ngcpcfg.port)
+else
+  echo "ERROR: ngcpcfg tt2-daemon port not found (missed /var/run/ngcpcfg.port)" >&2
+  exit 1
+fi
+
+echo "$@" | netcat localhost "$port"
 
 exit $?

@@ -33,13 +33,16 @@ sub get_server_port {
     my $server = IO::Socket::INET->new(
         'Proto'     => 'tcp',
         'LocalAddr' => 'localhost',
-        'LocalPort' => 42_042,
         'Listen'    => SOMAXCONN,
         'Reuse'     => 1,
     );
     die "Error: can't setup tt2-daemon!\n$EVAL_ERROR\n$ERRNO\n" unless $server;
 
     binmode $server => ":encoding(utf8)";
+
+    open (my $PORTFILE, '>', '/var/run/ngcpcfg.port');
+    print $PORTFILE "%d\n", $server->sockport();
+    close ($PORTFILE);
 
     return $server;
 }
