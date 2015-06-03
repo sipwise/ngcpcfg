@@ -1,3 +1,13 @@
+ngcp-ngcpcfg (0.25.3.0+0~mr3.8.3.0) unstable; urgency=low
+
+  [ Alexander Lutay ]
+  * [7b24240] MT#12513 Check $RTP_INTERFACES_CONFIG availability for sync-db
+  * [433e64f] MT#12547 Remove hardcoded port 42042 from tt2-wrapper/tt2-daemon
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 03 Jun 2015 16:39:44 +0200
+
 ngcp-ngcpcfg (0.25.2.0+0~mr3.8.2.0) unstable; urgency=low
 
   * New release.
