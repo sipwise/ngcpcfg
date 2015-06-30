@@ -50,7 +50,4 @@ timestamp_action "services"
 "${SCRIPTS}"/commit "$*"
 timestamp_action "commit"
 
-"${SCRIPTS}"/etckeeper
-timestamp_action "etckeeper"
-
 ## END OF FILE #################################################################

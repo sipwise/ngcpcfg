@@ -168,7 +168,7 @@ version() {
 case ${1:-} in
   build)      shift ; check && build "$*" ;;
   check)      shift ; check "$*" ;;
-  commit)     shift ; commit "$*" ;;
+  commit)     shift ; commit "$*" && etckeeper "$*" ;;
   initialise) initialise;;
   push)       shift ; push "$*" ;;
   pull)       shift ; pull "$*" ;;

@@ -34,13 +34,20 @@ if ! [ -d .git ] ; then
   exit 0
 fi
 
+# commit message
+if [ -z "${1:-}" ] ; then
+  msg="ngcpcfg commits etckeeper on $(date)"
+else
+  msg="$* on $(date)"
+fi
+
 log_info "Checking state of /etc files"
 log_debug 'git status | grep -q "working directory clean"'
 if git status | grep -q 'working directory clean' ; then
   log_info "OK:   nothing to commit."
 else
-  log_debug "etckeeper commit \"ngcpcfg apply on \$(date)\""
-  etckeeper commit "ngcpcfg apply on $(date)" | sed "s/^/$timestamp_replacementchars/"
+  log_debug 'etckeeper commit "$msg"'
+  etckeeper commit "$msg" | sed "s/^/$timestamp_replacementchars/"
 fi
 
 ## END OF FILE #################################################################
