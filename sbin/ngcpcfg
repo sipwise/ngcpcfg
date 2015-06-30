@@ -139,13 +139,13 @@ version() {
 case ${1:-} in
   build)      shift ; check && build "$*" ;;
   check)      shift ; check "$*" ;;
-  commit)     shift ; commit "$*" ;;
+  commit)     shift ; commit "$*" && etckeeper "$*" ;;
   initialise) initialise;;
   push)       shift ; push "$*" ;;
   pull)       shift ; pull "$*" ;;
   services)   shift ; services "$*" ;;
   status)     shift ; status "$*" ;;
-  apply)      shift ; build && services && commit "$*" && etckeeper ;;
+  apply)      shift ; build && services && commit "$*";;
   encrypt)    shift ; encrypt "$*" ;;
   decrypt)    shift ; decrypt "$*" ;;
   diff)       shift ; diff "$*" ;;

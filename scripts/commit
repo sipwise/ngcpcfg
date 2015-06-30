@@ -65,9 +65,6 @@ else
   log_info "OK"
 fi
 
-log_debug "/usr/share/ngcp-ngcpcfg/scripts/etckeeper"
-/usr/share/ngcp-ngcpcfg/scripts/etckeeper >/dev/null
-
 if [ -z "${NO_DB_SYNC:-}" ] ; then
     log_info "Synchronizing data from ${CONSTANTS_CONFIG}"
     ngcp-sync-constants >/dev/null | sed "s/^/$timestamp_replacementchars/"
