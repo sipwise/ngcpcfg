@@ -20,3 +20,4 @@ scripts/etckeeper           usr/share/ngcp-ngcpcfg/scripts/
 scripts/initialise          usr/share/ngcp-ngcpcfg/scripts/
 scripts/services            usr/share/ngcp-ngcpcfg/scripts/
 scripts/status              usr/share/ngcp-ngcpcfg/scripts/
+scripts/values              usr/share/ngcp-ngcpcfg/scripts/
