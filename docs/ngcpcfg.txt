@@ -303,6 +303,10 @@ only and disables checking any remote systems (useful when the remote
 system isn't available).
 
 
+  **values** <key>::
+
+Prints the value of <key> using ngcp config files as source.
+
 Usage examples
 --------------
 
