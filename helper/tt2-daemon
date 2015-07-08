@@ -9,12 +9,17 @@ use Hash::Merge qw(merge);
 use Template;
 use YAML qw/LoadFile/;
 use Clone 'clone';
+use Getopt::Long;
+
+my $quiet = 0;
+
+GetOptions("q|quiet" => \$quiet);
 
 my $server_port = get_server_port();
 
 daemonize();
 
-handle_connections( $server_port );
+handle_connections( $server_port, $quiet );
 
 exit;
 
@@ -49,6 +54,7 @@ sub get_server_port {
 
 sub handle_connections {
     my $port = shift;
+    my $quiet = shift;
     my $config = {};
     my %loaded_ymls = ();
 
@@ -65,9 +71,9 @@ sub handle_connections {
         {
             next if(exists $loaded_ymls{$file});
             $loaded_ymls{$file} = undef;
-            print $client "Loading $file in memory:";
+            print $client "Loading $file in memory:" unless $quiet;
             $config = merge($config, LoadFile($file) || die $ERRNO);
-            print $client " OK \n";
+            print $client " OK \n" unless $quiet;
         };
     };
 
