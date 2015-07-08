@@ -83,6 +83,12 @@ check() {
   "${SCRIPTS}"/check $*
 }
 
+values() {
+  log_debug "${SCRIPTS}/values $*"
+  "${SCRIPTS}"/values $*
+}
+
+
 usage() {
   # make sure to output errors on stderr
   [ "${1:-}" = "1" ] && exec >&2
@@ -97,6 +103,7 @@ usage() {
   $PN version         - display program version and exit
   $PN initialise      - initialise setup (to be executed only once on setup)
   $PN check           - validate YAML configuration files
+  $PN values          - print key value from YAML configuration files
 "
 
   # display only if ngcp-ngcpcfg-ha is available
@@ -143,6 +150,7 @@ case ${1:-} in
   decrypt)    shift ; decrypt "$*" ;;
   diff)       shift ; diff "$*" ;;
   init-mgmt)  shift ; init-mgmt "$*" ;;
+  values)     shift ; values "$*" ;;
   --debug)         export DEBUG=1 ;      shift ; $0 $* ;;
   --no-db-sync)    export NO_DB_SYNC=1 ; shift ; $0 $* ;;
   -h|--help|help)       usage   ; exit 0;;
