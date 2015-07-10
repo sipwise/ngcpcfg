@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa5d592f_5b8839e7",
+        "filename": "scripts/values",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2015-07-10T08:10:43Z",
+      "side": 1,
+      "message": "I\u0027d avoid leaking the full path here, to prevent:\n\nsipwise@spce:~$ sudo ngcpcfg values \nUsage: /usr/share/ngcp-ngcpcfg/helper/values key\n\n\nInstead it should output something like:\n\n\"Usage: ngcpcfg values \u003cargument\u003e\"\n\nMaybe even with some useful usage example?",
+      "revId": "511be608f28ec510db0777bd2c4067775e5e4aba",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
