@@ -38,6 +38,7 @@ Readonly my $MYSQL_DATA => {
 											billingdb => { user => 'pass' } } },
 						prosody      => { dbuser => 'dbpassword' },
 						database     => { debian => { dbuser => 'dbpassword' } },
+						ldap         => { dbuser => 'dbpassword' },
 							 };
 Readonly my $COPY_PASSWORDS => [ # pairs of from/to
 						{ rateomat => { accountingdb => { user => 'pass' }}},
@@ -56,8 +57,10 @@ Readonly my $COPY_PASSWORDS => [ # pairs of from/to
 						{ ossbss   => { provisioning => { openserdb => { user => 'pass' }}}},
 
 						{ ossbss   => { provisioning => { billingdb => { user => 'pass' }}}},
-						{ reminder => { dbuser => 'dbpassword' }}
+						{ reminder => { dbuser => 'dbpassword' }},
 
+						{ ldap     => { dbuser => 'dbpassword' }},
+						{ ldap     => { dbuser => 'rootpwd' }},
 								];
 
 sub Usage {
