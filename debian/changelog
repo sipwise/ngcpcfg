@@ -1,3 +1,22 @@
+ngcp-ngcpcfg (0.26.1.0+0~mr4.0.1.0) unstable; urgency=low
+
+  [ Victor Seva ]
+  * [f6f94ae] MT#11921 Adjust code to satisfy perlcritic/tap-test policies
+  * [df055e5] MT#13891 add values command to get config/constants values easily
+  * [bf4c102] MT#13919 add new 'ldap' constants
+
+  [ Alexander Lutay ]
+  * [9253629] MT#12513 Check $RTP_INTERFACES_CONFIG availability for sync-db
+  * [0a3867a] MT#10071 Add 'check' option for YAML validations
+  * [e35944e] MT#12547 Remove hardcoded port 42042 from tt2-wrapper/tt2-daemon
+
+  [ Michael Prokop ]
+  * [2deea0f] MT#9557 Provide timestamps in console output
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 13 Jul 2015 15:27:58 +0200
+
 ngcp-ngcpcfg (0.26.0.0+0~mr4.0.0.0) unstable; urgency=low
 
   [ Victor Seva ]
