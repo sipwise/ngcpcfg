@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa5d592f_95355548",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2015-07-15T14:02:33Z",
+      "side": 1,
+      "message": "Please move that at the alphabetically ordered place in the Options list (so between --help and --version)",
+      "revId": "c9f8db778d6832e12977bf3a66c3c65c44744029",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa5d592f_553fdd25",
+        "filename": "scripts/check",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2015-07-15T14:02:33Z",
+      "side": 1,
+      "message": "Hm, can\u0027t we rely on $config_files here as we do in the oder functions in this file as well?",
+      "revId": "c9f8db778d6832e12977bf3a66c3c65c44744029",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
