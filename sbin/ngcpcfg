@@ -145,7 +145,7 @@ case ${1:-} in
   pull)       shift ; pull "$*" ;;
   services)   shift ; services "$*" ;;
   status)     shift ; status "$*" ;;
-  apply)      shift ; build && services && commit "$*" && etckeeper ;;
+  apply)      shift ; check && build && services && commit "$*" && etckeeper ;;
   encrypt)    shift ; encrypt "$*" ;;
   decrypt)    shift ; decrypt "$*" ;;
   diff)       shift ; diff "$*" ;;
