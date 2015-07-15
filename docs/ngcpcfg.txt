@@ -173,6 +173,10 @@ services files
 Options
 -------
 
+  **--no-validate**::
+
+Ignore schema validation results for YAML files (syntax check is still performed).
+
   **--debug** <action> [<further_options>]::
 
 Run actions (see next section) in verbose mode, useful for debugging.
@@ -196,7 +200,7 @@ the most commonly executed commands.
 
   **check** [<config_files_or_directories>|<pattern>]::
 
-Validate YAML files before performing any further actions.
+Check syntax of YAML files and validate schema before performing any further actions.
 
   **build** [--modified-only] [<files_or_directories>|<pattern>]::
 
