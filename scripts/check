@@ -53,6 +53,35 @@ check_configs() {
   check_config_syntax
 }
 
+validate_config() {
+  local rc=0
+  log_debug "Validating schema for main YAML files"
+
+  for f in $config_files ; do
+    local schema="/usr/share/ngcp-cfg-schema/validate/$(basename "${f}")"
+
+    if ! [ -f "${schema}" ] ; then
+      continue
+    fi
+
+    if ! pkwalify -s -f "${schema}" "${f}" >/dev/null 2>&1 ; then
+      log_error "Invalid schema detected for ${f}"
+      pkwalify -f "${schema}" "${f}" >&2 || true
+      rc=1
+    fi
+  done
+
+  if [ "$rc" != "0" ] ; then
+    if [ -n "${NO_VALIDATE:-}" ] ; then
+      log_info "DANGEROUS ZONE: invalid configs detected, continue anyway due to option '--no-validate'"
+    else
+      log_error "Aborted, please fix issue(s) above and repeat."
+      exit 1
+    fi
+  fi
+}
+
+
 if [ "$*" = "" ] ; then
   config_files="${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG:-} ${EXTRA_CONFIG_FILES:-} ${CONSTANTS_CONFIG:-}"
 else
@@ -60,6 +89,7 @@ else
 fi
 
 check_configs
+validate_config
 
 exit 0
 
