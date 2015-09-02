@@ -1,0 +1,21 @@
+[%
+  # @return out		list of fax_gateway URLs.
+-%]
+[%
+  IF faxserver.fax_gateways.size > 0;
+    out = faxserver.fax_gateways.unique;
+  ELSE;
+    argv.role='proxy'; argv.type='sip_int';
+    PROCESS '/usr/lib/ngcp-ngcpcfg/get_all_shared_ips;
+    IF !out.size;
+      PROCESS '/usr/lib/ngcp-ngcpcfg/get_all_ips;
+    END;
+    sip_int_ips = out;
+    out = ();
+    FOREACH ip IN sip_int_ips;
+      IF ip;
+        out.push("sip:"_ ip _ ":" _ asterisk.sip.bindport);
+      END;
+    END;
+  END;
+-%]
