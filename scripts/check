@@ -81,6 +81,16 @@ validate_config() {
   fi
 }
 
+check_configs_conflicts() {
+  log_info "Checking merge conflicts in ngcp configs:"
+  if grep -rP '^>>>>>>> [0-9a-fA-F]+' /etc/ngcp-config/ 2>&1; then
+    log_error "ERROR: ngcp configs with Git merge conflicts found."
+    exit 1
+  else
+    log_info "No ngcp configs with merge conflicts found."
+  fi
+}
+
 if [ "$*" = "" ] ; then
   config_files="${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG:-} ${EXTRA_CONFIG_FILES:-} ${CONSTANTS_CONFIG:-}"
 else
@@ -91,6 +101,7 @@ check_configs
 if "${VALIDATE_SCHEMA:-false}" ; then
   validate_config
 fi
+check_configs_conflicts
 
 exit 0
 
