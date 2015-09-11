@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_efba7a09",
+        "filename": "scripts/check",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2015-09-11T09:52:42Z",
+      "side": 1,
+      "message": "IMHO, we should use \u0027find\u0027 here to skip dpkg-bak, dpkg-old, etc.\n\nMika should I care about it?",
+      "revId": "ea4016f210059603d6e45e6904298646f92711b4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
