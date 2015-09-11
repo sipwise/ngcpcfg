@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_6f40ca56",
+        "filename": "scripts/check",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2015-09-11T16:28:53Z",
+      "side": 1,
+      "message": "TODO: exclude .git \u0026\u0026 dpkg-* (c) Victor",
+      "revId": "4f25bc8cb1917ec89107d738d37c5dc8164f0d50",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
