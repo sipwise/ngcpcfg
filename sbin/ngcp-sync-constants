@@ -43,6 +43,7 @@ Readonly my $MYSQL_DATA => {
 Readonly my $COPY_PASSWORDS => [ # pairs of from/to
 						{ rateomat => { accountingdb => { user => 'pass' }}},
 						{ rateomat => { billingdb    => { user => 'pass' }}},
+						{ rateomat => { provisioningdb    => { user => 'pass' }}},
 
 						{ kamailio => { proxy => { dbrwuser => 'dbrwpw' }}},
 						{ kamailio => { lb    => { dbrwuser => 'dbrwpw' }}},
