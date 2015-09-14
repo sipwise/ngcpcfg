@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_0a493cd0",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2015-09-14T08:53:50Z",
+      "side": 1,
+      "message": "where is cfg-schema.git review for those changes?\n\nIt is a bit tricky part of product which is not documented properly. We need to take care of proper random password generation on new installation and upgrade.\n\nFeel free to ask Victor for details here.",
+      "revId": "13ad9fca6cc3cbb28447968e5b2700cfb4acab95",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_6a3af837",
+        "filename": "testsuite/ngcp-config/constants.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2015-09-14T08:53:50Z",
+      "side": 1,
+      "message": "can you please remove trailing spaces here",
+      "revId": "13ad9fca6cc3cbb28447968e5b2700cfb4acab95",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
