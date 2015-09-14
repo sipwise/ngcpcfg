@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_eaf8284b",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2015-09-14T09:14:48Z",
+      "side": 1,
+      "message": "this is not a new password, is just using the same but in another table. No need to touch installer/upgrader.",
+      "parentUuid": "da6255ed_0a493cd0",
+      "revId": "13ad9fca6cc3cbb28447968e5b2700cfb4acab95",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_6a3af837",
         "filename": "testsuite/ngcp-config/constants.yml",
         "patchSetId": 2
