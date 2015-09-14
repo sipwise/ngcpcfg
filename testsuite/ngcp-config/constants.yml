@@ -45,6 +45,10 @@ rateomat:
     name: accounting
     user: rateomat
     pass: dn7iM9YgPcJhmHXo9eWr
+  provisioningdb:
+    name: provisioning
+    user: rateomat
+    pass: dn7iM9YgPcJhmHXo9eWr    
 mysql:
 
   repuser: replicator
