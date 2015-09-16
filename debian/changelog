@@ -1,3 +1,12 @@
+ngcp-ngcpcfg (0.26.1.2+0~mr4.0.1.2) unstable; urgency=medium
+
+  [ Richard Fuchs ]
+  * [78fe50f] MT#15237 Generate list of RTP interfaces from all configured hosts
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 16 Sep 2015 18:49:19 +0200
+
 ngcp-ngcpcfg (0.26.1.1+0~mr4.0.1.1) unstable; urgency=medium
 
   [ Alexander Lutay ]
