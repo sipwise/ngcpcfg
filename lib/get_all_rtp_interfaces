@@ -1,0 +1,32 @@
+[%
+
+  # Returns a list of RTP-enabled interfaces from all hosts
+  #
+  # @return out		The array of interfaces
+
+X_out = { };
+
+FOREACH X_host IN hosts.keys;
+	X_hd = hosts.$X_host;
+	X_roles = X_hd.role;
+	IF X_roles.grep('^rtp$').size() == 0;
+		NEXT;
+	END;
+
+	FOREACH X_iface IN X_hd.interfaces;
+		X_if = X_hd.$X_iface;
+		X_types = X_if.type;
+		X_tgl = X_types.grep('^rtp_.');
+		IF X.tgl.size() == 0;
+			NEXT;
+		END;
+
+		X_type = X_tgl.0;
+		X_type = X_type.remove('^rtp_');
+		X_out.$X_type = 1;
+	END;
+END;
+
+X_vals = X_out.keys;
+out = X_vals.sort;
+-%]
