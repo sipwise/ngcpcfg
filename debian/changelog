@@ -1,3 +1,13 @@
+ngcp-ngcpcfg (0.26.1.3+0~mr4.0.1.3) unstable; urgency=medium
+
+  [ Alexander Lutay ]
+  * [2b2618f] MT#15261 Fix YML merging order for tt2-daemon
+  * [c9e628d] MT#15261 Allow using symbolic links for YML files
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 18 Sep 2015 16:59:17 +0200
+
 ngcp-ngcpcfg (0.26.1.2+0~mr4.0.1.2) unstable; urgency=medium
 
   [ Richard Fuchs ]
