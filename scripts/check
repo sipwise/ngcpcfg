@@ -19,7 +19,7 @@ fi
 check_config_encoding() {
   log_debug "Checking encoding for $config_files"
   for f in $config_files ; do
-    if [ -r "$f" ] && ! file "$f" | grep -qe "UTF-8" -qe "ASCII" ; then
+    if [ -r "$f" ] && ! file -L "$f" | grep -qe "UTF-8" -qe "ASCII" ; then
       log_error "Encoding check of ${f} fails: neither ASCII nor UTF-8."
       log_error "Please convert ${f} to UTF-8."
       log_info
