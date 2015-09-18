@@ -26,7 +26,7 @@ fi
 
 # make sure encoding is OK
 for f in ${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG:-} ${EXTRA_CONFIG_FILES:-} ${CONSTANTS_CONFIG:-} ; do
-  if [ -r "$f" ] && ! file "$f" | grep -qe "UTF-8" -qe "ASCII" ; then
+  if [ -r "$f" ] && ! file -L "$f" | grep -qe "UTF-8" -qe "ASCII" ; then
     log_error "Encoding check of ${f} fails: neither ASCII nor UTF-8."
     log_error "Please convert ${f} to UTF-8."
     log_info
