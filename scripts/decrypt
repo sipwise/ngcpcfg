@@ -20,7 +20,8 @@ console_output() {
     return 0
   fi
 
-  local timestamp="$(date "$TIME_FORMAT")"
+  local timestamp
+  timestamp="$(date "$TIME_FORMAT")"
 
   # indent depending on number of characters in date output
   timestamp_replacementchars="$(printf -- "%s: " "$timestamp" | sed 's/./ /g')"

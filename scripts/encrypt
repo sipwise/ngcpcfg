@@ -9,15 +9,16 @@ set -u
 FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
 HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
 
-if ! [ -r ${FUNCTIONS}/main ] ; then
-  printf "Error: ${FUNCTIONS}/main could not be read. Exiting.\n" >&2
+if ! [ -r "${FUNCTIONS}"/main ] ; then
+  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}" >&2
   exit 1
 fi
 
-. ${FUNCTIONS}/main
+. "${FUNCTIONS}"/main
 
 get_config_file_list() {
   for dir in ${CONFIG_POOL} ; do
+    # shellcheck disable=SC2044
     for file in $(find "$TEMPLATE_POOL_BASE/${dir}" -name \*.tt2 -o -name \*.tt2"${HA_FILE:-}") ; do
       x=${file##${NGCPCTL_MAIN}/templates/}  # drop leading /etc/ngcp-config
       y=${x%%.tt2}                           # drop trailing suffix '.tt2'
@@ -43,7 +44,7 @@ fi
 RC=0
 TARGZ=/etc/ngcp-config-crypted.tgz
 FILES=$(get_config_file_list)
-
+# shellcheck disable=SC2086
 tar zcf "$TARGZ" /etc/ngcp-config/ $FILES /etc/.git
 if gpg --symmetric "$TARGZ" ; then
   log_info "Successfully created crypted ngcpcfg configuration archive ${TARGZ}.gpg"
@@ -54,8 +55,10 @@ fi
 
 log_info_n "Now really erase all configuration files managed by ngcpcfg? [y/N] "
 a='' ; read a
-if [[ "$a" == "y" ]] || [ "$a" == "Y" ]] ; then
-  rm -rf "$NGCPCTL_MAIN" ; rm -f "$TARGZ" ; rm -f $FILES ; rm -rf /etc/.git
+if [[ "$a" == "y" ]] || [[ "$a" == "Y" ]] ; then
+  rm -rf "$NGCPCTL_MAIN" ; rm -f "$TARGZ"
+  # shellcheck disable=SC2086
+  rm -f $FILES ; rm -rf /etc/.git
   # make sure we don't leavy any stuff on shared storage
   rm -rf /var/lib/glusterfs/export/ngcpcfg-share
   rm -rf /mnt/glusterfs/ngcpcfg-share/

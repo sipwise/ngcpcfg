@@ -6,12 +6,16 @@ set -e
 set -u
 set -o pipefail
 
-if ! [ -r /usr/share/ngcp-ngcpcfg/functions/main ] ; then
-  printf "Error: /usr/share/ngcp-ngcpcfg/functions/main could not be read. Exiting.\n" >&2
+# support testsuite
+FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
+
+if ! [ -r "${FUNCTIONS}"/main ] ; then
+  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}">&2
   exit 1
 fi
 
-. /usr/share/ngcp-ngcpcfg/functions/main
+timestamp_replacementchars=''
+. "${FUNCTIONS}"/main
 
 # main script
 
@@ -35,7 +39,7 @@ log_debug 'git status | grep -q "working directory clean"'
 if git status | grep -q 'working directory clean' ; then
   log_info "OK:   nothing to commit."
 else
-  log_debug 'etckeeper commit "ngcpcfg apply on $(date)"'
+  log_debug "etckeeper commit \"ngcpcfg apply on \$(date)\""
   etckeeper commit "ngcpcfg apply on $(date)" | sed "s/^/$timestamp_replacementchars/"
 fi
 

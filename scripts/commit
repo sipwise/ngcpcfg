@@ -6,14 +6,19 @@ set -e
 set -u
 set -o pipefail
 
-if ! [ -r /usr/share/ngcp-ngcpcfg/functions/main ] ; then
-  printf "Error: /usr/share/ngcp-ngcpcfg/functions/main could not be read. Exiting.\n" >&2
+# support testsuite
+FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
+HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
+SCRIPTS="${SCRIPTS:-/usr/share/ngcp-ngcpcfg/scripts/}"
+
+if ! [ -r "${FUNCTIONS}"/main ] ; then
+  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}">&2
   exit 1
 fi
 
-. /usr/share/ngcp-ngcpcfg/functions/main
+timestamp_replacementchars=''
+. "${FUNCTIONS}"/main
 
-HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
 # main script
 
 cd "$NGCPCTL_MAIN"
@@ -35,16 +40,16 @@ if ! git config user.name >/dev/null ; then
   git config user.name "ngcp-config"
 fi
 if ! git config user.email >/dev/null ; then
-  log_debug 'git config user.email "root@$(hostname)"'
+  log_debug "git config user.email \"root@\$(hostname)\""
   git config user.email "root@$(hostname)"
 fi
 
 if ! git config --global user.name >/dev/null ; then
-  log_debug 'git config --global user.name "git user on $(hostname)"'
+  log_debug "git config --global user.name \"git user on \$(hostname)\""
   git config --global user.name "git user on $(hostname)"
 fi
 if ! git config --global user.email >/dev/null ; then
-  log_debug 'git config --global user.email "root@$(hostname)"'
+  log_debug "git config --global user.email \"root@\$(hostname)\""
   git config --global user.email "root@$(hostname)"
 fi
 
@@ -59,23 +64,23 @@ log_debug "git status | grep -q 'working directory clean'"
 if git status | grep -q 'working directory clean' ; then
    log_info "OK:   nothing to commit."
 else
-  if [ -f /usr/share/ngcp-ngcpcfg/scripts/pull ] ; then
+  if [ -f "${SCRIPTS}"/pull ] ; then
     log_debug 'git stash'
     git stash >/dev/null
-    if ! /usr/share/ngcp-ngcpcfg/scripts/pull ; then
+    if ! "${SCRIPTS}"/pull ; then
       exit 1
     fi
     log_debug 'git stash pop'
     git stash pop >/dev/null
   fi
-  log_debug 'git add . ; git commit -a -m "$msg [$(date --rfc-3339=ns)]"'
+  log_debug "git add . ; git commit -a -m \"\$msg [\$(date --rfc-3339=ns)]\""
   git add .
   git commit -a -m "$msg [$(date --rfc-3339=ns)]" >/dev/null
   log_info "OK"
 fi
 
-log_debug "/usr/share/ngcp-ngcpcfg/scripts/etckeeper"
-/usr/share/ngcp-ngcpcfg/scripts/etckeeper >/dev/null
+log_debug "${SCRIPTS}/etckeeper"
+"${SCRIPTS}"/etckeeper >/dev/null
 
 if [ -z "${NO_DB_SYNC:-}" ] ; then
     log_info "Synchronizing data from ${CONSTANTS_CONFIG}"
