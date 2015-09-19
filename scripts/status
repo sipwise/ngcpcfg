@@ -9,12 +9,13 @@ set -o pipefail
 # support testsuite
 FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
 
-if ! [ -r ${FUNCTIONS}/main ] ; then
-  printf "Error: ${FUNCTIONS}/main could not be read. Exiting.\n" >&2
+if ! [ -r "${FUNCTIONS}"/main ] ; then
+  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}">&2
   exit 1
 fi
 
-. ${FUNCTIONS}/main
+timestamp_replacementchars=''
+. "${FUNCTIONS}"/main
 
 # main script
 

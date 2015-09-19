@@ -31,12 +31,12 @@ fi
 FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
 HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
 
-if ! [ -r ${FUNCTIONS}/main ] ; then
-  printf "Error: ${FUNCTIONS}/main could not be read. Exiting.\n" >&2
+if ! [ -r "${FUNCTIONS}"/main ] ; then
+  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}">&2
   exit 1
 fi
 
-. ${FUNCTIONS}/main
+. "${FUNCTIONS}"/main
 
 TT_WRAPPER="${HELPER}/tt2-wrapper"
 
@@ -45,7 +45,7 @@ killall tt2-daemon 2>/dev/null || true
 rm -f /var/run/ngcpcfg.port
 
 # Start new tt2-daemon Perl process
-${HELPER}/tt2-daemon --quiet
+"${HELPER}"/tt2-daemon --quiet
 
 # Load all the configs in proper order and check their avialability and valid YAML syntax
 for f in ${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG:-} ${EXTRA_CONFIG_FILES:-} ${CONSTANTS_CONFIG:-} ; do
