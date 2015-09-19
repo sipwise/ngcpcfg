@@ -9,12 +9,13 @@ set -o pipefail
 # support testsuite
 FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
 
-if ! [ -r ${FUNCTIONS}/main ] ; then
-  printf "Error: ${FUNCTIONS}/main could not be read. Exiting.\n" >&2
+if ! [ -r "${FUNCTIONS}"/main ] ; then
+  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}">&2
   exit 1
 fi
 
-. ${FUNCTIONS}/main
+timestamp_replacementchars=''
+. "${FUNCTIONS}"/main
 
 # main script
 
@@ -29,6 +30,9 @@ usage() {
 --local-only - do not check state on any remote host(s) (HA/PRO only)\n\n"
 }
 
+# shellcheck disable=SC2034
+{
+# used on ngcpcfg-ha/functions/ha_features.execute_check_remote()
 CHECK_REMOTE=true
 REMOTE_INVOKED=false
 while [ -n "${1:-}" ] ; do
@@ -39,6 +43,7 @@ while [ -n "${1:-}" ] ; do
     *) break ;;
   esac
 done
+}
 
 check_local_state() {
   log_debug "check_local_state"
