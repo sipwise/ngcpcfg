@@ -63,7 +63,7 @@ if ! [ -r /etc/.gitignore ] ; then
 else
   log_debug 'grep -q ngcp-config /etc/.gitignore'
   if ! grep -q ngcp-config /etc/.gitignore ; then
-    log_info_n "etckeeper seems to be present, adding "$NGCPCTL_MAIN" to ignore list: "
+    log_info_n "etckeeper seems to be present, adding \"$NGCPCTL_MAIN\" to ignore list: "
     echo "ngcp-config" >> /etc/.gitignore
     log_debug 'cd /etc ; git add .gitignore ; git commit -m "add ngcp-config directory to .gitignore"'
     cd /etc

@@ -42,6 +42,7 @@ unifyer() {
 }
 
 for dir in ${CONFIG_POOL} ; do
+  #shellcheck disable=SC2106
   (
   if ! [[ "${dir}" =~ ^/ ]] ; then
     log_error "${dir} is not an absolute path"
@@ -56,9 +57,9 @@ for dir in ${CONFIG_POOL} ; do
     if [ -r "$file" ] && [ -r "${SERVICES_POOL_BASE}/${dir}/${file}".services ] ; then
       log_debug "unifyer ${SERVICES_POOL_BASE}/${dir}/${file}.services"
       unifyer "${SERVICES_POOL_BASE}/${dir}/${file}".services
-    elif [ -r "$file" ] && [ -r $SERVICES_POOL_BASE/${dir}/"$(dirname $file)"/ngcpcfg.services ] ; then
-      log_debug "unifyer ${SERVICES_POOL_BASE}/${dir}/$(dirname $file)/ngcpcfg.services"
-      unifyer "${SERVICES_POOL_BASE}/${dir}"/"$(dirname $file)/ngcpcfg.services"
+    elif [ -r "$file" ] && [ -r "${SERVICES_POOL_BASE}/${dir}/$(dirname "$file")"/ngcpcfg.services ] ; then
+      log_debug "unifyer ${SERVICES_POOL_BASE}/${dir}/$(dirname "$file")/ngcpcfg.services"
+      unifyer "${SERVICES_POOL_BASE}/${dir}/$(dirname "$file")/ngcpcfg.services"
     fi
   done
   )
