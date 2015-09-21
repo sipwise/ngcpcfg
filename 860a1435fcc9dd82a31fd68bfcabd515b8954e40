@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da6255ed_bfe26b01",
+        "filename": "scripts/commit",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2015-09-21T07:43:26Z",
+      "side": 1,
+      "message": "Copy\u0026paste from build. Actually spread it like this on the rest. No problem from my POW",
+      "parentUuid": "da6255ed_14c83e21",
+      "revId": "860a1435fcc9dd82a31fd68bfcabd515b8954e40",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6255ed_f4cc8a37",
         "filename": "scripts/encrypt",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2015-09-19T22:12:50Z",
       "side": 1,
       "message": "maybe loop is better here, to remove them one by one?",
+      "revId": "860a1435fcc9dd82a31fd68bfcabd515b8954e40",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_1fd4d71e",
+        "filename": "scripts/encrypt",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2015-09-21T07:43:26Z",
+      "side": 1,
+      "message": "why? one rm execution seems better",
+      "parentUuid": "da6255ed_f4cc8a37",
       "revId": "860a1435fcc9dd82a31fd68bfcabd515b8954e40",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
@@ -70,6 +106,30 @@
       "writtenOn": "2015-09-19T22:12:50Z",
       "side": 1,
       "message": "Yes, it is.\n  \nngcpcfg-ha/functions/ha_features:\n   79  }\n   80  \n   81: execute_check_remote() {\n   82:   if ! \"$CHECK_REMOTE\" ; then\n   83      log_info \"Skipping remote checks as requested via --local-only option.\"\n   84      return 0\n   ..\n   86  \n   87    if \"$REMOTE_INVOKED\" ; then\n   88:     log_debug \"REMOTE_INVOKED is enabled, skipping check_remote\"\n   89      return 0\n   90    fi",
+      "parentUuid": "da6255ed_b4b972eb",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 20
+      },
+      "revId": "860a1435fcc9dd82a31fd68bfcabd515b8954e40",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_ffd8e354",
+        "filename": "scripts/status",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2015-09-21T07:43:26Z",
+      "side": 1,
+      "message": "Done",
       "parentUuid": "da6255ed_b4b972eb",
       "range": {
         "startLine": 33,
