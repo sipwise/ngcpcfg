@@ -1,3 +1,29 @@
+ngcp-ngcpcfg (0.28.0.0+0~mr4.2.0.0) unstable; urgency=medium
+
+  [ Alexander Lutay ]
+  * [9ca317d] MT#13669 MT#10071 Fix 0a3867a: check configs on 'apply'
+  * [34f731b] MT#13669 Add YML configs validation accordingly to kwalify schema
+  * [986030b] MT#15141 Add check for merge failures
+  * [fe7644d] MT#15261 Fix YML merging order for tt2-daemon
+  * [b9d07de] MT#15261 Allow using symbolic links for YML files
+
+  [ Rene Krenn ]
+  * [6a4bad6] MT#15193 manage ratomat provisioningdb user/credentials
+
+  [ Richard Fuchs ]
+  * [776a4da] MT#15237 Generate list of RTP interfaces from all configured hosts
+
+  [ Victor Seva ]
+  * [76ada0a] MT#15293 commit: [PRO] do pull first
+  * [eac494c] MT#14229 clean shellcheck warnings
+
+  [ Víctor Seva ]
+  * [b883a9f] Revert "MT#15293 commit: [PRO] do pull first"
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 12 Oct 2015 15:41:27 +0200
+
 ngcp-ngcpcfg (0.27.0.0+0~mr4.1.0.0) unstable; urgency=low
 
   [ Victor Seva ]
