@@ -43,7 +43,9 @@ Readonly my $MYSQL_DATA => {
 Readonly my $COPY_PASSWORDS => [ # pairs of from/to
 						{ rateomat => { accountingdb => { user => 'pass' }}},
 						{ rateomat => { billingdb    => { user => 'pass' }}},
-						{ rateomat => { provisioningdb    => { user => 'pass' }}},
+
+						{ rateomat => { accountingdb   => { user => 'pass' }}},
+						{ rateomat => { provisioningdb => { user => 'pass' }}},
 
 						{ kamailio => { proxy => { dbrwuser => 'dbrwpw' }}},
 						{ kamailio => { lb    => { dbrwuser => 'dbrwpw' }}},
@@ -279,7 +281,7 @@ sub sync_repuser {
 
 sub do_flush {
 	my $dbh = shift;
-	print "--> flush priveleges\n" if $debug;
+	print "\t--> flush priveleges\n" if $debug;
 	$dbh->do('FLUSH PRIVILEGES')
 		or die "Can't flush MySQL privileges: ". $DBI::errstr;
 	return;
@@ -403,9 +405,8 @@ sub copy_grants {
 	foreach my $key (keys %{$MYSQL_DATA}) {
 		# skip repuser
 		next if($key eq "mysql");
-		print $key." => " if $debug;
 		$yml_ref = $yml->[0]->{$key};
-		my $opts = { init_passwords => 0 };
+		my $opts = { parent => $key, init_passwords => 0 };
 		my $data = get_user_pass($MYSQL_DATA->{$key}, $opts, $yml_ref);
 		#print "**data:".Dumper($data)."\n" if $debug;
 		foreach my $pair (@{$data}) {
@@ -467,8 +468,8 @@ sub sync_mysql_data {
 
 	foreach my $key (keys %{$MYSQL_DATA}) {
 		$yml_ref = $yml->[0]->{$key};
-		print $key." => " if $debug;
-		my $opts = { init_passwords => $key eq "mysql" ? 0 : $init_passwords };
+		my $opts = { parent => $key,
+					 init_passwords => $key eq "mysql" ? 0 : $init_passwords };
 		my $data = get_user_pass($MYSQL_DATA->{$key}, $opts, $yml_ref);
 		foreach my $pair (@{$data}) {
 			my $user = $pair->{'user'};
@@ -507,27 +508,33 @@ sub get_user_pass {
 	my $h_ref = shift || "No data passed to fetch_mysql_data";
 	my $opts = shift;
 	my $yml_ref = shift;
+	my $deep = shift || 0;
+
+	my $key  = $opts->{parent} || '';
 
 	my @data;
 	foreach my $ref (keys %{$h_ref}) {
+		print "$key => " if $debug && $deep == 0 && $key;
 		if (ref($ref) eq 'HASH') {
-			return get_user_pass($ref, $opts);
+			push @data, @{ get_user_pass($ref, $opts) };
 		} elsif (ref($h_ref->{$ref}) eq 'HASH') {
-			print $ref." => " if $debug;
-			$yml_ref = $yml_ref->{$ref};
-			return get_user_pass($h_ref->{$ref}, $opts, $yml_ref);
+			print $ref." -> " if $debug;
+			my $yml_key_ref = $yml_ref->{$ref};
+			push @data,
+				@{ get_user_pass($h_ref->{$ref}, $opts, $yml_key_ref, $deep+1) };
 		} else {
-			print " ".$ref." -- ".$h_ref->{$ref} if $debug;
+			print $ref." -- ".$h_ref->{$ref} if $debug;
 			$opts->{'init_passwords'} and $yml_ref->{$h_ref->{$ref}} = pwgen();
 			my %pair;
 			$pair{'user'} = $yml_ref->{$ref};
 			$pair{'pass'} = $yml_ref->{$h_ref->{$ref}};
-			$pair{'user_key'}  = $ref;
-			$pair{'pass_key'}  = $h_ref->{$ref};
+			$pair{'user_ref'}  = \$yml_ref->{$ref};
+			$pair{'pass_ref'}  = \$yml_ref->{$h_ref->{$ref}};
 			push @data, \%pair;
+			print "\n" if $debug;
+			return \@data;
 		}
 	}
-	print "\n" if $debug;
 	return \@data;
 }
 
@@ -543,20 +550,20 @@ sub copy_passwords {
 		die "Incorrect from/to pair" if $idx+1 >= $pairs_count+1;
 		$yml_ref = $yml->[0];
 		print "from\t=> " if $debug;
-		my $from_data = get_user_pass($COPY_PASSWORDS->[$idx]);
+		my $from_data = get_user_pass($COPY_PASSWORDS->[$idx], {}, $yml_ref);
 		die "No 'from' user/pass data available" if $#{$from_data} == -1;
 		$yml_ref = $yml->[0];
 		print "to\t=> " if $debug;
-		my $to_data = get_user_pass($COPY_PASSWORDS->[$idx+1]);
-		die "No 'from' user/pass data available" if $#{$to_data} == -1;
+		my $to_data = get_user_pass($COPY_PASSWORDS->[$idx+1], {}, $yml_ref);
+		die "No 'to' user/pass data available" if $#{$to_data} == -1;
 		my $user = $from_data->[0]{'user'};
 		my $pass = $from_data->[0]{'pass'};
-		my $user_key = $to_data->[0]{'user_key'};
-		my $pass_key = $to_data->[0]{'pass_key'};
-		if ($user && $pass && $user_key && $pass_key) {
+		my $user_ref = $to_data->[0]{'user_ref'};
+		my $pass_ref = $to_data->[0]{'pass_ref'};
+		if ($user && $pass && $user_ref && $pass_ref) {
 			print "\t---> updating $user => $pass\n" if $debug;
-			$yml_ref->{$user_key} = $user;
-			$yml_ref->{$pass_key} = $pass;
+			$$user_ref = $user;
+			$$pass_ref = $pass;
 		}
 	}
 	$init_passwords = $saved_init_passwords;
