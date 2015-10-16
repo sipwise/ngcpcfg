@@ -94,6 +94,35 @@ check_configs_conflicts() {
   fi
 }
 
+check_shared_storage() {
+  # ensure there are no outstanding pull/push actions,
+  # unless --no-action-failure is enabled
+  if ! type -p execute_check_shared_storage &>/dev/null ; then
+    log_debug "execute_check_shared_storage not available"
+    return 0
+  fi
+
+  log_debug "execute_check_shared_storage function"
+  if [ "${NO_ACTION_FAILURE:-}" = "1" ] ; then
+    if execute_check_shared_storage ; then
+      log_debug "No outstanding actions identified (NO_ACTION_FAILURE=1)."
+    else
+      log_info "Ignoring outstanding push/pull actions as --no-action-failure option is enabled."
+    fi
+
+    return 0
+  fi
+
+  execute_check_shared_storage && RC=0 || RC=$?
+  if [ "$RC" = "0" ] ; then
+    log_debug "No outstanding actions identified (NO_ACTION_FAILURE unset)."
+  else
+    log_info "Outstanding push/pull actions have been identified (see ACTION_NEEDED), exiting."
+    log_info "TIP: Use the '--no-action-failure' option to force execution anyway (use with care!)."
+    return $RC
+  fi
+}
+
 if [ "$*" = "" ] ; then
   config_files="${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG:-} ${EXTRA_CONFIG_FILES:-} ${CONSTANTS_CONFIG:-}"
 else
@@ -105,6 +134,8 @@ if "${VALIDATE_SCHEMA:-false}" ; then
   validate_config
 fi
 check_configs_conflicts
+
+check_shared_storage || exit $?
 
 exit 0
 
