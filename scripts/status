@@ -90,21 +90,21 @@ check_etc_state() {
 }
 
 check_push() {
-  if which execute_check_push &>/dev/null ; then
+  if type -p execute_check_push &>/dev/null ; then
     log_debug "execute_check_push function"
     execute_check_push
   fi
 }
 
 check_shared_storage() {
-  if which execute_check_shared_storage &>/dev/null ; then
+  if type -p execute_check_shared_storage &>/dev/null ; then
     log_debug "execute_check_shared_storage function"
     execute_check_shared_storage
   fi
 }
 
 check_remote() {
-  if which execute_check_remote &>/dev/null ; then
+  if type -p execute_check_remote &>/dev/null ; then
     log_debug "execute_check_remote function"
     execute_check_remote
   fi
