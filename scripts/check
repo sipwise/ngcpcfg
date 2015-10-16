@@ -100,6 +100,11 @@ else
   config_files="$*"
 fi
 
+if type -p execute_check_shared_storage &>/dev/null ; then
+  log_debug "execute_check_shared_storage function"
+  execute_check_shared_storage
+fi
+
 check_configs
 if "${VALIDATE_SCHEMA:-false}" ; then
   validate_config
