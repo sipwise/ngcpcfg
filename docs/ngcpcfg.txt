@@ -181,6 +181,14 @@ Run actions (see next section) in verbose mode, useful for debugging.
 
 Display usage information and exit.
 
+  **--no-action-failure**::
+
+By default if any outstanding actions for push/pull are identified the _check_ and _apply_ commands
+abort to inform the user about it. If this option is enabled then ngcpcfg
+doesn't abort on outstanding actions.
+
+Note: This option is available in the High Availability setup only.
+
   **--no-validate**::
 
 Ignore schema validation results for YAML files (syntax check is still performed).

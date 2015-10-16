@@ -106,6 +106,19 @@ if "${VALIDATE_SCHEMA:-false}" ; then
 fi
 check_configs_conflicts
 
+# ensure there are no outstanding pull/push actions,
+# unless --ignore-errors has been provided error out on
+# outstanding actions
+if type -p execute_check_shared_storage &>/dev/null ; then
+  log_debug "execute_check_shared_storage function"
+  if $NO_ACTION_FAILURE ; then
+    log_info "Not failing on outstanding actions because --no-action-failure option is enabled."
+    execute_check_shared_storage
+  else
+    execute_check_shared_storage "fail_on_action_needed"
+  fi
+fi
+
 exit 0
 
 ## END OF FILE #################################################################
