@@ -83,14 +83,16 @@ validate_config() {
 }
 
 check_configs_conflicts() {
-  log_info "Checking merge conflicts in ngcp configs:"
+  log_debug "Checking merge conflicts in ngcp configs:"
   if grep -rP --exclude-dir='.git' --exclude='*.dpkg-*' \
-     '^>>>>>>> [0-9a-fA-F]+' /etc/ngcp-config/ 2>&1
+     '^>>>>>>> [0-9a-fA-F]+' /etc/ngcp-config/ >/dev/null 2>&1
   then
-    log_error "ERROR: ngcp configs with Git merge conflicts found."
+    log_error "ERROR: ngcp configs with Git merge conflicts found:"
+    grep -rP --exclude-dir='.git' --exclude='*.dpkg-*' \
+     '^>>>>>>> [0-9a-fA-F]+' /etc/ngcp-config/ >&2
     exit 1
   else
-    log_info "No ngcp configs with merge conflicts found."
+    log_debug "No ngcp configs with merge conflicts found."
   fi
 }
 
