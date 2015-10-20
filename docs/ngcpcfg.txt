@@ -284,6 +284,11 @@ sip:carrier environment. Further details about the details of the setup
 are available in the <<init-mgmt>> section.
 Note: This feature is only available if the ngcp-ngcpcfg-carrier package is installed.
 
+  **log** [<server>]::
+
+Prints the log of changes on specified server. If no servers are specific
+print local changes.
+
   **pull**::
 
 Retrieve modifications from shared repository.
@@ -311,6 +316,11 @@ _--dry-run_ option is present the services won't be executed but you'll be
 noticed which service files would be executed if being invoked without the
 _--dry-run__ option.
 
+  **show** [<change_id>]::
+
+Display the change details for specified <change_id>. Show the last change if
+no <change_id> is specified.
+
   **status** [--local-only]::
 
 Display the current state of the configuration system, like modified
@@ -318,7 +328,6 @@ configuration files and pending actions.
 Note: The _--local-only_ option is available in the High Availability setup
 only and disables checking any remote systems (useful when the remote
 system isn't available).
-
 
   **values** <key>::
 
