@@ -30,9 +30,9 @@ Readonly my $MYSQL_DATA => {
 						cdrexport    => { dbuser => 'dbpassword' },
 						checktools   => { dbuser => 'dbpassword' },
 						mysql        => { repuser => 'reppassword' },
-						kamailio     => { proxy => { dbrwuser => 'dbrwpw',
-												     dbrouser => 'dbropw' } },
 						mediator     => { dbuser => 'dbpassword' },
+						kamailio     => { proxy => { dbrwuser => 'dbrwpw',
+													 dbrouser => 'dbropw' } },
 						asterisk     => { odbc => { dbuser => 'dbpassword' } },
 						ossbss       => { provisioning => {
 											billingdb => { user => 'pass' } } },
@@ -514,16 +514,16 @@ sub get_user_pass {
 
 	my @data;
 	foreach my $ref (keys %{$h_ref}) {
-		print "$key => " if $debug && $deep == 0 && $key;
+		printf "%s =>\n", $key if $debug && $deep == 0 && $key;
 		if (ref($ref) eq 'HASH') {
-			push @data, @{ get_user_pass($ref, $opts) };
+			push @data, @{ get_user_pass($ref, $opts, $yml_ref, $deep+1) };
 		} elsif (ref($h_ref->{$ref}) eq 'HASH') {
-			print $ref." -> " if $debug;
+			printf "%s%s ->\n", " "x(($deep+1)*2), $ref  if $debug;
 			my $yml_key_ref = $yml_ref->{$ref};
 			push @data,
 				@{ get_user_pass($h_ref->{$ref}, $opts, $yml_key_ref, $deep+1) };
 		} else {
-			print $ref." -- ".$h_ref->{$ref} if $debug;
+			printf "%s%s:%s\n", " "x(($deep+1)*2), $ref, $h_ref->{$ref} if $debug;
 			$opts->{'init_passwords'} and $yml_ref->{$h_ref->{$ref}} = pwgen();
 			my %pair;
 			$pair{'user'} = $yml_ref->{$ref};
@@ -531,8 +531,6 @@ sub get_user_pass {
 			$pair{'user_ref'}  = \$yml_ref->{$ref};
 			$pair{'pass_ref'}  = \$yml_ref->{$h_ref->{$ref}};
 			push @data, \%pair;
-			print "\n" if $debug;
-			return \@data;
 		}
 	}
 	return \@data;
@@ -549,11 +547,11 @@ sub copy_passwords {
 		next if $idx % 2;
 		die "Incorrect from/to pair" if $idx+1 >= $pairs_count+1;
 		$yml_ref = $yml->[0];
-		print "from\t=> " if $debug;
+		print "<+ from:\n" if $debug;
 		my $from_data = get_user_pass($COPY_PASSWORDS->[$idx], {}, $yml_ref);
 		die "No 'from' user/pass data available" if $#{$from_data} == -1;
 		$yml_ref = $yml->[0];
-		print "to\t=> " if $debug;
+		print "+> to:\n" if $debug;
 		my $to_data = get_user_pass($COPY_PASSWORDS->[$idx+1], {}, $yml_ref);
 		die "No 'to' user/pass data available" if $#{$to_data} == -1;
 		my $user = $from_data->[0]{'user'};
