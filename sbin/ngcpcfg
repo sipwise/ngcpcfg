@@ -88,6 +88,15 @@ values() {
   "${SCRIPTS}"/values $*
 }
 
+log() {
+  log_debug "${SCRIPTS}/log $*"
+  "${SCRIPTS}"/log $*
+}
+
+show() {
+  log_debug "${SCRIPTS}/show $*"
+  "${SCRIPTS}"/show $*
+}
 
 usage() {
   # make sure to output errors on stderr
@@ -104,6 +113,8 @@ usage() {
   $PN initialise      - initialise setup (to be executed only once on setup)
   $PN check           - validate YAML configuration files
   $PN values          - print key value from YAML configuration files
+  $PN log             - show log of config changes
+  $PN show [id]       - show config changes with specified id
 "
 
   # display only if ngcp-ngcpcfg-ha is available
@@ -151,6 +162,8 @@ case ${1:-} in
   diff)       shift ; diff "$*" ;;
   init-mgmt)  shift ; init-mgmt "$*" ;;
   values)     shift ; values "$*" ;;
+  log)        shift ; log "$*" ;;
+  show)       shift ; show "$*" ;;
   --debug)         export DEBUG=1 ;      shift ; $0 $* ;;
   --no-db-sync)    export NO_DB_SYNC=1 ; shift ; $0 $* ;;
   --no-validate)   export NO_VALIDATE=1; shift ; $0 $* ;;
