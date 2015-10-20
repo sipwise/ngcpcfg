@@ -1,0 +1,38 @@
+#!/bin/bash
+# Purpose: show ngcpcfg log (git log) in human readable format
+################################################################################
+
+set -e
+set -u
+
+# support testsuite
+FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
+HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
+
+if ! [ -r "${FUNCTIONS}"/main ] ; then
+  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}" >&2
+  exit 1
+fi
+
+. "${FUNCTIONS}"/main
+
+cd "$NGCPCTL_MAIN"
+
+if [ -f "${FUNCTIONS}/ha_features" ] ; then
+
+  if ! git remote update origin >/dev/null 2>&1 ; then
+    log_error "Failed to fetch changes from shared repository"
+    exit 1
+  fi
+
+  git log $* --oneline --date-order --graph --date=rfc --format=format:"%h (%ar) %s %d" master origin/master
+
+else
+
+  git log $* --oneline --date-order --graph --date=rfc --format=format:"%h (%ar) %s %d" master
+
+fi
+
+exit 0
+
+## END OF FILE #################################################################

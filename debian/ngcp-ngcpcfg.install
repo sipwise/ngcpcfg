@@ -18,6 +18,8 @@ scripts/commit              usr/share/ngcp-ngcpcfg/scripts/
 scripts/diff                usr/share/ngcp-ngcpcfg/scripts/
 scripts/etckeeper           usr/share/ngcp-ngcpcfg/scripts/
 scripts/initialise          usr/share/ngcp-ngcpcfg/scripts/
+scripts/log                 usr/share/ngcp-ngcpcfg/scripts/
 scripts/services            usr/share/ngcp-ngcpcfg/scripts/
+scripts/show                usr/share/ngcp-ngcpcfg/scripts/
 scripts/status              usr/share/ngcp-ngcpcfg/scripts/
 scripts/values              usr/share/ngcp-ngcpcfg/scripts/

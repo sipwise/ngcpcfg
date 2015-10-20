@@ -1,0 +1,31 @@
+#!/bin/bash
+# Purpose: show ngcpcfg changes (git show) as part of ngcpcfg framework
+################################################################################
+
+set -e
+set -u
+
+# support testsuite
+FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
+HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
+
+if ! [ -r "${FUNCTIONS}"/main ] ; then
+  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}" >&2
+  exit 1
+fi
+
+. "${FUNCTIONS}"/main
+
+if [ "$*" = "" ] ; then
+  git_commit="HEAD"
+else
+  git_commit="$*"
+fi
+
+
+cd "$NGCPCTL_MAIN"
+git show ${git_commit}
+
+exit 0
+
+## END OF FILE #################################################################
