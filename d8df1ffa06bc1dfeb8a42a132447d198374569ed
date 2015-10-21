@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ba57610f_c39b2571",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2015-10-21T15:21:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba57610f_c31685f1",
+      "revId": "d8df1ffa06bc1dfeb8a42a132447d198374569ed",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba57610f_e3198923",
         "filename": "functions/main",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ba57610f_e39e2963",
+        "filename": "functions/main",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2015-10-21T15:21:38Z",
+      "side": 1,
+      "message": "I do not access shared storage here. but sure I will add \"log_debug\" anyway",
+      "parentUuid": "ba57610f_e3198923",
+      "revId": "d8df1ffa06bc1dfeb8a42a132447d198374569ed",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba57610f_63dd9942",
         "filename": "functions/main",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2015-10-21T15:18:49Z",
       "side": 1,
       "message": "Hm, what about when git pull *and* git push are needed both at the same time?",
+      "revId": "d8df1ffa06bc1dfeb8a42a132447d198374569ed",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_43b055f4",
+        "filename": "functions/main",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2015-10-21T15:21:38Z",
+      "side": 1,
+      "message": "the it calls \"diverged\" ;-) see the lines below...",
+      "parentUuid": "ba57610f_63dd9942",
       "revId": "d8df1ffa06bc1dfeb8a42a132447d198374569ed",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
