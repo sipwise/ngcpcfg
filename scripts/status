@@ -96,16 +96,16 @@ check_etc_state() {
 }
 
 check_push() {
-  if type -p execute_check_push &>/dev/null ; then
-    log_debug "execute_check_push function"
-    execute_check_push
+  if type -p execute_check_shared_storage &>/dev/null ; then
+    log_debug "execute_check_shared_storage function, action 'push'"
+    execute_check_shared_storage push
   fi
 }
 
 check_shared_storage() {
   if type -p execute_check_shared_storage &>/dev/null ; then
-    log_debug "execute_check_shared_storage function"
-    execute_check_shared_storage
+    log_debug "execute_check_shared_storage function, action all"
+    execute_check_shared_storage all
   fi
 }
 

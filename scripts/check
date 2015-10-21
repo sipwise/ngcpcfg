@@ -97,29 +97,29 @@ check_configs_conflicts() {
 }
 
 check_shared_storage() {
-  # ensure there are no outstanding pull/push actions,
+  # ensure there are no outstanding pull actions,
   # unless --no-action-failure is used (ignore then)
   if ! type -p execute_check_shared_storage &>/dev/null ; then
     log_debug "execute_check_shared_storage not available"
     return 0
   fi
 
-  log_debug "execute_check_shared_storage function"
+  log_debug "execute_check_shared_storage function, action pull"
   if [ "${NO_ACTION_FAILURE:-}" = "1" ] ; then
-    if execute_check_shared_storage ; then
-      log_debug "No outstanding actions identified (NO_ACTION_FAILURE=1)."
+    if execute_check_shared_storage pull ; then
+      log_debug "No outstanding pull actions identified (NO_ACTION_FAILURE=1)."
     else
-      log_info "Ignoring outstanding push/pull actions as --no-action-failure option is enabled."
+      log_info "Ignoring outstanding pull actions as --no-action-failure option is enabled."
     fi
 
     return 0
   fi
 
-  execute_check_shared_storage && RC=0 || RC=$?
+  execute_check_shared_storage pull && RC=0 || RC=$?
   if [ "$RC" = "0" ] ; then
-    log_debug "No outstanding actions identified (NO_ACTION_FAILURE unset)."
+    log_debug "No outstanding pull actions identified (NO_ACTION_FAILURE unset)."
   else
-    log_info "Outstanding push/pull actions have been identified (see ACTION_NEEDED), exiting."
+    log_info "Outstanding pull actions have been identified (see ACTION_NEEDED), exiting."
     log_info "TIP: '--no-action-failure' forces execution within 'apply' anyway (use with care!)."
     return $RC
   fi
