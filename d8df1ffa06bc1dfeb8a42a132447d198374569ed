@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba57610f_c31685f1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2015-10-21T15:18:49Z",
+      "side": 1,
+      "message": "s/guesting/guessed the/",
+      "revId": "d8df1ffa06bc1dfeb8a42a132447d198374569ed",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_e3198923",
+        "filename": "functions/main",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2015-10-21T15:18:49Z",
+      "side": 1,
+      "message": "When accessing shared storage as remote then this might cause problems with timeouts or read failures if glusterfs is b0rken, so I\u0027d like to see at least the git rev-parse commands with log_debug calls before (like \"log_debug \"git rev-parse HEAD\" etc)",
+      "revId": "d8df1ffa06bc1dfeb8a42a132447d198374569ed",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_63dd9942",
+        "filename": "functions/main",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2015-10-21T15:18:49Z",
+      "side": 1,
+      "message": "Hm, what about when git pull *and* git push are needed both at the same time?",
+      "revId": "d8df1ffa06bc1dfeb8a42a132447d198374569ed",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
