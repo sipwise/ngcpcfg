@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba57610f_435cd525",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2015-10-21T14:46:12Z",
+      "side": 1,
+      "message": "log accepts any option for \"git log\", so that should be \"$PN log [opt]\"?",
+      "revId": "59c239726e690ee2121209448dd7a23c92fe79a6",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_2341e139",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2015-10-21T14:46:12Z",
+      "side": 1,
+      "message": "since id is optional the description should read like:\n\n  show latest config change (if id is specified show specified id instead)",
+      "revId": "59c239726e690ee2121209448dd7a23c92fe79a6",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_033eddb8",
+        "filename": "scripts/log",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2015-10-21T14:46:12Z",
+      "side": 1,
+      "message": "Can\u0027t we accept any option instead of just $1 here?",
+      "revId": "59c239726e690ee2121209448dd7a23c92fe79a6",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_c347a54a",
+        "filename": "scripts/log",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2015-10-21T14:46:12Z",
+      "side": 1,
+      "message": "Same here as above of course :)",
+      "revId": "59c239726e690ee2121209448dd7a23c92fe79a6",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
