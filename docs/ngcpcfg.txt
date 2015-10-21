@@ -183,11 +183,11 @@ Display usage information and exit.
 
   **--no-action-failure**::
 
-The _check_ and _apply_ actions check for any possibly outstanding push/pull
+The _check_ and _apply_ actions check for any possibly outstanding pull
 actions on the shared storage. If any outstanding actions are identified then
 the script aborts to avoid running into tricky configuration merge situations.
 If this option is enabled then ngcpcfg instead doesn't abort on outstanding
-push/pull actions. This option should be used with care and only if you know
+pull actions. This option should be used with care and only if you know
 what you're doing.
 
 Note: This option is available in the High Availability setup only.
@@ -212,7 +212,7 @@ the most commonly executed commands.
   **check** [<config_files_or_directories>|<pattern>]::
 
 Check syntax of YAML files and validate schema before performing any further actions.
-In the High Availability setup possibly outstanding push/pull actions are
+In the High Availability setup possibly outstanding pull actions are
 checked as well.
 
   **build** [--modified-only] [<files_or_directories>|<pattern>]::
