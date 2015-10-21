@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "ba57610f_638359cd",
+        "filename": "functions/main",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2015-10-21T15:33:50Z",
+      "side": 1,
+      "message": "Ah right, thx",
+      "parentUuid": "ba57610f_e39e2963",
+      "revId": "d8df1ffa06bc1dfeb8a42a132447d198374569ed",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba57610f_63dd9942",
         "filename": "functions/main",
         "patchSetId": 1
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "the it calls \"diverged\" ;-) see the lines below...",
       "parentUuid": "ba57610f_63dd9942",
+      "revId": "d8df1ffa06bc1dfeb8a42a132447d198374569ed",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba57610f_438855e7",
+        "filename": "functions/main",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2015-10-21T15:33:50Z",
+      "side": 1,
+      "message": "Ah nice one then! :)",
+      "parentUuid": "ba57610f_43b055f4",
       "revId": "d8df1ffa06bc1dfeb8a42a132447d198374569ed",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
