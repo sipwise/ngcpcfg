@@ -98,6 +98,11 @@ show() {
   "${SCRIPTS}"/show $*
 }
 
+apply() {
+  log_debug "${SCRIPTS}/apply $*"
+  "${SCRIPTS}"/apply $*
+}
+
 usage() {
   # make sure to output errors on stderr
   [ "${1:-}" = "1" ] && exec >&2
@@ -156,7 +161,7 @@ case ${1:-} in
   pull)       shift ; pull "$*" ;;
   services)   shift ; services "$*" ;;
   status)     shift ; status "$*" ;;
-  apply)      shift ; check && build && services && commit "$*" && etckeeper ;;
+  apply)      shift ; apply "$*" ;;
   encrypt)    shift ; encrypt "$*" ;;
   decrypt)    shift ; decrypt "$*" ;;
   diff)       shift ; diff "$*" ;;

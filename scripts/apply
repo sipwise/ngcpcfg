@@ -1,0 +1,43 @@
+#!/bin/bash
+# Purpose: shortcut for check, build, services, commit + etckeeper in one run
+################################################################################
+
+set -e
+set -u
+set -o pipefail
+
+# support testsuite
+FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
+HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
+SCRIPTS="${SCRIPTS:-/usr/share/ngcp-ngcpcfg/scripts/}"
+
+if ! [ -r "${FUNCTIONS}"/main ] ; then
+  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}">&2
+  exit 1
+fi
+
+timestamp_replacementchars=''
+. "${FUNCTIONS}"/main
+
+# based on check_local_state() from scripts/status
+check_for_outstanding_commits()  {
+  log_debug "cd $NGCPCTL_MAIN"
+  cd "$NGCPCTL_MAIN"
+
+  log_debug "git status | grep -q 'working directory clean'"
+  if git status | grep -q 'working directory clean' ; then
+    return 1 # nothing to commit
+  else
+    return 0 # outstanding commits
+  fi
+}
+
+if check_for_outstanding_commits && [ -z "${1:-}" ] ; then
+  log_error "Uncommitted configuration files found."
+  log_info  "Please provide commit message, like: $PN apply 'summary of your changes'"
+  exit 1
+fi
+
+"${SCRIPTS}"/check && "${SCRIPTS}"/build && "${SCRIPTS}"/services && "${SCRIPTS}"/commit "$*" && "${SCRIPTS}"/etckeeper
+
+## END OF FILE #################################################################

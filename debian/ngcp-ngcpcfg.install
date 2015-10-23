@@ -12,6 +12,7 @@ lib/*                       usr/lib/ngcp-ngcpcfg/
 sbin/ngcp-network           usr/sbin/
 sbin/ngcp-sync-constants    usr/sbin/
 sbin/ngcpcfg                usr/sbin/
+scripts/apply               usr/share/ngcp-ngcpcfg/scripts/
 scripts/build               usr/share/ngcp-ngcpcfg/scripts/
 scripts/check               usr/share/ngcp-ngcpcfg/scripts/
 scripts/commit              usr/share/ngcp-ngcpcfg/scripts/
