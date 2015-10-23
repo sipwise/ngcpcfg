@@ -147,6 +147,19 @@ version() {
   printf "ngcpcfg, version ${versinfo}\n"
 }
 
+# based on check_local_state() from scripts/status
+check_for_outstanding_commits()  {
+  log_debug "cd $NGCPCTL_MAIN"
+  cd "$NGCPCTL_MAIN"
+
+  log_debug "git status | grep -q 'working directory clean'"
+  if git status | grep -q 'working directory clean' ; then
+    return 1 # nothing to commit
+  else
+    return 0 # outstanding commits
+  fi
+}
+
 case ${1:-} in
   build)      shift ; check && build "$*" ;;
   check)      shift ; check "$*" ;;
@@ -156,7 +169,14 @@ case ${1:-} in
   pull)       shift ; pull "$*" ;;
   services)   shift ; services "$*" ;;
   status)     shift ; status "$*" ;;
-  apply)      shift ; check && build && services && commit "$*" && etckeeper ;;
+  apply)      shift
+              if check_for_outstanding_commits && [ -z "${1:-}" ] ; then
+                log_error "Uncommitted configuration files found."
+                log_info  "Please provide commit message, like: $PN apply 'summary of your changes'"
+                exit 1
+              fi
+              check && build && services && commit "$*" && etckeeper
+              ;;
   encrypt)    shift ; encrypt "$*" ;;
   decrypt)    shift ; decrypt "$*" ;;
   diff)       shift ; diff "$*" ;;
