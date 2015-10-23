@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba57610f_34b915ea",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2015-10-23T14:38:38Z",
+      "side": 1,
+      "message": "I would create \u0027apply\u0027 function here, for better readability.",
+      "revId": "b1cff489f9a14990de80362e2512e9a264dea9c9",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
