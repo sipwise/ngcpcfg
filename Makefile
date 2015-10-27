@@ -1,3 +1,4 @@
+# muh!
 # for syntax checks
 BASH_SCRIPTS =	scripts/* functions/* etc/ngcp-config/ngcpcfg.cfg helper/build_config sbin/ngcpcfg helper/tt2-wrapper
 PERL_SCRIPTS =	helper/sort-yml \
