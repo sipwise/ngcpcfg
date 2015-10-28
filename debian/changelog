@@ -1,3 +1,12 @@
+ngcp-ngcpcfg (0.25.3.4+0~mr3.8.3.4) unstable; urgency=medium
+
+  [ Michael Prokop ]
+  * [e44cc1f] MT#15803 Fix usage of HA features in 'ngcpcfg status'
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 28 Oct 2015 12:32:09 +0100
+
 ngcp-ngcpcfg (0.25.3.3+0~mr3.8.3.3) unstable; urgency=medium
 
   [ Alexander Lutay ]
