@@ -21,6 +21,7 @@ fi
 DRYRUN='false'
 if [[ "${1:-}" == "test" ]] || [[ "${1:-}" == "--dry-run" ]]; then
   DRYRUN='true'
+  log_info "Skipping service restarts (as option --dry-run was passed to service action)"
 elif [[ -n "${1:-}" ]] ; then
   log_error "Unsupported option(s) given: $*"
   log_info  "Did you mean '--dry-run'?"
