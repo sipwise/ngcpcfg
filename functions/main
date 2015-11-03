@@ -125,6 +125,11 @@ if ! [ -d "$TEMPLATE_POOL_BASE" ] ; then
   exit 1
 fi
 
+if [ -z "${TIMESTAMP_DIR:-}" ] ; then
+  log_error "No timestamp directory setting [TIMESTAMP_DIR] found - exiting."
+  exit 1
+fi
+
 if [ -d "${EXTRA_CONFIG_DIR:-}" ] && ls ${EXTRA_CONFIG_DIR}/*.yml &>/dev/null ; then
   log_debug "EXTRA_CONFIG_DIR is configured and *.yml files are present, setting EXTRA_CONFIG_FILES"
   EXTRA_CONFIG_FILES=${EXTRA_CONFIG_DIR}/*.yml
@@ -244,6 +249,11 @@ generate_template_list() {
   fi
 
   unset filelist_prepared filelist_final
+}
+
+timestamp_action() {
+  mkdir -p "${TIMESTAMP_DIR}"
+  touch "${TIMESTAMP_DIR}/${1}"
 }
 ## }}}
 
