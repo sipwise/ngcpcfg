@@ -296,15 +296,16 @@ Prints the log of local changes. Expand all changes if '-p' option is specified.
 Retrieve modifications from shared repository.
 Note: This option is available in the High Availability setup only.
 
-  **push** [--nobuild] [--noapply] [--shared-only] [<host(s)>]::
+  **push** [--dry-services-run] [--nobuild] [--noapply] [--shared-only] [<host(s)>]::
 
-Push modifications to shared repository and remote systems. After changes have been
-pushed to the node the _apply_ operation will be executed on each remote system
-to rebuild the configuration files (unless the '--noapply' operation has been
-specified, then only the _build_ operation will be executed). To skip building
-any configuration files at all the '--nobuild' option can be specified (implying
-to also skip the _apply_ operation).  If the '--shared-only' option is set then
-the any pending commits will be pushed only to the shared repository only, any
+Push modifications to shared repository and remote systems. After changes have
+been pushed to the node the _apply_ operation will be executed on each remote
+system to rebuild the configuration files (unless the '--noapply' operation has
+been specified, then only the _build_ operation will be executed).  To skip
+service restarts specify the '--dry-services-run' option.  To skip building any
+configuration files at all the '--nobuild' option can be specified (implying to
+also skip the _apply_ operation).  If the '--shared-only' option is set then the
+any pending commits will be pushed only to the shared repository only, any
 foreign hosts will be skipped then.  If hostname(s) or IP address(es) is given
 as argument then the changes will be pushed to the shared repository and to the
 given hosts only. If no host has has been specified then the hosts specified in
