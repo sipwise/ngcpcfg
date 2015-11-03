@@ -16,6 +16,7 @@ if ! [ -r "${FUNCTIONS}"/main ] ; then
   exit 1
 fi
 
+# shellcheck disable=SC2034
 timestamp_replacementchars=''
 . "${FUNCTIONS}"/main
 
@@ -38,19 +39,39 @@ if check_for_outstanding_commits && [ -z "${1:-}" ] ; then
   exit 1
 fi
 
+# ensure that we strip of the "--dry-services-run" option from the
+# command line, so it doesn't end up in the commit action as commit message
+SERVICE_OPTION=
+orig_opts=("$*")
+new_opts=
+
+for i in "${orig_opts[@]}" ; do
+  case "$i" in
+    --dry-services-run)
+      SERVICE_OPTION="--dry-run"
+      ;;
+    *)
+      new_opts+=($i)
+      ;;
+  esac
+done
+
 "${SCRIPTS}"/check
 timestamp_action "check"
 
 "${SCRIPTS}"/build
 timestamp_action "build"
 
-"${SCRIPTS}"/services
+"${SCRIPTS}"/services ${SERVICE_OPTION:-}
 timestamp_action "services"
 
-"${SCRIPTS}"/commit "$*"
+"${SCRIPTS}"/commit "${new_opts[*]}"
 timestamp_action "commit"
 
-"${SCRIPTS}"/etckeeper
-timestamp_action "etckeeper"
-
+if [ -n "$SERVICE_OPTION" ] ; then
+  log_info "Skipping etckeeper execution because executing services in --dry-run mode"
+else
+  "${SCRIPTS}"/etckeeper
+  timestamp_action "etckeeper"
+fi
 ## END OF FILE #################################################################
