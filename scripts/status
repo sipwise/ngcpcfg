@@ -116,11 +116,39 @@ check_remote() {
   fi
 }
 
+check_pending_actions() {
+  log_debug "cd $NGCPCTL_MAIN"
+  cd "$NGCPCTL_MAIN"
+
+  log_debug "git log --format='%ct' -1"
+  local timestamp_commit=$(git log --format='%ct' -1)
+  log_debug "timestamp_commit = $timestamp_commit"
+  if ! [ -f "${TIMESTAMP_DIR}/build" ] ; then
+    log_debug "File ${TIMESTAMP_DIR}/build doesn't exist."
+    return 0
+  fi
+
+  log_debug "stat --format='%Y' ${TIMESTAMP_DIR}/build"
+  local timestamp_build=$(stat --format='%Y' "${TIMESTAMP_DIR}/build")
+  log_debug "timestamp_build = $timestamp_build"
+
+  log_info "Checking state of pending builds:"
+  if [ -n "$timestamp_commit" ] && [ -n "$timestamp_build" ] ; then
+    local timediff=$(( timestamp_commit - timestamp_build ))
+    log_debug "timediff = $timediff"
+    if [ -n "$timediff" ] && [ "$timediff" -lt 0 ] ; then
+      log_info "OK:     nothing to build"
+    else
+      log_info "ACTION_NEEDED: commits without according build identified"
+    fi
+  fi
+}
 
 if [ -z "${1:-}" ] ; then
   check_local_state
   check_push
   check_etc_state
+  check_pending_actions
   check_shared_storage "$@"
 fi
 
