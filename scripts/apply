@@ -38,6 +38,27 @@ if check_for_outstanding_commits && [ -z "${1:-}" ] ; then
   exit 1
 fi
 
-"${SCRIPTS}"/check && "${SCRIPTS}"/build && "${SCRIPTS}"/services && "${SCRIPTS}"/commit "$*" && "${SCRIPTS}"/etckeeper
+# ensure that we strip of the "--dry-services-run" option from the
+# command line, so it doesn't end up in the commit action as commit message
+SERVICE_OPTION=
+orig_opts=("$*")
+new_opts=
+
+for i in ${orig_opts[@]} ; do
+  case "$i" in
+    --dry-services-run)
+      SERVICE_OPTION="--dry-run"
+      ;;
+    *)
+      new_opts+=($i)
+      ;;
+  esac
+done
+
+"${SCRIPTS}"/check
+"${SCRIPTS}"/build
+"${SCRIPTS}"/services ${SERVICE_OPTION:-}
+"${SCRIPTS}"/commit "${new_opts[*]}"
+"${SCRIPTS}"/etckeeper
 
 ## END OF FILE #################################################################
