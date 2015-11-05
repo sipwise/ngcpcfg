@@ -16,6 +16,24 @@
       "revId": "bdece895f56c2c43fb102fab2f3235952f8e0f50",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5c5d37_ed760f06",
+        "filename": "scripts/apply",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2015-11-05T21:53:39Z",
+      "side": 1,
+      "message": "yes :-/\n\nhm, you mean we should run the \"commit\" action twice inside apply?\n\nanyway, will upload new patchset which should get the ordering right, without a COPY of commit though",
+      "parentUuid": "9a5c5d37_8d31d3a4",
+      "revId": "bdece895f56c2c43fb102fab2f3235952f8e0f50",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
