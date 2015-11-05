@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_8d31d3a4",
+        "filename": "scripts/apply",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2015-11-05T16:19:36Z",
+      "side": 1,
+      "message": "no-no-no, you need a rest :-)\n\n\nyou have co COPY commit before build, not even move... \nwhile you are moving build after service :\u003d)",
+      "revId": "bdece895f56c2c43fb102fab2f3235952f8e0f50",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
