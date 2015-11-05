@@ -41,14 +41,14 @@ fi
 "${SCRIPTS}"/check
 timestamp_action "check"
 
-"${SCRIPTS}"/build
-timestamp_action "build"
-
 "${SCRIPTS}"/services
 timestamp_action "services"
 
 "${SCRIPTS}"/commit "$*"
 timestamp_action "commit"
+
+"${SCRIPTS}"/build
+timestamp_action "build"
 
 "${SCRIPTS}"/etckeeper
 timestamp_action "etckeeper"
