@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c5d37_0df603d8",
+        "filename": "scripts/apply",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2015-11-05T16:09:26Z",
+      "side": 0,
+      "message": "How can services work then, If the new config is not yet build?",
+      "revId": "db373d3927392bc2adf2cdae7aee5e2adfd84a65",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
