@@ -370,7 +370,7 @@ sub set_dbnode {
     my $new_dbnode = shift;
     my @nodes = ( 0, );
 
-    foreach my $h (keys $yaml->[0]->{hosts}) {
+    foreach my $h (keys %{ $yaml->[0]->{hosts} }) {
         if($h ne $host && defined $yaml->[0]->{hosts}->{$h}->{dbnode}) {
             push @nodes, $yaml->[0]->{hosts}->{$h}->{dbnode};
         }
