@@ -147,12 +147,26 @@ check_pending_actions() {
   fi
 }
 
+check_reboot_requests() {
+  log_debug "check_requested_reboot"
+
+  log_info "Checking for pending reboot requests:"
+
+  if [ -f "${RUN_DIR}/reboot-required" ]; then
+    log_info "ACTION_NEEDED: configuration, service or system changes requested a reboot"
+    log_info "-> reboot the system at your earliest convenience"
+  else
+    log_info "OK:     no reboot requested"
+  fi
+}
+
 if [ -z "${1:-}" ] ; then
   check_local_state
   check_push
   check_etc_state
   check_pending_actions
   check_shared_storage "$@"
+  check_reboot_requests
 fi
 
 check_remote "$@"
