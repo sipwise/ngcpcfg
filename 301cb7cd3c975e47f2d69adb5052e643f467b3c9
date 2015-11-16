@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a51691d_4dd1aacc",
+        "filename": "scripts/status",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2015-11-16T14:33:27Z",
+      "side": 1,
+      "message": "The code changes are super from speed of getting in touch with component and style of code and... +2\n\nPersonally I do not like long list of \"Status OK\" here, so IMHO one day we need to joing them and show \"status OK\" one time only. Otherwise it will be two pages of \"status OK\" messages. Anyway, LGTM it is not related to current changes.",
+      "revId": "301cb7cd3c975e47f2d69adb5052e643f467b3c9",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
