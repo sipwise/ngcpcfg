@@ -1,3 +1,19 @@
+ngcp-ngcpcfg (0.25.5.0+0~mr3.8.5.0) unstable; urgency=medium
+
+  [ Richard Fuchs ]
+  * [3eabaed] MT#15237 Generate list of RTP interfaces from all configured hosts
+
+  [ Alexander Lutay ]
+  * [cd58351] MT#15261 Fix YML merging order for tt2-daemon
+  * [7156159] MT#15261 Allow using symbolic links for YML files
+
+  [ Michael Prokop ]
+  * [c969c97] MT#15803 Fix usage of HA features in 'ngcpcfg status'
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 16 Nov 2015 17:38:30 +0100
+
 ngcp-ngcpcfg (0.25.4.0+0~mr3.8.4.0) unstable; urgency=medium
 
   * New release.
