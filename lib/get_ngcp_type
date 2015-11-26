@@ -1,0 +1,29 @@
+[%
+  # Returns the ngcp_type of the node calling this function.
+  #
+  # @return out		one of ['spce', 'sppro', 'spcarrier']
+-%]
+[% PERL -%]
+use Dpkg;
+use Dpkg::Index;
+use Dpkg::Control::Types;
+
+my $status = Dpkg::Index->new(type => CTRL_INFO_PKG);
+$status->load("$Dpkg::ADMINDIR/status");
+
+my $pkg = $status->get_by_key('ngcp-ngcp-ce');
+if ($pkg->{Status} == 'install ok installed') {
+	$stash->set(out => 'spce');
+	return;
+}
+$pkg = $status->get_by_key('ngcp-ngcp-pro');
+if ($pkg->{Status} == 'install ok installed') {
+	$stash->set(out => 'sppro');
+	return;
+}
+$pkg = $status->get_by_key('ngcp-ngcp-carrier');
+if ($pkg->{Status} == 'install ok installed') {
+	$stash->set(out => 'spcarrier');
+	return;
+}
+[% END -%]
