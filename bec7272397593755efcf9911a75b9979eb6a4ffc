@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5a4e6583_79ee6f8d",
+        "filename": "lib/get_ngcp_type",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2015-11-26T14:18:32Z",
+      "side": 1,
+      "message": "we have no spcarrier :-) please \"carrier\" here\n+1 to Guillem below",
+      "range": {
+        "startLine": 4,
+        "startChar": 44,
+        "endLine": 5,
+        "endChar": 3
+      },
+      "revId": "bec7272397593755efcf9911a75b9979eb6a4ffc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a4e6583_398357ce",
         "filename": "lib/get_ngcp_type",
         "patchSetId": 5
