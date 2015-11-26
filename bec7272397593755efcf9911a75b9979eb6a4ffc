@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a4e6583_398357ce",
+        "filename": "lib/get_ngcp_type",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2015-11-26T14:13:43Z",
+      "side": 1,
+      "message": "As you are using vars from the Dpkg module you should not assume its being pulled in by other modules. use Dpkg;",
+      "revId": "bec7272397593755efcf9911a75b9979eb6a4ffc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_7960af35",
+        "filename": "lib/get_ngcp_type",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2015-11-26T14:13:43Z",
+      "side": 1,
+      "message": "This is probably super nitpicky, but I\u0027d probably match on word boundaries to make sure no future changes in the word contents match unexpected stuff, like: m/\\s+ok\\s+installed$/ for example or something similar.",
+      "revId": "bec7272397593755efcf9911a75b9979eb6a4ffc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
