@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a4e6583_59361305",
+        "filename": "lib/get_ngcp_type",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2015-11-26T14:33:58Z",
+      "side": 1,
+      "message": "spcarrier :-)",
+      "range": {
+        "startLine": 4,
+        "startChar": 43,
+        "endLine": 4,
+        "endChar": 52
+      },
+      "revId": "2e9b05e4066ae639c1b0457c4557aaedf7aa75bd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
