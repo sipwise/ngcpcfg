@@ -1,0 +1,26 @@
+[%
+  # Returns the ngcp_type of the node calling this function.
+  #
+  # @return out		one of ['spce', 'sppro', 'spcarrier']
+-%]
+[% PERL -%]
+use DPKG::Parse::Status;
+
+my $status = DPKG::Parse::Status->new;
+
+my $ngcp_status = $status->get_installed('name' => 'ngcp-ngcp-ce');
+if (defined $ngcp_status) {
+	$stash->set(out => 'spce');
+	return;
+}
+$ngcp_status = $status->get_installed('name' => 'ngcp-ngcp-pro');
+if (defined $ngcp_status) {
+	$stash->set(out => 'sppro');
+	return;
+}
+$ngcp_status = $status->get_installed('name' => 'ngcp-ngcp-carrier');
+if (defined $ngcp_status) {
+	$stash->set(out => 'spcarrier');
+	return;
+}
+[% END -%]
