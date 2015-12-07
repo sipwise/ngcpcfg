@@ -16,4 +16,4 @@ else
   mkdir -p "${RESULTS}"
 fi
 
-RESULTS=${RESULTS} make unittest
+RESULTS=${RESULTS} make test

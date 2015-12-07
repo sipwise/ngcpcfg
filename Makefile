@@ -60,12 +60,12 @@ perlcheck:
 	done; \
 	echo "-> perl check done."; \
 
-unittest:
+test:
 	mkdir -p $(RESULTS)
-	nosetests --xunit-file=$(RESULTS)/ngcpcfg.xml --with-xunit t/tests.py
-	# note: can't control output filename :(
+	nosetests --xunit-file=$(RESULTS)/nose1.xml --with-xunit t/tests.py
 	nose2-3 --plugin nose2.plugins.junitxml --junit-xml -s t/
-	py.test-3 --junit-xml=$(RESULTS)/ngcpcfg.xml t/tests.py
-
+	# can't control output filename :(
+	mv nose2-junit.xml $(RESULTS)/nose2.xml
+	py.test-3 --junit-xml=$(RESULTS)/pytest.xml t/tests.py
 
 # EOF
