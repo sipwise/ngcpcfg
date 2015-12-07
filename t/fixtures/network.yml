@@ -1,0 +1,23 @@
+---
+hosts:
+  self:
+    role:
+      - proxy
+      - lb
+      - mgmt
+      - rtp
+      - db
+  sp1:
+    role:
+      - proxy
+      - lb
+      - mgmt
+      - rtp
+      - db
+  slb01a:
+    role:
+      - lb
+      - rtp
+  prx01a:
+    role:
+      - proxy

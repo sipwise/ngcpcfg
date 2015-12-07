@@ -91,8 +91,13 @@ get_branch_status() {
 
 ## important variables we depend on to operate successfully {{{
 # support test suite which requires system independent configuration
-if [ -r ngcpcfg-testsuite.cfg ] ; then
-  . ngcpcfg-testsuite.cfg
+# note: we do NOT allow random files, but just files based on the
+# directory path of the original running script; TODO - security review!
+self_dir="$(dirname "$(which "$0")")"
+test_dir="${self_dir}/../t/fixtures"
+if [ -r "${test_dir}/${NGCPCFG:-}" ] ; then
+  . "${test_dir}/${NGCPCFG:-}"
+  log_debug "sourced configuration file ${test_dir}/${NGCPCFG:-}"
 else
   if [ -r /etc/ngcp-config/ngcpcfg.cfg ] ; then
     . /etc/ngcp-config/ngcpcfg.cfg

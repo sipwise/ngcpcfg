@@ -6,6 +6,7 @@ PERL_SCRIPTS =	helper/sort-yml \
 		helper/validate-yml helper/fileformat_version \
 		sbin/ngcp-network \
 		sbin/ngcp-sync-constants
+RESULTS ?= results
 
 all: docs
 
@@ -55,5 +56,9 @@ perlcheck:
 		perl -CSD -w -c $${SCRIPT} || exit ; \
 	done; \
 	echo "-> perl check done."; \
+
+unittest: t/ngcpcfg.py
+	nosetests --xunit-file=$(RESULTS)/ngcpcfg.xml --with-xunit $<
+
 
 # EOF
