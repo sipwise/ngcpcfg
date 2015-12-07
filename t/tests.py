@@ -2,6 +2,7 @@
 
 from __future__ import print_function
 import copy
+import io
 import os
 import re
 import subprocess
@@ -15,9 +16,14 @@ command = ["fakeroot",
 
 
 def create_prog(filename, command):
-    os.system('echo "#!/bin/sh" > %s' % filename)
-    os.system('echo "%s" >> "%s"' % (command, filename))
-    os.system('chmod +x %s' % filename)
+    """Create test program.
+
+    :param unicode filename: destination filename
+    :param unicode command: command to write to test program
+    """
+    with io.open(filename, 'w', encoding='utf-8') as fp:
+        fp.write(u"#!/bin/sh\n%s\n" % (command, ))
+        os.fchmod(fp.fileno(), 0o755)
 
 
 class TestCommandLine(unittest.TestCase):
@@ -54,13 +60,13 @@ class TestCommandLine(unittest.TestCase):
         # self.config['HOSTNAME']='sppo'
         res = self._executeAndReturnOutput()
         self.assertNotEquals(res[0], 0)
-        self.assertRegexpMatches(res[2],
-                                 "Error: Could not read configuration file "
-                                 "/etc/ngcp-config/ngcpcfg.cfg. Exiting.")
+        expected_regex = re.compile('Error: Could not read configuration file '
+                                    '/etc/ngcp-config/ngcpcfg.cfg. Exiting.')
+        self.assertRegexpMatches(str(res[2]), expected_regex)
 
     def test_no_action_ok(self):
         res = self._executeAndReturnOutput()
         self.assertNotEquals(res[0], 0)
-        expected_regex = re.compile(".*For further usage information and "
-                                    "options.*", re.MULTILINE)
-        self.assertRegexpMatches(res[2], expected_regex)
+        expected_regex = re.compile('.*For further usage information and '
+                                    'options.*', re.MULTILINE)
+        self.assertRegexpMatches(str(res[2]), expected_regex)

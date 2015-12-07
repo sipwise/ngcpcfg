@@ -32,10 +32,13 @@ man:
 clean:
 	rm -f docs/ngcpcfg.xml docs/ngcpcfg.epub docs/ngcpcfg.html docs/ngcpcfg.pdf
 	rm -f ngcpcfg.8 ngcp-network.8 ngcp-sync-constants.8
+	rm -rf t/__pycache__ rm
+	rm -f t/fixtures/bin/* t/tests.pyc
 
-dist-clean:
+dist-clean: clean
 	rm -f docs/ngcpcfg.html docs/ngcpcfg.pdf
 	rm -f docs/ngcpcfg.epub ngcpcfg.8
+	rm -rf $(RESULTS)
 
 # check for syntax errors
 syntaxcheck: shellcheck perlcheck
@@ -57,8 +60,12 @@ perlcheck:
 	done; \
 	echo "-> perl check done."; \
 
-unittest: t/ngcpcfg.py
-	nosetests --xunit-file=$(RESULTS)/ngcpcfg.xml --with-xunit $<
+unittest:
+	mkdir -p $(RESULTS)
+	nosetests --xunit-file=$(RESULTS)/ngcpcfg.xml --with-xunit t/tests.py
+	# note: can't control output filename :(
+	nose2-3 --plugin nose2.plugins.junitxml --junit-xml -s t/
+	py.test-3 --junit-xml=$(RESULTS)/ngcpcfg.xml t/tests.py
 
 
 # EOF

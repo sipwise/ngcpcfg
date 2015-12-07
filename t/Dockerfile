@@ -19,7 +19,7 @@ deb https://deb.sipwise.com/autobuild/ release-trunk-jessie main\n" > /etc/apt/s
 RUN wget -O /etc/apt/trusted.gpg.d/sipwise.gpg https://deb.sipwise.com/spce/sipwise.gpg
 
 RUN apt-get update
-RUN apt-get install --assume-yes python-nose git make
+RUN apt-get install --assume-yes python-nose git make python3-nose2 python3-junitxml python3-pytest
 
 RUN echo './t/testrunner' >>/root/.bash_history
 
