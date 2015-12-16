@@ -1,0 +1,87 @@
+[%
+	# Iterates YAML config lists and translates them into strings suitable for the
+	# cdr-exporter config file.
+	#
+	# @param argv.admin_export_fields
+	# @param argv.reseller_export_fields
+	# @param argv.export_joins
+	# @param argv.export_conditions
+	# @return out.admin_fields
+	# @return out.reseller_fields
+	# @return out.joins
+	# @return out.conditions
+-%]
+[%
+	out = { };
+
+	# translate upper-case presets into their proper equivalents
+
+	# presets that map directly into accounting.cdr.X columns
+
+	X_cdr_id_list = [ 'call_code', 'call_id', 'call_status', 'call_type', 'destination_account_id', 'destination_carrier_cost', 'destination_carrier_free_time', 'destination_customer_cost', 'destination_customer_free_time', 'destination_domain', 'destination_domain_in', 'destination_external_contract_id', 'destination_external_subscriber_id', 'destination_provider_id', 'destination_reseller_cost', 'destination_reseller_free_time', 'destination_user', 'destination_user_dialed', 'destination_user_id', 'destination_user_in', 'duration', 'peer_auth_realm', 'peer_auth_user', 'rated_at', 'rating_status', 'source_account_id', 'source_carrier_cost', 'source_carrier_free_time', 'source_cli', 'source_clir', 'source_customer_cost', 'source_customer_free_time', 'source_domain', 'source_external_contract_id', 'source_external_subscriber_id', 'source_ip', 'source_provider_id', 'source_reseller_cost', 'source_reseller_free_time', 'source_user', 'source_user_id', 'update_time' ];
+
+	FOREACH X_num IN [ 0 .. 9 ];
+		X_cdr_id_list.push("source_gpp" _ X_num, "destination_gpp" _ X_num);
+	END;
+
+	X_cdr_id_map = { };
+
+	FOREACH X_col IN X_cdr_id_list;
+		X_upc = X_col.upper;
+		X_cdr_id_map.$X_upc = "accounting.cdr." _ X_col;
+	END;
+
+	# other presets
+
+	X_cdr_id_map.CDR_ID = "accounting.cdr.id";
+
+	X_cdr_id_map.SOURCE_SUBSCRIBER_ID = "source_voip_subscribers.id";
+	X_cdr_id_map.DESTINATION_SUBSCRIBER_ID = "destination_voip_subscribers.id";
+	X_cdr_id_map.INIT_TIME = "CONCAT(FROM_UNIXTIME(accounting.cdr.init_time), \".\", SUBSTRING_INDEX(accounting.cdr.init_time, \".\", -1))";
+	X_cdr_id_map.START_TIME = "CONCAT(FROM_UNIXTIME(accounting.cdr.start_time), \".\", SUBSTRING_INDEX(accounting.cdr.start_time, \".\", -1))";
+	X_cdr_id_map.SOURCE_CARRIER_ZONE = "COALESCE(source_carrier_bbz.zone, \"onnet\")";
+	X_cdr_id_map.SOURCE_CARRIER_DETAIL = "COALESCE(source_carrier_bbz.detail, \"platform internal\")";
+	X_cdr_id_map.SOURCE_CUSTOMER_ZONE = "source_customer_bbz.zone";
+	X_cdr_id_map.SOURCE_CUSTOMER_DETAIL = "source_customer_bbz.detail";
+	X_cdr_id_map.DESTINATION_CARRIER_ZONE = "destination_carrier_bbz.zone";
+	X_cdr_id_map.DESTINATION_CUSTOMER_ZONE = "destination_customer_bbz.zone";
+	X_cdr_id_map.DESTINATION_CARRIER_DETAIL = "destination_carrier_bbz.detail";
+	X_cdr_id_map.DESTINATION_CUSTOMER_DETAIL = "destination_customer_bbz.detail";
+	X_cdr_id_map.SOURCE_RESELLER_ZONE = "source_reseller_bbz.zone";
+	X_cdr_id_map.SOURCE_RESELLER_DETAIL = "source_reseller_bbz.detail";
+	X_cdr_id_map.DESTINATION_RESELLER_ZONE = "destination_reseller_bbz.zone";
+	X_cdr_id_map.DESTINATION_RESELLER_DETAIL = "destination_reseller_bbz.detail";
+
+	# translate the fields
+
+	out.admin_fields = [ ];
+	FOREACH X_f IN argv.admin_export_fields;
+		IF X_cdr_id_map.exists(X_f);
+			out.admin_fields.push("'" _ X_cdr_id_map.$X_f _ "'");
+		ELSE;
+			out.admin_fields.push("'" _ X_f _ "'");
+		END;
+	END;
+
+	out.reseller_fields = [ ];
+	FOREACH X_f IN argv.reseller_export_fields;
+		IF X_cdr_id_map.exists(X_f);
+			out.reseller_fields.push("'" _ X_cdr_id_map.$X_f _ "'");
+		ELSE;
+			out.reseller_fields.push("'" _ X_f _ "'");
+		END;
+	END;
+
+	# build joins and conditions lists
+
+	out.joins = [ ];
+	FOREACH X_f IN argv.export_joins;
+		out.joins.push("{ '" _ X_f.table _ ' ' _ X_f.alias _ "' => { '" _ X_f.key_column _ "' => '" _ X_f.reference_column _ "' } }");
+	END;
+
+	out.conditions = [ ];
+	FOREACH X_f IN argv.export_conditions;
+		out.conditions.push("{ '" _ X_f.column _ "' => { '" _ X_f.operand _ "' => '" _ X_f.compare_value _ "' } }");
+	END;
+
+-%]
