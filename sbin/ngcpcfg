@@ -36,79 +36,66 @@ fi
 initialise() {
   log_debug "${SCRIPTS}/initialise $*"
   "${SCRIPTS}"/initialise $*
-  timestamp_action "initialise"
 }
 
 build() {
   log_debug "${SCRIPTS}/build $*"
   "${SCRIPTS}"/build $*
-  timestamp_action "build"
 }
 
 services() {
   log_debug "${SCRIPTS}/services $*"
   "${SCRIPTS}"/services $*
-  timestamp_action "services"
 }
 
 encrypt() {
   log_debug "${SCRIPTS}/encrypt $*"
   "${SCRIPTS}"/encrypt $*
-  timestamp_action "encrypt"
 }
 
 decrypt() {
   log_debug "${SCRIPTS}/decrypt $*"
   "${SCRIPTS}"/decrypt $*
-  timestamp_action "decrypt"
 }
 
 diff() {
   log_debug "${SCRIPTS}/diff $*"
   "${SCRIPTS}"/diff $*
-  timestamp_action "diff"
 }
 
 etckeeper() {
   log_debug "${SCRIPTS}/etckeeper $*"
   "${SCRIPTS}"/etckeeper $*
-  timestamp_action "etckeeper"
 }
 
 commit() {
   log_debug "${SCRIPTS}/commit $*"
   "${SCRIPTS}"/commit $*
-  timestamp_action "commit"
 }
 
 status() {
   log_debug "${SCRIPTS}/status $*"
   "${SCRIPTS}"/status $*
-  timestamp_action "status"
 }
 
 check() {
   log_debug "${SCRIPTS}/check $*"
   "${SCRIPTS}"/check $*
-  timestamp_action "check"
 }
 
 values() {
   log_debug "${SCRIPTS}/values $*"
   "${SCRIPTS}"/values $*
-  timestamp_action "values"
 }
 
 log() {
   log_debug "${SCRIPTS}/log $*"
   "${SCRIPTS}"/log $*
-  timestamp_action "log"
 }
 
 show() {
   log_debug "${SCRIPTS}/show $*"
   "${SCRIPTS}"/show $*
-  timestamp_action "show"
 }
 
 apply() {
