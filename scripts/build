@@ -48,6 +48,8 @@ build_config_files() {
     "${HELPER}/build_config" "${file}"
     RC=$(($RC + $?))
   done
+
+  record_commit_id
 }
 
 # main script
