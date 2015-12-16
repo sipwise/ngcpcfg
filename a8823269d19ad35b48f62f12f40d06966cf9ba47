@@ -22,6 +22,30 @@
       "revId": "a8823269d19ad35b48f62f12f40d06966cf9ba47",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a96c907_6ab9bce8",
+        "filename": "lib/get_cdr_export_fields",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2015-12-16T20:40:09Z",
+      "side": 1,
+      "message": "I guess. Copied this from other scripts, so I don\u0027t know.",
+      "parentUuid": "7a96c907_aabfc4cf",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 2
+      },
+      "revId": "a8823269d19ad35b48f62f12f40d06966cf9ba47",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
