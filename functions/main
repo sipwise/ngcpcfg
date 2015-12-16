@@ -245,6 +245,23 @@ generate_template_list() {
 
   unset filelist_prepared filelist_final
 }
+
+record_commit_id() {
+  log_debug "cd $NGCPCTL_MAIN"
+  cd "$NGCPCTL_MAIN"
+
+  log_debug "mkdir -p ${STATE_FILES_DIR}"
+  mkdir -p "${STATE_FILES_DIR}"
+
+  # if there are uncommited changes then record it as such
+  if git status --porcelain | grep -q . ; then
+    echo "dirty" > "${STATE_FILES_DIR}/build"
+  else
+    local latest_commit=$(git log -1 --format="%H")
+    log_debug "echo $latest_commit > ${STATE_FILES_DIR}/build"
+    echo "$latest_commit" > "${STATE_FILES_DIR}/build"
+  fi
+}
 ## }}}
 
 ## END OF FILE #################################################################

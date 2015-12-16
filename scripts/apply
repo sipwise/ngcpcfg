@@ -38,6 +38,17 @@ if check_for_outstanding_commits && [ -z "${1:-}" ] ; then
   exit 1
 fi
 
-"${SCRIPTS}"/check && "${SCRIPTS}"/build && "${SCRIPTS}"/services && "${SCRIPTS}"/commit "$*" && "${SCRIPTS}"/etckeeper
+
+"${SCRIPTS}"/check
+"${SCRIPTS}"/build
+"${SCRIPTS}"/services
+"${SCRIPTS}"/commit "$*"
+
+# We "commit" AFTER we "build", therefore the state information is out of date
+# and would be marked as "dirty". As we have full control over this during the
+# "apply" run let's ensure it's not marked as dirty.
+record_commit_id
+
+"${SCRIPTS}"/etckeeper
 
 ## END OF FILE #################################################################

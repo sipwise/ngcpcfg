@@ -130,10 +130,43 @@ check_reboot_requests() {
   fi
 }
 
+check_pending_build() {
+  log_debug "$FUNCNAME"
+
+  log_debug "cd $NGCPCTL_MAIN"
+  cd "$NGCPCTL_MAIN"
+
+  log_info "Checking state of pending builds:"
+
+  local latest_commit=$(git log -1 --format="%H")
+  log_debug "latest_commit = $latest_commit"
+
+  if ! [ -f "${STATE_FILES_DIR}/build" ] ; then
+    log_debug "File ${STATE_FILES_DIR}/build doesn't exist."
+    log_info  "OK:       no build/apply executed yet, nothing to do"
+    return 0
+  fi
+
+  local latest_build_commit=$(cat "${STATE_FILES_DIR}/build")
+  log_debug "latest_build_commit = $latest_build_commit"
+
+  if [ -n "$latest_commit" ] && [ -n "$latest_build_commit" ] ; then
+    if [ "$latest_build_commit" = "dirty" ] ; then
+      log_info "OK:     nothing to build (latest build newer than latest commit)"
+    elif [ "$latest_commit" = "$latest_build_commit" ] ; then
+      log_info "OK:     nothing to build"
+    else
+      log_info "ACTION_NEEDED: commits without according build identified"
+      log_info "-> execute either 'ngcpcfg build' or 'ngcpcfg apply'"
+    fi
+  fi
+}
+
 if [ -z "${1:-}" ] ; then
   check_local_state
   check_push
   check_etc_state
+  check_pending_build
   check_shared_storage "$@"
   check_reboot_requests
 fi
