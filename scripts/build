@@ -42,12 +42,31 @@ for f in ${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG
   fi
 done
 
+record_commit_id() {
+  log_debug "cd $NGCPCTL_MAIN"
+  cd "$NGCPCTL_MAIN"
+
+  log_debug "mkdir -p ${STATE_FILES_DIR}"
+  mkdir -p "${STATE_FILES_DIR}"
+
+  # if there are uncommited changes then record it as such
+  if git status --porcelain | grep -q . ; then
+    echo "dirty" > "${STATE_FILES_DIR}/build"
+  else
+    local latest_commit=$(git log -1 --format="%H")
+    log_debug "echo $latest_commit > ${STATE_FILES_DIR}/build"
+    echo "$latest_commit" > "${STATE_FILES_DIR}/build"
+  fi
+}
+
 build_config_files() {
   for file in $(generate_template_list $*) ; do
     log_debug "${HELPER}/build_config $file"
     "${HELPER}/build_config" "${file}"
     RC=$(($RC + $?))
   done
+
+  record_commit_id
 }
 
 # main script
