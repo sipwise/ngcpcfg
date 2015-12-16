@@ -38,6 +38,17 @@ if check_for_outstanding_commits && [ -z "${1:-}" ] ; then
   exit 1
 fi
 
-"${SCRIPTS}"/check && "${SCRIPTS}"/build && "${SCRIPTS}"/services && "${SCRIPTS}"/commit "$*" && "${SCRIPTS}"/etckeeper
+
+"${SCRIPTS}"/check
+"${SCRIPTS}"/build
+"${SCRIPTS}"/services
+"${SCRIPTS}"/commit "$*"
+
+# since we commit *after* we build the according state information
+# is out of date, since we have full control over this during apply
+# let's correct it by ensuring the build<->commit information is up2date
+record_commit_id
+
+"${SCRIPTS}"/etckeeper
 
 ## END OF FILE #################################################################
