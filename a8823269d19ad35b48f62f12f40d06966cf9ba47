@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a96c907_aabfc4cf",
+        "filename": "lib/get_cdr_export_fields",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2015-12-16T20:39:16Z",
+      "side": 1,
+      "message": "is there some hidden logic behind closing/opening brackets here? just to separate header/footer? \n\nAnyway LGTM",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 2
+      },
+      "revId": "a8823269d19ad35b48f62f12f40d06966cf9ba47",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
