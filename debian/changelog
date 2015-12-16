@@ -1,3 +1,34 @@
+ngcp-ngcpcfg (0.28.1.0+0~mr4.2.1.0) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [8093c07] MT#15761 - improved hash multistructure handling          - improved debug output          - fixed copy passwords logic          - added missing pair for a "rateomat" copy element
+  * [ef891f3] MT#15761 - fixed multihash key sequence bug, improved debug logging
+
+  [ Michael Prokop ]
+  * [d7d48e1] MT#15803 Fix usage of HA features in 'ngcpcfg status'
+  * [7adf2b2] MT#15803 HA: support shared storage check in 'ngcpcfg check'
+  * [24aa4a9] MT#15943 Prompt for commit message during 'ngcpcfg apply' on outstanding changes
+  * [9eb9457] MT#15937 debian/copyright: adjust copyright year information
+  * [db373d3] MT#15973 Report in 'status' action when build/apply run is needed
+  * [c409008] MT#16473 Convert debian/copyright to machine-readable format
+
+  [ Alexander Lutay ]
+  * [c89f72e] MT#15141 Hide debug output to keep old ngcpcfg output style
+  * [e8f7ce8] MT#15803 Add ngcpcfg log/show scripts to improve usability
+  * [cad0d3c] MT#15803 Introducing the new function to provide current branch status
+  * [550067a] MT#15803 Check oustanding pull actions only (ignore outstanding push actions)
+  * [50b08a3] MT#11097 Fix warning 'keys on reference is experimental' in ngcp-network
+
+  [ Guillem Jover ]
+  * [301cb7c] MT#16387 Report pending requested reboots
+
+  [ Victor Seva ]
+  * [95051ac] MT#16637 get_ngcp_type helper
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 16 Dec 2015 09:27:14 +0100
+
 ngcp-ngcpcfg (0.28.0.0+0~mr4.2.0.0) unstable; urgency=medium
 
   [ Alexander Lutay ]
