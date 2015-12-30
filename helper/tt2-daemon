@@ -30,7 +30,7 @@ sub daemonize {
     defined(my $pid = fork)        or croak "Can't fork: $ERRNO";
     exit if $pid;
     setsid                         or croak "Can't start a new session: $ERRNO";
-    open(STDERR, '>', '&STDOUT')   or croak "Can't dup stdout: $ERRNO";
+    open(STDERR, '>&', \*STDOUT)   or croak "Can't dup stdout: $ERRNO";
     return;
 }
 
