@@ -24,7 +24,7 @@ sub daemonize {
     defined(my $pid = fork)        or croak "Can't fork: $!";
     exit if $pid;
     setsid                         or croak "Can't start a new session: $!";
-    open(STDERR, '>', '&STDOUT')   or croak "Can't dup stdout: $!";
+    open(STDERR, '>&', \*STDOUT)   or croak "Can't dup stdout: $!";
 }
 
 sub get_server_port {
