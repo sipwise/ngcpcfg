@@ -25,3 +25,4 @@
 [% END -%]
 [% END -%]
 [% END -%]
+[% out = out.sort -%]
