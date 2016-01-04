@@ -18,7 +18,7 @@
   IF cluster_sets.type == 'central';
     set_hosts = [ argv.host, hosts.${argv.host}.peer ];
   ELSE;
-    set_hosts = hosts.keys;
+    set_hosts = hosts.keys.sort;
   END;
 
 

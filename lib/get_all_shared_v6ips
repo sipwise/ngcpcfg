@@ -12,7 +12,7 @@
 -%]
 [% blktmp.processed_hosts = {} -%]
 [% out = [] -%]
-[% FOREACH host IN hosts.keys -%]
+[% FOREACH host IN hosts.keys.sort -%]
 [% IF hosts.$host.role.grep('^' _ argv.role _ '$').size() && !blktmp.processed_hosts.$host.defined -%]
 [% FOREACH iface IN hosts.$host.interfaces -%]
 [% FOREACH realiface IN hosts.$host.keys -%]

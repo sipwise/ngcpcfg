@@ -10,7 +10,7 @@
   # @return out		The array of ips
 -%]
 [% out = [] -%]
-[% FOREACH host IN hosts.keys -%]
+[% FOREACH host IN hosts.keys.sort -%]
 [% IF hosts.$host.role.grep('^' _ argv.role _ '$').size() -%]
 [% FOREACH iface IN hosts.$host.interfaces -%]
 [% FOREACH realiface IN hosts.$host.keys -%]
