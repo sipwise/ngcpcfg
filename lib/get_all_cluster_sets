@@ -10,7 +10,7 @@
   FOREACH set IN cluster_sets.keys;
     NEXT IF (set == 'default_set' || set == 'type');
 
-    FOREACH host IN hosts.keys;
+    FOREACH host IN hosts.keys.sort;
       NEXT UNLESS hosts.$host.role.grep('^' _ argv.type _ '$').size();
       FOREACH iface IN hosts.$host.interfaces;
         NEXT UNLESS hosts.$host.$iface.cluster_sets.grep('^' _ set _ '$').size();
