@@ -1,5 +1,5 @@
 #!/bin/bash
-# Purpose: shortcut for check, build, services, commit + etckeeper in one run
+# Purpose: shortcut for build, services, commit + etckeeper in one run
 ################################################################################
 
 set -e
@@ -38,8 +38,6 @@ if check_for_outstanding_commits && [ -z "${1:-}" ] ; then
   exit 1
 fi
 
-
-"${SCRIPTS}"/check
 "${SCRIPTS}"/build
 "${SCRIPTS}"/services
 "${SCRIPTS}"/commit "$*"

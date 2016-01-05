@@ -9,6 +9,7 @@ set -u
 # support testsuite
 FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
 HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
+SCRIPTS="${SCRIPTS:-/usr/share/ngcp-ngcpcfg/scripts/}"
 
 if ! [ -r ${FUNCTIONS}/main ] ; then
   printf "Error: ${FUNCTIONS}/main could not be read. Exiting.\n" >&2
@@ -16,6 +17,9 @@ if ! [ -r ${FUNCTIONS}/main ] ; then
 fi
 
 . ${FUNCTIONS}/main
+
+# Sanity check the YAML and schema files.
+"${SCRIPTS}"/check
 
 MODIFIED_ONLY=false
 if [ -n "${1:-}" ] ; then

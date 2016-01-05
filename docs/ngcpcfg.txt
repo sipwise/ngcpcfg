@@ -205,7 +205,7 @@ Actions
 
   **apply** [<commit_message>]::
 
-Executes the _check_, _build_, _services_ and _commit_ commands in a batch
+Executes the _build_, _services_ and _commit_ commands in a batch
 (assuming each command worked as expected). This option serves as a shortcut for
 the most commonly executed commands. If there are any outstanding changes that
 need to be committed, then the commit message needs to be provided. This is
