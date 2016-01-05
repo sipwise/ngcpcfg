@@ -78,7 +78,7 @@ usage() {
   fi
 
   printf "  $PN services [opts] - execute service handlers for modified configuration files
-  $PN apply           - a short-cut for check-build-services-commit-etckeeper
+  $PN apply           - a short-cut for check-build-services-commit
   $PN status          - display status of configuration file\n\n"
 
   printf "For further usage information and options visit the ngcpcfg manpage.\n"
