@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da7095c5_b8e410ad",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2016-01-05T22:06:47Z",
+      "side": 1,
+      "message": "This line is missing an ending \"\\\"\n\nWhat about sorting the list by alphabet while at it (this was intended once, but for some reasons went out of order :-/)?",
+      "revId": "1df8c9c80f28c9b308625c053d7033353d882eed",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
