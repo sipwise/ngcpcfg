@@ -85,7 +85,7 @@ usage() {
 }
 
 version() {
-  versinfo=$(dpkg --list ngcp-ngcpcfg 2>/dev/null | awk '/^ii/ {print $3}')
+  versinfo=$(dpkg-query -f '${Version}' -W ngcp-ngcpcfg 2>/dev/null)
   [ -n "${versinfo:-}" ] || versinfo='information not available'
   printf "ngcpcfg, version ${versinfo}\n"
 }
