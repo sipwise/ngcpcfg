@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da7095c5_98f34c73",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2016-01-05T22:12:18Z",
+      "side": 1,
+      "message": "Any specific reason why here\u0027s an extra empty line?",
+      "revId": "2f612cc5b12f37350e315594e4c1c944fe99ac37",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
