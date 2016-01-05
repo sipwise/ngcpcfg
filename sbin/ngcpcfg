@@ -46,42 +46,48 @@ usage() {
   [ "${1:-}" = "1" ] && exec >&2
 
   printf "%s - Configuration Management System\n\n" "$PN"
-  printf "Usage:
+  printf "Usage: $PN <action> [<opts>]
 
-  $PN build [opts]    - generate/update configuration files
-  $PN commit [msg]    - commit and record changes (without pushing)
-  $PN diff [opts]     - display pending configuration changes
-  $PN help            - display this help screen and exit
-  $PN version         - display program version and exit
-  $PN initialise      - initialise setup (to be executed only once on setup)
-  $PN check           - validate YAML configuration files
-  $PN values          - print key value from YAML configuration files
-  $PN log [opt]       - show log of config changes
-  $PN show [id]       - show latest config change (if id is specified show specified id instead)
+Actions:
+  check [<path>]      validate YAML configuration files
+  build [<opts>]      generate/update configuration files
+  services [<opts>]   execute service handlers for modified configuration files
+  commit [<msg>]      commit and record changes (without pushing)
+  apply [<msg>]       a short-cut for build-services-commit
+  diff [<opts>]       display pending configuration changes
+  status [<opts>]     display status of configuration file
+  log [<opts>]        show log of config changes
+  show [<id>]         show latest config change (or <id> if specified)
 "
 
   # display only if ngcp-ngcpcfg-ha is available
   if [ -r /usr/share/ngcp-ngcpcfg/functions/ha_features ] ; then
-    printf "  $PN push [opts]     - push modifications to other systems (shared storage setup only)\n"
-    printf "  $PN pull            - retrieve modifications from shared storage (shared storage setup only)\n"
+    printf "  push [<opts>]       push modifications to other systems (shared storage setup only)\n"
+    printf "  pull                retrieve modifications from shared storage (shared storage setup only)\n"
   fi
 
   # display only if ngcp-ngcpcfg-locker is available
   if [ -r /usr/share/ngcp-ngcpcfg/scripts/encrypt ] ; then
-    printf "  $PN encrypt         - encrypt /etc/ngcp-config and all resulting configuration files\n"
-    printf "  $PN decrypt         - decrypt /etc/ngcp-config-crypted.tgz.gpg and restore config files\n"
+    printf "  encrypt             encrypt /etc/ngcp-config and all resulting configuration files\n"
+    printf "  decrypt             decrypt /etc/ngcp-config-crypted.tgz.gpg and restore config files\n"
   fi
+
+  printf "\
+  initialise          initialise setup (to be executed only once on setup)
+"
 
   # display only if ngcp-ngcpcfg-carrier is available
   if [ -r /usr/share/ngcp-ngcpcfg/scripts/init-mgmt ] ; then
-    printf "  $PN init-mgmt <srv> - set up mgmgt server for carrier environment (to be executed only once)\n"
+    printf "  init-mgmt <srv>     set up mgmt server for carrier environment (to be executed only once)\n"
   fi
 
-  printf "  $PN services [opts] - execute service handlers for modified configuration files
-  $PN apply           - a short-cut for check-build-services-commit-etckeeper
-  $PN status          - display status of configuration file\n\n"
+  printf "\
+  values <key>        print key value from YAML configuration files
+  help                display this help screen and exit
+  version             display program version and exit
+\n"
 
-  printf "For further usage information and options visit the ngcpcfg manpage.\n"
+  printf "For further usage information and options see the ngcpcfg(8) man page.\n"
 }
 
 version() {
