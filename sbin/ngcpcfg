@@ -33,74 +33,12 @@ else
 fi
 
 # helper functions
-initialise() {
-  log_debug "${SCRIPTS}/initialise $*"
-  "${SCRIPTS}"/initialise $*
-}
 
-build() {
-  log_debug "${SCRIPTS}/build $*"
-  "${SCRIPTS}"/build $*
-}
-
-services() {
-  log_debug "${SCRIPTS}/services $*"
-  "${SCRIPTS}"/services $*
-}
-
-encrypt() {
-  log_debug "${SCRIPTS}/encrypt $*"
-  "${SCRIPTS}"/encrypt $*
-}
-
-decrypt() {
-  log_debug "${SCRIPTS}/decrypt $*"
-  "${SCRIPTS}"/decrypt $*
-}
-
-diff() {
-  log_debug "${SCRIPTS}/diff $*"
-  "${SCRIPTS}"/diff $*
-}
-
-etckeeper() {
-  log_debug "${SCRIPTS}/etckeeper $*"
-  "${SCRIPTS}"/etckeeper $*
-}
-
-commit() {
-  log_debug "${SCRIPTS}/commit $*"
-  "${SCRIPTS}"/commit $*
-}
-
-status() {
-  log_debug "${SCRIPTS}/status $*"
-  "${SCRIPTS}"/status $*
-}
-
-check() {
-  log_debug "${SCRIPTS}/check $*"
-  "${SCRIPTS}"/check $*
-}
-
-values() {
-  log_debug "${SCRIPTS}/values $*"
-  "${SCRIPTS}"/values $*
-}
-
-log() {
-  log_debug "${SCRIPTS}/log $*"
-  "${SCRIPTS}"/log $*
-}
-
-show() {
-  log_debug "${SCRIPTS}/show $*"
-  "${SCRIPTS}"/show $*
-}
-
-apply() {
-  log_debug "${SCRIPTS}/apply $*"
-  "${SCRIPTS}"/apply $*
+action() {
+  ACTION="$1"
+  shift
+  log_debug "${SCRIPTS}/${ACTION} $*"
+  "${SCRIPTS}/${ACTION}" $*
 }
 
 usage() {
@@ -153,22 +91,21 @@ version() {
 }
 
 case ${1:-} in
-  build)      shift ; build "$*" ;;
-  check)      shift ; check "$*" ;;
-  commit)     shift ; commit "$*" ;;
-  initialise) initialise;;
-  push)       shift ; push "$*" ;;
-  pull)       shift ; pull "$*" ;;
-  services)   shift ; services "$*" ;;
-  status)     shift ; status "$*" ;;
-  apply)      shift ; apply "$*" ;;
-  encrypt)    shift ; encrypt "$*" ;;
-  decrypt)    shift ; decrypt "$*" ;;
-  diff)       shift ; diff "$*" ;;
-  init-mgmt)  shift ; init-mgmt "$*" ;;
-  values)     shift ; values "$*" ;;
-  log)        shift ; log "$*" ;;
-  show)       shift ; show "$*" ;;
+  initialise|\
+  init-mgmt|\
+  check|\
+  build|\
+  commit|\
+  push|pull|\
+  services|\
+  status|\
+  apply|\
+  encrypt|decrypt|
+  diff|\
+  values|\
+  log|\
+  show)
+    action "$*" ;;
   --debug)         export DEBUG=1 ;      shift ; $0 $* ;;
   --no-db-sync)    export NO_DB_SYNC=1 ; shift ; $0 $* ;;
   --no-validate)   export NO_VALIDATE=1; shift ; $0 $* ;;
