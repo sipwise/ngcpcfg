@@ -40,7 +40,7 @@ fi
 
 "${SCRIPTS}"/build
 "${SCRIPTS}"/services
-"${SCRIPTS}"/commit "$*"
+"${SCRIPTS}"/commit "$@"
 
 # We "commit" AFTER we "build", therefore the state information is out of date
 # and would be marked as "dirty". As we have full control over this during the

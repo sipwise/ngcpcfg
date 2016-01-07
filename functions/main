@@ -183,7 +183,7 @@ generate_template_list() {
         echo "$file" >> "${filelist_prepared}"
       else
         # arguments (file list/pattern) provided via cmdline
-        for arg in $* ; do
+        for arg in "$@"; do
           if echo $file | grep -q -- "${arg}" ; then
             echo "$file" >> "${filelist_prepared}"
           fi
