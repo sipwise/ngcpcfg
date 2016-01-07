@@ -16,6 +16,24 @@
       "revId": "1df8c9c80f28c9b308625c053d7033353d882eed",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_7863e1b1",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2016-01-07T10:44:54Z",
+      "side": 1,
+      "message": "Ah right will add the missing \"\\\"! I can also sort the items, I was undecided if sorting them alphabetically, grouping them by related action or by sorting them by order of execution, etc.",
+      "parentUuid": "da7095c5_b8e410ad",
+      "revId": "1df8c9c80f28c9b308625c053d7033353d882eed",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
