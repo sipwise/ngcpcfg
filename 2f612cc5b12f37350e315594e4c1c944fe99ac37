@@ -16,6 +16,24 @@
       "revId": "2f612cc5b12f37350e315594e4c1c944fe99ac37",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_381489f4",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2016-01-07T10:46:43Z",
+      "side": 1,
+      "message": "No, just a leftover from me trying to align the text and not restoring it afterwards. Nice catch! :)",
+      "parentUuid": "da7095c5_98f34c73",
+      "revId": "2f612cc5b12f37350e315594e4c1c944fe99ac37",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
