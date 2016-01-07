@@ -24,8 +24,6 @@ kamailio:
   dbrwuser: kamailio
   uaccryptpw: UwrpwmpCUMhfv4zscuha
 asterisk:
-  asterisk:
-    internal_timing: no
   odbc:
     dbuser: asterisk
     dbpassword: cx9W7PWMmkjRVpzzYkts
