@@ -47,7 +47,7 @@ for f in ${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG
 done
 
 build_config_files() {
-  for file in $(generate_template_list $*) ; do
+  for file in $(generate_template_list "$@") ; do
     log_debug "${HELPER}/build_config $file"
     "${HELPER}/build_config" "${file}"
     RC=$(($RC + $?))
@@ -60,7 +60,7 @@ build_config_files() {
 RC=0
 
 if ! $MODIFIED_ONLY ; then
-  build_config_files "$*"
+  build_config_files "$@"
 else
   log_info "Considering modified files only due to --modified-only option."
 
@@ -94,7 +94,7 @@ else
   if $trigger_rebuild ; then
     log_info "Main configuation file(s) has been changed, running full rebuild."
     log_debug "Executing: build_config_files $*"
-    build_config_files "$*"
+    build_config_files "$@"
   fi
 
   if git diff-index --name-only HEAD | grep -q templates/ || \

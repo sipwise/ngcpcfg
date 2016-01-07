@@ -18,7 +18,7 @@ log_debug "cd $NGCPCTL_MAIN"
 cd "$NGCPCTL_MAIN"
 
 log_debug "git diff $*"
-git diff $*
+git diff "$@"
 
 # added files
 log_debug "git status --porcelain | awk '/^\?\? / {print \$2}'"
