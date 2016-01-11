@@ -108,12 +108,18 @@ normalize_files() {
 }
 
 # restart monit services before the rest (see MT#9971)
+# restart HA just after monit (see MT#17163)
 sort_service_list() {
   SORTED_LIST="$(mktemp)"
   log_debug "SORTED_LIST = $SORTED_LIST"
 
-  grep    '/etc/ngcp-config/templates/etc/monit/.*services' "${NORMALIZED_FILES}" > "${SORTED_LIST}" || true
-  grep -v '/etc/ngcp-config/templates/etc/monit/.*services' "${NORMALIZED_FILES}" >> "${SORTED_LIST}" || true
+  grep  "${SERVICES_POOL_BASE}"/etc/monit/'.*services' "${NORMALIZED_FILES}" > \
+    "${SORTED_LIST}" || true
+  grep  "${SERVICES_POOL_BASE}"/etc/ha.d/'.*services' "${NORMALIZED_FILES}" >> \
+    "${SORTED_LIST}" || true
+  grep -v "${SERVICES_POOL_BASE}"/etc/monit/'.*services' "${NORMALIZED_FILES}"| \
+  grep -v "${SERVICES_POOL_BASE}"/etc/ha.d/'.*services' >> \
+    "${SORTED_LIST}" || true
 }
 
 execute() {
