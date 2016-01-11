@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba65a107_22ff6f36",
+        "filename": "scripts/services",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2016-01-11T22:33:58Z",
+      "side": 1,
+      "message": "restart HA just AFTER monit (see MT#17163)",
+      "revId": "d73f6dc33a1fc0134f17dec570c7c30b9dc4de1f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_c2fb1346",
+        "filename": "scripts/services",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2016-01-11T22:33:58Z",
+      "side": 1,
+      "message": ".* will be expanded by shell now, while previously grep expanded it.\nIt still should work while some corner cases might be not covered.",
+      "revId": "d73f6dc33a1fc0134f17dec570c7c30b9dc4de1f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
