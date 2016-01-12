@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba65a107_f5536f6a",
+        "filename": "scripts/services",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2016-01-12T10:55:26Z",
+      "side": 1,
+      "message": "sorry for the nitpick, could you please replace the two spaces after the grep with just one to keep coding style consistent?",
+      "revId": "a58cb1a3d58c930d30fbbcb02f233c6e28e56e14",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba65a107_555fbb72",
+        "filename": "scripts/services",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2016-01-12T10:55:26Z",
+      "side": 1,
+      "message": "tbh I\u0027d like to see this line indendet like above if it\u0027s a continuation of the previous line",
+      "revId": "a58cb1a3d58c930d30fbbcb02f233c6e28e56e14",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
