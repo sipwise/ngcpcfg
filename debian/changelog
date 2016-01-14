@@ -1,3 +1,20 @@
+ngcp-ngcpcfg (0.28.2.0+0~mr4.2.2.0) unstable; urgency=medium
+
+  [ Michael Prokop ]
+  * [c939e20] MT#15973 Revert "MT#15973 Report in 'status' action when build/apply run is needed"
+
+  [ Victor Seva ]
+  * [7893e05] MT#17179 lib: return sorted result
+  * [91f619d] MT#17179 lib: sort host.keys
+  * [019ebae] MT#17163 services: restart ha.d after monit and before the rest
+
+  [ Guillem Jover ]
+  * [c614990] MT#17153 Fix three-argument form of open call
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 14 Jan 2016 23:37:39 +0100
+
 ngcp-ngcpcfg (0.28.1.0+0~mr4.2.1.0) unstable; urgency=medium
 
   [ Kirill Solomko ]
