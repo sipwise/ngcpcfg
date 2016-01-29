@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a6a9dd7_1d264117",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2016-01-29T23:36:14Z",
+      "side": 1,
+      "message": "Who sets this \"amanager_{user,pass}\" configs and what\u0027s that amanager meant to mean? (Just so I know what\u0027s it about)",
+      "revId": "741212e581f82a58baf9404d99f28bd81e87db9f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
