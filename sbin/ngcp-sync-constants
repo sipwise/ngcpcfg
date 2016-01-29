@@ -26,7 +26,7 @@ Readonly my $MYSQL_DATA => {
 						sems         => { dbuser => 'dbpassword',
 						                  prepaid_dbuser => 'prepaid_dbpassword' },
 						rateomat     => { accountingdb => { user => 'pass' } },
-						faxserver    => { hylafax => { db_user => 'db_pass' } },
+						faxserver    => { amanager_user => 'amanager_pass' },
 						cdrexport    => { dbuser => 'dbpassword' },
 						checktools   => { dbuser => 'dbpassword' },
 						mysql        => { repuser => 'reppassword' },
