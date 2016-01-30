@@ -16,6 +16,24 @@
       "revId": "741212e581f82a58baf9404d99f28bd81e87db9f",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_dd1f69b6",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-01-30T00:02:52Z",
+      "side": 1,
+      "message": "asterisk manager interface, localhost only, tcp port 5038.",
+      "parentUuid": "9a6a9dd7_1d264117",
+      "revId": "741212e581f82a58baf9404d99f28bd81e87db9f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
