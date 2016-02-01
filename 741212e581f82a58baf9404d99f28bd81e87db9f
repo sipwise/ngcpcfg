@@ -34,6 +34,24 @@
       "revId": "741212e581f82a58baf9404d99f28bd81e87db9f",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_7eb973e8",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2016-02-01T10:09:58Z",
+      "side": 1,
+      "message": "Kirill, please do not forget to create installer/upgrade changes here to replace PW_FAXSERVER for random generated values. Like:\n\nhttps://git.mgm.sipwise.com/gitweb/?p\u003dinstaller.git;a\u003dcommit;h\u003d434b00c96abafb9902f8beabc3a7ded0693478ac\n\nhttps://git.mgm.sipwise.com/gitweb/?p\u003dupgrade.git;a\u003dcommit;h\u003de05e37cd49e763c7c7142fae6314802e00774b09",
+      "parentUuid": "9a6a9dd7_dd1f69b6",
+      "revId": "741212e581f82a58baf9404d99f28bd81e87db9f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
