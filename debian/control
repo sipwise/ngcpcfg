@@ -23,7 +23,7 @@ Build-Depends: asciidoc,
                libyaml-perl,
                libyaml-tiny-perl,
                xsltproc
-Standards-Version: 3.9.6
+Standards-Version: 3.9.7
 Homepage: http://sipwise.com/
 
 Package: ngcp-ngcpcfg
