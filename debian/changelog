@@ -1,3 +1,15 @@
+ngcp-ngcpcfg (0.27.3.0+0~mr4.1.3.0) unstable; urgency=medium
+
+  [ Michael Prokop ]
+  * [325cdb9] MT#15803 Fix usage of HA features in 'ngcpcfg status'
+
+  [ Guillem Jover ]
+  * [998e480] MT#17153 Fix three-argument form of open call
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 09 Feb 2016 12:15:31 +0100
+
 ngcp-ngcpcfg (0.27.2.0+0~mr4.1.2.0) unstable; urgency=medium
 
   * New release.
