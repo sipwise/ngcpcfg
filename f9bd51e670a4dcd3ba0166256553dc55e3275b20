@@ -34,6 +34,24 @@
       "revId": "f9bd51e670a4dcd3ba0166256553dc55e3275b20",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_006d8732",
+        "filename": "sbin/ngcp-network",
+        "patchSetId": 3
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2016-02-22T23:27:29Z",
+      "side": 1,
+      "message": "newly installed network.yml is:\n\n\u003e prx01a:\n\u003e   peer: prx01b\n\u003e prx01b:\n\u003e   peer: prx01a\n\nso after $(ngcp-network --from\u003dprx01a --to\u003dprx02a) we will have prx02 hosts as:\n\n\u003e prx02a:\n\u003e   peer: prx01b\n\u003e prx02b:\n\u003e   peer: prx01a\n\nI believe we need to set \"peer\" something like (not a valid perl!):\n\n$from\u003dprx02a\n$from_short\u003dprx02\n\nif ( $from \u003d~ .*a$ ) {\n  $yaml-\u003e[0]-\u003e{hosts}-\u003e{$to}-\u003e{peer}\u003d\"$from_short\".\"b\"\n} else {\n  $yaml-\u003e[0]-\u003e{hosts}-\u003e{$to}-\u003e{peer}\u003d\"$from_short\".\"a\"\n}\n\nP.S. it can be just a late time :-) and I can be completely wrong here,\nwhile I believe opt guys will forget to change peer values after clonning :-(",
+      "parentUuid": "7a7fa997_400cdf94",
+      "revId": "f9bd51e670a4dcd3ba0166256553dc55e3275b20",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
