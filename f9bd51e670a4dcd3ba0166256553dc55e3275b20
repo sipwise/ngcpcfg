@@ -16,6 +16,24 @@
       "revId": "f9bd51e670a4dcd3ba0166256553dc55e3275b20",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_400cdf94",
+        "filename": "sbin/ngcp-network",
+        "patchSetId": 3
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2016-02-22T23:14:16Z",
+      "side": 1,
+      "message": "What means \"properly\"? Please provide a cmdline/example how this should look like.",
+      "parentUuid": "7a7fa997_a094d337",
+      "revId": "f9bd51e670a4dcd3ba0166256553dc55e3275b20",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
