@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a7fa997_a094d337",
+        "filename": "sbin/ngcp-network",
+        "patchSetId": 3
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2016-02-22T22:54:15Z",
+      "side": 1,
+      "message": "maybe it worth to set peer values properly?",
+      "revId": "f9bd51e670a4dcd3ba0166256553dc55e3275b20",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
