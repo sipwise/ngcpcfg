@@ -4,6 +4,7 @@ use warnings;
 use strict;
 
 use Carp;
+use Data::Clone;
 use Data::Validate::IP;
 use English qw( -no_match_vars );
 use Getopt::Long;
@@ -33,6 +34,8 @@ my $bond_miimon;
 my $bond_mode;
 my $bond_slaves;
 my $broadcast;
+my $clone_from;
+my $clone_to;
 my $dbnode;
 my @dns_nameservers;
 my $gateway;
@@ -65,6 +68,8 @@ GetOptions(
     'bond-mode=s'        => \$bond_mode,
     'bond-slaves=s'      => \$bond_slaves,
     'broadcast=s'        => \$broadcast,
+    'clone-from=s'       => \$clone_from,
+    'clone-to=s'         => \$clone_to,
     'dbnode:i'           => \$dbnode,
     'dns=s'              => \@dns_nameservers,
     'gateway=s'          => \$gateway,
@@ -128,7 +133,8 @@ if ($ip_v6) {
 }
 
 foreach my $opt (
-    $bond_miimon,      $bond_mode,     $broadcast, $dbnode, @dns_nameservers,
+    $bond_miimon,      $bond_mode,     $broadcast, $clone_from,
+    $clone_to,         $dbnode,        @dns_nameservers,
     $gateway,          @set_interface, $host,      $hwaddr,
     $internal_iface,   $ip,            $ip_v6,     $move_from,
     $move_to,          $netmask,       $peer,      @remove_host,
@@ -390,6 +396,63 @@ sub set_dbnode {
     return;
 }
 
+sub clone_settings {
+    my $from = shift;
+    my $to   = shift;
+
+    if ( defined $from && !defined $to ) {
+        croak '--clone-from option must be used with --clone-to option together';
+    }
+
+    if ( !defined $from && defined $to ) {
+        croak '--clone-to option must be used with --clone-from option together';
+    }
+
+    # ha, nothing to do for us
+    if ( !defined $from && !defined $to ) {
+        return;
+    }
+
+    logger("clone from = $from");
+    logger("clone to = $to");
+
+    if ( !defined $yaml->[0]->{hosts}->{$from} ) {
+      croak "Host '$from' doesn\'t exist, refusing to clone settings.";
+    }
+
+    $yaml->[0]->{hosts}->{$to} = clone($yaml->[0]->{hosts}->{$from});
+
+    # adjust peer on-the-fly to prevent user mistakes
+    if ( defined $yaml->[0]->{hosts}->{$from}->{peer} ) {
+
+      if ( $to !~ /[ab]$/ ) {
+        carp "Target host $from not ending with 'a' or 'b', skipping automatic peer config.";
+      } else {
+        ## no critic qw(ValuesAndExpressions::RequireInterpolationOfMetachars)
+        logger('Target host matching ".*[ab]$" pattern');
+        ## use critic
+
+        my $hostpattern = substr $to, 0, - 1; # everything but the trailing 'a' or 'b'
+        my $last_char   = substr $to,    - 1; # just the 'a' or 'b'
+
+	my $other_node;
+	if ( $to =~ /a$/ ) {
+	  $other_node = $to =~ s/a$/b/r;
+	} else {
+	  $other_node = $to =~ s/b$/a/r;
+	}
+	print "Setting peer for host '$to' to '$other_node'.\n";
+
+      }
+    }
+
+    print "Finished cloning host section '$from' to '$to'.\n" or croak 'Output error';
+    print "Please do not forget to manually adjust '$outputfile'!\n" or croak 'Output error';
+
+    return;
+}
+
+
 sub move_settings {
     my $from = shift;
     my $to   = shift;
@@ -503,6 +566,7 @@ if ( defined $dbnode && ( !defined $move_from || !defined $move_to ) )
 
 
 move_settings( $move_from, $move_to );
+clone_settings ( $clone_from, $clone_to );
 
 open my $fh, '>', "$outputfile"
   or croak "Could not open $outputfile for writing";
@@ -544,6 +608,23 @@ Set bond_slaves configuration to specified argument.
 =item B<--broadcast=<IP>>
 
 Set broadcast configuration to specified argument.
+
+=item B<--clone-from=<HOST>>
+
+Clone specified HOST section, using specified HOST setting as its source.
+Please do not forget to manually adjust the resulting configuration file, no
+further checks like duplicated IPs are performed. Needs to be used in
+combination with the '--clone-to=<HOST>' option.
+
+This option is useful especially in carrier setups with plenty of similar
+web/db/proxy/.... systems, where the host definition of a host like 'prx01a'
+should be used as base for another host 'prx02a'. Usage example:
+'--clone-from=prx01a --clone-to=prx02a'
+
+=item B<--clone-to=<HOST>>
+
+Clone specified HOST section, using specified HOST setting as its destination.
+Refer to '--clone-from=<HOST>' for further information.
 
 =item B<--dbnode=<ID>>
 
@@ -705,6 +786,7 @@ Usage examples useful especially on sip:provider PRO systems:
 Usage examples useful especially on sip:carrier systems:
 
   ngcp-network --host=proxy2 --set-interface=eth0 --ip=192.168.10.42 --netmask=255.255.255.0
+  ngcp-network --clone-from=prx01a --clone-to=prx02a
 
 =head1 REQUIRED ARGUMENTS
 

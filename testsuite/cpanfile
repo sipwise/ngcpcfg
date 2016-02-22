@@ -1,4 +1,5 @@
 requires 'Carp';
+requires 'Data::Clone';
 requires 'Data::Validate::IP';
 requires 'Getopt::Long';
 requires 'IO::Interface';
