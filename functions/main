@@ -48,6 +48,18 @@ log_debug() {
   fi
 }
 
+compare_active_branch() {
+  log_debug "get_active_branch ${1:-}"
+
+  log_debug "cd $NGCPCTL_MAIN"
+  cd "$NGCPCTL_MAIN"
+
+  local current_branch
+  current_branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+  log_debug "current_branch = $current_branch"
+  echo "$current_branch"
+}
+
 get_branch_status() {
   log_debug "cd $NGCPCTL_MAIN"
   cd "$NGCPCTL_MAIN"
