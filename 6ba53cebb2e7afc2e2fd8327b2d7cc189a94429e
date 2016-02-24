@@ -37,6 +37,41 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_cb61f0d4",
+        "filename": "sbin/ngcp-network",
+        "patchSetId": 5
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1000005
+      },
+      "writtenOn": "2016-02-24T19:38:07Z",
+      "side": 1,
+      "message": "This warning will (like the other one) be gone with Guillem\u0027s perlcritic update. But you may leave it, it doesn\u0027t hurt and seems to be in sync with other code of ours.",
+      "parentUuid": "1a76adc5_10a3959f",
+      "revId": "6ba53cebb2e7afc2e2fd8327b2d7cc189a94429e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_eb5e2c12",
+        "filename": "sbin/ngcp-network",
+        "patchSetId": 5
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1000005
+      },
+      "writtenOn": "2016-02-24T19:38:07Z",
+      "side": 1,
+      "message": "This will also be gone when/if we apply Guillem\u0027s update",
+      "revId": "6ba53cebb2e7afc2e2fd8327b2d7cc189a94429e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_155b8755",
         "filename": "sbin/ngcp-network",
         "patchSetId": 5
