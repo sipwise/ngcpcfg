@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_10a3959f",
+        "filename": "sbin/ngcp-network",
+        "patchSetId": 5
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2016-02-24T14:54:02Z",
+      "side": 1,
+      "message": "Thanks ad \".*\", right.\n\nRegarding msx I just followed perlcritic rules:\n\nRegular expression without \"/s\" flag at line 428, column 19.  See pages 240,241 of PBP.  (Severity: 2)\nRegular expression without \"/x\" flag at line 428, column 19.  See page 236 of PBP.  (Severity: 3)\nRegular expression without \"/m\" flag at line 428, column 19.  See page 237 of PBP.  (Severity: 2)\n\nShould I keep/remove msx?",
+      "parentUuid": "1a76adc5_f55dab49",
+      "revId": "6ba53cebb2e7afc2e2fd8327b2d7cc189a94429e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_155b8755",
         "filename": "sbin/ngcp-network",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_30a01190",
+        "filename": "sbin/ngcp-network",
+        "patchSetId": 5
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2016-02-24T14:54:02Z",
+      "side": 1,
+      "message": "Thx, done",
+      "parentUuid": "1a76adc5_155b8755",
+      "revId": "6ba53cebb2e7afc2e2fd8327b2d7cc189a94429e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_b5573326",
         "filename": "sbin/ngcp-network",
         "patchSetId": 5
@@ -47,6 +83,30 @@
       "writtenOn": "2016-02-24T11:24:52Z",
       "side": 1,
       "message": "my $other_node;\nif ($to \u003d~ /a$/) {\n  $other_node \u003d $to \u003d~ s/a$/b/r;\n} else {\n  $other_node \u003d $to \u003d~ s/b$/a/r;\n}\nprint \"Setting from \u0027$to\u0027 to \u0027$other_node\u0027\\n\";\n\n(Could be done in one line, but let\u0027s keep it clean ;) )",
+      "range": {
+        "startLine": 435,
+        "startChar": 0,
+        "endLine": 446,
+        "endChar": 9
+      },
+      "revId": "6ba53cebb2e7afc2e2fd8327b2d7cc189a94429e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_d0ac3d8f",
+        "filename": "sbin/ngcp-network",
+        "patchSetId": 5
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2016-02-24T14:54:02Z",
+      "side": 1,
+      "message": "Oh, that\u0027s indeed much nicer, thx :)",
+      "parentUuid": "1a76adc5_b5573326",
       "range": {
         "startLine": 435,
         "startChar": 0,
