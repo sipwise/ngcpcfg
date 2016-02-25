@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_ab3cb494",
+        "filename": "sbin/ngcp-network",
+        "patchSetId": 5
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2016-02-25T11:04:36Z",
+      "side": 1,
+      "message": "I see, thanks for clarification!",
+      "parentUuid": "1a76adc5_cb61f0d4",
+      "revId": "6ba53cebb2e7afc2e2fd8327b2d7cc189a94429e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_eb5e2c12",
         "filename": "sbin/ngcp-network",
         "patchSetId": 5
@@ -66,6 +84,24 @@
       "writtenOn": "2016-02-24T19:38:07Z",
       "side": 1,
       "message": "This will also be gone when/if we apply Guillem\u0027s update",
+      "revId": "6ba53cebb2e7afc2e2fd8327b2d7cc189a94429e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_4b41600a",
+        "filename": "sbin/ngcp-network",
+        "patchSetId": 5
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2016-02-25T11:04:36Z",
+      "side": 1,
+      "message": "Ah nice, thx :) So I\u0027ll drop that part too.",
+      "parentUuid": "1a76adc5_eb5e2c12",
       "revId": "6ba53cebb2e7afc2e2fd8327b2d7cc189a94429e",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
