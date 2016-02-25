@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_eba62c53",
+        "filename": "sbin/ngcp-network",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2016-02-25T11:04:36Z",
+      "side": 1,
+      "message": "Ah nice, wasn\u0027t aware of this - sure, will change it, thx!",
+      "parentUuid": "1a76adc5_0b8928ca",
+      "revId": "06435bc877b6908a67ee7e7fe213b7aa8db3ff30",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_8bbc586e",
         "filename": "sbin/ngcp-network",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2016-02-25T10:51:17Z",
       "side": 1,
       "message": "You forgot to remove the now unused variables $hostpattern and $last_char.",
+      "revId": "06435bc877b6908a67ee7e7fe213b7aa8db3ff30",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_8b63f819",
+        "filename": "sbin/ngcp-network",
+        "patchSetId": 7
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2016-02-25T11:04:36Z",
+      "side": 1,
+      "message": "Indeed, thx!",
+      "parentUuid": "1a76adc5_8bbc586e",
       "revId": "06435bc877b6908a67ee7e7fe213b7aa8db3ff30",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
