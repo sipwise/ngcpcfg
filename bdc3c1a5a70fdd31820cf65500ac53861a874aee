@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_1a208748",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 2
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2016-03-02T13:37:32Z",
+      "side": 1,
+      "message": "by far better style than the old code.\nbut why don\u0027t you use the exact same pattern as above here as well, i.e.\nif ($@) {\n ...",
+      "revId": "bdc3c1a5a70fdd31820cf65500ac53861a874aee",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
