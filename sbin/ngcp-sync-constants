@@ -711,7 +711,6 @@ sub do_slave_sync
 }
 
 sub main {
-	my $yml;
 	eval {
 		$yml = YAML::Tiny->read($CONSTANTS_YML);
 	};
