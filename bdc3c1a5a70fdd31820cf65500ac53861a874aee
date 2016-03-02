@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_faed8bf0",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 2
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2016-03-02T14:01:11Z",
+      "side": 1,
+      "message": "but here the eval might be ok, since they seem to just wanting to skip loading hosts if the network yml is empty (or nonexistent or errorneous)",
+      "range": {
+        "startLine": 606,
+        "startChar": 1,
+        "endLine": 612,
+        "endChar": 3
+      },
+      "revId": "bdc3c1a5a70fdd31820cf65500ac53861a874aee",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_1a208748",
         "filename": "sbin/ngcp-sync-constants",
         "patchSetId": 2
@@ -90,6 +113,24 @@
       "side": 1,
       "message": "\"our\" die will not be executed without eval. as -\u003eread() croaks implicitly.\nand we have our own prefix \"Can\u0027t read constants file\" where $ERRNO contains only the pure error string.\nTherefore, it is better to keep using our die with the description prefix understandable for us.",
       "parentUuid": "1a76adc5_bad87354",
+      "revId": "bdc3c1a5a70fdd31820cf65500ac53861a874aee",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_daf0cfcb",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 2
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2016-03-02T14:01:11Z",
+      "side": 1,
+      "message": "yes what i mean, to leave the original code here:\n\n$yml \u003d YAML::Tiny-\u003eread($CONSTANTS_YML)\n\t\tor die \"Can\u0027t read constants file: $ERRNO\\n\";\n\nso either read dies upon parsing error, or the \"or\" part jumps in if the config is emtpy.",
+      "parentUuid": "1a76adc5_1ae72714",
       "revId": "bdc3c1a5a70fdd31820cf65500ac53861a874aee",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
