@@ -170,6 +170,24 @@
       "revId": "bdc3c1a5a70fdd31820cf65500ac53861a874aee",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_9a1257b3",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 2
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-03-02T14:42:55Z",
+      "side": 1,
+      "message": "the initial goal was to just fail if we could not read it \"read-\u003e() or die\"\nnow as they have changed the way of their error logic to \"croak if error\" we cannot catch anything without evals as it implicity croaks automatically otherwise. hence I added \"eval {}\" for both cases there, 1st case with network.yml needs to gracefully return and another case with constants.yml, just intercept and die but preserving our prefix \"Can\u0027t read constants file\".",
+      "parentUuid": "1a76adc5_1aa3a79f",
+      "revId": "bdc3c1a5a70fdd31820cf65500ac53861a874aee",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
