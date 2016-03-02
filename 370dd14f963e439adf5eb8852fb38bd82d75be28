@@ -1,0 +1,10 @@
+Verified+1: Jenkins Jenkins <jenkins@sipwise.com>
+Code-Review+1: Guillem Jover <gjover@sipwise.com>
+Code-Review+1: Alexander Lutay <alutay@sipwise.com>
+Code-Review+2: Víctor Seva <vseva@sipwise.com>
+Code-Review+2: Rene Krenn <rkrenn@sipwise.com>
+Submitted-by: Kirill Solomko <ksolomko@sipwise.com>
+Submitted-at: Wed, 02 Mar 2016 15:49:44 +0100
+Reviewed-on: http://gerrit.mgm.sipwise.com/4970
+Project: ngcpcfg
+Branch: refs/heads/master
