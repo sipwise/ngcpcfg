@@ -152,6 +152,24 @@
       "revId": "bdc3c1a5a70fdd31820cf65500ac53861a874aee",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_1aa3a79f",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 2
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2016-03-02T14:28:53Z",
+      "side": 1,
+      "message": "whats the actual goal here, should it fail with an empty or amlformed fiel or not? $EVAL_ERROR (from the language english module) is the same as $@",
+      "parentUuid": "1a76adc5_babf13d0",
+      "revId": "bdc3c1a5a70fdd31820cf65500ac53861a874aee",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
