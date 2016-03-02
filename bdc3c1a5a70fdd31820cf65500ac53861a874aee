@@ -16,6 +16,24 @@
       "revId": "bdc3c1a5a70fdd31820cf65500ac53861a874aee",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_fa16ebf0",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 2
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-03-02T13:42:49Z",
+      "side": 1,
+      "message": "one string condition style. turning 1 condition line code into 3 lines complicates style for no benefits.",
+      "parentUuid": "1a76adc5_1a208748",
+      "revId": "bdc3c1a5a70fdd31820cf65500ac53861a874aee",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
