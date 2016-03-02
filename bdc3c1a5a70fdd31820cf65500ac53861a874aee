@@ -134,6 +134,24 @@
       "revId": "bdc3c1a5a70fdd31820cf65500ac53861a874aee",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_babf13d0",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 2
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-03-02T14:07:12Z",
+      "side": 1,
+      "message": "It returns an empty YAML::Tiny object even if the file is empty and \"or\" will not work there :(",
+      "parentUuid": "1a76adc5_daf0cfcb",
+      "revId": "bdc3c1a5a70fdd31820cf65500ac53861a874aee",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
