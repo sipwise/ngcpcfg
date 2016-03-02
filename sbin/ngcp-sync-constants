@@ -603,10 +603,13 @@ sub do_pair_sync {
 sub get_slave_hosts {
 	my $self = shift;
 	my $network = new YAML::Tiny;
-	$network = YAML::Tiny->read($NETWORK_YML) || do {
-		print "Can't read network file: $ERRNO\n";
-		return;
-	};
+    eval {
+        $network = YAML::Tiny->read($NETWORK_YML);
+    };
+    if ($@) {
+        print "Can't read network file: $EVAL_ERROR\n";
+        return;
+    };
 	my @hosts;
 
 	foreach my $host (keys %{$network->[0]->{hosts}})
@@ -709,8 +712,10 @@ sub do_slave_sync
 
 sub main {
 	$yml = new YAML::Tiny;
-	$yml = YAML::Tiny->read($CONSTANTS_YML)
-		or die "Can't read constants file: $ERRNO\n";
+    eval {
+	    $yml = YAML::Tiny->read($CONSTANTS_YML);
+    };
+    die "Can't read constants file: $EVAL_ERROR\n" if $EVAL_ERROR;
 
 	if ($init_passwords and not $test_mode and not -w $CONSTANTS_YML) {
 		die "$CONSTANTS_YML is not writable";
