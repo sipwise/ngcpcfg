@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "1a76adc5_5add9f41",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 2
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2016-03-02T13:52:47Z",
+      "side": 1,
+      "message": "but here the eval seem to be justified.",
+      "range": {
+        "startLine": 611,
+        "startChar": 2,
+        "endLine": 611,
+        "endChar": 9
+      },
+      "revId": "bdc3c1a5a70fdd31820cf65500ac53861a874aee",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_1a208748",
         "filename": "sbin/ngcp-sync-constants",
         "patchSetId": 2
@@ -31,6 +54,24 @@
       "side": 1,
       "message": "one string condition style. turning 1 condition line code into 3 lines complicates style for no benefits.",
       "parentUuid": "1a76adc5_1a208748",
+      "revId": "bdc3c1a5a70fdd31820cf65500ac53861a874aee",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_bad87354",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 2
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2016-03-02T13:52:47Z",
+      "side": 1,
+      "message": "but obviously -\u003eread can die as described in the commit message, confirmed by cpan doc \"Returns the object on success or throws an error on failure.\"\n\nas we are dying anyway here, i would revert this to the original code.",
+      "parentUuid": "1a76adc5_fa16ebf0",
       "revId": "bdc3c1a5a70fdd31820cf65500ac53861a874aee",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
