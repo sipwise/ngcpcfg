@@ -7,6 +7,7 @@
 X_out = { };
 
 FOREACH X_host IN hosts.keys;
+    NEXT IF hosts.$host.status == 'offline';
 	X_hd = hosts.$X_host;
 	X_roles = X_hd.role;
 	IF X_roles.grep('^rtp$').size() == 0;

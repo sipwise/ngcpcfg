@@ -13,3 +13,6 @@
 [% IF hosts.${argv.host}.role.grep('^' _ argv.role _ '$').size() -%]
 [% out = 1 -%]
 [% END -%]
+[% IF hosts.${argv.host}.status == 'offline' -%]
+[% out = 0 -%]
+[% END -%]

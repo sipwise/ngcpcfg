@@ -15,6 +15,7 @@
     theset.ips = [];
 
     FOREACH host IN hosts.keys.sort;
+      NEXT IF hosts.$host.status == 'offline';
       NEXT UNLESS hosts.$host.role.grep('^' _ argv.role _ '$').size();
       FOREACH iface IN hosts.$host.interfaces;
         NEXT UNLESS hosts.$host.$iface.cluster_sets.grep('^' _ set _ '$').size();
