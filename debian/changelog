@@ -1,3 +1,44 @@
+ngcp-ngcpcfg (0.29.1.0+0~mr4.3.1.0) unstable; urgency=medium
+
+  [ Michael Prokop ]
+  * [0d828d4] MT#15973 Revert "MT#15973 Report in 'status' action when build/apply run is needed"
+  * [c9b6265] MT#15973 Report in 'status' action when build/apply run is needed
+  * [de84408] MT#17699 Bump Standards-Version to 3.9.7
+  * [4fd5122] MT#16393 Check for branch 'master' being active
+  * [14dbc9d] MT#16719 Support cloning of host sections
+
+  [ Richard Fuchs ]
+  * [a882326] MT#15613 add get_cdr_export_fields helper script
+  * [326330f] MT#15613 amend get_cdr_export_fields to accommodate event-exporter
+
+  [ Guillem Jover ]
+  * [ed179ff] MT#17153 Fix three-argument form of open call
+  * [daa68ce] MT#17219 Move check invocation inside build script
+  * [7c2d649] MT#17219 Use dpkg-query to retrieve the self version
+  * [e9e3bd5] MT#17219 Unify action handling into a single function
+  * [d0b12d1] MT#17219 Do not invoke redundant etckeeper from apply action
+  * [04e4d45] MT#17219 Cleanup help output
+  * [b789568] MT#17219 Use $@ instead of $* when we need to preserve argument grouping
+
+  [ Victor Seva ]
+  * [28a436f] MT#17179 lib: return sorted result
+  * [df1fc96] MT#17179 lib: sort host.keys
+  * [8784b36] MT#17163 services: restart ha.d after monit and before the rest
+
+  [ Alexander Lutay ]
+  * [c40fd75] MT#17231 Remove internal_timing astisisk option from testsuite
+  * [2e74d71] MT#17781 Enable /var handling via ngcpcfg for sipwise user bash aliases
+  * [2c03892] MT#17781 Define NGCPCTL_BASE to fix PRO/Carrier installation
+
+  [ Kirill Solomko ]
+  * [741212e] MT#16017 adjusted faxserver section password data
+  * [370dd14] MT#18333 eval around YAML::Tiny->read to handle implicit croak on error
+  * [7478682] MT#18333 do not declare $yml as local in main()
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 21 Mar 2016 22:27:11 +0100
+
 ngcp-ngcpcfg (0.29.0.0+0~mr4.3.0.0) unstable; urgency=medium
 
   [ Kirill Solomko ]
