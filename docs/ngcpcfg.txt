@@ -7,7 +7,7 @@ ngcpcfg - central and template based Configuration Management
 
 Synopsis
 --------
-ngcpcfg <action> [ options ]
+ngcpcfg [<global option(s)>] <action> [ <action specific option(s)> ]
 
 Introduction
 ------------
@@ -170,8 +170,8 @@ executed under "bash $FILE", so you can use commands e.g. like
 "/etc/init.d/foobar restart" and any further shell scripting syntax inside the
 services files
 
-Options
--------
+Global Options
+--------------
 
   **--debug** <action> [<further_options>]::
 
@@ -183,7 +183,7 @@ NGCP systems) as well as stderr.
 
 Display usage information and exit.
 
-  **--no-action-failure**::
+  **--no-action-failure** <action> [<further_options>]::
 
 The _check_ and _apply_ actions check for any possibly outstanding pull
 actions on the shared storage. If any outstanding actions are identified then
@@ -194,7 +194,7 @@ what you're doing.
 
 Note: This option is available in the High Availability setup only.
 
-  **--no-validate**::
+  **--no-validate** <action> [<further_options>]::
 
 Ignore schema validation results for YAML files (syntax check is still performed).
 
@@ -202,8 +202,8 @@ Ignore schema validation results for YAML files (syntax check is still performed
 
 Display ngcpcfg version and exit.
 
-Actions
--------
+Actions and action specific options
+-----------------------------------
 
   **apply** [<commit_message>]::
 
