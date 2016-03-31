@@ -44,7 +44,7 @@ log_error() {
 log_debug() {
   if [ -n "${DEBUG:-}" ] ; then
     logger -t ngcpcfg -- "Debug: $*"
-    console_output "DEBUG: $*\n"
+    console_output "DEBUG: $*\n" >&2
   fi
 }
 

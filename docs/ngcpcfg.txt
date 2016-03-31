@@ -176,6 +176,8 @@ Options
   **--debug** <action> [<further_options>]::
 
 Run actions (see next section) in verbose mode, useful for debugging.
+Debug output will be sent to syslog (available as /var/log/ngcp/ngcpcfg.log on
+NGCP systems) as well as stderr.
 
   **--help**::
 
