@@ -267,11 +267,16 @@ sub set_interface {
                 delete $yaml->[0]->{hosts}->{$host}->{$iface}->{$k};
             }
             else {
-                logger("$k: $settings->{$k}");
                 if($k eq 'shared_ip' || $k eq 'shared_v6ip' || $k eq 'advertised_ip') {
-                    push @{ $yaml->[0]->{hosts}->{$host}->{$iface}->{$k} }, $settings->{$k};
+                    if (my ($matched) = grep $_ eq $settings->{$k}, @{ $yaml->[0]->{hosts}->{$host}->{$iface}->{$k} }) {
+                        logger("not setting $k to $matched to avoid duplicates");
+                    } else {
+                        logger("adding IP entry $k: $settings->{$k}");
+                        push @{ $yaml->[0]->{hosts}->{$host}->{$iface}->{$k} }, $settings->{$k}
+                    }
                 }
                 else {
+                    logger("adding entry $k: $settings->{$k}");
                     $yaml->[0]->{hosts}->{$host}->{$iface}->{$k} = $settings->{$k};
                 }
             }
