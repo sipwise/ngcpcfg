@@ -22,6 +22,30 @@
       "revId": "4e3703660e5cc805bfd9decb4f11205f237548be",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_eb87fa5f",
+        "filename": "sbin/ngcp-network",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2016-04-01T11:02:59Z",
+      "side": 1,
+      "message": "grep is fine and should be used whenever you need a filter, something that has to scan the whole array. When it might not be appropriate is when you want to match or not on some condition or find an item. For those cases the functions any/all/etc from the List::Util module or if that is old from List::MoreUtils are a better fit.",
+      "parentUuid": "dad5f5cf_48dbaced",
+      "range": {
+        "startLine": 271,
+        "startChar": 40,
+        "endLine": 271,
+        "endChar": 44
+      },
+      "revId": "4e3703660e5cc805bfd9decb4f11205f237548be",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
