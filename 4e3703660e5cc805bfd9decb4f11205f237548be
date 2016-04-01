@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad5f5cf_48dbaced",
+        "filename": "sbin/ngcp-network",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2016-04-01T09:08:27Z",
+      "side": 1,
+      "message": "I personally do not like grep usage in Perl (I read somewhere it is not a best practice), but I am NOT a perl developer and I do not have proper code here :-(",
+      "range": {
+        "startLine": 271,
+        "startChar": 40,
+        "endLine": 271,
+        "endChar": 44
+      },
+      "revId": "4e3703660e5cc805bfd9decb4f11205f237548be",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
