@@ -1,3 +1,9 @@
+ngcp-ngcpcfg (0.29.2.0+0~mr4.3.2.0) unstable; urgency=medium
+
+  * New release.
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 04 Apr 2016 23:33:30 +0200
+
 ngcp-ngcpcfg (0.29.1.0+0~mr4.3.1.0) unstable; urgency=medium
 
   [ Michael Prokop ]
