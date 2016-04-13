@@ -33,6 +33,24 @@
       "revId": "0386fd1eb450f5a56829cbd0cabedfde31cc66ee",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_ca4a47ac",
+        "filename": "lib/get_cdr_export_fields",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2016-04-13T13:16:42Z",
+      "side": 1,
+      "message": "Nevermind, I take that back. Not fully awake yet.",
+      "parentUuid": "bada0100_0a512f62",
+      "revId": "0386fd1eb450f5a56829cbd0cabedfde31cc66ee",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
