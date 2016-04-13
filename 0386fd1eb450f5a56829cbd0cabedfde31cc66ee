@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bada0100_ea538b6a",
+        "filename": "lib/get_cdr_export_fields",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2016-04-13T13:15:33Z",
+      "side": 1,
+      "message": "should be -%] instead of [%- I assume?",
+      "revId": "0386fd1eb450f5a56829cbd0cabedfde31cc66ee",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_0a512f62",
+        "filename": "lib/get_cdr_export_fields",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2016-04-13T13:15:33Z",
+      "side": 1,
+      "message": "Are these really supposed to be here? The point is to be able to specify in the YML config which fields to include in the CDR export. These fields here would all be forcefully included in the export.",
+      "revId": "0386fd1eb450f5a56829cbd0cabedfde31cc66ee",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
