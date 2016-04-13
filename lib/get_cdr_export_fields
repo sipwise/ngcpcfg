@@ -12,6 +12,9 @@
 	# @return out.joins
 	# @return out.conditions
 -%]
+[% MACRO direction_provider_select(dict_table,data_table,dict_col,val_col,direction,provider,type) BLOCK -%]
+(SELECT data.[%- val_col -%] FROM accounting.[%- data_table -%] AS data INNER JOIN accounting.cdr_direction AS dir ON data.direction_id = dir.id INNER JOIN accounting.cdr_provider AS prov ON data.provider_id = prov.id INNER JOIN accounting.[%- dict_table -%] AS dict ON data.[%- dict_col -%] = dict.id WHERE data.cdr_id = accounting.cdr.id AND dir.type = "[%- direction -%]" AND prov.type="[%- provider -%]" AND dict.type="[%- type -%]")
+[%- END %]
 [%
 	out = { };
 
@@ -46,6 +49,7 @@
 	X_cdr_id_map.DESTINATION_SUBSCRIBER_ID = "destination_voip_subscribers.id";
 	X_cdr_id_map.INIT_TIME = "CONCAT(FROM_UNIXTIME(accounting.cdr.init_time), \".\", SUBSTRING_INDEX(accounting.cdr.init_time, \".\", -1))";
 	X_cdr_id_map.START_TIME = "CONCAT(FROM_UNIXTIME(accounting.cdr.start_time), \".\", SUBSTRING_INDEX(accounting.cdr.start_time, \".\", -1))";
+	X_cdr_id_map.END_TIME = "CONCAT(FROM_UNIXTIME(accounting.cdr.start_time + accounting.cdr.duration), \".\", SUBSTRING_INDEX(accounting.cdr.start_time + accounting.cdr.duration, \".\", -1))";
 	X_cdr_id_map.SOURCE_CARRIER_ZONE = "COALESCE(source_carrier_bbz.zone, \"onnet\")";
 	X_cdr_id_map.SOURCE_CARRIER_DETAIL = "COALESCE(source_carrier_bbz.detail, \"platform internal\")";
 	X_cdr_id_map.SOURCE_CUSTOMER_ZONE = "source_customer_bbz.zone";
@@ -70,8 +74,24 @@
 
 	out.admin_fields = [ ];
 	FOREACH X_f IN argv.admin_export_fields;
+		# explicitly declared fields have highest precedence:
 		IF X_cdr_id_map.exists(X_f);
 			out.admin_fields.push("'" _ X_cdr_id_map.$X_f _ "'");
+
+		# specify cash balance before/after fields like e.g. source_CuStOmEr_cash_balance_before in config.yml:
+		ELSIF (matches = X_f.lower.match('^([a-z]+)_([a-z]+)_([a-z_]*cash_balance)_(before|after)$'));
+			out.admin_fields.push("'" _ direction_provider_select("cdr_cash_balance","cdr_cash_balance_data","cash_balance_id","val_" _ matches.3,matches.0,matches.1,matches.2) _ "'");
+
+		# specify time balance before/after fields like e.g. source_CuStOmEr_free_time_balance_after:
+		ELSIF (matches = X_f.lower.match('^([a-z]+)_([a-z]+)_([a-z_]*time_balance)_(before|after)$'));
+			out.admin_fields.push("'" _ direction_provider_select("cdr_time_balance","cdr_time_balance_data","time_balance_id","val_" _ matches.3,matches.0,matches.1,matches.2) _ "'");
+
+		# specify new cdr relation fields like e.g. source_CuStOmEr_profile_package_id:
+		# note: they cannot be used in conditions for now.
+		ELSIF (matches = X_f.lower.match('^([a-z]+)_([a-z]+)_(profile_package_id|contract_balance_id)$'));
+			out.admin_fields.push("'" _ direction_provider_select("cdr_relation","cdr_relation_data","relation_id","val",matches.0,matches.1,matches.2) _ "'");
+
+		# lowest precendece: other cdr fields, fields joined on your own or 'calculated' (raw sql) fields ... :
 		ELSE;
 			out.admin_fields.push("'" _ X_f _ "'");
 		END;
@@ -81,6 +101,16 @@
 	FOREACH X_f IN argv.reseller_export_fields;
 		IF X_cdr_id_map.exists(X_f);
 			out.reseller_fields.push("'" _ X_cdr_id_map.$X_f _ "'");
+
+		ELSIF (matches = X_f.lower.match('^([a-z]+)_([a-z]+)_([a-z_]*cash_balance)_(before|after)$'));
+			out.reseller_fields.push("'" _ direction_provider_select("cdr_cash_balance","cdr_cash_balance_data","cash_balance_id","val_" _ matches.3,matches.0,matches.1,matches.2) _ "'");
+
+		ELSIF (matches = X_f.lower.match('^([a-z]+)_([a-z]+)_([a-z_]*time_balance)_(before|after)$'));
+			out.reseller_fields.push("'" _ direction_provider_select("cdr_time_balance","cdr_time_balance_data","time_balance_id","val_" _ matches.3,matches.0,matches.1,matches.2) _ "'");
+
+		ELSIF (matches = X_f.lower.match('^([a-z]+)_([a-z]+)_(profile_package_id|contract_balance_id)$'));
+			out.reseller_fields.push("'" _ direction_provider_select("cdr_relation","cdr_relation_data","relation_id","val",matches.0,matches.1,matches.2) _ "'");
+
 		ELSE;
 			out.reseller_fields.push("'" _ X_f _ "'");
 		END;
