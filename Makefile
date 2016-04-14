@@ -6,6 +6,7 @@ PERL_SCRIPTS =	helper/sort-yml \
 		helper/validate-yml helper/fileformat_version \
 		sbin/ngcp-network \
 		sbin/ngcp-sync-constants
+RESULTS ?= results
 
 all: docs
 
@@ -31,10 +32,13 @@ man:
 clean:
 	rm -f docs/ngcpcfg.xml docs/ngcpcfg.epub docs/ngcpcfg.html docs/ngcpcfg.pdf
 	rm -f ngcpcfg.8 ngcp-network.8 ngcp-sync-constants.8
+	rm -rf t/__pycache__
+	rm -f t/fixtures/bin/* t/tests.pyc
 
-dist-clean:
+dist-clean: clean
 	rm -f docs/ngcpcfg.html docs/ngcpcfg.pdf
 	rm -f docs/ngcpcfg.epub ngcpcfg.8
+	rm -rf $(RESULTS)
 
 # check for syntax errors
 syntaxcheck: shellcheck perlcheck
@@ -55,5 +59,9 @@ perlcheck:
 		perl -CSD -w -c $${SCRIPT} || exit ; \
 	done; \
 	echo "-> perl check done."; \
+
+test:
+	mkdir -p $(RESULTS)
+	cd t ; py.test-3 --junit-xml=../$(RESULTS)/pytest.xml tests.py
 
 # EOF
