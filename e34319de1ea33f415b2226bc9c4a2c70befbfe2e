@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bada0100_4d88aee7",
+        "filename": "t/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2016-04-14T15:38:30Z",
+      "side": 1,
+      "message": "ngcpcfg-jessie is not good enough??",
+      "revId": "e34319de1ea33f415b2226bc9c4a2c70befbfe2e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_cd1c9ec4",
+        "filename": "t/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2016-04-14T15:38:30Z",
+      "side": 1,
+      "message": "the sipwise-jessie docker image has already all this stuff remove 10-\u003e20 lines",
+      "revId": "e34319de1ea33f415b2226bc9c4a2c70befbfe2e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
