@@ -51,6 +51,7 @@ Depends: etckeeper,
          netcat | netcat-traditional,
          ngcp-system-tools,
          pkwalify,
+         psmisc,
          ${misc:Depends},
          ${perl:Depends}
 Description: central and templated based Configuration Management System for NGCP platforms
