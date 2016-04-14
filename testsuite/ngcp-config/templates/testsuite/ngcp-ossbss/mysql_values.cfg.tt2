@@ -1,4 +1,0 @@
-EADDRESS='[% networking.eaddress %]'
-ASTERISK_PORT='[% asterisk.sip.bindport %]'
-SEMS_PORT='[% sems.bindport %]'
-SEMS_XMLRPCPORT='[% sems.xmlrpcport %]'
