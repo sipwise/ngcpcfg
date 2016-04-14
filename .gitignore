@@ -1,0 +1,17 @@
+# cache files
+__pycache__/
+*.pyc
+
+# editor temp files
+*~
+.*.sw?
+.sw?
+\#*\#
+DEADJOE
+
+# runtime files
+t/fixtures/bin/hostname
+t/fixtures/bin/ngcp-nodename
+
+# testing output
+results
