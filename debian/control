@@ -2,60 +2,63 @@ Source: ngcp-ngcpcfg
 Section: admin
 Priority: extra
 Maintainer: Sipwise Development Team <support@sipwise.com>
-Build-Depends: asciidoc,
-               debhelper (>= 9~),
-               docbook-xsl,
-               libclone-perl,
-               libconfig-tiny-perl,
-               libdata-validate-ip-perl,
-               libdbd-mysql-perl,
-               libdbi-perl,
-               libhash-merge-perl,
-               libio-interface-perl,
-               libipc-system-simple-perl,
-               liblist-moreutils-perl,
-               libnet-netmask-perl,
-               libnetwork-ipv4addr-perl,
-               libreadonly-perl,
-               libregexp-ipv6-perl,
-               libsocket-perl,
-               libsys-hostname-long-perl,
-               libtemplate-perl,
-               libyaml-perl,
-               libyaml-tiny-perl,
-               xsltproc
+Build-Depends:
+ asciidoc,
+ debhelper (>= 9~),
+ docbook-xsl,
+ libclone-perl,
+ libconfig-tiny-perl,
+ libdata-validate-ip-perl,
+ libdbd-mysql-perl,
+ libdbi-perl,
+ libhash-merge-perl,
+ libio-interface-perl,
+ libipc-system-simple-perl,
+ liblist-moreutils-perl,
+ libnet-netmask-perl,
+ libnetwork-ipv4addr-perl,
+ libreadonly-perl,
+ libregexp-ipv6-perl,
+ libsocket-perl,
+ libsys-hostname-long-perl,
+ libtemplate-perl,
+ libyaml-perl,
+ libyaml-tiny-perl,
+ python3-pytest,
+ xsltproc,
 Standards-Version: 3.9.7
 Homepage: http://sipwise.com/
 
 Package: ngcp-ngcpcfg
 Architecture: all
-Depends: etckeeper,
-         file,
-         git (>= 1:1.7.2.5-3~),
-         libclone-perl,
-         libconfig-tiny-perl,
-         libdata-validate-ip-perl,
-         libdbd-mysql-perl,
-         libdbi-perl,
-         libdpkg-perl,
-         libhash-merge-perl,
-         libio-interface-perl,
-         libipc-system-simple-perl,
-         liblist-moreutils-perl,
-         libnet-netmask-perl,
-         libnetwork-ipv4addr-perl,
-         libregexp-ipv6-perl,
-         libsocket-perl,
-         libsys-hostname-long-perl,
-         libtemplate-perl,
-         libyaml-perl,
-         libyaml-tiny-perl,
-         netcat | netcat-traditional,
-         ngcp-system-tools,
-         pkwalify,
-         psmisc,
-         ${misc:Depends},
-         ${perl:Depends}
+Depends:
+ etckeeper,
+ file,
+ git (>= 1:1.7.2.5-3~),
+ libclone-perl,
+ libconfig-tiny-perl,
+ libdata-validate-ip-perl,
+ libdbd-mysql-perl,
+ libdbi-perl,
+ libdpkg-perl,
+ libhash-merge-perl,
+ libio-interface-perl,
+ libipc-system-simple-perl,
+ liblist-moreutils-perl,
+ libnet-netmask-perl,
+ libnetwork-ipv4addr-perl,
+ libregexp-ipv6-perl,
+ libsocket-perl,
+ libsys-hostname-long-perl,
+ libtemplate-perl,
+ libyaml-perl,
+ libyaml-tiny-perl,
+ netcat | netcat-traditional,
+ ngcp-system-tools,
+ pkwalify,
+ psmisc,
+ ${misc:Depends},
+ ${perl:Depends},
 Description: central and templated based Configuration Management System for NGCP platforms
  ngcp-ngcpcfg is a Configuration Management System providing central
  configuration and template based handling of configuration
@@ -64,17 +67,19 @@ Description: central and templated based Configuration Management System for NGC
 
 Package: ngcp-ngcpcfg-locker
 Architecture: all
-Depends: gnupg,
-         ngcp-ngcpcfg,
-         ${misc:Depends}
+Depends:
+ gnupg,
+ ngcp-ngcpcfg,
+ ${misc:Depends},
 Description: Encrypt and decrypt feature for ngcp-ngcpcfg
  This package provides the encrypt and decrypt options for
  usage via ngcpcfg.
 
 Package: ngcp-ngcpcfg-testsuite
 Architecture: all
-Depends: ngcp-ngcpcfg,
-         ${misc:Depends}
+Depends:
+ ngcp-ngcpcfg,
+ ${misc:Depends},
 Description: testsuite for ngcpcfg
  This package provides a testsuite to automatically test ngcpcfg
  features and detect any possible breakages.
