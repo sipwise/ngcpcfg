@@ -1,0 +1,32 @@
+Hacking
+=======
+
+Source Layout
+-------------
+
+The frontend command ngcpcfg is in _sbin/_. Each of its subcommands are
+implemented in _scripts/_.
+
+The _functions/_ directory contains a shell library to be used by the various
+shell script commands. The _lib/_ directory contains Template library files
+to be used (via the PROCESS directive) by the _*.tt2_ template files. And
+the _helper/_ directory contains various helper tools used by the various
+scripts and build system.
+
+Templating
+----------
+
+Of very significant note here are the 'tt2-daemon' and 'tt2-wrapper' tandem,
+which perform most of the work when processing the templates. The daemon is
+a long-lived process that gets interacted with via a socket, and receives
+"commands" from the 'tt2-wrapper'. The YAML configuration files are loaded
+so that they only need to be validated and processed once. And then each
+template file to be processed is fed to the daemon and the result returned
+via the wrapper. All the configuration loaded from the YAML files is
+flattened into a dot-separated namespaced tree, which can be accessed
+directly by any template file even if no other code has references to those
+configurations.
+
+/////////////////////////////
+// vim: ft=asciidoc tw=80 ai
+/////////////////////////////
