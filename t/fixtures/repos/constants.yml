@@ -1,0 +1,254 @@
+---
+asterisk:
+  odbc:
+    dbname: kamailio
+    dbpassword: vvfVWowR4sqe49xA9Jx4
+    dbuser: asterisk
+cdrexport:
+  dbname: accounting
+  dbpassword: PUAP4veMxKrijPFxiTRw
+  dbuser: exporter
+  fileprefix: sipwise
+  fileversion: '007'
+checktools:
+  dbpassword: HYsrF7LzyPqnyPnXCYCM
+  dbuser: nagios
+  redis_db: '9'
+  sip_check_ip: 127.0.0.1
+  sipdomain: voip.sipwise.local
+  sipuser: nagios
+cleanuptools:
+  acc_db: kamailio
+  cdr_db: accounting
+  dbpassword: x9sHiLJcmboV49kty3gx
+  dbuser: dbcleaner
+  trash_db: kamailio
+database:
+  central:
+    dbhost: localhost
+    dbmaster: db01a
+    dbport: '3306'
+    redis_port: '6379'
+  debian:
+    dbhost: localhost
+    dbpassword: gbpfcgGBrBPD3ucI
+    dbuser: debian-sys-maint
+  local:
+    dbhost: localhost
+    dbport: '3306'
+  pair:
+    dbhost: localhost
+    dbport: '3306'
+dialogic:
+  pass: Dial0gic
+  user: dialogic
+eventexport:
+  fileprefix: sipwise
+  filesuffix: edr
+  fileversion: '001'
+general:
+  init_system: sysv
+  process_handler: none
+invoicegen:
+  dbname: billing
+kamailio:
+  lb:
+    dbengine: DBTEXT
+    dbname: kamailio
+    dbpath: /etc/kamailio/lb/db
+    dbrootuser: root
+    dbropw: 3uxmxnbLbmCdJFLCFarA
+    dbrouser: kamailioro
+    dbrwpw: xuEdaYVEjN7irmYNmeeU
+    dbrwuser: kamailio
+    log:
+      request:
+        - R=$ru
+        - ID=$ci
+        - "UA='$ua'"
+      request_init:
+        - M=$rm
+        - R=$ru
+        - F=$fu
+        - T=$tu
+        - IP=$pr:$si:$sp
+        - ID=$ci
+        - "UA='$ua'"
+      response:
+        - ID=$ci
+        - "UA='$ua'"
+      response_init:
+        - 'S=$rs - $rr'
+        - M=$rm
+        - IP=$pr:$si:$sp
+        - ID=$ci
+        - "UA='$ua'"
+    topoh_key: axxTfpPqzLkVeAc9bNY7
+    user_agent: 'Sipwise NGCP LB 4.X'
+  proxy:
+    dbengine: MYSQL
+    dbname: kamailio
+    dbrootuser: root
+    dbropw: 3uxmxnbLbmCdJFLCFarA
+    dbrouser: kamailioro
+    dbrwpw: xuEdaYVEjN7irmYNmeeU
+    dbrwuser: kamailio
+    dlgcnt:
+      central_redis_db: '3'
+      pair_redis_db: '4'
+    log:
+      request:
+        - R=$ru
+        - ID=$ci
+        - "UA='$ua'"
+      request_init:
+        - M=$rm
+        - R=$ru
+        - F=$fu
+        - T=$tu
+        - 'IP=$avp(s:ip):$avp(s:port) ($si:$sp)'
+        - ID=$ci
+        - "UA='$ua'"
+      response:
+        - ID=$ci
+        - "UA='$ua'"
+      response_init:
+        - 'S=$rs - $rr'
+        - M=$rm
+        - 'IP=$avp(s:ip):$avp(s:port) ($si:$sp)'
+        - ID=$ci
+        - "UA='$ua'"
+    loop_detection:
+      redis_db: '10'
+    recentcalls:
+      central_redis_db: '7'
+      expire: '3600'
+    redis_db: '2'
+    uaccryptpw: VvTFopwisk4EqgJTUufN
+    user_agent: 'Sipwise NGCP Proxy 4.X'
+mediator:
+  dbpassword: vhEfTbfNmfrp4a39TXyC
+  dbuser: mediator
+  destdbname: accounting
+  provdbname: provisioning
+  srcdbname: kamailio
+  stats:
+    dbname: stats
+    period: '1'
+ossbss:
+  provisioning:
+    acl:
+      -
+        allow:
+          - Voip
+          - Billing
+        pass: XuseyFVsLY3xH74CzuCM
+        user: csc
+      -
+        allow:
+          - Voip
+          - Billing
+        pass: W4qnyNbvbLYWRvxWfHnE
+        user: cmd
+      -
+        allow:
+          - Voip
+          - Billing
+        pass: qnApdFA9FrekRsbrhnjR
+        user: proxy
+    backends:
+      available:
+        - Billing
+        - Voip
+      enabled:
+        - Billing
+        - Voip
+    billingdb:
+      name: billing
+      pass: bgTgdCNPfKVekf3FW3rF
+      user: soap
+    carrierdb:
+      name: carrier
+      pass: bgTgdCNPfKVekf3FW3rF
+      user: soap
+    database:
+      name: provisioning
+      pass: bgTgdCNPfKVekf3FW3rF
+      user: soap
+    openserdb:
+      name: kamailio
+      pass: bgTgdCNPfKVekf3FW3rF
+      user: soap
+    routing:
+      conference_domain: conference.local
+      fax2mail_domain: fax2mail.local
+      internal_domain: voip.sipwise.local
+      no_such_number: no_such_number
+      voicebox_domain: voicebox.local
+prosody:
+  dbname: prosody
+  dbpassword: 9wJYMsLa4eNLwokNpzxe
+  dbuser: prosody
+  redis_db: '5'
+rateomat:
+  accountingdb:
+    name: accounting
+    pass: mUUPg9uyzngFEAfkyf7v
+    user: rateomat
+  billingdb:
+    name: billing
+    pass: mUUPg9uyzngFEAfkyf7v
+    user: rateomat
+  provisioningdb:
+    name: provisioning
+    pass: mUUPg9uyzngFEAfkyf7v
+    user: rateomat
+reminder:
+  context: reminder
+  dbname: provisioning
+  dbpassword: bgTgdCNPfKVekf3FW3rF
+  dbuser: soap
+  sip_peer: sip_proxy
+rest_api:
+  auth_system:
+    login: system
+    password: YvPrWv7bVonEC3h7zwbm
+    roles: admin
+rsyslog:
+  dbname: syslog
+  dbpassword: m3tALdWqzdRNCNxftCeu
+  dbuser: rsyslog
+  rotate_days: '28'
+rtpengine:
+  control_port: '2223'
+  redis_db: '1'
+sems:
+  dbpassword: bgTgdCNPfKVekf3FW3rF
+  dbuser: soap
+  pbx:
+    redis_db: '6'
+    user_agent: 'Sipwise NGCP PBX Server 4.X'
+  prepaid_dbpassword: xigRMgcgbbzzs4LJujaA
+  prepaid_dbuser: sems_prepaid
+  provisioning_dbpassword: xigRMgcgbbzzs4LJujaA
+  provisioning_dbuser: sems_prepaid
+  redis_db: '0'
+  user_agent: 'Sipwise NGCP Application Server 4.X'
+  vsc:
+    announce_path: /usr/lib/ngcp-sems/audio/
+    cfb_off_announcement: vsc_cfb_off.wav
+    cfb_on_announcement: vsc_cfb_on.wav
+    cfna_off_announcement: vsc_cfna_off.wav
+    cfna_on_announcement: vsc_cfna_on.wav
+    cft_off_announcement: vsc_cft_off.wav
+    cft_on_announcement: vsc_cft_on.wav
+    cfu_off_announcement: vsc_cfu_off.wav
+    cfu_on_announcement: vsc_cfu_on.wav
+    error_announcement: vsc_error.wav
+    reminder_off_announcement: vsc_reminder_off.wav
+    reminder_on_announcement: vsc_reminder_on.wav
+    speed_dial_announcement: vsc_speeddial.wav
+    unknown_announcement: vsc_invalid.wav
+vmnotify:
+  user_agent: 'Sipwise NGCP Application Server 4.X'
+
