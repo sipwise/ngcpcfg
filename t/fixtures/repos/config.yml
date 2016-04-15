@@ -1,0 +1,923 @@
+---
+apps:
+  malicious_call: no
+asterisk:
+  enabled: yes
+  log:
+    facility: local6
+  rtp:
+    maxport: '20000'
+    minport: '10000'
+  sip:
+    bindport: '5070'
+    dtmfmode: rfc2833
+  voicemail:
+    emaildateformat: '%A, %d %B %Y %H:%M:%S'
+    enable: yes
+    fromstring: 'Voicemail server'
+    greeting:
+      busy_custom_greeting: /home/user/file_no_extension
+      busy_overwrite_default: no
+      busy_overwrite_subscriber: no
+      unavail_custom_greeting: /home/user/file_no_extension
+      unavail_overwrite_default: no
+      unavail_overwrite_subscriber: no
+    mailbody: 'You have received a new message from ${VM_CALLERID} in voicebox ${VM_MAILBOX} on ${VM_DATE}.'
+    mailsubject: '[Voicebox] New message ${VM_MSGNUM} in voicebox ${VM_MAILBOX}'
+    max_msg_length: '180'
+    maxgreet: '60'
+    maxmsg: '30'
+    maxsilence: '0'
+    min_msg_length: '3'
+    normalize_match: ^00|\+([1-9][0-9]+)$
+    normalize_replace: $1
+    serveremail: voicebox@sip.sipwise.com
+autoprov:
+  hardphone:
+    skip_vendor_redirect: no
+  server:
+    bootstrap_port: '1445'
+    ca_certfile: /etc/ngcp-config/ssl/client-auth-ca.crt
+    host: localhost
+    nginx_debug: no
+    port: '1444'
+    server_certfile: /etc/ngcp-config/ssl/myserver.crt
+    server_keyfile: /etc/ngcp-config/ssl/myserver.key
+    ssl_enabled: yes
+  softphone:
+    config_lockdown: '0'
+    webauth: '0'
+cdrexport:
+  admin_export_fields:
+    - CDR_ID
+    - UPDATE_TIME
+    - SOURCE_USER_ID
+    - SOURCE_PROVIDER_ID
+    - SOURCE_EXTERNAL_SUBSCRIBER_ID
+    - SOURCE_SUBSCRIBER_ID
+    - SOURCE_EXTERNAL_CONTRACT_ID
+    - SOURCE_ACCOUNT_ID
+    - SOURCE_USER
+    - SOURCE_DOMAIN
+    - SOURCE_CLI
+    - SOURCE_CLIR
+    - SOURCE_IP
+    - DESTINATION_USER_ID
+    - DESTINATION_PROVIDER_ID
+    - DESTINATION_EXTERNAL_SUBSCRIBER_ID
+    - DESTINATION_SUBSCRIBER_ID
+    - DESTINATION_EXTERNAL_CONTRACT_ID
+    - DESTINATION_ACCOUNT_ID
+    - DESTINATION_USER
+    - DESTINATION_DOMAIN
+    - DESTINATION_USER_IN
+    - DESTINATION_DOMAIN_IN
+    - DESTINATION_USER_DIALED
+    - PEER_AUTH_USER
+    - PEER_AUTH_REALM
+    - CALL_TYPE
+    - CALL_STATUS
+    - CALL_CODE
+    - INIT_TIME
+    - START_TIME
+    - DURATION
+    - CALL_ID
+    - RATING_STATUS
+    - RATED_AT
+    - SOURCE_CARRIER_COST
+    - SOURCE_CUSTOMER_COST
+    - SOURCE_CARRIER_ZONE
+    - SOURCE_CUSTOMER_ZONE
+    - SOURCE_CARRIER_DETAIL
+    - SOURCE_CUSTOMER_DETAIL
+    - SOURCE_CARRIER_FREE_TIME
+    - SOURCE_CUSTOMER_FREE_TIME
+    - DESTINATION_CARRIER_COST
+    - DESTINATION_CUSTOMER_COST
+    - DESTINATION_CARRIER_ZONE
+    - DESTINATION_CUSTOMER_ZONE
+    - DESTINATION_CARRIER_DETAIL
+    - DESTINATION_CUSTOMER_DETAIL
+    - DESTINATION_CARRIER_FREE_TIME
+    - DESTINATION_CUSTOMER_FREE_TIME
+    - SOURCE_RESELLER_COST
+    - SOURCE_RESELLER_ZONE
+    - SOURCE_RESELLER_DETAIL
+    - SOURCE_RESELLER_FREE_TIME
+    - DESTINATION_RESELLER_COST
+    - DESTINATION_RESELLER_ZONE
+    - DESTINATION_RESELLER_DETAIL
+    - DESTINATION_RESELLER_FREE_TIME
+  daily_folder: yes
+  export_conditions:
+    -
+      column: accounting.cdr.export_status
+      compare_value: '"unexported"'
+      operand: =
+    -
+      column: accounting.cdr.rating_status
+      compare_value: '"ok"'
+      operand: =
+  export_failed: no
+  export_incoming: no
+  export_joins:
+    -
+      alias: source_voip_subscribers
+      key_column: source_voip_subscribers.uuid
+      reference_column: accounting.cdr.source_user_id
+      table: billing.voip_subscribers
+    -
+      alias: destination_voip_subscribers
+      key_column: destination_voip_subscribers.uuid
+      reference_column: accounting.cdr.destination_user_id
+      table: billing.voip_subscribers
+    -
+      alias: source_carrier_bbz
+      key_column: source_carrier_bbz.id
+      reference_column: accounting.cdr.source_carrier_billing_zone_id
+      table: billing.billing_zones_history
+    -
+      alias: source_reseller_bbz
+      key_column: source_reseller_bbz.id
+      reference_column: accounting.cdr.source_reseller_billing_zone_id
+      table: billing.billing_zones_history
+    -
+      alias: source_customer_bbz
+      key_column: source_customer_bbz.id
+      reference_column: accounting.cdr.source_customer_billing_zone_id
+      table: billing.billing_zones_history
+    -
+      alias: destination_carrier_bbz
+      key_column: destination_carrier_bbz.id
+      reference_column: accounting.cdr.destination_carrier_billing_zone_id
+      table: billing.billing_zones_history
+    -
+      alias: destination_reseller_bbz
+      key_column: destination_reseller_bbz.id
+      reference_column: accounting.cdr.destination_reseller_billing_zone_id
+      table: billing.billing_zones_history
+    -
+      alias: destination_customer_bbz
+      key_column: destination_customer_bbz.id
+      reference_column: accounting.cdr.destination_customer_billing_zone_id
+      table: billing.billing_zones_history
+  exportpath: /home/jail/home/cdrexport
+  full_names: yes
+  max_rows_per_file: '5000'
+  monthly_folder: yes
+  reseller_export_fields:
+    - CDR_ID
+    - UPDATE_TIME
+    - SOURCE_USER_ID
+    - SOURCE_PROVIDER_ID
+    - SOURCE_EXTERNAL_SUBSCRIBER_ID
+    - SOURCE_SUBSCRIBER_ID
+    - SOURCE_EXTERNAL_CONTRACT_ID
+    - SOURCE_ACCOUNT_ID
+    - SOURCE_USER
+    - SOURCE_DOMAIN
+    - SOURCE_CLI
+    - SOURCE_CLIR
+    - SOURCE_IP
+    - DESTINATION_USER_ID
+    - DESTINATION_PROVIDER_ID
+    - DESTINATION_EXTERNAL_SUBSCRIBER_ID
+    - DESTINATION_SUBSCRIBER_ID
+    - DESTINATION_EXTERNAL_CONTRACT_ID
+    - DESTINATION_ACCOUNT_ID
+    - DESTINATION_USER
+    - DESTINATION_DOMAIN
+    - DESTINATION_USER_IN
+    - DESTINATION_DOMAIN_IN
+    - DESTINATION_USER_DIALED
+    - PEER_AUTH_USER
+    - PEER_AUTH_REALM
+    - CALL_TYPE
+    - CALL_STATUS
+    - CALL_CODE
+    - INIT_TIME
+    - START_TIME
+    - DURATION
+    - CALL_ID
+    - RATING_STATUS
+    - RATED_AT
+    - SOURCE_CUSTOMER_COST
+    - SOURCE_CUSTOMER_ZONE
+    - SOURCE_CUSTOMER_DETAIL
+    - SOURCE_CUSTOMER_FREE_TIME
+    - DESTINATION_CUSTOMER_COST
+    - DESTINATION_CUSTOMER_ZONE
+    - DESTINATION_CUSTOMER_DETAIL
+    - DESTINATION_CUSTOMER_FREE_TIME
+checktools:
+  active_check_enable: '1'
+  asr_nsr_statistics: '1'
+  exim_check_enable: '0'
+  force: '1'
+  kamailio_check_concurrent_calls_enable: '0'
+  kamailio_check_dialog_active_enable: '1'
+  kamailio_check_dialog_early_enable: '0'
+  kamailio_check_shmem_enable: '1'
+  kamailio_check_usrloc_regdevices_enable: '0'
+  kamailio_check_usrloc_regusers_enable: '1'
+  mpt_check_enable: '0'
+  mysql_check_enable: '1'
+  oss_check_provisioned_subscribers_enable: '1'
+  sip_check_enable: '1'
+  sipstats_check_num_packets: '0'
+  sipstats_check_num_packets_perday: '0'
+  sipstats_check_partition_size: '0'
+cleanuptools:
+  acc_cleanup_days: '90'
+  archive_targetdir: /var/backup/cdr
+  binlog_days: '0'
+  cdr_archive_months: '2'
+  cdr_backup_months: '2'
+  cdr_backup_retro: '3'
+  compress: gzip
+  sql_batch: '10000'
+  trash_cleanup_days: '30'
+cluster_sets:
+  default:
+    dispatcher_id: '50'
+  default_set: default
+  type: central
+database:
+  bufferpoolsize: 64M
+eventexport:
+  admin_export_fields:
+    - EVENT_ID
+    - TYPE
+    - CONTRACT_EXTERNAL_ID
+    - COMPANY
+    - SUBSCRIBER_EXTERNAL_ID
+    - PRIMARY_NUMBER
+    - OLD_PROFILE_NAME
+    - NEW_PROFILE_NAME
+    - TIMESTAMP
+    - RESELLER_ID
+  export_conditions:
+    -
+      column: accounting.events.export_status
+      compare_value: '"unexported"'
+      operand: =
+  export_joins:
+    -
+      key_column: billing.voip_subscribers.id
+      reference_column: accounting.events.subscriber_id
+      table: billing.voip_subscribers
+    -
+      key_column: billing.contracts.id
+      reference_column: billing.voip_subscribers.contract_id
+      table: billing.contracts
+    -
+      key_column: billing.contacts.id
+      reference_column: billing.contracts.contact_id
+      table: billing.contacts
+    -
+      key_column: provisioning.voip_subscribers.uuid
+      reference_column: billing.voip_subscribers.uuid
+      table: provisioning.voip_subscribers
+    -
+      alias: old_profile
+      key_column: old_profile.id
+      reference_column: accounting.events.old_status
+      table: provisioning.voip_subscriber_profiles
+    -
+      alias: new_profile
+      key_column: new_profile.id
+      reference_column: accounting.events.new_status
+      table: provisioning.voip_subscriber_profiles
+  filter_flapping: no
+  max_rows_per_file: '0'
+  merge_update: no
+  reseller_export_fields:
+    - EVENT_ID
+    - TYPE
+    - CONTRACT_EXTERNAL_ID
+    - COMPANY
+    - SUBSCRIBER_EXTERNAL_ID
+    - PRIMARY_NUMBER
+    - OLD_PROFILE_NAME
+    - NEW_PROFILE_NAME
+    - TIMESTAMP
+  transfer:
+    host: remotehost.invalid
+    password: yourpassword
+    port: '22'
+    private_key: /path/to/priv-key
+    remote_directory: /remote/target/directory
+    type: none
+    username: youruser
+general:
+  adminmail: adjust@example.org
+  companyname: sipwise
+  lang: en
+haproxy:
+  admin: no
+  admin_port: '8080'
+  admin_pwd: ywTg7xuV9CRKNkEgPLNa
+  enable: no
+invoicegen:
+  allow_terminated: ''
+  customer_contract_id: ''
+  enable: no
+  etime: ''
+  regenerate: ''
+  reseller_id: ''
+  resend: ''
+  send: ''
+  stime: ''
+iproute2:
+  rt_tables: []
+kamailio:
+  lb:
+    debug: no
+    extra_sockets: ~
+    max_forwards: '70'
+    nattest_exception_ips: []
+    pkg_mem: '16'
+    port: '5060'
+    security:
+      dos_ban_enable: yes
+      dos_ban_time: '300'
+      dos_reqs_density_per_unit: '50'
+      dos_sampling_time_unit: '5'
+      dos_whitelisted_ips: []
+      dos_whitelisted_subnets: []
+      failed_auth_attempts: '3'
+      failed_auth_ban_enable: yes
+      failed_auth_ban_time: '3600'
+      topoh:
+        enable: no
+        mask_callid: no
+        mask_ip: 127.0.0.8
+    shm_mem: '125'
+    start: yes
+    strict_routing_safe: no
+    syslog_options: yes
+    tcp_children: '1'
+    tcp_max_connections: '2048'
+    tls:
+      enable: yes
+      port: '5061'
+      sslcertfile: /etc/kamailio/kamailio-selfsigned.pem
+      sslcertkeyfile: /etc/kamailio/kamailio-selfsigned.key
+    udp_children: '1'
+    use_dns_cache: on
+  proxy:
+    allow_info_method: no
+    allow_peer_relay: no
+    allow_refer_method: no
+    authenticate_bye: no
+    cf_depth_limit: '10'
+    children: '1'
+    debug: no
+    default_expires: '3600'
+    default_expires_range: '30'
+    emergency_priorization:
+      enabled: no
+      register_fake_200: yes
+      register_fake_expires: '3600'
+      retry_after: '3600'
+    enum_suffix: e164.arpa.
+    expires_range: '30'
+    filter_100rel_from_supported: no
+    foreign_domain_via_peer: no
+    fritzbox:
+      enable: no
+      prefixes:
+        - '112'
+        - '110'
+        - 118[0-9]{2}
+    ignore_auth_realm: no
+    ims_as: no
+    keep_original_to: no
+    latency_limit_action: '100'
+    latency_limit_db: '500'
+    latency_log_level: '1'
+    lnp:
+      api:
+        keepalive_interval: '3'
+        port: '8991'
+        request_timeout: '1000'
+        server: localhost
+      enabled: no
+      type: api
+    loop_detection:
+      enable: no
+      expire: '1'
+      max: '5'
+    max_expires: '43200'
+    max_gw_lcr: '128'
+    max_registrations_per_subscriber: '5'
+    min_expires: '60'
+    nathelper:
+      sipping_from: sip:pinger@sipwise.local
+    nathelper_dbro: no
+    natping_interval: '30'
+    natping_processes: '1'
+    nonce_expire: '300'
+    pbx:
+      hunt_display_indicator: '[H $var(cloud_pbx_hg_ext)]'
+    perform_peer_lcr: no
+    pkg_mem: '32'
+    port: '5062'
+    presence:
+      enable: yes
+      max_expires: '3600'
+      reginfo_domain: example.org
+    proxy_lookup: no
+    push:
+      apns_alert: 'New call'
+      apns_sound: incoming_call.xaf
+    set_ruri_to_peer_auth_realm: no
+    shm_mem: '125'
+    start: yes
+    store_recentcalls: no
+    syslog_options: yes
+    tcp_children: '1'
+    tm:
+      fr_inv_timer: '180000'
+      fr_timer: '9000'
+    use_enum: no
+    usrloc_dbmode: '1'
+mediator:
+  enabled: yes
+  interval: '10'
+nginx:
+  enabled: yes
+  status_port: '8081'
+  xcap_port: '1080'
+ntp:
+  servers:
+    - 0.debian.pool.ntp.org
+    - 1.debian.pool.ntp.org
+    - 2.debian.pool.ntp.org
+    - 3.debian.pool.ntp.org
+ossbss:
+  apache:
+    port: '2443'
+    proxyluport: '1080'
+    restapi:
+      sslcertfile: /etc/ngcp-config/ssl/api_ca.crt
+      sslcertkeyfile: /etc/ngcp-config/ssl/api_ca.key
+    serveradmin: support@sipwise.com
+    servername: '"myserver"'
+    ssl_enable: yes
+    sslcertfile: /etc/ngcp-config/ssl/myserver.crt
+    sslcertkeyfile: /etc/ngcp-config/ssl/myserver.key
+  frontend: no
+  htpasswd:
+    -
+      pass: '{SHA}w4zj3mxbmynIQ1jsUEjSkN2z2pk='
+      user: ngcpsoap
+  logging:
+    apache:
+      acc:
+        facility: daemon
+        identity: oss
+        level: info
+      err:
+        facility: local7
+        level: info
+    ossbss:
+      facility: local0
+      identity: provisioning
+      level: DEBUG
+    web:
+      facility: local0
+      level: DEBUG
+  provisioning:
+    allow_ip_as_domain: '1'
+    allow_numeric_usernames: '0'
+    auto_allow_cli: '1'
+    auto_sync_cli: yes
+    carrier:
+      account_distribution_function: roundrobin
+      prov_distribution_function: roundrobin
+    credit_warnings:
+      -
+        domain: example.com
+        recipients:
+          - nobody@example.com
+        threshold: '1000'
+    log_passwords: '0'
+    no_logline_truncate: '0'
+    pw_min_char: '6'
+    routing:
+      ac_regex: '[1-9]\d{0,4}'
+      cc_regex: '[1-9]\d{0,3}'
+      sn_regex: '[1-9]\d+'
+    tmpdir: /tmp
+pbx:
+  dialog_publish_expires: '3600'
+  media_processor_threads: '1'
+  session_processor_threads: '1'
+prosody:
+  ctrl_port: '5582'
+  enabled: yes
+  log_level: info
+pushd:
+  sslcertfile: /etc/kamailio/kamailio-selfsigned.pem
+  sslcertkeyfile: /etc/kamailio/kamailio-selfsigned.key
+qos:
+  tos_rtp: '184'
+  tos_sip: '184'
+rateomat:
+  enable: yes
+  loopinterval: '10'
+  splitpeakparts: '0'
+redis:
+  database_amount: '16'
+  enabled: yes
+  port: '6379'
+  syslog_ident: redis
+reminder:
+  retries: '2'
+  retry_time: '60'
+  sip_fromdomain: voicebox.sipwise.local
+  sip_fromuser: reminder
+  wait_time: '30'
+  weekdays: '2, 3, 4, 5, 6, 7'
+resolver:
+  domain: ''
+  options: ''
+  search: ''
+  sortlist: ''
+rsyslog:
+  elasticsearch:
+    action:
+      resumeretrycount: '-1'
+    bulkmode: on
+    dynSearchIndex: on
+    enable: no
+    queue:
+      dequeuebatchsize: '300'
+      size: '5000'
+      type: linkedlist
+  external_address: 192.168.32.1
+  external_log: '0'
+  external_loglevel: warning
+  external_port: '514'
+  external_proto: udp
+  ngcp_logs_preserve_days: '93'
+rtpproxy:
+  allow_userspace_only: yes
+  enabled: yes
+  homer_rtcp_stats:
+    destination: 0.0.0.0:9070
+    enabled: no
+    id: '2001'
+    protocol: udp
+  log_level: '6'
+  maxport: '40000'
+  minport: '30000'
+  rtp_timeout: '60'
+  rtp_timeout_onhold: '3600'
+security:
+  firewall:
+    blacklist_networks_4: []
+    blacklist_networks_6: []
+    enable: no
+    sipwise_support_access: no
+    whitelist_networks_4: []
+    whitelist_networks_6: []
+  ngcp_panel:
+    scripts:
+      restapi:
+        sslverify: no
+sems:
+  bindport: '5080'
+  conference:
+    enable: yes
+    max_participants: '10'
+  debug: no
+  enabled: yes
+  highport: '50000'
+  lowport: '40001'
+  media_processor_threads: '1'
+  sbc:
+    calltimer_enable: yes
+    calltimer_max: '21600'
+    outbound_timeout: '6000'
+    sdp_filter:
+      codecs: PCMA,PCMU,telephone-event
+      enable: no
+      mode: whitelist
+    session_timer:
+      enable: yes
+      max_timer: '7200'
+      min_timer: '90'
+      session_expires: '300'
+  session_processor_threads: '1'
+  vsc:
+    block_override_code: '80'
+    cfb_code: '90'
+    cfna_code: '93'
+    cft_code: '92'
+    cfu_code: '72'
+    clir_code: '31'
+    directed_pickup_code: '99'
+    enable: yes
+    park_code: '97'
+    reminder_code: '55'
+    speedial_code: '50'
+    unpark_code: '98'
+    voicemail_number: '2000'
+  xmlrpcport: '8090'
+sshd:
+  authorized_keys_file: '%h/.ssh/authorized_keys %h/.ssh/sipwise_vagrant_key'
+  listen_addresses:
+    - 0.0.0.0
+  permit_root_login: yes
+  port: '22'
+sudo:
+  logging: no
+turnserver:
+  enabled: no
+  max_port: '60000'
+  min_port: '50000'
+  pass: turnpass
+  port: '443'
+  realm: turn.sipwise.com
+  sslcertfile: /etc/ngcp-config/ssl/myserver.crt
+  sslcertkeyfile: /etc/ngcp-config/ssl/myserver.key
+  tlsport: '443'
+  user: turnuser
+www_admin:
+  ac_dial_prefix: '0'
+  api_debug_opts:
+    allow_delay_commit: '0'
+    allow_fake_client_time: '0'
+  api_journal:
+    billingprofiles:
+      enable: yes
+      format: json
+      operations:
+        - create
+        - update
+        - delete
+    callforwards:
+      enable: yes
+      format: json
+      operations:
+        - create
+        - update
+        - delete
+    ccmapentries:
+      enable: yes
+      format: json
+      operations:
+        - create
+        - update
+        - delete
+    cfdestinationsets:
+      enable: yes
+      format: json
+      operations:
+        - create
+        - update
+        - delete
+    cfmappings:
+      enable: yes
+      format: json
+      operations:
+        - create
+        - update
+        - delete
+    cftimesets:
+      enable: yes
+      format: json
+      operations:
+        - create
+        - update
+        - delete
+    contracts:
+      enable: yes
+      format: json
+      operations:
+        - create
+        - update
+        - delete
+    customercontacts:
+      enable: yes
+      format: json
+      operations:
+        - create
+        - update
+        - delete
+    customerpreferences:
+      enable: yes
+      format: json
+      operations:
+        - create
+        - update
+        - delete
+    customers:
+      enable: yes
+      format: json
+      operations:
+        - create
+        - update
+        - delete
+    domains:
+      enable: yes
+      format: json
+      operations:
+        - create
+        - update
+        - delete
+    faxserversettings:
+      enable: yes
+      format: json
+      operations:
+        - create
+        - update
+        - delete
+    profilepreferences:
+      enable: yes
+      format: json
+      operations:
+        - create
+        - update
+        - delete
+    reminders:
+      enable: yes
+      format: json
+      operations:
+        - create
+        - update
+        - delete
+    resellers:
+      enable: yes
+      format: json
+      operations:
+        - create
+        - update
+        - delete
+    soundsets:
+      enable: yes
+      format: json
+      operations:
+        - create
+        - update
+        - delete
+    speeddials:
+      enable: yes
+      format: json
+      operations:
+        - create
+        - update
+        - delete
+    subscriberpreferences:
+      enable: yes
+      format: json
+      operations:
+        - create
+        - update
+        - delete
+    subscriberprofiles:
+      enable: yes
+      format: json
+      operations:
+        - create
+        - update
+        - delete
+    subscriberprofilesets:
+      enable: yes
+      format: json
+      operations:
+        - create
+        - update
+        - delete
+    subscribers:
+      enable: yes
+      format: json
+      operations:
+        - create
+        - update
+        - delete
+    systemcontacts:
+      enable: yes
+      format: json
+      operations:
+        - create
+        - update
+        - delete
+    trustedsources:
+      enable: yes
+      format: json
+      operations:
+        - create
+        - update
+        - delete
+    voicemailsettings:
+      enable: yes
+      format: json
+      operations:
+        - create
+        - update
+        - delete
+  billing_features: '1'
+  callingcard_features: '0'
+  callthru_features: '0'
+  cc_dial_prefix: '00'
+  cdr_apply_vat: no
+  conference_features: '1'
+  contactmail: adjust@example.org
+  dashboard:
+    enabled: '1'
+  default_admin_settings:
+    call_data: '0'
+    is_active: '1'
+    is_master: '0'
+    read_only: '0'
+    show_passwords: '1'
+  domain:
+    preference_features: '1'
+    rewrite_features: '1'
+    vsc_features: '0'
+  enabled: yes
+  fastcgi_workers: '2'
+  fees_csv:
+    element_order:
+      - source
+      - destination
+      - direction
+      - zone
+      - zone_detail
+      - onpeak_init_rate
+      - onpeak_init_interval
+      - onpeak_follow_rate
+      - onpeak_follow_interval
+      - offpeak_init_rate
+      - offpeak_init_interval
+      - offpeak_follow_rate
+      - offpeak_follow_interval
+      - use_free_time
+  filesize_limit: 128M
+  force_language: none
+  http_admin:
+    port: '1443'
+    serveradmin: support@sipwise.com
+    servername: '"myserver"'
+    ssl_enable: yes
+    sslcertfile: /etc/ngcp-config/ssl/myserver.crt
+    sslcertkeyfile: /etc/ngcp-config/ssl/myserver.key
+  http_csc:
+    port: '443'
+    serveradmin: support@sipwise.com
+    servername: '"myserver"'
+    ssl_enable: yes
+    sslcertfile: /etc/ngcp-config/ssl/myserver.crt
+    sslcertkeyfile: /etc/ngcp-config/ssl/myserver.key
+  http_system:
+    port: '1442'
+    serveradmin: support@sipwise.com
+    servername: '"myserver"'
+    ssl_enable: yes
+    sslcertfile: /etc/ngcp-config/ssl/myserver.crt
+    sslcertkeyfile: /etc/ngcp-config/ssl/myserver.key
+  logging:
+    apache:
+      acc:
+        facility: daemon
+        identity: oss
+        level: info
+      err:
+        facility: local7
+        level: info
+  peer:
+    preference_features: '1'
+  peering_features: '1'
+  security:
+    password_allow_recovery: '0'
+    password_max_length: '40'
+    password_min_length: '6'
+    password_musthave_digit: '0'
+    password_musthave_lowercase: '1'
+    password_musthave_specialchar: '0'
+    password_musthave_uppercase: '0'
+    password_sip_autogenerate: '0'
+    password_sip_expose_subadmin: '1'
+    password_web_autogenerate: '0'
+    password_web_expose_subadmin: '1'
+    voucher_iv: 90Ww6iAwka0QEqh1
+    voucher_key: d57xhVqAfSkfluEB
+  speed_dial_vsc_presets:
+    vsc:
+      - '*0'
+      - '*1'
+      - '*2'
+      - '*3'
+      - '*4'
+      - '*5'
+      - '*6'
+      - '*7'
+      - '*8'
+      - '*9'
+  subscriber:
+    auto_allow_cli: '0'
+    extension_features: '0'
+  voicemail_features: '1'

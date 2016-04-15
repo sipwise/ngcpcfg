@@ -1,0 +1,17 @@
+# begin section managed by ngcpcfg (do not edit this section by hand)
+# new and old versions of conffiles, stored by dpkg
+*.dpkg-*
+# new and old versions of conffiles, stored by ucf
+*.ucf-*
+
+# old versions of files
+*.old
+
+# editor temp files
+*~
+.*.sw?
+.sw?
+\#*\#
+DEADJOE
+
+# end section managed by ngcpcfg
