@@ -1,0 +1,13 @@
+# cache files
+__pycache__/
+*.pyc
+
+# editor temp files
+*~
+.*.sw?
+.sw?
+\#*\#
+DEADJOE
+
+# testing output
+results
