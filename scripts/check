@@ -16,7 +16,27 @@ fi
 
 . "${FUNCTIONS}"/main
 
+usage() {
+  printf "ngcpcfg build -- supported command line options:
+
+--ignore-branch-check - do not fail build if branch doesn't match 'master'\n\n"
+}
+
+CHECK_BRANCH=true
+while [ -n "${1:-}" ] ; do
+  case "$1" in
+    *--ignore-branch-check*) CHECK_BRANCH=false ; shift ;;
+    *--help*)   usage ; exit 0 ;;
+    *) break ;;
+  esac
+done
+
 check_branch() {
+  if ! $CHECK_BRANCH ; then
+    log_info "Option --ignore-branch-check is enabled, not checking for branch 'master'."
+    return 0
+  fi
+
   local current_branch=$(compare_active_branch 'master')
   if [ "$current_branch" = 'master' ] ; then
     log_debug "Current branch is 'master', continuing."
