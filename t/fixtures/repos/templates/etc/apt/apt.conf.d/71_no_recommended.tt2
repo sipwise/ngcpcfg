@@ -1,0 +1,2 @@
+[% TAGS [- -] %]
+APT::Install-Recommends "0";
