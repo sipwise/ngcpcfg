@@ -23,6 +23,7 @@ Build-Depends: asciidoc,
                libtemplate-perl,
                libyaml-perl,
                libyaml-tiny-perl,
+               python3-pytest,
                xsltproc
 Standards-Version: 3.9.7
 Homepage: http://sipwise.com/
