@@ -5,6 +5,7 @@ Maintainer: Sipwise Development Team <support@sipwise.com>
 Build-Depends: asciidoc,
                debhelper (>= 9~),
                docbook-xsl,
+               git,
                libclone-perl,
                libconfig-tiny-perl,
                libdata-validate-ip-perl,
@@ -23,6 +24,7 @@ Build-Depends: asciidoc,
                libtemplate-perl,
                libyaml-perl,
                libyaml-tiny-perl,
+               python3-pytest,
                xsltproc
 Standards-Version: 3.9.7
 Homepage: http://sipwise.com/
