@@ -1,1 +1,0 @@
-echo chgrp www-data ${output_file}
