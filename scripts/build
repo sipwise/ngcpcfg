@@ -18,14 +18,22 @@ fi
 
 . ${FUNCTIONS}/main
 
-# Sanity check the YAML and schema files.
-"${SCRIPTS}"/check
-
 MODIFIED_ONLY=false
+CHECK_BRANCH=true
 if [ -n "${1:-}" ] ; then
   case "$1" in
     *--modified-only*) MODIFIED_ONLY=true ; shift ;;
+    *--ignore-branch-check*) CHECK_BRANCH=false ; shift ;;
   esac
+fi
+
+# Sanity check the YAML and schema files.
+# NOTE: we can't blindly pass "$@" to the check script,
+#       so explicitely check and add option as needed
+if [ "$CHECK_BRANCH" = "false" ] ; then
+  "${SCRIPTS}"/check --ignore-branch-check
+else
+  "${SCRIPTS}"/check
 fi
 
 # Kill all previous started tt2-daemon Perl processes if they were not stopped properly
