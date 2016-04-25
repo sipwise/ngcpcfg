@@ -1,3 +1,13 @@
+ngcp-ngcpcfg (0.28.2.1+0~mr4.2.2.1) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [f40051c] MT#18333 eval around YAML::Tiny->read to handle implicit croak on error
+  * [034f5e0] MT#18333 do not declare $yml as local in main()
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 25 Apr 2016 09:28:22 +0200
+
 ngcp-ngcpcfg (0.28.2.0+0~mr4.2.2.0) unstable; urgency=medium
 
   [ Michael Prokop ]
