@@ -198,6 +198,10 @@ Note: This option is available in the High Availability setup only.
 
 Ignore schema validation results for YAML files (syntax check is still performed).
 
+  **--validate** <action> [<further_options>]::
+
+Force schema validation for YAML files even if validation is disabled in config.
+
   **--version**::
 
 Display ngcpcfg version and exit.
