@@ -144,7 +144,7 @@ fi
 check_branch
 
 check_configs
-if "${VALIDATE_SCHEMA:-false}" ; then
+if "${VALIDATE_SCHEMA:-false}" || [ "${VALIDATE:-0}" = 1 ] ; then
   validate_config
 fi
 check_configs_conflicts
