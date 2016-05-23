@@ -1,3 +1,25 @@
+ngcp-ngcpcfg (0.30.1.0+0~mr4.4.1.0) unstable; urgency=medium
+
+  [ Michael Prokop ]
+  * [1fd2247] MT#18811 Send debug output to stderr
+  * [3f1b490] MT#18833 Improve documentation regarding global vs action specific options
+  * [4e37036] MT#16239 Avoid duplicate IP records (shared_ip/shared_v6ip/advertised_ip)
+  * [6f45e51] MT#16391 Depend on psmisc
+
+  [ Rene Krenn ]
+  * [0386fd1] MT#17795 support new cdr extension fields for cdr exporter config
+  * [c300a8e] MT#19329 add lnp_prefix fields for cdr-exporter
+
+  [ Guillem Jover ]
+  * [5d7c3d5] MT#19129 Document the internal workings of the configuration framework
+
+  [ Alexander Lutay ]
+  * [2317a90] MT#19571 Add ngcpcfg option to force validation
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 23 May 2016 18:58:30 +0200
+
 ngcp-ngcpcfg (0.30.0.0+0~mr4.4.0.0) unstable; urgency=medium
 
   [ Michael Prokop ]
