@@ -1,0 +1,20 @@
+[%
+  # Returns the ngcp management node shared name.
+  #
+  # @return out		The mgmt node shared name.
+-%]
+[% PROCESS '/usr/lib/ngcp-ngcpcfg/get_ngcp_type'; ngcp_type = out -%]
+[% IF ngcp_type == 'carrier' -%]
+[%   FOREACH host IN hosts.keys -%]
+[%     argv.host=host; argv.role='mgmt';
+       PROCESS '/usr/lib/ngcp-ngcpcfg/has_role';
+       is_mgmt = out -%]
+[%     IF is_mgmt -%]
+[%       matches = host.match('^(\w+[0-9])[ab]?$') -%]
+[%       out = matches.0 -%]
+[%       LAST -%]
+[%     END -%]
+[%   END -%]
+[% ELSE -%]
+[%   out = "sp" -%]
+[% END -%]
