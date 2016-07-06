@@ -11,6 +11,7 @@ helper/validate-yml         usr/share/ngcp-ngcpcfg/helper/
 lib/*                       usr/lib/ngcp-ngcpcfg/
 sbin/ngcp-network           usr/sbin/
 sbin/ngcp-sync-constants    usr/sbin/
+sbin/ngcp-sync-grants       usr/sbin/
 sbin/ngcpcfg                usr/sbin/
 scripts/apply               usr/share/ngcp-ngcpcfg/scripts/
 scripts/build               usr/share/ngcp-ngcpcfg/scripts/
