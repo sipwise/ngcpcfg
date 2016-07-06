@@ -1,0 +1,467 @@
+#!/usr/bin/perl
+#----------------------------------------------------------------------
+# Synchronizes mysql grants from a schema template
+#----------------------------------------------------------------------
+use strict;
+use warnings;
+use English;
+use DBI;
+use Getopt::Long;
+use Config::Tiny;
+use YAML::Tiny;
+use Readonly;
+
+Readonly my $GRANTS_SCHEMA => '/etc/mysql/grants.yml';
+Readonly my $MYSQL_CREDENTIALS => "/etc/mysql/sipwise.cnf";
+Readonly my $DB_CFG => "/etc/default/ngcp-db";
+
+my $grants = {};
+my $dbh;
+my $debug = 0;
+my $log_offset = 0;
+
+my $recreate_user = 0;
+
+sub Usage {
+    print <<USAGE;
+==
+    Synchronizes mysql grants from a schema template
+==
+$PROGRAM_NAME [options]
+Options:
+    --help|-h|-?     -- this help
+    --verbose|-v     -- verbose mode
+    --recreate-user  -- recreate user
+                        (useful when all user hosts need to be cleared)
+
+USAGE
+    exit 0;
+}
+
+GetOptions("h|?|help"       => \&Usage,
+           "v|verbose"      => \$debug,
+           "recreate-user"  => \$recreate_user,
+          ) or die Usage();
+
+sub connect_db {
+    my ($dbhost, $dbport) = @_;
+    my ($mysql_user, $mysql_pass) = get_mysql_credentials();
+
+    $dbh = DBI->connect("DBI:mysql:database=mysql;host=$dbhost;port=$dbport",
+                        $mysql_user, $mysql_pass,
+                        { PrintError => 0 })
+        or die "Can't connect to MySQL database 'mysql': ". $DBI::errstr;
+    logger("connected to $dbhost:$dbport as $mysql_user");
+
+    return;
+}
+
+sub logger {
+    my $str = shift || '';
+    return unless $debug;
+    printf "-->%s %s\n", " "x($log_offset*2), $str;
+
+    return;
+}
+
+sub get_mysql_credentials {
+    my $mysql_user = 'sipwise';
+    my $mysql_pass;
+
+    open(my $fh, "<", $MYSQL_CREDENTIALS)
+        or die "Cannot open $MYSQL_CREDENTIALS: $ERRNO";
+    ($mysql_pass = <$fh>) =~ s/^.+='(.+?)'\s*$/$1/;
+    close $fh;
+
+    return ($mysql_user, $mysql_pass);
+}
+
+sub get_hostname {
+
+    open(my $fh, "<", "/etc/hostname")
+        or die "Cannot open /etc/hostname: $ERRNO";
+    my $hostname = <$fh>;
+    chomp $hostname;
+    close $fh;
+
+    return $hostname;
+}
+
+sub apply_grants {
+    my ($ref, $ptr, $key, $idx, $data, $as) = @_;
+    $idx ||= 0;
+    $data ||= [];
+
+    if ($ref =~ s/^(.+\..+\..+)\s+as\s+(\S+)\s*$/$1/) {
+        $as = $2 || die "Missing as 'hostname'";
+    }
+
+    my $rc = 0;
+
+    unless ($key) {
+        my @path = split /\./, $ref;
+        die "Malformed grants ref $ref" unless $#path == 2;
+        die "Index $idx is out of allowed range" if $idx < 0 || $idx > 2;
+        $key ||= $path[$idx];
+    }
+
+    $ptr ||= $grants;
+
+    if ($key =~ s/\*/.+/g) {
+        foreach my $v (sort { $a cmp $b } keys %$ptr) {
+            if ($v =~ /^$key$/) {
+                $rc += apply_grants($ref, $ptr, $v, $idx, $data, $as);
+            }
+        }
+    } else {
+        unless (defined $ptr->{$key}) {
+            die sprintf "Unknown key %s in %s with idx=%d in ref %s",
+                $key, join('.', @$data), $idx, $ref
+        }
+        if (ref $ptr->{$key} eq 'HASH') {
+            $rc += apply_grants($ref, $ptr->{$key}, undef, $idx+1,
+                                [ @$data, $key ], $as);
+        } elsif (ref $ptr->{$key} eq 'ARRAY') {
+            push @$data, $key;
+            my ($top, $user, $host) = @$data;
+            $host = $as if $as;
+            $log_offset = 1;
+            logger(sprintf "[%s]%s", join('.', @$data), $as ? " as $as" : '');
+            if (!$as && $recreate_user) {
+                if (apply_drop_users($user)) {
+                    flush_privs();
+                }
+            } else {
+                return 0 unless check_grants($ptr->{$key}, $user, $host);
+                $log_offset = 2;
+                logger(sprintf "revoke all from: %s\@%s", $user, $host);
+                $dbh->do("REVOKE ALL PRIVILEGES, GRANT OPTION FROM $user\@$host");
+                if ($DBI::errstr
+                    &&
+                    ($DBI::errstr !~ /There is no such grant defined/ &&
+                     $DBI::errstr !~
+                      /revoke all privileges for one or more of the requested users/
+                    )) {
+                        die sprintf "Cannot revoke privileges from %s\@%s: %s",
+                            $user, $host, $DBI::errstr;
+                }
+            }
+            $rc++;
+            foreach my $grant (@{$ptr->{$key}}) {
+                $log_offset = 2;
+                logger(sprintf "grant %s to %s\@%s", $grant, $user, $host);
+                $dbh->do("GRANT $grant TO $user\@$host")
+                    or die "Cannot grant privileges: ".$DBI::errstr;
+            }
+        } else {
+            die "Unparsable grants structure elemenent: $key";
+        }
+    }
+
+    return $rc;
+}
+
+sub apply_host_grants {
+
+    my $rc = 0;
+
+    foreach my $grant_host (sort { $a cmp $b } keys %{$grants->{hosts}}) {
+        if (my $ref = $grants->{hosts}{$grant_host}) {
+            (my $grant_host_rx = $grant_host) =~ s/\*/.+/g;
+            my $hostname = get_hostname();
+            $grant_host_rx = $hostname if $grant_host_rx eq "self";
+            if ($hostname =~ /^$grant_host_rx$/) {
+                logger("host: $hostname ($grant_host)");
+                $ref = ref $ref ? $ref : [ $ref ];
+                map { $rc += apply_grants($_) } @$ref;
+                $log_offset = 0;
+            }
+        }
+    }
+
+    return $rc;
+}
+
+sub apply_copy_grants {
+
+    my $rc = 0;
+
+    foreach my $grant_host (sort { $a cmp $b } keys %{$grants->{copy}}) {
+        if (my $ref = $grants->{copy}{$grant_host}) {
+            (my $grant_host_rx = $grant_host) =~ s/\*/.+/g;
+            my $hostname = get_hostname();
+            $grant_host_rx = $hostname if $grant_host_rx eq "self";
+            if ($hostname =~ /^$grant_host_rx$/) {
+                logger("copy: $hostname ($grant_host)");
+                $ref = ref $ref ? $ref : [ $ref ];
+                map { $rc += apply_grants($_) } @$ref;
+                $log_offset = 0;
+            }
+        }
+    }
+
+    return $rc;
+}
+
+sub apply_drop_users {
+    my $forced_user = shift; # to drop a specific user
+
+    my $ch = $dbh->prepare(<<SQL)
+DELETE FROM mysql.user WHERE User = ? AND Host LIKE ?
+SQL
+        or die "Cannot prepare: ".$DBI::errstr;
+    my $ch_sel = $dbh->prepare(<<SQL)
+SELECT Host FROM mysql.user WHERE User = ? AND Host LIKE ?
+SQL
+        or die "Cannot prepare: ".$DBI::errstr;
+
+    my $rc = 0;
+
+    my $drops = $grants->{drop};
+    if ($forced_user) {
+        $drops = { $forced_user => '*' };
+    }
+
+    foreach my $user (sort { $a cmp $b } keys %$drops) {
+        my $ref = $drops->{$user};
+        $ref = ref $ref ? $ref : [ $ref ];
+        foreach my $host_rx (@$ref) {
+            $host_rx =~ s/\*/%/g;
+            $ch_sel->execute($user, $host_rx)
+                or die "Cannot select user $user -- $host_rx: ".$DBI::errstr;
+            while (my ($host) = $ch_sel->fetchrow_array) {
+                $ch->execute($user, $host_rx)
+                    or die "Cannot drop user $user -- $host_rx: ".$DBI::errstr;
+                logger(sprintf "drop: %s\@%s", $user, $host);
+                $rc++;
+            }
+        }
+    }
+
+    $ch->finish;
+    $ch_sel->finish;
+
+    return $rc;
+}
+
+sub normalise_grant_str {
+    my $grant = shift;
+    $grant =~ s/^grant\s+//i;
+    $grant =~ s/^(.+)\s+TO.+$/$1/i;
+    $grant =~ s/`//g;
+    $grant =~ s/,\s+/,/g;
+    $grant =~ s/all\s+on/all privileges on/;
+    $grant = lc $grant;
+    if ($grant =~ /,/) {
+        $grant =~ /^(.+)\s+(on\s+.+)$/i;
+        my $allow = $1;
+        my $on = $2;
+        my %sorted;
+        my @order = qw(select insert update delete);
+        foreach (split /,/, $allow) {
+            for (my $i=0;$i<=$#order;$i++) {
+                if ($_ eq $order[$i]) {
+                    $sorted{$i} = $_;
+                }
+            }
+        }
+        $grant = join ',', map { $sorted{$_} } sort { $a <=> $b } keys %sorted;
+        $grant .= ' '.$on;
+    }
+
+    return $grant;
+}
+
+sub check_grants {
+    my ($grants, $user, $host) = @_;
+
+    my $current_grants = $dbh->selectall_arrayref(
+        "SHOW GRANTS FOR ?\@?", undef, $user, $host);
+    if ($DBI::errstr
+        && $DBI::errstr !~ /There is no such grant defined/) {
+            die sprintf "Cannot select grants for %s\@%s: %s",
+                $user, $host, $DBI::errstr;
+    }
+
+    return 0 if not $current_grants and scalar @$grants == 0;
+
+    for (my $i=0;$i<=$#$current_grants;$i++) {
+        if ($current_grants->[$i][0] =~ /grant usage/i) {
+            splice(@$current_grants, $i, 1);
+            last;
+        }
+    }
+
+    return 1 if scalar @$current_grants != scalar @$grants;
+
+    foreach my $c_ref (@{$current_grants}) {
+        my $grant = $c_ref->[0];
+        next if $grant =~ /grant usage/i;
+        $grant = normalise_grant_str($grant);
+
+        my $rc = 1;
+        foreach my $check (@$grants) {
+            $check = normalise_grant_str($check);
+            if ($check eq $grant) {
+                $rc = 0;
+                last;
+            }
+        }
+        return $rc if $rc;
+    }
+
+    return 0;
+}
+
+sub flush_privs {
+    logger("flush privileges");
+    $dbh->do("FLUSH PRIVILEGES")
+        or die "Cannot flush privileges: ".$DBI::errstr;
+
+    return;
+}
+
+sub main {
+    if (my $yml = YAML::Tiny->read($GRANTS_SCHEMA)) {
+        $grants = $yml->[0];
+    }
+
+    my $db_cfg = Config::Tiny->read($DB_CFG)
+        or die "Cannot open $DB_CFG: $ERRNO";
+
+    connect_db(@{$db_cfg->{_}}{qw(LOCAL_DBHOST LOCAL_DBPORT)});
+
+    $dbh->begin_work or die "Cannot start transaction: ".$DBI::errstr;
+
+    eval {
+        my $rc = 0;
+        foreach my $proc (@{$grants->{order}}) {
+            SWITCH: for ($proc) {
+                /^drop$/ && do {
+                    if (apply_drop_users()) {
+                        flush_privs();
+                    }
+                };
+                /^hosts$/ && do {
+                    $rc += apply_host_grants();
+                };
+                /^hosts$/ && do {
+                    $rc += apply_copy_grants();
+                };
+            } # SWITCH
+        }
+
+        if ($rc) {
+            flush_privs();
+        }
+    };
+    if ($@) {
+        $dbh->rollback if $dbh;
+        $dbh->disconnect if $dbh;
+        die "Error: $@";
+    }
+
+    $dbh->commit or die "Cannot commit transaction: ".$DBI::errstr;
+    $dbh->disconnect;
+
+    return;
+}
+
+main();
+
+exit 0;
+
+# vim: ts=4 sw=4 et
+
+__END__
+
+=pod
+
+=head1 NAME
+
+ngcp-sync-grants - synchronizes mysql grants from a schema template
+
+=head1 USAGE
+
+ngcp-sync-grants [ options ... ]
+
+=head1 OPTIONS
+
+=over 8
+
+=item B<--recreate-user>
+
+Drop all appearances of a user before applying grants.
+This option is useful to clean up the particular
+user's hosts that are not covered by the schema.
+
+=item B<--verbose>
+
+Verbose mode
+
+=back
+
+=head1 DESCRIPTION
+
+B<This program> synchronizes mysql grants from a schema template.
+
+=head1 EXIT STATUS
+
+=over 8
+
+=item B<exit code 0>
+Everything is ok
+
+=item B<exit code != 0>
+Something is wrong, an error message raises
+
+=back
+
+=head1 REQUIRED ARGUMENTS
+
+None
+
+=head1 CONFIGURATION
+
+None
+
+=head1 DEPENDENCIES
+
+ngcp-sync-grants relies on a bunch of Perl modules, all of them specified as
+dependencies through the Debian package.
+
+=head1 DIAGNOSTICS
+
+TODO
+
+=head1 INCOMPATIBILITIES
+
+No known at this time.
+
+=head1 BUGS AND LIMITATIONS
+
+Please report problems you notice to the Sipwise
+Development Team <support@sipwise.com>.
+
+=head1 AUTHOR
+
+Kirill Solomko <ksolomko@sipwise.com>
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2016 Sipwise GmbH, Austria
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+=cut
