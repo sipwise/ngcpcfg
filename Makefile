@@ -5,7 +5,8 @@ PERL_SCRIPTS =	helper/sort-yml \
 		helper/tt2-daemon \
 		helper/validate-yml helper/fileformat_version \
 		sbin/ngcp-network \
-		sbin/ngcp-sync-constants
+		sbin/ngcp-sync-constants \
+		sbin/ngcp-sync-grants
 
 all: docs
 
@@ -26,11 +27,12 @@ man:
 	xsltproc --nonet /usr/share/xml/docbook/stylesheet/nwalsh/manpages/docbook.xsl docs/ngcpcfg.xml
 	pod2man --section=8 sbin/ngcp-network > ngcp-network.8
 	pod2man --section=8 sbin/ngcp-sync-constants > ngcp-sync-constants.8
+	pod2man --section=8 sbin/ngcp-sync-grants > ngcp-sync-grants.8
 
 
 clean:
 	rm -f docs/ngcpcfg.xml docs/ngcpcfg.epub docs/ngcpcfg.html docs/ngcpcfg.pdf
-	rm -f ngcpcfg.8 ngcp-network.8 ngcp-sync-constants.8
+	rm -f ngcpcfg.8 ngcp-network.8 ngcp-sync-constants.8 ngcp-sync-grants.8
 
 dist-clean:
 	rm -f docs/ngcpcfg.html docs/ngcpcfg.pdf
