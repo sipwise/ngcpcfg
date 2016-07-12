@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "bab3e1c7_44314aeb",
+        "filename": "sbin/ngcp-sync-grants",
+        "patchSetId": 13
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-07-12T12:39:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bab3e1c7_e6a96525",
+      "range": {
+        "startLine": 79,
+        "startChar": 21,
+        "endLine": 79,
+        "endChar": 30
+      },
+      "revId": "4b1616fd6d7fa284a44bea99257ebfa078d030c4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bab3e1c7_a695ade5",
         "filename": "sbin/ngcp-sync-grants",
         "patchSetId": 13
@@ -95,6 +119,24 @@
       "writtenOn": "2016-07-12T11:32:53Z",
       "side": 1,
       "message": "Hmm, this does not seem very robust to what the mysql config might accept as valid syntax? Stuff like surrounding spaces around \u003d, missing quoting (and perhaps \"\" used for quoting?).",
+      "revId": "4b1616fd6d7fa284a44bea99257ebfa078d030c4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_243456dd",
+        "filename": "sbin/ngcp-sync-grants",
+        "patchSetId": 13
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-07-12T12:39:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bab3e1c7_a695ade5",
       "revId": "4b1616fd6d7fa284a44bea99257ebfa078d030c4",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
