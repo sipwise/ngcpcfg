@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bab3e1c7_06e2799f",
+        "filename": "sbin/ngcp-sync-grants",
+        "patchSetId": 13
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2016-07-12T11:32:53Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this log to printf { \\*STDERR } \"...\";",
+      "revId": "4b1616fd6d7fa284a44bea99257ebfa078d030c4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_a6ee0d8a",
+        "filename": "sbin/ngcp-sync-grants",
+        "patchSetId": 13
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2016-07-12T11:32:53Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be configurable?",
+      "range": {
+        "startLine": 79,
+        "startChar": 21,
+        "endLine": 79,
+        "endChar": 30
+      },
+      "revId": "4b1616fd6d7fa284a44bea99257ebfa078d030c4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_a695ade5",
+        "filename": "sbin/ngcp-sync-grants",
+        "patchSetId": 13
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2016-07-12T11:32:53Z",
+      "side": 1,
+      "message": "Hmm, this does not seem very robust to what the mysql config might accept as valid syntax? Stuff like surrounding spaces around \u003d, missing quoting (and perhaps \"\" used for quoting?).",
+      "revId": "4b1616fd6d7fa284a44bea99257ebfa078d030c4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_e692c5f5",
+        "filename": "sbin/ngcp-sync-grants",
+        "patchSetId": 13
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2016-07-12T11:32:53Z",
+      "side": 1,
+      "message": "I\u0027ve not checked but are those errors part of the public interface? Otherwise checking on error strings tends to be a bit fragile.",
+      "range": {
+        "startLine": 155,
+        "startChar": 21,
+        "endLine": 157,
+        "endChar": 84
+      },
+      "revId": "4b1616fd6d7fa284a44bea99257ebfa078d030c4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_069039eb",
+        "filename": "sbin/ngcp-sync-grants",
+        "patchSetId": 13
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2016-07-12T11:32:53Z",
+      "side": 1,
+      "message": "This is being used later on as a regex, but I guess other characters could be interpreted, in an unintended way, as part of the regex?",
+      "range": {
+        "startLine": 184,
+        "startChar": 33,
+        "endLine": 184,
+        "endChar": 59
+      },
+      "revId": "4b1616fd6d7fa284a44bea99257ebfa078d030c4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_c6c1c1e5",
+        "filename": "sbin/ngcp-sync-grants",
+        "patchSetId": 13
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2016-07-12T11:32:53Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 205,
+        "startChar": 33,
+        "endLine": 205,
+        "endChar": 58
+      },
+      "revId": "4b1616fd6d7fa284a44bea99257ebfa078d030c4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_86bbc971",
+        "filename": "sbin/ngcp-sync-grants",
+        "patchSetId": 13
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2016-07-12T11:32:53Z",
+      "side": 1,
+      "message": "Ditto but with SQL?",
+      "range": {
+        "startLine": 243,
+        "startChar": 12,
+        "endLine": 243,
+        "endChar": 33
+      },
+      "revId": "4b1616fd6d7fa284a44bea99257ebfa078d030c4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
