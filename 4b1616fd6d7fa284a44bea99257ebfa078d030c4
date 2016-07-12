@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bab3e1c7_46add130",
+        "filename": "sbin/ngcp-sync-grants",
+        "patchSetId": 13
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-07-12T12:28:53Z",
+      "side": 1,
+      "message": "those are info/debug messages only, I do not think we need to route them into STDERR",
+      "parentUuid": "bab3e1c7_06e2799f",
+      "revId": "4b1616fd6d7fa284a44bea99257ebfa078d030c4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bab3e1c7_a6ee0d8a",
         "filename": "sbin/ngcp-sync-grants",
         "patchSetId": 13
@@ -30,6 +48,30 @@
       "writtenOn": "2016-07-12T11:32:53Z",
       "side": 1,
       "message": "Shouldn\u0027t this be configurable?",
+      "range": {
+        "startLine": 79,
+        "startChar": 21,
+        "endLine": 79,
+        "endChar": 30
+      },
+      "revId": "4b1616fd6d7fa284a44bea99257ebfa078d030c4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_e6a96525",
+        "filename": "sbin/ngcp-sync-grants",
+        "patchSetId": 13
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-07-12T12:28:53Z",
+      "side": 1,
+      "message": "we need a way to have that configurable as currently we have  it as /etc/mysql/sipwise.cnf (password only inside) and user is \u0027sipwise\u0027.\nso I will adapt ngcp-sync-constants as well for that. \nfor now I will make \u0027sipwise\u0027 as a constant.",
+      "parentUuid": "bab3e1c7_a6ee0d8a",
       "range": {
         "startLine": 79,
         "startChar": 21,
@@ -82,6 +124,30 @@
     },
     {
       "key": {
+        "uuid": "bab3e1c7_e4ff1e00",
+        "filename": "sbin/ngcp-sync-grants",
+        "patchSetId": 13
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-07-12T12:28:53Z",
+      "side": 1,
+      "message": "\"There is no such grant defined\" - when revoke is issued on a non-existing user or no grants for a user at all., so it is acceptable to skip it.\n\"revoke all privileges for one or more of the requested users\" - same as above but it triggers when you try to revoke grants from an existing user without grants.",
+      "parentUuid": "bab3e1c7_e692c5f5",
+      "range": {
+        "startLine": 155,
+        "startChar": 21,
+        "endLine": 157,
+        "endChar": 84
+      },
+      "revId": "4b1616fd6d7fa284a44bea99257ebfa078d030c4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bab3e1c7_069039eb",
         "filename": "sbin/ngcp-sync-grants",
         "patchSetId": 13
@@ -93,6 +159,30 @@
       "writtenOn": "2016-07-12T11:32:53Z",
       "side": 1,
       "message": "This is being used later on as a regex, but I guess other characters could be interpreted, in an unintended way, as part of the regex?",
+      "range": {
+        "startLine": 184,
+        "startChar": 33,
+        "endLine": 184,
+        "endChar": 59
+      },
+      "revId": "4b1616fd6d7fa284a44bea99257ebfa078d030c4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_04059210",
+        "filename": "sbin/ngcp-sync-grants",
+        "patchSetId": 13
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-07-12T12:28:53Z",
+      "side": 1,
+      "message": "In grants.yml I use the \"wildcard\" based match (db* prx* some*host, etc.) where internally I translate it into \"pregex\" syntax.",
+      "parentUuid": "bab3e1c7_069039eb",
       "range": {
         "startLine": 184,
         "startChar": 33,
@@ -128,6 +218,30 @@
     },
     {
       "key": {
+        "uuid": "bab3e1c7_a409262e",
+        "filename": "sbin/ngcp-sync-grants",
+        "patchSetId": 13
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-07-12T12:28:53Z",
+      "side": 1,
+      "message": "In grants.yml I use the \"wildcard\" based match (db* prx* some*host, etc.) where internally I translate it into \"pregex\" syntax.",
+      "parentUuid": "bab3e1c7_c6c1c1e5",
+      "range": {
+        "startLine": 205,
+        "startChar": 33,
+        "endLine": 205,
+        "endChar": 58
+      },
+      "revId": "4b1616fd6d7fa284a44bea99257ebfa078d030c4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bab3e1c7_86bbc971",
         "filename": "sbin/ngcp-sync-grants",
         "patchSetId": 13
@@ -139,6 +253,30 @@
       "writtenOn": "2016-07-12T11:32:53Z",
       "side": 1,
       "message": "Ditto but with SQL?",
+      "range": {
+        "startLine": 243,
+        "startChar": 12,
+        "endLine": 243,
+        "endChar": 33
+      },
+      "revId": "4b1616fd6d7fa284a44bea99257ebfa078d030c4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_c40e9a34",
+        "filename": "sbin/ngcp-sync-grants",
+        "patchSetId": 13
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-07-12T12:28:53Z",
+      "side": 1,
+      "message": "In grants.yml I use the \"wildcard\" based match (db* prx* some*host, etc.) where internally I translate it into mysql \"LIKE\" based wildcard, which is \"%\".",
+      "parentUuid": "bab3e1c7_86bbc971",
       "range": {
         "startLine": 243,
         "startChar": 12,
