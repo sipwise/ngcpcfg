@@ -68,13 +68,16 @@ sub logger {
     return if $mode == 1 && $debug <= 0;
     my $offset = $log_offset*2;
     $offset -= 2 if $debug < 1;
-    printf "-->%s %s\n", " "x$offset, $str;
+    my $prefix = $mode < 2 ? "-->" : "Warning:";
+    printf { $mode == 2 ? *STDERR : *STDOUT } "%s%s %s\n",
+        $prefix, " "x$offset, $str;
 
     return;
 }
 
-sub log_debug { logger(shift, 1); }
 sub log_info  { logger(shift, 0); }
+sub log_debug { logger(shift, 1); }
+sub log_warn  { logger(shift, 2); }
 
 sub get_mysql_credentials {
     my $mysql_user = $DEFAULT_MYSQL_USER;
@@ -169,8 +172,15 @@ sub apply_grants {
             foreach my $grant (@{$ptr->{$key}}) {
                 $log_offset = 2;
                 log_info(sprintf "grant %s to %s\@%s", $grant, $user, $host);
-                $dbh->do("GRANT $grant TO $user\@$host")
-                    or die "Cannot grant privileges: ".$DBI::errstr;
+                $dbh->do("GRANT $grant TO $user\@$host");
+                if ($DBI::errstr &&
+                    $DBI::errstr !~ /Table\s+'\S+\.\S+'\s+doesn't\s+exist/) {
+                    die "Cannot grant privileges: ".$DBI::errstr;
+                } elsif ($DBI::errstr) {
+                    $log_offset = 0;
+                    log_warn("Cannot apply grant: ".$DBI::errstr);
+                    $log_offset = 2;
+                }
             }
         } else {
             die "Unparsable grants structure elemenent: $key";
