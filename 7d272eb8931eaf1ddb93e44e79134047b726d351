@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "7aade967_066dba04",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 8
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-07-22T12:17:15Z",
+      "side": 1,
+      "message": "I would not do this as someone may include DDL statements unintentionally and break the \"test mode\" altogether.",
+      "parentUuid": "7aade967_c6afa22a",
+      "range": {
+        "startLine": 182,
+        "startChar": 47,
+        "endLine": 182,
+        "endChar": 57
+      },
+      "revId": "7d272eb8931eaf1ddb93e44e79134047b726d351",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_66682ef6",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 8
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-07-22T12:17:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aade967_26b556cd",
+      "range": {
+        "startLine": 182,
+        "startChar": 18,
+        "endLine": 182,
+        "endChar": 39
+      },
+      "revId": "7d272eb8931eaf1ddb93e44e79134047b726d351",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_c653226b",
         "filename": "sbin/ngcp-sync-constants",
         "patchSetId": 8
@@ -59,6 +107,30 @@
       "writtenOn": "2016-07-22T11:38:24Z",
       "side": 1,
       "message": "ok when manipualting grats via the User table, it can be done transactional, wasnt aware of that. since GRANT wasnt, right? btw. i will never use GRANT anymore :-)",
+      "range": {
+        "startLine": 268,
+        "startChar": 14,
+        "endLine": 268,
+        "endChar": 22
+      },
+      "revId": "7d272eb8931eaf1ddb93e44e79134047b726d351",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_267236e6",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 8
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-07-22T12:17:15Z",
+      "side": 1,
+      "message": "yes, GRANT is not transactional but not exactly DDL. When you issue a grant the changes land into mysql and if you for instance do \"show grants\" you see the changes immediately but you need to issue \"flush privileges\" still for that grant to be synced with the current inmemory mysql privs data.",
+      "parentUuid": "7aade967_c653226b",
       "range": {
         "startLine": 268,
         "startChar": 14,
@@ -105,6 +177,54 @@
       "writtenOn": "2016-07-22T11:50:47Z",
       "side": 1,
       "message": "maybe going even a step further: execute the update statements even in test mode, but rollabck instead of commit if in test mode.",
+      "range": {
+        "startLine": 273,
+        "startChar": 10,
+        "endLine": 273,
+        "endChar": 16
+      },
+      "revId": "7d272eb8931eaf1ddb93e44e79134047b726d351",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_c676c2d8",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 8
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-07-22T12:17:15Z",
+      "side": 1,
+      "message": "very interesting info thanks!, ok I will remove the \"die\" part as there will be implicit rollback anyways if anything and/or the proper commit at the sage is expected, so win/win there for us.",
+      "parentUuid": "7aade967_26d6b6c6",
+      "range": {
+        "startLine": 273,
+        "startChar": 17,
+        "endLine": 273,
+        "endChar": 19
+      },
+      "revId": "7d272eb8931eaf1ddb93e44e79134047b726d351",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_e673bee5",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 8
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-07-22T12:17:15Z",
+      "side": 1,
+      "message": "would like to avoid that in this script for the \"test mode\" as if someone in the future adds a DDL statement or \"grant/revoke\" the test mode is broken.",
+      "parentUuid": "7aade967_e6ac1e38",
       "range": {
         "startLine": 273,
         "startChar": 10,
