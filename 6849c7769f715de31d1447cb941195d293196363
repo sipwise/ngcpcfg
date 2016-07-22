@@ -34,6 +34,24 @@
       "revId": "6849c7769f715de31d1447cb941195d293196363",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_86e44aad",
+        "filename": "sbin/ngcp-sync-grants",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2016-07-22T11:36:14Z",
+      "side": 1,
+      "message": "Sounds good, thanks for information and implementing!",
+      "parentUuid": "7aade967_c667a2e9",
+      "revId": "6849c7769f715de31d1447cb941195d293196363",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
