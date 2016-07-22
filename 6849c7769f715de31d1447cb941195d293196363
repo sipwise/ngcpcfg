@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_31db39ef",
+        "filename": "sbin/ngcp-sync-grants",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2016-07-22T08:58:44Z",
+      "side": 1,
+      "message": "this comment is slightly misleading because AFAICT it affects also the revocation process as present in line 174ff? (IMO the comment could be just dropped)",
+      "revId": "6849c7769f715de31d1447cb941195d293196363",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
