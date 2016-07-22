@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_26b556cd",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 8
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2016-07-22T11:38:24Z",
+      "side": 1,
+      "message": "maybe check number of affected rows here?",
+      "range": {
+        "startLine": 182,
+        "startChar": 18,
+        "endLine": 182,
+        "endChar": 39
+      },
+      "revId": "7d272eb8931eaf1ddb93e44e79134047b726d351",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_c653226b",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 8
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2016-07-22T11:38:24Z",
+      "side": 1,
+      "message": "ok when manipualting grats via the User table, it can be done transactional, wasnt aware of that. since GRANT wasnt, right? btw. i will never use GRANT anymore :-)",
+      "range": {
+        "startLine": 268,
+        "startChar": 14,
+        "endLine": 268,
+        "endChar": 22
+      },
+      "revId": "7d272eb8931eaf1ddb93e44e79134047b726d351",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_26d6b6c6",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 8
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2016-07-22T11:38:24Z",
+      "side": 1,
+      "message": "had fun with expecting a return value from -\u003ecommit and -\u003e rollback, see https://rt.cpan.org/Public/Bug/Display.html?id\u003d102791 .\n\ncheck out how i worked around in https://gerrit.mgm.sipwise.com/#/c/7065/21/lib/NGCP/BulkProcessor/SqlConnector.pm line 713.\n\nits not a problem when not debugging actually..",
+      "range": {
+        "startLine": 273,
+        "startChar": 17,
+        "endLine": 273,
+        "endChar": 19
+      },
+      "revId": "7d272eb8931eaf1ddb93e44e79134047b726d351",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
