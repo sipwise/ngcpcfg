@@ -16,6 +16,24 @@
       "revId": "6849c7769f715de31d1447cb941195d293196363",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_c667a2e9",
+        "filename": "sbin/ngcp-sync-grants",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-07-22T10:42:57Z",
+      "side": 1,
+      "message": "The idea is as following:\nWhen no user exist in mysql and a \"grant ... \" is issued it automatically creates a new user with an empty password, which is normally should be covered by ngcp-sync-constants but if there is no such user in ngcp-sync-constants it creates a security hole, therefore if a new user is created, I generate a random password for him to make sure it is inaccessible at least before ngcp-sync-constants update the password for him. \nit does not affect the revocation process and the revocation process can produce 2 errors which we anticipate and skip:\n1. (line 174) revocation from a non-existing user, we must protect him with a password\n2. (line 177) revocation from an existing user without any grants. no need to touch his password as it has already been taken care of.\nUPDATE: after discussion with Alex instead of a new pass generation I will protect him with \u0027!\u0027 which blocks all access + allows Alex to write tests around such users to catch them there if needed.",
+      "parentUuid": "9ab8dda7_31db39ef",
+      "revId": "6849c7769f715de31d1447cb941195d293196363",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
