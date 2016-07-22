@@ -15,6 +15,8 @@ Readonly my $GRANTS_SCHEMA => '/etc/mysql/grants.yml';
 Readonly my $DEFAULT_MYSQL_USER => "sipwise";
 Readonly my $MYSQL_CREDENTIALS => "/etc/mysql/sipwise.cnf";
 Readonly my $DB_CFG => "/etc/default/ngcp-db";
+Readonly my $DEFAULT_DBHOST => "127.0.0.1";
+Readonly my $DEFAULT_DBPORT => "3306";
 
 my $grants = {};
 my $dbh;
@@ -365,10 +367,16 @@ sub main {
         $grants = $yml->[0];
     }
 
-    my $db_cfg = Config::Tiny->read($DB_CFG)
-        or die "Cannot open $DB_CFG: $ERRNO";
+    my ($dbhost, $dbport);
+    if (my $db_cfg = Config::Tiny->read($DB_CFG)) {
+        ($dbhost, $dbport) = @{$db_cfg->{_}}{qw(LOCAL_DBHOST LOCAL_DBPORT)};
+    } else {
+        log_warn(sprintf "Cannot open %s: %s, using host=%s port=%s",
+            $DB_CFG, $ERRNO, $DEFAULT_DBHOST, $DEFAULT_DBPORT);
+        ($dbhost, $dbport) = ($DEFAULT_DBHOST, $DEFAULT_DBPORT);
+    }
 
-    connect_db(@{$db_cfg->{_}}{qw(LOCAL_DBHOST LOCAL_DBPORT)});
+    connect_db($dbhost, $dbport);
 
     $dbh->begin_work or die "Cannot start transaction: ".$DBI::errstr;
 
