@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "7aade967_c6afa22a",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 8
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2016-07-22T11:50:47Z",
+      "side": 1,
+      "message": "maybe going even a step further: execute the update even in test mode, but rollabck if test mode.",
+      "range": {
+        "startLine": 182,
+        "startChar": 47,
+        "endLine": 182,
+        "endChar": 57
+      },
+      "revId": "7d272eb8931eaf1ddb93e44e79134047b726d351",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_c653226b",
         "filename": "sbin/ngcp-sync-constants",
         "patchSetId": 8
@@ -64,6 +87,29 @@
         "startChar": 17,
         "endLine": 273,
         "endChar": 19
+      },
+      "revId": "7d272eb8931eaf1ddb93e44e79134047b726d351",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_e6ac1e38",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 8
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2016-07-22T11:50:47Z",
+      "side": 1,
+      "message": "maybe going even a step further: execute the update statements even in test mode, but rollabck instead of commit if in test mode.",
+      "range": {
+        "startLine": 273,
+        "startChar": 10,
+        "endLine": 273,
+        "endChar": 16
       },
       "revId": "7d272eb8931eaf1ddb93e44e79134047b726d351",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
