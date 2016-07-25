@@ -49,6 +49,16 @@ GetOptions("h|?|help"       => \&Usage,
            "recreate-user"  => \$recreate_user,
           ) or die Usage();
 
+sub pwgen {
+    my @list = ("a".."z",0..9,"A".."Z");
+    my @randoms;
+    for (1..$password_length) {
+        push @randoms, $list[int(rand($#list))];
+    }
+
+    return join "", @randoms;
+}
+
 sub connect_db {
     my ($dbhost, $dbport) = @_;
     my ($mysql_user, $mysql_pass) = get_mysql_credentials();
@@ -188,10 +198,16 @@ sub apply_grants {
                 }
             }
             if ($new_user) {
-                $dbh->do("UPDATE user SET Password = '!'
-                          WHERE User = ? AND Host = ?",
-                         undef, $user, $host);
-                die sprintf "Cannot update %s@%s with disabled password, %s",
+                my ($random_pass) = $dbh->selectrow_array("SELECT PASSWORD(?)",
+                                                          undef, pwgen());
+                die "Cannot generate password: ".$DBI::errstr if $DBI::err;
+                unless ($random_pass =~ /^\*(\S+)\s*$/) {
+                    die "Cannot parse generated password: $random_pass";
+                }
+                $random_pass = '!'.$1;
+                $dbh->do("UPDATE user SET Password = ? WHERE User = ? AND Host = ?",
+                         undef, $random_pass, $user, $host);
+                die sprintf "Cannot update %s@%s with generated password, %s",
                     $user, $host, $DBI::errstr if $DBI::err;
             }
         } else {
