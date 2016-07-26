@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_a5edbef1",
+        "filename": "sbin/ngcp-sync-grants",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2016-07-26T12:09:25Z",
+      "side": 1,
+      "message": "Should be rand(@list) IMO, but that\u0027s only a minor complaint.",
+      "revId": "34771bc4ae3d4fbfe8a988668806eeb31b473ce2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
