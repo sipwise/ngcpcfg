@@ -1,3 +1,20 @@
+ngcp-ngcpcfg (0.32.0.0+0~mr5.0.0.0) unstable; urgency=medium
+
+  [ Alexander Lutay ]
+  * [3250181] MT#19797 Add ngcpcfg helper get_mgmt_node
+
+  [ Kirill Solomko ]
+  * [5a06286] MT#19407 add ngcp-sync-grants script
+  * [594753b] MT#19407 add log warning, change error handling on grant apply.
+  * [3c881f9] MT#19407 ngcp-sync-grants disabled password for new users (security)
+  * [0eaa1a8] MT#19407 warning and use with default dbhost=127.0.0.1, dbport=3306 if no defaults/ngcp-db file
+  * [db782cd] MT#21227 complete rework of ngcp-sync-constants
+  * [34771bc] MT#19407 ngcp-sync-grants random password for new users
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 01 Aug 2016 16:33:53 +0200
+
 ngcp-ngcpcfg (0.31.0.0+0~mr4.5.0.0) unstable; urgency=medium
 
   [ Michael Prokop ]
