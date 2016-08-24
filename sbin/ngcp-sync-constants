@@ -195,7 +195,7 @@ SQL
 
     my ($count, $match) = $sth_sel->fetchrow_array();
     if ($count && !$match) {
-        log_info(sprintf "%s => %s", $user, $pass);
+        log_info(sprintf "%s", $user);
         unless ($test_mode) {
             my $rows = $sth_upd->execute($pass, $user)
                 or die "Cannot update: ".$DBI::errstr;
