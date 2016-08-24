@@ -147,10 +147,19 @@ sub apply_grants {
         }
     } else {
         unless (defined $ptr->{$key}) {
-            die sprintf "Unknown key %s in %s with idx=%d in ref %s",
-                $key, join('.', @$data), $idx, $ref
+            unless ($as) {
+                die sprintf "Undefined key %s in %s with idx=%d in ref %s",
+                    $key, join('.', @$data), $idx, $ref
+            } else {
+                return 0;
+            }
         }
         if (ref $ptr->{$key} eq 'HASH') {
+            if ($idx == 1 && $recreate_user && !$as) { # local user
+                if (apply_drop_users($key)) {
+                    flush_privs();
+                }
+            }
             $rc += apply_grants($ref, $ptr->{$key}, undef, $idx+1,
                                 [ @$data, $key ], $as);
         } elsif (ref $ptr->{$key} eq 'ARRAY') {
@@ -160,27 +169,17 @@ sub apply_grants {
             $log_offset = 1;
             my $new_user = 0;
             log_debug(sprintf "[%s]%s", join('.', @$data), $as ? " as $as" : '');
-            if (!$as && $recreate_user) {
-                if (apply_drop_users($user)) {
-                    flush_privs();
+            return 0 unless check_grants($ptr->{$key}, $user, $host);
+            $log_offset = 2;
+            log_info(sprintf "revoke all from: %s\@%s", $user, $host);
+            $dbh->do("REVOKE ALL PRIVILEGES, GRANT OPTION FROM $user\@$host");
+            if ($DBI::errstr) {
+                if ($DBI::errstr =~
+                  /revoke all privileges for one or more of the requested users/) {
                     $new_user = 1;
-                }
-            } else {
-                return 0 unless check_grants($ptr->{$key}, $user, $host);
-                unless ($debug > 0) {
-                    log_info(sprintf "[%s]%s", join('.', @$data), $as ? " as $as" : '');
-                }
-                $log_offset = 2;
-                log_info(sprintf "revoke all from: %s\@%s", $user, $host);
-                $dbh->do("REVOKE ALL PRIVILEGES, GRANT OPTION FROM $user\@$host");
-                if ($DBI::errstr) {
-                    if ($DBI::errstr =~
-                      /revoke all privileges for one or more of the requested users/) {
-                        $new_user = 1;
-                    } elsif ($DBI::errstr !~ /There is no such grant defined/) {
-                        die sprintf "Cannot revoke privileges from %s\@%s: %s",
-                            $user, $host, $DBI::errstr;
-                    }
+                } elsif ($DBI::errstr !~ /There is no such grant defined/) {
+                    die sprintf "Cannot revoke privileges from %s\@%s: %s",
+                        $user, $host, $DBI::errstr;
                 }
             }
             $rc++;
@@ -314,12 +313,22 @@ sub normalise_grant_str {
         my $allow = $1;
         my $on = $2;
         my %sorted;
-        my @order = qw(select insert update delete);
-        foreach (split /,/, $allow) {
+        my %unsorted = (map { $_ => 0 } split /,/, $allow);
+        my @order = qw(select insert update delete reload super);
+        push @order, "replication slave";
+        push @order, "replication client";
+        foreach my $chunk (sort { $a cmp $b } keys %unsorted) {
+            (my $parsed = $chunk) =~ s/\s+/ /;
             for (my $i=0;$i<=$#order;$i++) {
-                if ($_ eq $order[$i]) {
-                    $sorted{$i} = $_;
+                if ($parsed eq $order[$i]) {
+                    $sorted{$i} = $parsed;
+                    $unsorted{$chunk} = 1;
                 }
+            }
+        }
+        foreach my $chunk (sort { $a cmp $b } keys %unsorted) {
+            unless ($unsorted{$chunk} == 1) {
+                die "Unknown grant element: $chunk";
             }
         }
         $grant = join ',', map { $sorted{$_} } sort { $a <=> $b } keys %sorted;
