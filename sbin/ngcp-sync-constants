@@ -182,6 +182,9 @@ sub sync_user {
 SELECT count(User), Password = PASSWORD(?) as matched
   FROM user
  WHERE User = ?
+GROUP by matched
+ORDER by matched ASC
+LIMIT 1
 SQL
 
     my $sth_upd = $dbh->prepare(<<SQL);
