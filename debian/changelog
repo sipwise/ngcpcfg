@@ -1,3 +1,17 @@
+ngcp-ngcpcfg (0.31.1.2+0~mr4.5.1.2) unstable; urgency=medium
+
+  [ Alexander Lutay ]
+  * [da5b048] MT#22185 Fix ngcp-sync-grants/-constants, use 'pair' MySQL DB instead of 'local'
+
+  [ Kirill Solomko ]
+  * [245b87f] MT#22185 various ngcp-sync-grant improvements
+  * [e5b22d0] MT#22211 ngcp-sync-constants suppress cleartext passwords to stdout
+  * [0fbbc5f] MT#22217 ngcp-sync-constants improve detecting users with password mismatch
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 25 Aug 2016 12:25:07 +0200
+
 ngcp-ngcpcfg (0.31.1.1+0~mr4.5.1.1) unstable; urgency=medium
 
   * New release.
