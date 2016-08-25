@@ -76,21 +76,27 @@ sub pwgen {
     return join "", @randoms;
 }
 
+sub get_sipwise_db_password {
+
+    my $mysql_creds = Config::Tiny->read($MYSQL_CREDENTIALS)
+        or die "Cannot open $MYSQL_CREDENTIALS: $ERRNO";
+
+    if (my $mysql_pass = $mysql_creds->{_}{SIPWISE_DB_PASSWORD}) {
+        $mysql_pass =~ s/^['"]|['"]$//g;
+        return $mysql_pass;
+    } else {
+        die "Cannot parse mysql credentials file $MYSQL_CREDENTIALS";
+    }
+
+    return;
+}
+
 sub get_mysql_credentials {
 
     return ('root', '') if $mysql_root;
 
     my $mysql_user = $DEFAULT_MYSQL_USER;
-    my $mysql_pass;
-
-    my $mysql_creds = Config::Tiny->read($MYSQL_CREDENTIALS)
-        or die "Cannot open $MYSQL_CREDENTIALS: $ERRNO";
-
-    if ($mysql_pass = $mysql_creds->{_}{SIPWISE_DB_PASSWORD}) {
-        $mysql_pass =~ s/^['"]|['"]$//g;
-    } else {
-        die "Cannot parse mysql credentials file $MYSQL_CREDENTIALS";
-    }
+    my $mysql_pass = get_sipwise_db_password();
 
     return ($mysql_user, $mysql_pass);
 }
@@ -191,6 +197,7 @@ SQL
 UPDATE user
    SET Password=PASSWORD(?)
  WHERE User = ?
+   AND Password != PASSWORD(?)
 SQL
 
     $sth_sel->execute($pass, $user)
@@ -204,11 +211,11 @@ SQL
             log_info(sprintf "%s", $user);
         }
         unless ($test_mode) {
-            my $rows = $sth_upd->execute($pass, $user)
+            my $rows = $sth_upd->execute($pass, $user, $pass)
                 or die "Cannot update: ".$DBI::errstr;
             if ($rows != $count) {
                 log_warn(sprintf
-                    "User update was supposed to affect %d rows but changed only %d",
+                    "User update was supposed to affect %d rows but changed %d",
                         $count, $rows);
             }
             if ($user eq 'replicator') {
@@ -232,6 +239,10 @@ sub sync_mysql_data {
     my $rc = 0;
 
     my $data = get_user_pass($yml->[0]->{credentials}{mysql});
+
+    # special handling for user sipwise as it is not in constants.yml
+    push @$data, { user => $DEFAULT_MYSQL_USER,
+                   pass => get_sipwise_db_password() };
 
     foreach my $pair (@{$data}) {
         if (defined $pair->{user} and defined $pair->{pass}) {
