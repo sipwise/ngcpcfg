@@ -183,10 +183,16 @@ sub apply_grants {
                 }
             }
             $rc++;
-            foreach my $grant (@{$ptr->{$key}}) {
+            for (my $i=0;$i<=$#{$ptr->{$key}};$i++) {
+                my $grant = $ptr->{$key}[$i];
                 $log_offset = 2;
-                log_info(sprintf "grant %s to %s\@%s", $grant, $user, $host);
-                $dbh->do("GRANT $grant TO $user\@$host");
+                my $grant_extras = "";
+                if ($grant =~ s/\s+with\s+grant\s+option//) {
+                    $grant_extras = "with grant option";
+                }
+                log_info(sprintf "grant %s to %s\@%s %s",
+                            $grant, $user, $host, $grant_extras);
+                $dbh->do("GRANT $grant TO $user\@$host $grant_extras");
                 if ($DBI::errstr &&
                     $DBI::errstr !~ /Table\s+'\S+\.\S+'\s+doesn't\s+exist/) {
                     die "Cannot grant privileges: ".$DBI::errstr;
@@ -302,12 +308,16 @@ SQL
 
 sub normalise_grant_str {
     my $grant = shift;
+    $grant = lc $grant;
+    my $suffix = "";
+    if ($grant =~ s/\s+with\s+grant\s+option//) {
+        $suffix = "with grant option";
+    }
     $grant =~ s/^grant\s+//i;
-    $grant =~ s/^(.+)\s+TO.+$/$1/i;
+    $grant =~ s/^(.+)\s+to.+$/$1/i;
     $grant =~ s/`//g;
     $grant =~ s/,\s+/,/g;
     $grant =~ s/all\s+on/all privileges on/;
-    $grant = lc $grant;
     if ($grant =~ /,/) {
         $grant =~ /^(.+)\s+(on\s+.+)$/i;
         my $allow = $1;
@@ -333,6 +343,11 @@ sub normalise_grant_str {
         }
         $grant = join ',', map { $sorted{$_} } sort { $a <=> $b } keys %sorted;
         $grant .= ' '.$on;
+    }
+    if ($suffix) {
+        $grant  =~ s/\s+$//;
+        $suffix =~ s/\s+/ /;
+        $grant = sprintf "%s %s", $grant, $suffix;
     }
 
     return $grant;
