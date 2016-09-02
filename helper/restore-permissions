@@ -1,0 +1,44 @@
+#!/bin/bash
+# Filename:      /usr/share/ngcp-ngcpcfg/helper/restore-permissions
+# Purpose:       restore file/directory permissions after git clone
+################################################################################
+
+set -e
+set -u
+
+if [ "${#:-}" -ne 1 ] ; then
+  echo "Usage: /usr/share/ngcp-ngcpcfg/helper/restore-permissions <ngcpcfg_directory>" >&2
+  exit 1
+fi
+
+# support for testsuite, assume defaults if unset
+CONFIG_POOL="${CONFIG_POOL:-/etc}"
+FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
+HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
+
+. ${FUNCTIONS}/main
+
+# used to run a command if the file it acts on (the last parameter) exists.
+maybe() {
+  local command="$1"
+  shift 1
+
+  if eval [ -e "\"\$$#\"" ] ; then
+    "$command" "$@"
+  fi
+}
+
+target_directory="$1"
+if ! [ -d "${target_directory}" ] ; then
+  log_errror "Directory ${target_directory} doesn't exist. Exiting."
+  exit 1
+fi
+
+# should only be run on repositories you trust
+if ! [ -e "$target_directory"/.ngcpcfg_perms ]; then
+  log_warn "Permission file ${target_directory}/.ngcpcfg_perms doesn't exist."
+else
+  . "${target_directory}"/.ngcpcfg_perms
+fi
+
+## END OF FILE #################################################################
