@@ -47,6 +47,34 @@ log_debug() {
     console_output "DEBUG: $*\n" >&2
   fi
 }
+## }}}
+
+hook_setup() {
+  log_debug "hook_setup ${1:-}"
+
+  if ! [ -d /usr/share/ngcp-ngcpcfg/hooks ] ; then
+    log_debug "Directory /usr/share/ngcp-ngcpcfg/hooks doesn't exist."
+    return 0
+  fi
+
+  local target_directory="$1"
+
+  if [ -z "${1:-}" ] ; then
+    log_error "Missing argument for target directory in hook_setup. Exiting."
+    exit 1
+  fi
+
+  if ! [ -d "$target_directory" ] ; then
+    log_error "Hook target directory $target_directory not a directory. Exiting."
+    exit 1
+  fi
+
+  for hook in /usr/share/ngcp-ngcpcfg/hooks/* ; do
+    [ -r "$hook" ] || continue
+    log_debug "Creating symlink for $hook in $target_directory"
+    ln -sf "$hook" "$target_directory"/
+  done
+}
 
 compare_active_branch() {
   log_debug "get_active_branch ${1:-}"
@@ -87,7 +115,6 @@ get_branch_status() {
     return 3
   fi
 }
-## }}}
 
 ## important variables we depend on to operate successfully {{{
 # support test suite which requires system independent configuration

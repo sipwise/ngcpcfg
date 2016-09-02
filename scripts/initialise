@@ -25,6 +25,8 @@ if [ -d .git ] ; then
 else
   log_debug "git init"
   git init >/dev/null
+  chmod 0700 .git
+  hook_setup "${NGCPCTL_MAIN}/.git/hooks"
 fi
 
 # ignore files we do not consider as valid template files
