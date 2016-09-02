@@ -21,6 +21,9 @@ timestamp_replacementchars=''
 
 # main script
 
+# ensure that existing hooks are up2date
+hook_setup "${NGCPCTL_MAIN}/.git/hooks"
+
 cd "$NGCPCTL_MAIN"
 
 if [ -z "${NO_DB_SYNC:-}" ] ; then
