@@ -90,6 +90,7 @@ Please execute the following command on one node
 as soon as glusterfs share is mounted again:
 
   git clone --bare /etc/ngcp-config /mnt/glusterfs/ngcpcfg-share
+  /usr/share/ngcp-ngcpcfg/helper/restore-permissions /mnt/glusterfs/ngcpcfg-share
 
 
 "
@@ -99,6 +100,7 @@ else
   else
     log_info "Copying git repository to shared storage."
     git clone --bare /etc/ngcp-config /mnt/glusterfs/ngcpcfg-share | sed "s/^/$timestamp_replacementchars/"
+    /usr/share/ngcp-ngcpcfg/helper/restore-permissions /mnt/glusterfs/ngcpcfg-share
   fi
 fi
 

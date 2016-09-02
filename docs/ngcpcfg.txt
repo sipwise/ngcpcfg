@@ -390,10 +390,37 @@ functionality (which is highly recommended in a HA Setup).
 How does the configuration management system work?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-ngcpcfg takes the central yml files (/etc/ngcp-config/*.yml) as input for
+ngcpcfg takes the central yml files (/etc/ngcp-config/\*.yml) as input for
 configuration, searches for supported templates files (*.tt2) in the template
 pool (_/etc/ngcp-config/templates/etc/_) and builds the resulting configuration
 files in _/etc_.
+
+Does ngcpcfg also track file permissions?
+-----------------------------------------
+
+When using ngcpcfg in a HA setup (PRO/CARRIER only) you want to ensure that
+changing file permissions inside the ngcpcfg repository on one node propogates
+to the other node(s) as well.  ngcpcfg is using git underneath, though git
+itself doesn't track file permissions (except for the execution bit).
+
+To be able to track file permissions ngcpcfg includes a pre-commit hook which
+records file permissions via the _.ngcpcfg_perms_ file inside the ngcpcfg
+repository (being _/etc/ngcp-config/.ngcpcfg_perms_ by default).  Whenever you
+run 'ngcpcfg commit' this pre-commit hook looks at the existing file permissions
+and records them through the _.ngcpcfg_perms_ file. After pushing the changes to
+the shared storage and when pulling then from the git repository on the foreign
+node(s) via 'ngcpcfg pull' the file permissions get restored automatically (via
+_/usr/share/ngcp-ngcpcfg/helper/restore-permissions_ which can be used also
+manually if needed).
+
+The solution via the git pre-commit hook ensures that no matter whether you're
+using 'ngcpcfg commit …' or 'git commit …' directly (for whatever reason) you
+always get the file permissions handled via .ngcpcfg_perms.
+
+If you want to change file permissions in a *clean* working directory and commit
+*without* using 'ngcpcfg commit' but directly via git itself then you've to use
+'git commit --allow-empty ...'. Thanks to the pre-commit hook the file
+_.ngcpcfg_perms_ will get updated accordingly.
 
 [[errorhandling]]
 Error handling - what does this error message mean?
