@@ -359,7 +359,8 @@ sub check_grants {
     my $current_grants = $dbh->selectall_arrayref(
         "SHOW GRANTS FOR ?\@?", undef, $user, $host);
     if ($DBI::errstr
-        && $DBI::errstr !~ /There is no such grant defined/) {
+        && ($DBI::errstr !~ /There is no such grant defined/ &&
+            $DBI::errstr !~ /fetch\(\) without execute\(\)/)) {
             die sprintf "Cannot select grants for %s\@%s: %s",
                 $user, $host, $DBI::errstr;
     }
