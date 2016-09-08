@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_bd9b8f71",
+        "filename": "scripts/decrypt",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2016-09-08T10:42:51Z",
+      "side": 1,
+      "message": "IMHO, it cannot work, as /mnt/glusterfs/ngcpcfg-share is a BARE repository. :-(",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 81
+      },
+      "revId": "ee89450b4318ac4b33ed515a809ac7cca36bb8bd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_fd910753",
+        "filename": "scripts/decrypt",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2016-09-08T10:42:51Z",
+      "side": 1,
+      "message": "see above",
+      "range": {
+        "startLine": 100,
+        "startChar": 4,
+        "endLine": 100,
+        "endChar": 83
+      },
+      "revId": "ee89450b4318ac4b33ed515a809ac7cca36bb8bd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_3d879f11",
+        "filename": "scripts/initialise",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2016-09-08T10:42:51Z",
+      "side": 1,
+      "message": "See /mnt/tmp/ngcp-installer(-debug).log on 192.168.22.202\n(new PRO installation using PPA, failed on sp1 installation stage)\n\n2016-09-08 11:51:34: Cloning repository to shared storage.\nCloning into bare repository \u0027/mnt/glusterfs/ngcpcfg-share\u0027...\ndone.\n2016-09-08 11:51:38: Error: Hook target directory /mnt/glusterfs/ngcpcfg-share/.git/hooks/ not a directory. Exiting.\n+11:51:38 exit 1",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 41
+      },
+      "revId": "ee89450b4318ac4b33ed515a809ac7cca36bb8bd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
