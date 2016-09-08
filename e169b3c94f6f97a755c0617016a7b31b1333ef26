@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_5d2cdb4a",
+        "filename": "sbin/ngcp-sync-grants",
+        "patchSetId": 2
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1000005
+      },
+      "writtenOn": "2016-09-08T08:42:52Z",
+      "side": 1,
+      "message": "funny way :)",
+      "range": {
+        "startLine": 363,
+        "startChar": 34,
+        "endLine": 363,
+        "endChar": 39
+      },
+      "revId": "e169b3c94f6f97a755c0617016a7b31b1333ef26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
