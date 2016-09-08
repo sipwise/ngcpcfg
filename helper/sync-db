@@ -33,23 +33,23 @@ my $dbuser = 'sipwise';
 my $dbname = $config->{ossbss}->{provisioning}->{database}->{name};
 
 unless(defined $dbhost) {
-  print "Could not determine provisioning db hostname\n";
+  print "Error: Could not determine provisioning db hostname\n";
   exit 1;
 }
 unless(defined $dbport) {
-  print "Could not determine provisioning db port\n";
+  print "Error: Could not determine provisioning db port\n";
   exit 1;
 }
 unless(defined $dbname) {
-  print "Could not determine provisioning db name\n";
+  print "Error: Could not determine provisioning db name\n";
   exit 1;
 }
 unless(defined $dbuser) {
-  print "Could not determine provisioning db user\n";
+  print "Error: Could not determine provisioning db user\n";
   exit 1;
 }
 unless(defined $dbpass) {
-  print "Could not determine provisioning db password\n";
+  print "Error: Could not determine provisioning db password\n";
   exit 1;
 }
 
@@ -64,19 +64,19 @@ exit 1 unless(sync_rtp_interfaces($dbh,
 $dbh->disconnect;
 
 # this part sync with kamailio db
-$dbuser = $config->{kamailio}->{proxy}->{dbrwuser};
 $dbname = $config->{kamailio}->{proxy}->{dbname};
-$dbpass = $config->{kamailio}->{proxy}->{dbrwpw};
+$dbuser = $config->{credentials}->{mysql}->{kamailio}->{u};
+$dbpass = $config->{credentials}->{mysql}->{kamailio}->{p};
 unless(defined $dbname) {
-  print "Could not determine kamailio db name\n";
+  print "Error: Could not determine kamailio db name\n";
   exit 1;
 }
 unless(defined $dbuser) {
-  print "Could not determine kamailio db user\n";
+  print "Error: Could not determine kamailio db user\n";
   exit 1;
 }
 unless(defined $dbpass) {
-  print "Could not determine kamailio db password\n";
+  print "Error: Could not determine kamailio db password\n";
   exit 1;
 }
 
@@ -93,7 +93,7 @@ sub db_connect
 	my $dbh = DBI->connect("DBI:mysql:database=${dbname};host=${dbhost};port=${dbport}",
 						$dbuser, $dbpass, { PrintError => 1 });
 	unless(defined $dbh) {
-		print "Could not connect to database '$dbname' at '$dbhost:$dbport' as '${dbuser}': $DBI::errstr\n";
+		print "Error: Could not connect to database '$dbname' at '$dbhost:$dbport' as '${dbuser}': $DBI::errstr\n";
 		exit 1;
 	}
 	return $dbh;
@@ -107,7 +107,7 @@ sub generic_enum_sync {
 	$sth->execute($pref_name);
 	my $res = $sth->fetchrow_hashref();
 	unless(defined $res) {
-	  print "Could not find preference '$pref_name' in db\n";
+	  print "Error: Could not find preference '$pref_name' in db\n";
 	  return;
 	}
 	my $pref_id = $res->{id};
