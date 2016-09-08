@@ -33,23 +33,23 @@ my $dbuser = 'sipwise';
 my $dbname = $config->{ossbss}->{provisioning}->{database}->{name};
 
 unless(defined $dbhost) {
-  print "Could not determine provisioning db hostname\n";
+  print "Error: Could not determine provisioning db hostname\n";
   exit 1;
 }
 unless(defined $dbport) {
-  print "Could not determine provisioning db port\n";
+  print "Error: Could not determine provisioning db port\n";
   exit 1;
 }
 unless(defined $dbname) {
-  print "Could not determine provisioning db name\n";
+  print "Error: Could not determine provisioning db name\n";
   exit 1;
 }
 unless(defined $dbuser) {
-  print "Could not determine provisioning db user\n";
+  print "Error: Could not determine provisioning db user\n";
   exit 1;
 }
 unless(defined $dbpass) {
-  print "Could not determine provisioning db password\n";
+  print "Error: Could not determine provisioning db password\n";
   exit 1;
 }
 
@@ -63,29 +63,6 @@ exit 1 unless(sync_rtp_interfaces($dbh,
 
 $dbh->disconnect;
 
-# this part sync with kamailio db
-$dbuser = $config->{kamailio}->{proxy}->{dbrwuser};
-$dbname = $config->{kamailio}->{proxy}->{dbname};
-$dbpass = $config->{kamailio}->{proxy}->{dbrwpw};
-unless(defined $dbname) {
-  print "Could not determine kamailio db name\n";
-  exit 1;
-}
-unless(defined $dbuser) {
-  print "Could not determine kamailio db user\n";
-  exit 1;
-}
-unless(defined $dbpass) {
-  print "Could not determine kamailio db password\n";
-  exit 1;
-}
-
-$dbh = db_connect();
-
-exit 1 unless(sync_faxserver_uris($dbh,
-  $config->{faxserver}->{fax_gateways}));
-$dbh->disconnect;
-
 exit 0;
 
 sub db_connect
@@ -93,7 +70,7 @@ sub db_connect
 	my $dbh = DBI->connect("DBI:mysql:database=${dbname};host=${dbhost};port=${dbport}",
 						$dbuser, $dbpass, { PrintError => 1 });
 	unless(defined $dbh) {
-		print "Could not connect to database '$dbname' at '$dbhost:$dbport' as '${dbuser}': $DBI::errstr\n";
+		print "Error: Could not connect to database '$dbname' at '$dbhost:$dbport' as '${dbuser}': $DBI::errstr\n";
 		exit 1;
 	}
 	return $dbh;
@@ -107,7 +84,7 @@ sub generic_enum_sync {
 	$sth->execute($pref_name);
 	my $res = $sth->fetchrow_hashref();
 	unless(defined $res) {
-	  print "Could not find preference '$pref_name' in db\n";
+	  print "Error: Could not find preference '$pref_name' in db\n";
 	  return;
 	}
 	my $pref_id = $res->{id};
@@ -157,64 +134,5 @@ sub sync_extra_sockets {
 sub sync_rtp_interfaces {
 	return generic_enum_sync(@_, 'rtp_interface');
 }
-
-## faxserver.hw_fax_gateways handling: ##############################
-sub sync_faxserver_uris {
-	my $dbh = shift;
-	my $yaml_fax_gateways = shift;
-	my $fax_set_id = 4;
-	my $reload_dispatcher = 0;
-	my $dispatcher_insert_sth = $dbh->prepare("insert into dispatcher (setid, destination, flags, priority, description) values(4, ?, 0, 0, 'Fax2Mail Servers')");
-	my $dispatcher_delete_sth = $dbh->prepare("delete from dispatcher where id=?");
-
-	my $sth = $dbh->prepare("select id,destination from dispatcher where setid=?");
-	$sth->execute($fax_set_id);
-	my $db_fax_gateways = $sth->fetchall_hashref('destination');
-	$sth->finish;
-
-	# array reference
-	unless(defined $yaml_fax_gateways) {
-		return 1;
-	}
-	my @tmp_array = @{$yaml_fax_gateways};
-	# turn the array into hash reference
-	my $fax_gateways = {};
-	foreach my $gw (@tmp_array) {
-		# e.g: sip:127.0.0.1:5070/255.255.255.0, remove /255.255.255.0
-		my @new_gw_parts =  split(/\//, $gw);
- 		my $gw_sip_parts = $new_gw_parts[0];
-		$fax_gateways->{$gw_sip_parts} = 1 ;
-	}
-
-	foreach my $row (keys %{$db_fax_gateways}) {
-	  $row = $db_fax_gateways->{$row};
-	  if(!exists $fax_gateways->{$row->{destination}}) {
-	    print "fax gateway $row->{destination} does not exist anymore in config, delete from db\n";
-	    $dispatcher_delete_sth->execute($row->{id});
-	    $reload_dispatcher ||= 1;
-	  } else {
-	    print "fax gateway $row->{destination} sync between config and db\n";
-	    delete $fax_gateways->{$row->{destination}};
-	  }
-	}
-	foreach my $fax_gw(keys %{$fax_gateways}) {
-	  print "insert new fax gateway $fax_gw from config into db\n";
-	  $dispatcher_insert_sth->execute($fax_gw);
-	  $reload_dispatcher ||= 1;
-	}
-
-	$dispatcher_insert_sth->finish;
-	$dispatcher_delete_sth->finish;
-
-	if($reload_dispatcher){
-		print "fax gateway changes, need to reload kamailio dispatcher ... \n";
-		my $result = `ngcp-kamctl proxy  dispatcher reload`;
-		print "reload kamailio dispatcher done, status was: $CHILD_ERROR \n";
-	}
-
-	return 1;
-
-}
-
 
 ## END OF FILE #################################################################
