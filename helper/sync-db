@@ -64,9 +64,9 @@ exit 1 unless(sync_rtp_interfaces($dbh,
 $dbh->disconnect;
 
 # this part sync with kamailio db
-$dbuser = $config->{kamailio}->{proxy}->{dbrwuser};
 $dbname = $config->{kamailio}->{proxy}->{dbname};
-$dbpass = $config->{kamailio}->{proxy}->{dbrwpw};
+$dbuser = $config->{credentials}->{mysql}->{kamailio}->{u};
+$dbpass = $config->{credentials}->{mysql}->{kamailio}->{p};
 unless(defined $dbname) {
   print "Could not determine kamailio db name\n";
   exit 1;
