@@ -99,15 +99,12 @@ hosts changes should be pushed to.
 Supported template files
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Example for generating a configuration file named_/etc/foobar/baz_:
+Example for generating a configuration file named_/etc/foobar/baz_  (from lower
+precedence to higher precedence):
 
 * _/etc/ngcp-config/templates/etc/foobar/baz.tt2_: main and default template
 file, used by template-handler for generating /etc/foobar/baz. Configuration
 file is usually provided by a Debian package.
-
-* _/etc/ngcp-config/templates/etc/foobar/baz.customtt.tt2_: system specific
-template file, but configuration usually isn't provided by a Debian package and
-can be modified independent from any Debian package mechanism.
 
 * _/etc/ngcp-config/templates/etc/foobar/baz.tt2.$HA_NODE_: node specific
 template file. $HA_NODE is determined using the content of /etc/ngcp_ha_node
@@ -115,18 +112,51 @@ template file. $HA_NODE is determined using the content of /etc/ngcp_ha_node
 Sipwise Next Generation Platform). Wheras _*customtt.tt2_ files are used on all
 nodes in a High Availability setup the _*.tt2.$HA_NODE*_ file is specific for
 the single node only. A common usage case is master vs. slave configuration of a
-service. Configuration file is usually provided by a Debian package. Note:
-Feature is available in the High Availability setup only.
+service. Configuration file is usually provided by a Debian package.
+Note: Feature is available in the High Availability setup only.
+
+* _/etc/ngcp-config/templates/etc/foobar/baz.tt2.$PAIRNAME_: pair specific
+template file. Given a PRO pair in a CARRIER environment where two nodes are
+named _web01a_ and _web01b_ then $PAIRNAME corresponds to _web01_. This is
+useful if there are multiple pairs available but only a specific pair of them
+should include some specific configuration.
+Note: Feature is available in the High Availability setup only.
+
+* _/etc/ngcp-config/templates/etc/foobar/baz.tt2.$HOSTNAME_: hostname specific
+template file. While $HA_NODE is usually bound to _sp1_ for the first node and
+_sp2_ via /etc/ngcp_ha_node it's possible to use host specific template file by
+referring to its hostname ($HOSTNAME is determined via (hostname(1)).
+Note: Feature is available in the High Availability setup only.
+
+* _/etc/ngcp-config/templates/etc/foobar/baz.customtt.tt2_: system specific
+template file, but configuration usually isn't provided by a Debian package and
+can be modified independent from any Debian package mechanism.
 
 * _/etc/ngcp-config/templates/etc/foobar/baz.customtt.tt2.$HA_NODE_: node
 specific template file. Regarding $HA_NODE the same as for _baz.tt2.$HA_NODE_
 applies (see previous bullet), but the configuration file usually isn't provided
 by a Debian package but can be modified independent from any Debian package
-mechanism. Note: Feature is available in the High Availability setup only.
+mechanism.
+Note: Feature is available in the High Availability setup only.
+
+* _/etc/ngcp-config/templates/etc/foobar/baz.customtt.tt2.$PAIRNAME_:
+configuration file similar to
+_/etc/ngcp-config/templates/etc/foobar/baz.tt2.$PAIRNAME_ but it's guaranteed
+that the file won't be part of any Debian package mechanism.  Note: Feature is
+available in the High Availability setup only.
+
+* _/etc/ngcp-config/templates/etc/foobar/baz.customtt.tt2.$HOSTNAME_:
+configuration file similar to
+_/etc/ngcp-config/templates/etc/foobar/baz.tt2.$HOSTNAME_ but it's guaranteed
+that the file won't be part of any Debian package mechanism.  Note: Feature is
+available in the High Availability setup only.
+Note: Feature is available in the High Availability setup only.
 
 [IMPORTANT]
-Configuration file priority: *.customtt.tt2.$HA_NODE takes precedence over
-*.customtt.tt2, over *.tt2.$HA_NODE, over *.tt2.
+Configuration file priority: *.customtt.tt2.$HOSTNAME takes precedence over
+*.customtt.tt2.$PAIRNAME, over .customtt.tt2.$HA_NODE, over *.customtt.tt2, over
+*.tt2.$HOSTNAME, over *.tt2.$PAIRNAME, over *.tt2.$HA_NODE, over *.tt2.
+
 
 Support action related files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
