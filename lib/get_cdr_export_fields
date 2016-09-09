@@ -47,9 +47,9 @@
 
 	X_cdr_id_map.SOURCE_SUBSCRIBER_ID = "source_voip_subscribers.id";
 	X_cdr_id_map.DESTINATION_SUBSCRIBER_ID = "destination_voip_subscribers.id";
-	X_cdr_id_map.INIT_TIME = "CONCAT(FROM_UNIXTIME(accounting.cdr.init_time), \".\", SUBSTRING_INDEX(accounting.cdr.init_time, \".\", -1))";
-	X_cdr_id_map.START_TIME = "CONCAT(FROM_UNIXTIME(accounting.cdr.start_time), \".\", SUBSTRING_INDEX(accounting.cdr.start_time, \".\", -1))";
-	X_cdr_id_map.END_TIME = "CONCAT(FROM_UNIXTIME(accounting.cdr.start_time + accounting.cdr.duration), \".\", SUBSTRING_INDEX(accounting.cdr.start_time + accounting.cdr.duration, \".\", -1))";
+	X_cdr_id_map.INIT_TIME = "CONCAT(FROM_UNIXTIME(FLOOR(accounting.cdr.init_time)), \".\", SUBSTRING_INDEX(accounting.cdr.init_time, \".\", -1))";
+	X_cdr_id_map.START_TIME = "CONCAT(FROM_UNIXTIME(FLOOR(accounting.cdr.start_time)), \".\", SUBSTRING_INDEX(accounting.cdr.start_time, \".\", -1))";
+	X_cdr_id_map.END_TIME = "CONCAT(FROM_UNIXTIME(FLOOR(accounting.cdr.start_time + accounting.cdr.duration)), \".\", SUBSTRING_INDEX(accounting.cdr.start_time + accounting.cdr.duration, \".\", -1))";
 	X_cdr_id_map.SOURCE_CARRIER_ZONE = "COALESCE(source_carrier_bbz.zone, \"onnet\")";
 	X_cdr_id_map.SOURCE_CARRIER_DETAIL = "COALESCE(source_carrier_bbz.detail, \"platform internal\")";
 	X_cdr_id_map.SOURCE_CUSTOMER_ZONE = "source_customer_bbz.zone";
