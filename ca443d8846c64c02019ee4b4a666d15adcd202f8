@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_0477b803",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2016-09-09T11:33:09Z",
+      "side": 1,
+      "message": "I\u0027d like to see the relevant part of the explanation in https://support.sipwise.com/view.php?id\u003d22477 be part of the commit message, otherwise it\u0027s unclear from looking at this commit what\u0027s the actual issue. Otherwise LGTM",
+      "revId": "ca443d8846c64c02019ee4b4a666d15adcd202f8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
