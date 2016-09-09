@@ -176,6 +176,9 @@ export PN="ngcpcfg"
 export HNAME="$(hostname)"
 export NNAME="$(ngcp-nodename)"
 
+HOST_FILE=".$(hostname)" # FIXME, move to ha_...., also:
+PAIR_FILE="${HOST_FILE%[ab]}" # if hostname is web01b then we need `web01` for the pair of nodes FIXME
+
 # avoid warnings by perl script complaining about locales
 export LANG=C
 export LC_ALL=C
@@ -216,7 +219,7 @@ generate_template_list() {
   for dir in ${CONFIG_POOL} ; do
     [ -n "${dir}" ] || ( echo "${dir} doesn't exist" >&2 ; continue )
     # iterate over all files
-    for file in $(find "$TEMPLATE_POOL_BASE/${dir}" -name \*.tt2 -o -name \*.tt2"${HA_FILE:-}") ; do
+    for file in $(find "$TEMPLATE_POOL_BASE/${dir}" -name \*.tt2 -o -name \*.tt2"${HA_FILE:-}" -o -name \*.tt2"${HOST_FILE:-}" -o -name \*.tt2"${PAIR_FILE:-}") ; do
       # *NO* arguments provided via cmdline
       if [ -z "${1:-}" ] ; then
         echo "$file" >> "${filelist_prepared}"
@@ -236,13 +239,32 @@ generate_template_list() {
   for line in $(cat ${filelist_prepared}); do
 
     # reduce filenames from "foo.*" to "foo"
-    if [ -n "${HA_FILE:-}" ] ; then
+    if [ -n "${HOST_FILE:-}" ] && [ -r "${line}${HOST_FILE}" ] ; then
+       normalized_filename="${line%${HOST_FILE}}"
+    elif [ -n "${PAIR_FILE:-}" ] && [ -r "${line}${PAIR_FILE}" ] ; then
+      normalized_filename="${line%${PAIR_FILE}}"
+    elif [ -n "${HA_FILE:-}" ] ; then
       normalized_filename="${line%${HA_FILE}}"
     else
       normalized_filename="${line}"
     fi
+
     normalized_filename="${normalized_filename%.customtt.tt2}"
     normalized_filename="${normalized_filename%.tt2}"
+
+    if [ -n "${HOST_FILE:-}" ] ; then
+      if grep -q -- "^${normalized_filename}.customtt.tt2${HOST_FILE:-}" "${filelist_prepared}" ; then
+        echo "${normalized_filename}.customtt.tt2${HOST_FILE:-}" >> "${filelist_final}"
+        continue
+      fi
+    fi
+
+    if [ -n "${PAIR_FILE:-}" ] ; then
+      if grep -q -- "^${normalized_filename}.customtt.tt2${PAIR_FILE:-}" "${filelist_prepared}" ; then
+        echo "${normalized_filename}.customtt.tt2${PAIR_FILE:-}" >> "${filelist_final}"
+        continue
+      fi
+    fi
 
     # foo.customtt.tt2.sp{1,2}
     if [ -n "${HA_FILE:-}" ] ; then
