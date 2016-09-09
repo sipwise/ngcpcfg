@@ -23,10 +23,12 @@ HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
 
 input_file="$1"       # like /etc/ngcp-config/templates/etc/mysql/my.cnf.tt2
 # calculate output file {{{
-  x=${input_file##${NGCPCTL_MAIN}/templates/}     # drop leading /etc/ngcp-config
-  y=${x%%.tt2}                                    # drop trailing suffix '.tt2'
-  [ -n "${HA_FILE:-}" ] && y=${y%%.tt2${HA_FILE}} # drop trailing suffix '.tt2.sp{1,2}'
-  y=${y%%.customtt}                               # drop trailing suffix '.customtt'
+  x=${input_file##${NGCPCTL_MAIN}/templates/}         # drop leading /etc/ngcp-config
+  y=${x%%.tt2}                                        # drop trailing suffix '.tt2'
+  [ -n "${HA_FILE:-}" ]   && y=${y%%.tt2${HA_FILE}}   # drop trailing suffix '.tt2.sp{1,2}'
+  [ -n "${PAIR_FILE:-}" ] && y=${y%%.tt2${PAIR_FILE}} # drop trailing suffix '.tt2.pairname'
+  [ -n "${HOST_FILE:-}" ] && y=${y%%.tt2${HOST_FILE}} # drop trailing suffix '.tt2.hostname'
+  y=${y%%.customtt}                                   # drop trailing suffix '.customtt'
 # }}}
 export output_file="${y}" # like /etc/mysql/my.cnf, export variable
                           # for usage within {pre,post}build scripts
