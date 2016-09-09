@@ -203,6 +203,7 @@ fi
 
 if [ -r /usr/share/ngcp-ngcpcfg/functions/carrier_features ] ; then
   . /usr/share/ngcp-ngcpcfg/functions/carrier_features
+  set_host_and_pair_files # set $HOST_FILE + $PAIR_FILE for usage in generate_template_list
 fi
 ## }}}
 
@@ -216,7 +217,7 @@ generate_template_list() {
   for dir in ${CONFIG_POOL} ; do
     [ -n "${dir}" ] || ( echo "${dir} doesn't exist" >&2 ; continue )
     # iterate over all files
-    for file in $(find "$TEMPLATE_POOL_BASE/${dir}" -name \*.tt2 -o -name \*.tt2"${HA_FILE:-}") ; do
+    for file in $(find "$TEMPLATE_POOL_BASE/${dir}" -name \*.tt2 -o -name \*.tt2"${HA_FILE:-}" -o -name \*.tt2"${HOST_FILE:-}" -o -name \*.tt2"${PAIR_FILE:-}") ; do
       # *NO* arguments provided via cmdline
       if [ -z "${1:-}" ] ; then
         echo "$file" >> "${filelist_prepared}"
@@ -232,17 +233,41 @@ generate_template_list() {
   done
 
   # remove all filenames where a preferred filename exists
-  # foo.customtt.tt2.spX > foo.customtt.tt2 > foo.tt2.spX > foo.tt2
+  # foo.customtt.tt2.hostname > foo.customtt.tt2.pairname > foo.customtt.tt2.spX > foo.customtt.tt2 > foo.tt2.hostname > foo.tt2.pairname > foo.tt2.spX > foo.tt2
   for line in $(cat ${filelist_prepared}); do
 
-    # reduce filenames from "foo.*" to "foo"
+    normalized_filename="$line"
+
     if [ -n "${HA_FILE:-}" ] ; then
-      normalized_filename="${line%${HA_FILE}}"
-    else
-      normalized_filename="${line}"
+      normalized_filename="${normalized_filename%${HA_FILE}}"
     fi
+
+    if [ -n "${HOST_FILE:-}" ] ; then
+      normalized_filename="${normalized_filename%${HOST_FILE}}"
+    fi
+
+    if [ -n "${PAIR_FILE:-}" ] ; then
+      normalized_filename="${normalized_filename%${PAIR_FILE}}"
+    fi
+
     normalized_filename="${normalized_filename%.customtt.tt2}"
     normalized_filename="${normalized_filename%.tt2}"
+
+    # foo.custom.tt2.hostname
+    if [ -n "${HOST_FILE:-}" ] ; then
+      if grep -q -- "^${normalized_filename}.customtt.tt2${HOST_FILE}$" "${filelist_prepared}" ; then
+        echo "${normalized_filename}.customtt.tt2${HOST_FILE}" >> "${filelist_final}"
+        continue
+      fi
+    fi
+
+    # foo.custom.tt2.pairname
+    if [ -n "${PAIR_FILE:-}" ] ; then
+      if grep -q -- "^${normalized_filename}.customtt.tt2${PAIR_FILE}$" "${filelist_prepared}" ; then
+        echo "${normalized_filename}.customtt.tt2${PAIR_FILE}" >> "${filelist_final}"
+        continue
+      fi
+    fi
 
     # foo.customtt.tt2.sp{1,2}
     if [ -n "${HA_FILE:-}" ] ; then
@@ -258,6 +283,22 @@ generate_template_list() {
       continue
     fi
 
+    # foo.tt2.hostname
+    if [ -n "${HOST_FILE:-}" ] ; then
+      if grep -q -- "^${normalized_filename}.tt2${HOST_FILE}" "${filelist_prepared}" ; then
+        echo "${normalized_filename}.tt2${HOST_FILE}" >> "${filelist_final}"
+        continue
+      fi
+    fi
+
+    # foo.tt2.pairname
+    if [ -n "${HOST_FILE:-}" ] ; then
+      if grep -q -- "^${normalized_filename}.tt2${PAIR_FILE}" "${filelist_prepared}" ; then
+        echo "${normalized_filename}.tt2${PAIR_FILE}" >> "${filelist_final}"
+        continue
+      fi
+    fi
+
     # foo.tt2.sp{1,2}
     if [ -n "${HA_FILE:-}" ] ; then
       if grep -q -- "^${normalized_filename}.tt2${HA_FILE}" "${filelist_prepared}" ; then
@@ -266,7 +307,7 @@ generate_template_list() {
       fi
     fi
 
-    # file should be used, so list it
+    # another file not matching any previous checks
     echo "$line" >> "${filelist_final}"
   done
 
