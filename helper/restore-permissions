@@ -10,13 +10,21 @@ if [ "${#:-}" -ne 1 ] ; then
   echo "Usage: /usr/share/ngcp-ngcpcfg/helper/restore-permissions <ngcpcfg_directory>" >&2
   exit 1
 fi
+target_directory="$1"
 
 # support for testsuite, assume defaults if unset
 CONFIG_POOL="${CONFIG_POOL:-/etc}"
 FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
 HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
+SKIP_NGCP_FUNCTIONS="${SKIP_NGCP_FUNCTIONS:-false}"
 
-. ${FUNCTIONS}/main
+if "${SKIP_NGCP_FUNCTIONS}" ; then
+  cd "${target_directory}"
+  log_errror () { echo "$@" >&2 ; }
+  log_warn () { echo "$@" ; }
+else
+  . "${FUNCTIONS}/main"
+fi
 
 # used to run a command if the file it acts on (the last parameter) exists.
 maybe() {
@@ -28,7 +36,6 @@ maybe() {
   fi
 }
 
-target_directory="$1"
 if ! [ -d "${target_directory}" ] ; then
   log_errror "Directory ${target_directory} doesn't exist. Exiting."
   exit 1
