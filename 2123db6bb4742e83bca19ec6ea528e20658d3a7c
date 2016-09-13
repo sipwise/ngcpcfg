@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba3841fe_80b0d6de",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2016-09-13T17:09:49Z",
+      "side": 1,
+      "message": "Please use something like \"MT#19043 decrypt: check for glusterfs \u0027mgmt-share\u0027 instead of \u0027shared_config\u0027\" instead.",
+      "revId": "2123db6bb4742e83bca19ec6ea528e20658d3a7c",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba3841fe_60b5d2cc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2016-09-13T17:09:49Z",
+      "side": 1,
+      "message": "I\u0027d appreciate a ticket for that (feel free to assign it to me) and instead drop it here from the commit message.",
+      "revId": "2123db6bb4742e83bca19ec6ea528e20658d3a7c",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
