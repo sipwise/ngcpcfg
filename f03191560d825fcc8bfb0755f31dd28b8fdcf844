@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba3841fe_40b6cedd",
+        "filename": "helper/restore-permissions",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2016-09-13T17:06:29Z",
+      "side": 1,
+      "message": "If SKIP_NGCP_FUNCTIONS is set then we should at least log/mention that via log_debug or similar to be aware of that?",
+      "revId": "f03191560d825fcc8bfb0755f31dd28b8fdcf844",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba3841fe_e0a9e27c",
+        "filename": "helper/restore-permissions",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2016-09-13T17:06:29Z",
+      "side": 1,
+      "message": "Do we need the cd ... here?",
+      "revId": "f03191560d825fcc8bfb0755f31dd28b8fdcf844",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
