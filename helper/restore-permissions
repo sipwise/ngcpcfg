@@ -15,8 +15,14 @@ fi
 CONFIG_POOL="${CONFIG_POOL:-/etc}"
 FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
 HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
+SKIP_NGCP_FUNCTIONS="${SKIP_NGCP_FUNCTIONS:-false}"
 
-. ${FUNCTIONS}/main
+if "${SKIP_NGCP_FUNCTIONS}" ; then
+  log_errror () { echo "$@" >&2 ; }
+  log_warn () { echo "$@" ; }
+else
+  . "${FUNCTIONS}/main"
+fi
 
 # used to run a command if the file it acts on (the last parameter) exists.
 maybe() {
