@@ -83,7 +83,7 @@ else
   fi
 fi
 
-if ! [ -d /mnt/glusterfs/shared_config ] ; then
+if ! [ -d /mnt/glusterfs/mgmt-share ] ; then
   log_warn "Looks like glusterfs is not running, can not install it automatically.
 
 Please execute the following command on one node
