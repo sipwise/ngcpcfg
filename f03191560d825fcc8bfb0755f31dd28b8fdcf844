@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ba3841fe_a0851aaf",
+        "filename": "helper/restore-permissions",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2016-09-13T17:54:29Z",
+      "side": 1,
+      "message": "Done, will be uploaded soonish.",
+      "parentUuid": "ba3841fe_40b6cedd",
+      "revId": "f03191560d825fcc8bfb0755f31dd28b8fdcf844",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba3841fe_e0a9e27c",
         "filename": "helper/restore-permissions",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2016-09-13T17:06:29Z",
       "side": 1,
       "message": "Do we need the cd ... here?",
+      "revId": "f03191560d825fcc8bfb0755f31dd28b8fdcf844",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba3841fe_60bb1273",
+        "filename": "helper/restore-permissions",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2016-09-13T17:54:29Z",
+      "side": 1,
+      "message": "To make it work - yes.\notherwise calling restore-permissions outside of desinaton folder doesn\u0027t work.\n\nAlso during the last test I notices that probably it should be done by default always. Please check the current trunk.\nsp1 is installed properly and all OK (perms as expected).\nsp2 is installed and push to sp1 perms 644 everywhere into ssl folder. I believe perms are not restored on sp1 after cloning from glusterfs. then ngcpcfg commit is performed on sp2 which changes perms to wrong one. then they pushed to sp1 and applied there: http://paste.mgm.sipwise.com/show/3247/\n\nPlease check it from your side.",
+      "parentUuid": "ba3841fe_e0a9e27c",
       "revId": "f03191560d825fcc8bfb0755f31dd28b8fdcf844",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
