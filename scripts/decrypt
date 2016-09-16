@@ -57,6 +57,29 @@ log_debug() {
 }
 # }}}
 
+setup_shared_config() {
+  if ! [ -d /mnt/glusterfs/mgmt-share ] ; then
+    log_warn "Looks like glusterfs is not running, can not install it automatically.
+
+Please execute the following command on one node
+as soon as glusterfs share is mounted again:
+
+  git clone --bare /etc/ngcp-config /mnt/glusterfs/ngcpcfg-share
+  /usr/share/ngcp-ngcpcfg/helper/restore-permissions /mnt/glusterfs/ngcpcfg-share
+
+"
+    return 0
+  fi
+
+  if [ -d /mnt/glusterfs/ngcpcfg-share ] ; then
+    log_info "Shared storage exists already, ignoring request to (re)install it."
+  else
+    log_info "Copying git repository to shared storage."
+    git clone --bare /etc/ngcp-config /mnt/glusterfs/ngcpcfg-share | sed "s/^/$timestamp_replacementchars/"
+    /usr/share/ngcp-ngcpcfg/helper/restore-permissions /mnt/glusterfs/ngcpcfg-share
+  fi
+}
+
 # main script
 if ! type -p gpg &>/dev/null ; then
   log_error "gpg binary not found, exiting."
@@ -83,25 +106,11 @@ else
   fi
 fi
 
-if ! [ -d /mnt/glusterfs/shared_config ] ; then
-  log_warn "Looks like glusterfs is not running, can not install it automatically.
-
-Please execute the following command on one node
-as soon as glusterfs share is mounted again:
-
-  git clone --bare /etc/ngcp-config /mnt/glusterfs/ngcpcfg-share
-  /usr/share/ngcp-ngcpcfg/helper/restore-permissions /mnt/glusterfs/ngcpcfg-share
-
-
-"
+# only for PRO/CARRIER
+if [ -r /usr/share/ngcp-ngcpcfg/functions/ha_features ] ; then
+  setup_shared_config
 else
-  if [ -d /mnt/glusterfs/ngcpcfg-share ] ; then
-    log_info "Shared storage exists already, ignoring request to (re)install it."
-  else
-    log_info "Copying git repository to shared storage."
-    git clone --bare /etc/ngcp-config /mnt/glusterfs/ngcpcfg-share | sed "s/^/$timestamp_replacementchars/"
-    /usr/share/ngcp-ngcpcfg/helper/restore-permissions /mnt/glusterfs/ngcpcfg-share
-  fi
+  log_info "Ignoring shared configuration (PRO/CARRIER only)."
 fi
 
 # don't leave the unencrypted archive behind
