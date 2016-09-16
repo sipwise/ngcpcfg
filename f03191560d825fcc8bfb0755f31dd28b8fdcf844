@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "ba3841fe_8ffe416a",
+        "filename": "helper/restore-permissions",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2016-09-16T09:21:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba3841fe_b40f182e",
+      "revId": "f03191560d825fcc8bfb0755f31dd28b8fdcf844",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba3841fe_e0a9e27c",
         "filename": "helper/restore-permissions",
         "patchSetId": 2
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "ACK, need to check the perms issue yet. We should do the \"cd \"${target_directory}\"\" independent from SKIP_NGCP_FUNCTIONS always though (as discussed in person, I\u0027m aware that you changed it like that to be able to test the change through a PPA without changing anything else), so please place this cmdline outside the \"if ...\", thx!",
       "parentUuid": "ba3841fe_60bb1273",
+      "revId": "f03191560d825fcc8bfb0755f31dd28b8fdcf844",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba3841fe_6f03fd73",
+        "filename": "helper/restore-permissions",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2016-09-16T09:21:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba3841fe_141d2467",
       "revId": "f03191560d825fcc8bfb0755f31dd28b8fdcf844",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
