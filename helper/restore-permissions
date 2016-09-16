@@ -34,6 +34,8 @@ if ! [ -d "${target_directory}" ] ; then
   exit 1
 fi
 
+cd "$target_directory"
+
 # should only be run on repositories you trust
 if ! [ -e "$target_directory"/.ngcpcfg_perms ]; then
   log_warn "Permission file ${target_directory}/.ngcpcfg_perms doesn't exist."
