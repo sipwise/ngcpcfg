@@ -1,3 +1,22 @@
+ngcp-ngcpcfg (0.31.3.0+0~mr4.5.3.0) unstable; urgency=medium
+
+  [ Alexander Lutay ]
+  * [7afcce8] MT#22185 Fix ngcp-sync-grants/-constants, use 'pair' MySQL DB instead of 'local'
+
+  [ Kirill Solomko ]
+  * [2aac646] MT#22185 various ngcp-sync-grant improvements
+  * [6208275] MT#22211 ngcp-sync-constants suppress cleartext passwords to stdout
+  * [fbe3ae4] MT#22217 ngcp-sync-constants improve detecting users with password mismatch
+  * [952c795] MT#22235 ngcp-sync-grants improvements, ngcp-sync-constants sipwise user
+  * [41239a2] MT#16017 helper/sync-db: remove fax gateways sync, add Error prefix
+
+  [ Rene Krenn ]
+  * [45f0927] MT#22477 correct init_time, start_time and end_time
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 10 Oct 2016 16:17:31 +0200
+
 ngcp-ngcpcfg (0.31.2.0+0~mr4.5.2.0) unstable; urgency=medium
 
   * New release.
