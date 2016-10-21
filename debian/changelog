@@ -1,3 +1,33 @@
+ngcp-ngcpcfg (5.0.0.0+0~mr5.0.0.0) unstable; urgency=medium
+
+  [ Alexander Lutay ]
+  * [993c2a3] MT#22185 Fix ngcp-sync-grants/-constants, use 'pair' MySQL DB instead of 'local'
+  * [63645df] MT#19043 Add env var SKIP_NGCP_FUNCTIONS to helper restore-permissions
+  * [98c9465] MT#19043 decrypt: check for glusterfs 'mgmt-share' instead of 'shared_config'
+
+  [ Kirill Solomko ]
+  * [e58a4ff] MT#22185 various ngcp-sync-grant improvements
+  * [6e281ae] MT#22211 ngcp-sync-constants suppress cleartext passwords to stdout
+  * [9e32e4f] MT#22217 ngcp-sync-constants improve detecting users with password mismatch
+  * [dd08fcd] MT#22235 ngcp-sync-grants improvements, ngcp-sync-constants sipwise user
+  * [089cfa6] MT#16017 helper/sync-db: remove fax gateways sync, add Error prefix
+  * [e6a21c1] MT#22031 ngcp-sync-grants compatibility with MariaDB
+
+  [ Michael Prokop ]
+  * [f009806] MT#22567 Create /etc/ngcp-config-crypted.tgz* files with more restrict file permissions
+  * [08f68c8] MT#22361 Remember file permissions through pre-commit hook + restore-permissions helper script
+  * [40cc015] MT#22361 helper/restore-permissions: ensure we're in the target directory
+  * [f750176] MT#22675 decrypt: ignore shared storage on CE systems
+  * [e00d7e3] MT#22241 Support hostname and pairname specific templates (PRO-/CARRIER-only)
+
+  [ Rene Krenn ]
+  * [581f8b1] MT#22477 correct init_time, start_time and end_time
+
+  [ Victor Seva ]
+  * [9f4d913] MT#21671 add get_ndb_ips
+
+ -- Alexander Lutay <alutay@sipwise.com>  Fri, 21 Oct 2016 15:23:34 +0200
+
 ngcp-ngcpcfg (0.32.0.0+0~mr5.0.0.0) unstable; urgency=medium
 
   [ Alexander Lutay ]
