@@ -1,0 +1,14 @@
+[%
+out = '';
+FOREACH key IN hosts.${argv.host}.keys;
+	IF hosts.${argv.host}.${key}.ip.defined && hosts.${argv.host}.${key}.ip == argv.ip;
+		out = "$key";
+	ELSIF hosts.${argv.host}.${key}.shared_ip.defined && hosts.${argv.host}.${key}.shared_ip.size > 0;
+		FOREACH shared_ip IN hosts.${argv.host}.${key}.shared_ip;
+			IF shared_ip == argv.ip;
+				out = "$key:$loop.index";
+			END;
+		END;
+	END;
+END;
+-%]
