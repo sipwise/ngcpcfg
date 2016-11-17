@@ -1,0 +1,21 @@
+[%
+# Returns the interface name of a given ip address
+#
+# @param argv.host	Current host for ip interface name mapping
+# @param argv.ip	Ip address to map
+# @return out		Interface name of the given ip
+out = '';
+FOREACH key IN hosts.${argv.host}.keys;
+	IF hosts.${argv.host}.${key}.ip.defined && hosts.${argv.host}.${key}.ip == argv.ip;
+		out = "$key";
+		RETURN;
+	ELSIF hosts.${argv.host}.${key}.shared_ip.defined && hosts.${argv.host}.${key}.shared_ip.size > 0;
+		FOREACH shared_ip IN hosts.${argv.host}.${key}.shared_ip;
+			IF shared_ip == argv.ip;
+				out = "$key:$loop.index";
+				RETURN;
+			END;
+		END;
+	END;
+END;
+-%]
