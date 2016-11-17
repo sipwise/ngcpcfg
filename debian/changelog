@@ -1,3 +1,12 @@
+ngcp-ngcpcfg (5.0.1.0+0~mr5.0.1.0) unstable; urgency=medium
+
+  [ Michael Prokop ]
+  * [44b55fa] TT#5030 Provide all sync-db output also to syslog
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 17 Nov 2016 23:18:50 +0100
+
 ngcp-ngcpcfg (5.0.0.0+0~mr5.0.0.0) unstable; urgency=medium
 
   [ Alexander Lutay ]
