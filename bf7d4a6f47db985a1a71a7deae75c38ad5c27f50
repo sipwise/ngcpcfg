@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba51214e_10006300",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2016-12-01T23:07:39Z",
+      "side": 1,
+      "message": "Could you please rename this to something like:\n\nTT#2725 lib: add get_iface helper script\n\n? And maybe provide a short description in the commit message body why that script is needed/what\u0027s its purpose?",
+      "revId": "bf7d4a6f47db985a1a71a7deae75c38ad5c27f50",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba51214e_ad03240e",
+        "filename": "debian/changelog",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2016-12-01T23:07:39Z",
+      "side": 1,
+      "message": "This file change shouldn\u0027t be part of the commit :)",
+      "revId": "bf7d4a6f47db985a1a71a7deae75c38ad5c27f50",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba51214e_cd065820",
+        "filename": "lib/get_iface_for_ip",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2016-12-01T23:07:39Z",
+      "side": 1,
+      "message": "It would be nice to have some comments in the script describing its purpose and param usage, like it\u0027s present in the get_iface script.",
+      "revId": "bf7d4a6f47db985a1a71a7deae75c38ad5c27f50",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
