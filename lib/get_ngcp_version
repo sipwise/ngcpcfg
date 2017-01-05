@@ -1,0 +1,19 @@
+[%
+  # Returns the ngcp_version of the node calling this function.
+  #
+  # @return out		one of ['spce', 'sppro', 'carrier']
+-%]
+[% PERL -%]
+my $filename = '/etc/ngcp_upgrade_version';
+unless (-e $filename) {
+  $filename = '/etc/ngcp_version';
+}
+open my $hh, '<', $filename or die "Error opening $filename";
+my $ngcp_version = <$hh>;
+close $hh;
+chomp $ngcp_version;
+die "Fatal error retrieving ngcp_version [$ngcp_version]" unless length $ngcp_version;
+
+$stash->set(out => $ngcp_version);
+return;
+[% END -%]
