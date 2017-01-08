@@ -12,8 +12,11 @@
 	# @return out.joins
 	# @return out.conditions
 -%]
-[% MACRO direction_provider_select(dict_table,data_table,dict_col,val_col,direction,provider,type) BLOCK -%]
+[% MACRO cdr_direction_provider_type_select(dict_table,data_table,dict_col,val_col,direction,provider,type) BLOCK -%]
 (SELECT data.[%- val_col -%] FROM accounting.[%- data_table -%] AS data INNER JOIN accounting.cdr_direction AS dir ON data.direction_id = dir.id INNER JOIN accounting.cdr_provider AS prov ON data.provider_id = prov.id INNER JOIN accounting.[%- dict_table -%] AS dict ON data.[%- dict_col -%] = dict.id WHERE data.cdr_id = accounting.cdr.id AND dir.type = "[%- direction -%]" AND prov.type="[%- provider -%]" AND dict.type="[%- type -%]")
+[%- END %]
+[% MACRO edr_type_select(dict_table,data_table,dict_col,val_col,type) BLOCK -%]
+(SELECT data.[%- val_col -%] FROM accounting.[%- data_table -%] AS data INNER JOIN accounting.[%- dict_table -%] AS dict ON data.[%- dict_col -%] = dict.id WHERE data.event_id = accounting.events.id AND dict.type="[%- type -%]")
 [%- END %]
 [%
 	out = { };
@@ -65,9 +68,22 @@
 	X_cdr_id_map.CONTRACT_EXTERNAL_ID = "billing.contracts.external_id";
 	X_cdr_id_map.COMPANY = "billing.contacts.company";
 	X_cdr_id_map.SUBSCRIBER_EXTERNAL_ID = "billing.voip_subscribers.external_id";
-	X_cdr_id_map.PRIMARY_NUMBER = "(select username from provisioning.voip_dbaliases tmp where tmp.subscriber_id = provisioning.voip_subscribers.id order by is_primary, id limit 1)";
+	#X_cdr_id_map.PRIMARY_NUMBER = "(select username from provisioning.voip_dbaliases tmp where tmp.subscriber_id = provisioning.voip_subscribers.id order by is_primary, id limit 1)";
+	X_cdr_id_map.PILOT_SUBSCRIBER_ID = edr_type_select("events_relation","events_relation_data","relation_id","val","pilot_subscriber_id");
+	X_cdr_id_map.PRIMARY_NUMBER = "CONCAT(IFNULL(" _ edr_type_select("events_tag","events_tag_data","tag_id","val","primary_number_cc") _ ',""),IFNULL(' _ edr_type_select("events_tag","events_tag_data","tag_id","val","primary_number_ac") _ ',""),IFNULL(' _ edr_type_select("events_tag","events_tag_data","tag_id","val","primary_number_sn") _ ',""))';
+	X_cdr_id_map.PRIMARY_NUMBER_ID = edr_type_select("events_relation","events_relation_data","relation_id","val","primary_number_id");
+	X_cdr_id_map.PILOT_PRIMARY_NUMBER = "CONCAT(IFNULL(" _ edr_type_select("events_tag","events_tag_data","tag_id","val","pilot_primary_number_cc") _ ',""),IFNULL(' _ edr_type_select("events_tag","events_tag_data","tag_id","val","pilot_primary_number_ac") _ ',""),IFNULL(' _ edr_type_select("events_tag","events_tag_data","tag_id","val","pilot_primary_number_sn") _ ',""))';
+	X_cdr_id_map.PILOT_PRIMARY_NUMBER_ID = edr_type_select("events_relation","events_relation_data","relation_id","val","pilot_primary_number_id");
 	X_cdr_id_map.OLD_PROFILE_NAME = "old_profile.name";
 	X_cdr_id_map.NEW_PROFILE_NAME = "new_profile.name";
+	X_cdr_id_map.SUBSCRIBER_PROFILE_NAME = edr_type_select("events_tag","events_tag_data","tag_id","val","subscriber_profile_name");
+	X_cdr_id_map.SUBSCRIBER_PROFILE_ID = edr_type_select("events_relation","events_relation_data","relation_id","val","subscriber_profile_id");
+	X_cdr_id_map.SUBSCRIBER_PROFILE_SET_NAME = edr_type_select("events_tag","events_tag_data","tag_id","val","subscriber_profile_set_name");
+	X_cdr_id_map.SUBSCRIBER_PROFILE_SET_ID = edr_type_select("events_relation","events_relation_data","relation_id","val","subscriber_profile_set_id");
+	X_cdr_id_map.PILOT_SUBSCRIBER_PROFILE_NAME = edr_type_select("events_tag","events_tag_data","tag_id","val","pilot_subscriber_profile_name");
+	X_cdr_id_map.PILOT_SUBSCRIBER_PROFILE_ID = edr_type_select("events_relation","events_relation_data","relation_id","val","pilot_subscriber_profile_id");
+	X_cdr_id_map.PILOT_SUBSCRIBER_PROFILE_SET_NAME = edr_type_select("events_tag","events_tag_data","tag_id","val","pilot_subscriber_profile_set_name");
+	X_cdr_id_map.PILOT_SUBSCRIBER_PROFILE_SET_ID = edr_type_select("events_relation","events_relation_data","relation_id","val","pilot_subscriber_profile_set_id");
 	X_cdr_id_map.TIMESTAMP = "from_unixtime(accounting.events.timestamp)";
 
 	# translate the fields
@@ -80,16 +96,16 @@
 
 		# specify cash balance before/after fields like e.g. source_CuStOmEr_cash_balance_before in config.yml:
 		ELSIF (matches = X_f.lower.match('^([a-z]+)_([a-z]+)_([a-z_]*cash_balance)_(before|after)$'));
-			out.admin_fields.push("'" _ direction_provider_select("cdr_cash_balance","cdr_cash_balance_data","cash_balance_id","val_" _ matches.3,matches.0,matches.1,matches.2) _ "'");
+			out.admin_fields.push("'" _ cdr_direction_provider_type_select("cdr_cash_balance","cdr_cash_balance_data","cash_balance_id","val_" _ matches.3,matches.0,matches.1,matches.2) _ "'");
 
 		# specify time balance before/after fields like e.g. source_CuStOmEr_free_time_balance_after:
 		ELSIF (matches = X_f.lower.match('^([a-z]+)_([a-z]+)_([a-z_]*time_balance)_(before|after)$'));
-			out.admin_fields.push("'" _ direction_provider_select("cdr_time_balance","cdr_time_balance_data","time_balance_id","val_" _ matches.3,matches.0,matches.1,matches.2) _ "'");
+			out.admin_fields.push("'" _ cdr_direction_provider_type_select("cdr_time_balance","cdr_time_balance_data","time_balance_id","val_" _ matches.3,matches.0,matches.1,matches.2) _ "'");
 
 		# specify new cdr relation fields like e.g. source_CuStOmEr_profile_package_id:
 		# note: they cannot be used in conditions for now.
 		ELSIF (matches = X_f.lower.match('^([a-z]+)_([a-z]+)_(profile_package_id|contract_balance_id)$'));
-			out.admin_fields.push("'" _ direction_provider_select("cdr_relation","cdr_relation_data","relation_id","val",matches.0,matches.1,matches.2) _ "'");
+			out.admin_fields.push("'" _ cdr_direction_provider_type_select("cdr_relation","cdr_relation_data","relation_id","val",matches.0,matches.1,matches.2) _ "'");
 
 		# lowest precendece: other cdr fields, fields joined on your own or 'calculated' (raw sql) fields ... :
 		ELSE;
@@ -103,13 +119,13 @@
 			out.reseller_fields.push("'" _ X_cdr_id_map.$X_f _ "'");
 
 		ELSIF (matches = X_f.lower.match('^([a-z]+)_([a-z]+)_([a-z_]*cash_balance)_(before|after)$'));
-			out.reseller_fields.push("'" _ direction_provider_select("cdr_cash_balance","cdr_cash_balance_data","cash_balance_id","val_" _ matches.3,matches.0,matches.1,matches.2) _ "'");
+			out.reseller_fields.push("'" _ cdr_direction_provider_type_select("cdr_cash_balance","cdr_cash_balance_data","cash_balance_id","val_" _ matches.3,matches.0,matches.1,matches.2) _ "'");
 
 		ELSIF (matches = X_f.lower.match('^([a-z]+)_([a-z]+)_([a-z_]*time_balance)_(before|after)$'));
-			out.reseller_fields.push("'" _ direction_provider_select("cdr_time_balance","cdr_time_balance_data","time_balance_id","val_" _ matches.3,matches.0,matches.1,matches.2) _ "'");
+			out.reseller_fields.push("'" _ cdr_direction_provider_type_select("cdr_time_balance","cdr_time_balance_data","time_balance_id","val_" _ matches.3,matches.0,matches.1,matches.2) _ "'");
 
 		ELSIF (matches = X_f.lower.match('^([a-z]+)_([a-z]+)_(profile_package_id|contract_balance_id)$'));
-			out.reseller_fields.push("'" _ direction_provider_select("cdr_relation","cdr_relation_data","relation_id","val",matches.0,matches.1,matches.2) _ "'");
+			out.reseller_fields.push("'" _ cdr_direction_provider_type_select("cdr_relation","cdr_relation_data","relation_id","val",matches.0,matches.1,matches.2) _ "'");
 
 		ELSE;
 			out.reseller_fields.push("'" _ X_f _ "'");
