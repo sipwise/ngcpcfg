@@ -1,3 +1,12 @@
+ngcp-ngcpcfg (5.0.1.2+0~mr5.0.1.2) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [d47699e] TT#6735 TT#7030 TT#5850 new event exporter fields
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 09 Jan 2017 19:10:44 +0100
+
 ngcp-ngcpcfg (5.0.1.1+0~mr5.0.1.1) unstable; urgency=medium
 
   * New release.
