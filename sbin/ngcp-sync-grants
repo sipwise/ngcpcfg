@@ -17,6 +17,8 @@ Readonly my $MYSQL_CREDENTIALS => "/etc/mysql/sipwise.cnf";
 Readonly my $DB_CFG => "/etc/default/ngcp-db";
 Readonly my $DEFAULT_DBHOST => "127.0.0.1";
 Readonly my $DEFAULT_DBPORT => "3306";
+Readonly my $TEMP_GRANT_USER => 'ngcp-sync-db';
+Readonly my $TEMP_GRANT_HOST => 'localhost';
 
 my $grants = {};
 my $dbh;
@@ -169,6 +171,7 @@ sub apply_grants {
             $log_offset = 1;
             my $new_user = 0;
             log_debug(sprintf "[%s]%s", join('.', @$data), $as ? " as $as" : '');
+            normalise_grants($ptr->{$key}, $user, $host);
             return 0 unless check_grants($ptr->{$key}, $user, $host);
             $log_offset = 2;
             log_info(sprintf "revoke all from: %s\@%s", $user, $host);
@@ -186,13 +189,10 @@ sub apply_grants {
             for (my $i=0;$i<=$#{$ptr->{$key}};$i++) {
                 my $grant = $ptr->{$key}[$i];
                 $log_offset = 2;
-                my $grant_extras = "";
-                if ($grant =~ s/\s+with\s+grant\s+option//) {
-                    $grant_extras = "with grant option";
-                }
+                my ($s_grant, $s_suffix) = split_grant_suffix($grant);
                 log_info(sprintf "grant %s to %s\@%s %s",
-                            $grant, $user, $host, $grant_extras);
-                $dbh->do("GRANT $grant TO $user\@$host $grant_extras");
+                            $s_grant, $user, $host, $s_suffix);
+                $dbh->do("GRANT $s_grant TO $user\@$host $s_suffix");
                 if ($DBI::errstr &&
                     $DBI::errstr !~ /Table\s+'\S+\.\S+'\s+doesn't\s+exist/) {
                     die "Cannot grant privileges: ".$DBI::errstr;
@@ -203,17 +203,7 @@ sub apply_grants {
                 }
             }
             if ($new_user) {
-                my ($random_pass) = $dbh->selectrow_array("SELECT PASSWORD(?)",
-                                                          undef, pwgen());
-                die "Cannot generate password: ".$DBI::errstr if $DBI::err;
-                unless ($random_pass =~ /^\*(\S+)\s*$/) {
-                    die "Cannot parse generated password: $random_pass";
-                }
-                $random_pass = '!'.$1;
-                $dbh->do("UPDATE user SET Password = ? WHERE User = ? AND Host = ?",
-                         undef, $random_pass, $user, $host);
-                die sprintf "Cannot update %s@%s with generated password, %s",
-                    $user, $host, $DBI::errstr if $DBI::err;
+                set_user_protected_password($user, $host);
             }
         } else {
             die "Unparsable grants structure elemenent: $key";
@@ -306,51 +296,121 @@ SQL
     return $rc;
 }
 
+sub set_user_protected_password {
+    my ($user, $host) = @_;
+    my ($random_pass) = $dbh->selectrow_array("SELECT PASSWORD(?)",
+                                              undef, pwgen());
+    die "Cannot generate password: ".$DBI::errstr if $DBI::err;
+    unless ($random_pass =~ /^\*(\S+)\s*$/) {
+        die "Cannot parse generated password: $random_pass";
+    }
+
+    my ($temp_user_count) = $dbh->selectrow_array(<<SQL, undef, $user, $host);
+SELECT COUNT(User)
+  FROM user
+ WHERE User = ?
+   AND Host = ?
+SQL
+    die "Cannot select grant temp user: ".$DBI::errstr if $DBI::err;
+
+    unless ($temp_user_count) {
+        $dbh->do("CREATE USER '$user'\@'$host'");
+        die "Cannot create grant temp user: ".$DBI::errstr if $DBI::err;
+    }
+
+    $dbh->do("UPDATE user SET Password = ? WHERE User = ? AND Host = ?",
+             undef, $random_pass, $user, $host);
+    die sprintf "Cannot update %s@%s with generated password, %s",
+        $user, $host, $DBI::errstr if $DBI::err;
+
+    return;
+}
+
+sub split_grant_suffix {
+    my $grant = shift;
+
+    my $suffix = "";
+    if ($grant =~ s/^(.+on\s+\S+\.\S+)\s+(to\s+\S+\@\S+\s*.*?)*((with|require).+)$/$1/i) {
+        $suffix = $3 if $3;
+    }
+
+    return ($grant, $suffix);
+}
+
+sub grants_helper {
+    my $grants = shift;
+
+    my $user = $TEMP_GRANT_USER;
+    my $host = $TEMP_GRANT_HOST;
+
+    set_user_protected_password($user, $host);
+    $dbh->do("REVOKE ALL PRIVILEGES, GRANT OPTION FROM $user\@$host");
+
+    foreach my $grant (@$grants) {
+        $grant = normalise_grant_str($grant);
+        my ($s_grant, $s_suffix) = split_grant_suffix($grant);
+        $dbh->do("GRANT $s_grant TO '$user'\@'$host' $s_suffix");
+        if ($DBI::errstr &&
+            $DBI::errstr !~ /Table\s+'\S+\.\S+'\s+doesn't\s+exist/) {
+            die "Cannot grant privileges: ".$DBI::errstr;
+        } elsif ($DBI::errstr) {
+            $log_offset = 0;
+            log_warn("Cannot apply grant: ".$DBI::errstr);
+            $log_offset = 2;
+        }
+    }
+
+    my $temp_grants = $dbh->selectall_arrayref(
+        "SHOW GRANTS FOR ?\@?", undef, $user, $host);
+
+    for (my $i=0;$i<=$#$temp_grants;$i++) {
+        if ($temp_grants->[$i][0] =~ /grant usage/i) {
+            splice(@$temp_grants, $i, 1);
+            last;
+        }
+    }
+
+    die "Error in checking grants" if $#$temp_grants < 0;
+
+    $dbh->do("DROP USER '$user'\@'$host'");
+    die "Cannot drop grant temp user: ".$DBI::errstr if $DBI::err;
+
+    @$grants = ( map { $_->[0] } @$temp_grants );
+
+    return;
+
+}
+
 sub normalise_grant_str {
     my $grant = shift;
-    $grant = lc $grant;
     my $suffix = "";
-    if ($grant =~ s/\s+with\s+grant\s+option//) {
-        $suffix = "with grant option";
-    }
+    ($grant, $suffix) = split_grant_suffix($grant);
+    $grant = lc $grant;
+    $grant =~ s/(^\s+|\s+$)//g;
     $grant =~ s/^grant\s+//i;
-    $grant =~ s/^(.+)\s+to.+$/$1/i;
+    $grant =~ s/^(.+)\s+to\s+.+$/$1/i;
     $grant =~ s/`//g;
     $grant =~ s/,\s+/,/g;
     $grant =~ s/all\s+on/all privileges on/;
-    if ($grant =~ /,/) {
-        $grant =~ /^(.+)\s+(on\s+.+)$/i;
-        my $allow = $1;
-        my $on = $2;
-        my %sorted;
-        my %unsorted = (map { $_ => 0 } split /,/, $allow);
-        my @order = qw(select insert update delete reload super);
-        push @order, "replication slave";
-        push @order, "replication client";
-        foreach my $chunk (sort { $a cmp $b } keys %unsorted) {
-            (my $parsed = $chunk) =~ s/\s+/ /;
-            for (my $i=0;$i<=$#order;$i++) {
-                if ($parsed eq $order[$i]) {
-                    $sorted{$i} = $parsed;
-                    $unsorted{$chunk} = 1;
-                }
-            }
-        }
-        foreach my $chunk (sort { $a cmp $b } keys %unsorted) {
-            unless ($unsorted{$chunk} == 1) {
-                die "Unknown grant element: $chunk";
-            }
-        }
-        $grant = join ',', map { $sorted{$_} } sort { $a <=> $b } keys %sorted;
-        $grant .= ' '.$on;
-    }
+
     if ($suffix) {
         $grant  =~ s/\s+$//;
         $suffix =~ s/\s+/ /;
+        $suffix = lc $suffix;
         $grant = sprintf "%s %s", $grant, $suffix;
     }
 
     return $grant;
+}
+
+sub normalise_grants {
+    my ($grants, $user, $host) = @_;
+    grants_helper($grants);
+    foreach my $grant (@$grants) {
+        $grant = normalise_grant_str($grant);
+    }
+
+    return;
 }
 
 sub check_grants {
@@ -383,7 +443,6 @@ sub check_grants {
 
         my $rc = 1;
         foreach my $check (@$grants) {
-            $check = normalise_grant_str($check);
             if ($check eq $grant) {
                 $rc = 0;
                 last;
