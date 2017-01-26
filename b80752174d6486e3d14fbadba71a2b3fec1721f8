@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "1a622d24_cbb66b8a",
+        "filename": "sbin/ngcp-sync-grants",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-01-26T17:47:35Z",
+      "side": 1,
+      "message": "because that may create access discrepancies for already existing users, especially ones like \"replicator\", my PoV is it does not matter how complicated it is on the low level, but on the high (user) level it must be well predictable and easy working.",
+      "parentUuid": "1a622d24_0b02233e",
+      "range": {
+        "startLine": 174,
+        "startChar": 12,
+        "endLine": 174,
+        "endChar": 28
+      },
+      "revId": "b80752174d6486e3d14fbadba71a2b3fec1721f8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a622d24_0b26a316",
         "filename": "sbin/ngcp-sync-grants",
         "patchSetId": 3
@@ -179,6 +203,30 @@
       "side": 1,
       "message": "i see its to generate the digest.. why not just\nUPDATE USER SEt Password \u003d PASSWORD(?) ..",
       "parentUuid": "1a622d24_cbd14bcf",
+      "range": {
+        "startLine": 302,
+        "startChar": 53,
+        "endLine": 302,
+        "endChar": 60
+      },
+      "revId": "b80752174d6486e3d14fbadba71a2b3fec1721f8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_ebac0738",
+        "filename": "sbin/ngcp-sync-grants",
+        "patchSetId": 3
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-01-26T17:47:35Z",
+      "side": 1,
+      "message": "ah, that is what\u0027s missing now, it used to be \n\n$random_pass \u003d \u0027!\u0027.$1;\n\nbefore UPDATE user SET Password.\n\ngonna add the missing part.",
+      "parentUuid": "1a622d24_abedef8d",
       "range": {
         "startLine": 302,
         "startChar": 53,
