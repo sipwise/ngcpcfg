@@ -236,6 +236,30 @@
       "revId": "b80752174d6486e3d14fbadba71a2b3fec1721f8",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_eb5a474f",
+        "filename": "sbin/ngcp-sync-grants",
+        "patchSetId": 3
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-01-26T17:51:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a622d24_ebac0738",
+      "range": {
+        "startLine": 302,
+        "startChar": 53,
+        "endLine": 302,
+        "endChar": 60
+      },
+      "revId": "b80752174d6486e3d14fbadba71a2b3fec1721f8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
