@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1a622d24_0b02233e",
+        "filename": "sbin/ngcp-sync-grants",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2017-01-26T17:37:36Z",
+      "side": 1,
+      "message": "ok, so it still will be compared with exisitng grants. why not always removing and re-writing them?",
+      "parentUuid": "1a622d24_2b4b9fb1",
+      "range": {
+        "startLine": 174,
+        "startChar": 12,
+        "endLine": 174,
+        "endChar": 28
+      },
+      "revId": "b80752174d6486e3d14fbadba71a2b3fec1721f8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a622d24_0b26a316",
         "filename": "sbin/ngcp-sync-grants",
         "patchSetId": 3
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "a random password is generated here but then we need to get it in the \"encoded\" format to further process (e.g. change first char there to disable it). realistically it is already safe enough but new users created by grants (and not served by ngcp-sync-constants) should be well protected from \"user\" errors working with grants.ym",
       "parentUuid": "1a622d24_abb5efce",
+      "range": {
+        "startLine": 302,
+        "startChar": 53,
+        "endLine": 302,
+        "endChar": 60
+      },
+      "revId": "b80752174d6486e3d14fbadba71a2b3fec1721f8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_abedef8d",
+        "filename": "sbin/ngcp-sync-grants",
+        "patchSetId": 3
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2017-01-26T17:37:36Z",
+      "side": 1,
+      "message": "i see its to generate the digest.. why not just\nUPDATE USER SEt Password \u003d PASSWORD(?) ..",
+      "parentUuid": "1a622d24_cbd14bcf",
       "range": {
         "startLine": 302,
         "startChar": 53,
