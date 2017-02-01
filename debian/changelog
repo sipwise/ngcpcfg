@@ -1,3 +1,12 @@
+ngcp-ngcpcfg (5.0.1.3+0~mr5.0.1.3) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [b3a76a4] TT#8750 improve sync grants changes detection algorithm
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 01 Feb 2017 12:40:53 +0100
+
 ngcp-ngcpcfg (5.0.1.2+0~mr5.0.1.2) unstable; urgency=medium
 
   [ Rene Krenn ]
