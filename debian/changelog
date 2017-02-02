@@ -1,3 +1,24 @@
+ngcp-ngcpcfg (5.1.1.0+0~mr5.1.1.0) unstable; urgency=medium
+
+  [ Hans-Peter Herzog ]
+  * [f7d4d59] TT#2725 lib: add helper script to get the interface name of a given ip address
+
+  [ Alexander Lutay ]
+  * [be35733] TT#8760 Add a ngcpcfg helper get_ngcp_version for the future usage
+  * [75a7138] TT#8760 Fix be357333: fix return sample for lib/get_ngcp_version
+
+  [ Rene Krenn ]
+  * [59efe33] TT#6735 TT#7030 TT#5850 new event exporter fields
+  * [12bb34e] TT#9714 susbcriber first non-prim alias for edr records
+  * [4cfeef5] TT#6735 TT#5850 refactor "profile" events to track number changes
+
+  [ Kirill Solomko ]
+  * [1e3800b] TT#8750 improve sync grants changes detection algorithm
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 03 Feb 2017 00:40:16 +0100
+
 ngcp-ngcpcfg (5.1.0.0+0~mr5.1.0.0) unstable; urgency=medium
 
   [ Michael Prokop ]
