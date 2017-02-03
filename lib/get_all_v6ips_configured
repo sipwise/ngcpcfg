@@ -1,0 +1,23 @@
+[%
+  # Return array of all IPv6 addresses configured on all NGCP
+  # cluster nodes
+  #
+  # This template takes no parameters
+  #
+  # @return out     The array of ips
+
+  out = [];
+  FOREACH host IN hosts.keys;
+    FOREACH interface IN hosts.$host.interfaces;
+      IF hosts.$host.$interface.v6ip;
+        out.push(hosts.$host.$interface.v6ip);
+      END;
+      FOREACH ip IN hosts.$host.$interface.shared_v6ip;
+        IF ip;
+          out.push(ip);
+        END;
+      END;
+    END;
+  END;
+  out = out.unique;
+-%]
