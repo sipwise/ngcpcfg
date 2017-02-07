@@ -1,3 +1,12 @@
+ngcp-ngcpcfg (0.31.3.3+0~mr4.5.3.3) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [8ce0977] TT#5744 lnp_prefix fields for cdr exports
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 07 Feb 2017 18:31:55 +0100
+
 ngcp-ngcpcfg (0.31.3.2+0~mr4.5.3.2) unstable; urgency=medium
 
   [ Rene Krenn ]
