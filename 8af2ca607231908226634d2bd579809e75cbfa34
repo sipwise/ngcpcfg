@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da01753e_3a2b05ed",
+        "filename": "lib/get_all_ips_configured",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-02-08T14:56:38Z",
+      "side": 1,
+      "message": "There\u0027s a trailing whitespace, please consider removing that :)",
+      "revId": "8af2ca607231908226634d2bd579809e75cbfa34",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
