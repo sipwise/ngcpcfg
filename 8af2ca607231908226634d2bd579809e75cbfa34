@@ -16,6 +16,24 @@
       "revId": "8af2ca607231908226634d2bd579809e75cbfa34",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_05c4e23e",
+        "filename": "lib/get_all_ips_configured",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-02-08T18:11:51Z",
+      "side": 1,
+      "message": "an array",
+      "parentUuid": "da01753e_3a2b05ed",
+      "revId": "8af2ca607231908226634d2bd579809e75cbfa34",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
