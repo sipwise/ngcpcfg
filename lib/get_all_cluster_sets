@@ -1,22 +1,23 @@
 [%
-  # Return a hash of set_name=>dispatcher_id for a given cluster set type.
-  #
-  # @param argv.type	The type of element we are interested in (rtp, lb)
-  # @return out		The hash
--%]
-[%
-  out = {};
+# vi: ft=tt2
 
-  FOREACH set IN cluster_sets.keys;
-    NEXT IF (set == 'default_set' || set == 'type');
+# Return a hash of set_name=>dispatcher_id for a given cluster set type.
+#
+# @param argv.type	The type of element we are interested in (rtp, lb)
+# @return out		The hash
 
-    FOREACH host IN hosts.keys.sort;
-      NEXT UNLESS hosts.$host.role.grep('^' _ argv.type _ '$').size();
-      FOREACH iface IN hosts.$host.interfaces;
-        NEXT UNLESS hosts.$host.$iface.cluster_sets.grep('^' _ set _ '$').size();
-        out.$set = cluster_sets.$set.dispatcher_id;
-      END;
+out = {};
+
+FOREACH set IN cluster_sets.keys;
+  NEXT IF (set == 'default_set' || set == 'type');
+
+  FOREACH host IN hosts.keys.sort;
+    NEXT UNLESS hosts.$host.role.grep('^' _ argv.type _ '$').size();
+    FOREACH iface IN hosts.$host.interfaces;
+      NEXT UNLESS hosts.$host.$iface.cluster_sets.grep('^' _ set _ '$').size();
+      out.$set = cluster_sets.$set.dispatcher_id;
     END;
-
   END;
+END;
+
 -%]
