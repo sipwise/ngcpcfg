@@ -1,9 +1,11 @@
 [%
-  # Returns the ngcp_type of the node calling this function.
-  #
-  # This function is obsolete and for backwards compatibility only, as it
-  # can be replaced by directly getting the general.ngcp_type variable.
-  #
-  # @return out		one of ['spce', 'sppro', 'carrier']
+# vi: ft=tt2
+
+# Returns the NGCP type of the node calling this function.
+#
+# @return out		The NGCP type, one of:
+#			  spce, sppro, carrier
+
+out = general.ngcp_type
+
 -%]
-[% out = general.ngcp_type -%]

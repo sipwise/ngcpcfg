@@ -1,13 +1,15 @@
 [%
-  # Return an array of IPs from a given hostname
-  #
-  # @param argv.name    The hostname to lookup
-  # @param argv.type    The address family to lookup ("AF_INET" for IPv4,
-  #                     "AF_INET6" for IPv6, and "" for both)
-  # @return out         The array of ips
+# vi: ft=tt2
+
+# Return an array of IPs from a given hostname.
+#
+# @param argv.name	The hostname to lookup.
+# @param argv.type	The address family to lookup, one of:
+#			  "AF_INET" for IPv4
+#			  "AF_INET6" for IPv6
+#			  "" for both
+# @return out		The array of IPs.
 -%]
-[% out = [] -%]
-[% LOAD_PERL => 1 -%]
 [% PERL -%]
    use Socket qw(:all);
 
@@ -16,12 +18,14 @@
    my @res;
    my @ips;
 
-   ($err, @res) = getaddrinfo("[% argv.name %]", "", {socktype => SOCK_RAW, family => [% argv.type %]});
-   while( my $ai = shift @res ) {
+   ($err, @res) = getaddrinfo("[% argv.name %]", "", {
+       socktype => SOCK_RAW, family => [% argv.type %]
+   });
+   while (my $ai = shift @res) {
       ($err, $ipaddr) = getnameinfo($ai->{addr}, NI_NUMERICHOST, NIx_NOSERV);
-      push(@ips, $ipaddr);
+      push @ips, $ipaddr;
    }
+   @ips = sort @ips;
 
    $stash->set(out => \@ips);
 [% END -%]
-[% out = out.sort -%]

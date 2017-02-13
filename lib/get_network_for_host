@@ -1,31 +1,37 @@
 [%
-  # Returns the network address of a certain interface type for a given host
-  #
-  # @param argv.host	The hostname to get the interface from.
-  # @param argv.type	The interface type
-  #			One of: web_int, web_ext, sip_int, sip_ext, ...
-  # @return out		network address in CDIR format
+# vi: ft=tt2
+
+# Returns the network address of a certain interface type for a given host.
+#
+# @param argv.host	The hostname to get the interface from.
+# @param argv.type	The interface type, one of:
+#			  web_int, web_ext, sip_int, sip_ext, ...
+# @return out		The network address in CDIR format.
+
+IF !hosts.${argv.host}.defined;
+  argv.host = 'self';
+END;
+
+out = '';
+FOREACH iface IN hosts.${argv.host}.interfaces;
+  FOREACH realiface IN hosts.${argv.host}.keys;
+    NEXT IF realiface != iface;
+    NEXT UNLESS hosts.${argv.host}.$realiface.type.grep('^' _ argv.type _ '$').size();
+
+    IF hosts.${argv.host}.$realiface.ip AND
+       hosts.${argv.host}.$realiface.netmask;
 -%]
-[% PERL %]
-use Net::IPv4Addr qw( ipv4_network );
-[% END %]
-[% IF !hosts.${argv.host}.defined -%]
-[% argv.host = 'self' -%]
-[% END -%]
-[% out = '' -%]
-[% FOREACH iface IN hosts.${argv.host}.interfaces -%]
-[% FOREACH realiface IN hosts.${argv.host}.keys -%]
-[% IF realiface == iface -%]
-[% IF hosts.${argv.host}.$realiface.type.grep('^' _ argv.type _ '$').size()
+[%    PERL -%]
+        use Net::IPv4Addr qw(ipv4_network);
+
+        my ($ip, $netmask) = ipv4_network("[% hosts.${argv.host}.${realiface}.ip %]/[% hosts.${argv.host}.${realiface}.netmask %]");
+        $stash->set('out' => "$ip/$netmask");
+[%    END -%]
+[%
+    END;
+
+    RETURN;
+  END;
+END;
+
 -%]
-[% IF hosts.${argv.host}.$realiface.ip and hosts.${argv.host}.$realiface.netmask -%]
-[% PERL -%]
-my ($ip, $netmask) = ipv4_network("[% hosts.${argv.host}.${realiface}.ip %]/[% hosts.${argv.host}.${realiface}.netmask %]");
-$stash->set( 'out' => "$ip/$netmask");
-[% END -%]
-[% END -%]
-[% RETURN -%]
-[% END -%]
-[% END -%]
-[% END -%]
-[% END -%]
