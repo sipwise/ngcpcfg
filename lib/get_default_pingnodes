@@ -1,28 +1,30 @@
 [%
-  # Returns a list of IPs to ping.
-  # @param argv.dns  add dns IPs
-  #
-  # @return out		list of pingnodes.
+# vi: ft=tt2
+
+# Returns a list of IPs to ping.
+#
+# @param argv.dns       A boolean selecting whether to add DNS IPs.
+# @return out           List of pingnodes.
 -%]
 [% PERL -%]
-my $gateway = (split(" ", `ip route | grep default`))[2];
-my @nodes = ($gateway);
-[% IF argv.dns == 'yes' %]
-my @dnsnodes = (split(" ", `grep -v '^#' /etc/resolv.conf | grep nameserver | cut -f2 -d' '|xargs`));
+  my $gateway = (split(" ", `ip route | grep default`))[2];
+  my @nodes = ($gateway);
 
-foreach my $host (@dnsnodes)
-{
-  my $res = `/bin/ping -c 1 -s 164 $host -W 1 2>/dev/null`;
-  if ($res =~ '1 received')
-  {
-    if ($res =~ 'truncated') { print "#$host reply truncated\n"; }
-    else { push(@nodes, $host); }
+[% IF argv.dns == 'yes' %]
+  my @dnsnodes = (split(" ", `grep -v '^#' /etc/resolv.conf | grep nameserver | cut -f2 -d' '|xargs`));
+
+  foreach my $host (@dnsnodes) {
+    my $res = `/bin/ping -c 1 -s 164 $host -W 1 2>/dev/null`;
+    if ($res =~ '1 received') {
+      if ($res =~ 'truncated') {
+        print "#$host reply truncated\n";
+      } else {
+        push(@nodes, $host);
+      }
+    } else {
+      print "# $host error\n";
+    }
   }
-  else
-  {
-    print "# $host error\n";
-  }
-}
 [% END %]
-$stash->set(out => \@nodes);
+  $stash->set(out => \@nodes);
 [% END -%]

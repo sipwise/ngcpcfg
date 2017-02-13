@@ -1,19 +1,21 @@
 [%
-  # Returns the ngcp_version of the node calling this function.
-  #
-  # @return out	      ngcp version (e.g. 'mr4.5.3' or 'trunk')
+# vi: ft=tt2
+
+# Returns the NGCP version of the node calling this function.
+#
+# @return out           The NGCP version (e.g. 'mr4.5.3' or 'trunk').
 -%]
 [% PERL -%]
-my $filename = '/etc/ngcp_upgrade_version';
-unless (-e $filename) {
-  $filename = '/etc/ngcp_version';
-}
-open my $hh, '<', $filename or die "Error opening $filename";
-my $ngcp_version = <$hh>;
-close $hh;
-chomp $ngcp_version;
-die "Fatal error retrieving ngcp_version [$ngcp_version]" unless length $ngcp_version;
+  my $filename = '/etc/ngcp_upgrade_version';
+  unless (-e $filename) {
+    $filename = '/etc/ngcp_version';
+  }
+  open my $hh, '<', $filename or die "Error opening $filename";
+  my $ngcp_version = <$hh>;
+  close $hh;
+  chomp $ngcp_version;
+  die "Fatal error retrieving ngcp_version [$ngcp_version]" unless length $ngcp_version;
 
-$stash->set(out => $ngcp_version);
-return;
+  $stash->set(out => $ngcp_version);
+  return;
 [% END -%]
