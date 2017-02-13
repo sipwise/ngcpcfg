@@ -1,16 +1,17 @@
 [%
-  # Returns the name of the management node calling this function.
-  #
-  # @return out	      mgmt name (e.g. 'web01' or 'db01')
+# vi: ft=tt2
+
+# Returns the name of the management node calling this function.
+#
+# @return out		The mgmt name (e.g. 'web01' or 'db01').
 -%]
 [% PERL -%]
-my $filename = '/etc/ngcp_mgmt_node';
-open my $hh, '<', $filename or die "Error opening $filename";
-my $mgmt_name = <$hh>;
-close $hh;
-chomp $mgmt_name;
-die "Fatal error retrieving mgmt_name [$mgmt_name]" unless length $mgmt_name;
+  my $filename = '/etc/ngcp_mgmt_node';
+  open my $hh, '<', $filename or die "Error opening $filename";
+  my $mgmt_name = <$hh>;
+  close $hh;
+  chomp $mgmt_name;
+  die "Fatal error retrieving mgmt_name [$mgmt_name]" unless length $mgmt_name;
 
-$stash->set(out => $mgmt_name);
-return;
+  $stash->set(out => $mgmt_name);
 [% END -%]
