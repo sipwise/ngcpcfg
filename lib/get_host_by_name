@@ -1,14 +1,19 @@
 [%
-  # Return an array of IPs from a given hostname
-  #
-  # @param argv.name    The hostname to lookup
-  # @param argv.type    The address family to lookup ("AF_INET" for IPv4,
-  #                     "AF_INET6" for IPv6, and "" for both)
-  # @return out         The array of ips
--%]
-[% out = [] -%]
-[% LOAD_PERL => 1 -%]
-[% PERL -%]
+# vi: ft=tt2
+
+# Return an array of IPs from a given hostname.
+#
+# @param argv.name	The hostname to lookup.
+# @param argv.type	The address family to lookup, one of:
+#			  "AF_INET" for IPv4
+#			  "AF_INET6" for IPv6
+#			  "" for both
+# @return out		The array of IPs.
+
+LOAD_PERL => 1;
+
+out = [];
+PERL;
    use Socket qw(:all);
 
    my $err;
@@ -23,5 +28,5 @@
    }
 
    $stash->set(out => \@ips);
-[% END -%]
-[% out = out.sort -%]
+END;
+out = out.sort;
