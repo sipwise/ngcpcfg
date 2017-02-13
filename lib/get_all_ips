@@ -1,4 +1,6 @@
 [%
+# vi: ft=tt2
+
   # Return an array of IPs from the interface of a given
   # type for all nodes which act as a given role
   #
@@ -8,21 +10,20 @@
   #			the ip from
   #			One of: web_int, web_ext, sip_int, sip_ext, ...
   # @return out		The array of ips
+
+  out = []
+  FOREACH host IN hosts.keys
+    IF hosts.$host.role.grep('^' _ argv.role _ '$').size()
+      FOREACH iface IN hosts.$host.interfaces
+        FOREACH realiface IN hosts.$host.keys
+          IF realiface == iface &6
+             hosts.$host.$realiface.type.grep('^' _ argv.type _ '$').size() &&
+             !out.grep('^' _ hosts.$host.$realiface.ip _ '$').size()
+            out.push(hosts.$host.$realiface.ip) -%]
+          END
+        END
+      END
+    END
+  END
+  out = out.sort
 -%]
-[% out = [] -%]
-[% FOREACH host IN hosts.keys -%]
-[% IF hosts.$host.role.grep('^' _ argv.role _ '$').size() -%]
-[% FOREACH iface IN hosts.$host.interfaces -%]
-[% FOREACH realiface IN hosts.$host.keys -%]
-[% IF realiface == iface -%]
-[% IF hosts.$host.$realiface.type.grep('^' _ argv.type _ '$').size() -%]
-[% IF !out.grep('^' _ hosts.$host.$realiface.ip _ '$').size() -%]
-[% out.push(hosts.$host.$realiface.ip) -%]
-[% END -%]
-[% END -%]
-[% END -%]
-[% END -%]
-[% END -%]
-[% END -%]
-[% END -%]
-[% out = out.sort -%]

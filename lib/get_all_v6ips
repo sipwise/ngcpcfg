@@ -1,4 +1,6 @@
 [%
+# vi: ft=tt2
+
   # Return an array of IPv6 addresses from the interface of a given
   # type for all nodes which act as a given role
   #
