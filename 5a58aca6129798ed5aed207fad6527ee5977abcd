@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da01753e_2ef2959a",
+        "filename": "lib/get_all_cluster_set_ip_maps",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-02-15T12:42:55Z",
+      "side": 1,
+      "message": "Please fix indention while at it",
+      "revId": "5a58aca6129798ed5aed207fad6527ee5977abcd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_0eefd1b1",
+        "filename": "lib/get_all_cluster_set_ip_maps_for_host",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-02-15T12:42:55Z",
+      "side": 1,
+      "message": "Same here",
+      "revId": "5a58aca6129798ed5aed207fad6527ee5977abcd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_6e2bfdeb",
+        "filename": "lib/get_all_cluster_set_shared_ip_maps",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-02-15T12:42:55Z",
+      "side": 1,
+      "message": "And here :)",
+      "revId": "5a58aca6129798ed5aed207fad6527ee5977abcd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_4e30b956",
+        "filename": "lib/get_all_cluster_set_shared_ip_maps_for_host",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-02-15T12:42:55Z",
+      "side": 1,
+      "message": "here too",
+      "revId": "5a58aca6129798ed5aed207fad6527ee5977abcd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_8e3aa134",
+        "filename": "lib/get_all_shared_v6ips",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-02-15T12:42:55Z",
+      "side": 1,
+      "message": "here too",
+      "revId": "5a58aca6129798ed5aed207fad6527ee5977abcd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_cecdc95f",
+        "filename": "lib/get_all_shared_v6ips_for_host",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-02-15T12:42:55Z",
+      "side": 1,
+      "message": "here too",
+      "revId": "5a58aca6129798ed5aed207fad6527ee5977abcd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
