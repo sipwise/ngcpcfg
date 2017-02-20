@@ -1,3 +1,18 @@
+ngcp-ngcpcfg (5.0.3.0+0~mr5.0.3.0) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [9301ddf] TT#6735 TT#7030 TT#5850 new event exporter fields
+  * [b7b76de] TT#5744 lnp_prefix fields for cdr exports
+  * [259d5a0] TT#9714 susbcriber first non-prim alias for edr records
+  * [2b058c6] TT#6735 TT#5850 refactor "profile" events to track number changes
+
+  [ Kirill Solomko ]
+  * [f7d21e2] TT#8750 improve sync grants changes detection algorithm
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 20 Feb 2017 21:04:32 +0100
+
 ngcp-ngcpcfg (5.0.2.0+0~mr5.0.2.0) unstable; urgency=medium
 
   * New release.
