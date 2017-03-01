@@ -36,7 +36,7 @@ fi
 
 log_info "Checking state of /etc files"
 log_debug 'git status | grep -q "working directory clean"'
-if git status | grep -q 'working directory clean' ; then
+if git status | grep -qE 'working (directory|tree) clean' ; then
   log_info "OK:   nothing to commit."
 else
   log_debug "etckeeper commit \"ngcpcfg apply on \$(date)\""
