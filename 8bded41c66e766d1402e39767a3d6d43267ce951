@@ -16,6 +16,24 @@
       "revId": "8bded41c66e766d1402e39767a3d6d43267ce951",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba068154_4946f4c0",
+        "filename": "lib/get_debian_release",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-03-03T12:31:58Z",
+      "side": 1,
+      "message": "Good point, thanks.\n\nHaha, added bullseye too :p",
+      "parentUuid": "ba068154_d7ac3c38",
+      "revId": "8bded41c66e766d1402e39767a3d6d43267ce951",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
