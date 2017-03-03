@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba068154_d7ac3c38",
+        "filename": "lib/get_debian_release",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-03-03T11:55:50Z",
+      "side": 1,
+      "message": "While the regexes are fine now, they are not future-proof. :)\n\nPlease use /^N\\.*/ instead. And while at it you can add bullseye 11, too. ;)",
+      "revId": "8bded41c66e766d1402e39767a3d6d43267ce951",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
