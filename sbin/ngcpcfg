@@ -39,6 +39,9 @@ action() {
   shift
   log_debug "${SCRIPTS}/${ACTION} $*"
   "${SCRIPTS}/${ACTION}" "$@"
+  # after each and every action, make sure to
+  # set permissions of critical files
+  fix_perms
 }
 
 usage() {
@@ -95,6 +98,19 @@ version() {
   [ -n "${versinfo:-}" ] || versinfo='information not available'
   printf "ngcpcfg, version ${versinfo}\n"
 }
+
+fix_perms() {
+  declare -A perms
+  # multiple lines possible, one mapping per line
+  perms=(
+    ["/etc/ngcp-config/constants.yml"]="600"
+  )
+
+  for file in "${!perms[@]}"; do
+    chmod "${perms[$file]}" "$file"
+  done
+}
+
 
 case ${1:-} in
   apply|\
