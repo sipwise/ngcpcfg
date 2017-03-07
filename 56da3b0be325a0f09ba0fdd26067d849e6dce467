@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a0b7d60_92081a2f",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-03-07T13:04:22Z",
+      "side": 1,
+      "message": "I\u0027d use:\n\n  [\"${CONSTANTS_CONFIG}\"]\u003d\"600\"\n\nhere to not hardcode the place for constants.yml.",
+      "revId": "56da3b0be325a0f09ba0fdd26067d849e6dce467",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a0b7d60_f2052615",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-03-07T13:04:22Z",
+      "side": 1,
+      "message": "I\u0027d add:\n\n  log_debug \"chmod ${perms[$file]} $file\"\n\nin front of the chmod command line, just in case we need to debug it once and don\u0027t understand what\u0027s going on. (log_debug is only visible if invoked via DEBUG\u003d1 ngcpcfg ..., JFYI)",
+      "revId": "56da3b0be325a0f09ba0fdd26067d849e6dce467",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
