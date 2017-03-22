@@ -1,3 +1,19 @@
+ngcp-ngcpcfg (5.3.0.0+0~mr5.3.0.0) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [c1e3ecc] TT#5744 lnp_prefix fields for cdr exports
+
+  [ Gernot Fuchs ]
+  * [2abadfe] TT#11537 Add helper template for gethostbyname
+
+  [ Michael Prokop ]
+  * [bd9bf75] TT#11776 Support git v2.9.3 and newer
+  * [6cabb45] TT#12302 Helper script to get Debian release codename
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 22 Mar 2017 10:59:41 +0100
+
 ngcp-ngcpcfg (5.2.0.0+0~mr5.2.0.0) unstable; urgency=medium
 
   [ Hans-Peter Herzog ]
