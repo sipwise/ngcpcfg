@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a1969be_06d51a43",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-03-22T08:12:39Z",
+      "side": 1,
+      "message": "Please use something like:\n\n\"TT#13069 lib/get_cdr_export_fields: provide edr combined before-after alias fields\"\n\nhere, otherwise it\u0027s more than confusing without any context :)\n\nAlso I\u0027d like to see at least *some* reasoning in the body of the commit message why this change is needed. (I\u0027ve no objections against the change at all, but without looking at the ticket at least I have absolutely no idea why this change is needed :))",
+      "revId": "fbae4c4d4fd3c5af552f6eaaacb454cd0abec431",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a1969be_26d01653",
+        "filename": "lib/get_cdr_export_fields",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-03-22T08:12:39Z",
+      "side": 1,
+      "message": "please drop the trailing whitespaces here :)",
+      "revId": "fbae4c4d4fd3c5af552f6eaaacb454cd0abec431",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
