@@ -1,3 +1,12 @@
+ngcp-ngcpcfg (5.2.2.0+0~mr5.2.2.0) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [82a6370] TT#13069 provide edr combined before-after alias fields
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 03 Apr 2017 14:32:44 +0200
+
 ngcp-ngcpcfg (5.2.1.0+0~mr5.2.1.0) unstable; urgency=medium
 
   [ Rene Krenn ]
