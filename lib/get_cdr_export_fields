@@ -44,7 +44,7 @@
 	END;
 
 	# other presets
-
+    #cdr fields:
 	X_cdr_id_map.CDR_ID = "accounting.cdr.id";
 	X_cdr_id_map.EVENT_ID = "accounting.events.id";
 
@@ -70,6 +70,9 @@
 	X_cdr_id_map.SUBSCRIBER_EXTERNAL_ID = "billing.voip_subscribers.external_id";
 	X_cdr_id_map.SOURCE_LNP_PREFIX = "accounting.cdr.source_lnp_prefix";
 	X_cdr_id_map.DESTINATION_LNP_PREFIX = "accounting.cdr.destination_lnp_prefix";
+	X_cdr_id_map.SOURCE_USER_OUT = "accounting.cdr.source_user_out";
+	X_cdr_id_map.DESTINATION_USER_OUT = "accounting.cdr.destination_user_out";
+	#edr fields:
 	#X_cdr_id_map.PRIMARY_NUMBER = "(select username from provisioning.voip_dbaliases tmp where tmp.subscriber_id = provisioning.voip_subscribers.id order by is_primary, id limit 1)";
 	X_cdr_id_map.PILOT_SUBSCRIBER_ID = edr_type_select("events_relation","events_relation_data","relation_id","val","pilot_subscriber_id");
 	X_cdr_id_map.PRIMARY_NUMBER = "CONCAT(IFNULL(" _ edr_type_select("events_tag","events_tag_data","tag_id","val","primary_number_cc") _ ',""),IFNULL(' _ edr_type_select("events_tag","events_tag_data","tag_id","val","primary_number_ac") _ ',""),IFNULL(' _ edr_type_select("events_tag","events_tag_data","tag_id","val","primary_number_sn") _ ',""))';
