@@ -46,6 +46,30 @@
       "revId": "98d22be002d678c6377150ca89de5ca64a62c02f",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a166590_f905ff14",
+        "filename": "sbin/ngcp-network",
+        "patchSetId": 1
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-02T21:20:20Z",
+      "side": 0,
+      "message": "If there\u0027s a (sane) grouping with sections possible I prefer the grouping by relevance/theme as well. Though if there are no further sub sections then the man pages I usually see also follow the alphabetic ordering, AFAICS this is also what man pages like cd/tar/... do. Of course \"you can always just text search\", but when going through man pages it helps with the mental model and remembering where you left of, IMO.\n\nSo I\u0027d prefer to keep the alphabetic ordering (though I admit I don\u0027t have too strong opinion regarding the --help/--man/--version options here, which can be seen as kind of generic/\"special\").",
+      "parentUuid": "5a166590_b9f7078c",
+      "range": {
+        "startLine": 678,
+        "startChar": 0,
+        "endLine": 680,
+        "endChar": 33
+      },
+      "revId": "98d22be002d678c6377150ca89de5ca64a62c02f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
