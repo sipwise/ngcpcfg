@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a166590_99c68b48",
+        "filename": "sbin/ngcp-network",
+        "patchSetId": 1
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-02T12:23:16Z",
+      "side": 0,
+      "message": "it was alphabetically sorted previously as I can see.\nAFAIK Mika likes it, and will set -1 here.",
+      "range": {
+        "startLine": 678,
+        "startChar": 0,
+        "endLine": 680,
+        "endChar": 33
+      },
+      "revId": "98d22be002d678c6377150ca89de5ca64a62c02f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
