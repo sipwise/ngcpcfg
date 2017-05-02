@@ -580,36 +580,43 @@ close $fh or croak "Couldn't close '$fh': $OS_ERROR";
 __END__
 
 =head1 NAME
+
 ngcp-network - command line interface to ngcp's network configuration settings
 
 =head1 SYNOPSIS
-ngcp-network <options ...>
+
+B<ngcp-network> [I<options>...]
+
+=head1 DESCRIPTION
+
+B<This program> will read the given input file(s) and do something
+useful with the contents thereof.
 
 =head1 OPTIONS
 
 =over 8
 
-=item B<--advertised-ip=<IP>>
+=item B<--advertised-ip=>I<IP>
 
 Set advertised_ip configuration to specified argument.
 
-=item B<--bond-miimon=<setting>>
+=item B<--bond-miimon=>I<setting>
 
 Set bond_miimon configuration to specified argument.
 
-=item B<--bond-mode=<mode>>
+=item B<--bond-mode=>I<mode>
 
 Set bond_mode configuration to specified argument.
 
-=item B<--bond-slaves=<slaves>>
+=item B<--bond-slaves=>I<slaves>
 
 Set bond_slaves configuration to specified argument.
 
-=item B<--broadcast=<IP>>
+=item B<--broadcast=>I<IP>
 
 Set broadcast configuration to specified argument.
 
-=item B<--clone-from=<HOST>>
+=item B<--clone-from=>I<HOST>
 
 Clone specified HOST section, using specified HOST setting as its source.
 Please do not forget to manually adjust the resulting configuration file, no
@@ -621,106 +628,98 @@ web/db/proxy/.... systems, where the host definition of a host like 'prx01a'
 should be used as base for another host 'prx02a'. Usage example:
 '--clone-from=prx01a --clone-to=prx02a'
 
-=item B<--clone-to=<HOST>>
+=item B<--clone-to=>I<HOST>
 
 Clone specified HOST section, using specified HOST setting as its destination.
 Refer to '--clone-from=<HOST>' for further information.
 
-=item B<--dbnode=<ID>>
+=item B<--dbnode=>I<ID>
 
 Set dbnode configuration to specified number argument. If no value
 is provide it will use the next value available ( max + 1 )
 
-=item B<--dns=<nameserver>>
+=item B<--dns=>I<nameserver>
 
 Set dns_nameservers configuration to specified argument.
 Can be specified multiple times in one single command line.
 
-=item B<--gateway=<IP>>
+=item B<--gateway=>I<IP>
 
 Set gateway configuration to specified argument.
 
-=item B<--help>
-
-Print the help message and exit.
-
-=item B<--host=<name>>
+=item B<--host=>I<name>
 
 Apply configuration changes for specified host entry instead of using the
 hostname of the currently running system.  NOTE: If running the sip:provider CE
 edition this configuration option can't be changed as the only configured host
 is set to and supposed to be 'self' there.
 
-=item B<--hwaddr=<MAC_address>>
+=item B<--hwaddr=>I<MAC_address>
 
 Set hwaddr configuration (MAC address of network device) to specified argument.
 
-=item B<--input-file=<filename>>
+=item B<--input-file=>I<filename>
 
 Use specified file as input, defaults to /etc/ngcp-config/network.yml if unset.
 
-=item B<--internal-iface=<name>>
+=item B<--internal-iface=>I<name>
 
 Set internal-iface configuration to specified argument.
 
-=item B<--ip=<IP>>
+=item B<--ip=>I<IP>
 
 Set ip configuration (IPv4 address) to specified argument.  If set to 'auto' and
 the selected interface is available on the running host then the IP address will
 be determined based on its current settings.
 
-=item B<--ipv6=<IP>>
+=item B<--ipv6=>I<IP>
 
 Set ip configuration (IPv6 address) to specified argument.  If set to 'auto' and
 the selected interface is available on the running host then the IP address will
 be determined based on its current settings.
 
-=item B<--man>
-
-Prints the manual page and exits.
-
-=item B<--move-from=<source>>
+=item B<--move-from=>I<source>
 
 Move item from specified level (being host for --role and interface for --type).
 The item needs to be chosen via --type or --role. To be used in combination with
 --move-to=....
 
-=item B<--move-to=<target>>
+=item B<--move-to=>I<target>
 
 Move item to specified level (being host for --role and interface for --type).
 The item needs to be chosen via --type or --role. To be used in combination with
 --move-to=....
 
-=item B<--netmask=<IP>>
+=item B<--netmask=>I<IP>
 
 Set netmask configuration to specified argument.
 
-=item B<--output-file=<filename>>
+=item B<--output-file=>I<filename>
 
 Store resulting file under specified argument. If unset defaults to
 /etc/ngcp-config/network.yml.
 
-=item B<--peer=<nodename>>
+=item B<--peer=>I<nodename>
 
 Set peer configuration (being the corresponding other node in a PRO setup) to
 specified argument.
 
-=item B<--remove-host=<host>>
+=item B<--remove-host=>I<host>
 
 Remove the specified host from the configuration file.
 Can be specified multiple times (--remove-host=sp1 --remove-host=sp2 ...).
 
-=item B<--remove-interface=<interface>>
+=item B<--remove-interface=>I<interface>
 
 Remove the specified interface from the configuration file.
 Can be specified multiple times (--remove-interface=eth5 --remove-interface=eth6 ...).
 
-=item B<--role=<role>>
+=item B<--role=>I<role>
 
 Set role configuration for host to specified argument.
 Can be specified multiple times (--role=lb --role=proxy ...).
 
-=item B<--set-interface=<name>>
+=item B<--set-interface=>I<name>
 
 Add specified network interface. Can be combined with options like --hwaddr,
 --ip, --netmask,... to set specified arguments as configuration options for the
@@ -732,18 +731,22 @@ options like --hwaddr can't be sanely combined with different settings on
 multiple interfaces. Instead invoke ngcp-network with the --set-interface option
 mulitple times.
 
-=item B<--shared-ip=<IP>>
+=item B<--shared-ip=>I<IP>
 
 Set shared_ip configuration to specified argument.
 
-=item B<--shared-ipv6=<IP>>
+=item B<--shared-ipv6=>I<IP>
 
 Set shared_v6ip configuration to specified argument.
 
-=item B<--type=<name>>
+=item B<--type=>I<name>
 
 Set type configuration to specified argument.
 Can be specified multiple times in one single command line.
+
+=item B<--vlan-raw-device=>I<device>
+
+Set vlan_raw_device configuration to specified argument.
 
 =item B<--verbose>
 
@@ -753,16 +756,15 @@ Be more verbose about execution.
 
 Display program version and exit.
 
-=item B<--vlan-raw-device=<device>>
+=item B<--man>
 
-Set vlan_raw_device configuration to specified argument.
+Prints the manual page and exits.
+
+=item B<--help>
+
+Print the help message and exit.
 
 =back
-
-=head1 DESCRIPTION
-
-B<This program> will read the given input file(s) and do something
-useful with the contents thereof.
 
 =head1 USAGE
 
@@ -877,15 +879,6 @@ Exit code 9 means the specified argument to a command line option is not valid.
 There's no configuration file for the ngcp-network script itself supported at the moment.
 The main configuration file ngcp-network operates on is /etc/ngcp-config/network.yml.
 
-=head1 DEPENDENCIES
-
-ngcp-network relies on a bunch of Perl modules, all of them specified as dependencies
-through the ngcp-ngcpcfg Debian package.
-
-=head1 INCOMPATIBILITIES
-
-No known at this time.
-
 =head1 BUGS AND LIMITATIONS
 
 Please report problems you notice to the Sipwise Development Team <support@sipwise.com>.
@@ -894,7 +887,7 @@ Please report problems you notice to the Sipwise Development Team <support@sipwi
 
 Michael Prokop <mprokop@sipwise.com>
 
-=head1 LICENSE AND COPYRIGHT
+=head1 LICENSE
 
 GPL-3+, Sipwise GmbH, Austria
 

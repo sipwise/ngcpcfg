@@ -536,9 +536,13 @@ __END__
 
 ngcp-sync-grants - synchronizes mysql grants from a schema template
 
-=head1 USAGE
+=head1 SYNOPSIS
 
-ngcp-sync-grants [ options ... ]
+B<ngcp-sync-grants> [I<options>...]
+
+=head1 DESCRIPTION
+
+B<This program> synchronizes mysql grants from a schema template.
 
 =head1 OPTIONS
 
@@ -556,10 +560,6 @@ Verbose mode
 
 =back
 
-=head1 DESCRIPTION
-
-B<This program> synchronizes mysql grants from a schema template.
-
 =head1 EXIT STATUS
 
 =over 8
@@ -572,26 +572,9 @@ Something is wrong, an error message raises
 
 =back
 
-=head1 REQUIRED ARGUMENTS
-
-None
-
-=head1 CONFIGURATION
-
-None
-
-=head1 DEPENDENCIES
-
-ngcp-sync-grants relies on a bunch of Perl modules, all of them specified as
-dependencies through the Debian package.
-
 =head1 DIAGNOSTICS
 
 TODO
-
-=head1 INCOMPATIBILITIES
-
-No known at this time.
 
 =head1 BUGS AND LIMITATIONS
 
@@ -602,7 +585,7 @@ Development Team <support@sipwise.com>.
 
 Kirill Solomko <ksolomko@sipwise.com>
 
-=head1 LICENSE AND COPYRIGHT
+=head1 LICENSE
 
 Copyright (C) 2016 Sipwise GmbH, Austria
 

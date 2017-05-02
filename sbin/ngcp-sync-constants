@@ -339,35 +339,40 @@ __END__
 
 ngcp-sync-constants - syncronizes passwords from constants.yml with MySQL
 
-=head1 USAGE
+=head1 SYNOPSIS
 
-ngcp-sync-constants [ options ... ]
+B<ngcp-sync-constants> [I<options>...]
+
+=head1 DESCRIPTION
+
+B<This program> reads constants.yml file, parses it and syncronizes all
+required passwords with MySQL.
 
 =head1 OPTIONS
 
 =over 8
 
 =item B<--root>
+
 Use mysql root user without password as DB credentials
 
 =item B<--init-passwords>
+
 New passwords are generated (passwords for "mysql" is not generated to avoid replication problems)
 
 =item B<--test>
+
 No real updates, only for checks
 
 =item B<--verbose>
+
 Verbose mode where all changes are written to STDOUT
 
+=item B<--help>
+
+Print this help message.
+
 =back
-
-=head1 REQUIRED ARGUMENTS
-
-None
-
-=head1 DESCRIPTION
-
-B<This program> reads constants.yml file, parses it and syncronizes all required passwords with MySQL
 
 =head1 EXIT STATUS
 
@@ -385,18 +390,9 @@ Something is wrong, an error message raises
 
 TODO
 
-=head1 DEPENDENCIES
-
-ngcp-sync-constants relies on a bunch of Perl modules, all of them specified as
-dependencies through the Debian package.
-
 =head1 CONFIGURATION
 
 /etc/ngcp-config/constants.yml
-
-=head1 INCOMPATIBILITIES
-
-No known at this time.
 
 =head1 BUGS AND LIMITATIONS
 
@@ -406,7 +402,7 @@ Please report problems you notice to the Sipwise Development Team <support@sipwi
 
 Kirill Solomko <ksolomko@sipwise.com>
 
-=head1 LICENSE AND COPYRIGHT
+=head1 LICENSE
 
 Copyright (C) 2016 Sipwise GmbH, Austria
 
