@@ -94,6 +94,30 @@
       "revId": "98d22be002d678c6377150ca89de5ca64a62c02f",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a166590_540e9a35",
+        "filename": "sbin/ngcp-network",
+        "patchSetId": 1
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-02T22:34:18Z",
+      "side": 0,
+      "message": "\u003e Even w/o (sub)section separators, just having the most commonly\n \u003e used options first, I think is nicer for the reader.\n\nI usually prefer to have a decent \"USAGE EXAMPLES\" section for that. :)\n\n \u003e Also purely\n \u003e alphabetical can also seem a bit arbitrary because taking tar as an\n \u003e example, it\u0027s sorted based on the short options, but the long ones\n \u003e are then unordered. :)\n \nThe long options are also sorted alphabetically in the tar(1) man page,\nit\u0027s just that the \"--no-*\" options are always added after the corresponding option\n(like e.g. \"--overwrite-dir\" and afterwards \"--no-overwrite-dir\"), AFAICS.\n\n \u003e Of course all things being equal, if there\u0027s no actual obvious\n \u003e grouping or most commonly used options, then sure alphabetical\n \u003e order is as good.\n\nYeah.\n\n \u003e But I think there\u0027s always things that are more\n \u003e specialized, or targeted at developers or similar.\n\nThen according subsections could be created. :)\n\nI\u0027m just careful for tools that I\u0027m not a regular user myself, because too often the developer has a different PoV which might be too far off from what the user actually uses/needs. (For sure it would be nice to have users providing feedback and/or contributing according patchset/suggestions for improvement, but I don\u0027t see that really happening for us, not even internally :-/)\n\n \u003e In any case I think in this particular patchset I only moved the\n \u003e --help, --version and --man to the end, so not much contention I\n \u003e supposed. :)\n\nACK, +2 from me for the time being :)\n\n \u003e It might be nice to try to reach a consensus on this\n \u003e and codify in in our style-guide or similar though. :9\n\nIndeed",
+      "parentUuid": "5a166590_14042214",
+      "range": {
+        "startLine": 678,
+        "startChar": 0,
+        "endLine": 680,
+        "endChar": 33
+      },
+      "revId": "98d22be002d678c6377150ca89de5ca64a62c02f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
