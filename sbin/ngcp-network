@@ -596,155 +596,157 @@ useful with the contents thereof.
 
 =over 8
 
-=item B<--advertised-ip=>I<IP>
+=item B<--advertised-ip>=I<IP>
 
 Set advertised_ip configuration to specified argument.
 
-=item B<--bond-miimon=>I<setting>
+=item B<--bond-miimon>=I<setting>
 
 Set bond_miimon configuration to specified argument.
 
-=item B<--bond-mode=>I<mode>
+=item B<--bond-mode>=I<mode>
 
 Set bond_mode configuration to specified argument.
 
-=item B<--bond-slaves=>I<slaves>
+=item B<--bond-slaves>=I<slaves>
 
 Set bond_slaves configuration to specified argument.
 
-=item B<--broadcast=>I<IP>
+=item B<--broadcast>=I<IP>
 
 Set broadcast configuration to specified argument.
 
-=item B<--clone-from=>I<HOST>
+=item B<--clone-from>=I<HOST>
 
-Clone specified HOST section, using specified HOST setting as its source.
+Clone specified I<HOST> section, using specified I<HOST> setting as its source.
 Please do not forget to manually adjust the resulting configuration file, no
 further checks like duplicated IPs are performed. Needs to be used in
-combination with the '--clone-to=<HOST>' option.
+combination with the B<--clone-to> option.
 
 This option is useful especially in carrier setups with plenty of similar
-web/db/proxy/.... systems, where the host definition of a host like 'prx01a'
-should be used as base for another host 'prx02a'. Usage example:
-'--clone-from=prx01a --clone-to=prx02a'
+web/db/proxy/.... systems, where the host definition of a host like B<prx01a>
+should be used as base for another host B<prx02a>. Usage example:
+B<--clone-from=prx01a --clone-to=prx02a>.
 
-=item B<--clone-to=>I<HOST>
+=item B<--clone-to>=I<HOST>
 
-Clone specified HOST section, using specified HOST setting as its destination.
-Refer to '--clone-from=<HOST>' for further information.
+Clone specified I<HOST> section, using specified I<HOST> setting as its
+destination.
+Refer to B<--clone-from> for further information.
 
-=item B<--dbnode=>I<ID>
+=item B<--dbnode>=I<ID>
 
 Set dbnode configuration to specified number argument. If no value
-is provide it will use the next value available ( max + 1 )
+is provide it will use the next value available (max + 1).
 
-=item B<--dns=>I<nameserver>
+=item B<--dns>=I<nameserver>
 
 Set dns_nameservers configuration to specified argument.
 Can be specified multiple times in one single command line.
 
-=item B<--gateway=>I<IP>
+=item B<--gateway>=I<IP>
 
 Set gateway configuration to specified argument.
 
-=item B<--host=>I<name>
+=item B<--host>=I<name>
 
 Apply configuration changes for specified host entry instead of using the
 hostname of the currently running system.  NOTE: If running the sip:provider CE
 edition this configuration option can't be changed as the only configured host
-is set to and supposed to be 'self' there.
+is set to and supposed to be B<self> there.
 
-=item B<--hwaddr=>I<MAC_address>
+=item B<--hwaddr>=I<MAC_address>
 
 Set hwaddr configuration (MAC address of network device) to specified argument.
 
-=item B<--input-file=>I<filename>
+=item B<--input-file>=I<filename>
 
-Use specified file as input, defaults to /etc/ngcp-config/network.yml if unset.
+Use specified file as input, defaults to F</etc/ngcp-config/network.yml> if
+unset.
 
-=item B<--internal-iface=>I<name>
+=item B<--internal-iface>=I<name>
 
 Set internal-iface configuration to specified argument.
 
-=item B<--ip=>I<IP>
+=item B<--ip>=I<IP>
 
-Set ip configuration (IPv4 address) to specified argument.  If set to 'auto' and
-the selected interface is available on the running host then the IP address will
-be determined based on its current settings.
+Set ip configuration (IPv4 address) to specified argument. If set to B<auto>
+and the selected interface is available on the running host then the IP
+address will be determined based on its current settings.
 
-=item B<--ipv6=>I<IP>
+=item B<--ipv6>=I<IP>
 
-Set ip configuration (IPv6 address) to specified argument.  If set to 'auto' and
-the selected interface is available on the running host then the IP address will
-be determined based on its current settings.
+Set ip configuration (IPv6 address) to specified argument. If set to B<auto>
+and the selected interface is available on the running host then the IP
+address will be determined based on its current settings.
 
-=item B<--move-from=>I<source>
+=item B<--move-from>=I<source>
 
-Move item from specified level (being host for --role and interface for --type).
-The item needs to be chosen via --type or --role. To be used in combination with
---move-to=....
+Move item from specified level (being host for B<--role> and interface for
+B<--type>). The item needs to be chosen via B<--type> or B<--role>. To be
+used in combination with B<--move-to>.
 
-=item B<--move-to=>I<target>
+=item B<--move-to>=I<target>
 
-Move item to specified level (being host for --role and interface for --type).
-The item needs to be chosen via --type or --role. To be used in combination with
---move-to=....
+Move item to specified level (being host for B<--role> and interface for
+B<--type>). The item needs to be chosen via B<--type> or B<--role>. To be
+used in combination with B<--move-to>.
 
-=item B<--netmask=>I<IP>
+=item B<--netmask>=I<IP>
 
 Set netmask configuration to specified argument.
 
-=item B<--output-file=>I<filename>
+=item B<--output-file>=I<filename>
 
 Store resulting file under specified argument. If unset defaults to
-/etc/ngcp-config/network.yml.
+F</etc/ngcp-config/network.yml>.
 
-=item B<--peer=>I<nodename>
+=item B<--peer>=I<nodename>
 
 Set peer configuration (being the corresponding other node in a PRO setup) to
 specified argument.
 
-=item B<--remove-host=>I<host>
+=item B<--remove-host>=I<host>
 
 Remove the specified host from the configuration file.
-Can be specified multiple times (--remove-host=sp1 --remove-host=sp2 ...).
+Can be specified multiple times (B<--remove-host=sp1 --remove-host=sp2 ...>).
 
-=item B<--remove-interface=>I<interface>
+=item B<--remove-interface>=I<interface>
 
 Remove the specified interface from the configuration file.
-Can be specified multiple times (--remove-interface=eth5 --remove-interface=eth6 ...).
+Can be specified multiple times (B<--remove-interface=eth5 --remove-interface=eth6 ...>).
 
-=item B<--role=>I<role>
+=item B<--role>=I<role>
 
 Set role configuration for host to specified argument.
-Can be specified multiple times (--role=lb --role=proxy ...).
+Can be specified multiple times (B<--role=lb --role=proxy ...>).
 
-=item B<--set-interface=>I<name>
+=item B<--set-interface>=I<name>
 
-Add specified network interface. Can be combined with options like --hwaddr,
---ip, --netmask,... to set specified arguments as configuration options for the
-given network interface.
+Add specified network interface. Can be combined with options like B<--hwaddr>,
+B<--ip>, B<--netmask>,... to set specified arguments as configuration options
+for the given network interface.
 
-NOTE: If multiple --set-interface options are specified in one command line
-(e.g. '--set-interface=lo --set-interface=eth0 --set-interface=eth1') then
-options like --hwaddr can't be sanely combined with different settings on
-multiple interfaces. Instead invoke ngcp-network with the --set-interface option
-mulitple times.
+NOTE: If multiple B<--set-interface> options are specified in one command line
+(e.g. 'B<--set-interface=lo --set-interface=eth0 --set-interface=eth1>') then
+options like B<--hwaddr> cannot be sanely combined with different settings on
+multiple interfaces. Instead invoke ngcp-network with the B<--set-interface>
+option mulitple times.
 
-=item B<--shared-ip=>I<IP>
+=item B<--shared-ip>=I<IP>
 
 Set shared_ip configuration to specified argument.
 
-=item B<--shared-ipv6=>I<IP>
+=item B<--shared-ipv6>=I<IP>
 
 Set shared_v6ip configuration to specified argument.
 
-=item B<--type=>I<name>
+=item B<--type>=I<name>
 
 Set type configuration to specified argument.
 Can be specified multiple times in one single command line.
 
-=item B<--vlan-raw-device=>I<device>
+=item B<--vlan-raw-device>=I<device>
 
 Set vlan_raw_device configuration to specified argument.
 
@@ -765,30 +767,6 @@ Prints the manual page and exits.
 Print the help message and exit.
 
 =back
-
-=head1 USAGE
-
-Usage examples useful especially on sip:provider CE systems:
-
-  ngcp-network --set-interface=eth0 --ip=192.168.23.42 --netmask=255.25.255.248
-  ngcp-network --set-interface=eth1 --ip=auto --netmask=auto
-
-Usage examples useful especially on sip:provider PRO systems:
-
-  ngcp-network --set-interface=lo --set-interface=eth0 --set-interface=eth1 --ip=auto --netmask=auto
-
-  ngcp-network --peer=sp2
-  ngcp-network --host=sp2 --peer=sp1
-
-  ngcp-network --set-interface=eth1 --ip=auto --netmask=auto
-  ngcp-network --move-from=lo --move-to=eth1 --type=ha_int
-
-  ngcp-network --set-interface=eth1 --host=sp2 --ip=192.168.255.252 --netmask=255.255.255.248 --type=ha_int
-
-Usage examples useful especially on sip:carrier systems:
-
-  ngcp-network --host=proxy2 --set-interface=eth0 --ip=192.168.10.42 --netmask=255.255.255.0
-  ngcp-network --clone-from=prx01a --clone-to=prx02a
 
 =head1 REQUIRED ARGUMENTS
 
@@ -878,6 +856,30 @@ Exit code 9 means the specified argument to a command line option is not valid.
 
 There's no configuration file for the ngcp-network script itself supported at the moment.
 The main configuration file ngcp-network operates on is /etc/ngcp-config/network.yml.
+
+=head1 EXAMPLE
+
+Usage examples useful especially on sip:provider CE systems:
+
+  ngcp-network --set-interface=eth0 --ip=192.168.23.42 --netmask=255.25.255.248
+  ngcp-network --set-interface=eth1 --ip=auto --netmask=auto
+
+Usage examples useful especially on sip:provider PRO systems:
+
+  ngcp-network --set-interface=lo --set-interface=eth0 --set-interface=eth1 --ip=auto --netmask=auto
+
+  ngcp-network --peer=sp2
+  ngcp-network --host=sp2 --peer=sp1
+
+  ngcp-network --set-interface=eth1 --ip=auto --netmask=auto
+  ngcp-network --move-from=lo --move-to=eth1 --type=ha_int
+
+  ngcp-network --set-interface=eth1 --host=sp2 --ip=192.168.255.252 --netmask=255.255.255.248 --type=ha_int
+
+Usage examples useful especially on sip:carrier systems:
+
+  ngcp-network --host=proxy2 --set-interface=eth0 --ip=192.168.10.42 --netmask=255.255.255.0
+  ngcp-network --clone-from=prx01a --clone-to=prx02a
 
 =head1 BUGS AND LIMITATIONS
 
