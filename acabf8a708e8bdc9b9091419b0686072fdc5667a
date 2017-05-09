@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a1371a2_44ec2ec8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-09T12:10:03Z",
+      "side": 1,
+      "message": "s/manu.*/manipulations/ - isn\u0027t it mainly about upgrades though?",
+      "revId": "acabf8a708e8bdc9b9091419b0686072fdc5667a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_44b54ecc",
+        "filename": "debian/ngcp-ngcpcfg.install",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-09T12:10:03Z",
+      "side": 1,
+      "message": "Wrong ordering",
+      "revId": "acabf8a708e8bdc9b9091419b0686072fdc5667a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_a4c9a25c",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-09T12:10:03Z",
+      "side": 1,
+      "message": "Missing customtt action here",
+      "revId": "acabf8a708e8bdc9b9091419b0686072fdc5667a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_84c62648",
+        "filename": "scripts/customtt",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-09T12:10:03Z",
+      "side": 1,
+      "message": "Please don\u0027t add boilerplate code :)",
+      "revId": "acabf8a708e8bdc9b9091419b0686072fdc5667a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_64e7aae5",
+        "filename": "scripts/customtt",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-09T12:10:03Z",
+      "side": 1,
+      "message": "The \"$*\" is not used, nor?",
+      "revId": "acabf8a708e8bdc9b9091419b0686072fdc5667a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
