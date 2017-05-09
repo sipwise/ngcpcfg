@@ -208,6 +208,29 @@ fi
 ## }}}
 
 ## functions {{{
+get_normalized_file() {
+  local normalized_filename="$1"
+
+  [ -z "$1" ] && (echo "Error: missing normalized filename" >&2 ; exit 1)
+
+  if [ -n "${HA_FILE:-}" ] ; then
+    normalized_filename="${normalized_filename%${HA_FILE}}"
+  fi
+
+  if [ -n "${HOST_FILE:-}" ] ; then
+    normalized_filename="${normalized_filename%${HOST_FILE}}"
+  fi
+
+  if [ -n "${PAIR_FILE:-}" ] ; then
+    normalized_filename="${normalized_filename%${PAIR_FILE}}"
+  fi
+
+  normalized_filename="${normalized_filename%.customtt.tt2}"
+  normalized_filename="${normalized_filename%.tt2}"
+
+  echo "$normalized_filename"
+}
+
 generate_template_list() {
   [ -n "$TEMPLATE_POOL_BASE" ] || return 1
 
@@ -236,22 +259,7 @@ generate_template_list() {
   # foo.customtt.tt2.hostname > foo.customtt.tt2.pairname > foo.customtt.tt2.spX > foo.customtt.tt2 > foo.tt2.hostname > foo.tt2.pairname > foo.tt2.spX > foo.tt2
   for line in $(cat ${filelist_prepared}); do
 
-    normalized_filename="$line"
-
-    if [ -n "${HA_FILE:-}" ] ; then
-      normalized_filename="${normalized_filename%${HA_FILE}}"
-    fi
-
-    if [ -n "${HOST_FILE:-}" ] ; then
-      normalized_filename="${normalized_filename%${HOST_FILE}}"
-    fi
-
-    if [ -n "${PAIR_FILE:-}" ] ; then
-      normalized_filename="${normalized_filename%${PAIR_FILE}}"
-    fi
-
-    normalized_filename="${normalized_filename%.customtt.tt2}"
-    normalized_filename="${normalized_filename%.tt2}"
+    normalized_filename=get_normalized_file "$line"
 
     # foo.custom.tt2.hostname
     if [ -n "${HOST_FILE:-}" ] ; then
@@ -312,7 +320,7 @@ generate_template_list() {
   done
 
   # output file list, make sure we provide the file names just once
-  sort -u ${filelist_final}
+  sort -u "${filelist_final}"
 
   if [ -n "${DEBUG:-}" ] ; then
     # send to stderr since stdout is used from outside
