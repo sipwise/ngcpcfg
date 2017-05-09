@@ -347,6 +347,11 @@ given hosts only. If no host has has been specified then the hosts specified in
 _/etc/ngcp-config/systems.cfg_ are used.
 Note: This option is available in the High Availability setup only.
 
+  **clean** [--garbage]
+
+Clean ngcpcfg from not-yet committed/applied changes, reset all git stashes if any.
+Option '--garbage' removes old garbage template files like .dpkg-dist,.dpkg-old,.dpkg-new.
+
   **services** [--dry-run]::
 
 Execute any defined service actions for modified configuration files. If the
