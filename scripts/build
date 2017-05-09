@@ -11,12 +11,12 @@ FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
 HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
 SCRIPTS="${SCRIPTS:-/usr/share/ngcp-ngcpcfg/scripts/}"
 
-if ! [ -r ${FUNCTIONS}/main ] ; then
-  printf "Error: ${FUNCTIONS}/main could not be read. Exiting.\n" >&2
+if ! [ -r "${FUNCTIONS}"/main ] ; then
+  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}" >&2
   exit 1
 fi
 
-. ${FUNCTIONS}/main
+. "${FUNCTIONS}"/main
 
 # Sanity check the YAML and schema files.
 "${SCRIPTS}"/check
@@ -33,7 +33,7 @@ killall tt2-daemon 2>/dev/null || true
 rm -f /var/run/ngcpcfg.port
 
 # Start new tt2-daemon Perl process
-${HELPER}/tt2-daemon
+"${HELPER}"/tt2-daemon
 
 # Load all the configs in proper order and check their avialability and valid YAML syntax
 for f in ${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG:-} ${EXTRA_CONFIG_FILES:-} ${CONSTANTS_CONFIG:-} ; do
@@ -50,7 +50,7 @@ build_config_files() {
   for file in $(generate_template_list "$@") ; do
     log_debug "${HELPER}/build_config $file"
     "${HELPER}/build_config" "${file}"
-    RC=$(($RC + $?))
+    RC=$((RC + $?))
   done
 
   record_commit_id
@@ -73,7 +73,7 @@ else
 
   if [ -n "${EXTRA_CONFIG_FILES:-}" ] ; then
     for file in $EXTRA_CONFIG_FILES ; do
-      if git diff-index --name-only HEAD | grep -qe -- "$(basename $file)" ; then
+      if git diff-index --name-only HEAD | grep -qe -- "$(basename "$file")" ; then
 	log_debug "modification in EXTRA_CONFIG_FILES file $file found"
         trigger_rebuild=true
         break # no reason for further checks
@@ -82,11 +82,11 @@ else
   fi
 
   if git diff-index --name-only HEAD | grep \
-         -qe "$(basename $NGCPCTL_CONFIG)" \
-         -qe "$(basename $HOST_CONFIG)" \
-         -qe "$(basename $LOCAL_CONFIG)" \
-         -qe "$(basename $NETWORK_CONFIG)" \
-         -qe "$(basename $CONSTANTS_CONFIG)" ; then
+         -qe "$(basename "$NGCPCTL_CONFIG")" \
+         -qe "$(basename "$HOST_CONFIG")" \
+         -qe "$(basename "$LOCAL_CONFIG")" \
+         -qe "$(basename "$NETWORK_CONFIG")" \
+         -qe "$(basename "$CONSTANTS_CONFIG")" ; then
     log_debug "modification in main configuration file found"
     trigger_rebuild=true
   fi
@@ -108,9 +108,9 @@ else
 
         # drop HA file suffix of all registered nodes
         if [ -r /etc/ngcp-config/systems.cfg ] ; then
-          for host in $(cat /etc/ngcp-config/systems.cfg) ; do
-             build_file="${build_file%%.${host}}"
-           done
+          while IFS= read -r host ; do
+            build_file="${build_file%%.${host}}"
+          done < /etc/ngcp-config/systems.cfg
         fi
 
         build_file="${build_file%%.tt2}"
@@ -128,7 +128,7 @@ else
      done
 
      log_debug "Executing: build_config_files ${file_list}"
-     build_config_files ${file_list}
+     build_config_files "${file_list}"
   fi
 fi
 

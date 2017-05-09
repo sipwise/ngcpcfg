@@ -15,7 +15,7 @@ FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
 SCRIPTS="${SCRIPTS:-/usr/share/ngcp-ngcpcfg/scripts/}"
 
 if ! [ -r "${FUNCTIONS}/main" ] ; then
-  printf "Error: ${FUNCTIONS}/main could not be read. Exiting.\n" >&2
+  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}" >&2
   exit 1
 fi
 
@@ -29,7 +29,7 @@ if [[ "${1:-}" == "decrypt" ]] ; then
     fi
   }
 else
-  . ${FUNCTIONS}/main
+  . "${FUNCTIONS}"/main
 fi
 
 # helper functions
@@ -46,7 +46,7 @@ usage() {
   [ "${1:-}" = "1" ] && exec >&2
 
   printf "%s - Configuration Management System\n\n" "$PN"
-  printf "Usage: $PN <action> [<opts>]
+  printf "Usage: %s <action> [<opts>]
 
 Actions:
   check [<path>]      validate YAML configuration files
@@ -58,7 +58,7 @@ Actions:
   status [<opts>]     display status of configuration file
   log [<opts>]        show log of config changes
   show [<id>]         show latest config change (or <id> if specified)
-"
+" "$PN"
 
   # display only if ngcp-ngcpcfg-ha is available
   if [ -r /usr/share/ngcp-ngcpcfg/functions/ha_features ] ; then
@@ -91,9 +91,9 @@ Actions:
 }
 
 version() {
-  versinfo=$(dpkg-query -f '${Version}' -W ngcp-ngcpcfg 2>/dev/null)
+  versinfo=$(dpkg-query -f "\${Version}" -W ngcp-ngcpcfg 2>/dev/null)
   [ -n "${versinfo:-}" ] || versinfo='information not available'
-  printf "ngcpcfg, version ${versinfo}\n"
+  printf "ngcpcfg, version %s\n" "${versinfo}"
 }
 
 case ${1:-} in

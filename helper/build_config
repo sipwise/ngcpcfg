@@ -17,7 +17,7 @@ CONFIG_POOL="${CONFIG_POOL:-/etc}"
 FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
 HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
 
-. ${FUNCTIONS}/main
+. "${FUNCTIONS}"/main
 
 # main script
 
@@ -37,15 +37,15 @@ export output_file="${y}" # like /etc/mysql/my.cnf, export variable
 if [ -r "${NGCPCTL_MAIN}/templates/${output_file}.prebuild" ] ; then
   log_info "Executing prebuild for ${output_file}"
   bash "${NGCPCTL_MAIN}/templates/${output_file}.prebuild"
-elif [ -r "${NGCPCTL_MAIN}/templates/$(dirname ${output_file})/ngcpcfg.prebuild" ] ; then
+elif [ -r "${NGCPCTL_MAIN}/templates/$(dirname "${output_file}")/ngcpcfg.prebuild" ] ; then
   log_info "Executing prebuild for ${output_file}"
-  bash "${NGCPCTL_MAIN}/templates/$(dirname ${output_file})/ngcpcfg.prebuild"
+  bash "${NGCPCTL_MAIN}/templates/$(dirname "${output_file}")/ngcpcfg.prebuild"
 fi
 
 # if output directory does not exist yet, create it
-if ! [ -d "$(dirname ${output_file})" ] ; then
+if ! [ -d "$(dirname "${output_file}")" ] ; then
   umask 0022 # directory permissions should be '755'
-  mkdir -p "$(dirname ${output_file})"
+  mkdir -p "$(dirname "${output_file}")"
 fi
 
 # assume safe defaults
@@ -85,9 +85,9 @@ chmod a-w "${output_file}"
 if [ -r "${NGCPCTL_MAIN}/templates/${output_file}.postbuild" ] ; then
   log_info "Executing postbuild for ${output_file}"
   bash "${NGCPCTL_MAIN}/templates/${output_file}.postbuild"
-elif [ -r "${NGCPCTL_MAIN}/templates/$(dirname ${output_file})/ngcpcfg.postbuild" ] ; then
+elif [ -r "${NGCPCTL_MAIN}/templates/$(dirname "${output_file}")/ngcpcfg.postbuild" ] ; then
   log_info "Executing postbuild for ${output_file}"
-  bash "${NGCPCTL_MAIN}/templates/$(dirname ${output_file})/ngcpcfg.postbuild"
+  bash "${NGCPCTL_MAIN}/templates/$(dirname "${output_file}")/ngcpcfg.postbuild"
 fi
 
 exit $RC
