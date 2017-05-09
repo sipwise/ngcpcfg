@@ -274,6 +274,35 @@ shell globbing patterns - so argument 'mo..t' will match the files
 You can combine _<files_or_directories>_ and _<pattern>_ and use multiple
 arguments.
 
+  **clean** [--all] [--branches] [--force] [--help] [--reset-master] [--stashes] [--tracked-files] [--untracked-files]
+
+Clean ngcpcfg from not-yet committed/applied changes, reset git state and remove any possibly existing git stashes.
+Also it will propose to delete unnecessary git branches if available.
+Note: the action will (possibly) delete some files inside /etc/ngcp-config, it should be used with care!
+
+Option '--all' is an alias for '--branches' + '--reset-master' + '--stashes' + '--tracked-files' + '--untracked-files'.
+It should restore local /etc/ngcp-config in a clean state.
+Note: The option '--reset-master' is involved in the High Availability setup only.
+
+Option '--branches' will propose to clean all the unnecessary local git branches.
+Active branch will be switched to 'master'.
+
+Option '--force' will answer 'yes' automatically on all the cleanup questions.
+
+Option '--help' shows list of options for the action 'clean'.
+
+Option '--reset-master' will propose to back up local branch 'master' and restore branch 'master' from origin.
+It will effectively clean all locally committed and not-yet pushed changes.
+Note: Already pushed changes won't be removed while they can be reverted using 'git revert <commit>'.
+Note: This option is available in the High Availability setup only.
+
+Option '--stashed' will propose to clean all the changes in git stash.
+
+Option '--tracked-files' will reset cached git files and restored all tracked files to HEAD of branch master.
+
+Option '--untracked-files' will delete all untracked files available in /etc/ngcp-config/,
+including files ignored by /etc/ngcp-config/.gitignore
+
   **commit** [<commit_message>]::
 
 Commit all modified files in _/etc/ngcp-config_ and record changes in _/etc_ by
@@ -465,39 +494,6 @@ not reachable for the ngcpcfg system.
 
 How to fix: Make sure the system is up and running and reachable via ssh from
 the system where you are running the "pull" action.
-
-Error message:
-
-  error: Your local changes to 'config.yml' would be overwritten by merge. Aborting.
-
-Background: the file 'config.yml' (in this example) on the system where you are
-pushing to contains local modifications which are uncommitted yet. To avoid data
-damage the system can't resolve this situation automatically.
-
-How to fix:
-
-1) Throw away the changes on the remote system (where you are pushing to,
-important: your changes on the system where you are executing the commands will
-be gone!):
-
-  cd /etc/ngcp-config ; git checkout -- config.yml
-
-To get rid of *any* modified files (included added/removed files) the following
-commands will do the job (use with care and only execute it if you're aware of
-the consequences):
-
-  cd /etc/ngcp-config
-  git checkout -- .
-  git clean -xdf
-
-2) Resolve the merge conflict:
-
-  cd /etc/ngcp-config
-  git pull
-  $EDITOR config.yml # resolve conflict
-  ngcpcfg commit 'merge conflict on system sp2'
-  ngcpcfg pull # just to make sure
-  ngcpcfg push # push changes back to the other systems
 
 [[init-mgmt]]
 init-mgmt setup
