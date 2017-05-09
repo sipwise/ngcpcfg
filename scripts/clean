@@ -1,0 +1,329 @@
+#!/bin/bash
+# Purpose: clean ngcpcfg config/templates
+################################################################################
+
+set -e
+set -u
+
+# support testsuite
+FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
+HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
+SCRIPTS="${SCRIPTS:-/usr/share/ngcp-ngcpcfg/scripts/}"
+
+if ! [ -r "${FUNCTIONS}"/main ] ; then
+  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}" >&2
+  exit 1
+fi
+
+. "${FUNCTIONS}"/main
+
+cd "${NGCPCTL_MAIN}"
+
+## functions {{{
+clean_help() {
+  export TIME_FORMAT=''
+  log_info "Sample:"
+  log_info "  ngcpcfg clean [--all] [--branches] [--force] [--help] [--reset-master] [--stashes] [--tracked-files] [--untracked-files]"
+  log_info ""
+  log_info "Run 'man ngcpcfg' for more information."
+}
+
+request_confirmation() {
+  local result=1
+
+  if "${force:-false}" ; then
+    log_info "Forcing action due to option '--force'"
+    result=0
+  else
+    log_info_n "Please confirm 'yes' or 'no': "
+
+    # clearing STDIN
+    while read -r -t 0; do read -r; done
+
+    while true; do
+      read a
+      case "${a,,}" in
+        yes) result=0 ; break ;;
+        no) result=1 ; break ;;
+        *) log_info_n "Please answer 'yes' or 'no': " ;;
+      esac
+      unset a
+    done
+  fi
+
+  return "${result}"
+}
+
+clean_ensure_branch_master () {
+  local retval=0
+
+  log_info "Ensure local branch is 'master':"
+  log_debug "Call: compare_active_branch 'master'"
+
+  local current_branch
+  current_branch=$(compare_active_branch 'master')
+
+  if [ "${current_branch}" = 'master' ] ; then
+    log_info "OK: branch master active"
+  else
+    log_debug "git checkout master"
+    if git checkout master ; then
+      log_info "OK: checkouted branch master "
+    else
+      log_error "ERROR: Cannot checkout branch 'master', continue anyway"
+      retval=1
+    fi
+  fi
+
+  return "${retval}"
+}
+
+clean_tracked() {
+  local retval=0
+
+  log_info "Removing all local changes for tracked files (if any):"
+  log_debug "git reset --hard HEAD"
+  if git reset --hard HEAD ; then
+    log_info "OK: Done"
+  else
+    log_error "ERROR: Cannot reset local changes, continue anyway"
+    retval=1
+  fi
+
+  return "${retval}"
+}
+
+clean_untracked() {
+  local retval=0
+
+  log_info "Removing all untracked files (if any):"
+
+  local tmp
+  tmp=$(mktemp)
+
+  log_debug "git clean -n -f -d -x"
+  if ! git clean -n -f -d -x > "${tmp}" ; then
+    log_error "ERROR: Failed to collect list of untracked files, continue anyway"
+    retval=1
+
+  else
+    if [ "$(wc -l < "${tmp}")" = "0" ] ; then
+      log_info "OK: No untracked files found, nothing to clean here."
+    else
+      log_info "Found untracked files in '${NGCPCTL_MAIN}':"
+      cat "${tmp}"
+
+      if ! request_confirmation ; then
+        log_info "Skipping cleanup of untracked files as requested."
+      else
+        log_debug "git clean -f -d -x"
+        if ! git clean -f -d -x ; then
+          log_error "ERROR: Failed to clean list of untracked files, continue anyway"
+        fi
+      fi
+    fi
+  fi
+
+  rm -f "${tmp}"
+  return "${retval}"
+}
+
+clean_stash() {
+  local retval=0
+
+  log_info "Removing all stashes (if any):"
+
+  local tmp
+  tmp=$(mktemp)
+
+  log_debug "git stash list"
+  if ! git stash list > "${tmp}" ; then
+    log_error "ERROR: Failed to collect list of stashes, continue anyway"
+    retval=1
+  else
+    if [ "$(wc -l < "${tmp}")" = "0" ] ; then
+      log_info "OK: No stashes found, nothing to clean here."
+    else
+      log_info "Found stashes in '${NGCPCTL_MAIN}':"
+      cat "${tmp}"
+
+      if ! request_confirmation ; then
+        log_info "Skipping stash cleanup as requested."
+      else
+        log_debug "git stash clear"
+        if ! git stash clear ; then
+          log_error "ERROR: Failed to clean git stashes, continue anyway"
+        fi
+      fi
+    fi
+  fi
+
+  rm -f "${tmp}"
+  return "${retval}"
+}
+
+clean_old_local_branches() {
+  local retval=0
+
+  log_info "Removing all old branches (if any):"
+
+  local tmp
+  tmp=$(mktemp)
+
+  log_debug "git branch"
+  if ! git branch > "${tmp}" ; then
+    log_error "ERROR: Failed to collect list of available branches"
+    retval=1
+
+  else
+    # do not delete active branch and branch master
+    sed -i -r '/^\* /d' "${tmp}"
+    sed -i -r '/ master$/d' "${tmp}"
+
+    if [ "$(wc -l < "${tmp}")" = "0" ] ; then
+      log_info "OK: No branches to delete found, nothing to clean here."
+    else
+      log_info "Found branches to be removed:"
+      cat "${tmp}"
+
+      if ! request_confirmation ; then
+        log_info "Skipping branches cleanup as requested."
+      else
+        while read -r branch ; do
+          log_debug "git branch -D '${branch}'"
+          if ! git branch -D "${branch}" ; then
+            log_error "ERROR: Failed to delete local branch '${branch}'"
+          fi
+        done < "${tmp}"
+      fi
+    fi
+  fi
+
+  rm -f "${tmp}"
+  return "${retval}"
+}
+
+clean_reset_master() {
+  local retval=0
+
+  log_debug "checking 'origin' availability using: git remote show origin"
+  if ! git remote show origin >/dev/null 2>&1 ; then
+    log_error "ERROR: Missing git origin 'origin'. Aborting"
+    return 1
+  fi
+
+  log_info "Should we restore branch 'master' from origin?"
+  if ! request_confirmation ; then
+    log_info "Skipping restore branch 'master' from origin as requested."
+    return 0
+  fi
+
+  log_info "Restoring branch 'master' from origin:"
+
+  local new_branch
+  new_branch="ngcpcfg_backup_$(date +%s)"
+
+  log_debug "git branch -m '${new_branch}'"
+  if ! git branch -m "${new_branch}" ; then
+    log_error "ERROR: Cannot rename current branch to '${new_branch}'. Aborting"
+    retval=1
+  else
+    log_info "OK: renamed current branch to '${new_branch}'. Feel free to clean it."
+    log_debug "git checkout master"
+    if git checkout -b master --track origin/master ; then
+      log_info "OK: created local branch 'master' to track 'origin/master'"
+    else
+      log_error "ERROR: Cannot checkout branch 'master', continue anyway"
+      retval=1
+    fi
+  fi
+
+  return "${retval}"
+}
+
+## }}}
+
+RC=0
+branches=false
+force=false
+help=false
+reset_master=false
+stashes=false
+tracked_files=false
+untracked_files=false
+
+clean_options="all,branches,force,help,reset-master,stashes,tracked-files,untracked-files"
+_opt_temp=$(getopt --name "$0" -o +h --long ${clean_options} -- "$@")
+if [ $? -ne 0 ]; then
+  log_error "Try 'ngcpcfg clean --help' for more information." >&2
+  exit 1
+fi
+eval set -- "${_opt_temp}"
+
+[ "$1" = "--" ] && help=true
+
+while : ; do
+  case "$1" in
+    --all)
+      branches=true
+      reset_master=true
+      stashes=true
+      tracked_files=true
+      untracked_files=true
+      ;;
+    --branches)        branches=true        ;;
+    --force)           force=true           ;;
+    --help)            help=true            ;;
+    --reset-master)    reset_master=true    ;;
+    --stashes)         stashes=true         ;;
+    --tracked-files)   tracked_files=true   ;;
+    --untracked-files) untracked_files=true ;;
+    --) shift ; break ;;
+    *) log_error "ERROR: Unknown option '$1'" >&2 ; exit 1 ;;
+  esac
+  shift
+done
+
+if ${help} ; then
+  clean_help
+  exit 0
+fi
+
+if [ ! -f "${FUNCTIONS}/ha_features" ] ; then
+  log_debug "Skip function 'clean_reset_master'. It is for HA installation only."
+  reset_master=false
+fi
+
+if ! clean_ensure_branch_master ; then
+  exit 1
+fi
+
+if ${tracked_files} ; then
+    clean_tracked || RC=$((RC + $?))
+fi
+
+if ${untracked_files} ; then
+    clean_untracked || RC=$((RC + $?))
+fi
+
+if ${stashes} ; then
+    clean_stash || RC=$((RC + $?))
+fi
+
+if ${reset_master} ; then
+    clean_reset_master || RC=$((RC + $?))
+fi
+
+if ${branches} ; then
+    clean_old_local_branches || RC=$((RC + $?))
+fi
+
+if [ "${RC}" = "0" ] ; then
+  log_info "All operations were finished succesfully. Good to be clean!"
+else
+  log_error "ERROR: some operations finished with an error, see details above."
+fi
+
+exit "${RC}"
+
+## END OF FILE #################################################################
