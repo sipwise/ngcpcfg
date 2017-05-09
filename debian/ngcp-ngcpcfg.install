@@ -18,6 +18,7 @@ sbin/ngcpcfg                usr/sbin/
 scripts/apply               usr/share/ngcp-ngcpcfg/scripts/
 scripts/build               usr/share/ngcp-ngcpcfg/scripts/
 scripts/check               usr/share/ngcp-ngcpcfg/scripts/
+scripts/clean               usr/share/ngcp-ngcpcfg/scripts/
 scripts/commit              usr/share/ngcp-ngcpcfg/scripts/
 scripts/diff                usr/share/ngcp-ngcpcfg/scripts/
 scripts/etckeeper           usr/share/ngcp-ngcpcfg/scripts/
