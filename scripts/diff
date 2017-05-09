@@ -6,12 +6,18 @@ set -e
 set -u
 set -o pipefail
 
-if ! [ -r /usr/share/ngcp-ngcpcfg/functions/main ] ; then
-  printf "Error: /usr/share/ngcp-ngcpcfg/functions/main could not be read. Exiting.\n" >&2
+# support testsuite
+FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
+HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
+SCRIPTS="${SCRIPTS:-/usr/share/ngcp-ngcpcfg/scripts/}"
+
+if ! [ -r "${FUNCTIONS}"/main ] ; then
+  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}" >&2
   exit 1
 fi
 
-. /usr/share/ngcp-ngcpcfg/functions/main
+timestamp_replacementchars=''
+.  "${FUNCTIONS}"/main
 
 # main script
 log_debug "cd $NGCPCTL_MAIN"
