@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a1371a2_c472de48",
+        "filename": "helper/check-for-mysql",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-09T11:50:09Z",
+      "side": 0,
+      "message": "YMMD !",
+      "revId": "46c0acdf220cb3ad0320f9a850b1d6f649867d88",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
