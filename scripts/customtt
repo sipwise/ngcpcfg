@@ -1,0 +1,102 @@
+#!/bin/bash
+# Purpose: details about customized templates as part of ngcpcfg framework
+################################################################################
+
+set -e
+set -u
+
+# support testsuite
+FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
+HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
+SCRIPTS="${SCRIPTS:-/usr/share/ngcp-ngcpcfg/scripts/}"
+
+if ! [ -r "${FUNCTIONS}"/main ] ; then
+  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}" >&2
+  exit 1
+fi
+
+. "${FUNCTIONS}"/main
+
+cd "${NGCPCTL_MAIN}"
+
+show_customtt_list() {
+  log_debug "find \"${TEMPLATE_POOL_BASE}\" -name \"*\.customtt\.tt2*\""
+  find "${TEMPLATE_POOL_BASE}" -name "*\.customtt\.tt2*"
+}
+
+show_customtt_effective() {
+  log_debug "generate_template_list | grep customtt"
+  generate_template_list | grep customtt
+}
+
+
+show_customtt_diff() {
+  local tmp
+  tmp=$(mktemp)
+  show_customtt_list | sed "s#${NGCPCTL_MAIN}##" | sed "s#^/##"> "${tmp}"
+
+  if [ "$(wc -l < "${tmp}")" = "0" ] ; then
+    echo "No customtt files found"
+    return
+  fi
+
+  while IFS= read -r line ; do
+    local normalized_filename
+    normalized_filename=$(get_normalized_file "${line}")
+
+    echo "diff -u '${normalized_filename}.tt2' '${line}'"
+    diff -u "${normalized_filename}.tt2" "${line}" || true
+    echo
+  done < "${tmp}"
+
+  rm -f "${tmp}"
+}
+
+case "${1:-}" in
+  --show)
+    show_customtt_list "$*"
+    ;;
+  --effective)
+    show_customtt_effective "$*"
+    ;;
+  --diff)
+    case "${2:-}" in
+      --git)
+        echo "TODO: ngcpcfg customtt --diff --git : $*"
+        ;;
+      --helper)
+        echo "TODO: ngcpcfg customtt --diff --helper : $*"
+        ;;
+      *)
+        show_customtt_diff "$*"
+        ;;
+    esac
+    ;;
+  --garbage)
+    echo "TODO: ngcpcfg customtt --garbage : $*"
+    ;;
+  --clean)
+    echo "TODO: ngcpcfg customtt --clean : $*"
+    ;;
+  --export)
+    echo "TODO: ngcpcfg customtt --export : $*"
+    ;;
+  --import)
+    case "${2:-}" in
+      --dry-run)
+        echo "TODO: ngcpcfg customtt --import --dry-run : $*"
+        ;;
+      *)
+        echo "TODO: ngcpcfg customtt --import : $*"
+        ;;
+    esac
+    echo "TODO: ngcpcfg customtt --import : $*"
+    ;;
+  *)
+    show_customtt_list "$*"
+    ;;
+esac
+
+exit 0
+
+## END OF FILE #################################################################
