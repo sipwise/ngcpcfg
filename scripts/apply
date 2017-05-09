@@ -16,7 +16,6 @@ if ! [ -r "${FUNCTIONS}"/main ] ; then
   exit 1
 fi
 
-timestamp_replacementchars=''
 . "${FUNCTIONS}"/main
 
 # based on check_local_state() from scripts/status

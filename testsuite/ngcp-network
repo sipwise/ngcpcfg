@@ -23,11 +23,11 @@ bailout() {
 trap bailout 1 2 3 3 6 9 14 15
 
 OK() {
-    printf "ok ${1}           ${2}\n"
+    printf "ok %s           %s\n" "$1" "$2"
 }
 
 FAIL() {
-    printf "not ok ${1}        ${2}\n"
+    printf "not ok %s        %s\n" "$1" "$2"
     RC=1
 }
 
@@ -112,7 +112,7 @@ assertEqualFiles testfiles/deployment.yml network-config/deployment.yml
 
 
 # TAP output
-printf "1..$count\n"
+printf "1..%s\n" "${count}"
 cat "$OUTPUT"
 
 bailout
