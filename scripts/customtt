@@ -1,0 +1,160 @@
+#!/bin/bash
+# Purpose: details about customized templates as part of ngcpcfg framework
+################################################################################
+
+set -e
+set -u
+
+# support testsuite
+FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
+HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
+SCRIPTS="${SCRIPTS:-/usr/share/ngcp-ngcpcfg/scripts/}"
+
+if ! [ -r "${FUNCTIONS}"/main ] ; then
+  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}" >&2
+  exit 1
+fi
+
+. "${FUNCTIONS}"/main
+
+[ -z "${NGCPCTL_MAIN}" ] && (log_error "undefined \$NGCPCTL_MAIN" >&2 ; exit 1)
+cd "${NGCPCTL_MAIN}"
+
+export TIME_FORMAT=''
+hostname=$(hostname)
+
+func_get_customtt_files() {
+  [ -z "${TEMPLATE_POOL_BASE}" ] && (log_error "undefined \$TEMPLATE_POOL_BASE" >&2 ; exit 1)
+  find "${TEMPLATE_POOL_BASE}" -name "*\.customtt\.tt2*"
+}
+
+show_customtt_list() {
+  local customtt_files
+  customtt_files=$(mktemp)
+
+  log_debug "find \"${TEMPLATE_POOL_BASE}\" -name \"*\.customtt\.tt2*\" > \"${customtt_files}\""
+  func_get_customtt_files > "${customtt_files}"
+
+  if [ "$(wc -l < "${customtt_files}")" = "0" ] ; then
+    log_info "No customtt files found"
+    rm -f "${customtt_files}"
+    return
+  fi
+
+  log_info "All customtt files:"
+  cat "${customtt_files}"
+
+  rm -f "${customtt_files}"
+}
+
+show_customtt_effective() {
+  local customtt_files
+  customtt_files=$(mktemp)
+
+  log_debug "generate_template_list | grep customtt"
+  generate_template_list | grep customtt > "${customtt_files}"
+
+  if [ "$(wc -l < "${customtt_files}")" = "0" ] ; then
+    log_info "No effective customtt files on '${hostname}'"
+    rm -f "${customtt_files}"
+    return
+  fi
+
+  log_info "Effective customtt files on '${hostname}':"
+  cat "${customtt_files}"
+
+  rm -f "${customtt_files}"
+}
+
+show_customtt_diff() {
+  local customtt_files
+  customtt_files=$(mktemp)
+  func_get_customtt_files > "${customtt_files}"
+
+  if [ "$(wc -l < "${customtt_files}")" = "0" ] ; then
+    log_info "No customtt files found"
+    rm -f "${customtt_files}"
+    return
+  fi
+
+  while IFS= read -r customtt2_file ; do
+    local normalized_file
+    local tt2_file
+
+    log_debug "calling get_normalized_file '${customtt2_file}'"
+    normalized_file="$(get_normalized_file "${customtt2_file}")"
+    log_debug "received '${normalized_file}'"
+
+    if [ "${normalized_file}" = "${customtt2_file}" ] ; then
+      log_warn "customtt '${customtt2_file}' is ignored on '${hostname}'"
+      log_debug "normalizing filename manually (customtt for another host)"
+      local global_customtt2_file=${customtt2_file//customtt\.tt2.*/customtt.tt2}
+
+      log_debug "calling again get_normalized_file '${global_customtt2_file}'"
+      normalized_file="$(get_normalized_file "${global_customtt2_file}")"
+      log_debug "received '${normalized_file}'"
+
+      if [ "${normalized_file}" = "${global_customtt2_file}" ] ; then
+        log_warn "no tt2 file found for customtt '${customtt2_file}'"
+        continue
+      fi
+    fi
+
+    tt2_file="${normalized_file}.tt2"
+
+    if [ ! -f "${tt2_file}" ] ; then
+      log_warn "missing tt2 file for customtt '${customtt2_file}'"
+      tt2_file="/dev/null"
+    fi
+
+    log_info "diff -u '${tt2_file}' '${customtt2_file}'"
+    log_debug "diff -u \"${tt2_file}\" \"${customtt2_file}\" || true"
+    diff -u "${tt2_file}" "${customtt2_file}" || true
+    log_info
+  done < "${customtt_files}"
+
+  rm -f "${customtt_files}"
+}
+
+case "${1:-}" in
+  --show)
+    show_customtt_list "$*"
+    ;;
+  --effective)
+    show_customtt_effective "$*"
+    ;;
+  --diff)
+    case "${2:-}" in
+      --git)
+        echo "TODO: ngcpcfg customtt --diff --git : $*"
+        ;;
+      --helper)
+        echo "TODO: ngcpcfg customtt --diff --helper : $*"
+        ;;
+      *)
+        show_customtt_diff "$*"
+        ;;
+    esac
+    ;;
+  --export)
+    echo "TODO: ngcpcfg customtt --export : $*"
+    ;;
+  --import)
+    case "${2:-}" in
+      --dry-run)
+        echo "TODO: ngcpcfg customtt --import --dry-run : $*"
+        ;;
+      *)
+        echo "TODO: ngcpcfg customtt --import : $*"
+        ;;
+    esac
+    echo "TODO: ngcpcfg customtt --import : $*"
+    ;;
+  *)
+    show_customtt_list "$*"
+    ;;
+esac
+
+exit 0
+
+## END OF FILE #################################################################
