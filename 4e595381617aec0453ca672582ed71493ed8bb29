@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3a1371a2_07a078f3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-09T14:12:07Z",
+      "side": 1,
+      "message": "s/commit/code/",
+      "revId": "4e595381617aec0453ca672582ed71493ed8bb29",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a1371a2_c75e6012",
         "filename": "scripts/diff",
         "patchSetId": 1
