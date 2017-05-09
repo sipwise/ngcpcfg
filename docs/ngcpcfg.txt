@@ -274,6 +274,24 @@ shell globbing patterns - so argument 'mo..t' will match the files
 You can combine _<files_or_directories>_ and _<pattern>_ and use multiple
 arguments.
 
+  **clean** [--to-master|--to-origin] [--force]
+
+Clean ngcpcfg from not-yet committed/applied changes, reset git state and remove git stashes if any.
+Also it will propose to delete unnecessary git branches if found any.
+Note: the action will (possibly) delete some files inside /etc/ngcp-config, it should be used with care!
+
+Option '--to-master' (default) will delete all local not-yet committed/applied changes to restore
+working folder in clean state while it will keep all local and not-yet pushed commits in place.
+It will also propose to clean all local untracked files even covered by /etc/ngcp-config/.gitignore.
+Active branch will be switched to 'master'.
+
+Option '--to-origin' will backup local branch 'master' and restore branch 'master' from origin.
+It will effecively clean all locally applied and not-yet pushed changes.
+Note: Alredy pushed changes cannot be removed while they can be reverted using 'git revert <commit>'.
+Note: This option is available in the High Availability setup only.
+
+Option '--force' will answer 'yes' automatically on all the cleanup questions.
+
   **commit** [<commit_message>]::
 
 Commit all modified files in _/etc/ngcp-config_ and record changes in _/etc_ by
