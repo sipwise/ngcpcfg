@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a1371a2_64fe8a6d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-09T12:17:00Z",
+      "side": 1,
+      "message": "IMO: s/for ngcpcfg.git// (since we know in which repos we are)",
+      "revId": "5ed287b5f915ccd086dd73a8ed7f51ed2909c3ad",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
