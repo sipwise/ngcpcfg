@@ -1,0 +1,220 @@
+#!/bin/bash
+# Purpose: details about customized templates as part of ngcpcfg framework
+################################################################################
+
+set -e
+set -u
+
+# support testsuite
+FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
+HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
+SCRIPTS="${SCRIPTS:-/usr/share/ngcp-ngcpcfg/scripts/}"
+
+if ! [ -r "${FUNCTIONS}"/main ] ; then
+  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}" >&2
+  exit 1
+fi
+
+. "${FUNCTIONS}"/main
+
+[ -z "${NGCPCTL_MAIN}" ] && (log_error "undefined \$NGCPCTL_MAIN" >&2 ; exit 1)
+cd "${NGCPCTL_MAIN}"
+
+export TIME_FORMAT=''
+hostname=$(hostname)
+
+## functions {{{
+customtt_help() {
+  echo "TODO: ngcpcfg customtt [--effective] [--diff [--diff-on-apply]]"
+  echo "TODO: ngcpcfg customtt --import [--dry-run]"
+  echo "TODO: ngcpcfg customtt --import"
+}
+
+customtt_get_files() {
+  [ -z "${TEMPLATE_POOL_BASE}" ] && (log_error "undefined \$TEMPLATE_POOL_BASE" >&2 ; exit 1)
+  find "${TEMPLATE_POOL_BASE}" -name "*\.customtt\.tt2*"
+}
+
+customtt_show_list() {
+  local customtt_files
+  customtt_files=$(mktemp)
+
+  log_debug "find \"${TEMPLATE_POOL_BASE}\" -name \"*\.customtt\.tt2*\" > \"${customtt_files}\""
+  customtt_get_files > "${customtt_files}"
+
+  if [ "$(wc -l < "${customtt_files}")" = "0" ] ; then
+    log_info "No customtt files found"
+    rm -f "${customtt_files}"
+    return 0
+  fi
+
+  log_info "All customtt files:"
+  log_cat "${customtt_files}"
+
+  if ${diff} ; then
+    log_info "Changes for all customtt comparing to templates:"
+    customtt_show_diff "${customtt_files}"
+  fi
+
+  rm -f "${customtt_files}"
+}
+
+customtt_show_effective() {
+  local customtt_files
+  customtt_files=$(mktemp)
+
+  log_debug "generate_template_list | grep customtt"
+  generate_template_list | grep customtt > "${customtt_files}"
+
+  if [ "$(wc -l < "${customtt_files}")" = "0" ] ; then
+    log_info "No effective customtt files on '${hostname}'"
+    rm -f "${customtt_files}"
+    return
+  fi
+
+  log_info "Effective customtt files on '${hostname}':"
+  log_cat "${customtt_files}"
+
+  if ${diff} ; then
+    log_info "Changes for effective customtt comparing to templates:"
+    customtt_show_diff "${customtt_files}"
+  fi
+
+  rm -f "${customtt_files}"
+}
+
+customtt_show_diff() {
+  local customtt_files="$1"
+  [ -r "${customtt_files}" ] || (log_error "cannot read '${customtt_files}'" >&2 ; exit 1)
+
+  while IFS= read -r customtt2_file ; do
+    local normalized_file
+    local tt2_file
+
+    log_info "Changes for customtt '${customtt2_file}':"
+
+    log_debug "calling get_normalized_file '${customtt2_file}'"
+    normalized_file="$(get_normalized_file "${customtt2_file}")"
+    log_debug "received '${normalized_file}'"
+
+    if [ "${normalized_file}" = "${customtt2_file}" ] ; then
+      log_warn "customtt '${customtt2_file}' is ignored on '${hostname}'"
+      log_debug "normalizing filename manually (customtt for another host)"
+      local global_customtt2_file=${customtt2_file//customtt\.tt2.*/customtt.tt2}
+
+      log_debug "calling again get_normalized_file '${global_customtt2_file}'"
+      normalized_file="$(get_normalized_file "${global_customtt2_file}")"
+      log_debug "received '${normalized_file}'"
+
+      if [ "${normalized_file}" = "${global_customtt2_file}" ] ; then
+        log_warn "no tt2 file found for customtt '${customtt2_file}'"
+        continue
+      fi
+    fi
+
+    tt2_file="${normalized_file}.tt2"
+
+    if [ ! -f "${tt2_file}" ] ; then
+      log_warn "missing tt2 file for customtt '${customtt2_file}'"
+      tt2_file="/dev/null"
+    fi
+
+    log_info "diff -u '${tt2_file}' '${customtt2_file}'"
+    log_debug "diff -u \"${tt2_file}\" \"${customtt2_file}\" || true"
+    diff -u "${tt2_file}" "${customtt2_file}" || true
+    log_info
+
+    if ${diff_on_apply} ; then
+      log_info "Changes on apply time for customtt '${customtt2_file}':"
+      customtt_show_diff_on_apply "${tt2_file}" "${customtt2_file}"
+    fi
+
+  done < "${customtt_files}"
+}
+
+customtt_show_diff_on_apply() {
+  local tt2_file="${1//${NGCPCTL_MAIN}/./}"
+  local customtt_file="${2//${NGCPCTL_MAIN}/./}"
+
+  local customtt_commit_id customtt_commit_name
+  log_debug "git log --format=%h --diff-filter=A -- ${customtt_file}"
+  customtt_commit_id=$(git log --format=%h --diff-filter=A -- "${customtt_file}")
+
+  log_debug "git log  --pretty=%s ${customtt_commit_id}"
+  customtt_commit_name=$(git log -1 --pretty=%s "${customtt_commit_id}")
+
+  log_info "Customtt has been added in commit: ${customtt_commit_id} ${customtt_commit_name}"
+
+  log_debug "git diff --no-color \"${customtt_commit_id}:${tt2_file}\" \"HEAD:${customtt_file}\""
+  git diff --no-color "${customtt_commit_id}:${tt2_file}" "HEAD:${customtt_file}"
+
+}
+
+customtt_action_show() {
+  local RC=0
+
+  if ${effective} ; then
+    customtt_show_effective || RC=$?
+  else
+    customtt_show_list || RC=$?
+  fi
+
+  return $RC
+}
+
+customtt_action_export() {
+  echo TODO
+}
+
+customtt_action_import() {
+  echo TODO
+}
+
+## }}}
+
+RC=0
+help=false
+effective=false
+diff=false
+diff_on_apply=false
+action="show"
+
+#TODO: sort me
+clean_options="help,effective,diff,export,import,diff-on-apply"
+_opt_temp=$(getopt --name "$0" -o +h --long ${clean_options} -- "$@")
+if [ $? -ne 0 ]; then
+  log_error "Try 'ngcpcfg customtt --help' for more information."
+  exit 1
+fi
+eval set -- "${_opt_temp}"
+
+while : ; do
+  case "$1" in
+    --help)  help=true ;;
+    --effective)  effective=true ;;
+    --diff) diff=true ;;
+    --diff-on-apply) diff_on_apply=true ;;
+    --show) action="show" ;;
+    --export) action="export" ;;
+    --import) action="import" ;;
+    --) shift ; break ;;
+    *) log_error "Unknown option '$1'" ; exit 1 ;;
+  esac
+  shift
+done
+
+if ${help} ; then
+  customtt_help
+  exit 0
+fi
+
+case "${action}" in
+  show) customtt_action_show || RC=$? ;;
+  export) customtt_action_export || RC=$? ;;
+  import) customtt_action_import || RC=$? ;;
+  *) log_error "Unknown customtt action '${action}'" ; exit 1 ;;
+esac
+
+exit ${RC}
+
+## END OF FILE #################################################################
