@@ -274,6 +274,35 @@ shell globbing patterns - so argument 'mo..t' will match the files
 You can combine _<files_or_directories>_ and _<pattern>_ and use multiple
 arguments.
 
+  **clean** [--all] [--branches] [--force] [--help] [--reset-master] [--stashes] [--tracked-files] [--untracked-files]
+
+Clean ngcpcfg from not-yet committed/applied changes, reset git state and remove any possibly existing git stashes.
+It also proposes to delete unnecessary git branches if available.
+Note: the action (possibly) deletes some files inside /etc/ngcp-config, it should be used with care!
+
+Option '--all' is an alias for '--branches' + '--reset-master' + '--stashes' + '--tracked-files' + '--untracked-files'.
+It should restore local /etc/ngcp-config in a clean state.
+Note: The option '--reset-master' is involved in the High Availability setup only.
+
+Option '--branches' proposes to clean all the unnecessary local git branches.
+Active branch will be switched to 'master'.
+
+Option '--force' answers 'yes' automatically on all the cleanup questions.
+
+Option '--help' shows list of options for the action 'clean'.
+
+Option '--reset-master' proposes to back up local branch 'master' and restore branch 'master' from origin.
+It will effectively clean all locally committed and not-yet pushed changes.
+Note: Already pushed changes won't be removed while they can be reverted using 'git revert <commit>'.
+Note: This option is available in the High Availability setup only.
+
+Option '--stashed' proposes to clean all the changes in git stash.
+
+Option '--tracked-files' resets cached git files and restore all tracked files to HEAD of branch master.
+
+Option '--untracked-files' deletes all untracked files available in /etc/ngcp-config/,
+including files ignored by /etc/ngcp-config/.gitignore
+
   **commit** [<commit_message>]::
 
 Commit all modified files in _/etc/ngcp-config_ and record changes in _/etc_ by
