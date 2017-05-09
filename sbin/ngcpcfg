@@ -58,6 +58,7 @@ Actions:
   status [<opts>]     display status of configuration file
   log [<opts>]        show log of config changes
   show [<id>]         show latest config change (or <id> if specified)
+  clean [<opts>]      clean ngcpcfg config/templates
 " "$PN"
 
   # display only if ngcp-ngcpcfg-ha is available
@@ -100,6 +101,7 @@ case ${1:-} in
   apply|\
   build|\
   check|\
+  clean|\
   commit|\
   decrypt|\
   diff|\

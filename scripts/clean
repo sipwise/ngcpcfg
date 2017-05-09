@@ -1,0 +1,85 @@
+#!/bin/bash
+# Purpose: clean ngcpcfg config/templates
+################################################################################
+
+set -e
+set -u
+
+# support testsuite
+FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
+HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
+SCRIPTS="${SCRIPTS:-/usr/share/ngcp-ngcpcfg/scripts/}"
+
+if ! [ -r "${FUNCTIONS}"/main ] ; then
+  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}" >&2
+  exit 1
+fi
+
+. "${FUNCTIONS}"/main
+
+cd "$NGCPCTL_MAIN"
+
+ngcpcfg_clean() {
+  git checkout master
+  git reset --hard HEAD
+  git stash clear
+}
+
+ngcpcfg_clean_garbage() {
+  local force="$1"
+  local regex="*.tt2.dpkg*"
+  local clean=false
+  local tmp
+  tmp=$(mktemp)
+
+  [ -z "${TEMPLATE_POOL_BASE}" ] && (echo "Error: undefined \$TEMPLATE_POOL_BASE" >&2 ; exit 1)
+
+  find "${TEMPLATE_POOL_BASE}" -name "${regex}" > "${tmp}"
+
+  if [ "$(wc -l < "${tmp}")" = "0" ] ; then
+    echo "No garbage files found, nothing to clean here."
+    rm -f "${tmp}"
+    return
+  fi
+
+  if [ "${force}" = "--force" ] ; then
+    clean=true
+  else
+    echo "The following garbage templates files will be removed:"
+    cat "${tmp}"
+    echo -n "Please confirm 'yes' or 'no': "
+
+    # clearing STDIN
+    while read -r -t 0; do read -r; done
+    while true; do
+      read a
+      case "$a" in
+        [Yy]*) clean=true ; break ;;
+        [Nn]*) clean=false ; break ;;
+        * ) echo -n "Please answer 'yes' or 'no': " ;;
+      esac
+      unset a
+    done
+  fi
+
+  if "${clean}" ; then
+    echo "Removing garbage files..."
+    find "${TEMPLATE_POOL_BASE}" -name "${regex}" -exec rm -f {} \;
+    echo "Done. Please execute 'ngcpcfg apply' to commit the changes."
+  else
+    echo "Doing nothing, please remove garbage files yourself."
+  fi
+}
+
+case "${1:-}" in
+  --garbage)
+    ngcpcfg_clean_garbage "$*"
+    ;;
+  *)
+    ngcpcfg_clean
+    ;;
+esac
+
+exit 0
+
+## END OF FILE #################################################################
