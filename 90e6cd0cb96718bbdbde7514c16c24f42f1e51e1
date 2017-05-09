@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a1371a2_04ccf634",
+        "filename": "helper/build_config",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-05-09T13:08:13Z",
+      "side": 1,
+      "message": "Why quote only the first part, and not the whole string?",
+      "revId": "90e6cd0cb96718bbdbde7514c16c24f42f1e51e1",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_44d6eec6",
+        "filename": "helper/check-for-mysql",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-05-09T13:08:13Z",
+      "side": 1,
+      "message": "Do we need the absolute pathname here? (I\u0027d argue we should use relative ones in general).",
+      "revId": "90e6cd0cb96718bbdbde7514c16c24f42f1e51e1",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_a401a23b",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-05-09T13:08:13Z",
+      "side": 1,
+      "message": "Full quote?",
+      "revId": "90e6cd0cb96718bbdbde7514c16c24f42f1e51e1",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_c4f81e4c",
+        "filename": "scripts/build",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-05-09T13:08:13Z",
+      "side": 1,
+      "message": "Why the -q for each -e? -q is global AFAIK?",
+      "revId": "90e6cd0cb96718bbdbde7514c16c24f42f1e51e1",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_2495b2e4",
+        "filename": "scripts/build",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-05-09T13:08:13Z",
+      "side": 1,
+      "message": "Useless use of cat here?",
+      "revId": "90e6cd0cb96718bbdbde7514c16c24f42f1e51e1",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_44a42e57",
+        "filename": "testsuite/build-check",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-05-09T13:08:13Z",
+      "side": 1,
+      "message": "Useless use of cat.",
+      "revId": "90e6cd0cb96718bbdbde7514c16c24f42f1e51e1",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
