@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3a1371a2_677ccc73",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-09T14:22:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a1371a2_07a078f3",
+      "revId": "4e595381617aec0453ca672582ed71493ed8bb29",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a1371a2_c75e6012",
         "filename": "scripts/diff",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-05-09T14:11:50Z",
       "side": 1,
       "message": "# support testsuite\nFUNCTIONS\u003d\"${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}\"\nHELPER\u003d\"${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}\"\nSCRIPTS\u003d\"${SCRIPTS:-/usr/share/ngcp-ngcpcfg/scripts/}\"\n\nis missing here now",
+      "revId": "4e595381617aec0453ca672582ed71493ed8bb29",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_c7b5c032",
+        "filename": "scripts/diff",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-09T14:22:40Z",
+      "side": 1,
+      "message": "Done, also make it identical to other \"scripts\"",
+      "parentUuid": "3a1371a2_c75e6012",
       "revId": "4e595381617aec0453ca672582ed71493ed8bb29",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
