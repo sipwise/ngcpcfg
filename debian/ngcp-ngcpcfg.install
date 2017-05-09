@@ -22,6 +22,7 @@ scripts/build               usr/share/ngcp-ngcpcfg/scripts/
 scripts/check               usr/share/ngcp-ngcpcfg/scripts/
 scripts/clean               usr/share/ngcp-ngcpcfg/scripts/
 scripts/commit              usr/share/ngcp-ngcpcfg/scripts/
+scripts/customtt            usr/share/ngcp-ngcpcfg/scripts/
 scripts/del                 usr/share/ngcp-ngcpcfg/scripts/
 scripts/diff                usr/share/ngcp-ngcpcfg/scripts/
 scripts/etckeeper           usr/share/ngcp-ngcpcfg/scripts/

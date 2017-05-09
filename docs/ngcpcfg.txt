@@ -484,6 +484,22 @@ system isn't available).
 
 Prints the value of <key> using ngcp config files as source.
 
+  **customtt** [<options>] [<customtt_file(s)>|<pattern>]::
+
+Show available customtt files and help manage them using <options>.
+Available options for action 'customtt':
+__--show__ to show list of all available customtt files (default),
+__--effective__ to show list of 'effective' customtt files only (on current host),
+__--diff [--git [--stats|--summary] [<file(s)>] | --helper]__ to show customtt diff for files
+(to the current .tt2 files by default). Other suboptions are available:
+  __--git__ to show diff for customtt files compared to .tt2 file(s)
+  in a moment of adding/committing customtt to ngcpcfg,
+  __--stats__ to show LoC stats for customtt only,
+  __--summary__ to show customtt summary only,
+  __--helper__ to generate customtt diff details using ngcp-customtt-diff-helper,
+__--export [<file>]__ to create tar archive with all customtt files
+__--import [--dry-run] <folder>__ to import new customtt files from <folder> (on ngcp-upgrade).
+
 Usage examples
 --------------
 

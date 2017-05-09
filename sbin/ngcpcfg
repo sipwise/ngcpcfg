@@ -51,6 +51,7 @@ Actions:
   build [<opts>]      generate/update configuration files
   services [<opts>]   execute service handlers for modified configuration files
   commit [<msg>]      commit and record changes (without pushing)
+  customtt [<opts>]   display available customtt and help manage them
   apply [<msg>]       a short-cut for build-services-commit
   diff [<opts>]       display pending configuration changes
   status [<opts>]     display status of configuration file
@@ -145,6 +146,7 @@ case ${1:-} in
   check|\
   clean|\
   commit|\
+  customtt|\
   decrypt|\
   diff|\
   encrypt|\
