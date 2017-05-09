@@ -1,0 +1,46 @@
+#!/bin/bash
+# Purpose: details about customized templates as part of ngcpcfg framework
+################################################################################
+
+set -e
+set -u
+
+# support testsuite
+FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
+HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
+
+if ! [ -r "${FUNCTIONS}"/main ] ; then
+  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}" >&2
+  exit 1
+fi
+
+. "${FUNCTIONS}"/main
+
+cd "$NGCPCTL_MAIN"
+
+show_customtt_list() {
+  local a=".sp[1,2]"
+  local b=".(web|db|prx|lb|slb)[0-9]+[a,b]?"
+  local awk_regexp=".*\.customtt\.tt2(${a}|${b})?$"
+  find "${TEMPLATE_POOL_BASE}" -regextype awk -iregex  "${awk_regexp}"
+}
+
+show_customtt_diff() {
+  echo TODO
+}
+
+case "${1:-}" in
+  show)
+    show_customtt_list "$*"
+    ;;
+  diff)
+    show_customtt_diff "$*"
+    ;;
+  *)
+    show_customtt_list "$*"
+    ;;
+esac
+
+exit 0
+
+## END OF FILE #################################################################
