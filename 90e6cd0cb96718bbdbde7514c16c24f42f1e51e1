@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3a1371a2_046876f4",
+        "filename": "helper/build_config",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-09T13:14:17Z",
+      "side": 1,
+      "message": "see explanation in sbin/ngcpcfg",
+      "parentUuid": "3a1371a2_04ccf634",
+      "revId": "90e6cd0cb96718bbdbde7514c16c24f42f1e51e1",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a1371a2_44d6eec6",
         "filename": "helper/check-for-mysql",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-05-09T13:08:13Z",
       "side": 1,
       "message": "Do we need the absolute pathname here? (I\u0027d argue we should use relative ones in general).",
+      "revId": "90e6cd0cb96718bbdbde7514c16c24f42f1e51e1",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_c4a65e53",
+        "filename": "helper/check-for-mysql",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-09T13:14:17Z",
+      "side": 1,
+      "message": "will be fixed is separate commit",
+      "parentUuid": "3a1371a2_44d6eec6",
       "revId": "90e6cd0cb96718bbdbde7514c16c24f42f1e51e1",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3a1371a2_e4a9da25",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-09T13:14:17Z",
+      "side": 1,
+      "message": "I have tried to keep the same style in repo:\n\nhelper/build_config\n20:. \"${FUNCTIONS}\"/main\n\nscripts/check\n17:. \"${FUNCTIONS}\"/main\n\nscripts/build\n19:. \"${FUNCTIONS}\"/main\n\nscripts/services\n17:. \"${FUNCTIONS}\"/main\n\nscripts/encrypt\n17:. \"${FUNCTIONS}\"/main\n\nscripts/customtt\n17:. \"${FUNCTIONS}\"/main\n\nscripts/apply\n19:. \"${FUNCTIONS}\"/main\n\nscripts/values\n39:. \"${FUNCTIONS}\"/main\n\nscripts/show\n17:. \"${FUNCTIONS}\"/main\n\nscripts/commit\n20:. \"${FUNCTIONS}\"/main\n\nscripts/etckeeper\n18:. \"${FUNCTIONS}\"/main\n\nscripts/status\n18:. \"${FUNCTIONS}\"/main\n\nscripts/initialise\n16:. \"${FUNCTIONS}\"/main\n\nscripts/log\n17:. \"${FUNCTIONS}\"/main",
+      "parentUuid": "3a1371a2_a401a23b",
+      "revId": "90e6cd0cb96718bbdbde7514c16c24f42f1e51e1",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a1371a2_c4f81e4c",
         "filename": "scripts/build",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-05-09T13:08:13Z",
       "side": 1,
       "message": "Why the -q for each -e? -q is global AFAIK?",
+      "revId": "90e6cd0cb96718bbdbde7514c16c24f42f1e51e1",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_84ac6637",
+        "filename": "scripts/build",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-09T13:14:17Z",
+      "side": 1,
+      "message": "It can be discussed and changed as separate commit, it is for shellcheck to be safe here :-) ACK?",
+      "parentUuid": "3a1371a2_c4f81e4c",
       "revId": "90e6cd0cb96718bbdbde7514c16c24f42f1e51e1",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "3a1371a2_44bb8e72",
+        "filename": "scripts/build",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-09T13:14:17Z",
+      "side": 1,
+      "message": "Done, PS3",
+      "parentUuid": "3a1371a2_2495b2e4",
+      "revId": "90e6cd0cb96718bbdbde7514c16c24f42f1e51e1",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a1371a2_44a42e57",
         "filename": "testsuite/build-check",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2017-05-09T13:08:13Z",
       "side": 1,
       "message": "Useless use of cat.",
+      "revId": "90e6cd0cb96718bbdbde7514c16c24f42f1e51e1",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_64b68a8c",
+        "filename": "testsuite/build-check",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-09T13:14:17Z",
+      "side": 1,
+      "message": "Done, PS3",
+      "parentUuid": "3a1371a2_44a42e57",
       "revId": "90e6cd0cb96718bbdbde7514c16c24f42f1e51e1",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
