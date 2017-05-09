@@ -101,6 +101,7 @@ case ${1:-} in
   build|\
   check|\
   commit|\
+  customtt|\
   decrypt|\
   diff|\
   encrypt|\
