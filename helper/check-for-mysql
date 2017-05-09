@@ -17,13 +17,18 @@ if [ $COUNT -le 0 ] ; then
   exit 1
 fi
 
-if ! [ -x /usr/sbin/mysqld ] || ! [ -x /usr/bin/mysqladmin ] ; then
-  echo "Error: mysqld or mysqladmin not present. Exiting." >&2
+if ! which mysqld >/dev/null 2>&1 ; then
+  echo "Error: mysqld is not present. Exiting." >&2
+  exit 1
+fi
+
+if ! which mysqladmin >/dev/null 2>&1 ; then
+  echo "Error: mysqladmin is not present. Exiting." >&2
   exit 1
 fi
 
 mysqld_get_param() {
-  /usr/sbin/mysqld --defaults-group-suffix=$SUFF --print-defaults 2>/dev/null \
+  mysqld --defaults-group-suffix=$SUFF --print-defaults 2>/dev/null \
     | tr " " "\n" \
     | grep -- "--$1" \
     | tail -n 1 \
@@ -31,7 +36,7 @@ mysqld_get_param() {
 }
 
 mysqld_status () {
-  if /usr/bin/mysqladmin --defaults-group-suffix=$SUFF \
+  if mysqladmin --defaults-group-suffix=$SUFF \
     --defaults-file=/etc/mysql/debian.cnf ping 2>&1 ; then
     ping_alive=1
   else

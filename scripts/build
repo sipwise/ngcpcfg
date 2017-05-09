@@ -81,12 +81,12 @@ else
     done
   fi
 
-  if git diff-index --name-only HEAD | grep \
-         -qe "$(basename "$NGCPCTL_CONFIG")" \
-         -qe "$(basename "$HOST_CONFIG")" \
-         -qe "$(basename "$LOCAL_CONFIG")" \
-         -qe "$(basename "$NETWORK_CONFIG")" \
-         -qe "$(basename "$CONSTANTS_CONFIG")" ; then
+  if git diff-index --name-only HEAD | grep -q \
+         -e "$(basename "$NGCPCTL_CONFIG")" \
+         -e "$(basename "$HOST_CONFIG")" \
+         -e "$(basename "$LOCAL_CONFIG")" \
+         -e "$(basename "$NETWORK_CONFIG")" \
+         -e "$(basename "$CONSTANTS_CONFIG")" ; then
     log_debug "modification in main configuration file found"
     trigger_rebuild=true
   fi

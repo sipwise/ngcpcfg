@@ -6,12 +6,12 @@ set -e
 set -u
 set -o pipefail
 
-if ! [ -r /usr/share/ngcp-ngcpcfg/functions/main ] ; then
-  printf "Error: /usr/share/ngcp-ngcpcfg/functions/main could not be read. Exiting.\n" >&2
+if ! [ -r "${FUNCTIONS}"/main ] ; then
+  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}" >&2
   exit 1
 fi
 
-. /usr/share/ngcp-ngcpcfg/functions/main
+.  "${FUNCTIONS}"/main
 
 # main script
 log_debug "cd $NGCPCTL_MAIN"
@@ -24,14 +24,14 @@ git diff "$@"
 log_debug "git status --porcelain | awk '/^\?\? / {print \$2}'"
 if git status --porcelain | awk '/^\?\? / {print $2}' | grep -q . ; then
   log_info "* New but not yet registered files inside ${NGCPCTL_MAIN}:"
-  git status --porcelain | awk '/^\?\? / {print $2}' | sed "s/^/$timestamp_replacementchars/"
+  git status --porcelain | awk '/^\?\? / {print $2}' | sed "s/^/${timestamp_replacementchars:-}/"
 fi
 
 # deleted files
 log_debug "git status --porcelain | awk '/^D / {print \$2}'"
 if git status --porcelain | awk '/^D / {print $2}' | grep -q . ; then
   log_info "* Removed but not yet unregistered files inside ${NGCPCTL_MAIN}:"
-  git status --porcelain | awk '/^D / {print $2}' | sed "s/^/$timestamp_replacementchars/"
+  git status --porcelain | awk '/^D / {print $2}' | sed "s/^/${timestamp_replacementchars:-}/"
 fi
 
 ## END OF FILE #################################################################

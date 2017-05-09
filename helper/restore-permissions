@@ -22,6 +22,10 @@ if "${SKIP_NGCP_FUNCTIONS}" ; then
   log_errror () { echo "$@" >&2 ; }
   log_warn () { echo "$@" ; }
 else
+  if ! [ -r "${FUNCTIONS}"/main ] ; then
+    printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}" >&2
+    exit 1
+  fi
   . "${FUNCTIONS}/main"
 fi
 
