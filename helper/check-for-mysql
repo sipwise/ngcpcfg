@@ -12,7 +12,7 @@ if [ "$MYSQLID" = "2" ] ; then
   SUFF="2"
 fi
 
-if ! [ $COUNT -ge 0 2>/dev/null ] ; then
+if [ $COUNT -le 0 ] ; then
   echo "Usage: $0 <number_of_seconds> [<mysqlid>]" >&2
   exit 1
 fi
@@ -31,14 +31,17 @@ mysqld_get_param() {
 }
 
 mysqld_status () {
-  ping_output=$(/usr/bin/mysqladmin --defaults-group-suffix=$SUFF \
-    --defaults-file=/etc/mysql/debian.cnf ping 2>&1)
-  ping_alive=$(( ! $? ))
+  if /usr/bin/mysqladmin --defaults-group-suffix=$SUFF \
+    --defaults-file=/etc/mysql/debian.cnf ping 2>&1 ; then
+    ping_alive=1
+  else
+    ping_alive=0
+  fi
 
   ps_alive=0
   pidfile=$(mysqld_get_param pid-file)
 
-  if [ -f "$pidfile" ] && ps $(cat $pidfile) &>/dev/null ; then
+  if [ -f "$pidfile" ] && ps "$(cat "$pidfile")" &>/dev/null ; then
     ps_alive=1
   fi
 
@@ -51,7 +54,7 @@ mysqld_status () {
 }
 
 printf "Checking MySQL service status (for a maximum of %s seconds): " "$COUNT"
-for i in $(seq 1 $COUNT) ; do
+for _ in $(seq 1 $COUNT) ; do
   if mysqld_status check_alive warn; then
     printf "available.\n"
     exit 0
