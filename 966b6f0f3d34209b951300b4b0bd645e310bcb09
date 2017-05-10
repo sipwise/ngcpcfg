@@ -1,0 +1,412 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a1371a2_8a0f4f2e",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T15:48:05Z",
+      "side": 1,
+      "message": "I don\u0027t know what\u0027s the proper™ wording, but the \"remove git stashes if any\" feels wrong to me. How about:\n\n\"... and remove any possibly existing git stashes.\"\n\ninstead?",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_ea1c036d",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T15:48:05Z",
+      "side": 1,
+      "message": "this \"if found any\" also feels wrong to me here",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_2a261bbb",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T15:48:05Z",
+      "side": 1,
+      "message": "the \"[...] files even covered by\" is unclear IMO. what about something like \"[...] files, also ignoring standard ignore rules from /etc/ngcp-config/.gitignore\"?",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_4a2557aa",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T15:48:05Z",
+      "side": 1,
+      "message": "Is this HA (PRO/CARRIER) specific or not? Because the \"and not-yet pushed commits in place\" *is* HA specific. Maybe clarify that?",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_0a2b5f83",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T15:48:05Z",
+      "side": 1,
+      "message": "s/backup/back up/",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_6a20139c",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T15:48:05Z",
+      "side": 1,
+      "message": "s/cannot/won\u0027t/?",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_aa396bda",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T15:48:05Z",
+      "side": 1,
+      "message": "s/(old) not used/unused/?\n\nFor me \"old\" also includes files that aren\u0027t up2date, though that\u0027s not what \"clean\" is taking care of?",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_8a362fe6",
+        "filename": "scripts/clean",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T15:48:05Z",
+      "side": 1,
+      "message": "Just use:\n\n  return 0\nfi\n\nhere, then drop the following else/fi and drop the \"local result\u003d1, instead just \"return 1\" at the according place?",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_ea3363f4",
+        "filename": "scripts/clean",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T15:48:05Z",
+      "side": 1,
+      "message": "Please move the log_debug line straight before the current_branch\u003d$(...) so it\u0027s harder to oversight if any code is modified",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_ca3027eb",
+        "filename": "scripts/clean",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T15:48:05Z",
+      "side": 1,
+      "message": "s/checkouted/checked out/",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_0a523f13",
+        "filename": "scripts/clean",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T15:48:05Z",
+      "side": 1,
+      "message": "Why not drop this $retval completely in this function and just do \"return 1\" in the error case?",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_aa67abe9",
+        "filename": "scripts/clean",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T15:48:05Z",
+      "side": 1,
+      "message": "I think it\u0027s unclear what the \"continue anyway\" is supposed to mean. Either we make it a warning, or if we really consider it an error then exit 1 to properly handle/investigate it? (Same applies to further functions below)",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_2a4d7b73",
+        "filename": "scripts/clean",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T15:48:05Z",
+      "side": 1,
+      "message": "Why not drop this $retval completely in this function and just do \"return 1\" in the error case?",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_4a5c3726",
+        "filename": "scripts/clean",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T15:48:05Z",
+      "side": 1,
+      "message": "drop empty line?",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_6a577303",
+        "filename": "scripts/clean",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T15:48:05Z",
+      "side": 1,
+      "message": "When debugging such a situation it helps to have:\n\nif [ -n \"${DEBUG:-}\" ] ; then\n  log_debug \"Not removing temporary file ${tmp}\"\nelse\n   ...\n\nhere",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_aa404b36",
+        "filename": "scripts/clean",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T15:48:05Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_8a3d8fbe",
+        "filename": "scripts/clean",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T15:48:05Z",
+      "side": 1,
+      "message": "the \", continue anyway\" is missing here, by intention?\n(It\u0027s inconsistent through the file, see my comment above as well related to warn vs error)",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_ea4a4354",
+        "filename": "scripts/clean",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T15:48:05Z",
+      "side": 1,
+      "message": "empty line?",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_ca47874a",
+        "filename": "scripts/clean",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T15:48:05Z",
+      "side": 1,
+      "message": "there\u0027s no extended regex involved in any of the lines (regarding the -r switch), nor?",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_6a6e53cb",
+        "filename": "scripts/clean",
+        "patchSetId": 4
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T15:48:05Z",
+      "side": 1,
+      "message": "Drop the \"ERROR: \" from all the log_error invocations, the log_error function already provides that in a consistent style.",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_4a7397b1",
+        "filename": "scripts/clean",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T15:48:05Z",
+      "side": 1,
+      "message": "Drop the $retval usage in this function and just return 1 in the error conditions?",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_8a646fe6",
+        "filename": "scripts/clean",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T15:48:05Z",
+      "side": 1,
+      "message": "\u003e\u00262",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_ea61a3d4",
+        "filename": "scripts/clean",
+        "patchSetId": 4
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T15:48:05Z",
+      "side": 1,
+      "message": "strange indention?",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_ca5e6712",
+        "filename": "scripts/clean",
+        "patchSetId": 4
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T15:48:05Z",
+      "side": 1,
+      "message": "If the --origin option is present, all the other clean_tracker/clean_stash/..... shouldn\u0027t be executed, is that intended?",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
