@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "3a1371a2_ca8ca782",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-10T16:27:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a1371a2_ea1c036d",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a1371a2_2a261bbb",
         "filename": "docs/ngcpcfg.txt",
         "patchSetId": 4
@@ -47,6 +65,24 @@
       "writtenOn": "2017-05-10T15:48:05Z",
       "side": 1,
       "message": "the \"[...] files even covered by\" is unclear IMO. what about something like \"[...] files, also ignoring standard ignore rules from /etc/ngcp-config/.gitignore\"?",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_ea8fe373",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-10T16:27:09Z",
+      "side": 1,
+      "message": "Please check PS5 or better PS6",
+      "parentUuid": "3a1371a2_2a261bbb",
       "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "3a1371a2_8a92af9d",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-10T16:27:09Z",
+      "side": 1,
+      "message": "it is CE/PRO/Carrier, improved in PS5",
+      "parentUuid": "3a1371a2_4a2557aa",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a1371a2_0a2b5f83",
         "filename": "docs/ngcpcfg.txt",
         "patchSetId": 4
@@ -81,6 +135,24 @@
       "writtenOn": "2017-05-10T15:48:05Z",
       "side": 1,
       "message": "s/backup/back up/",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_aa95eb89",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-10T16:27:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a1371a2_0a2b5f83",
       "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "3a1371a2_4a81d749",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-10T16:27:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a1371a2_6a20139c",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a1371a2_aa396bda",
         "filename": "sbin/ngcpcfg",
         "patchSetId": 4
@@ -115,6 +205,24 @@
       "writtenOn": "2017-05-10T15:48:05Z",
       "side": 1,
       "message": "s/(old) not used/unused/?\n\nFor me \"old\" also includes files that aren\u0027t up2date, though that\u0027s not what \"clean\" is taking care of?",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_6a7c9373",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-10T16:27:09Z",
+      "side": 1,
+      "message": "Improved as\n\nclean /etc/ngcp-config folder configs/templates (see available options)",
+      "parentUuid": "3a1371a2_aa396bda",
       "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "3a1371a2_0aa07ff3",
+        "filename": "scripts/clean",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-10T16:27:09Z",
+      "side": 1,
+      "message": "I tried to follow concept \"one input point and one output\" while it looks really ugly with all this if/then...",
+      "parentUuid": "3a1371a2_8a362fe6",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a1371a2_ea3363f4",
         "filename": "scripts/clean",
         "patchSetId": 4
@@ -149,6 +275,24 @@
       "writtenOn": "2017-05-10T15:48:05Z",
       "side": 1,
       "message": "Please move the log_debug line straight before the current_branch\u003d$(...) so it\u0027s harder to oversight if any code is modified",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_6aa5b303",
+        "filename": "scripts/clean",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-10T16:27:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a1371a2_ea3363f4",
       "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
@@ -172,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "3a1371a2_4aaa77d5",
+        "filename": "scripts/clean",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-10T16:27:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a1371a2_ca3027eb",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a1371a2_0a523f13",
         "filename": "scripts/clean",
         "patchSetId": 4
@@ -183,6 +345,24 @@
       "writtenOn": "2017-05-10T15:48:05Z",
       "side": 1,
       "message": "Why not drop this $retval completely in this function and just do \"return 1\" in the error case?",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_aaae8be5",
+        "filename": "scripts/clean",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-10T16:27:09Z",
+      "side": 1,
+      "message": "tried to use  \"one input point and one output\", dropped",
+      "parentUuid": "3a1371a2_0a523f13",
       "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
@@ -206,6 +386,24 @@
     },
     {
       "key": {
+        "uuid": "3a1371a2_eab8832c",
+        "filename": "scripts/clean",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-10T16:27:09Z",
+      "side": 1,
+      "message": "removed confusing \"continue anyway\". replaced with return 1",
+      "parentUuid": "3a1371a2_aa67abe9",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a1371a2_2a4d7b73",
         "filename": "scripts/clean",
         "patchSetId": 4
@@ -217,6 +415,24 @@
       "writtenOn": "2017-05-10T15:48:05Z",
       "side": 1,
       "message": "Why not drop this $retval completely in this function and just do \"return 1\" in the error case?",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_cab5c732",
+        "filename": "scripts/clean",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-10T16:27:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a1371a2_2a4d7b73",
       "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
@@ -240,6 +456,24 @@
     },
     {
       "key": {
+        "uuid": "3a1371a2_2a829b52",
+        "filename": "scripts/clean",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-10T16:27:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a1371a2_4a5c3726",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a1371a2_6a577303",
         "filename": "scripts/clean",
         "patchSetId": 4
@@ -251,6 +485,24 @@
       "writtenOn": "2017-05-10T15:48:05Z",
       "side": 1,
       "message": "When debugging such a situation it helps to have:\n\nif [ -n \"${DEBUG:-}\" ] ; then\n  log_debug \"Not removing temporary file ${tmp}\"\nelse\n   ...\n\nhere",
+      "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_0a87df62",
+        "filename": "scripts/clean",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-10T16:27:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a1371a2_6a577303",
       "revId": "966b6f0f3d34209b951300b4b0bd645e310bcb09",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
