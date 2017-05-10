@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "3a1371a2_872108b7",
+        "filename": "scripts/clean",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T14:58:17Z",
+      "side": 1,
+      "message": "Unsure, since it depends on the behavior we want to have.\nSo needs extensive testing IMO :)",
+      "parentUuid": "3a1371a2_e7fb9c45",
+      "revId": "00dfe7551a6864802e3c51127a977d1f69ffad64",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a1371a2_a725240c",
         "filename": "scripts/clean",
         "patchSetId": 3
@@ -241,6 +259,24 @@
       "side": 1,
       "message": "then shellcheck claims on it.\nas \"local\" hides exit code of subshell as a result \u0027set -x\u0027 will NOT detect error if mktemp fail in $(subshell).",
       "parentUuid": "3a1371a2_e748bcce",
+      "revId": "00dfe7551a6864802e3c51127a977d1f69ffad64",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_e72efca4",
+        "filename": "scripts/clean",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T14:58:17Z",
+      "side": 1,
+      "message": "Ah https://github.com/koalaman/shellcheck/wiki/SC2155 - right",
+      "parentUuid": "3a1371a2_a75d244b",
       "revId": "00dfe7551a6864802e3c51127a977d1f69ffad64",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
