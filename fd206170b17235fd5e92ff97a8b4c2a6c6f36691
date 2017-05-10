@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a1371a2_67fe8c6d",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T07:21:54Z",
+      "side": 1,
+      "message": "Please move section to appropriate alphabetical ordering",
+      "revId": "fd206170b17235fd5e92ff97a8b4c2a6c6f36691",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_47039073",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T07:21:54Z",
+      "side": 1,
+      "message": "I don\u0027t understand line 383",
+      "revId": "fd206170b17235fd5e92ff97a8b4c2a6c6f36691",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_a7f7e48b",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T07:21:54Z",
+      "side": 1,
+      "message": "What\u0027s the use case of \"summary\"?",
+      "revId": "fd206170b17235fd5e92ff97a8b4c2a6c6f36691",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_87f46888",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T07:21:54Z",
+      "side": 1,
+      "message": "This is too technical/implementation specific, though it\u0027s unclear what it\u0027s supposed to be used for?",
+      "revId": "fd206170b17235fd5e92ff97a8b4c2a6c6f36691",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_e7f1dc96",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T07:21:54Z",
+      "side": 1,
+      "message": "What does old/garbage mean? In terms of *unused*? If so please use \"unused\" instead, because \"old\" as well as \"garbage\" have completely different meanings (at least to me). :)",
+      "revId": "fd206170b17235fd5e92ff97a8b4c2a6c6f36691",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
