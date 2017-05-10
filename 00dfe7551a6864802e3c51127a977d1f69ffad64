@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a1371a2_07307855",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T07:51:41Z",
+      "side": 1,
+      "message": "Please move to the according place for alphabetical ordering.\n\nMaybe it\u0027s worth mentioning that this action will actually (possibly) delete files inside /etc/ngcp-config, so it should be used with care?",
+      "revId": "00dfe7551a6864802e3c51127a977d1f69ffad64",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_c71ca0c4",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T07:51:41Z",
+      "side": 1,
+      "message": "Looking at the implementation \"--garbage\" removes *only* old template files, but doesn\u0027t reset git state, I\u0027d highlight that in the documentation.",
+      "revId": "00dfe7551a6864802e3c51127a977d1f69ffad64",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_6735ec45",
+        "filename": "scripts/clean",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T07:51:41Z",
+      "side": 1,
+      "message": "Does this have any effect if we\u0027re using \"git reset --hard HEAD\" in line 30 anyway?",
+      "revId": "00dfe7551a6864802e3c51127a977d1f69ffad64",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_873bc837",
+        "filename": "scripts/clean",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T07:51:41Z",
+      "side": 1,
+      "message": "s/clean/git clean/",
+      "revId": "00dfe7551a6864802e3c51127a977d1f69ffad64",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_473a7037",
+        "filename": "scripts/clean",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T07:51:41Z",
+      "side": 1,
+      "message": "Hm, option -x is not needed/relevant for us?",
+      "revId": "00dfe7551a6864802e3c51127a977d1f69ffad64",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_a725240c",
+        "filename": "scripts/clean",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T07:51:41Z",
+      "side": 1,
+      "message": "This will be unbound variable under \"set -u\" and if unset",
+      "revId": "00dfe7551a6864802e3c51127a977d1f69ffad64",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_e748bcce",
+        "filename": "scripts/clean",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T07:51:41Z",
+      "side": 1,
+      "message": "I\u0027d make this \"local tmp\u003d$(mktemp)\"",
+      "revId": "00dfe7551a6864802e3c51127a977d1f69ffad64",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_c745c0b4",
+        "filename": "scripts/clean",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T07:51:41Z",
+      "side": 1,
+      "message": "Please use log_error instead like we do elsewhere, like:\n\nif [ -z \"${TEMPLATE_BOOL_BASE}\" ] ; then\n  log_error \"Undefined \\$TEMPLATE_BOOL_BASE\"\n  exit 1\nfi\n\n(Though we already run under set -u anyway, jftr)",
+      "revId": "00dfe7551a6864802e3c51127a977d1f69ffad64",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_670ccc95",
+        "filename": "scripts/clean",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T07:51:41Z",
+      "side": 1,
+      "message": "According log_debug please",
+      "revId": "00dfe7551a6864802e3c51127a977d1f69ffad64",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_0717d8a4",
+        "filename": "scripts/clean",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T07:51:41Z",
+      "side": 1,
+      "message": "log_info",
+      "revId": "00dfe7551a6864802e3c51127a977d1f69ffad64",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_4711d0ab",
+        "filename": "scripts/clean",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T07:51:41Z",
+      "side": 1,
+      "message": "log_info (same for all the following echo)",
+      "revId": "00dfe7551a6864802e3c51127a977d1f69ffad64",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_8722a8ff",
+        "filename": "scripts/clean",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T07:51:41Z",
+      "side": 1,
+      "message": "log_debug please",
+      "revId": "00dfe7551a6864802e3c51127a977d1f69ffad64",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_e71f1cb6",
+        "filename": "scripts/clean",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-10T07:51:41Z",
+      "side": 1,
+      "message": "\"ngcpcfg apply\" does more than just \"commit\" :)",
+      "revId": "00dfe7551a6864802e3c51127a977d1f69ffad64",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
