@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a1371a2_aa768bd6",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-11T20:30:03Z",
+      "side": 0,
+      "message": "I\u0027m fine with removing this section, though are you sure users no longer run into the \"would be overwritten by merge\" situation? If so I\u0027m fine with dropping all of it, but if that situation (or similar) is still present I\u0027d prefer to document usage of the new \"clean\" action accordingly.",
+      "revId": "150d2a5e2ea0e118f2435c6d7e6ea2b6456bd212",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
