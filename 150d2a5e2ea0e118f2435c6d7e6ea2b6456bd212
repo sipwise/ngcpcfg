@@ -16,6 +16,24 @@
       "revId": "150d2a5e2ea0e118f2435c6d7e6ea2b6456bd212",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a1371a2_ed753d33",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-15T12:31:08Z",
+      "side": 0,
+      "message": "I am sure it will not happens due to mandatory stash/unstash process we have now. While let\u0027s remove those changes here to focus on code.",
+      "parentUuid": "3a1371a2_aa768bd6",
+      "revId": "150d2a5e2ea0e118f2435c6d7e6ea2b6456bd212",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
