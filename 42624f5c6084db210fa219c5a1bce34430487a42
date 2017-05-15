@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a1371a2_edbd3d04",
+        "filename": "lib/get_all_shared_names_by_role",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-15T09:13:01Z",
+      "side": 1,
+      "message": "\u003e put the sort here\nbut it is already here. Isn\u0027t it?",
+      "range": {
+        "startLine": 19,
+        "startChar": 1,
+        "endLine": 19,
+        "endChar": 17
+      },
+      "revId": "42624f5c6084db210fa219c5a1bce34430487a42",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
