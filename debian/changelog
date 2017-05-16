@@ -1,3 +1,24 @@
+ngcp-ngcpcfg (5.4.0.0+0~mr5.4.0.0) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [b475916] TT#13069 provide edr combined before-after alias fields
+  * [98d22be] TT#13754 pilot and subscriber primary alias fields for edr
+  * [46c0acd] TT#8162 provide source/destination_user_out cdr export fields
+
+  [ Guillem Jover ]
+  * [a0bdff8] TT#15450 Fix POD sections, markup and content
+  * [0999539] TT#15450 Further fix POD sections, markup and content
+
+  [ Alexander Lutay ]
+  * [6e554b5] TT#15824 Fix shellcheck warnings
+  * [150d2a5] TT#15824 Update code based on comments from previous code review
+  * [42624f5] TT#16162 Add lib/get_all_shared_names_by_role (extracted from mysql_values.cfg)
+  * [7800af7] TT#12952 Add 'ngcpcfg clean' action to simplify cleanups
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 16 May 2017 21:41:55 +0200
+
 ngcp-ngcpcfg (5.3.0.0+0~mr5.3.0.0) unstable; urgency=medium
 
   [ Rene Krenn ]
