@@ -1,0 +1,295 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+use Storable qw(dclone);
+use Getopt::Long qw(:config posix_default no_ignorecase auto_help auto_version);
+use Pod::Usage;
+use YAML::XS qw();
+use Kwalify;
+
+our $VERSION = 'UNRELEASED';
+
+sub miss_check
+{
+    my ($miss, $text) = @_;
+    my $errors = 0;
+
+    foreach my $id (sort keys %{$miss}) {
+        next unless exists $miss->{$id};
+
+        print { \*STDERR } "  - $text $id\n";
+        $errors++;
+    }
+
+    return $errors;
+}
+
+sub dupe_check
+{
+    my ($dupe, $text) = @_;
+    my $errors = 0;
+
+    foreach my $id (sort keys %{$dupe}) {
+        next if scalar @{$dupe->{$id}} <= 1;
+
+        print { \*STDERR } "  - $text $id (@{$dupe->{$id}})\n";
+        $errors++;
+    }
+
+    return $errors;
+}
+
+#
+# Main
+#
+
+my $network_file = '/etc/ngcp-config/network.yml';
+my $schema_path = '/usr/share/ngcp-cfg-schema/validate';
+
+GetOptions(
+    'n|network-file=s' => \$network_file,
+    's|schema-dir=s' => \$schema_path,
+) or pod2usage(2);
+
+my $schema_tmpl_head_file = "$schema_path/tmpl-network-head.yml";
+my $schema_tmpl_host_file = "$schema_path/tmpl-network-host.yml";
+my $schema_tmpl_iface_file = "$schema_path/tmpl-network-iface.yml";
+
+
+my $yaml = YAML::XS::LoadFile($network_file)
+    or die "cannot parse file $network_file";
+my $schema = YAML::XS::LoadFile($schema_tmpl_head_file)
+    or die "cannot parse network header schema template fragment";
+my $schema_host = YAML::XS::LoadFile($schema_tmpl_host_file)
+    or die "cannot parse network host schema template fragment";
+my $schema_iface = YAML::XS::LoadFile($schema_tmpl_iface_file)
+    or die "cannot parse network interface schema template fragment";
+
+# Data to track some manual out-of-schema validation.
+my %miss_peer;
+my %dupe_dbnode;
+my %dupe_ip;
+my %dupe_mac;
+
+# First pass to do an initial pre-fill.
+foreach my $hostname (sort keys %{$yaml->{hosts}}) {
+    my $host = $yaml->{hosts}->{$hostname};
+
+    # Manual checks.
+    if (defined $host->{dbnode}) {
+        push @{$dupe_dbnode{$host->{dbnode}}}, $hostname;
+    }
+
+    # Fill host map
+    my $hostmap = {
+        type => 'map',
+        mapping => dclone($schema_host->{hostmap}),
+    };
+    if ($hostname =~ m/^(?:self|sp[12]|(db|prx)01[ab])$/) {
+        $hostmap->{required} = 'yes';
+    } else {
+        $hostmap->{required} = 'no';
+    }
+
+    # Fill peer entry.
+    my $peermap = {
+        type => 'text',
+    };
+    if ($hostname =~ m/^(?:sp([12])|((?:db|web|lb|slb|prx)\d\d)([ab]))$/) {
+        my $peer;
+
+        $peermap->{required} = 'yes';
+
+        if (defined $1 and $1 eq '1') {
+            $peer = 'sp2';
+        } elsif (defined $1 and $1 eq '2') {
+            $peer = 'sp1';
+        } elsif (defined $3 and $3 eq 'a') {
+            $peer = "$2b";
+        } elsif (defined $3 and $3 eq 'b') {
+            $peer = "$2a";
+        }
+        $peermap->{enum} = [ $peer ];
+
+        # Manual check.
+        $miss_peer{$peer}++ unless exists $yaml->{hosts}->{$peer};
+    } else {
+        $peermap->{required} = 'no';
+    }
+    $hostmap->{mapping}->{peer} = $peermap;
+
+    # Fill the interface entries.
+    foreach my $iface (sort @{$host->{interfaces}}) {
+        # Manual interface checks.
+        if (defined $host->{$iface}->{ip} and
+            $host->{$iface}->{ip} ne '127.0.0.1') {
+            push @{$dupe_ip{$host->{$iface}->{ip}}}, "$hostname/$iface";
+        }
+        if (defined $host->{$iface}->{hwaddr} and
+            $host->{$iface}->{hwaddr} ne '00:00:00:00:00:00') {
+            push @{$dupe_mac{$host->{$iface}->{hwaddr}}}, "$hostname/$iface";
+        }
+
+        # Fill the interface.
+        my $ifacemap = {
+            type => 'map',
+            required => $iface eq 'lo' ? 'yes' : 'no',
+            mapping => dclone($schema_iface->{ifacemap}),
+        };
+
+        if ($iface =~ m/^bond/) {
+            $ifacemap->{mapping}->{bond_miimon}->{required} = 'yes';
+            $ifacemap->{mapping}->{bond_mode}->{required} = 'yes';
+            $ifacemap->{mapping}->{bond_slaves}->{required} = 'yes';
+        } elsif ($iface =~ m/^vlan/) {
+            $ifacemap->{mapping}->{vlan_raw_device}->{required} = 'yes';
+        }
+
+        $hostmap->{mapping}->{$iface} = $ifacemap;
+    }
+
+    # Commit the hostmap data.
+    $schema->{mapping}->{hosts}->{mapping}->{$hostname} = $hostmap;
+}
+
+# Second pass fixing up some of the schema, with the entire schema in place.
+foreach my $hostname (sort keys %{$yaml->{hosts}}) {
+    my $host = $yaml->{hosts}->{$hostname};
+    my $hostmap = $schema->{mapping}->{hosts}->{mapping}->{$hostname};
+
+    foreach my $iface (sort @{$host->{interfaces}}) {
+        foreach my $slave (split ' ', $host->{$iface}->{bond_slaves} // '') {
+            my $slavemap = $hostmap->{mapping}->{$slave};
+
+            # The bonded slave inerfaces do not require ip nor netmask.
+            $slavemap->{mapping}->{ip}->{required} = 'no';
+            $slavemap->{mapping}->{netmask}->{required} = 'no';
+        }
+    }
+}
+
+# Make it possible to dump the generated schema.
+if (defined $ENV{NGCP_KWALIFY_DUMP}) {
+    print YAML::XS::Dump($schema);
+}
+
+#
+# Validate the network.yml file dynamically.
+#
+
+if (defined $ENV{NGCP_KWALIFY_VERBOSE}) {
+    print { \*STDERR } "Checking $network_file\n"
+}
+
+my $errors = 0;
+
+eval {
+    Kwalify::validate($schema, $yaml);
+} or do {
+    print { \*STDERR } $@;
+    $errors++;
+};
+
+# Perform out-of-schema checks.
+$errors += miss_check(\%miss_peer, '[/hosts/<host>] Missing peer');
+$errors += dupe_check(\%dupe_dbnode, '[/hosts/<host>/dbnode] Duplicate dbnode index');
+$errors += dupe_check(\%dupe_ip, '[/hosts/<host>/<iface>/ip] Duplicate interface IP');
+$errors += dupe_check(\%dupe_mac, '[/hosts/<host>/<iface>/hwaddr] Duplicate interface MAC');
+
+exit 1 if $errors;
+
+1;
+
+# vim: ts=4 sw=4 et
+
+__END__
+
+=encoding utf-8
+
+=head1 NAME
+
+ngcp-network-validator - dynamically validates the network.yml file
+
+=head1 SYNOPSIS
+
+B<ngcp-network-validator> [I<option>...]
+
+=head1 DESCRIPTION
+
+B<This program> generates a schema at run-time to accurately validate this
+system specific network.yml, with the information gathered from the the
+same file.
+
+=head1 OPTIONS
+
+=over 8
+
+=item B<-n>, B<--network-file> I<yaml-file>
+
+The B<network.yml> file to validate.
+
+=item B<-s>, B<--schema-dir> I<directory>
+
+Set the schema directory to use containing the schema YAML validation
+templates.
+
+=item B<--help>
+
+Print a help message.
+
+=item B<--version>
+
+Print the prorgam version.
+
+=back
+
+=head1 EXIT STATUS
+
+=over 8
+
+=item B<0>
+
+The file validates correctly.
+
+=item B<1>
+
+The file has validation errors.
+
+=back
+
+=head1 ENVIRONMENT
+
+=over 8
+
+=item NGCP_KWALIFY_DUMP
+
+When set, dumps the dynamically generated schema to stdout.
+
+=item NGCP_KWALIFY_VERBOSE
+
+When set, enable verbose mode.
+
+=back
+
+=head1 AUTHOR
+
+Guillem Jover <gjover@sipwise.com>
+
+=head1 LICENSE
+
+Copyright © 2017 Sipwise GmbH, Austria
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.

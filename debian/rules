@@ -4,6 +4,10 @@
 # Uncomment this to turn on verbose mode.
 # export DH_VERBOSE=1
 
+SCRIPTS = \
+	$(CURDIR)/usr/sbin/ngcp-network \
+	$(CURDIR)/usr/sbin/ngcp-network-validator
+
 %:
 	dh $@
 
@@ -15,6 +19,8 @@ override_dh_auto_build:
 
 override_dh_install:
 	dh_install
-	test -r $(CURDIR)/usr/sbin/ngcp-network && \
-		sed -i -e "s/VERSION = 'UNRELEASED'/VERSION = '$(VERSION)'/" \
-		$(CURDIR)/usr/sbin/ngcp-network || true
+	for s in $(SCRIPTS); do \
+	  test -r "$$s" \
+	    && sed -i -e "s/VERSION = 'UNRELEASED'/VERSION = '$(VERSION)'/" "$$s" \
+	    || true; \
+	done
