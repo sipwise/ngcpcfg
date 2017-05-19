@@ -68,17 +68,27 @@ validate_config() {
   log_debug "Validating schema for main YAML files"
 
   for f in $config_files ; do
-    local schema
-    schema="/usr/share/ngcp-cfg-schema/validate/$(basename "${f}")"
+    local name
+    name="$(basename "${f}")"
 
-    if ! [ -f "${schema}" ] ; then
-      continue
-    fi
+    if [ "$name" = 'network.yml' ]; then
+      if ! ngcp-network-validator "$f"; then
+        log_error "Invalid schema detected for ${f}"
+        rc=1
+      fi
+    else
+      local schema
+      schema="/usr/share/ngcp-cfg-schema/validate/$(basename "${f}")"
 
-    if ! pkwalify -s -f "${schema}" "${f}" >/dev/null 2>&1 ; then
-      log_error "Invalid schema detected for ${f}"
-      pkwalify -f "${schema}" "${f}" >&2 || true
-      rc=1
+      if ! [ -f "${schema}" ] ; then
+        continue
+      fi
+
+      if ! pkwalify -s -f "${schema}" "${f}" >/dev/null 2>&1 ; then
+        log_error "Invalid schema detected for ${f}"
+        pkwalify -f "${schema}" "${f}" >&2 || true
+        rc=1
+      fi
     fi
   done
 
