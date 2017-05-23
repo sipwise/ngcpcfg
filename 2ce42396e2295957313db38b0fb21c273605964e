@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a106d94_b795508a",
+        "filename": "sbin/ngcp-network-validator",
+        "patchSetId": 5
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-23T12:23:38Z",
+      "side": 1,
+      "message": "s/the the/the/",
+      "revId": "2ce42396e2295957313db38b0fb21c273605964e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_f78fc873",
+        "filename": "sbin/ngcp-network-validator",
+        "patchSetId": 5
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-23T12:23:38Z",
+      "side": 1,
+      "message": "Maybe mention that it defaults to /etc/ngcp-config/network.yml if this option is unset?",
+      "revId": "2ce42396e2295957313db38b0fb21c273605964e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_d78c4c82",
+        "filename": "sbin/ngcp-network-validator",
+        "patchSetId": 5
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-23T12:23:38Z",
+      "side": 1,
+      "message": "Maybe mention the default also here?",
+      "revId": "2ce42396e2295957313db38b0fb21c273605964e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_9792d49d",
+        "filename": "sbin/ngcp-network-validator",
+        "patchSetId": 5
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-23T12:23:38Z",
+      "side": 1,
+      "message": "s/prorgam/program/",
+      "revId": "2ce42396e2295957313db38b0fb21c273605964e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
