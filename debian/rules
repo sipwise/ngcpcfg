@@ -22,3 +22,10 @@ override_dh_install:
 override_dh_auto_test:
 	mkdir -p /var/run
 	dh_auto_test
+	find $(CURDIR) -name pytest.xml || true
+	# /tmp/buildd/ngcp-ngcpcfg-5.4.0.0+0~mr5.4.0.0+0~20170526142007.254+jessie~1.gbp0a131e/results/pytest.xml 
+	find $(CURDIR) -name pytest.xml || true
+	find . -name pytest.xml || true
+	find / -name pytest.xml -exec echo cp {} /tmp/buildd/ \; || true
+
+
