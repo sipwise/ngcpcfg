@@ -1,0 +1,21 @@
+#!/bin/sh
+
+set -eu
+
+if ! ngcpcfg 2>&1 | grep -q 'Error: Configuration file' ; then
+  echo "Error: ngcpcfg doesn't detect missing configuration file(s)." >&2
+  ngcpcfg
+  exit 1
+fi
+
+touch /etc/ngcp-config/config.yml
+touch /etc/ngcp-config/constants.yml
+touch /etc/ngcp-config/network.yml
+
+mkdir /etc/ngcp-config/templates
+
+if ! ngcpcfg 2>&1 | grep -q 'Usage: ngcpcfg' ; then
+  echo "ngcpcfg usage information not displayed:" >&2
+  ngcpcfg
+  exit 1
+fi
