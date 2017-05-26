@@ -35,8 +35,15 @@ input_file="$1"       # like /etc/ngcp-config/templates/etc/mysql/my.cnf.tt2
   [ -n "${HOST_FILE:-}" ] && y=${y%%.tt2${HOST_FILE}} # drop trailing suffix '.tt2.hostname'
   y=${y%%.customtt}                                   # drop trailing suffix '.customtt'
 # }}}
-export output_file="${y}" # like /etc/mysql/my.cnf, export variable
-                          # for usage within {pre,post}build scripts
+#
+# export variable for usage within {pre,post}build scripts,
+# OUTPUT_DIRECTORY is used for testing
+if [ -n "${OUTPUT_DIRECTORY:-}" ] ; then
+  log_debug "Using output directory $OUTPUT_DIRECTORY"
+  export output_file="${OUTPUT_DIRECTORY}/${y}"
+else
+  export output_file="${y}"
+fi
 
 # pre-execution script in template store:
 if [ -r "${NGCPCTL_MAIN}/templates/${output_file}.prebuild" ] ; then

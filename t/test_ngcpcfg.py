@@ -1,6 +1,8 @@
 #!/usr/bin/env py.test-3
 
 import pytest
+import re
+import tempfile
 
 
 @pytest.mark.cmdline
@@ -22,8 +24,15 @@ def test_ngcpcfgcfg_ko(ngcpcfgcli):
 # until we've a mock/fixture for it
 @pytest.mark.mt_16391
 def test_simple_build_template_ok(ngcpcfgcli):
+    tmpdir = tempfile.mkdtemp(prefix='ngcp-', suffix='-pytest-output')
+
     out = ngcpcfgcli("build", "--ignore-branch-check",
                      "/etc/apt/apt.conf.d/71_no_recommended",
-                     env={'NGCP_PORTFILE': '/tmp/ngcpcfg.port'})
-    assert 'Generating /etc/apt/apt.conf.d/71_no_recommended: OK' \
-        in out.stdout
+                     env={
+                         'NGCP_PORTFILE': '/tmp/ngcpcfg.port',
+                         'OUTPUT_DIRECTORY': tmpdir,
+                         })
+    regex = re.compile(r"Generating " +
+                       tmpdir +
+                       r"//etc/apt/apt.conf.d/71_no_recommended: OK")
+    assert re.search(regex, out.stdout)
