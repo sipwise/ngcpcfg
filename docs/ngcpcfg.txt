@@ -381,6 +381,10 @@ _--dry-run_ option is present the services won't be executed but you'll be
 noticed which service files would be executed if being invoked without the
 _--dry-run__ option.
 
+  **set** <file> <option>=<value>::
+
+Set given <option> to <value> into <file>.
+
   **show** [<change_id>]::
 
 Display the change details for specified <change_id>. Show the latest change if
