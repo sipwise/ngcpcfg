@@ -23,5 +23,5 @@ override_dh_auto_test:
 	mkdir -p /var/run
 	dh_auto_test
 	find . -name pytest.xml -exec echo cp {} /tmp/buildd/ \; || true
-
-
+	ls /tmp/buildd/pytest.xml
+	tar acf /tmp/buildd/pytest.tgz /tmp/buildd/pytest.xml
