@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -eu
+
+echo Running autopkgtest
+echo "PATH=$PATH"
+which ngcpcfg || true
+if ngcpcfg 2>&1 | grep -q 'Usage: ngcpcfg' ; then
+  echo found
+  ngcpcfg || true
+else
+  echo not found
+  ngcpcfg || true
+fi
