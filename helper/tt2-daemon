@@ -45,11 +45,15 @@ sub get_server_port {
 
     binmode $server => ":encoding(utf8)";
 
-    open (my $PORTFILE, '>', '/var/run/ngcpcfg.port');
-    print $PORTFILE $server->sockport();
-    close ($PORTFILE);
-
-    return $server;
+    my $NGCP_PORTFILE = $ENV{'NGCP_PORTFILE'} //= '/var/run/ngcpcfg.port';
+    if (open (my $portfile, '>', "$NGCP_PORTFILE")) {
+        print $portfile $server->sockport();
+        close ($portfile);
+        return $server;
+    } else {
+        print "Can't write to $NGCP_PORTFILE\n"; # TODO
+        exit 1 ;
+    }
 }
 
 sub handle_connections {

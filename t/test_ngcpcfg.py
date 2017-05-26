@@ -23,6 +23,7 @@ def test_ngcpcfgcfg_ko(ngcpcfgcli):
 @pytest.mark.mt_16391
 def test_simple_build_template_ok(ngcpcfgcli):
     out = ngcpcfgcli("build", "--ignore-branch-check",
-                     "/etc/apt/apt.conf.d/71_no_recommended")
+                     "/etc/apt/apt.conf.d/71_no_recommended",
+                     env={'NGCP_PORTFILE': '/tmp/ngcpcfg.port'})
     assert 'Generating /etc/apt/apt.conf.d/71_no_recommended: OK' \
         in out.stdout

@@ -1,9 +1,13 @@
 #!/bin/bash
 
-if [ -r /var/run/ngcpcfg.port ] ; then
-  port=$(cat /var/run/ngcpcfg.port)
+if [ -z "${NGCP_PORTFILE:-}" ] ; then
+  NGCP_PORTFILE='/var/run/ngcpcfg.port'
+fi
+
+if [ -r "${NGCP_PORTFILE}" ] ; then
+  port=$(cat "${NGCP_PORTFILE}")
 else
-  echo "ERROR: Couldn't read file /var/run/ngcpcfg.port" >&2
+  echo "ERROR: Couldn't read file ${NGCP_PORTFILE}" >&2
   exit 1
 fi
 
