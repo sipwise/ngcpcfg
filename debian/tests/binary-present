@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -eu
+
+echo Running autopkgtest
+echo PATH=$PATH
+ngcpcfg 2>&1 | grep -q 'Usage: ngcpcfg'
