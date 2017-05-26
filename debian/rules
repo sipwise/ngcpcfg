@@ -22,3 +22,7 @@ override_dh_install:
 override_dh_auto_test:
 	mkdir -p /var/run
 	dh_auto_test
+	if [ -d /build/ ] ; then find $(CURDIR)/results/ -name pytest.xml -exec cp {} /build/ \; || true ; fi
+	if [ -d /build/ ] ; then find $(CURDIR)/results/ -name pytest.xml -exec cp {} /tmp/buildd/ \; || true ; fi
+	#find $(CURDIR)/results/ -name pytest.xml -exec cp {} /build/ \; || true
+	# find $(CURDIR) -name pytest.xml -exec echo cp {} $(BUILDDIR) \; || true
