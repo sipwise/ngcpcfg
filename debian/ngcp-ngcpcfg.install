@@ -20,11 +20,13 @@ scripts/build               usr/share/ngcp-ngcpcfg/scripts/
 scripts/check               usr/share/ngcp-ngcpcfg/scripts/
 scripts/clean               usr/share/ngcp-ngcpcfg/scripts/
 scripts/commit              usr/share/ngcp-ngcpcfg/scripts/
+scripts/del                 usr/share/ngcp-ngcpcfg/scripts/
 scripts/diff                usr/share/ngcp-ngcpcfg/scripts/
 scripts/etckeeper           usr/share/ngcp-ngcpcfg/scripts/
 scripts/initialise          usr/share/ngcp-ngcpcfg/scripts/
 scripts/log                 usr/share/ngcp-ngcpcfg/scripts/
 scripts/services            usr/share/ngcp-ngcpcfg/scripts/
+scripts/set                 usr/share/ngcp-ngcpcfg/scripts/
 scripts/show                usr/share/ngcp-ngcpcfg/scripts/
 scripts/status              usr/share/ngcp-ngcpcfg/scripts/
 scripts/values              usr/share/ngcp-ngcpcfg/scripts/
