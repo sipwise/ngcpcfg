@@ -319,6 +319,10 @@ doing the reverse operation of the _encrypt_ option.
 Note: This feature is only available if the ngcp-ngcpcfg-locker package is
 installed.
 
+  **del** <file> <option>::
+
+Delete given <option> in <file>.
+
   **diff** [<options_for_git_diff>]::
 
 Show changes between ngcpcfg's Git repository and the working tree inside
@@ -384,6 +388,10 @@ Execute any defined service actions for modified configuration files. If the
 _--dry-run_ option is present the services won't be executed but you'll be
 noticed which service files would be executed if being invoked without the
 _--dry-run__ option.
+
+  **set** <file> <option>=<value>::
+
+Set given <option> to <value> into <file>.
 
   **show** [<change_id>]::
 
