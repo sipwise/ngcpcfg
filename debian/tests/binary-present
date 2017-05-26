@@ -1,0 +1,5 @@
+#!/bin/sh
+
+set -eu
+
+ngcpcfg 2>&1 | grep -q 'Usage: ngcpcfg'
