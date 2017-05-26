@@ -59,6 +59,8 @@ Actions:
   log [<opts>]        show log of config changes
   show [<id>]         show latest config change (or <id> if specified)
   clean [<opts>]      clean /etc/ngcp-config folder configs/templates (see available options)
+  set [<opts>]        set YAML value for specific option into defined file
+  del [<opts>]        delete YAML option with value into defined file
 " "$PN"
 
   # display only if ngcp-ngcpcfg-ha is available
@@ -114,7 +116,9 @@ case ${1:-} in
   services|\
   show|\
   status|\
-  values)
+  values|\
+  set|\
+  del)
     action "$@" ;;
   --debug)         export DEBUG=1 ;      shift ; "$0" "$@" ;;
   --no-db-sync)    export NO_DB_SYNC=1 ; shift ; "$0" "$@" ;;
