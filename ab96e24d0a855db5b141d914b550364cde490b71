@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a106d94_8c6e46c8",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-29T13:29:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a106d94_b85d3d4b",
+      "range": {
+        "startLine": 62,
+        "startChar": 22,
+        "endLine": 62,
+        "endChar": 74
+      },
+      "revId": "ab96e24d0a855db5b141d914b550364cde490b71",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a106d94_985a014f",
         "filename": "sbin/ngcpcfg",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-29T11:30:25Z",
       "side": 1,
       "message": "\"Delete YAML option from file\" ?",
+      "range": {
+        "startLine": 63,
+        "startChar": 22,
+        "endLine": 63,
+        "endChar": 69
+      },
+      "revId": "ab96e24d0a855db5b141d914b550364cde490b71",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_2c791294",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-29T13:29:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a106d94_985a014f",
       "range": {
         "startLine": 63,
         "startChar": 22,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1a106d94_6c730ab2",
+        "filename": "scripts/del",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-29T13:29:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a106d94_f880558d",
+      "range": {
+        "startLine": 23,
+        "startChar": 29,
+        "endLine": 23,
+        "endChar": 37
+      },
+      "revId": "ab96e24d0a855db5b141d914b550364cde490b71",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a106d94_384aed83",
         "filename": "scripts/set",
         "patchSetId": 6
@@ -82,6 +154,30 @@
       "writtenOn": "2017-05-29T11:25:37Z",
       "side": 1,
       "message": "file is missed in example",
+      "range": {
+        "startLine": 23,
+        "startChar": 8,
+        "endLine": 23,
+        "endChar": 53
+      },
+      "revId": "ab96e24d0a855db5b141d914b550364cde490b71",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_ac64e2e5",
+        "filename": "scripts/set",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-29T13:29:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a106d94_384aed83",
       "range": {
         "startLine": 23,
         "startChar": 8,
