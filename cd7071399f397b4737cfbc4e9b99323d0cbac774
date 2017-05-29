@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a106d94_18657145",
+        "filename": "t/Dockerfile",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-29T09:09:35Z",
+      "side": 1,
+      "message": "ngcpcfg repo doesn\u0027t have -managedocker jenkins job, as a result docker image will not be build here.",
+      "revId": "cd7071399f397b4737cfbc4e9b99323d0cbac774",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
