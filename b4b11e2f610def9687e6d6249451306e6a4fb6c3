@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a106d94_b8253d0c",
+        "filename": "debian/tests/basic-binary",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-29T08:49:49Z",
+      "side": 1,
+      "message": "Honestly I didn\u0027t get this.\n\naccordingly to lines 11-13 we should have no YML files (we do create them using touch there).\n\nwhile in line 6-8 we will abort the script if grep is NOT notice  \u0027Error: Configuration file\u0027 (which will be printed if YMLs don\u0027t exist).\n\nError message will be: \"echo \"Assumed that /etc/ngcp-config/config.yml doesn\u0027t exist yet.\"\nWhich means for me \"aborted as config.yml is missing\".\n\nBut we are creating it in next step... \n\n\nBr...",
+      "revId": "b4b11e2f610def9687e6d6249451306e6a4fb6c3",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
