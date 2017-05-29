@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a106d94_7883c5cc",
+        "filename": "helper/tt2-daemon",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-29T08:58:51Z",
+      "side": 1,
+      "message": "maybe it should be $1 of the script and not a ENV?\nthen file can be defined on ngcpcfg via mktemp",
+      "range": {
+        "startLine": 48,
+        "startChar": 23,
+        "endLine": 48,
+        "endChar": 45
+      },
+      "revId": "f3158cafc89355cb46e2c2d500e7266f5b5ddd7b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_187e11e5",
+        "filename": "helper/tt2-daemon",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-29T08:58:51Z",
+      "side": 1,
+      "message": "do you need it here?",
+      "range": {
+        "startLine": 54,
+        "startChar": 48,
+        "endLine": 54,
+        "endChar": 55
+      },
+      "revId": "f3158cafc89355cb46e2c2d500e7266f5b5ddd7b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_588889e7",
+        "filename": "helper/tt2-wrapper",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-29T08:58:51Z",
+      "side": 1,
+      "message": "I believe you can remove 3-6 at all and use here:\n\nif [ -r \"${NGCP_PORTFILE:-/var/run/ngcpcfg.port}\" ] ; then\n\nor\n\nNGCP_PORTFILE_DEFAULT\u003d\"/var/run/ngcpcfg.port\"\nif [ -r \"${NGCP_PORTFILE:-NGCP_PORTFILE_DEFAULT}\" ] ; then\n\n\nwhile LGTM here.",
+      "revId": "f3158cafc89355cb46e2c2d500e7266f5b5ddd7b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
