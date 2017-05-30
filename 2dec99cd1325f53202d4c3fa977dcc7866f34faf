@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a106d94_efed2cf1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-30T11:33:17Z",
+      "side": 1,
+      "message": "Ah great!",
+      "parentUuid": "1a106d94_98696128",
+      "range": {
+        "startLine": 14,
+        "startChar": 12,
+        "endLine": 15,
+        "endChar": 14
+      },
+      "revId": "2dec99cd1325f53202d4c3fa977dcc7866f34faf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a106d94_f8769505",
         "filename": "helper/build_config",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-29T09:01:59Z",
       "side": 1,
       "message": "maybe such \u0027risky\u0027 variables should come from /etc/ngcp-config/ngcpcfg.cfg\nwhich is root writable only.",
+      "range": {
+        "startLine": 39,
+        "startChar": 11,
+        "endLine": 39,
+        "endChar": 27
+      },
+      "revId": "2dec99cd1325f53202d4c3fa977dcc7866f34faf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_2fbf44d2",
+        "filename": "helper/build_config",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-30T11:33:17Z",
+      "side": 1,
+      "message": "The point is that I don\u0027t want to rely nor modify /etc/ngcp-config/ngcpcfg.cfg, but use a temporary ngcpcfg.cfg for each single test.",
+      "parentUuid": "1a106d94_f8769505",
       "range": {
         "startLine": 39,
         "startChar": 11,
