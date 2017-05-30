@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a106d94_c5ae51e7",
+        "filename": "t/test_ngcpcfg.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-30T16:52:41Z",
+      "side": 1,
+      "message": "I am not sure what is this file?\n\nI mean, I show diff using \"ngcpcfg diff\", which will show nothing if file is not yet committed and/or file is outside /etc/ngcp-config\n\nI believe it works, otherwise -binaries will claim here. But I have no ideas how it works :-(",
+      "range": {
+        "startLine": 42,
+        "startChar": 47,
+        "endLine": 42,
+        "endChar": 58
+      },
+      "revId": "91b340533a14759b1b979ab81f4911cbd8fbd60b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
