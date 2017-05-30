@@ -28,8 +28,8 @@ WORKDIR /code/
 # % docker run --rm -i -t -v $(pwd)/..:/code:rw ngcpcfg-jessie:latest bash
 #
 # Use the existing docker image:
-# % docker pull docker1.mgm.sipwise.com/ngcpcfg-jessie
-# % docker run --rm -i -t -v $(pwd)/..:/code:rw docker1.mgm.sipwise.com/ngcpcfg-jessie:latest bash
+# % docker pull docker.mgm.sipwise.com/ngcpcfg-jessie
+# % docker run --rm -i -t -v $(pwd)/..:/code:rw docker.mgm.sipwise.com/ngcpcfg-jessie:latest bash
 #
 # Inside docker (the command is in history, just press UP button):
 #   ./t/testrunner
