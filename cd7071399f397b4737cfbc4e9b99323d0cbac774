@@ -34,6 +34,24 @@
       "revId": "cd7071399f397b4737cfbc4e9b99323d0cbac774",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_ef16ccf0",
+        "filename": "t/Dockerfile",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-30T11:30:07Z",
+      "side": 1,
+      "message": "ACK, https://gerrit.mgm.sipwise.com/#/c/13510/\n\nIs it correct that Dockerfile here just for manual tests execution?",
+      "parentUuid": "1a106d94_4f2c404b",
+      "revId": "cd7071399f397b4737cfbc4e9b99323d0cbac774",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }

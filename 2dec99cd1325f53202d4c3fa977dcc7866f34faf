@@ -34,6 +34,24 @@
       "revId": "2dec99cd1325f53202d4c3fa977dcc7866f34faf",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_afe33404",
+        "filename": "t/default-git-repository.tar.gz",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-30T11:30:07Z",
+      "side": 0,
+      "message": "tnx!",
+      "parentUuid": "1a106d94_6f2bfc30",
+      "revId": "2dec99cd1325f53202d4c3fa977dcc7866f34faf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
