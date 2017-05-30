@@ -52,6 +52,24 @@
       "revId": "cd7071399f397b4737cfbc4e9b99323d0cbac774",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_4f88c022",
+        "filename": "t/Dockerfile",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-30T11:44:08Z",
+      "side": 1,
+      "message": "Thanks for https://gerrit.mgm.sipwise.com/#/c/13510/!\n\nNope, that was only what I used for initial testing until I could get rid of root permissions, I\u0027d be more than happy if it could be used for manual testing as well as automated test execution!",
+      "parentUuid": "1a106d94_ef16ccf0",
+      "revId": "cd7071399f397b4737cfbc4e9b99323d0cbac774",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
