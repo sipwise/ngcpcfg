@@ -22,6 +22,30 @@
       "revId": "67084142c1d4d43bd432e4791e80435ce8513e67",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_8f5ab881",
+        "filename": "scripts/build",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-30T13:05:54Z",
+      "side": 1,
+      "message": "Thx, done",
+      "parentUuid": "1a106d94_f81fb5b5",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 39
+      },
+      "revId": "67084142c1d4d43bd432e4791e80435ce8513e67",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
