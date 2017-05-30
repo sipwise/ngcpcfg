@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a106d94_cf94b046",
+        "filename": "helper/tt2-daemon",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-30T11:42:10Z",
+      "side": 1,
+      "message": "Hm, I might be missing something, but what would this gives us? ngcpcfg binary could just be copied to /tmp/ and modified there, as well as the path to all functions, scripts + helpers?",
+      "parentUuid": "1a106d94_7883c5cc",
+      "range": {
+        "startLine": 48,
+        "startChar": 23,
+        "endLine": 48,
+        "endChar": 45
+      },
+      "revId": "f3158cafc89355cb46e2c2d500e7266f5b5ddd7b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a106d94_187e11e5",
         "filename": "helper/tt2-daemon",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-29T08:58:51Z",
       "side": 1,
       "message": "do you need it here?",
+      "range": {
+        "startLine": 54,
+        "startChar": 48,
+        "endLine": 54,
+        "endChar": 55
+      },
+      "revId": "f3158cafc89355cb46e2c2d500e7266f5b5ddd7b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_4fa1e0a8",
+        "filename": "helper/tt2-daemon",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-30T11:42:10Z",
+      "side": 1,
+      "message": "Ah right, this is something I wanted to verify, because its initial failure (that /var/run/ngcpcfg.port can\u0027t be written to in the old/original code) was very well hidden and stdout/stderr are being messed around in some of ngcpcfg internals (that\u0027s why also didn\u0027t go for just \"die ...\" here).\nWill verify and update accordingly, thanks for the reminder!",
+      "parentUuid": "1a106d94_187e11e5",
       "range": {
         "startLine": 54,
         "startChar": 48,
