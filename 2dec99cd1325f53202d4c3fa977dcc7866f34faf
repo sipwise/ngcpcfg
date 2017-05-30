@@ -16,6 +16,24 @@
       "revId": "2dec99cd1325f53202d4c3fa977dcc7866f34faf",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_6f2bfc30",
+        "filename": "t/default-git-repository.tar.gz",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-30T11:24:35Z",
+      "side": 0,
+      "message": "This is a plain stupid and initial git repos:\n\n  https://paste.mgm.sipwise.com/show/2697/\n\nIt\u0027s for easier usage with git/ngcpcfg testing, so we have a defined starting point for ngcpcfg repository testing. Not really much used yet (see test_add_file_to_default_repo in t/test_git.py as an example) and the tarball for sure will be modified over time, just should serve as a starting point.",
+      "parentUuid": "1a106d94_38602d35",
+      "revId": "2dec99cd1325f53202d4c3fa977dcc7866f34faf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }

@@ -16,6 +16,24 @@
       "revId": "cd7071399f397b4737cfbc4e9b99323d0cbac774",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_4f2c404b",
+        "filename": "t/Dockerfile",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-30T11:24:35Z",
+      "side": 1,
+      "message": "Yes that might be true, though the tests are already executed during ngcpcfg-binaries execution, so we can improve from here on then.",
+      "parentUuid": "1a106d94_18657145",
+      "revId": "cd7071399f397b4737cfbc4e9b99323d0cbac774",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
