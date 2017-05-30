@@ -16,6 +16,24 @@
       "revId": "b4b11e2f610def9687e6d6249451306e6a4fb6c3",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_cfcdd088",
+        "filename": "debian/tests/basic-binary",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-30T11:36:12Z",
+      "side": 1,
+      "message": "In line 5 we\u0027re checking that ngcpcfg invocation by default fails in initial run because an essential configuration file doesn\u0027t exist (yet).\n\nIn lines 11-13 we create the configuration files that need to exist so a call to \"ngcpcfg\" (without any further arguments) provides its Usage information.\n\nEmpty files are considered valid YML files.\n\nClear now?",
+      "parentUuid": "1a106d94_b8253d0c",
+      "revId": "b4b11e2f610def9687e6d6249451306e6a4fb6c3",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
