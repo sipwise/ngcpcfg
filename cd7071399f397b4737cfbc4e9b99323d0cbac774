@@ -70,6 +70,24 @@
       "revId": "cd7071399f397b4737cfbc4e9b99323d0cbac774",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_2f946436",
+        "filename": "t/Dockerfile",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-30T11:48:00Z",
+      "side": 1,
+      "message": "\u003e Nope,...\n\nThen I do not get it. -binaries job doesn\u0027t use Dockerfile.\nIt does \u0027make test\u0027 directly in building chroot.\nAlso I do not see another jenkins jobs which can trigger the tests here (using Dockerfile).\n\n\u003e as well as automated test execution!\n\nI believe you mean \"is the future\".",
+      "parentUuid": "1a106d94_4f88c022",
+      "revId": "cd7071399f397b4737cfbc4e9b99323d0cbac774",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
