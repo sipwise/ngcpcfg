@@ -88,6 +88,24 @@
       "revId": "cd7071399f397b4737cfbc4e9b99323d0cbac774",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_021dff66",
+        "filename": "t/Dockerfile",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-30T13:55:43Z",
+      "side": 1,
+      "message": "\u003e \u003e Nope,...\n \u003e \n \u003e Then I do not get it. -binaries job doesn\u0027t use Dockerfile.\n\nCorrect\n\n \u003e It does \u0027make test\u0027 directly in building chroot.\n\nExactly\n\n \u003e Also I do not see another jenkins jobs which can trigger the tests\n \u003e here (using Dockerfile).\n\nACK\n\n \u003e \u003e as well as automated test execution!\n \u003e \n \u003e I believe you mean \"is the future\".\n\nYes, the Dockerfile should/could be used for automated test execution in the future. :)\n(Currently we already have a unit-test jenkins job for ngcpcfg which takes care of testsuite executions, those should be moved towards pytests as well)",
+      "parentUuid": "1a106d94_2f946436",
+      "revId": "cd7071399f397b4737cfbc4e9b99323d0cbac774",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
