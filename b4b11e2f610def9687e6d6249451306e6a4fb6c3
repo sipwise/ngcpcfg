@@ -34,6 +34,24 @@
       "revId": "b4b11e2f610def9687e6d6249451306e6a4fb6c3",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_0f9fe860",
+        "filename": "debian/tests/basic-binary",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-30T11:43:08Z",
+      "side": 1,
+      "message": "Yes it is clear now. Tnx.\n\nI believe something like\n\n- echo \"Assumed that /etc/ngcp-config/config.yml doesn\u0027t exist yet.\" \u003e\u00262\n+ echo \"Error: ngcpcfg doesn\u0027t detect missing configuration file:\" \u003e\u00262\n\nwill improve readability here, just $0.05 still LGTM.",
+      "parentUuid": "1a106d94_cfcdd088",
+      "revId": "b4b11e2f610def9687e6d6249451306e6a4fb6c3",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
