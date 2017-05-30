@@ -134,6 +134,24 @@
       "revId": "f3158cafc89355cb46e2c2d500e7266f5b5ddd7b",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_cf7b1028",
+        "filename": "helper/tt2-wrapper",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-30T11:46:58Z",
+      "side": 1,
+      "message": "Good point, thx!",
+      "parentUuid": "1a106d94_588889e7",
+      "revId": "f3158cafc89355cb46e2c2d500e7266f5b5ddd7b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
