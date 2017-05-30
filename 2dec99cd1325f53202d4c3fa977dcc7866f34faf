@@ -93,6 +93,30 @@
       "revId": "2dec99cd1325f53202d4c3fa977dcc7866f34faf",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_2fa624c2",
+        "filename": "helper/build_config",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-30T11:39:52Z",
+      "side": 1,
+      "message": "Up 2 you here. Tnx.",
+      "parentUuid": "1a106d94_2fbf44d2",
+      "range": {
+        "startLine": 39,
+        "startChar": 11,
+        "endLine": 39,
+        "endChar": 27
+      },
+      "revId": "2dec99cd1325f53202d4c3fa977dcc7866f34faf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
