@@ -34,6 +34,29 @@
       "revId": "bd4ec37eb9a59b731c4886f57ef31bf9a0f81c48",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "facab960_02c14a2e",
+        "filename": "scripts/set",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-31T14:10:48Z",
+      "side": 1,
+      "message": "value\u003d\"${data/*\u003d/}\"\n\nif [ \"value\" \u003d \"true\" ] ; then\n # do something better, like:\n data\u003d\"\u0027true\u0027\"\n # or\n echo \"ERROR: ngcpcfg uses yes/no, instead of true/false\" \u003e\u00262\n exit 1\nfi",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 19
+      },
+      "revId": "bd4ec37eb9a59b731c4886f57ef31bf9a0f81c48",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
