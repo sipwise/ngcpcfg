@@ -22,6 +22,30 @@
       "revId": "91b340533a14759b1b979ab81f4911cbd8fbd60b",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "facab960_22d00e53",
+        "filename": "t/test_ngcpcfg.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-31T10:52:57Z",
+      "side": 1,
+      "message": "tmpdir is a so called python/pytest fixture, provided ready-to-use by pytest for us. It creates a temporary directory, specific for each single test case. This code-line means we\u0027ll have a temporary directory which includes a tmpfile.txt where the actual action takes place, so after the run it looks like:\n\nroot@47d372378bb9:/code# ls /tmp/pytest-0/test_set_action_generate_dicti0/set_action/\ntmpfile.txt\nroot@47d372378bb9:/code# cat /tmp/pytest-0/test_set_action_generate_dicti0/set_action/tmpfile.txt \n---\naaa:\n  bbb: 123\n\n\nWe do NOT operate with /etc/ngcp-config/ at all here, for at least the following reasons:\n\na) it\u0027s a system wide directory, where a normal user doesn\u0027t have according permissions (tests would require root permissions then and mess with system state)\nb) it\u0027s not safe for parallel runs (see https://pypi.python.org/pypi/pytest-xdist)",
+      "parentUuid": "1a106d94_c5ae51e7",
+      "range": {
+        "startLine": 42,
+        "startChar": 47,
+        "endLine": 42,
+        "endChar": 58
+      },
+      "revId": "91b340533a14759b1b979ab81f4911cbd8fbd60b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
