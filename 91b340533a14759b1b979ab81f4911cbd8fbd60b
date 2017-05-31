@@ -70,6 +70,30 @@
       "revId": "91b340533a14759b1b979ab81f4911cbd8fbd60b",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "facab960_426352b1",
+        "filename": "t/test_ngcpcfg.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-05-31T11:20:54Z",
+      "side": 1,
+      "message": "\u003e b) is not nice, while we are fast here for now... so lets see...\n\nWhat exactly is not nice?\nIt would NOT be safe to operate with /etc/ngcp-config/, the way my pytests are set up (by using temporary directories) *is* *safe* for parallel runs!",
+      "parentUuid": "facab960_c247621c",
+      "range": {
+        "startLine": 42,
+        "startChar": 47,
+        "endLine": 42,
+        "endChar": 58
+      },
+      "revId": "91b340533a14759b1b979ab81f4911cbd8fbd60b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
