@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "facab960_6226966a",
+        "filename": "debian/ngcp-ngcpcfg.install",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-31T12:05:48Z",
+      "side": 1,
+      "message": "Tnx for ths fix... I didn\u0027t notice it as final tuning was done using scp :-(\n\nShould we replace it with scripts/* ?",
+      "revId": "bd4ec37eb9a59b731c4886f57ef31bf9a0f81c48",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
