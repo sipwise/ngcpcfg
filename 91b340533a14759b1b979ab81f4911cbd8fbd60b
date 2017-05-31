@@ -94,6 +94,30 @@
       "revId": "91b340533a14759b1b979ab81f4911cbd8fbd60b",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "facab960_a2717e79",
+        "filename": "t/test_ngcpcfg.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-31T11:23:35Z",
+      "side": 1,
+      "message": "Ah I read it improperly. Nice to have pytest safe for parallel execution. Sure is not safe to use ngcpcfg in parallel... and support is asking us to find a protection here :-( as they and customer can request apply simultaneously on different nodes, etc.",
+      "parentUuid": "facab960_426352b1",
+      "range": {
+        "startLine": 42,
+        "startChar": 47,
+        "endLine": 42,
+        "endChar": 58
+      },
+      "revId": "91b340533a14759b1b979ab81f4911cbd8fbd60b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
