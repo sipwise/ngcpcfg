@@ -46,6 +46,30 @@
       "revId": "91b340533a14759b1b979ab81f4911cbd8fbd60b",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "facab960_c247621c",
+        "filename": "t/test_ngcpcfg.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-31T11:17:35Z",
+      "side": 1,
+      "message": "b) is not nice, while we are fast here for now... so lets see...\n\n\nI will try to write my test for next ngcpcfg feature:\nhttps://gerrit.mgm.sipwise.com/#/c/13131/\n\nTNX for explanation",
+      "parentUuid": "facab960_22d00e53",
+      "range": {
+        "startLine": 42,
+        "startChar": 47,
+        "endLine": 42,
+        "endChar": 58
+      },
+      "revId": "91b340533a14759b1b979ab81f4911cbd8fbd60b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
