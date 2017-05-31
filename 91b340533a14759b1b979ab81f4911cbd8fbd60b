@@ -142,6 +142,30 @@
       "revId": "91b340533a14759b1b979ab81f4911cbd8fbd60b",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "facab960_c2f5a2cc",
+        "filename": "t/test_ngcpcfg.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-31T12:02:36Z",
+      "side": 1,
+      "message": "This is what I told them on ngcpcfg training :-)",
+      "parentUuid": "facab960_e26b8683",
+      "range": {
+        "startLine": 42,
+        "startChar": 47,
+        "endLine": 42,
+        "endChar": 58
+      },
+      "revId": "91b340533a14759b1b979ab81f4911cbd8fbd60b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
