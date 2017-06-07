@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "dacfb570_0ac5df5a",
+        "filename": "debian/ngcp-ngcpcfg.install",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-06-07T11:48:10Z",
+      "side": 1,
+      "message": "I choose a) for now.",
+      "parentUuid": "dacfb570_cae3f703",
+      "revId": "bd4ec37eb9a59b731c4886f57ef31bf9a0f81c48",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "facab960_02c14a2e",
         "filename": "scripts/set",
         "patchSetId": 9
@@ -108,6 +126,30 @@
       "side": 1,
       "message": "Either we implement that properly or don\u0027t care or create a ticket to improve on that later, for me it\u0027s not a show-stopper right now, JFTR",
       "parentUuid": "facab960_02c14a2e",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 19
+      },
+      "revId": "bd4ec37eb9a59b731c4886f57ef31bf9a0f81c48",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dacfb570_caca176e",
+        "filename": "scripts/set",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-06-07T11:48:10Z",
+      "side": 1,
+      "message": "I am fine to implement it \"properly\" now.\nWhile which way is \"properly\" here? :-)  ERROR? or silent remapping?",
+      "parentUuid": "dacfb570_0aeebfec",
       "range": {
         "startLine": 37,
         "startChar": 0,
