@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "dacfb570_cae3f703",
+        "filename": "debian/ngcp-ngcpcfg.install",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-06-07T11:45:18Z",
+      "side": 1,
+      "message": "Right, that was the underlying reason for listing all of them explicitly. We either a) don\u0027t care about changing, or we b) list scripts/* and remove scripts/{encrypt,decrypt} in ngcp-ngcpcfg package explicitly, or c) move scripts/{encrypt,decrypt} to a different folder. I\u0027m fine with all three approaches. :)",
+      "parentUuid": "dacfb570_2a0543c2",
+      "revId": "bd4ec37eb9a59b731c4886f57ef31bf9a0f81c48",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "facab960_02c14a2e",
         "filename": "scripts/set",
         "patchSetId": 9
@@ -66,6 +84,30 @@
       "writtenOn": "2017-05-31T14:10:48Z",
       "side": 1,
       "message": "value\u003d\"${data/*\u003d/}\"\n\nif [ \"value\" \u003d \"true\" ] ; then\n # do something better, like:\n data\u003d\"\u0027true\u0027\"\n # or\n echo \"ERROR: ngcpcfg uses yes/no, instead of true/false\" \u003e\u00262\n exit 1\nfi",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 19
+      },
+      "revId": "bd4ec37eb9a59b731c4886f57ef31bf9a0f81c48",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dacfb570_0aeebfec",
+        "filename": "scripts/set",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-06-07T11:45:18Z",
+      "side": 1,
+      "message": "Either we implement that properly or don\u0027t care or create a ticket to improve on that later, for me it\u0027s not a show-stopper right now, JFTR",
+      "parentUuid": "facab960_02c14a2e",
       "range": {
         "startLine": 37,
         "startChar": 0,
