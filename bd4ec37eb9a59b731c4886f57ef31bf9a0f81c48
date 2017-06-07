@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "dacfb570_2a0543c2",
+        "filename": "debian/ngcp-ngcpcfg.install",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-06-07T10:54:09Z",
+      "side": 1,
+      "message": "We cannot as scripts/encrypt and scripts/decrypt are part of  ngcp-ngcpcfg-locker.",
+      "parentUuid": "facab960_a2c97e5c",
+      "revId": "bd4ec37eb9a59b731c4886f57ef31bf9a0f81c48",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "facab960_02c14a2e",
         "filename": "scripts/set",
         "patchSetId": 9
