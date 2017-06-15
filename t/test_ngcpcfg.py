@@ -1,5 +1,6 @@
 #!/usr/bin/env py.test-3
 
+import os
 import pytest
 import re
 import tempfile
@@ -35,3 +36,20 @@ def test_simple_build_template_ok(ngcpcfgcli):
                        tmpdir +
                        r"//etc/apt/apt.conf.d/71_no_recommended: OK")
     assert re.search(regex, out.stdout)
+
+
+@pytest.mark.tt_17401
+def test_fail_on_existing_directory_matching_output_filename(ngcpcfgcli, tmpdir):
+    tmpdir = tempfile.mkdtemp(prefix='ngcp-', suffix='-pytest-output')
+    output = "/etc/apt/apt.conf.d/71_no_recommended"
+    os.makedirs(tmpdir + output)
+    out = ngcpcfgcli("build", "--ignore-branch-check", output,
+                     env={
+                         'NGCP_PORTFILE': '/tmp/ngcpcfg.port',
+                         'OUTPUT_DIRECTORY': tmpdir,
+                         })
+    regex = re.compile("Error: Generating file " +
+                       tmpdir + "/" + output +
+                       r" not possible, it\'s an existing directory.")
+    assert re.search(regex, out.stderr)
+    assert out.returncode == 1

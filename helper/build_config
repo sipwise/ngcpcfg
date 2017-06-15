@@ -44,6 +44,12 @@ else
 fi
 # }}}
 
+# ensure we don't try to generate a file where a directory with same name exists already
+if [ -d "${output_file}" ] ; then
+  log_error "Generating file ${output_file} not possible, it's an existing directory." >&2
+  exit 1
+fi
+
 # pre-execution script in template store:
 if [ -r "${NGCPCTL_MAIN}/templates/${output_file}.prebuild" ] ; then
   log_info "Executing prebuild for ${output_file}"
