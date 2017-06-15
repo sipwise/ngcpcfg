@@ -5,6 +5,7 @@ PERL_SCRIPTS =	helper/sort-yml \
 		helper/tt2-daemon \
 		helper/validate-yml helper/fileformat_version \
 		sbin/ngcp-network \
+		sbin/ngcp-network-validator \
 		sbin/ngcp-sync-constants \
 		sbin/ngcp-sync-grants
 RESULTS ?= results

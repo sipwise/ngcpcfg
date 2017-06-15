@@ -25,6 +25,7 @@ Build-Depends: asciidoc,
                libyaml-libyaml-perl,
                libyaml-tiny-perl,
                netcat,
+               pkwalify,
                python3-pytest,
                xsltproc
 Standards-Version: 3.9.7
