@@ -5,10 +5,10 @@
 use strict;
 use warnings;
 
-use YAML::Tiny;
-my $yaml = YAML::Tiny->new;
-$yaml = YAML::Tiny->read("/etc/ngcp-config/config.yml");
-my $fileformat = $yaml->[0]->{internal}->{fileformat};
+use YAML::XS;
+
+my $yaml = YAML::XS::LoadFile('/etc/ngcp-config/config.yml');
+my $fileformat = $yaml->{internal}->{fileformat};
 
 if (defined $fileformat) {
   print "$fileformat\n";

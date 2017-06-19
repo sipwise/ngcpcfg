@@ -7,7 +7,7 @@ use warnings;
 use English qw( -no_match_vars );
 use DBI qw(:sql_types);
 use Config::Tiny;
-use YAML::Tiny;
+use YAML::XS;
 use Getopt::Long;
 use IPC::System::Simple qw(system capturex);
 use Readonly;
@@ -238,7 +238,7 @@ sub sync_mysql_data {
 
     my $rc = 0;
 
-    my $data = get_user_pass($yml->[0]->{credentials}{mysql});
+    my $data = get_user_pass($yml->{credentials}{mysql});
 
     # special handling for user sipwise as it is not in constants.yml
     push @$data, { user => $DEFAULT_MYSQL_USER,
@@ -272,7 +272,7 @@ sub flush_privs {
 
 sub main {
     eval {
-        $yml = YAML::Tiny->read($CONSTANTS_YML);
+        $yml = YAML::XS::LoadFile($CONSTANTS_YML);
     };
     die "Can't read constants file: $EVAL_ERROR\n" if $EVAL_ERROR;
 
@@ -321,7 +321,7 @@ sub main {
     return if $test_mode;
 
     log_info("writing new passwords into $CONSTANTS_YML ... ");
-    $yml->write($CONSTANTS_YML);
+    YAML::XS::DumpFile($CONSTANTS_YML, $yml);
     log_info("done");
 
     return;
