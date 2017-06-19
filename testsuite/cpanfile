@@ -11,4 +11,4 @@ requires 'Pod::Usage';
 requires 'Regexp::IPv6';
 requires 'Socket';
 requires 'Sys::Hostname';
-requires 'YAML::Tiny';
+requires 'YAML::XS';

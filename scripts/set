@@ -57,7 +57,7 @@ else
   esac
 fi
 
-perl_line="\$yaml->[0]->{${option//./\}->\{}}=${value};"
+perl_line="\$yaml->{${option//./\}->\{}}=${value};"
 log_debug "perl line: ${perl_line}"
 
 tmp=$(mktemp)
@@ -66,13 +66,13 @@ log_debug "Temporary perl file: ${tmp}"
 cat > "${tmp}" << EOF
 use strict;
 use warnings;
-use YAML::Tiny;
+use YAML::XS;
 my \$file="${file}";
-my \$yaml = YAML::Tiny->read("\$file") or die "YAML file '\$file' could not be loaded";
+my \$yaml = YAML::XS::LoadFile("\$file");
 
 ${perl_line}
 
-\$yaml->write(\$file) or die "Could not write YAML to \$file";
+YAML::XS::DumpFile(\$file, \$yaml);
 EOF
 
 log_debug "perl -wCSD \"${tmp}\" || RC=$?"

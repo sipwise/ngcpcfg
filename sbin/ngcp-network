@@ -17,7 +17,7 @@ use Regexp::IPv6 qw($IPv6_re);
 use Socket;
 use Storable qw(dclone);
 use Sys::Hostname;
-use YAML::Tiny;
+use YAML::XS;
 
 our $VERSION = 'UNRELEASED';
 
@@ -149,9 +149,9 @@ foreach my $opt (
 
 # }}}
 
-my $yaml = YAML::Tiny->new;
 logger("reading input file $inputfile");
-$yaml = YAML::Tiny->read($inputfile)
+
+my $yaml = YAML::XS::LoadFile($inputfile)
   or croak "File $inputfile could not be read";
 
 if ( -e "$outputfile" && !-w "$outputfile" ) {
@@ -159,7 +159,7 @@ if ( -e "$outputfile" && !-w "$outputfile" ) {
 }
 
 my $spce;
-if ( defined $yaml->[0]->{hosts}->{self} ) {
+if ( defined $yaml->{hosts}->{self} ) {
     logger('host "self" identified and set, assuming spce system');
     $host = 'self';
     $spce = 1;
@@ -260,24 +260,24 @@ sub set_interface {
         if ( defined $settings->{$k} ) {
             if ( $settings->{$k} =~ /^none$/msx ) {
                 logger("unsetting entry $k");
-                undef $yaml->[0]->{hosts}->{$host}->{$iface}->{$k};
+                undef $yaml->{hosts}->{$host}->{$iface}->{$k};
             }
             elsif ( $settings->{$k} =~ /^delete$/msx ) {
                 logger("deleting entry $k");
-                delete $yaml->[0]->{hosts}->{$host}->{$iface}->{$k};
+                delete $yaml->{hosts}->{$host}->{$iface}->{$k};
             }
             else {
                 if($k eq 'shared_ip' || $k eq 'shared_v6ip' || $k eq 'advertised_ip') {
-                    if (my ($matched) = grep { $_ eq $settings->{$k} } @{ $yaml->[0]->{hosts}->{$host}->{$iface}->{$k} }) {
+                    if (my ($matched) = grep { $_ eq $settings->{$k} } @{ $yaml->{hosts}->{$host}->{$iface}->{$k} }) {
                         logger("not setting $k to $matched to avoid duplicates");
                     } else {
                         logger("adding IP entry $k: $settings->{$k}");
-                        push @{ $yaml->[0]->{hosts}->{$host}->{$iface}->{$k} }, $settings->{$k}
+                        push @{ $yaml->{hosts}->{$host}->{$iface}->{$k} }, $settings->{$k}
                     }
                 }
                 else {
                     logger("adding entry $k: $settings->{$k}");
-                    $yaml->[0]->{hosts}->{$host}->{$iface}->{$k} = $settings->{$k};
+                    $yaml->{hosts}->{$host}->{$iface}->{$k} = $settings->{$k};
                 }
             }
         }
@@ -298,10 +298,10 @@ sub set_interface {
     }
 
     # add interface to list of available interfaces
-    my $ifaces = $yaml->[0]->{hosts}->{$host}->{interfaces};
+    my $ifaces = $yaml->{hosts}->{$host}->{interfaces};
     if ( !defined $ifaces ) {
         logger("no interfaces defined yet, adding interface $iface");
-        $yaml->[0]->{hosts}->{$host}->{interfaces}->[0] = "$iface";
+        $yaml->{hosts}->{$host}->{interfaces}->[0] = "$iface";
     }
     else {
         logger("interface = $iface");
@@ -321,9 +321,9 @@ sub set_interface {
 sub remove_interface {
     my $rem_iface = shift or croak 'Usage: remove_interface <interface>';
 
-    delete $yaml->[0]->{hosts}->{$host}->{$rem_iface};
+    delete $yaml->{hosts}->{$host}->{$rem_iface};
 
-    my $ifaces = $yaml->[0]->{hosts}->{$host}->{interfaces};
+    my $ifaces = $yaml->{hosts}->{$host}->{interfaces};
     if ( defined $ifaces ) {
         logger("removing interface @$ifaces as requested");
         undef @{$ifaces};
@@ -335,8 +335,8 @@ sub set_yml_config {
     my $setting = shift or croak 'Usage: set_yml_config <setting> <value>';
     my $value   = shift or croak 'Usage: set_yml_config <setting> <value>';
 
-    $yaml->[0]->{hosts}->{$host}->{$setting} = "$value";
-    logger("\$yaml->[0]->{hosts}->{\$host}->{$setting} = $value");
+    $yaml->{hosts}->{$host}->{$setting} = "$value";
+    logger("\$yaml->{hosts}->{\$host}->{$setting} = $value");
     return;
 }
 
@@ -349,14 +349,14 @@ sub set_iface_config {
       or croak 'Usage: set_iface_config <iface> <setting> <value>';
 
     if ( any { /^${value}$/msx }
-        @{ $yaml->[0]->{hosts}->{$host}->{$iface}->{$setting} } )
+        @{ $yaml->{hosts}->{$host}->{$iface}->{$setting} } )
     {
         logger("$value for $setting on $iface already defined in host $host");
     }
     else {
-        push @{ $yaml->[0]->{hosts}->{$host}->{$iface}->{$setting} }, $value;
+        push @{ $yaml->{hosts}->{$host}->{$iface}->{$setting} }, $value;
         logger(
-            "\$yaml->[0]->{hosts}->{\$host}->{$iface}->{$setting} => $value");
+            "\$yaml->{hosts}->{\$host}->{$iface}->{$setting} => $value");
     }
 
     return;
@@ -365,13 +365,13 @@ sub set_iface_config {
 sub set_role {
     my $new_role = shift or croak 'Usage: set_role <value>';
 
-    if ( any { /^${new_role}$/msx } @{ $yaml->[0]->{hosts}->{$host}->{role} } )
+    if ( any { /^${new_role}$/msx } @{ $yaml->{hosts}->{$host}->{role} } )
     {
         logger("role $new_role already defined in host $host");
     }
     else {
-        push @{ $yaml->[0]->{hosts}->{$host}->{role} }, $new_role;
-        logger("\$yaml->[0]->{hosts}->{\$host}->{role} => $new_role");
+        push @{ $yaml->{hosts}->{$host}->{role} }, $new_role;
+        logger("\$yaml->{hosts}->{\$host}->{role} => $new_role");
     }
 
     return;
@@ -381,9 +381,9 @@ sub set_dbnode {
     my $new_dbnode = shift;
     my @nodes = ( 0, );
 
-    foreach my $h (keys %{ $yaml->[0]->{hosts} }) {
-        if($h ne $host && defined $yaml->[0]->{hosts}->{$h}->{dbnode}) {
-            push @nodes, $yaml->[0]->{hosts}->{$h}->{dbnode};
+    foreach my $h (keys %{ $yaml->{hosts} }) {
+        if($h ne $host && defined $yaml->{hosts}->{$h}->{dbnode}) {
+            push @nodes, $yaml->{hosts}->{$h}->{dbnode};
         }
     }
     # if no value is given we have 0
@@ -421,14 +421,14 @@ sub clone_settings {
     logger("clone from = $from");
     logger("clone to = $to");
 
-    if ( !defined $yaml->[0]->{hosts}->{$from} ) {
+    if ( !defined $yaml->{hosts}->{$from} ) {
       croak "Host '$from' doesn\'t exist, refusing to clone settings.";
     }
 
-    $yaml->[0]->{hosts}->{$to} = dclone($yaml->[0]->{hosts}->{$from});
+    $yaml->{hosts}->{$to} = dclone($yaml->{hosts}->{$from});
 
     # adjust peer on-the-fly to prevent user mistakes
-    if ( defined $yaml->[0]->{hosts}->{$from}->{peer} ) {
+    if ( defined $yaml->{hosts}->{$from}->{peer} ) {
 
       if ( $to !~ /[ab]$/ ) {
         carp "Target host $from not ending with 'a' or 'b', skipping automatic peer config.";
@@ -442,7 +442,7 @@ sub clone_settings {
           $other_node = $to =~ s/b$/a/r;
         }
         print "Setting peer for host '$to' to '$other_node'.\n";
-        $yaml->[0]->{hosts}->{$to}->{peer} = $other_node;
+        $yaml->{hosts}->{$to}->{peer} = $other_node;
       }
     }
 
@@ -480,12 +480,12 @@ sub move_settings {
             # get rid of the entry from the old section
             my @tmp =
               grep { !/^${role}$/msx }
-              @{ $yaml->[0]->{hosts}->{$from}->{role} };
-            $yaml->[0]->{hosts}->{$from}->{role} = [];
-            push @{ $yaml->[0]->{hosts}->{$from}->{role} }, @tmp;
+              @{ $yaml->{hosts}->{$from}->{role} };
+            $yaml->{hosts}->{$from}->{role} = [];
+            push @{ $yaml->{hosts}->{$from}->{role} }, @tmp;
 
             # add it to its new place
-            push @{ $yaml->[0]->{hosts}->{$to}->{role} }, $role;
+            push @{ $yaml->{hosts}->{$to}->{role} }, $role;
         }
     }
 
@@ -496,18 +496,18 @@ sub move_settings {
             # get rid of the entry from the old section
             my @tmp =
               grep { !/^${type}$/msx }
-              @{ $yaml->[0]->{hosts}->{$host}->{$from}->{type} };
-            $yaml->[0]->{hosts}->{$host}->{$from}->{type} = [];
-            push @{ $yaml->[0]->{hosts}->{$host}->{$from}->{type} }, @tmp;
+              @{ $yaml->{hosts}->{$host}->{$from}->{type} };
+            $yaml->{hosts}->{$host}->{$from}->{type} = [];
+            push @{ $yaml->{hosts}->{$host}->{$from}->{type} }, @tmp;
 
             # add it to its new place, but only if not already defined yet
             if ( any { /^${type}$/msx }
-                @{ $yaml->[0]->{hosts}->{$host}->{$to}->{type} } )
+                @{ $yaml->{hosts}->{$host}->{$to}->{type} } )
             {
                 logger("type $type is already defined on host $host, interface $to");
             }
             else {
-                push @{ $yaml->[0]->{hosts}->{$host}->{$to}->{type} }, $type;
+                push @{ $yaml->{hosts}->{$host}->{$to}->{type} }, $type;
             }
         }
     }
@@ -528,7 +528,7 @@ if (@set_interface) {
 if (@remove_host) {
     foreach my $rhost (@remove_host) {
         logger("removing host $rhost");
-        delete $yaml->[0]->{hosts}->{$rhost};
+        delete $yaml->{hosts}->{$rhost};
     }
 }
 
@@ -568,12 +568,9 @@ if ( defined $dbnode && ( !defined $move_from || !defined $move_to ) )
 move_settings( $move_from, $move_to );
 clone_settings ( $clone_from, $clone_to );
 
-open my $fh, '>', "$outputfile"
-  or croak "Could not open $outputfile for writing";
 logger("writing output file $outputfile");
-print {$fh} $yaml->write_string()
+YAML::XS::DumpFile($outputfile, $yaml)
   or croak "Could not write YAML to $outputfile";
-close $fh or croak "Couldn't close '$fh': $OS_ERROR";
 
 # }}}
 
