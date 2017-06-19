@@ -1,7 +1,15 @@
-[% argv.role='proxy'; argv.type='sip_int'; PROCESS '../lib/get_all_shared_ips'; sip_int_ips = out -%]
-[% IF !sip_int_ips.size -%]
-[% argv.role='proxy'; argv.type='sip_int'; PROCESS '../lib/get_all_ips'; sip_int_ips = out -%]
-[% END -%]
+[%
+  argv.role='proxy';
+  argv.type='sip_int';
+  argv.status=['online',];
+  PROCESS '../lib/get_all_shared_ips';
+  sip_int_ips = out;
+
+  IF !sip_int_ips.size;
+    PROCESS '../lib/get_all_ips';
+    sip_int_ips = out;
+  END;
+-%]
 id(int,auto) setid(int) destination(str) priority(int) flags(int) description(str)
 [% idx = 1 -%]
 [% FOREACH sbc IN kamailio.lb.external_sbc -%]
