@@ -10,7 +10,7 @@ ENV REFRESHED_AT 2017-05-27
 RUN apt-get update
 
 # sourcecode test dependencies
-RUN apt-get install --assume-yes libyaml-tiny-perl netcat libhash-merge-perl libtemplate-perl libyaml-perl
+RUN apt-get install --assume-yes netcat libhash-merge-perl libtemplate-perl libyaml-libyaml-perl libyaml-tiny-perl libyaml-perl 
 # misc stuff for execution/debugging/devel
 RUN apt-get install --assume-yes fakeroot git lsof make strace
 # test execution
