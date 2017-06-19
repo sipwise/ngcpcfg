@@ -76,7 +76,7 @@ sub handle_connections {
             $loaded_ymls{$file} = undef;
             print $client "Loading $file in memory:" unless $quiet;
             my $hm = Hash::Merge->new('RIGHT_PRECEDENT');
-            $config = $hm->merge( $config, LoadFile($file) || die $ERRNO);
+            $config = $hm->merge( $config, LoadFile($file));
             print $client " OK \n" unless $quiet;
         };
     };

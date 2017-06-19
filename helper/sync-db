@@ -18,7 +18,7 @@ my $tt = Template->new({ ABSOLUTE => 1, RELATIVE => 1 });
 
 my $config = {};
 foreach my $file (@ARGV) {
-  $config = merge($config, LoadFile($file) || die $ERRNO);
+  $config = merge($config, LoadFile($file));
 }
 # rw connection to central node
 my $dbhost = $config->{database}->{central}->{dbhost};

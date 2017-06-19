@@ -8,7 +8,7 @@ use English;
 use DBI;
 use Getopt::Long;
 use Config::Tiny;
-use YAML::Tiny;
+use YAML::XS;
 use Readonly;
 
 Readonly my $GRANTS_SCHEMA => '/etc/mysql/grants.yml';
@@ -464,9 +464,7 @@ sub flush_privs {
 }
 
 sub main {
-    if (my $yml = YAML::Tiny->read($GRANTS_SCHEMA)) {
-        $grants = $yml->[0];
-    }
+    $grants = YAML::XS::LoadFile($GRANTS_SCHEMA);
 
     my ($dbhost, $dbport);
     if (my $db_cfg = Config::Tiny->read($DB_CFG)) {

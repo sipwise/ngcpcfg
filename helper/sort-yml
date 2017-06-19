@@ -4,15 +4,14 @@
 
 use strict;
 use warnings;
-use YAML::Tiny;
 
-my $yaml = YAML::Tiny->new;
+use YAML::XS;
+
 my $inputfile  = shift or die 'You did not specify an input file name';
 my $outputfile = shift or die 'You did not specify an ouput file name';
 
-$yaml = YAML::Tiny->read($inputfile);
+my $yaml = YAML::XS::LoadFile($inputfile);
 
-open(my $fh, '>', "$outputfile") or die "Could not open $outputfile for writing";
-print $fh $yaml->write_string() or die "Could not write YAML to $outputfile";
+YAML::XS::DumpFile($outputfile, $yaml);
 
 ## END OF FILE #################################################################
