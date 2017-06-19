@@ -34,7 +34,7 @@ option="$2"
 [ -z "${option}" ] && ( log_error "missing option to set. Exiting." ; exit 1)
 log_debug "Deleting option '${option}' from '${file}'"
 
-perl_line="delete \$yaml->[0]->{${option//./\}->\{}};"
+perl_line="delete \$yaml->{${option//./\}->\{}};"
 log_debug "perl line: ${perl_line}"
 
 tmp=$(mktemp)
@@ -43,13 +43,13 @@ log_debug "Temporary perl file: ${tmp}"
 cat > "${tmp}" << EOF
 use strict;
 use warnings;
-use YAML::Tiny;
+use YAML::XS;
 my \$file="${file}";
-my \$yaml = YAML::Tiny->read("\$file") or die "YAML file '\$file' could not be loaded";
+my \$yaml = YAML::XS::LoadFile("\$file") or die "YAML file '\$file' could not be loaded";
 
 ${perl_line}
 
-\$yaml->write(\$file) or die "Could not write YAML to \$file";
+YAML::XS::DumpFile(\$file, \$yaml) or die "Could not write YAML to \$file";
 EOF
 
 log_debug "perl -wCSD \"${tmp}\" || RC=$?"
