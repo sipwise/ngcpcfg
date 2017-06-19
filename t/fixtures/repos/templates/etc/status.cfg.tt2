@@ -1,0 +1,57 @@
+[%
+  argv.status=['online',];
+  argv.role='proxy';
+  PROCESS '../lib/get_all_shared_names_by_role';
+  prx_shared_names = out;
+
+  argv.type='ha_int';
+  PROCESS '../lib/get_all_shared_ips';
+  ha_prx_ips = out;
+
+  argv.type='sip_int';
+  PROCESS '../lib/get_all_shared_ips';
+  sip_prx_ips = out;
+
+  argv.role='lb';
+  PROCESS '../lib/get_all_shared_ips';
+  sip_lb_ips = out;
+
+  argv.role='lb'; argv.type='sip_int';
+  PROCESS '../lib/get_all_cluster_set_shared_ip_maps';
+  UNLESS out.size;
+    PROCESS '../lib/get_all_cluster_set_ip_maps';
+  END;
+  lb_ip_set = out;
+
+  argv.type='lb';
+  PROCESS '../lib/get_all_cluster_sets';
+  lb_dispatcher_set = out;
+
+  argv.role='mgmt';
+  argv.type='sip_int';
+  PROCESS '../lib/get_all_shared_ips';
+  mgmt_sip_ips = out;
+  IF !mgmt_sip_ips.size;
+    PROCESS '../lib/get_all_ips';
+    mgmt_sip_ips = out;
+  END;
+-%]
+CARRIER_LB_IP='[% sip_lb_ips.unique.join(' ') %]'
+CARRIER_PRXS='[% prx_shared_names.unique.join(' ') %]'
+SIPADDRESS='[% sip_prx_ips.unique.join(' ') %]'
+MGMT_SIP_IPS='[% mgmt_sip_ips.unique.join(' ') %]'
+
+[% IF lb_dispatcher_set.size -%]
+DISPATCHER_IPS="[% FOREACH set IN lb_ip_set -%][% set.dispatcher_id %];[% FOREACH ip IN set.ips %][% ip %][% UNLESS loop.last %];[% END %][% END %] [% END %]"
+declare -A DISPATCHER_IDS=(
+[% FOREACH set IN lb_dispatcher_set.keys -%]
+  [[% set %]]=[% lb_dispatcher_set.$set %]
+[% END -%]
+)
+[% ELSE -%]
+# Default network.yml in CE/PRO has no section 'cluster_set', defining default one
+DISPATCHER_IPS="50;127.0.0.1 "
+declare -A DISPATCHER_IDS=(
+  [default]=50
+)
+[% END -%]

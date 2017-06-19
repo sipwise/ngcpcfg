@@ -6,19 +6,36 @@
 # @param argv.host      The hostname to get the interface from.
 # @param argv.type      The interface type, one of:
 #                         web_int, web_ext, sip_int, sip_ext, ...
+# @param argv.status    node status [ online, offline, inactive ]
+#                         default value: ['online', 'inactive']
 # @return out           The interface name.
 
 IF !hosts.${argv.host}.defined;
   argv.host = 'self';
 END;
 
-out = [];
-FOREACH iface IN hosts.${argv.host}.interfaces;
-  FOREACH realiface IN hosts.${argv.host}.keys;
-    NEXT IF realiface != iface;
-    NEXT UNLESS hosts.${argv.host}.$realiface.type.grep('^' _ argv.type _ '$').size();
+IF !argv.status.size;
+  argv.status = ['online', 'inactive'];
+END;
 
-    out.push(realiface);
+status = {
+  online = 0
+  offline = 0
+  inactive = 0
+};
+FOREACH val IN argv.status;
+  status.$val = 1;
+END;
+
+out = [];
+IF status.item(hosts.${argv.host}.status);
+  FOREACH iface IN hosts.${argv.host}.interfaces;
+    FOREACH realiface IN hosts.${argv.host}.keys;
+      NEXT IF realiface != iface;
+      NEXT UNLESS hosts.${argv.host}.$realiface.type.grep('^' _ argv.type _ '$').size();
+
+      out.push(realiface);
+    END;
   END;
 END;
 out = out.sort;
