@@ -8,6 +8,8 @@
 # @param argv.format    The format of the returned list, one of:
 #                         "list" for plain list of interfaces,
 #                         blank or "rtpengine" for full CLI options.
+# @param argv.status    node status [ online, offline, inactive ]
+#   default value: ['online', 'inactive']
 # @return out           The array of interfaces.
 
 X_host = argv.host;
@@ -26,35 +28,50 @@ IF ! hosts.$X_host.defined;
   X_host = 'self';
 END;
 
+IF !argv.status.size;
+  argv.status = ['online', 'inactive'];
+END;
+
+status = {
+  online = 0
+  offline = 0
+  inactive = 0
+};
+FOREACH val IN argv.status;
+  status.$val = 1;
+END;
+
 out = [];
-FOREACH X_iface IN hosts.$X_host.interfaces;
-  X_ifc = hosts.$X_host.$X_iface;
-  X_types = X_ifc.type.grep('^rtp_.');
-  IF X_types.size();
-    X_type = X_types.0;
-    X_type = X_type.remove('^rtp_');
+IF status.item(hosts.$X_host.status);
+  FOREACH X_iface IN hosts.$X_host.interfaces;
+    X_ifc = hosts.$X_host.$X_iface;
+    X_types = X_ifc.type.grep('^rtp_.');
+    IF X_types.size();
+      X_type = X_types.0;
+      X_type = X_type.remove('^rtp_');
 
-    IF X_format == 'list';
-      out.push(X_type);
-      NEXT;
-    END;
+      IF X_format == 'list';
+        out.push(X_type);
+        NEXT;
+      END;
 
-    X_ips = X_ifc.shared_ip.list;
-    IF !X_ips.size() || !X_ips.0.defined;
-      X_ips = X_ifc.ip;
-    END;
-    X_adv_ips = X_ifc.advertised_ip.list;
-    FOREACH X_ip IN X_ips;
-      X_adv_ip = X_adv_ips.shift();
-      out.push(X_type _ '/' _ X_ip _ (X_adv_ip ? ('!' _ X_adv_ip) : ''));
-    END;
+      X_ips = X_ifc.shared_ip.list;
+      IF !X_ips.size() || !X_ips.0.defined;
+        X_ips = X_ifc.ip;
+      END;
+      X_adv_ips = X_ifc.advertised_ip.list;
+      FOREACH X_ip IN X_ips;
+        X_adv_ip = X_adv_ips.shift();
+        out.push(X_type _ '/' _ X_ip _ (X_adv_ip ? ('!' _ X_adv_ip) : ''));
+      END;
 
-    X_ips = X_ifc.shared_v6ip.list;
-    IF !X_ips.size() || !X_ips.0.defined;
-      X_ips = X_ifc.v6ip;
-    END;
-    FOREACH X_ip IN X_ips;
-      out.push(X_type _ '/' _ X_ip);
+      X_ips = X_ifc.shared_v6ip.list;
+      IF !X_ips.size() || !X_ips.0.defined;
+        X_ips = X_ifc.v6ip;
+      END;
+      FOREACH X_ip IN X_ips;
+        out.push(X_type _ '/' _ X_ip);
+      END;
     END;
   END;
 END;

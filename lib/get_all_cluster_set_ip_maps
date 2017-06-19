@@ -6,7 +6,22 @@
 #
 # @param argv.role      The role of element we are interested in (rtp, lb).
 # @param argv.type      The type of the interfaces (rtp_int, sip_int...).
+# @param argv.status    node status [ online, offline, inactive ]
+#   default value: ['online', 'inactive']
 # @return out           The array of hashes.
+
+IF !argv.status.size;
+  argv.status = ['online', 'inactive'];
+END;
+
+status = {
+  online = 0
+  offline = 0
+  inactive = 0
+};
+FOREACH val IN argv.status;
+  status.$val = 1;
+END;
 
 out = [];
 FOREACH set IN cluster_sets.keys;
@@ -15,6 +30,7 @@ FOREACH set IN cluster_sets.keys;
   theset.ips = [];
 
   FOREACH host IN hosts.keys.sort;
+    NEXT UNLESS status.item(hosts.$host.status);
     NEXT UNLESS hosts.$host.role.grep('^' _ argv.role _ '$').size();
     FOREACH iface IN hosts.$host.interfaces;
       NEXT UNLESS hosts.$host.$iface.cluster_sets.grep('^' _ set _ '$').size();
