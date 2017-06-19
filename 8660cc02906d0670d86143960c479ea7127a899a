@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dacfb570_2048ff5a",
+        "filename": "lib/get_ngcp_type",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-06-19T09:03:10Z",
+      "side": 1,
+      "message": "You are creating a loop here... ngcp-roles.tt2 uses this library, and library uses ngcp-roles file...\n\nChicken-egg problem is very dangerous IMHO... :-(\n\nAre you sure here? IMHO constants.yaml is much better here.",
+      "revId": "8660cc02906d0670d86143960c479ea7127a899a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
