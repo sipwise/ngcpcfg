@@ -67,7 +67,7 @@ check_config_syntax() {
   log_debug "Checking for valid YAML syntax for $config_files"
   for f in $config_files ; do
     if [ -r "$f" ] ; then
-      # use YAML::Tiny for checking
+      # use YAML::XS for checking
       log_debug "Validating main YAML syntax of ${f}"
       if ! "${HELPER}/validate-yml" "${f}" 2>/dev/null ; then
         log_error "Invalid file syntax in ${f}:"
