@@ -183,10 +183,10 @@ def test_set_action_generate_list(ngcpcfgcli, tmpdir):
     assert tmpfile.read() == '''---
 aaa:
   bbb:
-    - ccc
-    - '123'
-    - ddd
-    - '567'
+  - ccc
+  - '123'
+  - ddd
+  - '567'
 '''
     assert "" in out.stdout
     assert "" in out.stderr
@@ -203,13 +203,13 @@ ccc:
     out = ngcpcfgcli("set", str(tmpfile), "foo.bar=['ha','hi','he','ho']")
     assert tmpfile.read() == '''---
 ccc:
-  pytest-was-here: 'true'
+  pytest-was-here: true
 foo:
   bar:
-    - ha
-    - hi
-    - he
-    - ho
+  - ha
+  - hi
+  - he
+  - ho
 '''
     assert "" in out.stdout
     assert "" in out.stderr
