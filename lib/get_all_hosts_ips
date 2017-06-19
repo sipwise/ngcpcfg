@@ -8,14 +8,30 @@
 # @param argv.type      The interface type of a node to extract the IP
 #                       from, one of:
 #                         web_int, web_ext, sip_int, sip_ext, ...
+# @param argv.status    node status [ online, offline, inactive ]
+#   default value: ['online', 'inactive']
 # @return out           The array of hashes with fields "name" and "ip", e.g.:
 #                         [
 #                           { name => 'sp1', ip = '192.168.255.251' },
 #                           { name => 'sp2', ip = '192.168.255.252' }
 #                         ]
 
+IF !argv.status.size;
+  argv.status = ['online', 'inactive'];
+END;
+
+status = {
+  online = 0
+  offline = 0
+  inactive = 0
+};
+FOREACH val IN argv.status;
+  status.$val = 1;
+END;
+
 out = [];
 FOREACH host IN hosts.keys.sort;
+  NEXT UNLESS status.item(hosts.$host.status);
   NEXT UNLESS hosts.$host.role.grep('^' _ argv.role _ '$').size();
 
   FOREACH iface IN hosts.$host.interfaces;
