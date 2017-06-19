@@ -16,6 +16,24 @@
       "revId": "8660cc02906d0670d86143960c479ea7127a899a",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dacfb570_a0732fb0",
+        "filename": "lib/get_ngcp_type",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-06-19T09:05:45Z",
+      "side": 1,
+      "message": "Ah good point, yeah I guess using constants is also more technically correct, as that value is not supposed to change, I\u0027ll switch to do that. Thanks.",
+      "parentUuid": "dacfb570_2048ff5a",
+      "revId": "8660cc02906d0670d86143960c479ea7127a899a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
