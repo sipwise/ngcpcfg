@@ -40,6 +40,7 @@ assertEqualFiles() {
     OK "$count" "$2" >> "$OUTPUT"
   else
     echo "files $1 and $2 do not match" >&2
+    diff -u "$1" "$2" >&2
     FAIL "$count" "$2 # $2 differs from $1" >> "$OUTPUT"
     return 1
   fi
