@@ -6,7 +6,7 @@ use warnings;
 use Storable qw(dclone);
 use Getopt::Long qw(:config posix_default no_ignorecase auto_help auto_version);
 use Pod::Usage;
-use YAML::XS qw();
+use YAML qw();
 use Kwalify;
 
 our $VERSION = 'UNRELEASED';
@@ -58,13 +58,13 @@ my $schema_tmpl_host_file = "$schema_path/tmpl-network-host.yml";
 my $schema_tmpl_iface_file = "$schema_path/tmpl-network-iface.yml";
 
 
-my $yaml = YAML::XS::LoadFile($network_file)
+my $yaml = YAML::LoadFile($network_file)
     or die "cannot parse file $network_file";
-my $schema = YAML::XS::LoadFile($schema_tmpl_head_file)
+my $schema = YAML::LoadFile($schema_tmpl_head_file)
     or die "cannot parse network header schema template fragment";
-my $schema_host = YAML::XS::LoadFile($schema_tmpl_host_file)
+my $schema_host = YAML::LoadFile($schema_tmpl_host_file)
     or die "cannot parse network host schema template fragment";
-my $schema_iface = YAML::XS::LoadFile($schema_tmpl_iface_file)
+my $schema_iface = YAML::LoadFile($schema_tmpl_iface_file)
     or die "cannot parse network interface schema template fragment";
 
 # Data to track some manual out-of-schema validation.
@@ -172,7 +172,7 @@ foreach my $hostname (sort keys %{$yaml->{hosts}}) {
 
 # Make it possible to dump the generated schema.
 if (defined $ENV{NGCP_KWALIFY_DUMP}) {
-    print YAML::XS::Dump($schema);
+    print YAML::Dump($schema);
 }
 
 #

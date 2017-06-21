@@ -7,7 +7,7 @@ use POSIX qw( setsid );
 use IO::Socket;
 use Hash::Merge qw(merge);
 use Template;
-use YAML::XS qw(LoadFile);
+use YAML qw/LoadFile/;
 use Clone 'clone';
 use Getopt::Long;
 

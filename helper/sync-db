@@ -5,7 +5,7 @@
 use strict;
 use warnings;
 use English;
-use YAML::XS qw(LoadFile);
+use YAML qw/LoadFile/;
 use Template;
 use Hash::Merge qw(merge);
 use DBI;
