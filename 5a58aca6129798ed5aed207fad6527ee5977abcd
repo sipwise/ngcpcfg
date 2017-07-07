@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7adec928_527ec4e5",
+        "filename": "lib/get_all_cluster_set_ip_maps",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-07-07T10:47:04Z",
+      "side": 1,
+      "message": "I believe it is still topical, isn\u0027t it?\nremove tabs at all here.",
+      "parentUuid": "da01753e_2ef2959a",
+      "revId": "5a58aca6129798ed5aed207fad6527ee5977abcd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da01753e_0eefd1b1",
         "filename": "lib/get_all_cluster_set_ip_maps_for_host",
         "patchSetId": 2
