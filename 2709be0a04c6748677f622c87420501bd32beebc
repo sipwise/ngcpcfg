@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7adec928_7283c0cc",
+        "filename": "lib/get_all_adv_ips_for_host",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-07-07T10:47:04Z",
+      "side": 1,
+      "message": "should be here !\u003d ?",
+      "range": {
+        "startLine": 21,
+        "startChar": 22,
+        "endLine": 21,
+        "endChar": 24
+      },
+      "revId": "2709be0a04c6748677f622c87420501bd32beebc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7adec928_12743cfc",
+        "filename": "lib/get_all_shared_v6ips_for_host",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-07-07T10:47:04Z",
+      "side": 1,
+      "message": "NEXT IF argv.format !\u003d \u0027expand\u0027;\n\n?\n\nto follow common style :-)",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 33
+      },
+      "revId": "2709be0a04c6748677f622c87420501bd32beebc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7adec928_725ae084",
+        "filename": "lib/get_ndb_ips",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-07-07T10:47:04Z",
+      "side": 1,
+      "message": "previously your style was:\nNEXT IF realiface !\u003d iface;\nmaybe keep common?",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 37
+      },
+      "revId": "2709be0a04c6748677f622c87420501bd32beebc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7adec928_925f6c72",
+        "filename": "lib/get_network_for_host",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-07-07T10:47:04Z",
+      "side": 1,
+      "message": "readability here is not the best :-(\nMaybe:\n  \n...\n-%]\n[%      PERL; -%]\n        use Net::IPv4Addr qw(ipv4_network);\n\n        my ($ip, $netmask) \u003d ipv4_network(\"[% hosts.${argv.host}.${realiface}.ip %]/[% hosts.${argv.host}.${realiface}.netmask %]\");\n        $stash-\u003eset(\u0027out\u0027 \u003d\u003e \"$ip/$netmask\");\n[%      END; -%]\n[%\n...\n\nand drop section above completely:\n  \n[% PERL -%]\n  use Net::IPv4Addr qw(ipv4_network);\n[% END -%]\n\n?",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 13
+      },
+      "revId": "2709be0a04c6748677f622c87420501bd32beebc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
