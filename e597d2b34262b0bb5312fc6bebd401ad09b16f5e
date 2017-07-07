@@ -22,6 +22,30 @@
       "revId": "e597d2b34262b0bb5312fc6bebd401ad09b16f5e",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7adec928_d28574ae",
+        "filename": "lib/get_host_by_name",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-07-07T13:57:33Z",
+      "side": 0,
+      "message": "I guess this was just a misunderstanding of the purpose of LOAD_PERL from Gernot. That setting is used to specify that TT2 can load normal Perl modules (not just TT2 plugins modules) when using the USE directive. Which is not the case here.",
+      "parentUuid": "7adec928_5265e443",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 21
+      },
+      "revId": "e597d2b34262b0bb5312fc6bebd401ad09b16f5e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }

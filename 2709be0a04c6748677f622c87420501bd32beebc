@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "7adec928_b288e8c7",
+        "filename": "lib/get_all_shared_v6ips_for_host",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-07-07T13:57:33Z",
+      "side": 1,
+      "message": "Cannot do because there\u0027s an out.push at the end.",
+      "parentUuid": "7adec928_12743cfc",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 33
+      },
+      "revId": "2709be0a04c6748677f622c87420501bd32beebc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7adec928_725ae084",
         "filename": "lib/get_ndb_ips",
         "patchSetId": 9
