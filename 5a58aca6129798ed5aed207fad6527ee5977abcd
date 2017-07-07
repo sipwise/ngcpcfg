@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "7adec928_b27628d7",
+        "filename": "lib/get_all_cluster_set_ip_maps",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-07-07T14:02:24Z",
+      "side": 1,
+      "message": "I honestly prefer spaces... while it is IMHO.\nthe rest of the files uses spaces. why we need tabs here?\nMy vote: remove tabs here.",
+      "parentUuid": "7adec928_92a4cc58",
+      "revId": "5a58aca6129798ed5aed207fad6527ee5977abcd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da01753e_0eefd1b1",
         "filename": "lib/get_all_cluster_set_ip_maps_for_host",
         "patchSetId": 2
