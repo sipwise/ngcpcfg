@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "7adec928_65305557",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-07-12T22:31:56Z",
+      "side": 1,
+      "message": "Sorry for nitpicking, but maybe we could be more verbose in the commmit message, that \"add status param\" is actually about the library (helpers), and maybe also explain why it\u0027s changed to that?",
+      "revId": "aeba49cafca5c4af77b6cd3c4e193947456f8988",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7adec928_c5d049fa",
         "filename": "lib/get_all_adv_ips",
         "patchSetId": 7
