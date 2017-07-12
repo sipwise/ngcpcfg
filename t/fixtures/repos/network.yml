@@ -1,3 +1,47 @@
 ---
 hosts:
   self:
+    dbnode: '1'
+    eth0:
+      ip: 10.0.2.15
+      netmask: 255.255.255.0
+      type:
+      - web_ext
+      - web_int
+      - ssh_ext
+    eth1:
+      ip: 192.168.1.38
+      netmask: 255.255.255.0
+      type:
+      - ssh_ext
+      - web_ext
+      - web_int
+      - sip_ext
+      - rtp_ext
+      - mon_ext
+    interfaces:
+    - lo
+    - eth0
+    - eth1
+    lo:
+      cluster_sets:
+      - default
+      ip: 127.0.0.1
+      netmask: 255.255.255.0
+      shared_ip: []
+      shared_v6ip: []
+      type:
+      - sip_int
+      - ha_int
+      - aux_ext
+      - ssh_ext
+      - api_int
+      - rtp_int
+      v6ip: ::1
+    role:
+    - proxy
+    - lb
+    - mgmt
+    - rtp
+    - db
+    status: online
