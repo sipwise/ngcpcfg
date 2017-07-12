@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7adec928_05f2319a",
+        "filename": "helper/tt2-daemon",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-07-12T22:27:56Z",
+      "side": 1,
+      "message": "The error message should use $NGCP_BASE_TT2 too, not the hard-coded \"/\"",
+      "revId": "6527208277ba2b68e6b9bdf7449a9be72be82a1b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7adec928_25ef2db2",
+        "filename": "t/test_ngcpcfg_lib_get_all_ips.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-07-12T22:27:56Z",
+      "side": 1,
+      "message": "redundant?\n\n(What about sorting the imports alphabetically?)",
+      "revId": "6527208277ba2b68e6b9bdf7449a9be72be82a1b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
