@@ -1,0 +1,126 @@
+---
+hosts:
+  sp1:
+    dbnode: '1'
+    eth0:
+      dns_nameservers:
+      - 92.42.136.30
+      - 92.42.136.31
+      gateway: 192.168.22.1
+      hwaddr: 9e:2b:5e:ba:35:e9
+      ip: 10.0.2.15
+      netmask: 255.255.255.0
+      shared_ip: ~
+      shared_v6ip: ~
+      type:
+      - web_ext
+      - ssh_ext
+      - web_int
+    eth1:
+      hwaddr: c6:2e:8d:08:49:7b
+      ip: 192.168.255.251
+      netmask: 255.255.255.248
+      shared_ip:
+      - 192.168.255.250
+      shared_v6ip: ~
+      type:
+      - ha_int
+      - ssh_ext
+    eth2:
+      ip: 192.168.1.43
+      netmask: 255.255.255.0
+      type:
+      - ssh_ext
+      - web_ext
+      - web_int
+      - sip_ext
+      - rtp_ext
+      - mon_ext
+    interfaces:
+    - lo
+    - eth0
+    - eth1
+    - eth2
+    lo:
+      advertised_ip: []
+      cluster_sets:
+      - default
+      hwaddr: 00:00:00:00:00:00
+      ip: 127.0.0.1
+      netmask: 255.0.0.0
+      shared_ip: []
+      shared_v6ip: []
+      type:
+      - sip_int
+      - web_ext
+      - web_int
+      - aux_ext
+      - ssh_ext
+      - api_int
+      - rtp_int
+      v6ip: ::1
+    peer: sp2
+    role:
+    - proxy
+    - lb
+    - mgmt
+    - rtp
+    - db
+    status: online
+  sp2:
+    dbnode: '2'
+    eth0:
+      dns_nameservers:
+      - 92.42.136.30
+      - 92.42.136.31
+      gateway: 192.168.22.1
+      hwaddr: 8a:b5:f7:ee:0e:23
+      ip: 192.168.22.203
+      netmask: 255.255.255.0
+      shared_ip: ~
+      shared_v6ip: ~
+      type:
+      - web_int
+      - web_ext
+      - sip_ext
+      - rtp_ext
+      - mon_ext
+      - ssh_ext
+    eth1:
+      hwaddr: 6e:c9:99:c6:f3:e5
+      ip: 192.168.255.252
+      netmask: 255.255.255.248
+      shared_ip:
+      - 192.168.255.250
+      shared_v6ip: ~
+      type:
+      - ssh_ext
+      - ha_int
+    interfaces:
+    - eth0
+    - lo
+    - eth1
+    lo:
+      cluster_sets:
+      - default
+      hwaddr: 00:00:00:00:00:00
+      ip: 127.0.0.1
+      netmask: 255.0.0.0
+      shared_ip: []
+      shared_v6ip: []
+      type:
+      - api_int
+      - ssh_ext
+      - sip_int
+      - web_int
+      - web_ext
+      - aux_ext
+      v6ip: ::1
+    peer: sp1
+    role:
+    - proxy
+    - lb
+    - mgmt
+    - rtp
+    - db
+    status: online

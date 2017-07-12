@@ -24,7 +24,8 @@ handle_connections( $server_port, $quiet );
 exit;
 
 sub daemonize {
-    chdir '/'                      or croak "Can't chdir to /: $ERRNO";
+    my $NGCP_BASE_TT2 = $ENV{'NGCP_BASE_TT2'} //= '/';
+    chdir $NGCP_BASE_TT2           or croak "Can't chdir to $NGCP_BASE_TT2: $ERRNO";
     open(STDIN,  '<', '/dev/null') or croak "Can't read /dev/null: $ERRNO";
     open(STDOUT, '>', '/dev/null') or croak "Can't write to /dev/null: $ERRNO";
     defined(my $pid = fork)        or croak "Can't fork: $ERRNO";
