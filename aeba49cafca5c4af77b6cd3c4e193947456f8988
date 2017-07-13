@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "7adec928_c525a90b",
+        "filename": "lib/get_all_adv_ips",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2017-07-13T07:24:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7adec928_c5d049fa",
+      "range": {
+        "startLine": 13,
+        "startChar": 1,
+        "endLine": 13,
+        "endChar": 4
+      },
+      "revId": "aeba49cafca5c4af77b6cd3c4e193947456f8988",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7adec928_e5cd455f",
         "filename": "lib/get_all_adv_ips_for_host",
         "patchSetId": 7
@@ -65,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "7adec928_e522a500",
+        "filename": "lib/get_all_adv_ips_for_host",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2017-07-13T07:24:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7adec928_e5cd455f",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 1
+      },
+      "revId": "aeba49cafca5c4af77b6cd3c4e193947456f8988",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7adec928_25d80d1d",
         "filename": "lib/get_all_ips_for_host",
         "patchSetId": 7
@@ -76,6 +124,30 @@
       "writtenOn": "2017-07-12T16:19:39Z",
       "side": 1,
       "message": "ack?",
+      "range": {
+        "startLine": 35,
+        "startChar": 49,
+        "endLine": 35,
+        "endChar": 52
+      },
+      "revId": "aeba49cafca5c4af77b6cd3c4e193947456f8988",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7adec928_052071f6",
+        "filename": "lib/get_all_ips_for_host",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2017-07-13T07:24:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7adec928_25d80d1d",
       "range": {
         "startLine": 35,
         "startChar": 49,
