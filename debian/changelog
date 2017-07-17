@@ -1,3 +1,38 @@
+ngcp-ngcpcfg (5.4.1.0+0~mr5.4.1.0) unstable; urgency=medium
+
+  [ Alexander Lutay ]
+  * [e5a1c0d] TT#16680 Add info output for successful yml check/validation
+  * [4d207fc] TT#16903 Introduce 'ngcpcfg set' and 'ngcpcfg del' functionality
+  * [e597d2b] TT#17989 Add function lib/get_mgmt_name (as a copy of lib/get_ngcp_version)
+
+  [ Michael Prokop ]
+  * [8a6053a] MT#16391 Initial autopkgtest test
+  * [e06c458] MT#16391 Support --ignore-branch-check option in build/check actions
+  * [d62433c] MT#16391 Don't hardcode tt2-daemon's port file
+  * [55fa597] MT#16391 Support custom output directories
+  * [fa88307] TT#16813 Revert "MT#16391 Initial autopkgtest test"
+  * [e40ec01] MT#16391 Fix regression regarding unset NGCP_PORTFILE
+  * [acfa825] MT#16391 Initial tests using pytest
+  * [1acab57] TT#16903 Provide tests for 'ngcpcfg set' + 'ngcpcfg del'
+  * [0441810] TT#17401 Fail if destination file matches an existing directory
+  * [63ef578] TT#17600 pytest: import fixtures as plugins instead of importing them
+
+  [ Guillem Jover ]
+  * [18e34ab] TT#17650 Switch to use YAML::XS instead of YAML
+  * [2ab2a94] TT#14817 Add new network.yml dynamic validator program
+  * [b22e72c] TT#17656 Print the file diff when the files in the test suite differ
+  * [a4dd036] TT#17650 Switch to use YAML::XS instead of YAML::Tiny
+  * [efcf7e0] TT#17501 Use the new general.ngcp_type variable from constants.yml
+  * [1eac130] TT#10953 Reformat all library functions
+
+  [ Victor Seva ]
+  * [e0e63ac] TT#17653 helper/tt2-daemon: support NGCP_BASE_TT2 env config
+  * [e4f08fb] TT#16316 lib: add status param
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 17 Jul 2017 22:46:41 +0200
+
 ngcp-ngcpcfg (5.4.0.0+0~mr5.4.0.0) unstable; urgency=medium
 
   [ Rene Krenn ]
