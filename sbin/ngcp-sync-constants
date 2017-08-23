@@ -204,6 +204,7 @@ SQL
         or die "Cannot execute: ".$DBI::errstr;
 
     my ($count, $match) = $sth_sel->fetchrow_array();
+    $count //= 0;
     if ($count && !$match) {
         if ($debug) {
             log_debug(sprintf "%s => %s", $user, $pass);
