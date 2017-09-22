@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fab399f4_1d4b615a",
+        "filename": "t/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-09-22T13:10:02Z",
+      "side": 1,
+      "message": "The \"/\" looks broken :) (I\u0027d also prefer it to be in a single line)",
+      "revId": "18f8a2d15f11b4b42e22c33371b54073fb56a371",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
