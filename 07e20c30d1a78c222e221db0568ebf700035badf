@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fab399f4_e27b6827",
+        "filename": "t/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-09-22T08:16:24Z",
+      "side": 1,
+      "message": "this is not necessary here, and will be broked for other mr5.5+ branches as soon as the are branched. Victor created support of apt sources files from get-code, see snmp-agent.git/t/Dockerfile  as an example:\n\n\n# files that get-code generates\nCOPY t/sources.list.d/builddeps.list /etc/apt/sources.list.d/\nCOPY t/sources.list.d/preferences /etc/apt/preferences.d/",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 141
+      },
+      "revId": "07e20c30d1a78c222e221db0568ebf700035badf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
