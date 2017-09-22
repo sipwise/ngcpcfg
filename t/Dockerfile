@@ -28,7 +28,13 @@ WORKDIR /code/
 ################################################################################
 # Instructions for usage
 # ----------------------
-# When you want to build the base image from scratch (jump to the next section if you don't want to build yourself!):
+# When you want to build the base image from scratch
+# (jump to the next section if you don't want to build yourself!):
+#
+# you need to put the proper NGCP sources at t/sources.list.d/builddeps.list
+# for instance, trunk:
+# echo "deb https://deb.sipwise.com/autobuild/ release-trunk-stretch main" > t/sources.list.d/builddeps.list
+#
 # % docker build --tag="ngcpcfg-stretch" .
 # % docker run --rm -i -t -v $(pwd)/..:/code:rw ngcpcfg-stretch:latest bash
 #
