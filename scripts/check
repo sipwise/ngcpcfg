@@ -113,7 +113,7 @@ validate_config() {
   done
 
   if [ "$rc" = "0" ] ; then
-    log_info "yml configs were validated successfully"
+    log_info "yml configs were validated successfuly"
   else
     if [ -n "${NO_VALIDATE:-}" ] ; then
       log_info "DANGEROUS ZONE: invalid configs detected, continue anyway due to option '--no-validate'"
@@ -183,7 +183,7 @@ check_configs_conflicts
 
 check_shared_storage || exit $?
 
-log_info "configs were checked successfully"
+log_info "configs were checked successfuly"
 exit 0
 
 ## END OF FILE #################################################################

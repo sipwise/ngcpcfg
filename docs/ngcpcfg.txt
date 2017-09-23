@@ -109,7 +109,7 @@ file is usually provided by a Debian package.
 * _/etc/ngcp-config/templates/etc/foobar/baz.tt2.$HA_NODE_: node specific
 template file. $HA_NODE is determined using the content of /etc/ngcp_ha_node
 (usually being _sp1_ for the first node and _sp2_ for the second node on the
-Sipwise Next Generation Platform). Wheras _*customtt.tt2_ files are used on all
+Sipwise Next Generation Platform). Whereas _*customtt.tt2_ files are used on all
 nodes in a High Availability setup the _*.tt2.$HA_NODE*_ file is specific for
 the single node only. A common usage case is master vs. slave configuration of a
 service. Configuration file is usually provided by a Debian package.
@@ -330,7 +330,7 @@ _/etc/ngcp-config_. You can specify options for the underlying 'git diff'
 command, e.g. 'ngcpcfg diff HEAD^' will show all changes that have been recorded
 with the last _commit_ operation (see manpage git-rev-parse(1) for details how
 to specify revisions). If the tool doesn't report anything it means that there
-are neither any uncommited changes nor any new or removed files (files which are
+are neither any uncommitted changes nor any new or removed files (files which are
 not yet (un)registered to the repository).
 
   **encrypt**::
@@ -378,7 +378,7 @@ to also skip the _apply_ operation).  If the '--shared-only' option is set then
 the any pending commits will be pushed only to the shared repository only, any
 foreign hosts will be skipped then.  If hostname(s) or IP address(es) is given
 as argument then the changes will be pushed to the shared repository and to the
-given hosts only. If no host has has been specified then the hosts specified in
+given hosts only. If no host has been specified then the hosts specified in
 _/etc/ngcp-config/systems.cfg_ are used.
 Note: This option is available in the High Availability setup only.
 
@@ -468,7 +468,7 @@ Does ngcpcfg also track file permissions?
 -----------------------------------------
 
 When using ngcpcfg in a HA setup (PRO/CARRIER only) you want to ensure that
-changing file permissions inside the ngcpcfg repository on one node propogates
+changing file permissions inside the ngcpcfg repository on one node propagates
 to the other node(s) as well.  ngcpcfg is using git underneath, though git
 itself doesn't track file permissions (except for the execution bit).
 
