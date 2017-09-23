@@ -116,7 +116,7 @@ get_branch_status() {
   fi
 }
 
-## important variables we depend on to operate successfully {{{
+## important variables we depend on to operate successfuly {{{
 # support test suite which requires system independent configuration
 if [ -r "${NGCPCFG:-}" ] ; then
   log_debug "sourcing configuration file ${NGCPCFG:-}"
@@ -334,7 +334,7 @@ record_commit_id() {
   log_debug "mkdir -p ${STATE_FILES_DIR}"
   mkdir -p "${STATE_FILES_DIR}"
 
-  # if there are uncommited changes then record it as such
+  # if there are uncommitted changes then record it as such
   if git status --porcelain | grep -q . ; then
     echo "dirty" > "${STATE_FILES_DIR}/build"
   else

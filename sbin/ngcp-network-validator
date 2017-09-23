@@ -219,7 +219,7 @@ B<ngcp-network-validator> [I<option>...]
 =head1 DESCRIPTION
 
 B<This program> generates a schema at run-time to accurately validate this
-system specific network.yml, with the information gathered from the the
+system specific network.yml, with the information gathered from the
 same file.
 
 =head1 OPTIONS

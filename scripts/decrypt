@@ -9,7 +9,7 @@ set -o pipefail
 # helper functions {{{
 # sadly we can't source ${FUNCTIONS}/main as we are missing a bunch of
 # configuration files that are supposed to be available, therefore
-# provide the main functions we need for successfull execution of the
+# provide the main functions we need for successful execution of the
 # decrypt function
 
 timestamp_replacementchars='' # unset by default

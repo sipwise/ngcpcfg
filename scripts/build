@@ -29,7 +29,7 @@ fi
 
 # Sanity check the YAML and schema files.
 # NOTE: we can't blindly pass "$@" to the check script,
-#       so explicitely check and add option as needed
+#       so explicitly check and add option as needed
 if "$CHECK_BRANCH" ; then
   "${SCRIPTS}"/check
 else
@@ -107,7 +107,7 @@ else
   fi
 
   if $trigger_rebuild ; then
-    log_info "Main configuation file(s) has been changed, running full rebuild."
+    log_info "Main configuration file(s) has been changed, running full rebuild."
     log_debug "Executing: build_config_files $*"
     build_config_files "$@"
   fi

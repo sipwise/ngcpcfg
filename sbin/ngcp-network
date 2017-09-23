@@ -728,7 +728,7 @@ NOTE: If multiple B<--set-interface> options are specified in one command line
 (e.g. 'B<--set-interface=lo --set-interface=eth0 --set-interface=eth1>') then
 options like B<--hwaddr> cannot be sanely combined with different settings on
 multiple interfaces. Instead invoke ngcp-network with the B<--set-interface>
-option mulitple times.
+option multiple times.
 
 =item B<--shared-ip>=I<IP>
 

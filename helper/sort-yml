@@ -8,7 +8,7 @@ use warnings;
 use YAML::XS;
 
 my $inputfile  = shift or die 'You did not specify an input file name';
-my $outputfile = shift or die 'You did not specify an ouput file name';
+my $outputfile = shift or die 'You did not specify an output file name';
 
 my $yaml = YAML::XS::LoadFile($inputfile);
 

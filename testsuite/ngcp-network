@@ -47,7 +47,7 @@ assertEqualFiles() {
 }
 
 
-# make sure ip/netmask/interface can be set on exisiting host
+# make sure ip/netmask/interface can be set on existing host
 ${CMD} --input-file=network-config/network_pro.yml --output-file=testfiles/eth42.yml \
        --host=sp1 --set-interface=eth42 --ip=1.2.3.4 --netmask=255.255.255.248
 assertEqualFiles testfiles/eth42.yml network-config/eth42.yml

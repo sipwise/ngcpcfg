@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #----------------------------------------------------------------------
-# Syncronizes passwords from constants.yml with MySQL
+# Synchronizes passwords from constants.yml with MySQL
 #----------------------------------------------------------------------
 use strict;
 use warnings;
@@ -32,7 +32,7 @@ my $mysql_root      = 0;
 sub Usage {
     print <<USAGE;
 ==
-    Syncronizes passwords from constants.yml with MySQL
+    Synchronizes passwords from constants.yml with MySQL
 ==
 $PROGRAM_NAME [options]
 Options:
@@ -338,7 +338,7 @@ __END__
 
 =head1 NAME
 
-ngcp-sync-constants - syncronizes passwords from constants.yml with MySQL
+ngcp-sync-constants - synchronizes passwords from constants.yml with MySQL
 
 =head1 SYNOPSIS
 
@@ -346,7 +346,7 @@ B<ngcp-sync-constants> [I<options>...]
 
 =head1 DESCRIPTION
 
-B<This program> reads constants.yml file, parses it and syncronizes all
+B<This program> reads constants.yml file, parses it and synchronizes all
 required passwords with MySQL.
 
 =head1 OPTIONS
