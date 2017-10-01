@@ -83,6 +83,7 @@ sub logger {
     return if $mode == 1 && $debug <= 0;
     my $offset = $log_offset*2;
     $offset -= 2 if $debug < 1;
+    $offset = 0 if $offset < 0;
     my $prefix = $mode < 2 ? "-->" : "Warning:";
     printf { $mode == 2 ? *STDERR : *STDOUT } "%s%s %s\n",
         $prefix, " "x$offset, $str;
@@ -173,14 +174,16 @@ sub apply_grants {
             log_debug(sprintf "[%s]%s", join('.', @$data), $as ? " as $as" : '');
             normalise_grants($ptr->{$key}, $user, $host);
             return 0 unless check_grants($ptr->{$key}, $user, $host);
+            log_info(sprintf "[%s]%s", join('.', @$data), $as ? " as $as" : '') unless $debug;
             $log_offset = 2;
             log_info(sprintf "revoke all from: %s\@%s", $user, $host);
-            $dbh->do("REVOKE ALL PRIVILEGES, GRANT OPTION FROM $user\@$host");
+            $dbh->do("REVOKE ALL PRIVILEGES, GRANT OPTION FROM '$user'\@'$host'");
             if ($DBI::errstr) {
                 if ($DBI::errstr =~
                   /revoke all privileges for one or more of the requested users/) {
                     $new_user = 1;
                 } elsif ($DBI::errstr !~ /There is no such grant defined/) {
+                    print "USER: $user HOST: $host\n";
                     die sprintf "Cannot revoke privileges from %s\@%s: %s",
                         $user, $host, $DBI::errstr;
                 }
@@ -192,7 +195,7 @@ sub apply_grants {
                 my ($s_grant, $s_suffix) = split_grant_suffix($grant);
                 log_info(sprintf "grant %s to %s\@%s %s",
                             $s_grant, $user, $host, $s_suffix);
-                $dbh->do("GRANT $s_grant TO $user\@$host $s_suffix");
+                $dbh->do("GRANT $s_grant TO '$user'\@'$host' $s_suffix");
                 if ($DBI::errstr &&
                     $DBI::errstr !~ /Table\s+'\S+\.\S+'\s+doesn't\s+exist/) {
                     die "Cannot grant privileges: ".$DBI::errstr;
