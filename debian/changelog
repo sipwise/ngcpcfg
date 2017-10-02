@@ -1,3 +1,26 @@
+ngcp-ngcpcfg (5.5.1.0+0~mr5.5.1.0) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [f08fb58] TT#20092 ngcp-sync-constants: fix default $count
+  * [3538887] TT#22501 escape revoke/grant for users with special chars
+
+  [ Alexander Lutay ]
+  * [c945aba] TT#21905 Switch ngcpcfg Dockerfile to Debian stretch
+  * [d492cb0] TT#21905 Fix c945aba: update building instruction (no need to rebuild image)
+
+  [ Michael Prokop ]
+  * [a422484] TT#22411 Fix spelling mistakes/typos
+
+  [ Guillem Jover ]
+  * [16ba64f] TT#22805 Depend on netcat-openbsd | netcat
+
+  [ Rene Krenn ]
+  * [03b3a54] TT#22475 support src/dst lnp number cdr export fields
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 02 Oct 2017 23:43:08 +0200
+
 ngcp-ngcpcfg (5.5.0.0+0~mr5.5.0.0) unstable; urgency=medium
 
   [ Alexander Lutay ]
