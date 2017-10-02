@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dab895d6_65ccd136",
+        "filename": "sbin/ngcp-sync-grants",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-10-02T08:41:19Z",
+      "side": 1,
+      "message": "I don\u0027t understand the logic here to log only when we are not in debug mode?",
+      "revId": "353888767484f2c6a53d7c71a81da7ab645c4bbd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dab895d6_e550e160",
+        "filename": "sbin/ngcp-sync-grants",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-10-02T08:41:19Z",
+      "side": 1,
+      "message": "If this is an error message, shouldn\u0027t it go to STDERR?",
+      "revId": "353888767484f2c6a53d7c71a81da7ab645c4bbd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
