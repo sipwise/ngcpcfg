@@ -140,9 +140,16 @@ foreach my $hostname (sort keys %{$yaml->{hosts}}) {
         };
 
         if ($iface =~ m/^bond/) {
+            $ifacemap->{mapping}->{type}->{required} = 'no';
+            $ifacemap->{mapping}->{ip}->{required} = 'no';
+            $ifacemap->{mapping}->{netmask}->{required} = 'no';
             $ifacemap->{mapping}->{bond_miimon}->{required} = 'yes';
             $ifacemap->{mapping}->{bond_mode}->{required} = 'yes';
             $ifacemap->{mapping}->{bond_slaves}->{required} = 'yes';
+        } elsif ($iface =~ m/^eth/) {
+            $ifacemap->{mapping}->{type}->{required} = 'no';
+            $ifacemap->{mapping}->{ip}->{required} = 'no';
+            $ifacemap->{mapping}->{netmask}->{required} = 'no';
         } elsif ($iface =~ m/^vlan/) {
             $ifacemap->{mapping}->{vlan_raw_device}->{required} = 'yes';
         }
