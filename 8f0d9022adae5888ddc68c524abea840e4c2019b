@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dab895d6_716813f6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-10-05T07:36:36Z",
+      "side": 1,
+      "message": "s/inerfaces/interfaces/?",
+      "revId": "8f0d9022adae5888ddc68c524abea840e4c2019b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
