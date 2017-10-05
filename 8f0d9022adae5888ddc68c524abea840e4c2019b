@@ -39,6 +39,30 @@
       "revId": "8f0d9022adae5888ddc68c524abea840e4c2019b",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dab895d6_d1763fd8",
+        "filename": "sbin/ngcp-network-validator",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-10-05T07:37:05Z",
+      "side": 1,
+      "message": "Ignore. and idrac* should have ip/netmask.\nI am still sleeping...",
+      "parentUuid": "dab895d6_31a77b51",
+      "range": {
+        "startLine": 153,
+        "startChar": 30,
+        "endLine": 153,
+        "endChar": 35
+      },
+      "revId": "8f0d9022adae5888ddc68c524abea840e4c2019b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
