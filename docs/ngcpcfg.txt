@@ -156,6 +156,8 @@ Note: Feature is available in the High Availability setup only.
 Configuration file priority: *.customtt.tt2.$HOSTNAME takes precedence over
 *.customtt.tt2.$PAIRNAME, over .customtt.tt2.$HA_NODE, over *.customtt.tt2, over
 *.tt2.$HOSTNAME, over *.tt2.$PAIRNAME, over *.tt2.$HA_NODE, over *.tt2.
+Be aware that a configuration item from a lower priority file that isn't present
+in a file of higher precedence will end up in the resulting configuration file.
 
 
 Support action related files
