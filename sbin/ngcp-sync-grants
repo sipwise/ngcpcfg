@@ -17,6 +17,8 @@ Readonly my $MYSQL_CREDENTIALS => "/etc/mysql/sipwise.cnf";
 Readonly my $DB_CFG => "/etc/default/ngcp-db";
 Readonly my $DEFAULT_DBHOST => "127.0.0.1";
 Readonly my $DEFAULT_DBPORT => "3306";
+Readonly my $DEFAULT_NDBHOST => "127.0.0.1";
+Readonly my $DEFAULT_NDBPORT => "";
 Readonly my $TEMP_GRANT_USER => 'ngcp-sync-db';
 Readonly my $TEMP_GRANT_HOST => 'localhost';
 
@@ -471,53 +473,65 @@ sub main {
 
     my ($dbhost, $dbport);
     if (my $db_cfg = Config::Tiny->read($DB_CFG)) {
-        ($dbhost, $dbport) = @{$db_cfg->{_}}{qw(PAIR_DBHOST PAIR_DBPORT)};
+        ($dbhost, $dbport, $ndbhost, $ndbport) = @{$db_cfg->{_}}{
+            qw(PAIR_DBHOST PAIR_DBPORT CLUSTER_DBHOST CLUSTER_DBPORT)
+        };
     } else {
-        log_warn(sprintf "Cannot open %s: %s, using host=%s port=%s",
-            $DB_CFG, $ERRNO, $DEFAULT_DBHOST, $DEFAULT_DBPORT);
-        ($dbhost, $dbport) = ($DEFAULT_DBHOST, $DEFAULT_DBPORT);
+        log_warn(sprintf "Cannot open %s: %s, using host=%s port=%s ndbhost=%s ndbport=%s",
+            $DB_CFG, $ERRNO, $DEFAULT_DBHOST, $DEFAULT_DBPORT, $DEFAULT_NDBHOST, $DEFAULT_NDBPORT);
+        ($dbhost, $dbport, $ndbhost, $ndbport) =
+            ($DEFAULT_DBHOST, $DEFAULT_DBPORT, $DEFAULT_NDBHOST, $DEFAULT_NDBPORT);
     }
 
-    connect_db($dbhost, $dbport);
+    foreach my $tuple ([$dbhost, $dbport], [$ndbhost, $ndbport]) {
+        my ($host, $port) = @{ $tuple };
 
-    $dbh->begin_work or die "Cannot start transaction: ".$DBI::errstr;
-
-    eval {
-        my $rc = 0;
-        foreach my $proc (@{$grants->{order}}) {
-            SWITCH: for ($proc) {
-                /^drop$/ && do {
-                    if (apply_drop_users()) {
-                        flush_privs();
-                    }
-                };
-                /^hosts$/ && do {
-                    $rc += apply_host_grants();
-                };
-                /^hosts$/ && do {
-                    $rc += apply_copy_grants();
-                };
-            } # SWITCH
+        if(-z $port) {
+            log_info("Skipping db due to empty port");
+            next;
         }
 
-        if ($rc) {
-            flush_privs();
+        connect_db($host, $port);
+
+        $dbh->begin_work or die "Cannot start transaction: ".$DBI::errstr;
+
+        eval {
+            my $rc = 0;
+            foreach my $proc (@{$grants->{order}}) {
+                SWITCH: for ($proc) {
+                    /^drop$/ && do {
+                        if (apply_drop_users()) {
+                            flush_privs();
+                        }
+                    };
+                    /^hosts$/ && do {
+                        $rc += apply_host_grants();
+                    };
+                    /^hosts$/ && do {
+                        $rc += apply_copy_grants();
+                    };
+                } # SWITCH
+            }
+
+            if ($rc) {
+                flush_privs();
+            }
+        };
+        if ($@) {
+            $dbh->rollback if $dbh;
+            $dbh->disconnect if $dbh;
+            die "Error: $@";
         }
-    };
-    if ($@) {
-        $dbh->rollback if $dbh;
-        $dbh->disconnect if $dbh;
-        die "Error: $@";
-    }
 
-    $dbh->commit or die "Cannot commit transaction: ".$DBI::errstr;
-    $dbh->disconnect;
+        $dbh->commit or die "Cannot commit transaction: ".$DBI::errstr;
+        $dbh->disconnect;
 
-    if ($recreate_user) {
-        log_info(<<MSG);
+        if ($recreate_user) {
+            log_info(<<MSG);
 Warning: Recreated users are without passwords,
          please consider running 'ngcp-sync-constants' to update passwords for them.
 MSG
+        }
     }
 
     return;
