@@ -12,13 +12,18 @@ use YAML::XS;
 use Readonly;
 
 Readonly my $GRANTS_SCHEMA => '/etc/mysql/grants.yml';
+Readonly my $NDB_GRANTS_SCHEMA => '/etc/mysql/ndbgrants.yml';
 Readonly my $DEFAULT_MYSQL_USER => "sipwise";
 Readonly my $MYSQL_CREDENTIALS => "/etc/mysql/sipwise.cnf";
 Readonly my $DB_CFG => "/etc/default/ngcp-db";
 Readonly my $DEFAULT_DBHOST => "127.0.0.1";
 Readonly my $DEFAULT_DBPORT => "3306";
+Readonly my $DEFAULT_NDBHOST => "127.0.0.1";
+Readonly my $DEFAULT_NDBPORT => "";
 Readonly my $TEMP_GRANT_USER => 'ngcp-sync-db';
 Readonly my $TEMP_GRANT_HOST => 'localhost';
+Readonly my $FALLBACK_DBUSER => 'root';
+Readonly my $FALLBACK_DBPASS => undef;
 
 my $grants = {};
 my $dbh;
@@ -64,11 +69,24 @@ sub pwgen {
 sub connect_db {
     my ($dbhost, $dbport) = @_;
     my ($mysql_user, $mysql_pass) = get_mysql_credentials();
-
-    $dbh = DBI->connect("DBI:mysql:database=mysql;host=$dbhost;port=$dbport",
-                        $mysql_user, $mysql_pass,
-                        { PrintError => 0 })
-        or die "Can't connect to MySQL database 'mysql': ". $DBI::errstr;
+    my @connect_errors = ();
+    foreach my $creds ([$mysql_user, $mysql_pass], [$FALLBACK_DBUSER, $FALLBACK_DBPASS]) {
+        my ($user, $pass) = @{ $creds };
+        $dbh = DBI->connect("DBI:mysql:database=mysql;host=$dbhost;port=$dbport",
+                            $user, $pass,
+                            { PrintError => 0 });
+        if($dbh) {
+            last;
+        } elsif($DBI::err == 1045) { # authorization failed
+            push @connect_errors, $DBI::errstr;
+        } else {
+            die "Can't connect to MySQL database 'mysql': ". $DBI::errstr;
+        }
+    }
+    unless($dbh) {
+        my $err = shift @connect_errors;
+        die "Can't connect to MySQL database 'mysql': $err";
+    }
     log_debug("connected to $dbhost:$dbport as $mysql_user");
     $dbh->do("SET sql_log_bin=0")
         or die "Cannot set sql_log_bin=0: ".$DBI::errstr;
@@ -217,7 +235,6 @@ sub apply_grants {
 }
 
 sub apply_host_grants {
-
     my $rc = 0;
 
     foreach my $grant_host (sort { $a cmp $b } keys %{$grants->{hosts}}) {
@@ -467,57 +484,70 @@ sub flush_privs {
 }
 
 sub main {
-    $grants = YAML::XS::LoadFile($GRANTS_SCHEMA);
-
-    my ($dbhost, $dbport);
+    my ($dbhost, $dbport, $ndbhost, $ndbport);
     if (my $db_cfg = Config::Tiny->read($DB_CFG)) {
-        ($dbhost, $dbport) = @{$db_cfg->{_}}{qw(PAIR_DBHOST PAIR_DBPORT)};
+        ($dbhost, $dbport, $ndbhost, $ndbport) = @{$db_cfg->{_}}{
+            qw(PAIR_DBHOST PAIR_DBPORT CLUSTER_DBHOST CLUSTER_DBPORT)
+        };
     } else {
-        log_warn(sprintf "Cannot open %s: %s, using host=%s port=%s",
-            $DB_CFG, $ERRNO, $DEFAULT_DBHOST, $DEFAULT_DBPORT);
-        ($dbhost, $dbport) = ($DEFAULT_DBHOST, $DEFAULT_DBPORT);
+        log_warn(sprintf "Cannot open %s: %s, using host=%s port=%s ndbhost=%s ndbport=%s",
+            $DB_CFG, $ERRNO, $DEFAULT_DBHOST, $DEFAULT_DBPORT, $DEFAULT_NDBHOST, $DEFAULT_NDBPORT);
+        ($dbhost, $dbport, $ndbhost, $ndbport) =
+            ($DEFAULT_DBHOST, $DEFAULT_DBPORT, $DEFAULT_NDBHOST, $DEFAULT_NDBPORT);
     }
 
-    connect_db($dbhost, $dbport);
 
-    $dbh->begin_work or die "Cannot start transaction: ".$DBI::errstr;
 
-    eval {
-        my $rc = 0;
-        foreach my $proc (@{$grants->{order}}) {
-            SWITCH: for ($proc) {
-                /^drop$/ && do {
-                    if (apply_drop_users()) {
-                        flush_privs();
-                    }
-                };
-                /^hosts$/ && do {
-                    $rc += apply_host_grants();
-                };
-                /^hosts$/ && do {
-                    $rc += apply_copy_grants();
-                };
-            } # SWITCH
+    foreach my $node ([$dbhost, $dbport, $GRANTS_SCHEMA], [$ndbhost, $ndbport, $NDB_GRANT_SCHEMA]) {
+        my ($host, $port, $grants_schema) = @{ $node };
+
+        if(!defined $port || -z $port) {
+            log_info("Skipping db due to empty port");
+            next;
+        }
+        $grants = YAML::XS::LoadFile($grants_schema);
+
+        connect_db($host, $port);
+
+        $dbh->begin_work or die "Cannot start transaction: ".$DBI::errstr;
+
+        eval {
+            my $rc = 0;
+            foreach my $proc (@{$grants->{order}}) {
+                SWITCH: for ($proc) {
+                    /^drop$/ && do {
+                        if (apply_drop_users()) {
+                            flush_privs();
+                        }
+                    };
+                    /^hosts$/ && do {
+                        $rc += apply_host_grants();
+                    };
+                    /^copy$/ && do {
+                        $rc += apply_copy_grants();
+                    };
+                } # SWITCH
+            }
+
+            if ($rc) {
+                flush_privs();
+            }
+        };
+        if ($@) {
+            $dbh->rollback if $dbh;
+            $dbh->disconnect if $dbh;
+            die "Error: $@";
         }
 
-        if ($rc) {
-            flush_privs();
-        }
-    };
-    if ($@) {
-        $dbh->rollback if $dbh;
-        $dbh->disconnect if $dbh;
-        die "Error: $@";
-    }
+        $dbh->commit or die "Cannot commit transaction: ".$DBI::errstr;
+        $dbh->disconnect;
 
-    $dbh->commit or die "Cannot commit transaction: ".$DBI::errstr;
-    $dbh->disconnect;
-
-    if ($recreate_user) {
-        log_info(<<MSG);
+        if ($recreate_user) {
+            log_info(<<MSG);
 Warning: Recreated users are without passwords,
          please consider running 'ngcp-sync-constants' to update passwords for them.
 MSG
+        }
     }
 
     return;
