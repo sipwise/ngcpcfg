@@ -1,0 +1,4 @@
+              | Menge/Nummer | Subnetmask      | Vlan   | Vlan-ID |   | host    | PHY
+172.31.3.0/27
+172.31.3.1    | 1            | 255.255.255.224 | ha_int | 100     |   | gateway
+172.31.3.2    | 1            | 255.255.255.224 | ha_int | 100     |   | gd01a

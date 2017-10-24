@@ -1,0 +1,8 @@
+*.pyc
+__pycache__
+.cache
+.gitignore
+build
+dist
+network_xls2yml.egg-info
+venv
