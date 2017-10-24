@@ -28,14 +28,16 @@ Build-Depends:
  libyaml-libyaml-perl,
  netcat-openbsd | netcat,
  pkwalify,
+ python3-all,
+ python3-openpyxl,
  python3-pytest,
+ python3-ruamel.yaml,
+ python3-setuptools,
  xsltproc,
 
 Package: ngcp-ngcpcfg
 Architecture: all
 Depends:
- ${misc:Depends},
- ${perl:Depends},
  etckeeper,
  file,
  git (>= 1:1.7.2.5-3~),
@@ -59,6 +61,11 @@ Depends:
  ngcp-system-tools,
  pkwalify,
  psmisc,
+ python3,
+ python3-openpyxl,
+ python3-ruamel.yaml,
+ ${misc:Depends},
+ ${perl:Depends},
 Description: central and templated based Configuration Management System for NGCP platforms
  ngcp-ngcpcfg is a Configuration Management System providing central
  configuration and template based handling of configuration
@@ -68,9 +75,9 @@ Description: central and templated based Configuration Management System for NGC
 Package: ngcp-ngcpcfg-locker
 Architecture: all
 Depends:
- ${misc:Depends},
  gnupg,
  ngcp-ngcpcfg,
+ ${misc:Depends},
 Description: Encrypt and decrypt feature for ngcp-ngcpcfg
  This package provides the encrypt and decrypt options for
  usage via ngcpcfg.
@@ -78,8 +85,8 @@ Description: Encrypt and decrypt feature for ngcp-ngcpcfg
 Package: ngcp-ngcpcfg-testsuite
 Architecture: all
 Depends:
- ${misc:Depends},
  ngcp-ngcpcfg,
+ ${misc:Depends},
 Description: testsuite for ngcpcfg
  This package provides a testsuite to automatically test ngcpcfg
  features and detect any possible breakages.

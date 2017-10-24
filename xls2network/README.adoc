@@ -1,0 +1,38 @@
+Network XLS2YML
+===============
+
+What is it about?
+-----------------
+
+We have clients sharing their network configuration in XLS files with us.
+We want to parse these XLS files and generate the according network.yml for usage on NGCP and its ngcpcfg system.
+
+Why should I use it?
+--------------------
+
+To avoid having to set up and maintain large network.yml files manually.
+
+How to install
+--------------
+
+You can install this software in a virtual environment.
+We recommend to run the Makefile:
+
+[source,bash]
+make install
+
+otherwise, you need to run ``setup.py``:
+
+[source,bash]
+python3 setup.py install
+
+How to run
+----------
+
+An executable ``xls2yml`` will be installed (in virtualenv's ``bin`` directory).
+Run ``xls2yml -h`` to see the usage description.
+
+Issues
+------
+
+Please report any issues to support@sipwise.com

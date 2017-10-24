@@ -35,7 +35,7 @@ man:
 clean:
 	rm -f docs/ngcpcfg.xml docs/ngcpcfg.epub docs/ngcpcfg.html docs/ngcpcfg.pdf
 	rm -f ngcpcfg.8 ngcp-network.8 ngcp-sync-constants.8 ngcp-sync-grants.8
-	rm -rf t/__pycache__ t/fixtures/__pycache__/ t/*.pyc
+	rm -rf t/__pycache__ t/fixtures/__pycache__/ t/*.pyc debian/xls2yml
 
 dist-clean: clean
 	rm -f docs/ngcpcfg.html docs/ngcpcfg.pdf
