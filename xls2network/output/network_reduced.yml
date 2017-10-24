@@ -1,0 +1,72 @@
+---
+hosts:
+  db01a:
+    bond0:
+      bond_miimon: '100'
+      bond_mode: active-backup
+      bond_slaves: eth0 eth1
+    dbnode: '2'
+    interfaces:
+      - lo
+      - vlan100
+      - vlan11
+    lo:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 127.0.0.1
+      netmask: 255.0.0.0
+      shared_ip: []
+      shared_v6ip: []
+      type:
+        - ssh_ext
+        - api_int
+      v6ip: '::1'
+    peer: db01b
+    role:
+      - db
+    vlan100:
+      ip: 172.31.3.8
+      netmask: 255.255.255.224
+      type:
+        - ha_int
+      vlan_raw_device: bond0
+    vlan11:
+      ip: 172.31.3.40
+      netmask: 255.255.255.224
+      type:
+        - mon_ext
+      vlan_raw_device: bond0
+  db01b:
+    bond0:
+      bond_miimon: '100'
+      bond_mode: active-backup
+      bond_slaves: eth0 eth1
+    dbnode: '1'
+    interfaces:
+      - vlan100
+      - vlan11
+      - lo
+    lo:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 127.0.0.1
+      netmask: 255.0.0.0
+      type:
+        - ssh_ext
+        - api_int
+      v6ip: '::1'
+    peer: db01a
+    role:
+      - db
+    vlan100:
+      ip: 172.31.3.9
+      netmask: 255.255.255.224
+      type:
+        - ha_int
+      vlan_raw_device: bond0
+    vlan11:
+      ip: 172.31.3.41
+      netmask: 255.255.255.224
+      type:
+        - mon_ext
+      vlan_raw_device: bond0
