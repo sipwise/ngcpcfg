@@ -18,6 +18,8 @@ override_dh_auto_build:
 	$(MAKE) syntaxcheck
 
 override_dh_install:
+	# this is an ugly hack since I don't know how to use pybuild for a subdirectory
+	cd xls2network ; python3 ./setup.py install --install-layout deb --no-compile --root=$(CURDIR)/debian/xls2yml ; cd ..
 	dh_install
 	for s in $(SCRIPTS); do \
 	  test -r "$$s" \

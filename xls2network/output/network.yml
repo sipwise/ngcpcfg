@@ -1,0 +1,1313 @@
+---
+hosts:
+  db01a:
+    bond0:
+      bond_miimon: '100'
+      bond_mode: active-backup
+      bond_slaves: 'eth0 eth1'
+    dbnode: '1'
+    eth0:
+      hwaddr: 00:00:00:00:00:00
+    eth1:
+      hwaddr: 00:00:00:00:00:00
+    interfaces:
+      - vlan100
+      - vlan11
+      - vlan15
+      - lo
+      - eth0
+      - eth1
+      - bond0
+    lo:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 127.0.0.1
+      netmask: 255.0.0.0
+      shared_ip: []
+      shared_v6ip: []
+      type:
+        - ssh_ext
+        - api_int
+      v6ip: '::1'
+    peer: db01b
+    role:
+      - db
+    vlan100:
+      hwaddr: 00:0a:f7:8d:30:bc
+      ip: 172.31.3.8
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.31.3.7
+      type:
+        - ha_int
+        - ssh_ext
+      vlan_raw_device: bond0
+    vlan11:
+      dns_nameservers:
+        - 172.31.3.244
+        - 192.168.56.11
+        - 192.168.57.11
+      gateway: 172.31.3.33
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.40
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.31.3.39
+      shared_v6ip: []
+      type:
+        - mon_ext
+        - ssh_ext
+      vlan_raw_device: bond0
+      post_up:
+        - 'route add -host 192.168.5.118  gw 172.31.3.33 dev vlan11'
+        - 'route add -host 192.168.3.15/24 gw 172.31.3.33 dev vlan11'
+        - 'route add -host 192.168.3.16 gw 172.31.3.33 dev vlan11'
+        - 'route add -host 192.168.5.17 gw 172.31.3.33 dev vlan11'
+    vlan15:
+      hwaddr: 00:00:00:00:00:00
+      ip: 192.168.181.204
+      netmask: 255.255.255.0
+      post_up:
+        - 'route add -net 172.25.240.0/24  gw 192.168.181.1 dev vlan15'
+        - 'route add -net 192.168.6.0/24 gw 192.168.181.1 dev vlan15'
+        - 'route add -net 192.168.5.0/24 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.56.15 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.57.15 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.56.11 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.57.11 gw 192.168.181.1 dev vlan15'
+      shared_ip:
+        - 192.168.181.203
+      type:
+        - ssh_ext
+        - mon_ext
+      vlan_raw_device: bond0
+  db01b:
+    bond0:
+      bond_miimon: '100'
+      bond_mode: active-backup
+      bond_slaves: 'eth0 eth1'
+    dbnode: '2'
+    eth0:
+      hwaddr: 00:00:00:00:00:00
+    eth1:
+      hwaddr: 00:00:00:00:00:00
+    interfaces:
+      - vlan100
+      - vlan11
+      - vlan15
+      - lo
+      - eth0
+      - eth1
+      - bond0
+    lo:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 127.0.0.1
+      netmask: 255.0.0.0
+      shared_ip: []
+      shared_v6ip: []
+      type:
+        - ssh_ext
+        - api_int
+      v6ip: '::1'
+    peer: db01a
+    role:
+      - db
+    vlan100:
+      hwaddr: 00:0a:f7:8d:30:b8
+      ip: 172.31.3.9
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.31.3.7
+      type:
+        - ssh_ext
+        - ha_int
+      vlan_raw_device: bond0
+    vlan11:
+      dns_nameservers:
+        - 172.31.3.244
+        - 192.168.56.11
+        - 192.168.57.11
+      gateway: 172.31.3.33
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.41
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.31.3.39
+      shared_v6ip: []
+      type:
+        - ssh_ext
+        - mon_ext
+      vlan_raw_device: bond0
+      post_up:
+        - 'route add -host 192.168.5.118  gw 172.31.3.33 dev vlan11'
+        - 'route add -host 192.168.3.15/24 gw 172.31.3.33 dev vlan11'
+        - 'route add -host 192.168.3.16 gw 172.31.3.33 dev vlan11'
+        - 'route add -host 192.168.5.17 gw 172.31.3.33 dev vlan11'
+    vlan15:
+      hwaddr: 00:00:00:00:00:00
+      ip: 192.168.181.205
+      netmask: 255.255.255.0
+      post_up:
+        - 'route add -net 172.25.240.0/24  gw 192.168.181.1 dev vlan15'
+        - 'route add -net 192.168.6.0/24 gw 192.168.181.1 dev vlan15'
+        - 'route add -net 192.168.5.0/24 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.56.15 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.57.15 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.56.11 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.57.11 gw 192.168.181.1 dev vlan15'
+      shared_ip:
+        - 192.168.181.203
+      type:
+        - ssh_ext
+        - mon_ext
+      vlan_raw_device: bond0
+  lb01a:
+    bond0:
+      bond_miimon: '100'
+      bond_mode: active-backup
+      bond_slaves: 'eth0 eth1'
+    dbnode: '3'
+    eth0:
+      hwaddr: 00:00:00:00:00:00
+    eth1:
+      hwaddr: 00:00:00:00:00:00
+    interfaces:
+      - vlan11
+      - vlan30
+      - vlan35
+      - vlan100
+      - vlan31
+      - vlan40
+      - vlan15
+      - vlan61
+      - vlan71
+      - vlan51
+      - vlan60
+      - vlan70
+      - vlan20
+      - vlan50
+      - lo
+      - eth0
+      - eth1
+      - bond0
+    lo:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 127.0.0.1
+      netmask: 255.0.0.0
+      shared_ip: []
+      shared_v6ip: []
+      type:
+        - ssh_ext
+        - api_int
+      v6ip: '::1'
+    peer: lb01b
+    role:
+      - lb
+    vlan100:
+      hwaddr: 00:0a:f7:8d:32:34
+      ip: 172.31.3.11
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.31.3.10
+      type:
+        - ha_int
+        - ssh_ext
+      vlan_raw_device: bond0
+    vlan11:
+      dns_nameservers:
+        - 172.31.3.244
+        - 192.168.56.11
+        - 192.168.57.11
+      gateway: 172.31.3.33
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.43
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.31.3.42
+      shared_v6ip: []
+      type:
+        - mon_ext
+        - ssh_ext
+      vlan_raw_device: bond0
+      post_up:
+        - 'route add -host 192.168.5.118  gw 172.31.3.33 dev vlan11'
+        - 'route add -host 192.168.3.15/24 gw 172.31.3.33 dev vlan11'
+        - 'route add -host 192.168.3.16 gw 172.31.3.33 dev vlan11'
+        - 'route add -host 192.168.5.17 gw 172.31.3.33 dev vlan11'
+    vlan15:
+      hwaddr: 00:00:00:00:00:00
+      ip: 192.168.181.207
+      netmask: 255.255.255.0
+      post_up:
+        - 'route add -net 172.25.240.0/24  gw 192.168.181.1 dev vlan15'
+        - 'route add -net 192.168.6.0/24 gw 192.168.181.1 dev vlan15'
+        - 'route add -net 192.168.5.0/24 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.56.15 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.57.15 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.56.11 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.57.11 gw 192.168.181.1 dev vlan15'
+      shared_ip:
+        - 192.168.181.206
+      type:
+        - ssh_ext
+        - mon_ext
+      vlan_raw_device: bond0
+    vlan20:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.69
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.31.3.68
+      type:
+        - li_int
+      vlan_raw_device: bond0
+    vlan30:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.229
+      netmask: 255.255.255.248
+      post_up:
+        - 'route add -net 10.0.0.0/8 gw 172.31.3.225 dev vlan30'
+        - 'ip route add default via 172.31.3.225 dev vlan30 table sip_ext'
+        - 'ip rule add from 172.31.3.224/29 lookup sip_ext prio 1000'
+        - 'ip route add default via 2a02:8071:fb2b:0030::1 dev vlan30 table sip_ext_v6'
+        - 'ip rule add from 2a02:8071:fb2b:0030::/64 lookup sip_ext_v6 prio 1000'
+      shared_ip:
+        - 172.31.3.228
+      type:
+        - sip_ext
+      v6ip: 2a02:8071:fb2b:0030::5
+      shared_v6ip:
+        - 2a02:8071:fb2b:0030::4
+      vlan_raw_device: bond0
+    vlan31:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.85
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.31.3.84
+      vlan_raw_device: bond0
+    vlan35:
+      cluster_sets:
+        - default
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.104
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.31.3.103
+      type:
+        - sip_int
+      vlan_raw_device: bond0
+    vlan40:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.117
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.31.3.116
+      type:
+        - inap_ext
+      vlan_raw_device: bond0
+    vlan50:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.213
+      netmask: 255.255.255.240
+      post_up:
+        - 'ip route add default via 172.31.3.209 dev vlan50 table sip_peer_nrw'
+        - 'ip rule add from 172.31.3.208/28 lookup sip_peer_nrw prio 1000'
+      shared_ip:
+        - 172.31.3.212
+      type:
+        - sip_ext_incoming
+      vlan_raw_device: bond0
+    vlan51:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.165
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.31.3.164
+      vlan_raw_device: bond0
+    vlan60:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.181
+      netmask: 255.255.255.240
+      post_up:
+        - 'ip route add default via 172.31.3.177 dev vlan60 table sip_peer_bw'
+        - 'ip rule add from 172.31.3.176/28 lookup sip_peer_bw prio 1000'
+      shared_ip:
+        - 172.31.3.180
+      type:
+        - sip_ext_incoming
+      vlan_raw_device: bond0
+    vlan61:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.133
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.31.3.132
+      vlan_raw_device: bond0
+    vlan70:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.197
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.31.3.196
+      type:
+        - sip_peer_pe
+      vlan_raw_device: bond0
+      post_up:
+        - 'ip route add default via 172.31.3.193 dev vlan70 table sip_peer_pe'
+        - 'ip rule add from 172.31.3.192/28 lookup sip_peer_pe prio 1000'
+    vlan71:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.149
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.31.3.148
+      vlan_raw_device: bond0
+  lb01b:
+    bond0:
+      bond_miimon: '100'
+      bond_mode: active-backup
+      bond_slaves: 'eth0 eth1'
+    dbnode: '3'
+    eth0:
+      hwaddr: 00:00:00:00:00:00
+    eth1:
+      hwaddr: 00:00:00:00:00:00
+    interfaces:
+      - vlan11
+      - vlan30
+      - vlan35
+      - vlan100
+      - vlan15
+      - vlan31
+      - vlan40
+      - vlan61
+      - vlan71
+      - vlan51
+      - vlan60
+      - vlan70
+      - vlan20
+      - vlan50
+      - lo
+      - eth0
+      - eth1
+      - bond0
+    lo:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 127.0.0.1
+      netmask: 255.0.0.0
+      shared_ip: []
+      shared_v6ip: []
+      type:
+        - ssh_ext
+        - api_int
+      v6ip: '::1'
+    peer: lb01a
+    role:
+      - lb
+    vlan100:
+      hwaddr: 00:0a:f7:8d:24:68
+      ip: 172.31.3.12
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.31.3.10
+      type:
+        - ha_int
+        - ssh_ext
+      vlan_raw_device: bond0
+    vlan11:
+      dns_nameservers:
+        - 172.31.3.244
+        - 192.168.56.11
+        - 192.168.57.11
+      gateway: 172.31.3.33
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.44
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.31.3.42
+      shared_v6ip: []
+      type:
+        - mon_ext
+        - ssh_ext
+      vlan_raw_device: bond0
+      post_up:
+        - 'route add -host 192.168.5.118  gw 172.31.3.33 dev vlan11'
+        - 'route add -host 192.168.3.15/24 gw 172.31.3.33 dev vlan11'
+        - 'route add -host 192.168.3.16 gw 172.31.3.33 dev vlan11'
+        - 'route add -host 192.168.5.17 gw 172.31.3.33 dev vlan11'
+    vlan15:
+      hwaddr: 00:00:00:00:00:00
+      ip: 192.168.181.208
+      netmask: 255.255.255.0
+      post_up:
+        - 'route add -net 172.25.240.0/24  gw 192.168.181.1 dev vlan15'
+        - 'route add -net 192.168.6.0/24 gw 192.168.181.1 dev vlan15'
+        - 'route add -net 192.168.5.0/24 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.56.15 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.57.15 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.56.11 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.57.11 gw 192.168.181.1 dev vlan15'
+      shared_ip:
+        - 192.168.181.206
+      type:
+        - ssh_ext
+        - mon_ext
+      vlan_raw_device: bond0
+    vlan20:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.70
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.31.3.68
+      type:
+        - li_int
+      vlan_raw_device: bond0
+    vlan30:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.230
+      netmask: 255.255.255.248
+      post_up:
+        - 'route add -net 10.0.0.0/8 gw 172.31.3.225 dev vlan30'
+        - 'ip route add default via 172.31.3.225 dev vlan30 table sip_ext'
+        - 'ip rule add from 172.31.3.224/29 lookup sip_ext prio 1000'
+        - 'ip route add default via 2a02:8071:fb2b:0030::1 dev vlan30 table sip_ext_v6'
+        - 'ip rule add from 2a02:8071:fb2b:0030::/64 lookup sip_ext_v6 prio 1000'
+      shared_ip:
+        - 172.31.3.228
+      type:
+        - sip_ext
+      v6ip: 2a02:8071:fb2b:0030::6 
+      shared_v6ip:
+        - 2a02:8071:fb2b:0030::4
+      vlan_raw_device: bond0
+    vlan31:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.86
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.31.3.84
+      vlan_raw_device: bond0
+    vlan35:
+      cluster_sets:
+        - default
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.105
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.31.3.103
+      type:
+        - sip_int
+      vlan_raw_device: bond0
+    vlan40:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.118
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.31.3.116
+      type:
+        - inap_ext
+      vlan_raw_device: bond0
+    vlan50:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.214
+      netmask: 255.255.255.240
+      post_up:
+        - 'ip route add default via 172.31.3.209 dev vlan50 table sip_peer_nrw'
+        - 'ip rule add from 172.31.3.208/28 lookup sip_peer_nrw prio 1000'
+      shared_ip:
+        - 172.31.3.212
+      type:
+        - sip_ext_incoming
+      vlan_raw_device: bond0
+    vlan51:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.166
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.31.3.164
+      vlan_raw_device: bond0
+    vlan60:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.182
+      netmask: 255.255.255.240
+      post_up:
+        - 'ip route add default via 172.31.3.177 dev vlan60 table sip_peer_bw'
+        - 'ip rule add from 172.31.3.176/28 lookup sip_peer_bw prio 1000'
+      shared_ip:
+        - 172.31.3.180
+      type:
+        - sip_ext_incoming
+      vlan_raw_device: bond0
+    vlan61:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.134
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.31.3.132
+      vlan_raw_device: bond0
+    vlan70:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.198
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.31.3.196
+      type:
+        - sip_peer_pe
+      vlan_raw_device: bond0
+      post_up:
+        - 'ip route add default via 172.31.3.193 dev vlan70 table sip_peer_pe'
+        - 'ip rule add from 172.31.3.192/28 lookup sip_peer_pe prio 1000'
+    vlan71:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.150
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.31.3.148
+      vlan_raw_device: bond0
+  prx01a:
+    bond0:
+      bond_miimon: '100'
+      bond_mode: active-backup
+      bond_slaves: 'eth0 eth1'
+    dbnode: '5'
+    eth0:
+      hwaddr: 00:00:00:00:00:00
+    eth1:
+      hwaddr: 00:00:00:00:00:00
+    interfaces:
+      - vlan61
+      - vlan100
+      - vlan40
+      - vlan31
+      - vlan35
+      - vlan71
+      - vlan51
+      - vlan60
+      - vlan70
+      - vlan15
+      - vlan50
+      - vlan11
+      - vlan20
+      - lo
+      - eth0
+      - eth1
+      - bond0
+    lo:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 127.0.0.1
+      netmask: 255.0.0.0
+      shared_ip: []
+      shared_v6ip: []
+      type:
+        - ssh_ext
+        - api_int
+      v6ip: '::1'
+    peer: prx01b
+    role:
+      - proxy
+      - rtp
+      - li
+    vlan100:
+      hwaddr: 00:0a:f7:8d:2a:e8
+      ip: 172.31.3.14
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.31.3.13
+      type:
+        - ha_int
+        - ssh_ext
+      vlan_raw_device: bond0
+    vlan11:
+      dns_nameservers:
+        - 172.31.3.244
+        - 192.168.56.11
+        - 192.168.57.11
+      gateway: 172.31.3.33
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.46
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.31.3.45
+      shared_v6ip: []
+      type:
+        - mon_ext
+        - ssh_ext
+      vlan_raw_device: bond0
+      post_up:
+        - 'route add -host 192.168.5.118  gw 172.31.3.33 dev vlan11'
+        - 'route add -host 192.168.3.15/24 gw 172.31.3.33 dev vlan11'
+        - 'route add -host 192.168.3.16 gw 172.31.3.33 dev vlan11'
+        - 'route add -host 192.168.5.17 gw 172.31.3.33 dev vlan11'
+    vlan15:
+      hwaddr: 00:00:00:00:00:00
+      ip: 192.168.181.210
+      netmask: 255.255.255.0
+      post_up:
+        - 'route add -net 172.25.240.0/24  gw 192.168.181.1 dev vlan15'
+        - 'route add -net 192.168.6.0/24 gw 192.168.181.1 dev vlan15'
+        - 'route add -net 192.168.5.0/24 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.56.15 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.57.15 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.56.11 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.57.11 gw 192.168.181.1 dev vlan15'
+      shared_ip:
+        - 192.168.181.209
+      type:
+        - ssh_ext
+        - mon_ext
+      vlan_raw_device: bond0
+    vlan20:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.72
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.31.3.71
+      type:
+        - li_int
+      vlan_raw_device: bond0
+      post_up:
+        - 'route add -host 172.30.172.247 gw 172.31.3.65 dev vlan20'
+        - 'route add -host 172.30.172.245 gw 172.31.3.65 dev vlan20'
+        - 'route add -host 172.30.172.246 gw 172.31.3.65 dev vlan20'
+    vlan31:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.88
+      netmask: 255.255.255.240
+      post_up:
+        - 'route add -net 10.0.0.0/8 gw 172.31.3.81 dev vlan31'
+        - 'ip route add default via 172.31.3.81 dev vlan31 table rtp_ext'
+        - 'ip rule add from 172.31.3.87 lookup rtp_ext prio 1000'
+      shared_ip:
+        - 172.31.3.87
+      type:
+        - rtp_ext
+      vlan_raw_device: bond0
+      v6ip: 2a02:8071:fb2b:0031::8
+      shared_v6ip:
+        - 2a02:8071:fb2b:0031::7
+    vlan35:
+      cluster_sets:
+        - default
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.107
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.31.3.106
+      type:
+        - sip_int
+      vlan_raw_device: bond0
+    vlan40:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.120
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.31.3.119
+      type:
+        - inap_ext
+      vlan_raw_device: bond0
+    vlan50:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.216
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.31.3.215
+      type:
+        - sip_peer_um
+      vlan_raw_device: bond0
+    vlan51:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.168
+      netmask: 255.255.255.240
+      post_up:
+        - 'ip route add default via 172.31.3.161 dev vlan51 table rtp_peer_nrw'
+        - 'ip rule add from 172.31.3.167 lookup rtp_peer_nrw prio 1000'
+      shared_ip:
+        - 172.31.3.167
+      type:
+        - rtp_peer_nrw
+      vlan_raw_device: bond0
+    vlan60:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.184
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.31.3.183
+      type:
+        - sip_peer_kbw
+      vlan_raw_device: bond0
+    vlan61:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.136
+      netmask: 255.255.255.240
+      post_up:
+        - 'ip route add default via 172.31.3.129 dev vlan61 table rtp_peer_bw'
+        - 'ip rule add from 172.31.3.135 lookup rtp_peer_bw prio 1000'
+      shared_ip:
+        - 172.31.3.135
+      type:
+        - rtp_peer_bw
+      vlan_raw_device: bond0
+    vlan70:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.200
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.31.3.199
+      type:
+        - sip_peer_pe
+      vlan_raw_device: bond0
+    vlan71:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.152
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.31.3.151
+      type:
+        - rtp_peer_pe
+      vlan_raw_device: bond0
+      post_up:
+        - 'ip route add default via 172.31.3.145 dev vlan61 table rtp_peer_pe'
+        - 'ip rule add from 172.31.3.151 lookup rtp_peer_pe prio 1000'
+  prx01b:
+    bond0:
+      bond_miimon: '100'
+      bond_mode: active-backup
+      bond_slaves: 'eth0 eth1'
+    dbnode: '6'
+    eth0:
+      hwaddr: 00:00:00:00:00:00
+    eth1:
+      hwaddr: 00:00:00:00:00:00
+    interfaces:
+      - vlan61
+      - vlan100
+      - vlan15
+      - vlan40
+      - vlan31
+      - vlan35
+      - vlan71
+      - vlan51
+      - vlan60
+      - vlan70
+      - vlan50
+      - vlan11
+      - vlan20
+      - lo
+      - eth0
+      - eth1
+      - bond0
+    lo:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 127.0.0.1
+      netmask: 255.0.0.0
+      shared_ip: []
+      shared_v6ip: []
+      type:
+        - ssh_ext
+        - api_int
+      v6ip: '::1'
+    peer: prx01a
+    role:
+      - proxy
+      - rtp
+      - li
+    vlan100:
+      hwaddr: 00:0a:f7:8d:2b:70
+      ip: 172.31.3.15
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.31.3.13
+      type:
+        - ha_int
+        - ssh_ext
+      vlan_raw_device: bond0
+    vlan11:
+      dns_nameservers:
+        - 172.31.3.244
+        - 192.168.56.11
+        - 192.168.57.11
+      gateway: 172.31.3.33
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.47
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.31.3.45
+      shared_v6ip: []
+      type:
+        - mon_ext
+        - ssh_ext
+      vlan_raw_device: bond0
+    vlan15:
+      hwaddr: 00:00:00:00:00:00
+      ip: 192.168.181.211
+      netmask: 255.255.255.0
+      post_up:
+        - 'route add -net 172.25.240.0/24  gw 192.168.181.1 dev vlan15'
+        - 'route add -net 192.168.6.0/24 gw 192.168.181.1 dev vlan15'
+        - 'route add -net 192.168.5.0/24 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.56.15 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.57.15 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.56.11 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.57.11 gw 192.168.181.1 dev vlan15'
+      shared_ip:
+        - 192.168.181.209
+      type:
+        - ssh_ext
+        - mon_ext
+      vlan_raw_device: bond0
+    vlan20:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.73
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.31.3.71
+      type:
+        - li_int
+      vlan_raw_device: bond0
+      post_up:
+        - 'route add -host 172.30.172.247 gw 172.31.3.65 dev vlan20'
+        - 'route add -host 172.30.172.245 gw 172.31.3.65 dev vlan20'
+        - 'route add -host 172.30.172.246 gw 172.31.3.65 dev vlan20'
+    vlan31:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.89
+      netmask: 255.255.255.240
+      post_up:
+        - 'route add -net 10.0.0.0/8 gw 172.31.3.81 dev vlan31'
+        - 'ip route add default via 172.31.3.81 dev vlan31 table rtp_ext'
+        - 'ip rule add from 172.31.3.87 lookup rtp_ext prio 1000'
+      shared_ip:
+        - 172.31.3.87
+      type:
+        - rtp_ext
+      vlan_raw_device: bond0
+      v6ip: 2a02:8071:fb2b:0031::9
+      shared_v6ip:
+        - 2a02:8071:fb2b:0031::7
+    vlan35:
+      cluster_sets:
+        - default
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.108
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.31.3.106
+      type:
+        - sip_int
+      vlan_raw_device: bond0
+    vlan40:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.121
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.31.3.119
+      type:
+        - inap_ext
+      vlan_raw_device: bond0
+    vlan50:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.217
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.31.3.215
+      type:
+        - sip_peer_um
+      vlan_raw_device: bond0
+    vlan51:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.169
+      netmask: 255.255.255.240
+      post_up:
+        - 'ip route add default via 172.31.3.161 dev vlan51 table rtp_peer_nrw'
+        - 'ip rule add from 172.31.3.167 lookup rtp_peer_nrw prio 1000'
+      shared_ip:
+        - 172.31.3.167
+      type:
+        - rtp_peer_nrw
+      vlan_raw_device: bond0
+    vlan60:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.185
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.31.3.183
+      type:
+        - sip_peer_kbw
+      vlan_raw_device: bond0
+    vlan61:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.137
+      netmask: 255.255.255.240
+      post_up:
+        - 'ip route add default via 172.31.3.129 dev vlan61 table rtp_peer_bw'
+        - 'ip rule add from 172.31.3.135 lookup rtp_peer_bw prio 1000'
+      shared_ip:
+        - 172.31.3.135
+      type:
+        - rtp_peer_bw
+      vlan_raw_device: bond0
+    vlan70:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.201
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.31.3.199
+      type:
+        - sip_peer_pe
+      vlan_raw_device: bond0
+    vlan71:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.153
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.31.3.151
+      type:
+        - rtp_peer_pe
+      vlan_raw_device: bond0
+      post_up:
+        - 'ip route add default via 172.31.3.145 dev vlan61 table rtp_peer_pe'
+        - 'ip rule add from 172.31.3.151 lookup rtp_peer_pe prio 1000'
+  web01a:
+    bond0:
+      bond_miimon: '100'
+      bond_mode: active-backup
+      bond_slaves: 'eth0 eth1'
+      hwaddr: 00:00:00:00:00:00
+      ip: 192.168.1.2
+      netmask: 255.255.255.0
+      shared_ip:
+        - 192.168.1.1
+      type:
+        - boot_int
+    dbnode: '9'
+    eth0:
+      hwaddr: 00:00:00:00:00:00
+    eth1:
+      hwaddr: 00:00:00:00:00:00
+    interfaces:
+      - vlan11
+      - vlan666
+      - vlan35
+      - vlan100
+      - vlan80
+      - vlan90
+      - vlan15
+      - vlan20
+      - lo
+      - eth0
+      - eth1
+      - bond0
+    lo:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 127.0.0.1
+      netmask: 255.0.0.0
+      shared_ip: []
+      shared_v6ip: []
+      type:
+        - ssh_ext
+        - api_int
+      v6ip: '::1'
+    peer: web01b
+    role:
+      - mgmt
+    vlan20:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.75
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.31.3.74
+      type:
+        - web_int
+      vlan_raw_device: bond0
+      post_up:
+        - 'route add -host 172.30.172.247 gw 172.31.3.65 dev vlan20'
+    vlan100:
+      hwaddr: 00:0a:f7:8d:32:ec
+      ip: 172.31.3.5
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.31.3.4
+      type:
+        - ha_int
+        - web_int
+        - ssh_ext
+      vlan_raw_device: bond0
+    vlan11:
+      dns_nameservers:
+        - 172.31.3.244
+        - 192.168.56.11
+        - 192.168.57.11
+      gateway: 172.31.3.33
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.37
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.31.3.36
+      shared_v6ip: []
+      type:
+        - mon_ext
+        - ssh_ext
+      vlan_raw_device: bond0
+    vlan15:
+      hwaddr: 00:00:00:00:00:00
+      ip: 192.168.181.201
+      netmask: 255.255.255.0
+      post_up:
+        - 'route add -net 172.25.240.0/24  gw 192.168.181.1 dev vlan15'
+        - 'route add -net 192.168.6.0/24 gw 192.168.181.1 dev vlan15'
+        - 'route add -net 192.168.5.0/24 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.56.15 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.57.15 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.56.11 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.57.11 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 172.16.223.100 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.1.229 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.1.228 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.1.225 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.1.226 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.1.227 gw 192.168.181.1 dev vlan15'
+      shared_ip:
+        - 192.168.181.200
+      type:
+        - ssh_ext
+        - web_int
+        - mon_ext
+      vlan_raw_device: bond0
+    vlan35:
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.101
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.31.3.100
+      type:
+        - sip_int
+      vlan_raw_device: bond0
+    vlan666:
+      hwaddr: 00:00:00:00:00:00
+      ip: 46.5.10.37
+      netmask: 255.255.255.240
+      shared_ip:
+        - 46.5.10.36
+      type:
+        - web_ext
+      vlan_raw_device: bond0
+    vlan80:
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.237
+      netmask: 255.255.255.248
+      shared_ip:
+        - 172.31.3.236
+      type:
+        - phone_ext
+        - web_ext
+      vlan_raw_device: bond0
+      post_up:
+        - 'ip route add default via 172.31.3.233 dev vlan80 table phones_ext'
+        - 'ip rule add from 172.31.3.236 lookup phones_ext prio 1000'
+    vlan90:
+      hwaddr: 00:00:00:00:00:00
+      ip: 46.5.10.53
+      netmask: 255.255.255.248
+      post_up:
+        - 'route add -host 92.42.136.158 gw 46.5.10.49 dev vlan90'
+      shared_ip:
+        - 46.5.10.52
+      type:
+        - repos_ext
+      vlan_raw_device: bond0
+  web01b:
+    bond0:
+      bond_miimon: '100'
+      bond_mode: active-backup
+      bond_slaves: 'eth0 eth1'
+      hwaddr: 00:00:00:00:00:00
+      ip: 192.168.1.3
+      netmask: 255.255.255.0
+      shared_ip:
+        - 192.168.1.1
+      type:
+        - boot_int
+    dbnode: '10'
+    eth0:
+      hwaddr: 00:00:00:00:00:00
+    eth1:
+      hwaddr: 00:00:00:00:00:00
+    interfaces:
+      - vlan11
+      - vlan666
+      - vlan35
+      - vlan15
+      - vlan100
+      - vlan80
+      - vlan90
+      - vlan20
+      - lo
+      - eth0
+      - eth1
+      - bond0
+    lo:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 127.0.0.1
+      netmask: 255.0.0.0
+      shared_ip: []
+      shared_v6ip: []
+      type:
+        - ssh_ext
+        - api_int
+      v6ip: '::1'
+    peer: web01a
+    role:
+      - mgmt
+    vlan100:
+      hwaddr: 00:0a:f7:8d:31:28
+      ip: 172.31.3.6
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.31.3.4
+      type:
+        - ha_int
+        - web_int
+        - ssh_ext
+      vlan_raw_device: bond0
+    vlan20:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.76
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.31.3.74
+      type:
+        - web_int
+      vlan_raw_device: bond0
+      post_up:
+        - 'route add -host 172.30.172.247 gw 172.31.3.65 dev vlan20'
+    vlan11:
+      dns_nameservers:
+        - 172.31.3.244
+        - 192.168.56.11
+        - 192.168.57.11
+      gateway: 172.31.3.33
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.38
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.31.3.36
+      shared_v6ip: []
+      type:
+        - mon_ext
+        - ssh_ext
+      vlan_raw_device: bond0
+    vlan15:
+      hwaddr: 00:00:00:00:00:00
+      ip: 192.168.181.202
+      netmask: 255.255.255.0
+      post_up:
+        - 'route add -net 172.25.240.0/24  gw 192.168.181.1 dev vlan15'
+        - 'route add -net 192.168.6.0/24 gw 192.168.181.1 dev vlan15'
+        - 'route add -net 192.168.5.0/24 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.56.15 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.57.15 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.56.11 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.57.11 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 172.16.223.100 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.1.229 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.1.228 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.1.225 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.1.226 gw 192.168.181.1 dev vlan15'
+        - 'route add -host 192.168.1.227 gw 192.168.181.1 dev vlan15' 
+      shared_ip:
+        - 192.168.181.200
+      type:
+        - ssh_ext
+        - web_int
+        - mon_ext
+      vlan_raw_device: bond0
+    vlan35:
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.102
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.31.3.100
+      type:
+        - sip_int
+      vlan_raw_device: bond0
+    vlan666:
+      hwaddr: 00:00:00:00:00:00
+      ip: 46.5.10.38
+      netmask: 255.255.255.240
+      shared_ip:
+        - 46.5.10.36
+      type:
+        - web_ext
+      vlan_raw_device: bond0
+    vlan80:
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.31.3.238
+      netmask: 255.255.255.248
+      shared_ip:
+        - 172.31.3.236
+      type:
+        - phone_ext
+        - web_ext
+      vlan_raw_device: bond0
+      post_up:
+        - 'ip route add default via 172.31.3.233 dev vlan80 table phones_ext'
+        - 'ip rule add from 172.31.3.236 lookup phones_ext prio 1000'
+    vlan90:
+      hwaddr: 00:00:00:00:00:00
+      ip: 46.5.10.54
+      netmask: 255.255.255.248
+      post_up:
+        - 'route add -host 92.42.136.158 gw 46.5.10.49 dev vlan90'
+      shared_ip:
+        - 46.5.10.52
+      type:
+        - repos_ext
+      vlan_raw_device: bond0

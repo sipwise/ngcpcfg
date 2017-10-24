@@ -1,9 +1,11 @@
+debian/xls2yml/usr/bin/xls2yml usr/bin/
+debian/xls2yml/usr/lib/python3/dist-packages/* usr/lib/python3/dist-packages/
 etc/ngcp-config/ngcpcfg.cfg etc/ngcp-config/
 functions/main              usr/share/ngcp-ngcpcfg/functions/
 helper/build_config         usr/share/ngcp-ngcpcfg/helper/
-helper/restore-permissions  usr/share/ngcp-ngcpcfg/helper/
 helper/check-for-mysql      usr/share/ngcp-ngcpcfg/helper/
 helper/fileformat_version   usr/share/ngcp-ngcpcfg/helper/
+helper/restore-permissions  usr/share/ngcp-ngcpcfg/helper/
 helper/sort-yml             usr/share/ngcp-ngcpcfg/helper/
 helper/sync-db              usr/share/ngcp-ngcpcfg/helper/
 helper/tt2-daemon           usr/share/ngcp-ngcpcfg/helper/
