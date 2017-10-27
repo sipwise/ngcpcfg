@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dab895d6_c9ee7d8b",
+        "filename": "xls2network/xls2yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000018
+      },
+      "writtenOn": "2017-10-27T08:53:28Z",
+      "side": 1,
+      "message": "Hmm, this is enough?\nMy dumper looked like:\ndefault_flow_style\u003dFalse, width\u003d1000,explicit_start\u003dTrue,block_seq_indent\u003d2",
+      "range": {
+        "startLine": 197,
+        "startChar": 41,
+        "endLine": 197,
+        "endChar": 65
+      },
+      "revId": "08501cbf32ff5d9804351a04201ba2d1e9ad7008",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
