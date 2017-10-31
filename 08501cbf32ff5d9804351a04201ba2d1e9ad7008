@@ -22,6 +22,30 @@
       "revId": "08501cbf32ff5d9804351a04201ba2d1e9ad7008",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dab895d6_0f5955fe",
+        "filename": "xls2network/xls2yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-10-31T14:22:24Z",
+      "side": 1,
+      "message": "The code I\u0027m providing works and does what it\u0027s supposed to do AFAICT (I\u0027m using pyaml\u003d\u003d17.10.0 + PyYAML\u003d\u003d3.12 as present in requirements.txt). Why do you think those changes are needed?",
+      "parentUuid": "dab895d6_c9ee7d8b",
+      "range": {
+        "startLine": 197,
+        "startChar": 41,
+        "endLine": 197,
+        "endChar": 65
+      },
+      "revId": "08501cbf32ff5d9804351a04201ba2d1e9ad7008",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
