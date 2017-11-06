@@ -46,6 +46,30 @@
       "revId": "08501cbf32ff5d9804351a04201ba2d1e9ad7008",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dab895d6_fe9e9455",
+        "filename": "xls2network/xls2yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000018
+      },
+      "writtenOn": "2017-11-06T07:47:07Z",
+      "side": 1,
+      "message": "Maybe it is now safe for ngcpcfg framework, previously it did not work. Maybe you can check generated network.yml in mr4.5.X release.",
+      "parentUuid": "dab895d6_0f5955fe",
+      "range": {
+        "startLine": 197,
+        "startChar": 41,
+        "endLine": 197,
+        "endChar": 65
+      },
+      "revId": "08501cbf32ff5d9804351a04201ba2d1e9ad7008",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
