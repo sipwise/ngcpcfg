@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dab895d6_9e04b87f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-11-06T08:42:39Z",
+      "side": 1,
+      "message": "Just my $0.05, IMHO it is a part of ngcpcfg framework and should be available out of the box on pre-installed NGCP.\n\nSo sipwise ops/customers can perform:\n\n\u003e ngcpcfg import-network-xml /path/to/file.xml\n\u003e ngcpcfg diff\n\u003e ngcpcfg apply \"new network.yml\"\n\u003e ngcpcfg fetch /etc/hosts\n\u003e ngcpcfg fetch /etc/network/interfaces\n\nOr even upload network.xml from the WEB interface in the future.\n\nP.S. the last two commands are reserved for the future to update files from ngcpcfg-api :-)",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 65
+      },
+      "revId": "5be0e30cb498853051bc2ce57f3f4bdaac739b72",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
