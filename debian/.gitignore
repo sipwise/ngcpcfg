@@ -1,0 +1,9 @@
+*.log
+*.substvars
+*.debhelper
+/.debhelper/
+/files
+/debhelper-build-stamp
+/ngcp-ngcpcfg/
+/ngcp-ngcpcfg-locker/
+/ngcp-ngcpcfg-testsuite/

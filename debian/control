@@ -1,62 +1,64 @@
 Source: ngcp-ngcpcfg
 Section: admin
-Priority: extra
+Priority: optional
 Maintainer: Sipwise Development Team <support@sipwise.com>
-Build-Depends: asciidoc,
-               debhelper (>= 9~),
-               docbook-xsl,
-               git,
-               libclone-perl,
-               libconfig-tiny-perl,
-               libdata-validate-ip-perl,
-               libdbd-mysql-perl,
-               libdbi-perl,
-               libhash-merge-perl,
-               libio-interface-perl,
-               libipc-system-simple-perl,
-               liblist-moreutils-perl,
-               libnet-netmask-perl,
-               libnetwork-ipv4addr-perl,
-               libreadonly-perl,
-               libregexp-ipv6-perl,
-               libsocket-perl,
-               libsys-hostname-long-perl,
-               libtemplate-perl,
-               libyaml-libyaml-perl,
-               netcat-openbsd | netcat,
-               pkwalify,
-               python3-pytest,
-               xsltproc
-Standards-Version: 3.9.7
-Homepage: http://sipwise.com/
+Homepage: https://www.sipwise.com/
+Standards-Version: 3.9.8
+Build-Depends:
+ asciidoc,
+ debhelper (>= 10),
+ docbook-xsl,
+ git,
+ libclone-perl,
+ libconfig-tiny-perl,
+ libdata-validate-ip-perl,
+ libdbd-mysql-perl,
+ libdbi-perl,
+ libhash-merge-perl,
+ libio-interface-perl,
+ libipc-system-simple-perl,
+ liblist-moreutils-perl,
+ libnet-netmask-perl,
+ libnetwork-ipv4addr-perl,
+ libreadonly-perl,
+ libregexp-ipv6-perl,
+ libsocket-perl,
+ libsys-hostname-long-perl,
+ libtemplate-perl,
+ libyaml-libyaml-perl,
+ netcat-openbsd | netcat,
+ pkwalify,
+ python3-pytest,
+ xsltproc,
 
 Package: ngcp-ngcpcfg
 Architecture: all
-Depends: etckeeper,
-         file,
-         git (>= 1:1.7.2.5-3~),
-         libclone-perl,
-         libconfig-tiny-perl,
-         libdata-validate-ip-perl,
-         libdbd-mysql-perl,
-         libdbi-perl,
-         libhash-merge-perl,
-         libio-interface-perl,
-         libipc-system-simple-perl,
-         liblist-moreutils-perl,
-         libnet-netmask-perl,
-         libnetwork-ipv4addr-perl,
-         libregexp-ipv6-perl,
-         libsocket-perl,
-         libsys-hostname-long-perl,
-         libtemplate-perl,
-         libyaml-libyaml-perl,
-         netcat-openbsd | netcat,
-         ngcp-system-tools,
-         pkwalify,
-         psmisc,
-         ${misc:Depends},
-         ${perl:Depends}
+Depends:
+ ${misc:Depends},
+ ${perl:Depends},
+ etckeeper,
+ file,
+ git (>= 1:1.7.2.5-3~),
+ libclone-perl,
+ libconfig-tiny-perl,
+ libdata-validate-ip-perl,
+ libdbd-mysql-perl,
+ libdbi-perl,
+ libhash-merge-perl,
+ libio-interface-perl,
+ libipc-system-simple-perl,
+ liblist-moreutils-perl,
+ libnet-netmask-perl,
+ libnetwork-ipv4addr-perl,
+ libregexp-ipv6-perl,
+ libsocket-perl,
+ libsys-hostname-long-perl,
+ libtemplate-perl,
+ libyaml-libyaml-perl,
+ netcat-openbsd | netcat,
+ ngcp-system-tools,
+ pkwalify,
+ psmisc,
 Description: central and templated based Configuration Management System for NGCP platforms
  ngcp-ngcpcfg is a Configuration Management System providing central
  configuration and template based handling of configuration
@@ -65,17 +67,19 @@ Description: central and templated based Configuration Management System for NGC
 
 Package: ngcp-ngcpcfg-locker
 Architecture: all
-Depends: gnupg,
-         ngcp-ngcpcfg,
-         ${misc:Depends}
+Depends:
+ ${misc:Depends},
+ gnupg,
+ ngcp-ngcpcfg,
 Description: Encrypt and decrypt feature for ngcp-ngcpcfg
  This package provides the encrypt and decrypt options for
  usage via ngcpcfg.
 
 Package: ngcp-ngcpcfg-testsuite
 Architecture: all
-Depends: ngcp-ngcpcfg,
-         ${misc:Depends}
+Depends:
+ ${misc:Depends},
+ ngcp-ngcpcfg,
 Description: testsuite for ngcpcfg
  This package provides a testsuite to automatically test ngcpcfg
  features and detect any possible breakages.
