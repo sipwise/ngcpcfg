@@ -362,6 +362,11 @@ Note: This feature is only available if the ngcp-ngcpcfg-carrier package is inst
 
 Prints the log of local changes. Expand all changes if '-p' option is specified.
 
+  **patch** [--help] [<patchtt file(s)>]::
+
+Generate customtt files using default templates and patchtt files.
+Using patchtt files automates templates updating and simplifies customtt management.
+
   **pull**::
 
 Retrieve modifications from shared repository.
