@@ -157,6 +157,31 @@ Configuration file priority: *.customtt.tt2.$HOSTNAME takes precedence over
 *.customtt.tt2.$PAIRNAME, over .customtt.tt2.$HA_NODE, over *.customtt.tt2, over
 *.tt2.$HOSTNAME, over *.tt2.$PAIRNAME, over *.tt2.$HA_NODE, over *.tt2.
 
+Customisation for default template files
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can overwrite the default template file
+(e.g. _/etc/ngcp-config/templates/etc/foobar/baz.tt2_)
+using _customtt_ file, like _/etc/ngcp-config/templates/etc/foobar/baz.customtt.tt2_.
+Or even host specific _customtt_ file (see above in "Supported template files").
+This approach is NOT recommended as _customtt_ will be outdated very soon,
+as new template files can be released by upstream any moment.
+
+The better way is to handle modifications here using _patchtt_ files
+(e.g. _/etc/ngcp-config/templates/etc/foobar/baz.patchtt.tt2_).
+In this case, on every "ngcpcfg patch", _patchtt_ file will be applied on top of
+tt2 file and the result will be saved into _customtt_ file, which will be used
+further in a common way. "ngcpcfg patch" is the first step on "ngcpcfg build",
+which guaranties the latest upstream templates with necessary local changes on
+every configuration apply.
+
+[IMPORTANT]
+Configuration file priority: *.patchtt.tt2.$HOSTNAME takes precedence over
+*.patchtt.tt2.$PAIRNAME, over .patchtt.tt2.$HA_NODE, over *.patchtt.tt2.
+
+[IMPORTANT]
+_patchtt_ file always overwrites _customtt_ file, while you can find old version
+of customtt in ngcpcfg git repository (if necessary).
 
 Support action related files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -361,6 +386,11 @@ Note: This feature is only available if the ngcp-ngcpcfg-carrier package is inst
   **log** [-p]::
 
 Prints the log of local changes. Expand all changes if '-p' option is specified.
+
+  **patch** [--help] [<patchtt file(s)>]::
+
+Generate customtt files using default templates and patchtt files.
+Using patchtt files automates templates updating and simplifies customtt management.
 
   **pull**::
 
