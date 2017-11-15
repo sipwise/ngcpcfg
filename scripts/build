@@ -120,6 +120,7 @@ else
         build_file="${file##templates/}"
         build_file="${build_file%%.services}"
         build_file="${build_file%%.customtt}"
+        build_file="${build_file%%.patchtt}"
 
         # drop HA file suffix of all registered nodes
         if [ -r /etc/ngcp-config/systems.cfg ] ; then
