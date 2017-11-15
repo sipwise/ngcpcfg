@@ -1,0 +1,179 @@
+#!/bin/bash
+# Purpose: *.patchtt functionality for ngcpcfg config/templates
+################################################################################
+
+set -e
+set -u
+
+# support testsuite
+FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
+HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
+SCRIPTS="${SCRIPTS:-/usr/share/ngcp-ngcpcfg/scripts/}"
+
+if ! [ -r "${FUNCTIONS}"/main ] ; then
+  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}" >&2
+  exit 1
+fi
+
+. "${FUNCTIONS}"/main
+
+cd "${NGCPCTL_MAIN}"
+
+## functions {{{
+patch_help() {
+  export TIME_FORMAT=''
+  log_info "'ngcpcfg patch' walks through all templates searching for '*.patchtt.tt2' files"
+  log_info "and generates '*.customtt.tt2' files based on the original template"
+  log_info ""
+  log_info "Sample:"
+  log_info "  ngcpcfg patch [--help] [<patchtt file(s)>]"
+  log_info ""
+  log_info "Run 'man ngcpcfg' for more information."
+}
+
+patch_search() {
+  log_debug "Searching for patchtt files"
+
+  local patchlist
+  patchlist=$(mktemp)
+
+  local a="\.sp[12]?"
+  local b="\.(web|db|prx|lb|slb)[0-9]+[ab]?"
+  local awk_regexp=".*patchtt\.tt2(${a}|${b})?$"
+
+  for dir in ${CONFIG_POOL} ; do
+    [ -n "${dir}" ] || log_error "${dir} doesn't exist"
+    # iterate over all files
+    while read -r patch ; do
+      # *NO* arguments provided via cmdline
+      if [ -z "${1:-}" ] ; then
+        log_debug "Found patch '${patch}'"
+        echo "${patch}" >> "${patchlist}"
+      else
+        # arguments (file list/pattern) provided via cmdline
+        for arg in "$@"; do
+          if echo "${patch}" | grep -q -- "${arg}" ; then
+            log_debug "Processing patch '${patch}' as requested"
+            echo "${patch}" >> "${patchlist}"
+          fi
+        done
+      fi
+    done < <(find "${TEMPLATE_POOL_BASE}/${dir}" -regextype awk -iregex "${awk_regexp}")
+  done
+
+  # output patch list, make sure we provide the file names just once
+  sort -u "${patchlist}"
+
+  if [ -n "${DEBUG:-}" ] ; then
+    # send to stderr since stdout is used from outside
+    log_debug "Not removing temporary patchlist files since we are in debug mode:" >&2
+    log_debug "  patchlist = ${patchlist}" >&2
+  else
+    rm -f "${patchlist}"
+  fi
+}
+
+patch_validate() {
+  local patch="$1"
+  log_debug "Validating patch: '${patch}'"
+
+  if [ ! -f "${patch}" ] ; then
+    log_error "Missing patch file '${patch}'"
+    bad_patches+=("${patch}")
+    return 1
+  fi
+
+  local template="${patch%%.patchtt*}.tt2"
+
+  if [ -f "${template}" ] ; then
+    log_debug "Found template for the patch: '${template}'"
+  else
+    log_error "Missing template for patch '${patch}'"
+    bad_patches+=("${patch}")
+    return 1
+  fi
+
+  local customtt="${patch//.patchtt/.customtt}"
+  if [ -f "${customtt}" ] ; then
+    log_debug "Overwriting customtt '${customtt}'"
+  else
+    log_debug "Not found customtt for the patch: '${customtt}'"
+  fi
+}
+
+patch_apply() {
+  local patch="$1"
+  local apply="${2:-false}"
+  local template="${patch%%.patchtt*}.tt2"
+  local customtt="${patch//.patchtt/.customtt}"
+  local patch_output
+  patch_output=$(mktemp)
+
+  local patch_opts=()
+  patch_opts+=(--input="${patch}")
+  patch_opts+=(--prefix=/dev/null)  # do not produce .orig backup files
+  patch_opts+=(--reject-file=-)     # do not produce .rej file
+  if "${apply}" ; then
+    patch_opts+=(--output="${customtt}")
+  else
+    patch_opts+=(--dry-run)
+    patch_opts+=(--output=/dev/null)
+  fi
+
+  log_debug "Generating customtt '${customtt}' from '${patch}' (apply=${apply})"
+
+  log_debug "Executing: patch ${patch_opts[*]} ${template}"
+  if patch "${patch_opts[@]}" "${template}" >"${patch_output}" 2>&1 ; then
+    if "${apply}" ; then
+      log_info "Successfully created '${customtt}'"
+    else
+      log_debug "Patch '${patch}' can be applied"
+    fi
+  else
+    log_error "The patch '${patch}' cannot be applied:"
+    cat "${patch_output}" >&2
+    bad_patches+=("${patch}")
+  fi
+
+  rm -f "${patch_output}"
+}
+
+patch_main() {
+  for patch in $(patch_search "$@") ; do
+    log_info "Validating patch '${patch}'"
+    patch_validate "${patch}" && patch_apply "${patch}" "false"
+  done
+
+  if [ "${#bad_patches[@]}" != "0" ] ; then
+    log_debug "Aborted here due to failed patch validation above"
+    return
+  fi
+
+  for patch in $(patch_search "$@") ; do
+    log_info "Applying patch '${patch}'"
+    patch_apply "${patch}" "true"
+  done
+}
+## }}}
+
+if [ "${1:-}" = "--help" ]; then
+  patch_help
+  exit 0
+fi
+
+declare -a bad_patches=()
+
+patch_main "$@"
+
+if [ "${#bad_patches[@]}" = "0" ] ; then
+  log_info "Patch operation has finished successfully."
+else
+  log_error "Some operations above finished with an error for the patch(es):"
+  bad_patches_unique=($(echo "${bad_patches[@]}" | tr ' ' '\n' | sort -u))
+  printf '\t%s\n' "${bad_patches_unique[@]}"
+  RC=1
+fi
+
+exit "${RC:-0}"
+
+## END OF FILE #################################################################
