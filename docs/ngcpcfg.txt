@@ -111,8 +111,8 @@ template file. $HA_NODE is determined using the content of /etc/ngcp_ha_node
 (usually being _sp1_ for the first node and _sp2_ for the second node on the
 Sipwise Next Generation Platform). Whereas _*customtt.tt2_ files are used on all
 nodes in a High Availability setup the _*.tt2.$HA_NODE*_ file is specific for
-the single node only. A common usage case is master vs. slave configuration of a
-service. Configuration file is usually provided by a Debian package.
+the single node only. A common use case is master vs. slave configuration of a
+service. The configuration file is usually provided by a Debian package.
 Note: Feature is available in the High Availability setup only.
 
 * _/etc/ngcp-config/templates/etc/foobar/baz.tt2.$PAIRNAME_: pair specific
@@ -130,13 +130,13 @@ Note: Feature is available in the High Availability setup only.
 
 * _/etc/ngcp-config/templates/etc/foobar/baz.customtt.tt2_: system specific
 template file, but configuration usually isn't provided by a Debian package and
-can be modified independent from any Debian package mechanism.
+can be modified independently from any Debian package mechanism.
 
 * _/etc/ngcp-config/templates/etc/foobar/baz.customtt.tt2.$HA_NODE_: node
 specific template file. Regarding $HA_NODE the same as for _baz.tt2.$HA_NODE_
-applies (see previous bullet), but the configuration file usually isn't provided
-by a Debian package but can be modified independent from any Debian package
-mechanism.
+applies (see the previous bullet), but the configuration file usually isn't
+provided by a Debian package but can be modified independently from any
+Debian package mechanism.
 Note: Feature is available in the High Availability setup only.
 
 * _/etc/ngcp-config/templates/etc/foobar/baz.customtt.tt2.$PAIRNAME_:
@@ -150,13 +150,53 @@ configuration file similar to
 _/etc/ngcp-config/templates/etc/foobar/baz.tt2.$HOSTNAME_ but it's guaranteed
 that the file won't be part of any Debian package mechanism.  Note: Feature is
 available in the High Availability setup only.
-Note: Feature is available in the High Availability setup only.
 
 [IMPORTANT]
-Configuration file priority: *.customtt.tt2.$HOSTNAME takes precedence over
-*.customtt.tt2.$PAIRNAME, over .customtt.tt2.$HA_NODE, over *.customtt.tt2, over
-*.tt2.$HOSTNAME, over *.tt2.$PAIRNAME, over *.tt2.$HA_NODE, over *.tt2.
+Configuration file precedence (highest to lowest):
+*.customtt.tt2.$HOSTNAME
+*.customtt.tt2.$PAIRNAME
+*.customtt.tt2.$HA_NODE
+*.customtt.tt2,
+*.tt2.$HOSTNAME
+*.tt2.$PAIRNAME
+*.tt2.$HA_NODE
+*.tt2.
 
+Customisation for default template files
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can overwrite the default template file
+(e.g. _/etc/ngcp-config/templates/etc/foobar/baz.tt2_)
+using a _customtt_ file, like _/etc/ngcp-config/templates/etc/foobar/baz.customtt.tt2_.
+Or even host a specific _customtt_ file (see above in "Supported template files").
+This approach is NOT recommended as _customtt_ will become outdated very soon,
+hence new template files can be released by upstream any time.
+
+The better way is to handle modifications using _patchtt_ files
+(e.g. _/etc/ngcp-config/templates/etc/foobar/baz.patchtt.tt2_).
+In this case, on every "ngcpcfg patch", _patchtt_ file will be applied on top
+of the tt2 file and the result will be saved into the _customtt_ file, which
+in the future will be used in a common way. "ngcpcfg patch" is the first step
+on "ngcpcfg build" that guarantees the latest upstream templates with the
+availability of the necessary local changes on every configuration apply.
+
+[IMPORTANT]
+The patch to be applied to the corresponding tt2 template file is selected in
+the following order (highest to lowest):
+*.patchtt.tt2.$HOSTNAME
+*.patchtt.tt2.$PAIRNAME
+*.patchtt.tt2.$HA_NODE
+*.patchtt.tt2
+
+[IMPORTANT]
+If a suitable _patchtt_ file is found for a template, then the **ngcpcfg patch**
+command will overwrite the corresponding _customtt_ file, if any exists. You can
+find the old version of the customtt in ngcpcfg the git repository (if necessary).
+
+Hence, if there is already a customtt file with other patches, you need to
+move these patches to patchtt files as well. Also, if a patch is not required
+any more, make sure you not only remove the patchtt file, but also cleanup
+the corresponding changes in related customtt file.
 
 Support action related files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -361,6 +401,11 @@ Note: This feature is only available if the ngcp-ngcpcfg-carrier package is inst
   **log** [-p]::
 
 Prints the log of local changes. Expand all changes if '-p' option is specified.
+
+  **patch** [--help] [<patchtt file(s)>]::
+
+Generate customtt files using default templates and patchtt files.
+Using patchtt files automates template updating and simplifies customtt management.
 
   **pull**::
 
