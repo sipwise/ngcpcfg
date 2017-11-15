@@ -36,6 +36,8 @@ else
   "${SCRIPTS}"/check --ignore-branch-check
 fi
 
+"${SCRIPTS}"/patch
+
 # Kill all previous started tt2-daemon Perl processes if they were not stopped properly
 killall tt2-daemon 2>/dev/null || true
 
@@ -120,6 +122,7 @@ else
         build_file="${file##templates/}"
         build_file="${build_file%%.services}"
         build_file="${build_file%%.customtt}"
+        build_file="${build_file%%.patchtt}"
 
         # drop HA file suffix of all registered nodes
         if [ -r /etc/ngcp-config/systems.cfg ] ; then
