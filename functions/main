@@ -251,8 +251,39 @@ generate_template_list() {
       normalized_filename="${normalized_filename%${PAIR_FILE}}"
     fi
 
+    normalized_filename="${normalized_filename%.patchtt.tt2}"
     normalized_filename="${normalized_filename%.customtt.tt2}"
     normalized_filename="${normalized_filename%.tt2}"
+
+    # foo.patchtt.tt2.hostname
+    if [ -n "${HOST_FILE:-}" ] ; then
+      if grep -q -- "^${normalized_filename}.patchtt.tt2${HOST_FILE}$" "${filelist_prepared}" ; then
+        echo "${normalized_filename}.patchtt.tt2${HOST_FILE}" >> "${filelist_final}"
+        continue
+      fi
+    fi
+
+    # foo.patchtt.tt2.pairname
+    if [ -n "${PAIR_FILE:-}" ] ; then
+      if grep -q -- "^${normalized_filename}.patchtt.tt2${PAIR_FILE}$" "${filelist_prepared}" ; then
+        echo "${normalized_filename}.patchtt.tt2${PAIR_FILE}" >> "${filelist_final}"
+        continue
+      fi
+    fi
+
+    # foo.patchtt.tt2.sp{1,2}
+    if [ -n "${HA_FILE:-}" ] ; then
+      if grep -q -- "^${normalized_filename}.patchtt.tt2${HA_FILE:-}" "${filelist_prepared}" ; then
+        echo "${normalized_filename}.patchtt.tt2${HA_FILE:-}" >> "${filelist_final}"
+        continue
+      fi
+    fi
+
+    # foo.patchtt.tt2
+    if grep -q -- "^${normalized_filename}.patchtt.tt2$" "${filelist_prepared}" ; then
+      echo "${normalized_filename}.patchtt.tt2" >> "${filelist_final}"
+      continue
+    fi
 
     # foo.custom.tt2.hostname
     if [ -n "${HOST_FILE:-}" ] ; then
