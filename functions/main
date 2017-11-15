@@ -237,6 +237,12 @@ generate_template_list() {
   # foo.customtt.tt2.hostname > foo.customtt.tt2.pairname > foo.customtt.tt2.spX > foo.customtt.tt2 > foo.tt2.hostname > foo.tt2.pairname > foo.tt2.spX > foo.tt2
   for line in $(cat ${filelist_prepared}); do
 
+    # ignoring foo.patchtt.tt2.* completely (it is not a tt2 template to be built)
+    if [[ "${line}" =~ .*\.patchtt\.tt2(.*)?$ ]]; then
+      log_debug "Ignored patchtt file '${line}'"
+      continue
+    fi
+
     normalized_filename="$line"
 
     if [ -n "${HA_FILE:-}" ] ; then
