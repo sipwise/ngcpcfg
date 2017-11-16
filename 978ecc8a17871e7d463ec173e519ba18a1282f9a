@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baada198_a7e6f414",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-11-16T13:33:29Z",
+      "side": 1,
+      "message": "s/Initian/Initial/\n\nThough I\u0027d just name it \"Support new action \u0027patch\u0027\" or so",
+      "revId": "978ecc8a17871e7d463ec173e519ba18a1282f9a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baada198_27bae4e1",
+        "filename": "scripts/patch",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-11-16T13:33:29Z",
+      "side": 1,
+      "message": "s/thorugh/through/\ns/search/searching/",
+      "revId": "978ecc8a17871e7d463ec173e519ba18a1282f9a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baada198_67b4dcf2",
+        "filename": "scripts/patch",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-11-16T13:33:29Z",
+      "side": 1,
+      "message": "s/generate/generates/",
+      "revId": "978ecc8a17871e7d463ec173e519ba18a1282f9a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baada198_67993c6e",
+        "filename": "scripts/patch",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-11-16T13:33:29Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it be good to support \u0027ngcpcfg patch /path/to/some/patch/file\u0027 similar to what we also support with \u0027ngcpcfg build /etc/foo/bar\u0027?",
+      "revId": "978ecc8a17871e7d463ec173e519ba18a1282f9a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baada198_a7cd1489",
+        "filename": "scripts/patch",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-11-16T13:33:29Z",
+      "side": 1,
+      "message": "The \"Patch\" usage here is different from what you\u0027re using in log_debug in other function(s) here, I\u0027d like to have a consistent naming/wording :) (Also \"availability\" feels redundant to me)",
+      "revId": "978ecc8a17871e7d463ec173e519ba18a1282f9a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baada198_c7912854",
+        "filename": "scripts/patch",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-11-16T13:33:29Z",
+      "side": 1,
+      "message": "No objections from my side against this, though do we have any specification that we have those hostnames? Asking because I could also use it for xml2networkyml tool :)",
+      "revId": "978ecc8a17871e7d463ec173e519ba18a1282f9a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baada198_87b010f6",
+        "filename": "scripts/patch",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-11-16T13:33:29Z",
+      "side": 1,
+      "message": "log_debug usage to make it obvious when debugging?",
+      "revId": "978ecc8a17871e7d463ec173e519ba18a1282f9a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baada198_a7943445",
+        "filename": "scripts/patch",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-11-16T13:33:29Z",
+      "side": 1,
+      "message": "same here (log_debug)",
+      "revId": "978ecc8a17871e7d463ec173e519ba18a1282f9a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baada198_079c0069",
+        "filename": "scripts/patch",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-11-16T13:33:29Z",
+      "side": 1,
+      "message": "I\u0027d switch the logic here (short log_debug first, then the longer error case after the else ...)",
+      "revId": "978ecc8a17871e7d463ec173e519ba18a1282f9a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baada198_07c5e05a",
+        "filename": "scripts/patch",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-11-16T13:33:29Z",
+      "side": 1,
+      "message": "s/Overwritting/Overwriting/",
+      "revId": "978ecc8a17871e7d463ec173e519ba18a1282f9a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baada198_a77b5428",
+        "filename": "scripts/patch",
+        "patchSetId": 7
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-11-16T13:33:29Z",
+      "side": 1,
+      "message": "s/Running/Executing/ (to match existing scripts/*)",
+      "revId": "978ecc8a17871e7d463ec173e519ba18a1282f9a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baada198_27a104aa",
+        "filename": "scripts/patch",
+        "patchSetId": 7
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-11-16T13:33:29Z",
+      "side": 1,
+      "message": "s/Succesfully/Successfully/",
+      "revId": "978ecc8a17871e7d463ec173e519ba18a1282f9a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baada198_278f4425",
+        "filename": "scripts/patch",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-11-16T13:33:29Z",
+      "side": 1,
+      "message": "s/successfuly/successfully/",
+      "revId": "978ecc8a17871e7d463ec173e519ba18a1282f9a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
