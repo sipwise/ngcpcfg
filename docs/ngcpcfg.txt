@@ -379,7 +379,8 @@ the any pending commits will be pushed only to the shared repository only, any
 foreign hosts will be skipped then.  If hostname(s) or IP address(es) is given
 as argument then the changes will be pushed to the shared repository and to the
 given hosts only. If no host has been specified then the hosts specified in
-_/etc/ngcp-config/systems.cfg_ are used.
+_/etc/ngcp-config/systems.cfg_ are used. The magic word 'all' can be used as a 'host'
+to push the changes on all the nodes from the network.yml except the local one.
 Note: This option is available in the High Availability setup only.
 
   **services** [--dry-run]::
