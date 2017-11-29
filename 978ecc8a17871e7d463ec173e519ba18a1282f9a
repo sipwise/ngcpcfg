@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "baada198_b0ab7e88",
+        "filename": "scripts/patch",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-11-29T21:22:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baada198_27bae4e1",
+      "revId": "978ecc8a17871e7d463ec173e519ba18a1282f9a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "baada198_67b4dcf2",
         "filename": "scripts/patch",
         "patchSetId": 7
@@ -47,6 +65,24 @@
       "writtenOn": "2017-11-16T13:33:29Z",
       "side": 1,
       "message": "s/generate/generates/",
+      "revId": "978ecc8a17871e7d463ec173e519ba18a1282f9a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baada198_90a67ac0",
+        "filename": "scripts/patch",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-11-29T21:22:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baada198_67b4dcf2",
       "revId": "978ecc8a17871e7d463ec173e519ba18a1282f9a",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "baada198_70a1e6a8",
+        "filename": "scripts/patch",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-11-29T21:22:42Z",
+      "side": 1,
+      "message": "we do , see line 74... since it is PoC I didn\u0027t focus here on manuals yet.",
+      "parentUuid": "baada198_67993c6e",
+      "revId": "978ecc8a17871e7d463ec173e519ba18a1282f9a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "baada198_a7cd1489",
         "filename": "scripts/patch",
         "patchSetId": 7
@@ -81,6 +135,24 @@
       "writtenOn": "2017-11-16T13:33:29Z",
       "side": 1,
       "message": "The \"Patch\" usage here is different from what you\u0027re using in log_debug in other function(s) here, I\u0027d like to have a consistent naming/wording :) (Also \"availability\" feels redundant to me)",
+      "revId": "978ecc8a17871e7d463ec173e519ba18a1282f9a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baada198_50c5c259",
+        "filename": "scripts/patch",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-11-29T21:22:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baada198_a7cd1489",
       "revId": "978ecc8a17871e7d463ec173e519ba18a1282f9a",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "baada198_30c84e74",
+        "filename": "scripts/patch",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-11-29T21:22:42Z",
+      "side": 1,
+      "message": "this is a regexp I created from the all knows name PRO/Carrier can have. sure we have no specification, this is why we have lb and slb there :-(",
+      "parentUuid": "baada198_c7912854",
+      "revId": "978ecc8a17871e7d463ec173e519ba18a1282f9a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "baada198_87b010f6",
         "filename": "scripts/patch",
         "patchSetId": 7
@@ -115,6 +205,24 @@
       "writtenOn": "2017-11-16T13:33:29Z",
       "side": 1,
       "message": "log_debug usage to make it obvious when debugging?",
+      "revId": "978ecc8a17871e7d463ec173e519ba18a1282f9a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baada198_f0cdf687",
+        "filename": "scripts/patch",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-11-29T21:22:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baada198_87b010f6",
       "revId": "978ecc8a17871e7d463ec173e519ba18a1282f9a",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "baada198_10cb4a73",
+        "filename": "scripts/patch",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-11-29T21:22:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baada198_a7943445",
+      "revId": "978ecc8a17871e7d463ec173e519ba18a1282f9a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "baada198_079c0069",
         "filename": "scripts/patch",
         "patchSetId": 7
@@ -149,6 +275,24 @@
       "writtenOn": "2017-11-16T13:33:29Z",
       "side": 1,
       "message": "I\u0027d switch the logic here (short log_debug first, then the longer error case after the else ...)",
+      "revId": "978ecc8a17871e7d463ec173e519ba18a1282f9a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baada198_d0b0f2f6",
+        "filename": "scripts/patch",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-11-29T21:22:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baada198_079c0069",
       "revId": "978ecc8a17871e7d463ec173e519ba18a1282f9a",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
@@ -172,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "baada198_f0941646",
+        "filename": "scripts/patch",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-11-29T21:22:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baada198_07c5e05a",
+      "revId": "978ecc8a17871e7d463ec173e519ba18a1282f9a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "baada198_a77b5428",
         "filename": "scripts/patch",
         "patchSetId": 7
@@ -183,6 +345,24 @@
       "writtenOn": "2017-11-16T13:33:29Z",
       "side": 1,
       "message": "s/Running/Executing/ (to match existing scripts/*)",
+      "revId": "978ecc8a17871e7d463ec173e519ba18a1282f9a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baada198_d0b9d2ea",
+        "filename": "scripts/patch",
+        "patchSetId": 7
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-11-29T21:22:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baada198_a77b5428",
       "revId": "978ecc8a17871e7d463ec173e519ba18a1282f9a",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
@@ -206,6 +386,24 @@
     },
     {
       "key": {
+        "uuid": "baada198_b0b45ef3",
+        "filename": "scripts/patch",
+        "patchSetId": 7
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-11-29T21:22:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baada198_27a104aa",
+      "revId": "978ecc8a17871e7d463ec173e519ba18a1282f9a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "baada198_278f4425",
         "filename": "scripts/patch",
         "patchSetId": 7
@@ -217,6 +415,24 @@
       "writtenOn": "2017-11-16T13:33:29Z",
       "side": 1,
       "message": "s/successfuly/successfully/",
+      "revId": "978ecc8a17871e7d463ec173e519ba18a1282f9a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baada198_90bf5ad0",
+        "filename": "scripts/patch",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-11-29T21:22:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baada198_278f4425",
       "revId": "978ecc8a17871e7d463ec173e519ba18a1282f9a",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
