@@ -1,0 +1,18 @@
+[%
+	IF rsyslog.elasticsearch.enable == "yes";
+		IF ${argv.node} == "lb";
+			elasticsearch_template='S=$rs SS=\'$rr\' M=$rm R=$ru F=$fu T=$tu IP=$pr:$si:$sp UAIP=$si UA=\'$ua\' ID=$ci ';
+		ELSE;
+			elasticsearch_template='S=$rs SS=\'$rr\' M=$rm R=$ru F=$fu T=$tu IP=$avp(s:ip):$avp(s:port)($si:$sp) UAIP=$si UA=\'$ua\' ID=$ci ';
+		END
+		logreq_init=elasticsearch_template;
+		logreq=elasticsearch_template;
+		logres_init=elasticsearch_template;
+		logres=elasticsearch_template;
+	ELSE;
+		MACRO logreq_init GET kamailio.${argv.node}.log.request_init.join(' ');
+		MACRO logreq GET kamailio.${argv.node}.log.request.join(' ');
+		MACRO logres_init GET kamailio.${argv.node}.log.response_init.join(' ');
+		MACRO logres GET kamailio.${argv.node}.log.response.join(' ');
+	END;
+-%]
