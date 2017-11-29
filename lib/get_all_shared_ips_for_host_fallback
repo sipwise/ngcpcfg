@@ -1,0 +1,64 @@
+[%
+# vi: ft=tt2
+
+# Return an array of shared IPs for a given host. Fallback on all IPs in 
+# case of no shared found
+#
+# @param argv.host      The host to get all shared IPs for.
+# @param argv.type      The interface type or empty string for all types.
+# @param argv.status    node status [ online, offline, inactive ]
+#                         default value: ['online', 'inactive']
+# @return out           The array of shared IPs.
+
+IF !hosts.${argv.host}.defined;
+  argv.host = 'self';
+END;
+
+IF !argv.type.length;
+  argv.type = '.*';
+END;
+
+IF !argv.status.size;
+  argv.status = ['online', 'inactive'];
+END;
+
+status = {
+  online = 0
+  offline = 0
+  inactive = 0
+};
+FOREACH val IN argv.status;
+  status.$val = 1;
+END;
+
+out = [];
+
+IF status.item(hosts.${argv.host}.status);
+  FOREACH iface IN hosts.${argv.host}.interfaces;
+    FOREACH realiface IN hosts.${argv.host}.keys;
+      NEXT IF realiface != iface;
+      NEXT UNLESS hosts.${argv.host}.$realiface.type.grep('^' _ argv.type _ '$').size();
+
+      FOREACH ip IN hosts.${argv.host}.$realiface.shared_ip;
+        out.push(ip);
+      END;
+    END;
+  END;
+END;
+
+IF !out.size;
+  IF status.item(hosts.${argv.host}.status);
+    FOREACH iface IN hosts.${argv.host}.interfaces;
+      FOREACH realiface IN hosts.${argv.host}.keys;
+        NEXT IF realiface != iface;
+        NEXT UNLESS hosts.${argv.host}.$realiface.type.grep('^' _ argv.type _ '$').size();
+
+        out.push(hosts.${argv.host}.$realiface.ip);
+      END;
+    END;
+  END;
+END;
+
+out = out.sort;
+
+-%]
