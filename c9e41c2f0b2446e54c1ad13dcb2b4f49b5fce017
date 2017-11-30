@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baada198_b0445e75",
+        "filename": "scripts/patch",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-11-30T10:17:50Z",
+      "side": 1,
+      "message": "The dot needs to be escaped.",
+      "range": {
+        "startLine": 40,
+        "startChar": 11,
+        "endLine": 40,
+        "endChar": 12
+      },
+      "revId": "c9e41c2f0b2446e54c1ad13dcb2b4f49b5fce017",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baada198_507ea2af",
+        "filename": "scripts/patch",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-11-30T10:17:50Z",
+      "side": 1,
+      "message": "This is not a range separator, this means «1», «2» or «,». I think you meant just [12]?",
+      "range": {
+        "startLine": 40,
+        "startChar": 16,
+        "endLine": 40,
+        "endChar": 17
+      },
+      "revId": "c9e41c2f0b2446e54c1ad13dcb2b4f49b5fce017",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baada198_d049d28c",
+        "filename": "scripts/patch",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-11-30T10:17:50Z",
+      "side": 1,
+      "message": "Escape the dot.",
+      "range": {
+        "startLine": 41,
+        "startChar": 11,
+        "endLine": 41,
+        "endChar": 12
+      },
+      "revId": "c9e41c2f0b2446e54c1ad13dcb2b4f49b5fce017",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baada198_704ac684",
+        "filename": "scripts/patch",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-11-30T10:17:50Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 41,
+        "startChar": 39,
+        "endLine": 41,
+        "endChar": 40
+      },
+      "revId": "c9e41c2f0b2446e54c1ad13dcb2b4f49b5fce017",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baada198_f05df649",
+        "filename": "scripts/patch",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-11-30T10:17:50Z",
+      "side": 1,
+      "message": "Eescape the dot.",
+      "range": {
+        "startLine": 42,
+        "startChar": 29,
+        "endLine": 42,
+        "endChar": 30
+      },
+      "revId": "c9e41c2f0b2446e54c1ad13dcb2b4f49b5fce017",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baada198_b03b7eea",
+        "filename": "scripts/patch",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-11-30T10:17:50Z",
+      "side": 1,
+      "message": "Why not simply a regex match within [[ ]]?",
+      "revId": "c9e41c2f0b2446e54c1ad13dcb2b4f49b5fce017",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baada198_10226ab9",
+        "filename": "scripts/patch",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-11-30T10:17:50Z",
+      "side": 1,
+      "message": "Why the special debug handling here? Isn\u0027t log_debug only effective anyway if specified via DEBUG?\n\nI\u0027d just conditionalize the rm below. Also why do these log_debug need to go to stderr but not the previous ones in the function? Actually log_debug already outputs to stderr by default anyway.",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 6
+      },
+      "revId": "c9e41c2f0b2446e54c1ad13dcb2b4f49b5fce017",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
