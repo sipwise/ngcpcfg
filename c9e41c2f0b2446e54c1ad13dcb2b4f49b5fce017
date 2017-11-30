@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "baada198_10098a31",
+        "filename": "scripts/patch",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-11-30T10:28:27Z",
+      "side": 1,
+      "message": "Done, this should be fixed in a lot of places then. Good catch.",
+      "parentUuid": "baada198_507ea2af",
+      "range": {
+        "startLine": 40,
+        "startChar": 16,
+        "endLine": 40,
+        "endChar": 17
+      },
+      "revId": "c9e41c2f0b2446e54c1ad13dcb2b4f49b5fce017",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baada198_30068e21",
+        "filename": "scripts/patch",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-11-30T10:28:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baada198_b0445e75",
+      "range": {
+        "startLine": 40,
+        "startChar": 11,
+        "endLine": 40,
+        "endChar": 12
+      },
+      "revId": "c9e41c2f0b2446e54c1ad13dcb2b4f49b5fce017",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "baada198_d049d28c",
         "filename": "scripts/patch",
         "patchSetId": 9
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "baada198_73ff3002",
+        "filename": "scripts/patch",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-11-30T10:28:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baada198_d049d28c",
+      "range": {
+        "startLine": 41,
+        "startChar": 11,
+        "endLine": 41,
+        "endChar": 12
+      },
+      "revId": "c9e41c2f0b2446e54c1ad13dcb2b4f49b5fce017",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baada198_5003020f",
+        "filename": "scripts/patch",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-11-30T10:28:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baada198_704ac684",
+      "range": {
+        "startLine": 41,
+        "startChar": 39,
+        "endLine": 41,
+        "endChar": 40
+      },
+      "revId": "c9e41c2f0b2446e54c1ad13dcb2b4f49b5fce017",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "baada198_f05df649",
         "filename": "scripts/patch",
         "patchSetId": 9
@@ -105,6 +201,30 @@
       "writtenOn": "2017-11-30T10:17:50Z",
       "side": 1,
       "message": "Eescape the dot.",
+      "range": {
+        "startLine": 42,
+        "startChar": 29,
+        "endLine": 42,
+        "endChar": 30
+      },
+      "revId": "c9e41c2f0b2446e54c1ad13dcb2b4f49b5fce017",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baada198_9304c416",
+        "filename": "scripts/patch",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-11-30T10:28:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baada198_f05df649",
       "range": {
         "startLine": 42,
         "startChar": 29,
@@ -134,6 +254,24 @@
     },
     {
       "key": {
+        "uuid": "baada198_732650bc",
+        "filename": "scripts/patch",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-11-30T10:28:27Z",
+      "side": 1,
+      "message": "copy\u0026paste to keep the code similar, see function/main:\n\nhttps://gerrit.mgm.sipwise.com/gitweb?p\u003dngcpcfg.git;a\u003dblob;f\u003dfunctions/main;h\u003d239c3399cdcde55b0d4d95dd2ce47ceae8ed3c8c;hb\u003dHEAD#l222\n\nTryin to stay close to the current codebase. Should I improve it?",
+      "parentUuid": "baada198_b03b7eea",
+      "revId": "c9e41c2f0b2446e54c1ad13dcb2b4f49b5fce017",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "baada198_10226ab9",
         "filename": "scripts/patch",
         "patchSetId": 9
@@ -145,6 +283,30 @@
       "writtenOn": "2017-11-30T10:17:50Z",
       "side": 1,
       "message": "Why the special debug handling here? Isn\u0027t log_debug only effective anyway if specified via DEBUG?\n\nI\u0027d just conditionalize the rm below. Also why do these log_debug need to go to stderr but not the previous ones in the function? Actually log_debug already outputs to stderr by default anyway.",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 6
+      },
+      "revId": "c9e41c2f0b2446e54c1ad13dcb2b4f49b5fce017",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baada198_331db867",
+        "filename": "scripts/patch",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-11-30T10:28:27Z",
+      "side": 1,
+      "message": "Similar to line 318:\n\nhttps://gerrit.mgm.sipwise.com/gitweb?p\u003dngcpcfg.git;a\u003dblob;f\u003dfunctions/main;h\u003d239c3399cdcde55b0d4d95dd2ce47ceae8ed3c8c;hb\u003dHEAD#l318\n\ntrying to stay close to the code repo has already...\n\na lot of optimization can be done here.",
+      "parentUuid": "baada198_10226ab9",
       "range": {
         "startLine": 67,
         "startChar": 2,
