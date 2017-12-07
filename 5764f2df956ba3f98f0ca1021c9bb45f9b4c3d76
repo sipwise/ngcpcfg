@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab29df4_5db08bdd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-12-07T11:58:53Z",
+      "side": 1,
+      "message": "s/kamalio/kamailio/ :)",
+      "revId": "5764f2df956ba3f98f0ca1021c9bb45f9b4c3d76",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab29df4_5d996b6d",
+        "filename": "lib/get_all_shared_ips_for_host_fallback",
+        "patchSetId": 5
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-12-07T11:58:53Z",
+      "side": 1,
+      "message": "trailing whitespace at the end ;)",
+      "revId": "5764f2df956ba3f98f0ca1021c9bb45f9b4c3d76",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
