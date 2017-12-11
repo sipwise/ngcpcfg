@@ -62,6 +62,9 @@ exit 1 unless(sync_extra_sockets($dbh,
 exit 1 unless(sync_rtp_interfaces($dbh,
   { map {$_ => $_} @{$config->{rtp_interfaces}} } ));
 
+exit 1 unless(sync_general_timezone($dbh,
+  $config->{general}->{timezone}));
+
 exit 1 unless(sync_db_timezones($dbh));
 
 $dbh->disconnect;
@@ -136,6 +139,31 @@ sub sync_extra_sockets {
 ## rtp_* interfaces handling: ##############################
 sub sync_rtp_interfaces {
 	return generic_enum_sync(@_, 'rtp_interface');
+}
+
+## general.timezone handling: ##############################
+sub sync_general_timezone {
+    my $dbh = shift;
+    my $tz = shift;
+
+    unless ($tz) {
+        print "Error: general.timezone value is not set\n";
+        return;
+    }
+
+    my $pe = $dbh->{PrintError};
+    $dbh->{PrintError} = 0;
+    $dbh->do(<<SQL, undef, $tz, $tz);
+INSERT INTO ngcp.timezone SET name = ?
+    ON DUPLICATE KEY UPDATE name = ?, modified_at = CURRENT_TIMESTAMP
+SQL
+    $dbh->{PrintError} = $pe;
+    if ($DBI::err) {
+        print "Error: Could not insert into ngcp.timezone: $DBI::errstr\n";
+        return;
+    }
+
+    return 1;
 }
 
 ## /usr/share/zoneinfo into MariaDB ##############################
