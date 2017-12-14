@@ -1,0 +1,35 @@
+README
+======
+
+Purpose of this directory
+-------------------------
+
+This directory provides system tests for ngcpcfg, using pytest (a mature full-featured Python testing tool).
+
+Tips for working with tests
+---------------------------
+
+If you're working on a new feature, try to simulate a specific behavior, or need to run ngcpcfg for any other reason,
+you might need to run ngcpcfg with a certain environment.
+This can be achieved by injecting according environment variables to ngcpcfg.
+The following command line provides an example invocation:
+
+[source,bash]
+cd t # we're assuming in the following command line that you're inside this testing folder
+HELPER=../helper CONFIG_POOL=/etc/ NGCPCFG=./fixtures/ngcpcfg.cfg SCRIPTS=../scripts/ FUNCTIONS=../functions/ \
+NGCP_BASE_TT2=/tmp/pytest-of-root/pytest-XX/test_YYY/ NGCP_PORTFILE=/tmp/ngcpcfg.port OUTPUT_DIRECTORY=/tmp/  \
+TEMPLATE_POOL_BASE=/tmp/pytest-of-root/pytest-XX/test_YYY ../sbin/ngcpcfg [...]
+
+Test runs
+----------
+
+It's recommended to run the tests inside a docker container (see Dockerfile for usage instructions).
+Running all available tests from inside the ``t`` directory then is as simple as:
+
+[source,bash]
+py.test-3 -v
+
+To run only the tests matching 'test_patch_action' execute:
+
+[source,bash]
+py.test-3 -v  -k test_patch_action
