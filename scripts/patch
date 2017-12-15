@@ -129,6 +129,7 @@ patch_apply() {
     else
       log_debug "Patch '${patch}' can be applied"
     fi
+    good_patches+=("${patch}")
   else
     log_error "The patch '${patch}' cannot be applied:"
     cat "${patch_output}" >&2
@@ -162,11 +163,16 @@ if [ "${1:-}" = "--help" ]; then
 fi
 
 declare -a bad_patches=()
+declare -a good_patches=()
 
 patch_main "$@"
 
 if [ "${#bad_patches[@]}" = "0" ] ; then
-  log_info "Patch operation has finished successfully."
+  if [ "${#good_patches[@]}" = "0" ] ; then
+    log_info "No patchtt files found, nothing to patch."
+  else
+    log_info "Patch operation has finished successfully."
+  fi
 else
   log_error "Some operations above finished with an error for the patch(es):"
   bad_patches_unique=($(echo "${bad_patches[@]}" | tr ' ' '\n' | sort -u))
