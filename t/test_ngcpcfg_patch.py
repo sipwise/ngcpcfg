@@ -12,8 +12,9 @@ def test_patch_action_no_args(ngcpcfgcli, tmpdir):
                      env={
                          'NGCP_PORTFILE': '/tmp/ngcpcfg.port',
                          })
-    string = r"Patch operation has finished successfully."
+    string = r"No patchtt files found, nothing to patch."
     assert string in out.stdout
+    assert out.stderr == "b''"
 
 
 @pytest.mark.tt_24920
@@ -49,6 +50,7 @@ APT::Install-Recommends "0";
     assert 'Validating patch' in out.stdout
     assert '71_no_recommended.customtt.tt2' in out.stdout
     assert 'Patch operation has finished successfully.' in out.stdout
+    assert out.stderr == "b''"
 
     generated_customtt = str(tmpdir) + \
         '/etc/apt/apt.conf.d/71_no_recommended.customtt.tt2'
@@ -88,11 +90,14 @@ APT::Install-Recommends "1";
                          'CONFIG_POOL': '/etc',
                          })
 
-    assert 'Patch operation has finished successfully.' in out.stdout
+    assert 'No patchtt files found, nothing to patch.' in out.stdout
+    assert 'Patch operation has finished successfully.' not in out.stdout
     assert 'Generating ' in out.stdout
     assert '/etc/apt/apt.conf.d/71_no_recommended: OK' in out.stdout
     assert 'Validating patch' not in out.stdout
     assert '71_no_recommended.customtt.tt2' not in out.stdout
+    # disabled for the moment, see https://gerrit.mgm.sipwise.com/#/c/17739/4/t/test_ngcpcfg_patch.py@99
+    #assert out.stderr == "b''"
 
     generated_config = str(tmpdir) + "/output" + str(tmpdir) + \
         '/etc/apt/apt.conf.d/71_no_recommended'
