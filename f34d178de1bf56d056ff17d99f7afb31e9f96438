@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ac1b152_977be628",
+        "filename": "t/README.adoc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-12-15T16:00:56Z",
+      "side": 1,
+      "message": "JFYI, this is still hard to manage due to /tmp/pytest-of-root/pytest-XX/test_YYY/ \n\n\nwhat can help is:\n\nroot@7644457938b9:/code/t# ./t/testrunner test_patch_action",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 79
+      },
+      "revId": "f34d178de1bf56d056ff17d99f7afb31e9f96438",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
