@@ -16,6 +16,24 @@
       "revId": "21993d816adb9e9980acea88f05ecaf27d367ec5",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ac1b152_94c3e489",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-12-15T09:13:48Z",
+      "side": 1,
+      "message": "ACK, will do.",
+      "parentUuid": "3ac1b152_943924db",
+      "revId": "21993d816adb9e9980acea88f05ecaf27d367ec5",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
