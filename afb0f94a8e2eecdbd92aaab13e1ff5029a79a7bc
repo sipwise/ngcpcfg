@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ac1b152_f7eedab3",
+        "filename": "t/test_ngcpcfg_patch.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-15T16:37:36Z",
+      "side": 1,
+      "message": "I am not 100% sure but I think that this is incorrect.  You have to check for \"len(out.stderr) \u003d\u003d 0\", or match \u0027\u0027\u003d\u003dout.stderr, but finding an empty substring in a string will always succeed, and it\u0027s not the check that you are trying to perform.",
+      "revId": "afb0f94a8e2eecdbd92aaab13e1ff5029a79a7bc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ac1b152_172b56ec",
+        "filename": "t/test_ngcpcfg_patch.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-15T16:37:36Z",
+      "side": 1,
+      "message": "idem",
+      "revId": "afb0f94a8e2eecdbd92aaab13e1ff5029a79a7bc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ac1b152_37305256",
+        "filename": "t/test_ngcpcfg_patch.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-15T16:37:36Z",
+      "side": 1,
+      "message": "idem",
+      "revId": "afb0f94a8e2eecdbd92aaab13e1ff5029a79a7bc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
