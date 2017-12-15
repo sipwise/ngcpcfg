@@ -22,6 +22,30 @@
       "revId": "f34d178de1bf56d056ff17d99f7afb31e9f96438",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ac1b152_371772a5",
+        "filename": "t/README.adoc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-12-15T16:50:01Z",
+      "side": 1,
+      "message": "I\u0027m not sure what you\u0027re asking for :)\n\n/tmp/pytest-of-root/pytest-XX/test_YYY/ is trivial to use/set, and could be any other directory as well, it\u0027s really just an example when hacking on pytest stuff and failing things (e.g. via \"assert 0, some_variable\").\n\ntestrunner is completely unrelated IMO, this command line here is about executing ngcpcfg in an as-much-as-possible-customized way by setting and controlling all related/involed variables. :)",
+      "parentUuid": "3ac1b152_977be628",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 79
+      },
+      "revId": "f34d178de1bf56d056ff17d99f7afb31e9f96438",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
