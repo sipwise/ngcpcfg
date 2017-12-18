@@ -46,6 +46,30 @@
       "revId": "f34d178de1bf56d056ff17d99f7afb31e9f96438",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ac1b152_9724c6c7",
+        "filename": "t/README.adoc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-12-18T10:13:36Z",
+      "side": 1,
+      "message": "I just said, as for me (ngcpcfg test newbie) it is hard to execute \"properly\"\n \nHELPER\u003d../helper CONFIG_POOL\u003d/etc/ NGCPCFG\u003d./fixtures/ngcpcfg.cfg SCRIPTS\u003d../scripts/ FUNCTIONS\u003d../functions/ \\\nNGCP_BASE_TT2\u003d/tmp/pytest-of-root/pytest-XX/test_YYY/ NGCP_PORTFILE\u003d/tmp/ngcpcfg.port OUTPUT_DIRECTORY\u003d/tmp/  \\\nTEMPLATE_POOL_BASE\u003d/tmp/pytest-of-root/pytest-XX/test_YYY ../sbin/ngcpcfg [...]\n\nas I do not know what to set instead of \"pytest-XX\".\nWhat can really help me is a manual like:\n\ndocker pull\ndocker run\n./testrunner test_YYY\n\nTnx!",
+      "parentUuid": "3ac1b152_371772a5",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 79
+      },
+      "revId": "f34d178de1bf56d056ff17d99f7afb31e9f96438",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
