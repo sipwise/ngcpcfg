@@ -70,6 +70,30 @@
       "revId": "f34d178de1bf56d056ff17d99f7afb31e9f96438",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1abeadc6_96120a57",
+        "filename": "t/README.adoc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-12-19T15:57:59Z",
+      "side": 1,
+      "message": "I\u0027m not sure we\u0027re talking about the same. :)\n\nThose instructions are meant if you need to get your hands dirty™ with ngcpcfg (and possibly in combination with pytest), without requiring a system wide installation.\n\nIf you just want to run certain tests then invoke \"py.test-3 -k test_YYY\". But controlling those environment variables manually is the *point* of it and why I\u0027m documenting it here: you might want to (re)use a certain directory for playing around, at the same time with running it from inside the source tree and not having to install it system-wide. If you don\u0027t know what /tmp/pytest-... path you should use: a simple \"assert 0, somevariable\" will fail and report the used tmpdir if we\u0027re talking about pytest. Though I\u0027m not sure how ./testrunner should know upfront what you\u0027re interested in hacking around, and you might not be using pytest at *all* when hacking around. :)\n\nSo unless you\u0027ve specific needs (which I\u0027d like to know!) that aren\u0027t met yet I\u0027m afraid I don\u0027t know what I should provide any further at this point. :)",
+      "parentUuid": "3ac1b152_9724c6c7",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 79
+      },
+      "revId": "f34d178de1bf56d056ff17d99f7afb31e9f96438",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
