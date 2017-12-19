@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1abeadc6_d64ac254",
+        "filename": "t/test_ngcpcfg_patch.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-12-19T16:29:33Z",
+      "side": 1,
+      "message": "Nice catch, yeah.\n\nEmpty stderr can be catched by:\n\n  assert out.stderr \u003d\u003d \"b\u0027\u0027\"\n\n(Not yet sure whether there\u0027s a more elegant approach to it)",
+      "parentUuid": "3ac1b152_f7eedab3",
+      "revId": "afb0f94a8e2eecdbd92aaab13e1ff5029a79a7bc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ac1b152_172b56ec",
         "filename": "t/test_ngcpcfg_patch.py",
         "patchSetId": 1
