@@ -118,6 +118,30 @@
       "revId": "f34d178de1bf56d056ff17d99f7afb31e9f96438",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1abeadc6_1c9b79ca",
+        "filename": "t/README.adoc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-12-20T19:18:00Z",
+      "side": 1,
+      "message": "\u003e So, I am looking for very simple for me scenarios to start playing\n \u003e with tests... I do not want to have \"dirty\" way of playing. I want\n \u003e to have _one_ and _simple_ way to create the test without touching\n \u003e the framework... like \"v n ce\" and I do not care about anything\n \u003e else.\n\nOk\n\n \u003e So, if I start docker container (as an isolated test framework\n \u003e container, the first step I can do is to run all the tests, jusp\n \u003e press up and enter, it is nice. While I cannot run only who I am\n \u003e changing/tunning right now. And run all of them - is too slow (or\n \u003e at least just slower). So I was thinking about \"./testrunner\n \u003e \u003ctest_name\u003e\" inside Docker container. Just like we have for REST\n \u003e API tests.\n\nAh, that\u0027s as simple as:\n\n  cd t ; py.test-3 -v -k \u003ctest_name\u003e\n\nQuoting from `py.test-3 --help`:\n\n\u003cquote\u003e\ngeneral:\n  -k EXPRESSION         only run tests which match the given substring\n                        expression. An expression is a python evaluatable\n                        expression where all names are substring-matched\n                        against test names and their parent classes. Example:\n                        -k \u0027test_method or test other\u0027 matches all test\n                        functions and classes whose name contains\n                        \u0027test_method\u0027 or \u0027test_other\u0027. Additionally keywords\n                        are matched to classes and functions containing extra\n                        names in their \u0027extra_keyword_matches\u0027 set, as well as\n                        functions which have names assigned directly to them.\n\u003cend_of_quote\u003e\n\nAnd this is exactly what I already provide in the docs \"Test runs\" starting in line 23 :) So if that\u0027s unclear yet please let me know what\u0027s not clear yet.\n\n \u003e All the smart and dirty cases is too early for me on this stage\n \u003e when I am not speaking freely with Python at all.\n \u003e Tnx anyway, the current description is better then nothing.\n\nOk, finally understood what you\u0027re looking for. :)",
+      "parentUuid": "1abeadc6_f95ecf11",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 79
+      },
+      "revId": "f34d178de1bf56d056ff17d99f7afb31e9f96438",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
