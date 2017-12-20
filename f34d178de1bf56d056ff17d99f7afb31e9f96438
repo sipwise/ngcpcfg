@@ -94,6 +94,30 @@
       "revId": "f34d178de1bf56d056ff17d99f7afb31e9f96438",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1abeadc6_f95ecf11",
+        "filename": "t/README.adoc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-12-20T11:43:28Z",
+      "side": 1,
+      "message": "Tnx. As I said LGTM here. Right now I am the good example of average Sipwise developer which have no ideas about ngcpcfg tests while is willing to add one.\n\nSo, I am looking for very simple for me scenarios to start playing with tests... I do not want to have \"dirty\" way of playing. I want to have _one_ and _simple_ way to create the test without touching the framework... like \"v n ce\" and I do not care about anything else.\n\nSo, if I start docker container (as an isolated test framework container, the first step I can do is to run all the tests, jusp press up and enter, it is nice. While I cannot run only who I am changing/tunning right now. And run all of them - is too slow (or at least just slower). So I was thinking about \"./testrunner \u003ctest_name\u003e\" inside Docker container. Just like we have for REST API tests.\n\n\nAll the smart and dirty cases is too early for me on this stage when I am not speaking freely with Python at all.\n\nTnx anyway, the current description is better then nothing.",
+      "parentUuid": "1abeadc6_96120a57",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 79
+      },
+      "revId": "f34d178de1bf56d056ff17d99f7afb31e9f96438",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
