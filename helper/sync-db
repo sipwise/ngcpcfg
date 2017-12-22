@@ -59,7 +59,7 @@ exit 1 unless(sync_extra_sockets($dbh,
   $config->{kamailio}->{lb}->{extra_sockets}));
 
 exit 1 unless(sync_rtp_interfaces($dbh,
-  { map {$_ => $_} @{$config->{rtp_interfaces}} } ));
+  { map {my $tmp = $_; $tmp =~ s/:.*//;$_ => $_, $tmp => $tmp} @{$config->{rtp_interfaces}} } ));
 
 exit 1 unless(sync_general_timezone($dbh,
   $config->{general}->{timezone}));
