@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "fa98f980_b521aab6",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000025
+      },
+      "writtenOn": "2017-12-27T12:43:29Z",
+      "side": 1,
+      "message": "duplicate note?",
+      "range": {
+        "startLine": 153,
+        "startChar": 0,
+        "endLine": 153,
+        "endChar": 63
+      },
+      "revId": "d298152a07979c8a40a85f881068e45b818acf2e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa98f980_351dba74",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000025
+      },
+      "writtenOn": "2017-12-27T12:43:29Z",
+      "side": 1,
+      "message": "Really hard to read and grasp. What about the following approach:\n\nConfiguration file precedence (highest to lowest): \n* *.customtt.tt2.$HOSTNAME \n* *.customtt.tt2.$PAIRNAME\n* *.customtt.tt2.$HA_NODE\n* *.customtt.tt2,\n* *.tt2.$HOSTNAME\n* *.tt2.$PAIRNAME\n* *.tt2.$HA_NODE\n* *.tt2.",
+      "range": {
+        "startLine": 156,
+        "startChar": 0,
+        "endLine": 158,
+        "endChar": 71
+      },
+      "revId": "d298152a07979c8a40a85f881068e45b818acf2e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa98f980_722598aa",
         "filename": "docs/ngcpcfg.txt",
         "patchSetId": 11
@@ -226,6 +272,29 @@
     },
     {
       "key": {
+        "uuid": "fa98f980_f502520a",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000025
+      },
+      "writtenOn": "2017-12-27T12:43:29Z",
+      "side": 1,
+      "message": "so, this feature is enabled automatically and actually works if finds any patchtt files, otherwise, the behaviour does not change from the previous one?",
+      "range": {
+        "startLine": 174,
+        "startChar": 63,
+        "endLine": 174,
+        "endChar": 76
+      },
+      "revId": "d298152a07979c8a40a85f881068e45b818acf2e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa98f980_7273d8b1",
         "filename": "docs/ngcpcfg.txt",
         "patchSetId": 11
@@ -318,6 +387,29 @@
     },
     {
       "key": {
+        "uuid": "fa98f980_75174252",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000025
+      },
+      "writtenOn": "2017-12-27T12:43:29Z",
+      "side": 1,
+      "message": "I\u0027d suggest having a list here for simplicity:\n\nThe patch to be applied to the corresponding tt2 template file is selected in the following order (highest to lowest):\n* *.patchtt.tt2.$HOSTNAME\n* *.patchtt.tt2.$PAIRNAME\n* *.patchtt.tt2.$HA_NODE\n* *.patchtt.tt2",
+      "range": {
+        "startLine": 179,
+        "startChar": 0,
+        "endLine": 179,
+        "endChar": 27
+      },
+      "revId": "d298152a07979c8a40a85f881068e45b818acf2e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa98f980_72aaf8d5",
         "filename": "docs/ngcpcfg.txt",
         "patchSetId": 11
@@ -380,6 +472,29 @@
         "startChar": 68,
         "endLine": 183,
         "endChar": 69
+      },
+      "revId": "d298152a07979c8a40a85f881068e45b818acf2e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa98f980_950bc62a",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000025
+      },
+      "writtenOn": "2017-12-27T12:43:29Z",
+      "side": 1,
+      "message": "If a suitable _patchtt_ file is found for a template, then the **ngcpcfg patch** command will overwrite the corresponding _customtt_ file, if any exists. You can find...",
+      "range": {
+        "startLine": 183,
+        "startChar": 0,
+        "endLine": 183,
+        "endChar": 9
       },
       "revId": "d298152a07979c8a40a85f881068e45b818acf2e",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
