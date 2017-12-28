@@ -16,6 +16,24 @@
       "revId": "28c288b0193b33b5fdd5ec52a1a521b413610bb1",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da9df570_71ed988b",
+        "filename": "helper/sync-db",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2017-12-28T14:57:31Z",
+      "side": 1,
+      "message": "$config-\u003e{rtp_interfaces} comes from /etc/ngcp-rtpengine-daemon/interfaces.yml which in turn is generated from network.yml\n\nIf an interface name is in NAME:SUFFIX notation, then the NAME alone will also be added to the enum. Then if the base NAME is selected as RTP interface in the preferences, rtpengine will run the round-robin algorithm between all NAME:* interfaces.",
+      "parentUuid": "da9df570_d1e64444",
+      "revId": "28c288b0193b33b5fdd5ec52a1a521b413610bb1",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
