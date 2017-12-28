@@ -52,6 +52,24 @@
       "revId": "28c288b0193b33b5fdd5ec52a1a521b413610bb1",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da9df570_74aae6d5",
+        "filename": "helper/sync-db",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2017-12-28T17:16:51Z",
+      "side": 1,
+      "message": "No, that returns a different hash\n\n  DB\u003c4\u003e x scalar { map {my $tmp \u003d $_; $tmp \u003d~ s/:.*//; ($_ \u003d\u003e $_, $tmp \u003d\u003e $tmp)} @a }\n0  HASH(0x559e00187c90)\n   \u0027foo\u0027 \u003d\u003e \u0027foo\u0027\n   \u0027foo:bar\u0027 \u003d\u003e \u0027foo:bar\u0027\n  DB\u003c5\u003e x scalar { map {($_ \u003d\u003e $_, $_ \u003d\u003e s/:.*//r)} @a }\n0  HASH(0x559e00192130)\n   \u0027foo:bar\u0027 \u003d\u003e \u0027foo\u0027",
+      "parentUuid": "da9df570_34a05ef4",
+      "revId": "28c288b0193b33b5fdd5ec52a1a521b413610bb1",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
