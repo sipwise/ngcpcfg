@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da9df570_d1e64444",
+        "filename": "helper/sync-db",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2017-12-28T10:00:04Z",
+      "side": 1,
+      "message": "s/:.*$//;\n\nwhat file is read by this script?\n\nsync_rtp_interfaces function effectively just updates the enumerated preferences in the the db to match these $config-\u003e{rt_interfaces}.\n\nthis change now seems to now also consider interface \"labels\" if present in $config-\u003e{rt_interfaces}.",
+      "revId": "28c288b0193b33b5fdd5ec52a1a521b413610bb1",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
