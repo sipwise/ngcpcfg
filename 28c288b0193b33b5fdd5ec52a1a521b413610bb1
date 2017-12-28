@@ -34,6 +34,24 @@
       "revId": "28c288b0193b33b5fdd5ec52a1a521b413610bb1",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da9df570_34a05ef4",
+        "filename": "helper/sync-db",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-12-28T17:09:40Z",
+      "side": 1,
+      "message": "You could simply use something like this instead:\n\nmap { ($_ \u003d\u003e $_, $_ \u003d\u003e s/:.*//r) } ...",
+      "parentUuid": "da9df570_71ed988b",
+      "revId": "28c288b0193b33b5fdd5ec52a1a521b413610bb1",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
