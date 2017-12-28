@@ -70,6 +70,24 @@
       "revId": "28c288b0193b33b5fdd5ec52a1a521b413610bb1",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da9df570_b4ab6ed5",
+        "filename": "helper/sync-db",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-12-28T17:25:47Z",
+      "side": 1,
+      "message": "Err right, stoopeed me:\n\nmap { my $base \u003d s/:.*//r; ($_ \u003d\u003e $_; $base \u003d\u003e $base) } @a\n\n:)",
+      "parentUuid": "da9df570_74aae6d5",
+      "revId": "28c288b0193b33b5fdd5ec52a1a521b413610bb1",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
