@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "da9df570_fac31836",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000025
+      },
+      "writtenOn": "2018-01-09T09:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa98f980_b521aab6",
+      "range": {
+        "startLine": 153,
+        "startChar": 0,
+        "endLine": 153,
+        "endChar": 63
+      },
+      "revId": "d298152a07979c8a40a85f881068e45b818acf2e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa98f980_351dba74",
         "filename": "docs/ngcpcfg.txt",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-27T12:43:29Z",
       "side": 1,
       "message": "Really hard to read and grasp. What about the following approach:\n\nConfiguration file precedence (highest to lowest): \n* *.customtt.tt2.$HOSTNAME \n* *.customtt.tt2.$PAIRNAME\n* *.customtt.tt2.$HA_NODE\n* *.customtt.tt2,\n* *.tt2.$HOSTNAME\n* *.tt2.$PAIRNAME\n* *.tt2.$HA_NODE\n* *.tt2.",
+      "range": {
+        "startLine": 156,
+        "startChar": 0,
+        "endLine": 158,
+        "endChar": 71
+      },
+      "revId": "d298152a07979c8a40a85f881068e45b818acf2e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da9df570_3adda015",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000025
+      },
+      "writtenOn": "2018-01-09T09:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa98f980_351dba74",
       "range": {
         "startLine": 156,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "da9df570_5ae264d6",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000025
+      },
+      "writtenOn": "2018-01-09T09:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa98f980_722598aa",
+      "range": {
+        "startLine": 165,
+        "startChar": 5,
+        "endLine": 165,
+        "endChar": 6
+      },
+      "revId": "d298152a07979c8a40a85f881068e45b818acf2e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa98f980_b23620e6",
         "filename": "docs/ngcpcfg.txt",
         "patchSetId": 11
@@ -82,6 +154,30 @@
       "writtenOn": "2017-12-22T08:46:07Z",
       "side": 1,
       "message": "a",
+      "range": {
+        "startLine": 166,
+        "startChar": 12,
+        "endLine": 166,
+        "endChar": 13
+      },
+      "revId": "d298152a07979c8a40a85f881068e45b818acf2e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da9df570_7ae728e5",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000025
+      },
+      "writtenOn": "2018-01-09T09:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa98f980_b23620e6",
       "range": {
         "startLine": 166,
         "startChar": 12,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "da9df570_9aecccc9",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000025
+      },
+      "writtenOn": "2018-01-09T09:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa98f980_f230a8ea",
+      "range": {
+        "startLine": 167,
+        "startChar": 52,
+        "endLine": 167,
+        "endChar": 55
+      },
+      "revId": "d298152a07979c8a40a85f881068e45b818acf2e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa98f980_124d2c73",
         "filename": "docs/ngcpcfg.txt",
         "patchSetId": 11
@@ -128,6 +248,30 @@
       "writtenOn": "2017-12-22T08:46:07Z",
       "side": 1,
       "message": "at any time",
+      "range": {
+        "startLine": 168,
+        "startChar": 50,
+        "endLine": 168,
+        "endChar": 59
+      },
+      "revId": "d298152a07979c8a40a85f881068e45b818acf2e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da9df570_bad0b0f8",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000025
+      },
+      "writtenOn": "2018-01-09T09:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa98f980_124d2c73",
       "range": {
         "startLine": 168,
         "startChar": 50,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "da9df570_dacd745f",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000025
+      },
+      "writtenOn": "2018-01-09T09:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa98f980_32523014",
+      "range": {
+        "startLine": 170,
+        "startChar": 42,
+        "endLine": 170,
+        "endChar": 47
+      },
+      "revId": "d298152a07979c8a40a85f881068e45b818acf2e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa98f980_5257b402",
         "filename": "docs/ngcpcfg.txt",
         "patchSetId": 11
@@ -174,6 +342,24 @@
       "writtenOn": "2017-12-22T08:46:07Z",
       "side": 1,
       "message": "the",
+      "revId": "d298152a07979c8a40a85f881068e45b818acf2e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da9df570_fada3816",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000025
+      },
+      "writtenOn": "2018-01-09T09:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa98f980_5257b402",
       "revId": "d298152a07979c8a40a85f881068e45b818acf2e",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
@@ -219,6 +405,30 @@
         "startChar": 42,
         "endLine": 173,
         "endChar": 43
+      },
+      "revId": "d298152a07979c8a40a85f881068e45b818acf2e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da9df570_1ad8dc1c",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000025
+      },
+      "writtenOn": "2018-01-09T09:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa98f980_92403c37",
+      "range": {
+        "startLine": 172,
+        "startChar": 78,
+        "endLine": 173,
+        "endChar": 3
       },
       "revId": "d298152a07979c8a40a85f881068e45b818acf2e",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
@@ -364,6 +574,30 @@
     },
     {
       "key": {
+        "uuid": "da9df570_faf15896",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000025
+      },
+      "writtenOn": "2018-01-09T09:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa98f980_d261e4d4",
+      "range": {
+        "startLine": 175,
+        "startChar": 51,
+        "endLine": 175,
+        "endChar": 52
+      },
+      "revId": "d298152a07979c8a40a85f881068e45b818acf2e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa98f980_32a070f4",
         "filename": "docs/ngcpcfg.txt",
         "patchSetId": 11
@@ -398,6 +632,30 @@
       "writtenOn": "2017-12-27T12:43:29Z",
       "side": 1,
       "message": "I\u0027d suggest having a list here for simplicity:\n\nThe patch to be applied to the corresponding tt2 template file is selected in the following order (highest to lowest):\n* *.patchtt.tt2.$HOSTNAME\n* *.patchtt.tt2.$PAIRNAME\n* *.patchtt.tt2.$HA_NODE\n* *.patchtt.tt2",
+      "range": {
+        "startLine": 179,
+        "startChar": 0,
+        "endLine": 179,
+        "endChar": 27
+      },
+      "revId": "d298152a07979c8a40a85f881068e45b818acf2e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da9df570_1aeffcb1",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000025
+      },
+      "writtenOn": "2018-01-09T09:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa98f980_75174252",
       "range": {
         "startLine": 179,
         "startChar": 0,
@@ -502,6 +760,30 @@
     },
     {
       "key": {
+        "uuid": "da9df570_5a30a456",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000025
+      },
+      "writtenOn": "2018-01-09T09:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa98f980_950bc62a",
+      "range": {
+        "startLine": 183,
+        "startChar": 0,
+        "endLine": 183,
+        "endChar": 9
+      },
+      "revId": "d298152a07979c8a40a85f881068e45b818acf2e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa98f980_b2ab80d5",
         "filename": "docs/ngcpcfg.txt",
         "patchSetId": 11
@@ -536,6 +818,30 @@
       "writtenOn": "2017-12-22T08:46:07Z",
       "side": 1,
       "message": "the",
+      "range": {
+        "startLine": 184,
+        "startChar": 14,
+        "endLine": 184,
+        "endChar": 15
+      },
+      "revId": "d298152a07979c8a40a85f881068e45b818acf2e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da9df570_7a356845",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000025
+      },
+      "writtenOn": "2018-01-09T09:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa98f980_d2b8042d",
       "range": {
         "startLine": 184,
         "startChar": 14,
