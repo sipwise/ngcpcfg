@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da9df570_7a83a8cc",
+        "filename": "scripts/patch",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-09T09:51:13Z",
+      "side": 1,
+      "message": "log_error?",
+      "revId": "114e802cf6850c4c773e3c9c3827c9891a4b8b94",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da9df570_5a650444",
+        "filename": "scripts/patch",
+        "patchSetId": 12
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-09T09:51:13Z",
+      "side": 1,
+      "message": "Should it go to stderr if the log_error line above doesn\u0027t?",
+      "revId": "114e802cf6850c4c773e3c9c3827c9891a4b8b94",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
