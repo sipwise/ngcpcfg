@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da9df570_10c51d5b",
+        "filename": "scripts/patch",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-01-10T13:32:16Z",
+      "side": 1,
+      "message": "ACK will fix it.",
+      "parentUuid": "da9df570_7a83a8cc",
+      "revId": "114e802cf6850c4c773e3c9c3827c9891a4b8b94",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da9df570_5a650444",
         "filename": "scripts/patch",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-09T09:51:13Z",
       "side": 1,
       "message": "Should it go to stderr if the log_error line above doesn\u0027t?",
+      "revId": "114e802cf6850c4c773e3c9c3827c9891a4b8b94",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da9df570_f0c7b962",
+        "filename": "scripts/patch",
+        "patchSetId": 12
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-01-10T13:32:16Z",
+      "side": 1,
+      "message": "It does:\n\nlog_error() {\n  logger -t ngcpcfg -- \"Error: $*\"\n  console_output \"Error: $*\\n\" \u003e\u00262\n}",
+      "parentUuid": "da9df570_5a650444",
       "revId": "114e802cf6850c4c773e3c9c3827c9891a4b8b94",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
