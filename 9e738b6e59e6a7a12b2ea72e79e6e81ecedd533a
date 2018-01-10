@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da9df570_b0c9b15c",
+        "filename": "t/test_ngcpcfg_patch.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-01-10T14:02:46Z",
+      "side": 1,
+      "message": "Mika I am afraid the test is not fully isolated here,\nit looks like it is trying to touch the real system:\n\nhttps://jenkins.mgm.sipwise.com/job/ngcpcfg-binaries/541/console\n\n00:01:06.842 E       assert \u0027b\"mkdir: can...on denied\\\\n\"\u0027 \u003d\u003d \"b\u0027\u0027\"\n00:01:06.842 E         - b\"mkdir: cannot create directory \u0027/var/lib/ngcpcfg\u0027: Permission denied\\n\"\n00:01:06.842 E         + b\u0027\u0027\n\nTested in docker here https://paste.mgm.sipwise.com/show/3562/\nSure on jenkins-slave*.mgm we have \u0027Permission denied\u0027",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 99,
+        "endChar": 30
+      },
+      "revId": "9e738b6e59e6a7a12b2ea72e79e6e81ecedd533a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
