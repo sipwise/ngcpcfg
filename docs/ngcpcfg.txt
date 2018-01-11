@@ -397,10 +397,14 @@ Note: This feature is only available if the ngcp-ngcpcfg-carrier package is inst
 
 Prints the log of local changes. Expand all changes if '-p' option is specified.
 
-  **patch** [--help] [<patchtt file(s)>]::
+  **patch** [--help | --from-customtt [<cusomtt file(s)>] | <patchtt file(s)>]::
 
 Generate customtt files using default templates and patchtt files.
 Using patchtt files automates template updating and simplifies customtt management.
+You can perform initial migration from customtt to patchtt using option '--from-customtt',
+ngcpcfg will process all/requested customtt files and generate patchtt files as a
+difference between template and current customtt files. You should normally
+execute '--from-customtt' only once during migration on patchtt.
 
   **pull**::
 

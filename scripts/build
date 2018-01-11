@@ -36,7 +36,7 @@ else
   "${SCRIPTS}"/check --ignore-branch-check
 fi
 
-"${SCRIPTS}"/patch
+"${SCRIPTS}"/patch "$@"
 
 # Kill all previous started tt2-daemon Perl processes if they were not stopped properly
 killall tt2-daemon 2>/dev/null || true
