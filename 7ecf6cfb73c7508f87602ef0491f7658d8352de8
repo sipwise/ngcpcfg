@@ -22,6 +22,30 @@
       "revId": "7ecf6cfb73c7508f87602ef0491f7658d8352de8",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a8c0949_f74a52ab",
+        "filename": "testsuite/Makefile",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000020
+      },
+      "writtenOn": "2018-01-17T13:36:17Z",
+      "side": 1,
+      "message": "The folder and files inside it are created by \u0027make test\u0027 while running /ngcp-network script. Test creates there some .yaml files and they are saved to artifact. I don\u0027t know the purpose of those files though",
+      "parentUuid": "7a8c0949_f7733213",
+      "range": {
+        "startLine": 9,
+        "startChar": 8,
+        "endLine": 9,
+        "endChar": 17
+      },
+      "revId": "7ecf6cfb73c7508f87602ef0491f7658d8352de8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
