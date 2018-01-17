@@ -1,5 +1,5 @@
-# DOCKER_NAME=ngcpcfg-stretch
-FROM docker.mgm.sipwise.com/sipwise-stretch:latest
+# DOCKER_NAME=ngcpcfg-jessie
+FROM docker.mgm.sipwise.com/sipwise-jessie:latest
 
 # Important! Update this no-op ENV variable when this Dockerfile
 # is updated with the current date. It will force refresh of all
@@ -10,15 +10,11 @@ ENV REFRESHED_AT 2017-09-22
 RUN apt-get update
 
 # sourcecode test dependencies
-RUN apt-get install --assume-yes netcat libhash-merge-perl libtemplate-perl libyaml-libyaml-perl libyaml-tiny-perl libyaml-perl
+RUN apt-get install --assume-yes netcat libhash-merge-perl libtemplate-perl \
+  libyaml-libyaml-perl libyaml-tiny-perl libyaml-perl \
+  libdata-validate-ip-perl libio-interface-perl liblist-moreutils-perl libregexp-ipv6-perl
 # misc stuff for execution/debugging/devel
 RUN apt-get install --assume-yes fakeroot git lsof make strace
-# test execution; we need the backport of python3-junitxml from our own
-# repository since it's not part of Debian/stretch
-# files that get-code generates
-COPY t/sources.list.d/builddeps.list /etc/apt/sources.list.d/
-COPY t/sources.list.d/preferences /etc/apt/preferences.d/
-RUN apt-get update
 RUN apt-get install --assume-yes python3-pytest python3-junitxml
 
 RUN echo './t/testrunner' >>/root/.bash_history
@@ -33,15 +29,15 @@ WORKDIR /code/
 #
 # you need to put the proper NGCP sources at t/sources.list.d/builddeps.list
 # for instance, trunk:
-# echo "deb https://deb.sipwise.com/autobuild/ release-trunk-stretch main" > t/sources.list.d/builddeps.list
+# echo "deb https://deb.sipwise.com/autobuild/ release-trunk-jessie main" > t/sources.list.d/builddeps.list
 #
-# % docker build --tag="ngcpcfg-stretch" .
-# % docker run --rm -i -t -v $(pwd)/..:/code:rw ngcpcfg-stretch:latest bash
+# % docker build --tag="ngcpcfg-jessie" -f ./t/Dockerfile .
+# % docker run --rm -i -t -v $(pwd):/code:rw ngcpcfg-jessie:latest bash
 #
 # Use the existing docker image:
-# % docker pull docker.mgm.sipwise.com/ngcpcfg-stretch
-# % docker run --rm -i -t -v $(pwd)/..:/code:rw docker.mgm.sipwise.com/ngcpcfg-stretch:latest bash
+# % docker pull docker.mgm.sipwise.com/ngcpcfg-jessie
+# % docker run --rm -i -t -v $(pwd):/code:rw docker.mgm.sipwise.com/ngcpcfg-jessie:latest bash
 #
 # Inside docker (the command is in history, just press UP button):
-#   ./t/testrunner
+#   cd /code && ./t/testrunner
 ################################################################################
