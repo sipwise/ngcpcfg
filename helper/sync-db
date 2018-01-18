@@ -9,6 +9,7 @@ use YAML::XS qw(LoadFile);
 use Template;
 use Hash::Merge qw(merge);
 use DBI;
+use Capture::Tiny qw(capture);
 
 sub sync_extra_sockets;
 sub db_connect;
@@ -60,6 +61,8 @@ exit 1 unless(sync_extra_sockets($dbh,
 
 exit 1 unless(sync_rtp_interfaces($dbh,
   { map {$_ => $_} @{$config->{rtp_interfaces}} } ));
+
+exit 1 unless(sync_db_timezones($dbh));
 
 $dbh->disconnect;
 
@@ -133,6 +136,74 @@ sub sync_extra_sockets {
 ## rtp_* interfaces handling: ##############################
 sub sync_rtp_interfaces {
 	return generic_enum_sync(@_, 'rtp_interface');
+}
+
+## /usr/share/zoneinfo into MariaDB ##############################
+sub sync_db_timezones {
+    my $dbh = shift;
+
+    my ($out, $err, $rc) = capture {
+        system('/usr/bin/mysql_tzinfo_to_sql /usr/share/zoneinfo');
+    };
+
+    if ($rc) {
+        print "Error: $err\n";
+        return;
+    }
+
+    my ($tzinfo_version, undef, undef) = capture {
+        system('dpkg -s tzdata | grep Version:');
+    };
+
+    unless ($tzinfo_version && $tzinfo_version =~ /Version:\s*(\S+)/) {
+        print "Error: Could not retreive tzdata package version\n";
+        return;
+    }
+    $tzinfo_version = $1;
+
+    my $pe = $dbh->{PrintError};
+    $dbh->{PrintError} = 0;
+    my $sql = '';
+    my $p_rs = $RS;
+    eval {
+        $dbh->begin_work() or die "Cannot start tx: ".$DBI::errstr;
+        my ($cur_tzinfo_version) = $dbh->selectrow_array(<<SQL)
+SELECT version
+  FROM ngcp.tzinfo_version
+SQL
+            or die "Cannot select from ngcp.tzinfo_version: $DBI::errstr\n";
+        if ($cur_tzinfo_version eq $tzinfo_version) {
+            return;
+        }
+        open(my $sql_stream, "<", \$out)
+            or die "Cannot open sql stream: $ERRNO\n";
+        binmode($sql_stream);
+        local $RS = ";\n";
+        $dbh->do('USE mysql')
+            or die "Cannot use mysql database: $DBI::errstr\n";
+        while ($sql = <$sql_stream>) {
+            map {
+                $dbh->do($_) or die "Cannot insert timezone data: $DBI::errstr\n";
+            } split /;\s+/, $sql; # multiple one line statements
+        }
+        close $sql_stream;
+        $dbh->do(<<SQL, undef, $tzinfo_version, $tzinfo_version)
+INSERT INTO ngcp.tzinfo_version SET version = ?
+    ON DUPLICATE KEY UPDATE version = ?, modified_at = CURRENT_TIMESTAMP
+SQL
+            or die "Cannot insert into ngcp.tzinfo_version: $DBI::errstr\n";
+    };
+    local $RS = $p_rs;
+    $err = $EVAL_ERROR;
+    $dbh->{PrintError} = $pe;
+    if ($err) {
+        print $err,"sql: $sql\n";
+        $dbh->rollback();
+        return;
+    }
+    $dbh->commit();
+
+    return 1;
 }
 
 ## END OF FILE #################################################################
