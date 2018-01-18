@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a890539_8d3e6128",
+        "filename": "helper/sync-db",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-01-18T11:24:16Z",
+      "side": 1,
+      "message": "this file from the package seems to be upstream sql; if they change stuff nithout noticing it, it might be better not to exclude unwanted statements, but allow only wanted stmts?",
+      "range": {
+        "startLine": 214,
+        "startChar": 12,
+        "endLine": 216,
+        "endChar": 70
+      },
+      "revId": "3ecb680932987f977fcb31f5a590643f1e4f17ff",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
