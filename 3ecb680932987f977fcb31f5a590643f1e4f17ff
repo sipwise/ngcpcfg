@@ -22,6 +22,30 @@
       "revId": "3ecb680932987f977fcb31f5a590643f1e4f17ff",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a890539_6d1135ac",
+        "filename": "helper/sync-db",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-01-18T11:34:09Z",
+      "side": 1,
+      "message": "there is no file with sql.\ntzdata package contains: /usr/share/zoneinfo files and has nothing to do with MariaDB\nin MariaDB there is a binary tool \u0027mysql_tzinfo_to_sql\u0027 that basically reads the directory and produces a list sql statements as an output.\n\nfound a solution to those, there are multiple one line statements.",
+      "parentUuid": "5a890539_8d3e6128",
+      "range": {
+        "startLine": 214,
+        "startChar": 12,
+        "endLine": 216,
+        "endChar": 70
+      },
+      "revId": "3ecb680932987f977fcb31f5a590643f1e4f17ff",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
