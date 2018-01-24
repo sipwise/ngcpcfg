@@ -16,7 +16,7 @@
         fax2mail_domain="[% ossbss.provisioning.routing.fax2mail_domain %]"
         conference_domain="[% ossbss.provisioning.routing.conference_domain %]"
        >
-  <dashboard enabled="[% www_admin.dashboard.enabled %]" />
+  <dashboard enabled="[% www_admin.dashboard.enable %]" />
   <subscriber extension_features="[% www_admin.subscriber.extension_features %]"
               audiofile_features="[% www_admin.subscriber.audiofile_features %]"
             />
