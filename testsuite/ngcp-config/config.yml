@@ -100,7 +100,7 @@ www_admin:
   cc_dial_prefix: 00
   ac_dial_prefix: 0
   dashboard:
-    enabled: 1
+    enable: 1
   subscriber:
     extension_features: 0
     audiofile_features: 0
