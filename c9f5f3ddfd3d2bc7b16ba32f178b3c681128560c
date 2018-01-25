@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a890539_07008aa9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-01-25T08:53:36Z",
+      "side": 1,
+      "message": "s/standart/standard/\n\nAlso please use \"testsuite: mitgrate \u0027enabled\u0027 ... \" or so",
+      "revId": "c9f5f3ddfd3d2bc7b16ba32f178b3c681128560c",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
