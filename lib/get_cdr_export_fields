@@ -20,6 +20,17 @@
 [% MACRO edr_type_select(dict_table, data_table, dict_col, val_col, type) BLOCK -%]
 (SELECT data.[%- val_col -%] FROM accounting.[%- data_table -%] AS data INNER JOIN accounting.[%- dict_table -%] AS dict ON data.[%- dict_col -%] = dict.id WHERE data.event_id = accounting.events.id AND dict.type="[%- type -%]")
 [%- END %]
+[% MACRO cdr_timezone BLOCK -%]
+[%
+source_subscriber_timezone = "(SELECT COALESCE(tz.name,@@global.time_zone) FROM billing.v_subscriber_timezone tz WHERE tz.uuid = accounting.cdr.source_user_id)";
+destination_subscriber_timezone = "(SELECT COALESCE(tz.name,@@global.time_zone) FROM billing.v_subscriber_timezone tz WHERE tz.uuid = accounting.cdr.destination_user_id)";
+transit_timezone = "(SELECT COALESCE(t.name,@@global.time_zone) FROM ngcp.timezone t LIMIT 1)";
+-%]
+(IF(accounting.cdr.source_user_id = "0",IF(accounting.cdr.destination_user_id = "0",[%- transit_timezone -%],[%- destination_subscriber_timezone -%]),[%- source_subscriber_timezone -%]))
+[%- END %]
+[% MACRO from_unixtime_tz(column, timezone) BLOCK -%]
+CONVERT_TZ(FROM_UNIXTIME([%- column -%]),@@session.time_zone,[%- timezone -%])
+[%- END %]
 [%
 
 out = {};
@@ -55,9 +66,9 @@ X_cdr_id_map.EVENT_ID = "accounting.events.id";
 
 X_cdr_id_map.SOURCE_SUBSCRIBER_ID = "source_voip_subscribers.id";
 X_cdr_id_map.DESTINATION_SUBSCRIBER_ID = "destination_voip_subscribers.id";
-X_cdr_id_map.INIT_TIME = "CONCAT(FROM_UNIXTIME(FLOOR(accounting.cdr.init_time)), \".\", SUBSTRING_INDEX(accounting.cdr.init_time, \".\", -1))";
-X_cdr_id_map.START_TIME = "CONCAT(FROM_UNIXTIME(FLOOR(accounting.cdr.start_time)), \".\", SUBSTRING_INDEX(accounting.cdr.start_time, \".\", -1))";
-X_cdr_id_map.END_TIME = "CONCAT(FROM_UNIXTIME(FLOOR(accounting.cdr.start_time + accounting.cdr.duration)), \".\", SUBSTRING_INDEX(accounting.cdr.start_time + accounting.cdr.duration, \".\", -1))";
+X_cdr_id_map.INIT_TIME = "CONCAT(FROM_UNIXTIME(FLOOR(accounting.cdr.init_time)), \".\", SUBSTRING_INDEX(accounting.cdr.init_time, \".\", -1)) as cdr_init_time";
+X_cdr_id_map.START_TIME = "CONCAT(FROM_UNIXTIME(FLOOR(accounting.cdr.start_time)), \".\", SUBSTRING_INDEX(accounting.cdr.start_time, \".\", -1)) as cdr_start_time";
+X_cdr_id_map.END_TIME = "CONCAT(FROM_UNIXTIME(FLOOR(accounting.cdr.start_time + accounting.cdr.duration)), \".\", SUBSTRING_INDEX(accounting.cdr.start_time + accounting.cdr.duration, \".\", -1)) as cdr_end_time";
 X_cdr_id_map.SOURCE_CARRIER_ZONE = "COALESCE(source_carrier_bbz.zone, \"onnet\")";
 X_cdr_id_map.SOURCE_CARRIER_DETAIL = "COALESCE(source_carrier_bbz.detail, \"platform internal\")";
 X_cdr_id_map.SOURCE_CUSTOMER_ZONE = "source_customer_bbz.zone";
@@ -79,6 +90,13 @@ X_cdr_id_map.SOURCE_USER_OUT = "accounting.cdr.source_user_out";
 X_cdr_id_map.DESTINATION_USER_OUT = "accounting.cdr.destination_user_out";
 X_cdr_id_map.SOURCE_LNP_TYPE = "accounting.cdr.source_lnp_type";
 X_cdr_id_map.DESTINATION_LNP_TYPE = "accounting.cdr.destination_lnp_type";
+
+X_cdr_id_map.TIMEZONE = cdr_timezone _ " as cdr_timezone";
+
+X_cdr_id_map.INIT_TIME_LOCALIZED = "CONCAT(" _ from_unixtime_tz("FLOOR(accounting.cdr.init_time)",cdr_timezone) _ ", \".\", SUBSTRING_INDEX(accounting.cdr.init_time, \".\", -1)) as cdr_init_time_localized";
+X_cdr_id_map.START_TIME_LOCALIZED = "CONCAT(" _ from_unixtime_tz("FLOOR(accounting.cdr.start_time)",cdr_timezone) _ ", \".\", SUBSTRING_INDEX(accounting.cdr.start_time, \".\", -1)) as cdr_start_time_localized";
+X_cdr_id_map.END_TIME_LOCALIZED = "CONCAT(" _ from_unixtime_tz("FLOOR(accounting.cdr.start_time + accounting.cdr.duration)",cdr_timezone) _ ", \".\", SUBSTRING_INDEX(accounting.cdr.start_time + accounting.cdr.duration, \".\", -1)) as cdr_end_time_localized";
+
 # edr fields:
 #X_cdr_id_map.PRIMARY_NUMBER = "(select username from provisioning.voip_dbaliases tmp where tmp.subscriber_id = provisioning.voip_subscribers.id order by is_primary, id limit 1)";
 X_cdr_id_map.PILOT_SUBSCRIBER_ID = edr_type_select("events_relation","events_relation_data","relation_id","val","pilot_subscriber_id");
