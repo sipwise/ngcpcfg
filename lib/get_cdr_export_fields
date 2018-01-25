@@ -20,6 +20,38 @@
 [% MACRO edr_type_select(dict_table, data_table, dict_col, val_col, type) BLOCK -%]
 (SELECT data.[%- val_col -%] FROM accounting.[%- data_table -%] AS data INNER JOIN accounting.[%- dict_table -%] AS dict ON data.[%- dict_col -%] = dict.id WHERE data.event_id = accounting.events.id AND dict.type="[%- type -%]")
 [%- END %]
+[% MACRO cdr_timezone(type, onnet) BLOCK -%]
+[%
+source_subscriber_timezone = "(SELECT tz.name FROM billing.v_subscriber_timezone tz WHERE tz.uuid = accounting.cdr.source_user_id)";
+destination_subscriber_timezone = "(SELECT tz.name FROM billing.v_subscriber_timezone tz WHERE tz.uuid = accounting.cdr.destination_user_id)";
+source_customer_timezone = "(SELECT tz.name FROM billing.v_contract_timezone tz WHERE tz.contract_id = accounting.cdr.source_account_id)";
+destination_customer_timezone = "(SELECT tz.name FROM billing.v_contract_timezone tz WHERE tz.contract_id = accounting.cdr.destination_account_id)";
+source_provider_timezone = "(SELECT tz.name FROM billing.v_contract_timezone tz WHERE tz.contract_id = accounting.cdr.provider_id)";
+destination_provider_timezone = "(SELECT tz.name FROM billing.v_contract_timezone tz WHERE tz.contract_id = accounting.cdr.provider_account_id)";
+IF onnet == "source";
+onnet_subscriber_timezone = source_subscriber_timezone;
+onnet_customer_timezone = source_customer_timezone;
+onnet_provider_timezone = source_provider_timezone;
+ELSIF onnet == "destination";
+onnet_subscriber_timezone = destination_subscriber_timezone;
+onnet_customer_timezone = destination_customer_timezone;
+onnet_provider_timezone = destination_provider_timezone;
+END;
+#transit_timezone = "(SELECT tz.name FROM billing.v_contract_timezone tz WHERE tz.contract_id = 1)"; # see rate-o-mat.pl
+transit_timezone = "(SELECT tz.name FROM ngcp.timezone LIMIT 1)";
+provider_timezone = "IF(accounting.cdr.source_provider_id = \"0\",IF(accounting.cdr.destination_provider_id = \"0\"," _ transit_timezone _ "," _ destination_provider_timezone _ "),IF(accounting.cdr.destination_provider_id = \"0\"," _ source_provider_timezone _ "," _ onnet_provider_timezone _ ")";
+-%]
+[% IF type == "user" -%]
+(IF(accounting.cdr.source_user_id = "0",IF(accounting.cdr.destination_user_id = "0",[%- provider_timezone -%],[%- destination_subscriber_timezone -%]),IF(accounting.cdr.destination_user_id = "0",[%- source_subscriber_timezone -%],[%- onnet_subscriber_timezone -%]))
+[% ELSIF type == "account" -%]
+(IF(accounting.cdr.source_account_id = "0",IF(accounting.cdr.destination_account_id = "0",[%- provider_timezone -%],[%- destination_account_timezone -%]),IF(accounting.cdr.destination_account_id = "0",[%- source_account_timezone -%],[%- onnet_account_timezone -%]))
+[% ELSIF type == "provider" -%]
+([%- provider_timezone -%])
+[% END -%]
+[%- END %]
+[% MACRO from_unixtime_tz(column, timezone) BLOCK -%]
+CONVERT_TZ(FROM_UNIXTIME([%- column -%]),@@session.time_zone,"[%- timezone -%]")
+[%- END %]
 [%
 
 out = {};
@@ -79,6 +111,15 @@ X_cdr_id_map.SOURCE_USER_OUT = "accounting.cdr.source_user_out";
 X_cdr_id_map.DESTINATION_USER_OUT = "accounting.cdr.destination_user_out";
 X_cdr_id_map.SOURCE_LNP_TYPE = "accounting.cdr.source_lnp_type";
 X_cdr_id_map.DESTINATION_LNP_TYPE = "accounting.cdr.destination_lnp_type";
+
+X_cdr_id_map.USER_TIMEZONE = cdr_timezone("user","source");
+#X_cdr_id_map.ACCOUNT_TIMEZONE = cdr_timezone("account","source");
+#X_cdr_id_map.PROVIDER_TIMEZONE = cdr_timezone("account","source");
+
+X_cdr_id_map.INIT_TIME_LOCALIZED = "CONCAT(" _ from_unixtime_tz("FLOOR(accounting.cdr.init_time)",cdr_timezone("user","source")) _ ", \".\", SUBSTRING_INDEX(accounting.cdr.init_time, \".\", -1))";
+X_cdr_id_map.START_TIME_LOCALIZED = "CONCAT(" _ from_unixtime_tz("FLOOR(accounting.cdr.start_time)",cdr_timezone("user","source")) _ ", \".\", SUBSTRING_INDEX(accounting.cdr.start_time, \".\", -1))";
+X_cdr_id_map.END_TIME_LOCALIZED = "CONCAT(" _ from_unixtime_tz("FLOOR(accounting.cdr.start_time + accounting.cdr.duration)",cdr_timezone("user","source")) _ ", \".\", SUBSTRING_INDEX(accounting.cdr.start_time + accounting.cdr.duration, \".\", -1))";
+
 # edr fields:
 #X_cdr_id_map.PRIMARY_NUMBER = "(select username from provisioning.voip_dbaliases tmp where tmp.subscriber_id = provisioning.voip_subscribers.id order by is_primary, id limit 1)";
 X_cdr_id_map.PILOT_SUBSCRIBER_ID = edr_type_select("events_relation","events_relation_data","relation_id","val","pilot_subscriber_id");
