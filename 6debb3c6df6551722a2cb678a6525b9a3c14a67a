@@ -22,6 +22,30 @@
       "revId": "6debb3c6df6551722a2cb678a6525b9a3c14a67a",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a890539_029078eb",
+        "filename": "lib/get_cdr_export_fields",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-01-26T03:36:45Z",
+      "side": 1,
+      "message": "that will only come into effect for cdrs, where not even reseller/peering contracts can be determined. ie. a transit call where both source and destination peering are unknown (\"0\").\n\nthis should never happen, but also ratomat has such fallback in it.",
+      "parentUuid": "5a890539_c7acc238",
+      "range": {
+        "startLine": 41,
+        "startChar": 20,
+        "endLine": 41,
+        "endChar": 65
+      },
+      "revId": "6debb3c6df6551722a2cb678a6525b9a3c14a67a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
