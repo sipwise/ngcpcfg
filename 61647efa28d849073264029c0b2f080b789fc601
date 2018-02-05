@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a930d6b_b753636b",
+        "filename": "scripts/services",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-02-05T18:14:41Z",
+      "side": 1,
+      "message": "I believe it fits in 80 symbols line :-)",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 132,
+        "endChar": 9
+      },
+      "revId": "61647efa28d849073264029c0b2f080b789fc601",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a930d6b_174b57b1",
+        "filename": "scripts/services",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-02-05T18:14:41Z",
+      "side": 1,
+      "message": "as discussed personally, consider to forward the output in ngcpcfg.log (there shouls be variable already AFAFIK)",
+      "range": {
+        "startLine": 134,
+        "startChar": 2,
+        "endLine": 134,
+        "endChar": 25
+      },
+      "revId": "61647efa28d849073264029c0b2f080b789fc601",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
