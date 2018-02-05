@@ -22,11 +22,14 @@
 [%- END %]
 [% MACRO cdr_timezone BLOCK -%]
 [%
-source_subscriber_timezone = "(SELECT COALESCE(tz.name,@@global.time_zone) FROM billing.v_subscriber_timezone tz WHERE tz.uuid = accounting.cdr.source_user_id)";
-destination_subscriber_timezone = "(SELECT COALESCE(tz.name,@@global.time_zone) FROM billing.v_subscriber_timezone tz WHERE tz.uuid = accounting.cdr.destination_user_id)";
-transit_timezone = "(SELECT COALESCE(t.name,@@global.time_zone) FROM ngcp.timezone t LIMIT 1)";
+source_subscriber_timezone = "(SELECT COALESCE((SELECT tz.name FROM billing.v_subscriber_timezone tz WHERE tz.uuid = accounting.cdr.source_user_id LIMIT 1),@@global.time_zone))";
+destination_subscriber_timezone = "(SELECT COALESCE((SELECT tz.name FROM billing.v_subscriber_timezone tz WHERE tz.uuid = accounting.cdr.destination_user_id LIMIT 1),@@global.time_zone))";
+transit_timezone = "(SELECT COALESCE((SELECT t.name FROM ngcp.timezone t LIMIT 1),@@global.time_zone))";
 -%]
 (IF(accounting.cdr.source_user_id = "0",IF(accounting.cdr.destination_user_id = "0",[%- transit_timezone -%],[%- destination_subscriber_timezone -%]),[%- source_subscriber_timezone -%]))
+[%- END %]
+[% MACRO edr_timezone BLOCK -%]
+(SELECT COALESCE((SELECT tz.name FROM billing.v_subscriber_timezone tz WHERE tz.subscriber_id = accounting.events.subscriber_id LIMIT 1),@@global.time_zone))
 [%- END %]
 [% MACRO from_unixtime_tz(column, timezone) BLOCK -%]
 CONVERT_TZ(FROM_UNIXTIME([%- column -%]),@@session.time_zone,[%- timezone -%])
@@ -128,6 +131,10 @@ X_cdr_id_map.FIRST_NON_PRIMARY_ALIAS_USERNAME_BEFORE_AFTER = "IF(" _ edr_type_se
 X_cdr_id_map.PILOT_FIRST_NON_PRIMARY_ALIAS_USERNAME_BEFORE_AFTER = "IF(" _ edr_type_select("events_tag","events_tag_data","tag_id","val","pilot_first_non_primary_alias_username_before") _ " IS NULL," _ edr_type_select("events_tag","events_tag_data","tag_id","val","pilot_first_non_primary_alias_username_after") _ "," _ edr_type_select("events_tag","events_tag_data","tag_id","val","pilot_first_non_primary_alias_username_before") _ ")";
 
 X_cdr_id_map.TIMESTAMP = "from_unixtime(accounting.events.timestamp)";
+
+X_cdr_id_map.EVENT_TIMESTAMP = "CONCAT(FROM_UNIXTIME(FLOOR(accounting.events.timestamp)), \".\", SUBSTRING_INDEX(accounting.events.timestamp, \".\", -1)) as event_timestamp";
+X_cdr_id_map.EVENT_TIMEZONE = edr_timezone _ " as event_timezone";
+X_cdr_id_map.EVENT_TIMESTAMP_LOCALIZED = "CONCAT(" _ from_unixtime_tz("FLOOR(accounting.events.timestamp)",edr_timezone) _ ", \".\", SUBSTRING_INDEX(accounting.events.timestamp, \".\", -1)) as event_timestamp_localized";
 
 # Translate the fields.
 
