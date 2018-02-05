@@ -128,6 +128,12 @@ execute() {
   done < "${SORTED_LIST}"
 }
 
+if [ -d "/run/systemd/system" ]; then
+  log_debug "systemd needs daemon-reload so the unit files loaded are in sync"
+  log_debug "Running: systemctl daemon-reload 2>&1 || true"
+  systemctl daemon-reload 2>&1 || true
+fi
+
 log_debug "normalize_files function"
 normalize_files
 
