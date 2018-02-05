@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a930d6b_17f9974d",
+        "filename": "scripts/services",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-02-05T18:26:08Z",
+      "side": 1,
+      "message": "IMHO\n\n\nif [ -d \"/run/systemd/system\" ]; then\n  log_debug \"systemd needs daemon-reload so the init files are correct\"\n  log_debug \"Running: systemctl daemon-reload 2\u003e\u00261 || true\"\n  systemctl daemon-reload 2\u003e\u00261 || true\nfi",
+      "range": {
+        "startLine": 130,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 2
+      },
+      "revId": "721dc6ad8971ac2060ce7f2cba6d43f9a090dff7",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
