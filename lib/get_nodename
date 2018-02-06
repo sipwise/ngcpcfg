@@ -17,7 +17,7 @@
 [% END -%]
 [%-
 
-IF !hosts.${out}.defined;
+IF hosts.self.defined && !hosts.${out}.defined;
   out = 'self';
 END;
 
