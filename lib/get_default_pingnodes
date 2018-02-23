@@ -7,8 +7,10 @@
 # @return out           List of pingnodes.
 -%]
 [% PERL -%]
+[% IF argv.gw == 'yes' %]
   my $gateway = (split(" ", `ip route | grep default`))[2];
   my @nodes = ($gateway);
+[% END %]
 
 [% IF argv.dns == 'yes' %]
   my @dnsnodes = (split(" ", `grep -v '^#' /etc/resolv.conf | grep nameserver | cut -f2 -d' '|xargs`));
