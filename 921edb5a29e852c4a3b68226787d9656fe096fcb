@@ -16,6 +16,24 @@
       "revId": "921edb5a29e852c4a3b68226787d9656fe096fcb",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a80dd14_27a03af4",
+        "filename": "lib/get_default_pingnodes",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000011
+      },
+      "writtenOn": "2018-02-23T09:52:58Z",
+      "side": 1,
+      "message": "yes, make sense to add the argv.gw",
+      "parentUuid": "9a80dd14_876726ea",
+      "revId": "921edb5a29e852c4a3b68226787d9656fe096fcb",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
