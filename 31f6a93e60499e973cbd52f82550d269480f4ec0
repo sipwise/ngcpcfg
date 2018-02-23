@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a80dd14_67879210",
+        "filename": "lib/get_default_pingnodes",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2018-02-23T14:05:47Z",
+      "side": 1,
+      "message": "you probably want to update the @param list :)",
+      "revId": "31f6a93e60499e973cbd52f82550d269480f4ec0",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
