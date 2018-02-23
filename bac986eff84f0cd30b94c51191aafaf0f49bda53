@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a80dd14_27d83a53",
+        "filename": "lib/get_default_pingnodes",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-02-23T12:47:23Z",
+      "side": 1,
+      "message": "@nodes will NOT be defined if argv.gw is \u0027no\u0027,\nbetter to define empty array outside of IF statements.",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 11
+      },
+      "revId": "bac986eff84f0cd30b94c51191aafaf0f49bda53",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
