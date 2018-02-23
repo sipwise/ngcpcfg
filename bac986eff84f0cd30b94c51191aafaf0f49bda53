@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "9a80dd14_47b44ef2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-02-23T13:26:27Z",
+      "side": 1,
+      "message": "Please use something like \"TT#33255 lib/get_default_pingnodes: add def gw in pingnodes list only if pingnodes are less than 2\" (you could also use \"iff\" instead of \"only if\", please also note the s/then/than/ :)) instead, to clarify it\u0027s about lib/ and not about ngcpcfg\u0027s core itself :)\n\nTBH, I don\u0027t understand the correlation between the commit message and the actual code change, because now we add support for argv.gw and only then modify behavior? :)",
+      "revId": "bac986eff84f0cd30b94c51191aafaf0f49bda53",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a80dd14_27bf5ad2",
+        "filename": "lib/get_default_pingnodes",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-02-23T13:26:27Z",
+      "side": 1,
+      "message": "Please also document argv.gw in the comment section above (line 4 ff)",
+      "revId": "bac986eff84f0cd30b94c51191aafaf0f49bda53",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a80dd14_27d83a53",
         "filename": "lib/get_default_pingnodes",
         "patchSetId": 2
