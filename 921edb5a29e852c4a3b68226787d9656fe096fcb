@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a80dd14_876726ea",
+        "filename": "lib/get_default_pingnodes",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-02-23T09:46:27Z",
+      "side": 1,
+      "message": "I believe we should not mix the logic with GW and DNS here,\nsee my concern in https://gerrit.mgm.sipwise.com/#/c/19307/\n\nI believe you should introduce [% IF argv.gw \u003d\u003d \u0027yes\u0027 %] here.",
+      "revId": "921edb5a29e852c4a3b68226787d9656fe096fcb",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
