@@ -56,6 +56,30 @@
       "revId": "bac986eff84f0cd30b94c51191aafaf0f49bda53",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a80dd14_07a176a9",
+        "filename": "lib/get_default_pingnodes",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000011
+      },
+      "writtenOn": "2018-02-23T13:41:53Z",
+      "side": 1,
+      "message": "I know, but I didn\u0027t consider since argv.gw is never set to \u0027no\u0027. I will keep in consideration, just in case.",
+      "parentUuid": "9a80dd14_27d83a53",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 11
+      },
+      "revId": "bac986eff84f0cd30b94c51191aafaf0f49bda53",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
