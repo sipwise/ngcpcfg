@@ -4,11 +4,15 @@
 # Returns a list of IPs to ping.
 #
 # @param argv.dns       A boolean selecting whether to add DNS IPs.
+# @param argv.gw        A boolean selecting whether to add Gateway IP.
 # @return out           List of pingnodes.
 -%]
 [% PERL -%]
+  my @nodes;
+[% IF argv.gw == 'yes' %]
   my $gateway = (split(" ", `ip route | grep default`))[2];
-  my @nodes = ($gateway);
+  push(@nodes, $gateway);
+[% END %]
 
 [% IF argv.dns == 'yes' %]
   my @dnsnodes = (split(" ", `grep -v '^#' /etc/resolv.conf | grep nameserver | cut -f2 -d' '|xargs`));
