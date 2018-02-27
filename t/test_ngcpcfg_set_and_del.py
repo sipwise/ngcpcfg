@@ -235,6 +235,172 @@ foo:
     assert out.returncode == 0
 
 
+@pytest.mark.tt_33030
+def test_set_action_set_array_element(ngcpcfgcli, tmpdir):
+    tmpfile = tmpdir.join("tmpfile.txt")
+    tmpfile.write('''---
+foo:
+  bar:
+  - 'blah'
+  - 'baz'
+''')
+    out = ngcpcfgcli("set", str(tmpfile), "foo.bar.0=\'moo\'")
+    assert tmpfile.read() == '''---
+foo:
+  bar:
+  - moo
+  - baz
+'''
+    assert "" in out.stdout
+    assert "" in out.stderr
+    assert out.returncode == 0
+
+
+@pytest.mark.tt_33030
+def test_set_action_append_array_element(ngcpcfgcli, tmpdir):
+    tmpfile = tmpdir.join("tmpfile.txt")
+    tmpfile.write('''---
+foo:
+  bar:
+  - blah
+  - baz
+''')
+    out = ngcpcfgcli("set", str(tmpfile), "foo.bar.2=\'moo\'")
+    assert tmpfile.read() == '''---
+foo:
+  bar:
+  - blah
+  - baz
+  - moo
+'''
+    assert "" in out.stdout
+    assert "" in out.stderr
+    assert out.returncode == 0
+
+
+@pytest.mark.tt_33030
+def test_set_action_auto_append_array_element(ngcpcfgcli, tmpdir):
+    tmpfile = tmpdir.join("tmpfile.txt")
+    tmpfile.write('''---
+foo:
+  bar:
+  - blah
+  - baz
+''')
+    out = ngcpcfgcli("set", str(tmpfile), "foo.bar.APPEND=\'moo\'")
+    assert tmpfile.read() == '''---
+foo:
+  bar:
+  - blah
+  - baz
+  - moo
+'''
+    assert "" in out.stdout
+    assert "" in out.stderr
+    assert out.returncode == 0
+
+
+@pytest.mark.tt_33030
+def test_set_action_add_new_array_one_element(ngcpcfgcli, tmpdir):
+    tmpfile = tmpdir.join("tmpfile.txt")
+    tmpfile.write('''---
+foo:
+  moo: blah
+''')
+    out = ngcpcfgcli("set", str(tmpfile), "foo.bar.0=\'boo\'")
+    assert tmpfile.read() == '''---
+foo:
+  bar:
+  - boo
+  moo: blah
+'''
+    assert "" in out.stdout
+    assert "" in out.stderr
+    assert out.returncode == 0
+
+
+@pytest.mark.tt_33030
+def test_set_action_set_array_subelement(ngcpcfgcli, tmpdir):
+    tmpfile = tmpdir.join("tmpfile.txt")
+    tmpfile.write('''---
+foo:
+  bar:
+  - blah: quux
+    foo: meh
+  - blah: zarg
+    foo: ruuk
+  moo: blah
+''')
+    out = ngcpcfgcli("set", str(tmpfile), "foo.bar.1.foo=\'boo\'")
+    assert tmpfile.read() == '''---
+foo:
+  bar:
+  - blah: quux
+    foo: meh
+  - blah: zarg
+    foo: boo
+  moo: blah
+'''
+    assert "" in out.stdout
+    assert "" in out.stderr
+    assert out.returncode == 0
+
+
+@pytest.mark.tt_33030
+def test_set_action_set_hash_instead_of_array(ngcpcfgcli, tmpdir):
+    tmpfile = tmpdir.join("tmpfile.txt")
+    tmpfile.write('''---
+foo:
+  bar:
+  - blah: quux
+    foo: meh
+  - blah: zarg
+    foo: ruuk
+  moo: blah
+''')
+    out = ngcpcfgcli("set", str(tmpfile), "foo.bar.baz=123")
+    assert tmpfile.read() == '''---
+foo:
+  bar:
+  - blah: quux
+    foo: meh
+  - blah: zarg
+    foo: ruuk
+  moo: blah
+'''
+    assert "" in out.stdout
+    assert "Key resolved to a ARRAY reference; refusing to overwrite." \
+            in out.stderr
+    assert out.returncode == 1
+
+
+@pytest.mark.tt_33030
+def test_set_action_set_array_instead_of_hash(ngcpcfgcli, tmpdir):
+    tmpfile = tmpdir.join("tmpfile.txt")
+    tmpfile.write('''---
+foo:
+  bar:
+  - blah: quux
+    foo: meh
+  - blah: zarg
+    foo: ruuk
+  moo: blah
+''')
+    out = ngcpcfgcli("set", str(tmpfile), "foo.0.bar=123")
+    assert tmpfile.read() == '''---
+foo:
+  bar:
+  - blah: quux
+    foo: meh
+  - blah: zarg
+    foo: ruuk
+  moo: blah
+'''
+    assert "" in out.stdout
+    assert "Key resolved to a HASH reference; refusing to overwrite." \
+            in out.stderr
+    assert out.returncode == 1
+
 ###############################################################
 #  ngcpcfg del
 ###############################################################
