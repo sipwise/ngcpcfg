@@ -118,6 +118,7 @@ patch_apply() {
   patch_opts+=(--input="${patch}")
   patch_opts+=(--prefix=/dev/null)  # do not produce .orig backup files
   patch_opts+=(--reject-file=-)     # do not produce .rej file
+  patch_opts+=(-F0 -N)              # disable fuzzy logic to be as safe as possible
   if "${apply}" ; then
     patch_opts+=(--output="${customtt}")
   else
