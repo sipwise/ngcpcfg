@@ -16,6 +16,24 @@
       "revId": "29e8c9616288d9c71f9bc0852a183ca1453d073d",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a75e904_cc80638e",
+        "filename": "t/README.adoc",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-02-28T10:39:17Z",
+      "side": 1,
+      "message": "Yes, and I would like to see this, while in the next review(s), IMHO.",
+      "parentUuid": "7a75e904_cca94326",
+      "revId": "29e8c9616288d9c71f9bc0852a183ca1453d073d",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
