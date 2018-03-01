@@ -175,10 +175,54 @@ aaa:
     assert out.returncode == 0
 
 
+@pytest.mark.tt_33030
+def test_set_action_overwrite_dictionary_subsection(ngcpcfgcli, tmpdir):
+    tmpfile = tmpdir.join("tmpfile.txt")
+    tmpfile.write('''---
+aaa:
+  bbb:
+    eee: 'foobar'
+    fff: 'quux'
+''')
+    out = ngcpcfgcli("set", str(tmpfile), "aaa.bbb={'ccc','123','ddd','567'}")
+    assert tmpfile.read() == '''---
+aaa:
+  bbb:
+    ccc: '123'
+    ddd: '567'
+'''
+    assert "" in out.stdout
+    assert "" in out.stderr
+    assert out.returncode == 0
+
+
 @pytest.mark.tt_16903
 def test_set_action_generate_list(ngcpcfgcli, tmpdir):
     tmpfile = tmpdir.join("tmpfile.txt")
     tmpfile.write("---\n")
+    out = ngcpcfgcli("set", str(tmpfile), "aaa.bbb=['ccc','123','ddd','567']")
+    assert tmpfile.read() == '''---
+aaa:
+  bbb:
+  - ccc
+  - '123'
+  - ddd
+  - '567'
+'''
+    assert "" in out.stdout
+    assert "" in out.stderr
+    assert out.returncode == 0
+
+
+@pytest.mark.tt_33030
+def test_set_action_overwrite_list(ngcpcfgcli, tmpdir):
+    tmpfile = tmpdir.join("tmpfile.txt")
+    tmpfile.write('''---
+aaa:
+  bbb:
+  - 5432
+  - 'foobar'
+''')
     out = ngcpcfgcli("set", str(tmpfile), "aaa.bbb=['ccc','123','ddd','567']")
     assert tmpfile.read() == '''---
 aaa:

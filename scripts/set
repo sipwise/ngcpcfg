@@ -90,6 +90,12 @@ for my \$component (split(/\\./, "${option}")) {
 if (!defined(\$\$valref) || ref(\$valref) eq 'SCALAR') {
   \$\$valref = ${value};
 }
+elsif (ref(\$\$valref) eq 'ARRAY' && ref(${value}) eq 'ARRAY') {
+  \$\$valref = ${value};
+}
+elsif (ref(\$\$valref) eq 'HASH' && ref(${value}) eq 'HASH') {
+  \$\$valref = ${value};
+}
 else {
   print STDERR ("Key resolved to a " . ref(\$\$valref) . " reference; refusing to overwrite.\n");
   exit(1);
