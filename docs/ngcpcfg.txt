@@ -436,7 +436,20 @@ _--dry-run__ option.
 
   **set** <file> <option>=<value>::
 
-Set given <option> to <value> in <file>.
+Set given <option> to <value> in <file>. Using this command you can add/change
+the value(s) for every YML file used by ngcpcfg. Use _del_ option to delete the value/option.
+Here you can find the most popular cases for YML configs modification:
+
+  # change rtpengine max port number:
+  ngcpcfg set /etc/ngcp-config/config.yml "rtpproxy.maxport=44123"
+  # disable asterisk service:
+  ngcpcfg set /etc/ngcp-config/config.yml "asterisk.enable='no'"
+  # add value with spaces
+  ngcpcfg set /etc/ngcp-config/config.yml "sshd.authorized_keys_file='%h/.ssh/authorized_keys %h/.ssh/sipwise_vagrant_key'"
+  # add the element to the array/hash:
+  ngcpcfg set /etc/ngcp-config/config.yml "sshd.listen_addresses.APPEND='1.2.3.4'"
+  # replace the first element in the array/hash:
+  ngcpcfg set /etc/ngcp-config/config.yml "sshd.listen_addresses.0='1.2.3.4'"
 
   **show** [<change_id>]::
 
