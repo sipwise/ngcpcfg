@@ -41,6 +41,7 @@ FOREACH set IN cluster_sets.keys;
       NEXT UNLESS hosts.$host.$iface.type.grep('^' _ argv.type _ '$').size();
       blktmp.processed_hosts.$peer = 1;
       FOREACH ip IN hosts.$host.$iface.shared_ip;
+        NEXT UNLESS ip;
         theset.ips.push(ip) UNLESS theset.ips.defined(ip);
       END;
     END;

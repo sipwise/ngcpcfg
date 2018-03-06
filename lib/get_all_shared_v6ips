@@ -50,6 +50,7 @@ FOREACH host IN hosts.keys.sort;
           ip = ip.replace('^:', '0:');
           ip = ip.replace(':$', ':0');
         END;
+        NEXT UNLESS ip;
         out.push(ip);
       END;
     END;

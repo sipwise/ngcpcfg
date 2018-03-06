@@ -38,6 +38,7 @@ IF status.item(hosts.${argv.host}.status);
       NEXT UNLESS hosts.${argv.host}.$realiface.type.grep('^' _ argv.type _ '$').size();
 
       FOREACH ip IN hosts.${argv.host}.$realiface.shared_ip;
+        NEXT UNLESS ip;
         out.push(ip);
       END;
     END;

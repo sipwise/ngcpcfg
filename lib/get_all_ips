@@ -36,6 +36,7 @@ FOREACH host IN hosts.keys;
       NEXT IF realiface != iface;
       NEXT UNLESS hosts.$host.$realiface.type.grep('^' _ argv.type _ '$').size();
       NEXT IF out.grep('^' _ hosts.$host.$realiface.ip _ '$').size();
+      NEXT UNLESS hosts.$host.$realiface.ip;
 
       out.push(hosts.$host.$realiface.ip);
     END;

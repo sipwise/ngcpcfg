@@ -41,6 +41,7 @@ FOREACH host IN hosts.keys.sort;
       peer = hosts.$host.peer;
       blktmp.processed_hosts.$peer = 1;
       FOREACH ip IN hosts.$host.$realiface.advertised_ip;
+        NEXT UNLESS ip;
         out.push(ip);
       END;
     END;

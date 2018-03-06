@@ -36,6 +36,7 @@ IF status.item(hosts.${argv.host}.status);
     FOREACH realiface IN hosts.${argv.host}.keys;
       NEXT IF realiface != iface;
       NEXT UNLESS hosts.${argv.host}.$realiface.type.grep('^' _ argv.type _ '$').size();
+      NEXT UNLESS hosts.${argv.host}.$realiface.ip;
 
       out.push(hosts.${argv.host}.$realiface.ip);
     END;
