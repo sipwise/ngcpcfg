@@ -450,6 +450,13 @@ Here you can find the most popular cases for YML configs modification:
   ngcpcfg set /etc/ngcp-config/config.yml "sshd.listen_addresses.APPEND='1.2.3.4'"
   # replace the first element in the array/hash:
   ngcpcfg set /etc/ngcp-config/config.yml "sshd.listen_addresses.0='1.2.3.4'"
+  # add the list of hashes to iproute2 section:
+  ngcpcfg set /etc/ngcp-config/config.yml iproute2.rt_tables.APPEND='{"name","my_route","id",205}'
+  #  iproute2:
+  # -  rt_tables: []
+  # +  rt_tables:
+  # +  - id: 205
+  # +    name: my_route
 
   **show** [<change_id>]::
 
