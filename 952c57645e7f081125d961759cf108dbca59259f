@@ -16,6 +16,24 @@
       "revId": "952c57645e7f081125d961759cf108dbca59259f",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a6ff13c_64b5cacc",
+        "filename": "lib/get_all_hosts_ips",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2018-03-07T12:35:26Z",
+      "side": 1,
+      "message": "True. AFAICS this is only used by lsb_scripts/hb_watchdog.default and that one doesn\u0027t want blank IPs.",
+      "parentUuid": "5a72e520_48ab7f89",
+      "revId": "952c57645e7f081125d961759cf108dbca59259f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
