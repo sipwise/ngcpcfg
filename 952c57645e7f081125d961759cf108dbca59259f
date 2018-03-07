@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a72e520_48ab7f89",
+        "filename": "lib/get_all_hosts_ips",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-03-07T08:34:50Z",
+      "side": 1,
+      "message": "if someone relies on list of names in templates using this helper, the behavior will be changed.",
+      "revId": "952c57645e7f081125d961759cf108dbca59259f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
