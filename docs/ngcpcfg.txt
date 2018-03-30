@@ -391,7 +391,7 @@ Set up specified '<server>' for usage as shared repository whereas '<server>'
 usually corresponds to the IP/hostname of the central management system in a
 sip:carrier environment. Further details about the details of the setup
 are available in the <<init-mgmt>> section.
-Note: This feature is only available if the ngcp-ngcpcfg-carrier package is installed.
+Note: This feature is only usable on Carrier installation, on PRO installation it will report warning and exit.
 
   **log** [-p]::
 
@@ -608,7 +608,7 @@ init-mgmt setup
 ---------------
 
 This section documents the 'ngcpcfg init-mgmt' feature in more detail.
-The feature is provided through the ngcp-ngcpcfg-carrier package.
+The feature is provided through the ngcp-ngcpcfg-ha package on Carrier installation.
 
 The script deprecates the shared repository /mnt/glusterfs/ngcpcfg-share of the
 local system by renaming it to /mnt/glusterfs/ngcpcfg-share.unused. It then
