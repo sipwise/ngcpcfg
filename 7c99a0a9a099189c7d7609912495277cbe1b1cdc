@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baa041b7_e003620c",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-03-30T20:42:12Z",
+      "side": 1,
+      "message": "Should we announce the execution of init-mgmt available for PRO even though it\u0027s considered a carrrier only feature, or are we deprecating the ngcp-ngcpcfg-carrier package as well?",
+      "revId": "7c99a0a9a099189c7d7609912495277cbe1b1cdc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baa041b7_00ff6602",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-03-30T20:42:12Z",
+      "side": 1,
+      "message": "Maybe redirect stderr f \"ngcpcfg values ...\" to stderr?",
+      "revId": "7c99a0a9a099189c7d7609912495277cbe1b1cdc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
