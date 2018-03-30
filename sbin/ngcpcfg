@@ -80,8 +80,8 @@ Actions:
   initialise          initialise setup (to be executed only once on setup)
 "
 
-  # display only if ngcp-ngcpcfg-carrier is available
-  if [ -r /usr/share/ngcp-ngcpcfg/scripts/init-mgmt ] ; then
+  # display only if node type = carrier
+  if [[ "$( ngcpcfg values general.ngcp_type )" == carrier ]] ; then
     printf "  init-mgmt <srv>     set up mgmt server for carrier environment (to be executed only once)\n"
   fi
 
