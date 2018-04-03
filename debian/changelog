@@ -1,3 +1,40 @@
+ngcp-ngcpcfg (6.3.0.0+0~mr6.3.0.0) unstable; urgency=medium
+
+  [ Alexander Lutay ]
+  * [12b88da] TT#17987 testsuite: migrate 'enableD' options to standard 'enable' (to keep them in sync)
+  * [607bbde] TT#18774 Fix library get_nodename (it was not in use previously)
+  * [6aba809] TT#18774 Fix library get_nodename for Carrier case
+  * [3af9b79] TT#18774 Check mysql using proper my.cnf file
+  * [a2a8b52] TT#24920 Initial commit for 'ngcpcfg patch'
+  * [3670689] TT#24920 Improve 'ngcpcfg patch' output when no 'patchtt' files found
+  * [051f27f] TT#24920 Introduce 'ngcpcfg patch --from-customtt' for initial import
+  * [35bfc31] TT#24920 Disable the patch fuzzy logic on 'ngcpcfg patch'
+  * [42357f5] TT#33030 Add samples to 'ngcpcfg set' manuals
+  * [ad5267a] TT#33030 Add sample how to append iproute2 in config.yml
+  * [3175f99] TT#33911 Perform 'wrap-and-sort -sat'
+
+  [ Manuel Montecelo ]
+  * [d470b7c] TT#32209 ngcpcfg must call 'systemctl daemon-reload' after applying templates
+
+  [ Rene Krenn ]
+  * [c3d0b62] TT#27463 edr export localized time columns
+
+  [ Guillem Jover ]
+  * [5775b11] TT#30355 Ignore duplicate IP for dummy interfaces on network validator
+
+  [ Michael Prokop ]
+  * [1b65ad2] TT#26206 Provide tests for 'ngcpcfg patch' action
+  * [29e8c96] TT#26206 Provide README for working with tests
+
+  [ Richard Fuchs ]
+  * [bd3ca63] TT#33030 enable setting of array elements via 'ngcpcfg set'
+  * [5eeb478] TT#33030 allow overwriting entire subkeys with similar types
+  * [952c576] TT#24841 don't return empty strings from IP helper scripts
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 03 Apr 2018 22:31:45 +0200
+
 ngcp-ngcpcfg (6.2.0.0+0~mr6.2.0.0) unstable; urgency=medium
 
   [ Kirill Solomko ]
