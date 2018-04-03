@@ -44,6 +44,11 @@ mysqld_status () {
   if [ -f "$pidfile" ] && ps "$(cat "$pidfile")" &>/dev/null ; then
     ps_alive=1
   fi
+  
+  if [ -n "${EXISTING_PID}" ] && [[ "${EXISTING_PID}" == "$(cat "$pidfile")" ]]; then
+    # if the old pid is equal to current one it means that mysql wasn't stopped yet
+    ps_alive=0
+  fi
 
   if [ "$1" = "check_alive" -a $ping_alive = 1 ] ||
      [ "$1" = "check_dead"  -a $ping_alive = 0 -a $ps_alive = 0 ]; then
