@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "baa041b7_60ad1231",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-04-03T13:45:56Z",
+      "side": 1,
+      "message": "The idea is to deprecate ngcp-ngcpcfg-carrier but you are right it\u0027s better to change the description",
+      "parentUuid": "baa041b7_e003620c",
+      "revId": "7c99a0a9a099189c7d7609912495277cbe1b1cdc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "baa041b7_00ff6602",
         "filename": "sbin/ngcpcfg",
         "patchSetId": 2
