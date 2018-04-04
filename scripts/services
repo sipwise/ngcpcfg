@@ -132,6 +132,10 @@ if [ -d "/run/systemd/system" ]; then
   log_debug "systemd needs daemon-reload so the unit files loaded are in sync"
   log_debug "Running: systemctl daemon-reload 2>&1 || true"
   systemctl daemon-reload 2>&1 || true
+
+  log_debug "systemd needs reset-all to enable/disabe services (to start them on boot)"
+  log_debug "Running: systemctl preset-all 2>&1 || true"
+  systemctl preset-all 2>&1 || true
 fi
 
 log_debug "normalize_files function"
