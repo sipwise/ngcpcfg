@@ -230,10 +230,10 @@ MySQL,...) needs. Any variables that should be replaced by the configuration
 management system (based on the main configuration files *.yml inside
 /etc/ngcp-config/) have to be written in the YAML syntax (see http://yaml.org/)
 
-* _service files_ (*.services) and _build files_ ({post,pre}build): file will be
-executed under "bash $FILE", so you can use commands e.g. like
-"/etc/init.d/foobar restart" and any further shell scripting syntax inside the
-services files
+* _service files_ (*.services) and _build files_ ({post,pre}build): file will
+be executed under "bash $FILE", so you can use commands e.g. like
+"ngcp-service foobar restart" and any further shell scripting syntax inside
+the services files
 
 Global Options
 --------------

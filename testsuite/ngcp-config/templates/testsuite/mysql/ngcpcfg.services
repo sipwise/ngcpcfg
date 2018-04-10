@@ -1,6 +1,5 @@
 #!/bin/bash
 
-/etc/init.d/mysql restart
-sleep 2
+ngcp-service mysql restart
 
 # vim: ft=sh

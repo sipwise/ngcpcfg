@@ -17,5 +17,5 @@ MYCOM="mysql -u$MYSQL_USER -p$SIPWISE_DB_PASSWORD provisioning -e"
 $MYCOM "update xmlhosts set ip='$EADDRESS' where id='1' "
 $MYCOM "update xmlhosts set port='$SEMS_XMLRPCPORT' where id='2' "
 
-/etc/init.d/kamailio restart
+ngcp-service kamailio restart
 sleep 2
