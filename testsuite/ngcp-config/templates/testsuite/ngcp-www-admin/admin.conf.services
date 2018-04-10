@@ -1,2 +1,2 @@
 
-/etc/init.d/apache2 reload
+ngcp-service apache2 reload
