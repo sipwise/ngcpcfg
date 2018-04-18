@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9aa53dc9_28000faa",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-04-18T14:51:57Z",
+      "side": 1,
+      "message": "maybe \"usable\" as it will be \"available\" on PRO as well, right?",
+      "range": {
+        "startLine": 394,
+        "startChar": 27,
+        "endLine": 394,
+        "endChar": 36
+      },
+      "revId": "84d857aae319a24d1f8bc9556a199383a3cd2c3a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9aa53dc9_c825235d",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-04-18T14:51:57Z",
+      "side": 1,
+      "message": "please do not use \"ngcpcfg values\" approach, it returned not-yet applied values!",
+      "range": {
+        "startLine": 84,
+        "startChar": 12,
+        "endLine": 84,
+        "endChar": 26
+      },
+      "revId": "84d857aae319a24d1f8bc9556a199383a3cd2c3a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
