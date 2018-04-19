@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9aa53dc9_330080aa",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-04-19T07:39:43Z",
+      "side": 1,
+      "message": "Well the script will be \"available\" but the feature itself not, \u0027cause I\u0027m going to add some \"fool proof\" to init-mgmt",
+      "parentUuid": "9aa53dc9_28000faa",
+      "range": {
+        "startLine": 394,
+        "startChar": 27,
+        "endLine": 394,
+        "endChar": 36
+      },
+      "revId": "84d857aae319a24d1f8bc9556a199383a3cd2c3a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9aa53dc9_c825235d",
         "filename": "sbin/ngcpcfg",
         "patchSetId": 4
