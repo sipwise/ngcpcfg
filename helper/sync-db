@@ -57,10 +57,16 @@ unless(defined $dbpass) {
 $dbh = db_connect();
 
 exit 1 unless(sync_extra_sockets($dbh,
-  $config->{kamailio}->{lb}->{extra_sockets}));
+  $config->{kamailio}->{lb}->{extra_sockets},
+  1, 1, 1));
 
 exit 1 unless(sync_rtp_interfaces($dbh,
-  { map {my $tmp = $_; $tmp =~ s/:.*//; ($_ => $_, $tmp => $tmp)} @{$config->{rtp_interfaces}} } ));
+  { map {my $tmp = $_; $tmp =~ s/:.*//; ($_ => $_, $tmp => $tmp)} @{$config->{rtp_interfaces}} },
+  1, 1, 1));
+
+exit 1 unless(sync_smsc_peers($dbh,
+  { map { ($_->{id} => $_->{id}) } @{$config->{sms}->{smsc}} },
+  0, 1, 0));
 
 exit 1 unless(sync_general_timezone($dbh,
   $config->{general}->{timezone}));
@@ -85,6 +91,9 @@ sub db_connect
 sub generic_enum_sync {
 	my $dbh = shift;
 	my $config_hash = shift;
+	my $usr_pref = shift;
+	my $dom_pref = shift;
+	my $peer_pref = shift;
 	my $pref_name = shift;
 	my $sth = $dbh->prepare("select id from voip_preferences where attribute=?");
 	$sth->execute($pref_name);
@@ -96,7 +105,7 @@ sub generic_enum_sync {
 	my $pref_id = $res->{id};
 	$sth->finish;
 
-	my $enum_insert_sth = $dbh->prepare("insert into voip_preferences_enum (preference_id, label, value, usr_pref, dom_pref, peer_pref) values(?, ?, ?, 1, 1, 1)");
+	my $enum_insert_sth = $dbh->prepare("insert into voip_preferences_enum (preference_id, label, value, usr_pref, dom_pref, peer_pref) values(?, ?, ?, ?, ?, ?)");
 	my $enum_update_sth = $dbh->prepare("update voip_preferences_enum set value=? where id=?");
 	my $enum_delete_sth = $dbh->prepare("delete from voip_preferences_enum where id=?");
 	$sth = $dbh->prepare("select id, label, value from voip_preferences_enum where preference_id=?");
@@ -122,7 +131,8 @@ sub generic_enum_sync {
 	}
 	foreach my $label(keys %{$config_hash}) {
 	  print "insert new $pref_name $label=$config_hash->{$label} from config into db\n";
-	  $enum_insert_sth->execute($pref_id, $label, $config_hash->{$label});
+	  $enum_insert_sth->execute($pref_id, $label, $config_hash->{$label},
+								$usr_pref ? 1 : 0, $dom_pref ? 1 : 0, $peer_pref ? 1: 0);
 	}
 
 	$enum_insert_sth->finish;
@@ -139,6 +149,11 @@ sub sync_extra_sockets {
 ## rtp_* interfaces handling: ##############################
 sub sync_rtp_interfaces {
 	return generic_enum_sync(@_, 'rtp_interface');
+}
+#
+## smsc_* interfaces handling: ##############################
+sub sync_smsc_peers {
+	return generic_enum_sync(@_, 'smsc_peer');
 }
 
 ## general.timezone handling: ##############################
