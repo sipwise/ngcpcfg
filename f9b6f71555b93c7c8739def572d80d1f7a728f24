@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "9aa53dc9_93950c42",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2018-04-19T11:14:29Z",
+      "side": 1,
+      "message": "Line-wrap please?",
+      "range": {
+        "startLine": 394,
+        "startChar": 80,
+        "endLine": 394,
+        "endChar": 111
+      },
+      "revId": "f9b6f71555b93c7c8739def572d80d1f7a728f24",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9aa53dc9_339c0069",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2018-04-19T11:14:29Z",
+      "side": 1,
+      "message": "report a warning",
+      "range": {
+        "startLine": 394,
+        "startChar": 88,
+        "endLine": 394,
+        "endChar": 101
+      },
+      "revId": "f9b6f71555b93c7c8739def572d80d1f7a728f24",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9aa53dc9_73928859",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2018-04-19T11:14:29Z",
+      "side": 1,
+      "message": "installations?",
+      "range": {
+        "startLine": 394,
+        "startChar": 45,
+        "endLine": 394,
+        "endChar": 57
+      },
+      "revId": "f9b6f71555b93c7c8739def572d80d1f7a728f24",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9aa53dc9_539f845f",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2018-04-19T11:14:29Z",
+      "side": 1,
+      "message": "installations?",
+      "range": {
+        "startLine": 394,
+        "startChar": 66,
+        "endLine": 394,
+        "endChar": 78
+      },
+      "revId": "f9b6f71555b93c7c8739def572d80d1f7a728f24",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9aa53dc9_33c5205b",
         "filename": "docs/ngcpcfg.txt",
         "patchSetId": 5
@@ -18,6 +110,29 @@
         "startChar": 0,
         "endLine": 611,
         "endChar": 84
+      },
+      "revId": "f9b6f71555b93c7c8739def572d80d1f7a728f24",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9aa53dc9_1388dc21",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2018-04-19T11:14:29Z",
+      "side": 1,
+      "message": "installations",
+      "range": {
+        "startLine": 611,
+        "startChar": 71,
+        "endLine": 611,
+        "endChar": 83
       },
       "revId": "f9b6f71555b93c7c8739def572d80d1f7a728f24",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
