@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9aa53dc9_33c5205b",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-04-19T11:06:23Z",
+      "side": 1,
+      "message": "I believe you can remove this line completely, maybe worth to repeat:\n\nThis feature is only usable on Carrier installation, on PRO installation it will report warning and exit.",
+      "range": {
+        "startLine": 611,
+        "startChar": 0,
+        "endLine": 611,
+        "endChar": 84
+      },
+      "revId": "f9b6f71555b93c7c8739def572d80d1f7a728f24",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
