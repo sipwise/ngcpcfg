@@ -34,6 +34,24 @@
       "revId": "d62f07655659ca53b31dcc3ae0a633a61e0bfc78",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9aa53dc9_73f608d9",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-04-19T06:57:44Z",
+      "side": 0,
+      "message": "We were checking in the past just to do not show message for missing code, since the code is merged - show message always.\nJust correct message to explicitly say \"Carrier only, kind:\n\n printf \"  init-mgmt \u003csrv\u003e     set up mgmt server for Carrier ONLY environment (to be executed only once)\\n\"",
+      "parentUuid": "9aa53dc9_f309f8de",
+      "revId": "d62f07655659ca53b31dcc3ae0a633a61e0bfc78",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
