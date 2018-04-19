@@ -16,6 +16,24 @@
       "revId": "d62f07655659ca53b31dcc3ae0a633a61e0bfc78",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9aa53dc9_f309f8de",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-04-19T06:27:20Z",
+      "side": 0,
+      "message": "the problem here is that pro installation will have carrier scripts so checking the files is useless.",
+      "parentUuid": "9aa53dc9_e830e7a0",
+      "revId": "d62f07655659ca53b31dcc3ae0a633a61e0bfc78",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
