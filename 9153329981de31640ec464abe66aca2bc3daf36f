@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aaa499b_875eec43",
+        "filename": "scripts/services",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-04-26T11:41:16Z",
+      "side": 1,
+      "message": "log_debug \"Running: rm -rf /etc/systemd/system/*.wants/ || true\"",
+      "revId": "9153329981de31640ec464abe66aca2bc3daf36f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
