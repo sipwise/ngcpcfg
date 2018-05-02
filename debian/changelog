@@ -1,3 +1,15 @@
+ngcp-ngcpcfg (6.2.1.1+0~mr6.2.1.1) unstable; urgency=medium
+
+  [ Alexander Lutay ]
+  * [6f6e6fb] TT#18774 Move 'systemctl preset-all' to ngcpcfg
+
+  [ Guillem Jover ]
+  * [3488904] TT#26264 Use ngcp-service instead of directly calling /etc/init.d/<service>
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 02 May 2018 12:58:24 +0200
+
 ngcp-ngcpcfg (6.2.1.0+0~mr6.2.1.0) unstable; urgency=medium
 
   [ Alexander Lutay ]
