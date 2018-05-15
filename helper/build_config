@@ -93,10 +93,14 @@ else
 
 fi
 
-# set permissions for generated config based on the ones of the template
-chmod --reference="${input_file}" "${output_file}"
-# finally drop all write permissions
-chmod a-w "${output_file}"
+if [ -L "$output_file" ] ; then
+  log_warn "File $output_file is a symlink - NOT adjusting permissions"
+else
+  # set permissions for generated config based on the ones of the template
+  chmod --reference="${input_file}" "${output_file}"
+  # finally drop all write permissions
+  chmod a-w "${output_file}"
+fi
 
 # post-execution script in template store:
 if [ -r "${NGCPCTL_MAIN}/templates/${output_file}.postbuild" ] ; then
