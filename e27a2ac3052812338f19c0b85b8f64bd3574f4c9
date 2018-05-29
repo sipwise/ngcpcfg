@@ -16,6 +16,24 @@
       "revId": "e27a2ac3052812338f19c0b85b8f64bd3574f4c9",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fabf19d9_90f50185",
+        "filename": "helper/sync-db",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-05-29T13:11:11Z",
+      "side": 1,
+      "message": "good question :)\nwhen I was implementing this function I saw that the already existing ones (above) had it that way so I thought that was the preferred way to do.",
+      "parentUuid": "fabf19d9_3004f57c",
+      "revId": "e27a2ac3052812338f19c0b85b8f64bd3574f4c9",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
