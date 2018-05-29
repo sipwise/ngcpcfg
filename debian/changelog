@@ -1,3 +1,25 @@
+ngcp-ngcpcfg (6.3.1.0+0~mr6.3.1.0) unstable; urgency=medium
+
+  [ Alexander Lutay ]
+  * [a8dc7b3] TT#18774 Move 'systemctl preset-all' to ngcpcfg
+
+  [ Guillem Jover ]
+  * [d62f076] TT#26264 Use ngcp-service instead of directly calling /etc/init.d/<service>
+  * [3e7c22c] TT#35912 systemd does not always cleanup .wants/ relationships by itself
+
+  [ Kirill Solomko ]
+  * [b81f0ba] TT#35507 helper/sync-db: add sync_smsc_peers
+
+  [ Mykola Malkov ]
+  * [6da220e] TT#34758 Change description of init-mgmt
+
+  [ Michael Prokop ]
+  * [57701e3] TT#36827 Do not set permissions on output files of type symlink
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 29 May 2018 10:08:38 +0200
+
 ngcp-ngcpcfg (6.3.0.0+0~mr6.3.0.0) unstable; urgency=medium
 
   [ Alexander Lutay ]
