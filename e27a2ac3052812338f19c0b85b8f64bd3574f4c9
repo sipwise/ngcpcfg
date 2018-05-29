@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fabf19d9_3004f57c",
+        "filename": "helper/sync-db",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-05-29T12:58:03Z",
+      "side": 1,
+      "message": "Is there any specific reason why all error messages of sync-db go towards stdout (instead of stderr)?",
+      "revId": "e27a2ac3052812338f19c0b85b8f64bd3574f4c9",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
