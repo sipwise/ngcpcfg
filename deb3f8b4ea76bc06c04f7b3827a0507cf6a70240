@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fabf19d9_c8e74d11",
+        "filename": "helper/build_config",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-05-30T17:49:51Z",
+      "side": 1,
+      "message": "\u003e $output_file_backup is set only if the line in 81 is executed, so\n \u003e you need to use \"${output_file_backup:-}\" instead here\n\nHmm, hadn\u0027t noticed the \u0027set -u\u0027 in the beginning of the script, thanks.",
+      "parentUuid": "fabf19d9_482c5d4a",
+      "revId": "deb3f8b4ea76bc06c04f7b3827a0507cf6a70240",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fabf19d9_283129a3",
         "filename": "helper/build_config",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-05-30T17:22:37Z",
       "side": 1,
       "message": "same here",
+      "revId": "deb3f8b4ea76bc06c04f7b3827a0507cf6a70240",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fabf19d9_a8e4190d",
+        "filename": "helper/build_config",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-05-30T17:49:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fabf19d9_283129a3",
       "revId": "deb3f8b4ea76bc06c04f7b3827a0507cf6a70240",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
