@@ -77,13 +77,28 @@ umask 0077
 
 TT_WRAPPER="${HELPER}/tt2-wrapper"
 
+# attempt to create back-up of the output file to be written
+if [ -f "${output_file}" ]; then
+  output_file_backup="${output_file}.ngcpcfg_bak"
+  log_debug "Creating backup file of the output file: '${output_file_backup}'"
+  cp -f "${output_file}" "${output_file_backup}"
+fi
+
 log_debug "Output file ${output_file} based on ${input_file}"
 log_debug "Executing: $TT_WRAPPER ${input_file} > ${output_file}"
 if "$TT_WRAPPER" "${input_file}" > "${output_file}" 2>/dev/null ; then
   log_info "Generating ${output_file}: OK"
+  if [ -n "${output_file_backup}" ] && [ -f "${output_file_backup}" ]; then
+    log_debug "Removing backup file: '${output_file_backup}'"
+    rm -f "${output_file_backup}"
+  fi
   RC=0
 else
   log_error "Generating ${output_file} based on ${input_file}: FAILED"
+  if [ -n "${output_file_backup}" ] && [ -f "${output_file_backup}" ]; then
+    log_info "Attempting to restore ${output_file} from ${output_file_backup}"
+    cp -f "${output_file_backup}" "${output_file}"
+  fi
   RC=1
 
   log_info "NOTE: Check those files for valid syntax and encoding:"
