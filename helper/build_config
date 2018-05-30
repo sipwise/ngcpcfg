@@ -27,6 +27,7 @@ fi
 # main script
 
 input_file="$1"       # like /etc/ngcp-config/templates/etc/mysql/my.cnf.tt2
+input_file="${input_file//\/\//\/}"
 # calculate output file {{{
   x=${input_file##${NGCPCTL_MAIN}/templates/}         # drop leading /etc/ngcp-config
   y=${x%%.tt2}                                        # drop trailing suffix '.tt2'
