@@ -29,6 +29,7 @@ fi
 input_file="$1"       # like /etc/ngcp-config/templates/etc/mysql/my.cnf.tt2
 # calculate output file {{{
   x=${input_file##${NGCPCTL_MAIN}/templates/}         # drop leading /etc/ngcp-config
+  x="${x//\/\//\/}"                                   # normalize path by replacing all "//" with single "/"
   y=${x%%.tt2}                                        # drop trailing suffix '.tt2'
   [ -n "${HA_FILE:-}" ]   && y=${y%%.tt2${HA_FILE}}   # drop trailing suffix '.tt2.sp{1,2}'
   [ -n "${PAIR_FILE:-}" ] && y=${y%%.tt2${PAIR_FILE}} # drop trailing suffix '.tt2.pairname'
@@ -38,10 +39,11 @@ input_file="$1"       # like /etc/ngcp-config/templates/etc/mysql/my.cnf.tt2
 # OUTPUT_DIRECTORY is for customization during testing
 if [ -n "${OUTPUT_DIRECTORY:-}" ] ; then
   log_debug "Using output directory $OUTPUT_DIRECTORY"
-  export output_file="${OUTPUT_DIRECTORY}/${y}"
+  output_file="${OUTPUT_DIRECTORY}/${y}"
 else
-  export output_file="${y}"
+  output_file="${y}"
 fi
+export output_file="${output_file//\/\//\/}"  # normalize path by replacing all "//" with single "/"
 # }}}
 
 # ensure we don't try to generate a file where a directory with same name exists already

@@ -427,8 +427,9 @@ dome dummy customtt message
     assert "Successfully created '" + str(template_path) + \
         "/apt/apt.conf.d/71_no_recommended.customtt.tt2.sp1'" in out.stdout
     assert 'Requested patchtt operation has finished successfully.' in out.stdout
-    assert "Generating " + str(tmpdir) + "/output/" + str(tmpdir) + \
-        "//etc/apt/apt.conf.d/71_no_recommended: OK" in out.stdout
+    assert "Generating " + os.path.normpath(str(tmpdir) + "/output/" +
+            str(tmpdir)) + \
+        "/etc/apt/apt.conf.d/71_no_recommended: OK" in out.stdout
     # disabled for the moment, see https://gerrit.mgm.sipwise.com/#/c/17739/4/t/test_ngcpcfg_patch.py@99
     #assert out.stderr == "b''"
 
@@ -448,7 +449,7 @@ dome dummy customtt message
         output = output_file.read()
     assert output == expected_output_sp1
 
-    generated_config = str(tmpdir) + "/output" + str(tmpdir) + \
+    generated_config = os.path.normpath(str(tmpdir) + "/output" + str(tmpdir)) + \
         '/etc/apt/apt.conf.d/71_no_recommended'
 
     assert os.path.isfile(generated_config)
@@ -524,7 +525,7 @@ dome dummy customtt message
                      env={
                          'NGCP_BASE_TT2': os.getcwd(),
                          'NGCP_PORTFILE': '/tmp/ngcpcfg.port',
-                         'OUTPUT_DIRECTORY': str(tmpdir) + "/output",
+                         'OUTPUT_DIRECTORY': os.path.normpath(str(tmpdir) + "/output"),
                          'TEMPLATE_POOL_BASE': str(tmpdir),
                          'CONFIG_POOL': '/etc',
                          })
@@ -549,8 +550,9 @@ dome dummy customtt message
     assert "Successfully created '" + str(template_path) + \
         "/dummy/dummy.customtt.tt2'" in out.stdout
     assert 'Requested patchtt operation has finished successfully.' in out.stdout
-    assert "Generating " + str(tmpdir) + "/output/" + str(tmpdir) + \
-        "//etc/apt/apt.conf.d/71_no_recommended: OK" in out.stdout
+    assert "Generating " + os.path.normpath(str(tmpdir) + "/output/" +
+            str(tmpdir)) + \
+        "/etc/apt/apt.conf.d/71_no_recommended: OK" in out.stdout
     # disabled for the moment, see https://gerrit.mgm.sipwise.com/#/c/17739/4/t/test_ngcpcfg_patch.py@99
     #assert out.stderr == "b''"
 
