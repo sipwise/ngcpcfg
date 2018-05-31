@@ -14,6 +14,6 @@ if ! [[ $port =~ [0-9]+ ]] ; then
   exit 1
 fi
 
-echo "$@" | netcat localhost "$port"
+echo "$@" | netcat 127.0.0.1 "$port"
 
 exit $?
