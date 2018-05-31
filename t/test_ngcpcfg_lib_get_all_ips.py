@@ -20,7 +20,7 @@ def test_all_ips(ngcpcfgcli, tmpdir):
                      })
     regex = re.compile(r"Generating " +
                        tmpdir +
-                       r"//etc/kamailio/lb/db/dispatcher: OK")
+                       r"/etc/kamailio/lb/db/dispatcher: OK")
     assert re.search(regex, out.stdout)
     output_file = os.path.join(tmpdir, "etc/kamailio/lb/db/dispatcher")
     test_file = "fixtures/output/dispatcher"
@@ -42,7 +42,7 @@ def test_all_ips_carrier(ngcpcfgcli, tmpdir):
                      })
     regex = re.compile(r"Generating " +
                        tmpdir +
-                       r"//etc/kamailio/lb/db/dispatcher: OK")
+                       r"/etc/kamailio/lb/db/dispatcher: OK")
     assert re.search(regex, out.stdout)
     output_file = os.path.join(tmpdir, "etc/kamailio/lb/db/dispatcher")
     test_file = "fixtures/output/dispatcher_carrier"
