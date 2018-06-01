@@ -14,7 +14,7 @@ def test_status_carrier(ngcpcfgcli, tmpdir):
                      "/etc/status.cfg",
                      env={
                          'NGCP_BASE_TT2': os.getcwd(),
-                         'NGCP_PORTFILE': '/tmp/ngcpcfg.port',
+                         'NGCP_SOCKETFILE': '/tmp/ngcpcfg.socket',
                          'OUTPUT_DIRECTORY': tmpdir,
                          'NGCPCFG':   'fixtures/ngcpcfg_carrier.cfg',
                      })

@@ -4,7 +4,7 @@ use warnings;
 use English;
 use Carp;
 use POSIX qw( setsid );
-use IO::Socket;
+use IO::Socket::UNIX;
 use Hash::Merge qw(merge);
 use Template;
 use YAML::XS qw(LoadFile);
@@ -15,11 +15,11 @@ my $quiet = 0;
 
 GetOptions("q|quiet" => \$quiet);
 
-my $server_port = get_server_port();
+my $server_socket = get_server_socket();
 
 daemonize();
 
-handle_connections( $server_port, $quiet );
+handle_connections( $server_socket, $quiet );
 
 exit;
 
@@ -35,25 +35,19 @@ sub daemonize {
     return;
 }
 
-sub get_server_port {
-    my $server = IO::Socket::INET->new(
-        'Proto'     => 'tcp',
-        'LocalAddr' => 'localhost',
+sub get_server_socket {
+    my $NGCP_SOCKETFILE = $ENV{'NGCP_SOCKETFILE'} //= '/var/run/ngcpcfg.socket';
+
+    my $server = IO::Socket::UNIX->new(
+        'Type'      => SOCK_STREAM(),
+        'Local'     => $NGCP_SOCKETFILE,
         'Listen'    => SOMAXCONN,
-        'Reuse'     => 1,
     );
     die "Error: can't setup tt2-daemon!\n$EVAL_ERROR\n$ERRNO\n" unless $server;
 
     binmode $server => ":encoding(utf8)";
 
-    my $NGCP_PORTFILE = $ENV{'NGCP_PORTFILE'} //= '/var/run/ngcpcfg.port';
-    if (open (my $portfile, '>', "$NGCP_PORTFILE")) {
-        print $portfile $server->sockport();
-        close ($portfile);
-        return $server;
-    } else {
-        die "Can't write to $NGCP_PORTFILE\n";
-    }
+    return $server;
 }
 
 sub handle_connections {
