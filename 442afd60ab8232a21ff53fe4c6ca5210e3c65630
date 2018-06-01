@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "fabf19d9_086d4504",
+        "filename": "helper/build_config",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-06-01T07:51:04Z",
+      "side": 1,
+      "message": "BTW, in this way you modify output_file but not input_file.  Is this intentional?  Or is it because then I still have to also apply my change on top, instead of Abandoning my change?",
+      "revId": "442afd60ab8232a21ff53fe4c6ca5210e3c65630",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fabf19d9_88aa7518",
         "filename": "helper/build_config",
         "patchSetId": 2
