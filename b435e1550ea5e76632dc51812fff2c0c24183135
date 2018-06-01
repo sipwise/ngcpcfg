@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fabf19d9_88815592",
+        "filename": "helper/tt2-wrapper",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-06-01T07:55:47Z",
+      "side": 1,
+      "message": "‎[09:45:00 AM] ‎mmontecelo‎: alutay: do you have a better way than: https://gerrit.mgm.sipwise.com/#/c/21577/ ?\n\n‎[09:45:31 AM] ‎mmontecelo‎: you mentioned to use the socket directly but I am not sure exactly how it\u0027s implemented in that way\n\n‎[09:55:11 AM] ‎alutay‎: mmontecelo, I know one customer which have changes localhost IP, don\u0027t ask why. So hardcoding IP is IMHO bad idea... I would say it should be easy to convert Perl based tt2-daemon from IP to socket channel. then you do not need networking at all.",
+      "revId": "b435e1550ea5e76632dc51812fff2c0c24183135",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
