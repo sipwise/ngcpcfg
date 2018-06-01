@@ -13,7 +13,7 @@ import tempfile
 def test_patch_action_no_args(ngcpcfgcli, tmpdir):
     out = ngcpcfgcli("patch",
                      env={
-                         'NGCP_PORTFILE': '/tmp/ngcpcfg.port',
+                         'NGCP_SOCKETFILE': '/tmp/ngcpcfg.socket',
                          })
     string = r"No patchtt files found, nothing to patch."
     assert string in out.stdout
@@ -45,7 +45,7 @@ APT::Install-Recommends "0";
                      "--help",
                      env={
                          'NGCP_BASE_TT2': os.getcwd(),
-                         'NGCP_PORTFILE': '/tmp/ngcpcfg.port',
+                         'NGCP_SOCKETFILE': '/tmp/ngcpcfg.socket',
                          'OUTPUT_DIRECTORY': str(tmpdir),
                          'TEMPLATE_POOL_BASE': str(tmpdir),
                          'CONFIG_POOL': '/etc',
@@ -82,7 +82,7 @@ APT::Install-Recommends "0";
                      "/etc/apt/apt.conf.d/",
                      env={
                          'NGCP_BASE_TT2': os.getcwd(),
-                         'NGCP_PORTFILE': '/tmp/ngcpcfg.port',
+                         'NGCP_SOCKETFILE': '/tmp/ngcpcfg.socket',
                          'OUTPUT_DIRECTORY': str(tmpdir),
                          'TEMPLATE_POOL_BASE': str(tmpdir),
                          'CONFIG_POOL': '/etc',
@@ -127,7 +127,7 @@ APT::Install-Recommends "0";
                      "/etc/apt/apt.conf.d/",
                      env={
                          'NGCP_BASE_TT2': os.getcwd(),
-                         'NGCP_PORTFILE': '/tmp/ngcpcfg.port',
+                         'NGCP_SOCKETFILE': '/tmp/ngcpcfg.socket',
                          'OUTPUT_DIRECTORY': str(tmpdir),
                          'TEMPLATE_POOL_BASE': str(tmpdir),
                          'CONFIG_POOL': '/etc',
@@ -164,7 +164,7 @@ def test_patch_action_template_missing_for_patchtt(ngcpcfgcli, tmpdir):
                      "/etc/apt/apt.conf.d/",
                      env={
                          'NGCP_BASE_TT2': os.getcwd(),
-                         'NGCP_PORTFILE': '/tmp/ngcpcfg.port',
+                         'NGCP_SOCKETFILE': '/tmp/ngcpcfg.socket',
                          'OUTPUT_DIRECTORY': str(tmpdir),
                          'TEMPLATE_POOL_BASE': str(tmpdir),
                          'CONFIG_POOL': '/etc',
@@ -216,7 +216,7 @@ APT::Install-Recommends "0";
                      "/etc/apt/apt.conf.d/71_no_recommended.patchtt.tt2",
                      env={
                          'NGCP_BASE_TT2': os.getcwd(),
-                         'NGCP_PORTFILE': '/tmp/ngcpcfg.port',
+                         'NGCP_SOCKETFILE': '/tmp/ngcpcfg.socket',
                          'OUTPUT_DIRECTORY': str(tmpdir),
                          'TEMPLATE_POOL_BASE': str(tmpdir),
                          'CONFIG_POOL': '/etc',
@@ -281,7 +281,7 @@ APT::Install-Recommends "0";
                      "71_no_recommended.patchtt.tt2",
                      env={
                          'NGCP_BASE_TT2': os.getcwd(),
-                         'NGCP_PORTFILE': '/tmp/ngcpcfg.port',
+                         'NGCP_SOCKETFILE': '/tmp/ngcpcfg.socket',
                          'OUTPUT_DIRECTORY': str(tmpdir),
                          'TEMPLATE_POOL_BASE': str(tmpdir),
                          'CONFIG_POOL': '/etc',
@@ -323,7 +323,7 @@ APT::Install-Recommends "0";
                      "/etc/missing_patchtt_file.patchtt.tt2",
                      env={
                          'NGCP_BASE_TT2': os.getcwd(),
-                         'NGCP_PORTFILE': '/tmp/ngcpcfg.port',
+                         'NGCP_SOCKETFILE': '/tmp/ngcpcfg.socket',
                          'OUTPUT_DIRECTORY': str(tmpdir),
                          'TEMPLATE_POOL_BASE': str(tmpdir),
                          'CONFIG_POOL': '/etc',
@@ -406,7 +406,7 @@ dome dummy customtt message
                      "/etc/apt/apt.conf.d/",
                      env={
                          'NGCP_BASE_TT2': os.getcwd(),
-                         'NGCP_PORTFILE': '/tmp/ngcpcfg.port',
+                         'NGCP_SOCKETFILE': '/tmp/ngcpcfg.socket',
                          'OUTPUT_DIRECTORY': str(tmpdir) + "/output",
                          'TEMPLATE_POOL_BASE': str(tmpdir),
                          'CONFIG_POOL': '/etc',
@@ -523,7 +523,7 @@ dome dummy customtt message
     out = ngcpcfgcli("build", "--ignore-branch-check",
                      env={
                          'NGCP_BASE_TT2': os.getcwd(),
-                         'NGCP_PORTFILE': '/tmp/ngcpcfg.port',
+                         'NGCP_SOCKETFILE': '/tmp/ngcpcfg.socket',
                          'OUTPUT_DIRECTORY': str(tmpdir) + "/output",
                          'TEMPLATE_POOL_BASE': str(tmpdir),
                          'CONFIG_POOL': '/etc',
@@ -604,7 +604,7 @@ APT::Install-Recommends "1";
                      "/etc/apt/apt.conf.d/",
                      env={
                          'NGCP_BASE_TT2': os.getcwd(),
-                         'NGCP_PORTFILE': '/tmp/ngcpcfg.port',
+                         'NGCP_SOCKETFILE': '/tmp/ngcpcfg.socket',
                          'OUTPUT_DIRECTORY': str(tmpdir) + "/output",
                          'TEMPLATE_POOL_BASE': str(tmpdir),
                          'CONFIG_POOL': '/etc',
@@ -653,7 +653,7 @@ APT::Install-Recommends "0";
                      "/etc/apt/apt.conf.d/",
                      env={
                          'NGCP_BASE_TT2': os.getcwd(),
-                         'NGCP_PORTFILE': '/tmp/ngcpcfg.port',
+                         'NGCP_SOCKETFILE': '/tmp/ngcpcfg.socket',
                          'OUTPUT_DIRECTORY': str(tmpdir) + "/output",
                          'TEMPLATE_POOL_BASE': str(tmpdir),
                          'CONFIG_POOL': '/etc',
@@ -704,7 +704,7 @@ APT::Install-Recommends "2";
     out = ngcpcfgcli("patch", "--from-customtt",
                      env={
                          'NGCP_BASE_TT2': os.getcwd(),
-                         'NGCP_PORTFILE': '/tmp/ngcpcfg.port',
+                         'NGCP_SOCKETFILE': '/tmp/ngcpcfg.socket',
                          'OUTPUT_DIRECTORY': str(tmpdir) + "/output",
                          'TEMPLATE_POOL_BASE': str(tmpdir),
                          'CONFIG_POOL': '/etc',
@@ -743,7 +743,7 @@ def test_patch_action_from_customtt_missing_file_argument(ngcpcfgcli, tmpdir):
                      "missing.customtt.tt2",
                      env={
                          'NGCP_BASE_TT2': os.getcwd(),
-                         'NGCP_PORTFILE': '/tmp/ngcpcfg.port',
+                         'NGCP_SOCKETFILE': '/tmp/ngcpcfg.socket',
                          'OUTPUT_DIRECTORY': str(tmpdir),
                          'TEMPLATE_POOL_BASE': str(tmpdir),
                          'CONFIG_POOL': '/etc',
@@ -786,7 +786,7 @@ APT::Install-Recommends "2";
                      "71_no_recommended.customtt.tt2",
                      env={
                          'NGCP_BASE_TT2': os.getcwd(),
-                         'NGCP_PORTFILE': '/tmp/ngcpcfg.port',
+                         'NGCP_SOCKETFILE': '/tmp/ngcpcfg.socket',
                          'OUTPUT_DIRECTORY': str(tmpdir),
                          'TEMPLATE_POOL_BASE': str(tmpdir),
                          'CONFIG_POOL': '/etc',
@@ -831,7 +831,7 @@ the content here doesn't matter as no tt2 file available
                      "--from-customtt",
                      env={
                          'NGCP_BASE_TT2': os.getcwd(),
-                         'NGCP_PORTFILE': '/tmp/ngcpcfg.port',
+                         'NGCP_SOCKETFILE': '/tmp/ngcpcfg.socket',
                          'OUTPUT_DIRECTORY': str(tmpdir),
                          'TEMPLATE_POOL_BASE': str(tmpdir),
                          'CONFIG_POOL': '/etc',

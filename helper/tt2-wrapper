@@ -1,19 +1,12 @@
 #!/bin/bash
 
-NGCP_PORTFILE="${NGCP_PORTFILE:-/var/run/ngcpcfg.port}"
+NGCP_SOCKETFILE="${NGCP_SOCKETFILE:-/var/run/ngcpcfg.socket}"
 
-if [ -r "${NGCP_PORTFILE}" ] ; then
-  port=$(cat "${NGCP_PORTFILE}")
-else
-  echo "ERROR: Couldn't read file ${NGCP_PORTFILE}" >&2
+if ! -e "$NGCP_SOCKETFILE" ; then
+  echo "ERROR: Wrong ngcpcfg tt2-daemon socket file: $NGCP_SOCKETFILE" >&2
   exit 1
 fi
 
-if ! [[ $port =~ [0-9]+ ]] ; then
-  echo "ERROR: Wrong ngcpcfg tt2-daemon port: $port" >&2
-  exit 1
-fi
-
-echo "$@" | netcat localhost "$port"
+echo "$@" | netcat -U "$NGCP_SOCKETFILE"
 
 exit $?
