@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fabf19d9_2b6363b3",
+        "filename": "helper/build_config",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-06-01T12:46:52Z",
+      "side": 1,
+      "message": "\u003e IMHO the approach backup-brake-restore is wrong by design as we\n \u003e might damage something in between \"brake-restore\".\n \u003e \n \u003e IMHO, we should generate the new config temporary and then move it\n \u003e to destination, otherwise do nothing.\n\nOK, so it\u0027s done in this way now.",
+      "parentUuid": "fabf19d9_8b34afde",
+      "revId": "3ac2bbb5ec7ee73484d8761f5be1c50ce4abdbf8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fabf19d9_ab3773e2",
         "filename": "helper/build_config",
         "patchSetId": 3
