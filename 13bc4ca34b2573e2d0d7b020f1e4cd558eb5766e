@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fabf19d9_0b0c1f93",
+        "filename": "helper/build_config",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-06-01T14:41:40Z",
+      "side": 1,
+      "message": "mayby we should change tt2-daemon to use second argument as a destination file, then stdout will not appears into the file, like here:\n\nroot@web01a:~# # hack/brake /etc/ngcp-config/templates/etc/ngcp-panel/ngcp_panel.conf.tt2 \n\nroot@web01a:~# ngcpcfg build /etc/ngcp-panel/ngcp_panel.conf \n2018-06-01 11:01:07: Checking state of local storage:\n2018-06-01 11:01:07: OK:   nothing to pull\n2018-06-01 11:01:07: configs were checked successfuly\n2018-06-01 11:01:07: No patchtt files found, nothing to patch.\nLoading /etc/ngcp-config/config.yml in memory: OK \nLoading /etc/ngcp-config/network.yml in memory: OK \nLoading /etc/ngcp-config/constants.yml in memory: OK \n2018-06-01 11:01:08: Generating /etc/ngcp-panel/ngcp_panel.conf: OK\n2018-06-01 11:01:08: Executing postbuild for /etc/ngcp-panel/ngcp_panel.conf\n\nroot@web01a:~# head -2 /etc/ngcp-panel/ngcp_panel.conf\nfile error - parse error - input file handle line 1-60: unexpected token (\u0027/usr/lib/ngcp-ngcpcfg/get_all_shared_ips\u0027)\n  [% argv.role\u003d\u0027lb\u0027; argv.type\u003d\u0027sip_ext\u0027;",
+      "range": {
+        "startLine": 86,
+        "startChar": 33,
+        "endLine": 86,
+        "endChar": 35
+      },
+      "revId": "13bc4ca34b2573e2d0d7b020f1e4cd558eb5766e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fabf19d9_0b353f45",
+        "filename": "helper/build_config",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-06-01T14:41:40Z",
+      "side": 1,
+      "message": "unnecessary space.",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 3
+      },
+      "revId": "13bc4ca34b2573e2d0d7b020f1e4cd558eb5766e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
