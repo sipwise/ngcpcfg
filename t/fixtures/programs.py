@@ -16,7 +16,7 @@ def ngcpcfgcli(tmpdir, *args):
             'NGCPCFG':   'fixtures/ngcpcfg.cfg',
             'SCRIPTS':   '../scripts/',
             'HELPER':    '../helper/',
-            'NGCP_PORTFILE': '/tmp/ngcpcfg.port',
+            'NGCP_SOCKETFILE': '/tmp/ngcpcfg.socket',
         }
         testenv.update(env)
 
