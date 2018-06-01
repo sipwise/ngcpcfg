@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fabf19d9_8b34afde",
+        "filename": "helper/build_config",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-06-01T09:02:14Z",
+      "side": 1,
+      "message": "IMHO the approach backup-brake-restore is wrong by design as we might damage something in between \"brake-restore\".\n\nIMHO, we should generate the new config temporary and then move it to destination, otherwise do nothing.\n\nTT_WRAPPER can  be improved to receive 2 parameter and write to the file directly, instead of :\n  \n\u003e if \"$TT_WRAPPER\" \"${input_file}\" \u003e \"${output_file}\" 2\u003e/dev/null ; then\n\ndo\n\n\u003e if \"$TT_WRAPPER\" \"${input_file}\" \"${tmp_output_file}\" ; then\n  cat \"${tmp_output_file}\" \u003e \"${output_file}\"\n...\n\nIt also prevent the issues like:\n  \nroot@web01a:~# # hack/brake /etc/ngcp-config/templates/etc/ngcp-panel/ngcp_panel.conf.tt2 \n\nroot@web01a:~# ngcpcfg build /etc/ngcp-panel/ngcp_panel.conf \n2018-06-01 11:01:07: Checking state of local storage:\n2018-06-01 11:01:07: OK:   nothing to pull\n2018-06-01 11:01:07: configs were checked successfuly\n2018-06-01 11:01:07: No patchtt files found, nothing to patch.\nLoading /etc/ngcp-config/config.yml in memory: OK \nLoading /etc/ngcp-config/network.yml in memory: OK \nLoading /etc/ngcp-config/constants.yml in memory: OK \n2018-06-01 11:01:08: Generating /etc/ngcp-panel/ngcp_panel.conf: OK\n2018-06-01 11:01:08: Executing postbuild for /etc/ngcp-panel/ngcp_panel.conf\n\nroot@web01a:~# head -2 /etc/ngcp-panel/ngcp_panel.conf\nfile error - parse error - input file handle line 1-60: unexpected token (\u0027/usr/lib/ngcp-ngcpcfg/get_all_shared_ips\u0027)\n  [% argv.role\u003d\u0027lb\u0027; argv.type\u003d\u0027sip_ext\u0027;",
+      "revId": "3ac2bbb5ec7ee73484d8761f5be1c50ce4abdbf8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fabf19d9_ab3773e2",
+        "filename": "helper/build_config",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-06-01T09:02:14Z",
+      "side": 1,
+      "message": "you also need -a to preserv perms and ownership.",
+      "range": {
+        "startLine": 84,
+        "startChar": 5,
+        "endLine": 84,
+        "endChar": 7
+      },
+      "revId": "3ac2bbb5ec7ee73484d8761f5be1c50ce4abdbf8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
