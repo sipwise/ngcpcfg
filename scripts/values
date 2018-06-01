@@ -43,12 +43,12 @@ TT_WRAPPER="${HELPER}/tt2-wrapper"
 # Kill all previous started tt2-daemon Perl processes if they were not stopped properly
 killall tt2-daemon 2>/dev/null || true
 
-if [ -n "${NGCP_PORTFILE:-}" ] ; then
-  log_debug "Using $NGCP_PORTFILE as tt2-daemon port file as set via 'NGCP_PORTFILE'."
+if [ -n "${NGCP_SOCKETFILE:-}" ] ; then
+  log_debug "Using $NGCP_SOCKETFILE as tt2-daemon socket file as set via 'NGCP_SOCKETFILE'."
 else
-  NGCP_PORTFILE='/var/run/ngcpcfg.port'
+  NGCP_SOCKETFILE='/var/run/ngcpcfg.socket'
 fi
-rm -f "${NGCP_PORTFILE}"
+rm -f "${NGCP_SOCKETFILE}"
 
 # Start new tt2-daemon Perl process
 "${HELPER}"/tt2-daemon --quiet
@@ -77,7 +77,7 @@ fi
 
 # Kill all previous started tt2-daemon Perl processes
 killall tt2-daemon 2>/dev/null || true
-rm -f "${NGCP_PORTFILE}"
+rm -f "${NGCP_SOCKETFILE}"
 
 exit "$RC"
 
