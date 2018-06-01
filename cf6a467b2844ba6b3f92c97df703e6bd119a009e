@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fabf19d9_4bdd7713",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-06-01T14:34:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fabf19d9_0bb09fdc",
+      "range": {
+        "startLine": 17,
+        "startChar": 13,
+        "endLine": 17,
+        "endChar": 18
+      },
+      "revId": "cf6a467b2844ba6b3f92c97df703e6bd119a009e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fabf19d9_ebb44bd2",
         "filename": "helper/build_config",
         "patchSetId": 5
@@ -36,6 +60,24 @@
       "writtenOn": "2018-06-01T14:05:04Z",
       "side": 1,
       "message": "This is unsafe, please use mktemp instead.",
+      "revId": "cf6a467b2844ba6b3f92c97df703e6bd119a009e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fabf19d9_0bfe5f6b",
+        "filename": "helper/build_config",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-06-01T14:34:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fabf19d9_ebb44bd2",
       "revId": "cf6a467b2844ba6b3f92c97df703e6bd119a009e",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
