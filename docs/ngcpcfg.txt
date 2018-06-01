@@ -99,7 +99,7 @@ hosts changes should be pushed to.
 Supported template files
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Example for generating a configuration file named_/etc/foobar/baz_  (from lower
+Example for generating a configuration file named _/etc/foobar/baz_ (from lower
 precedence to higher precedence):
 
 * _/etc/ngcp-config/templates/etc/foobar/baz.tt2_: main and default template
