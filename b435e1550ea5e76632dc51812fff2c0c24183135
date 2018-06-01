@@ -16,6 +16,24 @@
       "revId": "b435e1550ea5e76632dc51812fff2c0c24183135",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fabf19d9_e848d189",
+        "filename": "helper/tt2-wrapper",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-06-01T08:01:25Z",
+      "side": 1,
+      "message": "‎[09:56:31 AM] ‎alutay‎: \u003e I am not sure exactly how it\u0027s implemented in that way\nI do not know how to read from socket into Perl  , should be trivial, aka \"read \u003c\" but maybe guillem can provide some code sample\n‎[09:59:29 AM] ‎alutay‎: and \"helper/tt2-wrapper\" will just use \"echo \"$@\" | nc -U /var/run/ngcpcfg/tt2-daemon.socket\"",
+      "parentUuid": "fabf19d9_88815592",
+      "revId": "b435e1550ea5e76632dc51812fff2c0c24183135",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
