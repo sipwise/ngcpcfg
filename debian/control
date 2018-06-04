@@ -55,7 +55,7 @@ Depends:
  libsys-hostname-long-perl,
  libtemplate-perl,
  libyaml-libyaml-perl,
- netcat-openbsd | netcat,
+ netcat-openbsd,
  ngcp-system-tools,
  pkwalify,
  psmisc,
