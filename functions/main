@@ -116,7 +116,7 @@ get_branch_status() {
   fi
 }
 
-## important variables we depend on to operate successfuly {{{
+## important variables we depend on to operate successfully {{{
 # support test suite which requires system independent configuration
 if [ -r "${NGCPCFG:-}" ] ; then
   log_debug "sourcing configuration file ${NGCPCFG:-}"

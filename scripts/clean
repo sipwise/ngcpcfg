@@ -361,7 +361,7 @@ if ${branches} ; then
 fi
 
 if [ "${RC}" = "0" ] ; then
-  log_info "All operations were finished successfuly. Good to be clean!"
+  log_info "All operations were finished successfully. Good to be clean!"
 else
   log_error "Some operations finished with an error, see details above."
 fi

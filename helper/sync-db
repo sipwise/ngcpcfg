@@ -199,7 +199,7 @@ sub sync_db_timezones {
     };
 
     unless ($tzinfo_version && $tzinfo_version =~ /Version:\s*(\S+)/) {
-        print "Error: Could not retreive tzdata package version\n";
+        print "Error: Could not retrieve tzdata package version\n";
         return;
     }
     $tzinfo_version = $1;
