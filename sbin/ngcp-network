@@ -49,6 +49,7 @@ my $man;
 my $move_from;
 my $move_to;
 my $netmask;
+my $netmask_ip_v6;
 my $outputfile = $inputfile;
 my $peer;
 my @remove_host;
@@ -84,6 +85,7 @@ GetOptions(
     'move-from=s'        => \$move_from,
     'move-to=s'          => \$move_to,
     'netmask=s'          => \$netmask,
+    'netmask-ipv6=s'     => \$netmask_ip_v6,
     'output-file=s'      => \$outputfile,
     'peer=s'             => \$peer,
     'remove-host=s'      => \@remove_host,
@@ -138,7 +140,8 @@ foreach my $opt (
     $gateway,          @set_interface, $host,      $hwaddr,
     $internal_iface,   $ip,            $ip_v6,     $move_from,
     $move_to,          $netmask,       $peer,      @remove_host,
-    @remove_interface, @roles,         @type,      $vlan_raw_device
+    @remove_interface, @roles,         @type,      $vlan_raw_device,
+    $netmask_ip_v6
   )
 {
     if ( defined $opt && $opt =~ /\s/msx ) {
@@ -181,9 +184,9 @@ sub get_interface_details {
     return $s->$setting($interface);
 }
 
-sub get_ip6_addr {
+sub get_ip6_addrs {
 
-    my $interface = shift or croak 'Usage: runcmd <interface>';
+    my $interface = shift or croak 'Usage: get_ip6_addrs <interface>';
     my $cmd = 'ip';
     my @args = ( '-6', 'addr', 'show', 'dev', $interface, 'scope', 'global' );
 
@@ -205,9 +208,29 @@ sub get_ip6_addr {
         croak "Problem with execution [return code $CHILD_ERROR]:\n@stderr";
     }
 
+    return @stdout;
+}
+
+sub get_ip6_addr {
+
+    my @stdout = get_ip6_addrs(@_);
+
     foreach my $line (@stdout) {
         if ( $line =~ /^\s*inet6\s+($IPv6_re)\/\d+.*scope.*global.*$/msx ) {
             return $1;
+        }
+    }
+
+    return;
+}
+
+sub get_ip6_mask {
+
+    my @stdout = get_ip6_addrs(@_);
+
+    foreach my $line (@stdout) {
+        if ( $line =~ /^\s*inet6\s+($IPv6_re)\/(\d+).*scope.*global.*$/msx ) {
+            return $2;
         }
     }
 
@@ -226,13 +249,18 @@ sub set_interface {
     }
 
     if ( defined $ip_v6 && $ip_v6 =~ /^auto$/msx ) {
-        logger("get_interface_details( $iface, 'if_addr' );");
+        logger("get_ip6_addr( $iface );");
         $ip_v6 = get_ip6_addr($iface);
     }
 
     if ( defined $netmask && $netmask =~ /^auto$/msx ) {
         logger("get_interface_details( $iface, 'if_netmask' );");
         $netmask = get_interface_details( $iface, 'if_netmask' );
+    }
+
+    if ( defined $netmask_ip_v6 && $netmask_ip_v6 =~ /^auto$/msx ) {
+        logger("get_ip6_mask( $iface );");
+        $ip_v6 = get_ip6_mask($iface);
     }
 
     if ( defined $hwaddr && $hwaddr =~ /^auto$/msx ) {
@@ -250,6 +278,7 @@ sub set_interface {
         'hwaddr'          => $hwaddr,
         'ip'              => $ip,
         'netmask'         => $netmask,
+        'v6netmask'       => $netmask_ip_v6,
         'shared_ip'       => $shared_ip,
         'shared_v6ip'     => $shared_ip_v6,
         'v6ip'            => $ip_v6,
@@ -692,6 +721,10 @@ used in combination with B<--move-to>.
 =item B<--netmask>=I<IP>
 
 Set netmask configuration to specified argument.
+
+=item B<--netmask-ipv6>=I<length>
+
+Set IPv6 netmask (prefix length) configuration to specified argument.
 
 =item B<--output-file>=I<filename>
 
