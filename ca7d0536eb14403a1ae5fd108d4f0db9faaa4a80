@@ -22,6 +22,30 @@
       "revId": "ca7d0536eb14403a1ae5fd108d4f0db9faaa4a80",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad0253b_6993ada4",
+        "filename": "sbin/ngcp-network",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2018-06-07T23:29:33Z",
+      "side": 1,
+      "message": "Because I copied from above :)\n\nIdeally the netmask should be determined for a particular supplied IP address, not just the first one found. The sub match will be useful for that when implemented.",
+      "parentUuid": "5ad0253b_496231da",
+      "range": {
+        "startLine": 232,
+        "startChar": 35,
+        "endLine": 232,
+        "endChar": 45
+      },
+      "revId": "ca7d0536eb14403a1ae5fd108d4f0db9faaa4a80",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
