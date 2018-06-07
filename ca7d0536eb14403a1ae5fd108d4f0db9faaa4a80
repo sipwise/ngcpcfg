@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ad0253b_496231da",
+        "filename": "sbin/ngcp-network",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2018-06-07T22:38:43Z",
+      "side": 1,
+      "message": "Use (?:RE) when we do not want to capture the contents. Or actually why the parens at all?\n\nBTW it would be nice to make the function return the address and the netwask in a single call to avoid spawning to many children, but I see this is a common pattern in this script, so meh, for some later cleanup I guess.",
+      "range": {
+        "startLine": 232,
+        "startChar": 35,
+        "endLine": 232,
+        "endChar": 45
+      },
+      "revId": "ca7d0536eb14403a1ae5fd108d4f0db9faaa4a80",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
