@@ -153,11 +153,17 @@ sub sync_general_timezone {
 
     my $pe = $dbh->{PrintError};
     $dbh->{PrintError} = 0;
+		my $sth = $dbh->prepare('select @@sql_log_bin');
+		$sth->execute();
+		my ($sql_bin_log) = $sth->fetchrow_array();
+		$sth->finish();
+		$dbh->do("set sql_log_bin = 0") if $sql_bin_log;
     $dbh->do(<<SQL, undef, $tz, $tz);
 INSERT INTO ngcp.timezone SET name = ?
     ON DUPLICATE KEY UPDATE name = ?, modified_at = CURRENT_TIMESTAMP
 SQL
     $dbh->{PrintError} = $pe;
+		$dbh->do("set sql_log_bin = 1") if $sql_bin_log;
     if ($DBI::err) {
         print "Error: Could not insert into ngcp.timezone: $DBI::errstr\n";
         return;
