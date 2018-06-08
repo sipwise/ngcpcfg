@@ -37,6 +37,7 @@ my $broadcast;
 my $clone_from;
 my $clone_to;
 my $dbnode;
+my $dhcp;
 my @dns_nameservers;
 my $gateway;
 my $help;
@@ -71,6 +72,7 @@ GetOptions(
     'clone-from=s'       => \$clone_from,
     'clone-to=s'         => \$clone_to,
     'dbnode:i'           => \$dbnode,
+    'dhcp=s'             => \$dhcp,
     'dns=s'              => \@dns_nameservers,
     'gateway=s'          => \$gateway,
     'help'               => \$help,
@@ -246,6 +248,7 @@ sub set_interface {
         'bond_mode'       => $bond_mode,
         'bond_slaves'     => $bond_slaves,
         'broadcast'       => $broadcast,
+        'dhcp'            => $dhcp,
         'gateway'         => $gateway,
         'hwaddr'          => $hwaddr,
         'ip'              => $ip,
@@ -635,6 +638,10 @@ Refer to B<--clone-from> for further information.
 
 Set dbnode configuration to specified number argument. If no value
 is provide it will use the next value available (max + 1).
+
+=item B<--dhcp>=I<yes|no>
+
+Set dhcp to yes or no, to use dhcp to set up this interface.
 
 =item B<--dns>=I<nameserver>
 
