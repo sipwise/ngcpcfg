@@ -33,6 +33,24 @@
       "revId": "f9bd1ab290d9db67d7afec66904b9963fe310e9e",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad0253b_64acf4ed",
+        "filename": "helper/sync-db",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-06-08T16:27:36Z",
+      "side": 1,
+      "message": "ack, its properly formatted in https://gerrit.mgm.sipwise.com/#/c/21731/",
+      "parentUuid": "5ad0253b_446218da",
+      "revId": "f9bd1ab290d9db67d7afec66904b9963fe310e9e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
