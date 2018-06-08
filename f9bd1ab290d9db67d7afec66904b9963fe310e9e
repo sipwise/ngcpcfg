@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ad0253b_245f1c10",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-06-08T16:10:38Z",
+      "side": 1,
+      "message": "Please mention sync-db in the commit message to clarify what this is about on first sight - e.g. like:\n\n  TT#37210 helper/sync-db: turn off replication when updating ngcp.timezone\n\nand also mention *why* this change is needed (I don\u0027t even find anything in TT#37210 that explains this), thanks :)",
+      "revId": "f9bd1ab290d9db67d7afec66904b9963fe310e9e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad0253b_446218da",
+        "filename": "helper/sync-db",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-06-08T16:10:38Z",
+      "side": 1,
+      "message": "Please replace the tabs with spaces to keep the style consistent in the script",
+      "revId": "f9bd1ab290d9db67d7afec66904b9963fe310e9e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
