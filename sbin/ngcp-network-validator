@@ -17,7 +17,7 @@ sub miss_check
     my $errors = 0;
 
     foreach my $id (sort keys %{$miss}) {
-        print { \*STDERR } "  - $text $id\n";
+        warn "  - $text $id\n";
         $errors++;
     }
 
@@ -32,7 +32,7 @@ sub dupe_check
     foreach my $id (sort keys %{$dupe}) {
         next if scalar @{$dupe->{$id}} <= 1;
 
-        print { \*STDERR } "  - $text $id (@{$dupe->{$id}})\n";
+        warn "  - $text $id (@{$dupe->{$id}})\n";
         $errors++;
     }
 
@@ -190,7 +190,7 @@ if (defined $ENV{NGCP_KWALIFY_DUMP}) {
 #
 
 if (defined $ENV{NGCP_KWALIFY_VERBOSE}) {
-    print { \*STDERR } "Checking $network_file\n"
+    warn "Checking $network_file\n"
 }
 
 my $errors = 0;
@@ -198,7 +198,7 @@ my $errors = 0;
 eval {
     Kwalify::validate($schema, $yaml);
 } or do {
-    print { \*STDERR } $@;
+    warn $@;
     $errors++;
 };
 
