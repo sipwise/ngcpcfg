@@ -113,8 +113,10 @@ foreach my $hostname (sort keys %{$yaml->{hosts}}) {
 
         # Manual check.
         $miss_peer{$peer}++ unless exists $yaml->{hosts}->{$peer};
-    } else {
+    } elsif ($hostname eq 'self') {
         $peermap->{required} = 'no';
+    } else {
+        warn "[/hosts/<$hostname>] Unknown hostname pattern\n";
     }
     $hostmap->{mapping}->{peer} = $peermap;
 
