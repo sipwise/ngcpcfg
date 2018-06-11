@@ -159,6 +159,33 @@ foreach my $hostname (sort keys %{$yaml->{hosts}}) {
             $ifacemap->{mapping}->{netmask}->{required} = 'yes';
         }
 
+        # Consistency checks.
+        if (defined $host->{$iface}->{ip}) {
+            $ifacemap->{mapping}->{ip}->{required} = 'yes';
+            $ifacemap->{mapping}->{v6ip}->{required} = 'no';
+        } elsif (defined $host->{$iface}->{v6ip}) {
+            $ifacemap->{mapping}->{ip}->{required} = 'no';
+            $ifacemap->{mapping}->{v6ip}->{required} = 'yes';
+        }
+
+        if (defined $host->{$iface}->{ip}) {
+            $ifacemap->{mapping}->{netmask}->{required} = 'yes';
+        }
+        if (defined $host->{$iface}->{netmask} or
+            defined $host->{$iface}->{shared_ip} or
+            defined $host->{$iface}->{advertised_ip} or
+            defined $host->{$iface}->{post_up}) {
+            $ifacemap->{mapping}->{ip}->{required} = 'yes';
+        }
+        if (defined $host->{$iface}->{v6ip}) {
+            $ifacemap->{mapping}->{v6netmask}->{required} = 'yes';
+        }
+        if (defined $host->{$iface}->{v6netmask} or
+            defined $host->{$iface}->{shared_v6ip} or
+            defined $host->{$iface}->{v6post_up}) {
+            $ifacemap->{mapping}->{v6ip}->{required} = 'yes';
+        }
+
         $hostmap->{mapping}->{$iface} = $ifacemap;
     }
 
