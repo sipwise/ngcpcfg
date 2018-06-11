@@ -17,8 +17,6 @@ sub miss_check
     my $errors = 0;
 
     foreach my $id (sort keys %{$miss}) {
-        next unless exists $miss->{$id};
-
         print { \*STDERR } "  - $text $id\n";
         $errors++;
     }
