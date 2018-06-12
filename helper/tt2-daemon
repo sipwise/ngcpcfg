@@ -13,6 +13,8 @@ use YAML::XS qw(LoadFile);
 use Clone 'clone';
 use Getopt::Long;
 
+use NGCP::Template;
+
 my $quiet = 0;
 
 GetOptions("q|quiet" => \$quiet);
@@ -81,10 +83,12 @@ sub handle_connections {
             RELATIVE => 1,
             EVAL_PERL => 1
         });
+        my $tt_config = clone($config);
+        $tt_config->{ngcp} = NGCP::Template->new($tt_config);
 
         open my $fh, '<', $template or
             print { $client } "Unable to open file '$template' for reading: $ERRNO\n";
-        $tt->process($fh, clone($config), $client) or
+        $tt->process($fh, $tt_config, $client) or
             print { $client } $tt->error;
         close $fh;
 
