@@ -13,7 +13,7 @@
 
 out = {};
 FOREACH host IN hosts.keys;
-  NEXT UNLESS hosts.$host.role.grep('^' _ argv.role _ '$').size();
+  NEXT UNLESS ngcp.has_role(host, argv.role);
 
   FOREACH iface IN hosts.$host.interfaces;
     FOREACH realiface IN hosts.$host.keys;
