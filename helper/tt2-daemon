@@ -56,32 +56,30 @@ sub handle_connections {
     my $config = {};
     my %loaded_ymls = ();
 
-    while ( my $client = $port->accept() ) {
-    chomp ( my $input = <$client> );
+    while ((my $client = $port->accept())) {
+        my $input = <$client>;
+        chomp $input;
 
-    my $tt = Template->new({ ABSOLUTE => 1, RELATIVE => 1, EVAL_PERL => 1 });
-    my @ARGV = split(' ', $input) or
-        print $client "Usage: echo '<template> [<config.yml> [<another.yml>]]' | netcat localhost 42042 \n";
-    my $template =  shift(@ARGV);
+        my $tt = Template->new({ ABSOLUTE => 1, RELATIVE => 1, EVAL_PERL => 1 });
+        my @ARGV = split(' ', $input) or
+            print $client "Usage: echo '<template> [<config.yml> [<another.yml>]]' | netcat localhost 42042 \n";
+        my $template = shift @ARGV;
 
-    if (scalar @ARGV) {
-        foreach my $file (@ARGV)
-        {
-            next if(exists $loaded_ymls{$file});
+        foreach my $file (@ARGV) {
+            next if exists $loaded_ymls{$file};
             $loaded_ymls{$file} = undef;
             print $client "Loading $file in memory:" unless $quiet;
             my $hm = Hash::Merge->new('RIGHT_PRECEDENT');
-            $config = $hm->merge( $config, LoadFile($file));
+            $config = $hm->merge($config, LoadFile($file));
             print $client " OK \n" unless $quiet;
-        };
-    };
+        }
 
-    open my $fh, '<', $template or
-        print $client "Unable to open file '$template' for reading: $ERRNO\n";
-    $tt->process($fh, clone($config), $client) or print $client $tt->error;
-    close $fh;
+        open my $fh, '<', $template or
+            print $client "Unable to open file '$template' for reading: $ERRNO\n";
+        $tt->process($fh, clone($config), $client) or print $client $tt->error;
+        close $fh;
 
-    close $client;
+        close $client;
     }
 
     return;
