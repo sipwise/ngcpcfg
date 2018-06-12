@@ -17,6 +17,21 @@ sub new
     return bless $self, $class;
 }
 
+sub has_role
+{
+    my ($self, $host, $role) = @_;
+
+    if (not defined $self->{config}{hosts}{$host}) {
+        $host = 'self';
+    }
+
+    if (any { m/^$role$/ } @{$self->{config}{hosts}{$host}{role}}) {
+        return 1;
+    }
+
+    return 0;
+}
+
 1;
 
 __END__

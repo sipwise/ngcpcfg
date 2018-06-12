@@ -10,10 +10,7 @@ ngcp_type = out;
 
 IF ngcp_type == 'carrier';
   FOREACH host IN hosts.keys;
-    argv.host = host;
-    argv.role = 'mgmt';
-    PROCESS '/usr/lib/ngcp-ngcpcfg/has_role';
-    is_mgmt = out;
+    is_mgmt = ngcp.has_role(host, 'mgmt');
     IF is_mgmt;
       matches = host.match('^(\w+[0-9])[ab]?$');
       out = matches.0;
