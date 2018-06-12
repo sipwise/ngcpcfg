@@ -17,6 +17,21 @@ sub new
     return bless $self, $class;
 }
 
+sub has_role
+{
+    my ($self, $hostname, $role) = @_;
+
+    if (not defined $self->{config}{hosts}{$hostname}) {
+        $hostname = 'self';
+    }
+
+    if (any { m/^$role$/ } @{$self->{config}{hosts}{$hostname}{role}}) {
+        return 1;
+    }
+
+    return 0;
+}
+
 1;
 
 __END__
@@ -47,6 +62,10 @@ Create a new object that can be used from within the Tamplate Toolkit, via
 the B<ngcp> internal variable, such as C<ngcp.some_method(argument)>.
 
 The $config argument contains the deserialized ngcp-config YAML configuration.
+
+=item $bool = $t->has_role($hostname, $role)
+
+Checks whether the $hostname node has the $role.
 
 =back
 
