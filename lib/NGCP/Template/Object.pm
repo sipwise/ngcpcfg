@@ -25,8 +25,25 @@ sub has_role
         $hostname = 'self';
     }
 
+    # The LI role has a virtual role counterpart, which is active only in
+    # distributed mode.
+    if ('li_dist' =~ m/^$role$/) {
+        if ($self->{config}{cluster_sets}{type} eq 'distributed') {
+            $role = 'li';
+        } else {
+            return 0;
+        }
+    }
+
     if (any { m/^$role$/ } @{$self->{config}{hosts}{$hostname}{role}}) {
-        return 1;
+        # The LI roles are a bit special, they use additional keys to get
+        # enabled, so we handle them here.
+        if ('li' =~ m/^$role$/) {
+            return $self->{config}{intercept}{enable} eq 'yes';
+        } else {
+            # Otherwise, unconditionally enable the role.
+            return 1;
+        }
     }
 
     return 0;
