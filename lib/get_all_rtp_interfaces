@@ -24,9 +24,8 @@ X_out = {};
 
 FOREACH X_host IN hosts.keys;
   X_hd = hosts.$X_host;
-  X_roles = X_hd.role;
   NEXT UNLESS status.item(X_hd.status);
-  NEXT IF X_roles.grep('^rtp$').size() == 0;
+  NEXT UNLESS ngcp.has_role(X_host, 'rtp');
 
   FOREACH X_iface IN X_hd.interfaces;
     X_if = X_hd.$X_iface;
