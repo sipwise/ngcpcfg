@@ -26,7 +26,16 @@ sub has_role
     }
 
     if (any { m/^$role$/ } @{$self->{config}{hosts}{$hostname}{role}}) {
-        return 1;
+        # The LI roles are a bit special, they use additional keys to get
+        # enabled, so we handle them here.
+        if ($role eq 'li' or
+            ($role eq 'li_dist' and
+             $self->{config}{cluster_sets}{type} eq 'distributed')) {
+            return $self->{config}{intercept}{enable} eq 'yes';
+        } else {
+            # Otherwise, unconditionally enable the role.
+            return 1;
+        }
     }
 
     return 0;
