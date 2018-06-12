@@ -28,7 +28,7 @@ out = [];
 FOREACH host IN hosts.keys.sort;
   NEXT UNLESS status.item(hosts.$host.status);
   NEXT IF blktmp.processed_hosts.$host.defined;
-  NEXT UNLESS hosts.$host.role.grep('^' _ argv.role _ '$').size();
+  NEXT UNLESS ngcp.has_role(host, argv.role);
   peer = hosts.$host.peer;
   blktmp.processed_hosts.$peer = 1;
   matches = host.match('^(\w+[0-9])[ab]$');
