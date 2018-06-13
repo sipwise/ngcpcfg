@@ -46,6 +46,54 @@ check_branch() {
   fi
 }
 
+check_origin() {
+  if ! type -p execute_check_shared_storage &>/dev/null ; then
+    log_debug "Skipping check_origin, does not look like PRO/CARRIER system."
+    return 0
+  fi
+
+  log_debug "check_origin"
+
+  log_debug "cd ${NGCPCTL_MAIN}"
+  cd "${NGCPCTL_MAIN}"
+
+  if [ -r /etc/default/ngcp-roles ]; then
+    . /etc/default/ngcp-roles
+  else
+    NGCP_IS_MGMT="yes"
+  fi
+
+  local expected_origin
+  if [ -n "${NGCPCTL_SHARE:-}" ] ; then
+    expected_origin="${NGCPCTL_SHARE}"
+    log_debug "Using NGCPCTL_SHARE ['${NGCPCTL_SHARE}'] setting for expected_origin"
+  else
+    expected_origin="/mnt/glusterfs/ngcpcfg-share"
+    log_debug "NGCPCTL_SHARE is unset, using default ['${expected_origin}'] setting for expected_origin"
+  fi
+
+  local mgmtnode
+  mgmtnode="$(cat /etc/ngcp_mgmt_node)"
+
+  if [ "${NGCP_IS_MGMT}" == "yes" ]; then
+    log_debug "This looks like the mgmt node, not modifying expected_origin."
+  else
+    expected_origin="${mgmtnode}:${expected_origin}"
+    log_debug "This looks like a non-mgmt node on CARRIER, setting expected_origin to $expected_origin"
+  fi
+
+  local actual_origin
+  actual_origin="$(git remote get-url origin)"
+  if [ "${actual_origin}" = "${expected_origin}" ] ; then
+    log_debug "Current remote origin looks as expected [${expected_origin}]."
+  else
+    log_error "Remote origin of ngcpcfg is '$actual_origin', expected: '${expected_origin}'."
+    log_error "NOTE: execute \`cd $NGCPCTL_MAIN ; git remote set-url origin '${expected_origin}'\` to adjust setting."
+    log_error "NOTE: perform \`ngcpcfg clean --all\` to recreate local master branch from remote."
+    exit 1
+  fi
+}
+
 check_config_encoding() {
   log_debug "Checking encoding for $config_files"
   for f in $config_files ; do
@@ -174,6 +222,8 @@ else
 fi
 
 check_branch
+
+check_origin
 
 check_configs
 if "${VALIDATE_SCHEMA:-false}" || [ "${VALIDATE:-0}" = "1" ] ; then
