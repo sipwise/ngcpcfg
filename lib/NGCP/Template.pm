@@ -32,6 +32,31 @@ sub has_role
     return 0;
 }
 
+sub get_nodename
+{
+    my $self = shift;
+
+    return $self->{nodename} if exists $self->{nodename};
+
+    my $filename = '/etc/ngcp_ha_node';
+    $filename = '/etc/ngcp_nodename' unless -f $filename;
+    open my $hh, '<', $filename or die "Error opening $filename";
+    my $nodename = <$hh>;
+    close $hh;
+    chomp $nodename;
+
+    die "Fatal error retrieving nodename [$nodename]" unless length $nodename;
+
+    if (defined $self->{config}{hosts}{self} and
+        not defined $self->{config}{hosts}{$nodename}) {
+        $nodename = 'self';
+    }
+
+    $self->{nodename} = $nodename;
+
+    return $nodename;
+}
+
 1;
 
 __END__
