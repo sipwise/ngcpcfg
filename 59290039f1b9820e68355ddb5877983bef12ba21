@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ad0253b_c113b50c",
+        "filename": "helper/tt2-daemon",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-06-13T12:33:43Z",
+      "side": 1,
+      "message": "What for these additional brackets here?",
+      "range": {
+        "startLine": 59,
+        "startChar": 11,
+        "endLine": 59,
+        "endChar": 12
+      },
+      "revId": "59290039f1b9820e68355ddb5877983bef12ba21",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
