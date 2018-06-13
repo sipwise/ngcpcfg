@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ad0253b_411d65bc",
+        "filename": "scripts/check",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-06-13T16:12:04Z",
+      "side": 1,
+      "message": "magic constant?  maybe it\u0027s present somewhere else that we can import from?",
+      "revId": "1bf2681e3081f442b263f0362098ed23bf3bd38f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad0253b_217949fd",
+        "filename": "scripts/check",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-06-13T16:12:04Z",
+      "side": 1,
+      "message": "Even if the pathname is not imported from elsewhere, at least I\u0027d do something to avoid the duplication here:\n\n    expected_origin\u003d\"${mgmtnode}:/mnt/glusterfs/ngcpcfg-share\"\n\nLike:\n\n    expected_origin\u003d\"${mgmtnode}:${expected_origin}\"",
+      "revId": "1bf2681e3081f442b263f0362098ed23bf3bd38f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad0253b_612061f8",
+        "filename": "scripts/check",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-06-13T16:12:04Z",
+      "side": 1,
+      "message": "I\u0027d probably use ${} consistently across the file, this line is a good sample but there are more.\n\nApart from that, isn\u0027t a simple string comparison strict enough, or does it stop and newlines or something strange of that sort?",
+      "revId": "1bf2681e3081f442b263f0362098ed23bf3bd38f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
