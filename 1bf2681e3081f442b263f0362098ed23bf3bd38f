@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5ad0253b_d456d505",
+        "filename": "scripts/check",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-06-14T07:45:15Z",
+      "side": 1,
+      "message": "-r ?",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 60,
+        "endChar": 9
+      },
+      "revId": "1bf2681e3081f442b263f0362098ed23bf3bd38f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ad0253b_411d65bc",
         "filename": "scripts/check",
         "patchSetId": 4
@@ -13,6 +36,24 @@
       "writtenOn": "2018-06-13T16:12:04Z",
       "side": 1,
       "message": "magic constant?  maybe it\u0027s present somewhere else that we can import from?",
+      "revId": "1bf2681e3081f442b263f0362098ed23bf3bd38f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad0253b_144d6d72",
+        "filename": "scripts/check",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-06-14T07:45:15Z",
+      "side": 1,
+      "message": "I believe it should come from /etc/ngcp-config/ngcpcfg.cfg\n\nOR... you have already NGCPCTL_SHARE :\n\n09:37:18 ✔ taurus:(master)~/sipwise/git/ngcpcfg-ha$ ack ngcpcfg-share\netc/ngcp-config/ngcpcfg.d/shared_storage.cfg\n9:NGCPCTL_SHARE\u003d\"${GLUSTERFS}/ngcpcfg-share\"\n\nbut I do not see how do you use it.",
+      "parentUuid": "5ad0253b_411d65bc",
       "revId": "1bf2681e3081f442b263f0362098ed23bf3bd38f",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
@@ -47,6 +88,41 @@
       "writtenOn": "2018-06-13T16:12:04Z",
       "side": 1,
       "message": "I\u0027d probably use ${} consistently across the file, this line is a good sample but there are more.\n\nApart from that, isn\u0027t a simple string comparison strict enough, or does it stop and newlines or something strange of that sort?",
+      "revId": "1bf2681e3081f442b263f0362098ed23bf3bd38f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad0253b_94417d3c",
+        "filename": "scripts/check",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-06-14T07:45:15Z",
+      "side": 1,
+      "message": "Why not to compare two strings?\n  \n[ \"${expected_origin}\" \u003d \"${actual_origin}\" ]\n\nmaybe you can trim the values first....",
+      "parentUuid": "5ad0253b_612061f8",
+      "revId": "1bf2681e3081f442b263f0362098ed23bf3bd38f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad0253b_544be559",
+        "filename": "scripts/check",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-06-14T07:45:15Z",
+      "side": 1,
+      "message": "to adjust setting and perform \u0027ngcpcfg clean --all\u0027 to recreate local master branch from remote?",
       "revId": "1bf2681e3081f442b263f0362098ed23bf3bd38f",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
