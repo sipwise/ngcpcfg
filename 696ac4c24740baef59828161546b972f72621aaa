@@ -16,6 +16,24 @@
       "revId": "696ac4c24740baef59828161546b972f72621aaa",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad0253b_d7e6d7e7",
+        "filename": "lib/NGCP/Template.pm",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2018-06-14T20:24:18Z",
+      "side": 1,
+      "message": "Nope, that would be needed (perhaps) by the USE directive. But here we are using code binding: http://template-toolkit.org/docs/manual/Intro.html#section_Data_and_Code_Binding",
+      "parentUuid": "5ad0253b_17744f9a",
+      "revId": "696ac4c24740baef59828161546b972f72621aaa",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
