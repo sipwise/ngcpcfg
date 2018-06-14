@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ad0253b_17744f9a",
+        "filename": "lib/NGCP/Template.pm",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-06-14T14:59:53Z",
+      "side": 1,
+      "message": "doesnt this approach needs \n\nuse base qw( Template::Plugin );\n\nsomewhere?",
+      "revId": "696ac4c24740baef59828161546b972f72621aaa",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
