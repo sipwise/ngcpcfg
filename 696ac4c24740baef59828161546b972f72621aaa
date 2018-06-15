@@ -34,6 +34,24 @@
       "revId": "696ac4c24740baef59828161546b972f72621aaa",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad0253b_2dfff802",
+        "filename": "lib/NGCP/Template.pm",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-06-15T20:41:48Z",
+      "side": 1,
+      "message": "ok so to summarize: the goal is to minimize PROCESS directive, by moving such parts as get_role to perl code.\n\nvery much appreciated from my point of view, lots of benefits.\n\nto do so, there are several possibilities, either the Template::Plugin mechanism i was referring, or exposing sub refereces to the context map\n\nmy $vars \u003d {\n    foo   \u003d\u003e \u0027blah\u0027,\n    sometool \u003d\u003e sub { my $total \u003d shift; ...; return $something },\n};\n\nor providing the code with object methods, which is what you propose here, ie. the context map contains such NGCP::Template instance. maybe the best anyway, as it can also have state vars.\n\nnice refactoring, but i\u0027m just more concerned when it comes down to replace all topical PROCESS macros out there..?",
+      "parentUuid": "5ad0253b_d7e6d7e7",
+      "revId": "696ac4c24740baef59828161546b972f72621aaa",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
