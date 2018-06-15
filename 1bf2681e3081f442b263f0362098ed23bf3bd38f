@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5ad0253b_f23a01e7",
+        "filename": "scripts/check",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-06-15T19:50:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ad0253b_d456d505",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 60,
+        "endChar": 9
+      },
+      "revId": "1bf2681e3081f442b263f0362098ed23bf3bd38f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ad0253b_411d65bc",
         "filename": "scripts/check",
         "patchSetId": 4
@@ -60,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "5ad0253b_d23f05d5",
+        "filename": "scripts/check",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-06-15T19:50:54Z",
+      "side": 1,
+      "message": "In the new patchset I check for the variable, if it\u0027s unset then fall back to our default",
+      "parentUuid": "5ad0253b_144d6d72",
+      "revId": "1bf2681e3081f442b263f0362098ed23bf3bd38f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ad0253b_217949fd",
         "filename": "scripts/check",
         "patchSetId": 4
@@ -71,6 +113,24 @@
       "writtenOn": "2018-06-13T16:12:04Z",
       "side": 1,
       "message": "Even if the pathname is not imported from elsewhere, at least I\u0027d do something to avoid the duplication here:\n\n    expected_origin\u003d\"${mgmtnode}:/mnt/glusterfs/ngcpcfg-share\"\n\nLike:\n\n    expected_origin\u003d\"${mgmtnode}:${expected_origin}\"",
+      "revId": "1bf2681e3081f442b263f0362098ed23bf3bd38f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad0253b_b225a9c3",
+        "filename": "scripts/check",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-06-15T19:50:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ad0253b_217949fd",
       "revId": "1bf2681e3081f442b263f0362098ed23bf3bd38f",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
@@ -112,6 +172,24 @@
     },
     {
       "key": {
+        "uuid": "5ad0253b_9222adb8",
+        "filename": "scripts/check",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-06-15T19:50:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ad0253b_94417d3c",
+      "revId": "1bf2681e3081f442b263f0362098ed23bf3bd38f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ad0253b_544be559",
         "filename": "scripts/check",
         "patchSetId": 4
@@ -123,6 +201,24 @@
       "writtenOn": "2018-06-14T07:45:15Z",
       "side": 1,
       "message": "to adjust setting and perform \u0027ngcpcfg clean --all\u0027 to recreate local master branch from remote?",
+      "revId": "1bf2681e3081f442b263f0362098ed23bf3bd38f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad0253b_722f11a2",
+        "filename": "scripts/check",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-06-15T19:50:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ad0253b_544be559",
       "revId": "1bf2681e3081f442b263f0362098ed23bf3bd38f",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
