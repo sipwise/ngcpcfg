@@ -57,6 +57,17 @@ sub get_nodename
     return $nodename;
 }
 
+sub get_peername
+{
+    my ($self, $host) = @_;
+
+    if (not defined $self->{config}{hosts}{$host}) {
+        $host = 'self';
+    }
+
+    return $self->{config}{hosts}{$host}{peer};
+}
+
 1;
 
 __END__
