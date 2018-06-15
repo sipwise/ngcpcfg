@@ -57,6 +57,17 @@ sub get_nodename
     return $nodename;
 }
 
+sub get_peername
+{
+    my ($self, $hostname) = @_;
+
+    if (not defined $self->{config}{hosts}{$hostname}) {
+        $hostname = 'self';
+    }
+
+    return $self->{config}{hosts}{$hostname}{peer};
+}
+
 1;
 
 __END__
@@ -95,6 +106,10 @@ Checks whether the $hostname node has the $role.
 =item $nodename = $t->get_nodename()
 
 Returns the nodename of the node calling this function.
+
+=item $peername = $t->get_peername($hostname)
+
+Returns the peer name for a given $hostname.
 
 =back
 
