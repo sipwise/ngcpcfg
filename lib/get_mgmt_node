@@ -5,20 +5,6 @@
 #
 # @return out           The mgmt node shared name.
 
-PROCESS '/usr/lib/ngcp-ngcpcfg/get_ngcp_type';
-ngcp_type = out;
-
-IF ngcp_type == 'carrier';
-  FOREACH host IN hosts.keys;
-    is_mgmt = ngcp.has_role(host, 'mgmt');
-    IF is_mgmt;
-      matches = host.match('^(\w+[0-9])[ab]?$');
-      out = matches.0;
-      LAST;
-    END;
-  END;
-ELSE;
-  out = "sp";
-END;
+out = ngcp.get_mgmt_node();
 
 -%]

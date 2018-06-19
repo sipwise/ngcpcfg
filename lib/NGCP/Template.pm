@@ -97,6 +97,40 @@ sub get_firstname
     }
 }
 
+sub get_mgmt_name
+{
+    my ($self) = shift;
+    my $filename = '/etc/ngcp_mgmt_node';
+
+    open my $hh, '<', $filename or die "Error opening $filename";
+    my $mgmt_name = <$hh>;
+    close $hh;
+    chomp $mgmt_name;
+    die "Fatal error retrieving mgmt_name [$mgmt_name]" unless length $mgmt_name;
+
+    return $mgmt_name;
+}
+
+sub get_mgmt_node
+{
+    my ($self) = shift;
+
+    my $ngcp_type = $self->{config}{general}{ngcp_type};
+
+    if ($ngcp_type eq 'carrier') {
+        foreach my $host (keys %{$self->{config}{hosts}}) {
+            if ($self->has_role($host, 'mgmt') and
+                $host =~ m/^(\w+[0-9])[ab]?$/) {
+              return $1;
+            }
+        }
+    } else {
+        return 'sp';
+    }
+
+    return;
+}
+
 1;
 
 __END__
