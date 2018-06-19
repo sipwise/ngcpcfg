@@ -68,6 +68,20 @@ sub get_peername
     return $self->{config}{hosts}{$hostname}{peer};
 }
 
+sub get_firstname
+{
+    my ($self, $hostname) = @_;
+
+    if (not defined $self->{config}{hosts}{$hostname}) {
+        return 'self';
+    } else {
+        my $peername = $self->get_peername($hostname);
+        my @hosts = ($hostname, $peername);
+
+        return (sort @hosts)[0];
+    }
+}
+
 1;
 
 __END__
@@ -110,6 +124,11 @@ Returns the nodename of the node calling this function.
 =item $peername = $t->get_peername($hostname)
 
 Returns the peer name for a given $hostname.
+
+=item $firstname = $t->get_firstname($hostname)
+
+Returns the (alphabetically) first hostname of a node pair for a given
+$hostname.
 
 =back
 
