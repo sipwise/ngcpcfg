@@ -68,6 +68,20 @@ sub get_peername
     return $self->{config}{hosts}{$host}{peer};
 }
 
+sub get_firstname
+{
+    my ($self, $host) = @_;
+
+    if (not defined $self->{config}{hosts}{$host}) {
+        return 'self';
+    } else {
+        my $peer = $self->get_peername($host);
+        my @hosts = ($host, $peer);
+
+        return (sort @hosts)[0];
+    }
+}
+
 1;
 
 __END__
