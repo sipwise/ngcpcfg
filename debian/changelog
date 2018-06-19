@@ -1,3 +1,12 @@
+ngcp-ngcpcfg (5.5.5.2+0~mr5.5.5.2) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [ce58913] TT#38822 helper/sync-db: ngcp.timezone sync changes
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 19 Jun 2018 20:19:49 +0200
+
 ngcp-ngcpcfg (5.5.5.1+0~mr5.5.5.1) unstable; urgency=medium
 
   [ Kirill Solomko ]
