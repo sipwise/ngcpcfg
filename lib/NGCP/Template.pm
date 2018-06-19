@@ -32,6 +32,21 @@ sub has_role
     return 0;
 }
 
+sub get_hostname
+{
+    my $self = shift;
+
+    # Do not trust hostname(1) as this might differ from the hostname of
+    # the system which runs the installer, instead rely on /etc/hostname
+    open my $hh, '<', '/etc/hostname' or die "Error opening /etc/hostname";
+    my $hostname = <$hh>;
+    close $hh;
+    chomp $hostname;
+    die "Fatal error retrieving hostname [$hostname]" unless length $hostname;
+
+    return $hostname;
+}
+
 sub get_nodename
 {
     my $self = shift;
