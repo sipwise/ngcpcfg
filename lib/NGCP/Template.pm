@@ -32,6 +32,21 @@ sub has_role
     return 0;
 }
 
+sub get_hostname
+{
+    my $self = shift;
+
+    # Do not trust hostname(1) as this might differ from the hostname of
+    # the system which runs the installer, instead rely on /etc/hostname
+    open my $hh, '<', '/etc/hostname' or die "Error opening /etc/hostname";
+    my $hostname = <$hh>;
+    close $hh;
+    chomp $hostname;
+    die "Fatal error retrieving hostname [$hostname]" unless length $hostname;
+
+    return $hostname;
+}
+
 sub get_nodename
 {
     my $self = shift;
@@ -116,6 +131,10 @@ The $config argument contains the deserialized ngcp-config YAML configuration.
 =item $bool = $t->has_role($hostname, $role)
 
 Checks whether the $hostname node has the $role.
+
+=item $hostname = $t->get_hostname()
+
+Returns the hostname of the node calling this function.
 
 =item $nodename = $t->get_nodename()
 
