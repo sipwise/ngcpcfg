@@ -145,25 +145,41 @@ sub sync_rtp_interfaces {
 sub sync_general_timezone {
     my $dbh = shift;
     my $tz = shift;
-
-    unless ($tz) {
-        print "Error: general.timezone value is not set\n";
-        return;
-    }
-
+    my $ok = 1;
     my $pe = $dbh->{PrintError};
-    $dbh->{PrintError} = 0;
-    $dbh->do(<<SQL, undef, $tz, $tz);
+    my ($sql_log_bin) = $dbh->selectrow_array('SELECT @@sql_log_bin');
+
+    eval {
+        die "Error: general.timezone value is not set\n" unless $tz;
+
+        $dbh->do("SET sql_log_bin=0");
+        $dbh->{PrintError} = 0;
+
+        my ($current_tz) = $dbh->selectrow_array(<<SQL);
+SELECT name FROM ngcp.timezone
+SQL
+        if ($DBI::err) {
+            die "Error: Could not select from ngcp.timezone: $DBI::errstr\n";
+        }
+
+        return $ok if $current_tz && $current_tz eq $tz;
+
+        $dbh->do(<<SQL, undef, $tz, $tz);
 INSERT INTO ngcp.timezone SET name = ?
     ON DUPLICATE KEY UPDATE name = ?, modified_at = CURRENT_TIMESTAMP
 SQL
-    $dbh->{PrintError} = $pe;
-    if ($DBI::err) {
-        print "Error: Could not insert into ngcp.timezone: $DBI::errstr\n";
-        return;
+        if ($DBI::err) {
+            die "Error: Could not insert into ngcp.timezone: $DBI::errstr\n";
+        }
+    };
+    if ($@) {
+        print $@;
+        $ok = 0;
     }
+    $dbh->{PrintError} = $pe;
+    $dbh->do("SET sql_log_bin=$sql_log_bin");
 
-    return 1;
+    return $ok;
 }
 
 ## /usr/share/zoneinfo into MariaDB ##############################
