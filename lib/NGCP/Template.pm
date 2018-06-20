@@ -37,6 +37,19 @@ This module provides the methods for the ngcp object that can be used within
 the NGCP templates. This makes it easier to use instead of the old library
 of code executed via the C<PROCESS> directive.
 
+=head1 METHODS
+
+=over 8
+
+=item $t = NGCP::Template->new($config)
+
+Create a new object that can be used from within the Tamplate Toolkit, via
+the B<ngcp> internal variable, such as C<ngcp.some_method(argument)>.
+
+The $config argument contains the deserialized ngcp-config YAML configuration.
+
+=back
+
 =head1 AUTHOR
 
 Guillem Jover, C<< <gjover@sipwise.com> >>
