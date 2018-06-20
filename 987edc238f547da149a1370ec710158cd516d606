@@ -46,6 +46,30 @@
       "revId": "987edc238f547da149a1370ec710158cd516d606",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad0253b_e3a3504e",
+        "filename": "lib/NGCP/Template.pm",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-06-20T08:03:49Z",
+      "side": 1,
+      "message": "\u003e It is copy\u0026paste from the old ngcpcfg helper library, so IMHO should stay AS IS on migration.\nOK, no problem.",
+      "parentUuid": "5ad0253b_e3ec7091",
+      "range": {
+        "startLine": 123,
+        "startChar": 27,
+        "endLine": 123,
+        "endChar": 44
+      },
+      "revId": "987edc238f547da149a1370ec710158cd516d606",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
