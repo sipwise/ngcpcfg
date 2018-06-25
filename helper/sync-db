@@ -6,7 +6,6 @@ use strict;
 use warnings;
 use English;
 use YAML::XS qw(LoadFile);
-use Template;
 use Hash::Merge qw(merge);
 use DBI;
 use Capture::Tiny qw(capture);
@@ -14,8 +13,6 @@ use Capture::Tiny qw(capture);
 sub sync_extra_sockets;
 sub db_connect;
 my $dbh;
-
-my $tt = Template->new({ ABSOLUTE => 1, RELATIVE => 1 });
 
 my $config = {};
 foreach my $file (@ARGV) {
