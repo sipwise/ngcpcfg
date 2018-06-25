@@ -5,7 +5,6 @@ requires 'Getopt::Long';
 requires 'IO::Interface';
 requires 'IO::Socket';
 requires 'IPC::Open3';
-requires 'List::MoreUtils';
 requires 'Net::Netmask';
 requires 'Pod::Usage';
 requires 'Regexp::IPv6';

@@ -12,7 +12,7 @@ RUN apt-get update
 # sourcecode test dependencies
 RUN apt-get install --assume-yes netcat libhash-merge-perl libtemplate-perl \
   libyaml-libyaml-perl libyaml-tiny-perl libyaml-perl \
-  libdata-validate-ip-perl libio-interface-perl liblist-moreutils-perl libregexp-ipv6-perl
+  libdata-validate-ip-perl libio-interface-perl libregexp-ipv6-perl
 # misc stuff for execution/debugging/devel
 RUN apt-get install --assume-yes fakeroot git lsof make strace
 # test execution; we need the backport of python3-junitxml from our own

@@ -10,7 +10,7 @@ use Getopt::Long;
 use IO::Interface;
 use IO::Socket;
 use IPC::Open3;
-use List::MoreUtils qw{ any minmax };
+use List::Util qw(any max);
 use Net::Netmask;
 use Pod::Usage;
 use Regexp::IPv6 qw($IPv6_re);
@@ -425,8 +425,8 @@ sub set_dbnode {
         }
     }
     else {
-        my @temp = minmax @nodes;
-        $new_dbnode = $temp[1] + 1;
+        my $max = max @nodes;
+        $new_dbnode = $max + 1;
         logger("use $new_dbnode");
     }
     set_yml_config('dbnode', $new_dbnode);
