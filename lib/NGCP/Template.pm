@@ -3,133 +3,35 @@ package NGCP::Template 1.000;
 use strict;
 use warnings;
 
-use List::Util qw(any);
+use NGCP::Template::Object;
+
+use parent qw(Template);
 
 sub new
 {
     my ($this, $config) = @_;
     my $class = ref $this || $this;
 
-    my $self = {
-        config => $config,
-    };
+    $config //= {};
+
+    my $self = Template->new({
+        ABSOLUTE => 1,
+        RELATIVE => 1,
+        EVAL_PERL => 1,
+        %{$config},
+    });
 
     return bless $self, $class;
 }
 
-sub has_role
+sub process
 {
-    my ($self, $hostname, $role) = @_;
+    my ($self, $template, $vars, $output, @opts) = @_;
 
-    if (not defined $self->{config}{hosts}{$hostname}) {
-        $hostname = 'self';
-    }
+    # Inject our ngcp object variable.
+    $vars->{ngcp} = NGCP::Template::Object->new($vars);
 
-    if (any { m/^$role$/ } @{$self->{config}{hosts}{$hostname}{role}}) {
-        return 1;
-    }
-
-    return 0;
-}
-
-sub get_hostname
-{
-    my $self = shift;
-
-    # Do not trust hostname(1) as this might differ from the hostname of
-    # the system which runs the installer, instead rely on /etc/hostname
-    open my $hh, '<', '/etc/hostname' or die "Error opening /etc/hostname";
-    my $hostname = <$hh>;
-    close $hh;
-    chomp $hostname;
-    die "Fatal error retrieving hostname [$hostname]" unless length $hostname;
-
-    return $hostname;
-}
-
-sub get_nodename
-{
-    my $self = shift;
-
-    return $self->{nodename} if exists $self->{nodename};
-
-    my $filename = '/etc/ngcp_ha_node';
-    $filename = '/etc/ngcp_nodename' unless -f $filename;
-    open my $hh, '<', $filename or die "Error opening $filename";
-    my $nodename = <$hh>;
-    close $hh;
-    chomp $nodename;
-
-    die "Fatal error retrieving nodename [$nodename]" unless length $nodename;
-
-    if (defined $self->{config}{hosts}{self} and
-        not defined $self->{config}{hosts}{$nodename}) {
-        $nodename = 'self';
-    }
-
-    $self->{nodename} = $nodename;
-
-    return $nodename;
-}
-
-sub get_peername
-{
-    my ($self, $hostname) = @_;
-
-    if (not defined $self->{config}{hosts}{$hostname}) {
-        $hostname = 'self';
-    }
-
-    return $self->{config}{hosts}{$hostname}{peer};
-}
-
-sub get_firstname
-{
-    my ($self, $hostname) = @_;
-
-    if (not defined $self->{config}{hosts}{$hostname}) {
-        return 'self';
-    } else {
-        my $peername = $self->get_peername($hostname);
-        my @hosts = ($hostname, $peername);
-
-        return (sort @hosts)[0];
-    }
-}
-
-sub get_mgmt_name
-{
-    my ($self) = shift;
-    my $filename = '/etc/ngcp_mgmt_node';
-
-    open my $hh, '<', $filename or die "Error opening $filename";
-    my $mgmt_name = <$hh>;
-    close $hh;
-    chomp $mgmt_name;
-    die "Fatal error retrieving mgmt_name [$mgmt_name]" unless length $mgmt_name;
-
-    return $mgmt_name;
-}
-
-sub get_mgmt_node
-{
-    my ($self) = shift;
-
-    my $ngcp_type = $self->{config}{general}{ngcp_type};
-
-    if ($ngcp_type eq 'carrier') {
-        foreach my $hostname (keys %{$self->{config}{hosts}}) {
-            if ($self->has_role($hostname, 'mgmt') and
-                $hostname =~ m/^(\w+[0-9])[ab]?$/)
-            {
-              return $1;
-            }
-        }
-    } else {
-        return 'sp';
-    }
-
-    return;
+    return $self->SUPER::process($template, $vars, $output, @opts);
 }
 
 1;
@@ -140,7 +42,7 @@ __END__
 
 =head1 NAME
 
-NGCP::Template - NGCP module for the Template::Tolkit framework
+NGCP::Template - Custom NGCP Template Toolkit module
 
 =head1 VERSION
 
@@ -148,49 +50,26 @@ Version 1.000
 
 =head1 DESCRIPTION
 
-This module provides the methods for the ngcp object that can be used within
-the NGCP templates. This makes it easier to use instead of the old library
-of code executed via the C<PROCESS> directive.
+This module provides a custom instance of the Template Toolkit so that it can
+be used to expose all the necessary functionality expected from within the NGCP
+template files, including our ngcp object variable.
 
 =head1 METHODS
 
 =over 8
 
-=item $t = NGCP::Template->new($config)
+=item $tt = NGCP::Template->new($config)
 
-Create a new object that can be used from within the Tamplate Toolkit, via
-the B<ngcp> internal variable, such as C<ngcp.some_method(argument)>.
+Create a new Template compatible object that can be used in place of the stock
+Template module.
 
-The $config argument contains the deserialized ngcp-config YAML configuration.
+The $config argument contains any additional arguments for the Template
+constructor.
 
-=item $bool = $t->has_role($hostname, $role)
+=item $tt->process($input, \%vars, $output, %options)
 
-Checks whether the $hostname node has the $role.
-
-=item $hostname = $t->get_hostname()
-
-Returns the hostname of the node calling this function.
-
-=item $nodename = $t->get_nodename()
-
-Returns the nodename of the node calling this function.
-
-=item $peername = $t->get_peername($hostname)
-
-Returns the peer name for a given $hostname.
-
-=item $firstname = $t->get_firstname($hostname)
-
-Returns the (alphabetically) first hostname of a node pair for a given
-$hostname.
-
-=item $mgmtname = $t->get_mgmt_name()
-
-Returns the name of the management node calling this function.
-
-=item $mgmtnode = $t->get_mgmt_node()
-
-Returns the NGCP management node shared name.
+This method injects the ngcp object variable into the %vars, and calls the
+parent Template process() method.
 
 =back
 
