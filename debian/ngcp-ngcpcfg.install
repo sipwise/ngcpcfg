@@ -10,7 +10,6 @@ helper/tt2-daemon           usr/share/ngcp-ngcpcfg/helper/
 helper/tt2-wrapper          usr/share/ngcp-ngcpcfg/helper/
 helper/validate-yml         usr/share/ngcp-ngcpcfg/helper/
 hooks/                      usr/share/ngcp-ngcpcfg/
-lib/NGCP                    usr/share/perl5/
 lib/get_*                   usr/lib/ngcp-ngcpcfg/
 lib/has_*                   usr/lib/ngcp-ngcpcfg/
 sbin/ngcp-network           usr/sbin/
