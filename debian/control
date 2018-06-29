@@ -34,6 +34,8 @@ Build-Depends:
 Package: libngcp-template-perl
 Section: perl
 Architecture: all
+Replaces:
+ ngcp-ngcpcfg,
 Depends:
  libtemplate-perl,
  ${misc:Depends},
