@@ -31,6 +31,18 @@ Build-Depends:
  python3-pytest,
  xsltproc,
 
+Package: libngcp-template-perl
+Architecture: all
+Depends:
+ libtemplate-perl,
+ ${misc:Depends},
+ ${perl:Depends},
+Description: NGCP subclass for Template Toolkit
+ This package contains a Template subclass to be used for any NGCP template
+ files, which will setup all necessary configuration options for the class,
+ and inject an "ngcp" object in the variables providing NGCP-specific
+ functionality to be used from within the templates.
+
 Package: ngcp-ngcpcfg
 Architecture: all
 Depends:
@@ -48,10 +60,10 @@ Depends:
  libipc-system-simple-perl,
  libnet-netmask-perl,
  libnetwork-ipv4addr-perl,
+ libngcp-template-perl,
  libregexp-ipv6-perl,
  libsocket-perl,
  libsys-hostname-long-perl,
- libtemplate-perl,
  libyaml-libyaml-perl,
  netcat-openbsd,
  ngcp-system-tools,
