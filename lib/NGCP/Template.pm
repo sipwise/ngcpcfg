@@ -10,10 +10,16 @@ use parent qw(Template);
 
 sub new
 {
-    my ($this, $config) = @_;
+    my ($this, @args) = @_;
     my $class = ref $this || $this;
 
-    $config //= {};
+    # The config can be passed as a hash ref or as a hash.
+    my $config;
+    if (ref $args[0] eq 'HASH') {
+        $config = $args[0];
+    } else {
+        $config = { @args };
+    }
 
     my $self = Template->new({
         ABSOLUTE => 1,
