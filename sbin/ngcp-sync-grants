@@ -261,10 +261,6 @@ sub apply_copy_grants {
 sub apply_drop_users {
     my $forced_user = shift; # to drop a specific user
 
-    my $ch = $dbh->prepare(<<SQL)
-DELETE FROM mysql.user WHERE User = ? AND Host LIKE ?
-SQL
-        or die "Cannot prepare: ".$DBI::errstr;
     my $ch_sel = $dbh->prepare(<<SQL)
 SELECT Host FROM mysql.user WHERE User = ? AND Host LIKE ?
 SQL
@@ -285,7 +281,8 @@ SQL
             $ch_sel->execute($user, $host_rx)
                 or die "Cannot select user $user -- $host_rx: ".$DBI::errstr;
             while (my ($host) = $ch_sel->fetchrow_array) {
-                $ch->execute($user, $host_rx)
+                my $drop_statement = sprintf("DROP USER '%s'@'%s'", $user, $host_rx);
+                $dbh->do($drop_statement)
                     or die "Cannot drop user $user -- $host_rx: ".$DBI::errstr;
                 log_info(sprintf "drop: %s\@%s", $user, $host);
                 $rc++;
@@ -293,7 +290,6 @@ SQL
         }
     }
 
-    $ch->finish;
     $ch_sel->finish;
 
     return $rc;
