@@ -456,7 +456,7 @@ sub check_grants {
 }
 
 sub flush_privs {
-    log_info("flush privileges");
+    log_debug("flush privileges");
     $dbh->do("FLUSH PRIVILEGES")
         or die "Cannot flush privileges: ".$DBI::errstr;
 
