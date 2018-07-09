@@ -46,6 +46,54 @@
       "revId": "fc64867fa4b2785414676f7c2e88d9866725c18c",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad0253b_3163c5b3",
+        "filename": "sbin/ngcp-sync-grants",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-07-09T12:34:20Z",
+      "side": 1,
+      "message": "as long as flush_privs() is issued after dropping the user (the one that you added below in the code) there is no need in this one, so more important was to issue flush_privs() after dropping the user (which essentially fixed the issue with subsequent recreations while the script is running).",
+      "parentUuid": "5ad0253b_d14b712a",
+      "range": {
+        "startLine": 345,
+        "startChar": 4,
+        "endLine": 345,
+        "endChar": 18
+      },
+      "revId": "fc64867fa4b2785414676f7c2e88d9866725c18c",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad0253b_71525ddf",
+        "filename": "sbin/ngcp-sync-grants",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-07-09T12:34:20Z",
+      "side": 1,
+      "message": "it does not do anything with the user\u0027s creation",
+      "parentUuid": "5ad0253b_d14b712a",
+      "range": {
+        "startLine": 345,
+        "startChar": 4,
+        "endLine": 345,
+        "endChar": 18
+      },
+      "revId": "fc64867fa4b2785414676f7c2e88d9866725c18c",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
