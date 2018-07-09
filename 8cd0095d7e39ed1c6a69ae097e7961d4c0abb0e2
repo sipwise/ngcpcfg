@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ad0253b_f6bae36d",
+        "filename": "sbin/ngcp-sync-grants",
+        "patchSetId": 3
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2018-07-09T09:15:09Z",
+      "side": 1,
+      "message": "Why not normal interpolation?",
+      "range": {
+        "startLine": 284,
+        "startChar": 36,
+        "endLine": 284,
+        "endChar": 85
+      },
+      "revId": "8cd0095d7e39ed1c6a69ae097e7961d4c0abb0e2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
