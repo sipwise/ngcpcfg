@@ -94,6 +94,30 @@
       "revId": "fc64867fa4b2785414676f7c2e88d9866725c18c",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad0253b_f15c2def",
+        "filename": "sbin/ngcp-sync-grants",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-07-09T12:36:17Z",
+      "side": 1,
+      "message": "\u003e it does not do anything with the user\u0027s creation\nthis is a duplicate of the previous more detailed reply, so ignore this one please :)",
+      "parentUuid": "5ad0253b_71525ddf",
+      "range": {
+        "startLine": 345,
+        "startChar": 4,
+        "endLine": 345,
+        "endChar": 18
+      },
+      "revId": "fc64867fa4b2785414676f7c2e88d9866725c18c",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
