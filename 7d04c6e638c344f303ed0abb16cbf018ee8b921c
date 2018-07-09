@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ad0253b_b137d5e2",
+        "filename": "sbin/ngcp-sync-grants",
+        "patchSetId": 4
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-07-09T10:45:50Z",
+      "side": 1,
+      "message": "this flush is mostly NOOP here as flushed permissions only to affect the actual data queries, which does not affect SHOW GRANTS/GRANT/REVOKE.",
+      "range": {
+        "startLine": 345,
+        "startChar": 4,
+        "endLine": 345,
+        "endChar": 18
+      },
+      "revId": "7d04c6e638c344f303ed0abb16cbf018ee8b921c",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
