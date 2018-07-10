@@ -281,8 +281,8 @@ SQL
             $ch_sel->execute($user, $host_rx)
                 or die "Cannot select user $user -- $host_rx: ".$DBI::errstr;
             while (my ($host) = $ch_sel->fetchrow_array) {
-                $dbh->do("DROP USER '$user'\@'$host_rx'")
-                    or die "Cannot drop user $user -- $host_rx: ".$DBI::errstr;
+                $dbh->do("DROP USER '$user'\@'$host'")
+                    or die "Cannot drop user $user -- $host: ".$DBI::errstr;
                 log_info(sprintf "drop: %s\@%s", $user, $host);
                 $rc++;
             }
