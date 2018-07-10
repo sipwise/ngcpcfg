@@ -1,3 +1,12 @@
+ngcp-ngcpcfg (6.2.2.3+0~mr6.2.2.3) unstable; urgency=medium
+
+  [ Mykola Malkov ]
+  * [6dbaff9] TT#37113 Fix dropping users
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 10 Jul 2018 15:20:24 +0200
+
 ngcp-ngcpcfg (6.2.2.2+0~mr6.2.2.2) unstable; urgency=medium
 
   [ Mykola Malkov ]
