@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ad0253b_c2b6fc3c",
+        "filename": "scripts/check",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-07-16T13:36:18Z",
+      "side": 1,
+      "message": "JFYI, wow PRO installer is broken: https://paste.mgm.sipwise.com/show/4222/\n\nTrying to address it.",
+      "range": {
+        "startLine": 76,
+        "startChar": 1,
+        "endLine": 76,
+        "endChar": 39
+      },
+      "revId": "f95eeb2eff0a8f82792f9cc265165a345ad4d9f2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
