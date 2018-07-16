@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ad0253b_422b0c31",
+        "filename": "sbin/ngcp-network-validator",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2018-07-16T18:02:51Z",
+      "side": 1,
+      "message": "what\u0027s a netwask? :)",
+      "range": {
+        "startLine": 174,
+        "startChar": 38,
+        "endLine": 174,
+        "endChar": 45
+      },
+      "revId": "0b2b6887fd65163b2a3f8fadbebc3c90ecd5fec3",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad0253b_2221304e",
+        "filename": "sbin/ngcp-network-validator",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2018-07-16T18:02:51Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 183,
+        "startChar": 38,
+        "endLine": 183,
+        "endChar": 47
+      },
+      "revId": "0b2b6887fd65163b2a3f8fadbebc3c90ecd5fec3",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
