@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ad0253b_02f754d4",
+        "filename": "sbin/ngcp-network-validator",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2018-07-16T17:44:59Z",
+      "side": 1,
+      "message": "this one stays?",
+      "range": {
+        "startLine": 201,
+        "startChar": 4,
+        "endLine": 201,
+        "endChar": 22
+      },
+      "revId": "58ca1a9610e9ea9ecd87c0933cb3d99a66600aa1",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
