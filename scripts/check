@@ -52,6 +52,11 @@ check_origin() {
     return 0
   fi
 
+  if [ "${NO_CHECK_ORIGIN:-}" = "1" ] ; then
+    log_debug "Skipping check_origin (NO_CHECK_ORIGIN=1)."
+    return 0
+  fi
+
   log_debug "check_origin"
 
   log_debug "cd ${NGCPCTL_MAIN}"
