@@ -72,6 +72,11 @@ check_origin() {
     log_debug "NGCPCTL_SHARE is unset, using default ['${expected_origin}'] setting for expected_origin"
   fi
 
+  if [ ! -f /etc/ngcp_mgmt_node ]; then
+    log_info "Missing /etc/ngcp_mgmt_node, skipping remote origin check"
+    return 0
+  fi
+
   local mgmtnode
   mgmtnode="$(cat /etc/ngcp_mgmt_node)"
 
