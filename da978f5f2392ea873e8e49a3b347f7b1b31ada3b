@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3acd31a7_74ddc86f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-07-17T09:20:37Z",
+      "side": 1,
+      "message": "I think that this logic is wrong or not according to the current practice.\n\nSure, it has to have an IP, just that maybe it\u0027s not known in the config that you\u0027re enhancing with restrictions.\n\nI have seen network config where sometimes we set-up the stuff without having an IP, like:\n\n  https://paste.mgm.sipwise.com/show/4065/\n\nNot sure if it can happen in a post-up script, I usually ses pre-ups and post-ups setting routes with existing ip in the config, but I think that it could happen, if we use dhcp and some post-up in that case, or if the setting up of the address happen in a pre-up.\n\nI\u0027m fine if we want to go ahead with the change as it is and make invalid what I explain above, but raising the flag just in case (and voting -1 as a signal for that reason).",
+      "range": {
+        "startLine": 10,
+        "startChar": 28,
+        "endLine": 10,
+        "endChar": 44
+      },
+      "revId": "da978f5f2392ea873e8e49a3b347f7b1b31ada3b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3acd31a7_f49af8c4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-07-17T09:20:37Z",
+      "side": 1,
+      "message": "advertised I think (independent of European English :P)",
+      "range": {
+        "startLine": 10,
+        "startChar": 14,
+        "endLine": 10,
+        "endChar": 24
+      },
+      "revId": "da978f5f2392ea873e8e49a3b347f7b1b31ada3b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
