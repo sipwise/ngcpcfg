@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3acd31a7_d7a5beb5",
+        "filename": "debian/control",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-07-18T10:02:13Z",
+      "side": 1,
+      "message": "Can you please share why this is necessary?\nWhy library should replace another component on the package(s) upgrade?",
+      "revId": "a67e6357d33edde1e95efe7ed1411e56f5c65922",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
