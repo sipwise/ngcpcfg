@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3acd31a7_1769f68b",
+        "filename": "lib/NGCP/Template/Object.pm",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-07-18T08:49:01Z",
+      "side": 1,
+      "message": "this is section about li_dist, why we assign li here? Is ti to accumulate check $self-\u003e{config}{intercept}{enable} in one section below for both li and li_dist roles?",
+      "range": {
+        "startLine": 28,
+        "startChar": 21,
+        "endLine": 28,
+        "endChar": 23
+      },
+      "revId": "36e62eebefe43ea80a6d12a410103861410a782b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3acd31a7_f7043ac7",
+        "filename": "lib/NGCP/Template/Object.pm",
+        "patchSetId": 11
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-07-18T08:49:01Z",
+      "side": 1,
+      "message": "should it be the fist check ever? It change nothing for now, while IMHO it is more safer for the future.",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 5
+      },
+      "revId": "36e62eebefe43ea80a6d12a410103861410a782b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
