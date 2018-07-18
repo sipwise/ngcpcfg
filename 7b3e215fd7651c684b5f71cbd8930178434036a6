@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3acd31a7_17aa1671",
+        "filename": "helper/build_config",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-07-18T11:26:23Z",
+      "side": 1,
+      "message": "Maybe:\n\n  mv \"${tt_tmp_output_file}\" \"$(readlink -f \"${output_file}\")\"",
+      "range": {
+        "startLine": 89,
+        "startChar": 2,
+        "endLine": 89,
+        "endChar": 61
+      },
+      "revId": "7b3e215fd7651c684b5f71cbd8930178434036a6",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
