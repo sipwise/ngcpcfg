@@ -70,6 +70,30 @@
       "revId": "8fc290600a933364cb1accd0bb5374ef29510829",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3acd31a7_b7e7e2ab",
+        "filename": "helper/build_config",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-07-18T13:09:57Z",
+      "side": 1,
+      "message": "From Jabber:\n\n‎[03:06:56 PM] ‎alutay‎: re utf8, since it is just a comment I would use ASCII \"\" and don\u0027t brake windows users/developers life... if it is a problem like https://github.com/sipwise/rtpengine/issues/576 then - no way to fix. use Linux Luke :-)\n‎[03:07:38 PM] ‎alutay‎: And for sure I prefer to submit https://gerrit.mgm.sipwise.com/#/c/22550/ ASAP to rebuild trunk before branching mr6.4 ... so please do not create a holly war here :-D",
+      "parentUuid": "3acd31a7_d716dea6",
+      "range": {
+        "startLine": 86,
+        "startChar": 17,
+        "endLine": 86,
+        "endChar": 18
+      },
+      "revId": "8fc290600a933364cb1accd0bb5374ef29510829",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
