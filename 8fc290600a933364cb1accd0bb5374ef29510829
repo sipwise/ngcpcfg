@@ -22,6 +22,30 @@
       "revId": "8fc290600a933364cb1accd0bb5374ef29510829",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3acd31a7_9702a66e",
+        "filename": "helper/build_config",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2018-07-18T12:18:25Z",
+      "side": 1,
+      "message": "I think I asked this before but don\u0027t remember a reason? UTF-8 should be supported everywhere, why do you see this as a problem? This is in a comment. :)",
+      "parentUuid": "3acd31a7_57c76e45",
+      "range": {
+        "startLine": 86,
+        "startChar": 17,
+        "endLine": 86,
+        "endChar": 18
+      },
+      "revId": "8fc290600a933364cb1accd0bb5374ef29510829",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
