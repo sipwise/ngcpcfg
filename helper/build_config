@@ -83,8 +83,10 @@ tt_tmp_output_file="$(mktemp ngcpcfg."${tt_tmp_output_file_base}".XXXXXXXXXX)"
 log_debug "Output file ${output_file} based on ${input_file}"
 log_debug "Executing: $TT_WRAPPER ${input_file} > ${tt_tmp_output_file}"
 log_debug "      and: mv ${tt_tmp_output_file} ${output_file}"
+# We need to use «readlink -f» so that we do not destroy any symlink pointing
+# to the real file, which we were previously preserving while using «cat».
 if "$TT_WRAPPER" "${input_file}" > "${tt_tmp_output_file}" 2>/dev/null &&
-   mv "${tt_tmp_output_file}" "${output_file}" ; then
+   mv "${tt_tmp_output_file}" "$(readlink -f "${output_file}")" ; then
   log_info "Generating ${output_file}: OK"
   RC=0
 else
