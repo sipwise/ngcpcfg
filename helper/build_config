@@ -80,13 +80,29 @@ TT_WRAPPER="${HELPER}/tt2-wrapper"
 tt_tmp_output_file_base="$(basename "${output_file}")"
 tt_tmp_output_file="$(mktemp ngcpcfg."${tt_tmp_output_file_base}".XXXXXXXXXX)"
 
+# XXX: Docker breaks sane Unix expectations when moving a file into /etc/hosts,
+# as it creates a bind mount on that pathname. We need to use an implementation
+# that will fallback to use copy semantics in that case, but will default to
+# use rename semantics to avoid races on ETXTBSY on executable files.
+# <https://github.com/moby/moby/issues/22281>
+move()
+{
+  local src="$1"
+  local dst="$2"
+
+  perl -MFile::Copy=mv \
+       -E "mv('${src}', '${dst}') or die 'error: cannot move $src to $dst: \$!\n'"
+
+  rm -f "${src}"
+}
+
 log_debug "Output file ${output_file} based on ${input_file}"
 log_debug "Executing: $TT_WRAPPER ${input_file} > ${tt_tmp_output_file}"
-log_debug "      and: mv ${tt_tmp_output_file} ${output_file}"
+log_debug "      and: move ${tt_tmp_output_file} ${output_file}"
 # We need to use «readlink -f» so that we do not destroy any symlink pointing
 # to the real file, which we were previously preserving while using «cat».
 if "$TT_WRAPPER" "${input_file}" > "${tt_tmp_output_file}" 2>/dev/null &&
-   mv "${tt_tmp_output_file}" "$(readlink -f "${output_file}")" ; then
+   move "${tt_tmp_output_file}" "$(readlink -f "${output_file}")" ; then
   log_info "Generating ${output_file}: OK"
   RC=0
 else
