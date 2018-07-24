@@ -17,6 +17,9 @@
 [% MACRO cdr_direction_provider_type_select(dict_table, data_table, dict_col, val_col, direction, provider, type) BLOCK -%]
 (SELECT data.[%- val_col -%] FROM accounting.[%- data_table -%] AS data INNER JOIN accounting.cdr_direction AS dir ON data.direction_id = dir.id INNER JOIN accounting.cdr_provider AS prov ON data.provider_id = prov.id INNER JOIN accounting.[%- dict_table -%] AS dict ON data.[%- dict_col -%] = dict.id WHERE data.cdr_id = accounting.cdr.id AND dir.type = "[%- direction -%]" AND prov.type="[%- provider -%]" AND dict.type="[%- type -%]")
 [%- END %]
+[% MACRO cdr_direction_provider_type_select_casesensitive(dict_table, data_table, dict_col, val_col, direction, provider, type) BLOCK -%]
+(SELECT data.[%- val_col -%] FROM accounting.[%- data_table -%] AS data INNER JOIN accounting.cdr_direction AS dir ON data.direction_id = dir.id INNER JOIN accounting.cdr_provider AS prov ON data.provider_id = prov.id INNER JOIN accounting.[%- dict_table -%] AS dict ON data.[%- dict_col -%] = dict.id WHERE data.cdr_id = accounting.cdr.id AND dir.type = "[%- direction -%]" AND prov.type="[%- provider -%]" AND BINARY dict.type="[%- type -%]")
+[%- END %]
 [% MACRO edr_type_select(dict_table, data_table, dict_col, val_col, type) BLOCK -%]
 (SELECT data.[%- val_col -%] FROM accounting.[%- data_table -%] AS data INNER JOIN accounting.[%- dict_table -%] AS dict ON data.[%- dict_col -%] = dict.id WHERE data.event_id = accounting.events.id AND dict.type="[%- type -%]")
 [%- END %]
@@ -100,6 +103,8 @@ X_cdr_id_map.INIT_TIME_LOCALIZED = "CONCAT(" _ from_unixtime_tz("FLOOR(accountin
 X_cdr_id_map.START_TIME_LOCALIZED = "CONCAT(" _ from_unixtime_tz("FLOOR(accounting.cdr.start_time)",cdr_timezone) _ ", \".\", SUBSTRING_INDEX(accounting.cdr.start_time, \".\", -1)) as cdr_start_time_localized";
 X_cdr_id_map.END_TIME_LOCALIZED = "CONCAT(" _ from_unixtime_tz("FLOOR(accounting.cdr.start_time + accounting.cdr.duration)",cdr_timezone) _ ", \".\", SUBSTRING_INDEX(accounting.cdr.start_time + accounting.cdr.duration, \".\", -1)) as cdr_end_time_localized";
 
+X_cdr_id_map.FURNISHED_CHARGING_INFO = "COALESCE(" _ cdr_direction_provider_type_select("cdr_tag", "cdr_tag_data", "tag_id", "val", "destination", "customer", "furnished_charging_info") _ ',"") as furnished_charging_info';
+
 # edr fields:
 #X_cdr_id_map.PRIMARY_NUMBER = "(select username from provisioning.voip_dbaliases tmp where tmp.subscriber_id = provisioning.voip_subscribers.id order by is_primary, id limit 1)";
 X_cdr_id_map.PILOT_SUBSCRIBER_ID = edr_type_select("events_relation","events_relation_data","relation_id","val","pilot_subscriber_id");
@@ -150,9 +155,11 @@ FOREACH X_f IN argv.admin_export_fields;
   ELSIF (matches = X_f.lower.match('^([a-z]+)_([a-z]+)_([a-z_]*time_balance)_(before|after)$'));
     out.admin_fields.push("'" _ cdr_direction_provider_type_select("cdr_time_balance", "cdr_time_balance_data", "time_balance_id", "val_" _ matches.3, matches.0, matches.1, matches.2) _ "'");
   # Specify new cdr relation fields like e.g. source_CuStOmEr_profile_package_id:
-  # Note: they cannot be used in conditions for now.
+  # Note: not to be used in filter conditions.
   ELSIF (matches = X_f.lower.match('^([a-z]+)_([a-z]+)_(profile_package_id|contract_balance_id)$'));
     out.admin_fields.push("'" _ cdr_direction_provider_type_select("cdr_relation", "cdr_relation_data", "relation_id", "val", matches.0, matches.1, matches.2) _ "'");
+  ELSIF (matches = X_f.match('^(?i:header)_([a-zA-Z0-9_-]+)$'));
+    out.admin_fields.push("'" _ cdr_direction_provider_type_select_casesensitive("cdr_tag", "cdr_tag_data", "tag_id", "val", "source", "customer", "header=" _ matches.0) _ "'");
   # Lowest precendece: other cdr fields, fields joined on your own or 'calculated' (raw sql) fields...:
   ELSE;
     out.admin_fields.push("'" _ X_f _ "'");
@@ -169,6 +176,8 @@ FOREACH X_f IN argv.reseller_export_fields;
     out.reseller_fields.push("'" _ cdr_direction_provider_type_select("cdr_time_balance", "cdr_time_balance_data","time_balance_id","val_" _ matches.3, matches.0, matches.1, matches.2) _ "'");
   ELSIF (matches = X_f.lower.match('^([a-z]+)_([a-z]+)_(profile_package_id|contract_balance_id)$'));
     out.reseller_fields.push("'" _ cdr_direction_provider_type_select("cdr_relation", "cdr_relation_data", "relation_id", "val", matches.0, matches.1, matches.2) _ "'");
+  ELSIF (matches = X_f.match('^(?i:header)_([a-zA-Z0-9_-]+)$'));
+    out.reseller_fields.push("'" _ cdr_direction_provider_type_select_casesensitive("cdr_tag", "cdr_tag_data", "tag_id", "val", "source", "customer", "header=" _ matches.0) _ "'");
   ELSE;
     out.reseller_fields.push("'" _ X_f _ "'");
   END;
