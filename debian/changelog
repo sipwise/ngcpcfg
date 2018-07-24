@@ -1,3 +1,62 @@
+ngcp-ngcpcfg (6.4.1.0+0~mr6.4.1.0) unstable; urgency=medium
+
+  [ Guillem Jover ]
+  * [50ecc15] TT#37401 Use Unix sockets to avoid relying on hostnames for localhost/loopback
+  * [acb6ea8] TT#38200 Reformat tt2-daemon to follow Sipwise perl style
+  * [696ac4c] TT#38200 Add support for new NGCP::Template perl module
+  * [5104409] TT#38200 Document NGCP::Template->new method
+  * [711d232] TT#38200 Switch to new perl ngcp.has_role function
+  * [1c5e435] TT#38200 Switch to new perl ngcp.get_nodename() function
+  * [1ecd9f9] TT#38200 Switch to new perl ngcp.get_peername() function
+  * [5d35213] TT#38200 Switch to new perl ngcp.get_firstname() function
+  * [24f6923] TT#38200 Switch to new perl ngcp.get_hostname() function
+  * [b4627d3] TT#38200 Switch to new perl ngcp.get_mgmt_*() functions
+  * [c5014a8] TT#38200 Remove unused Template module usage
+  * [c027cfa] TT#38200 Make the NGCP::Template a derived class of Template
+  * [ae4e1f6] TT#39401 Use List::Util in perl core instead of List::MoreUtils
+  * [a333076] TT#38200 Fix NGCP::Template to accept configuration as a list of elements
+  * [b83a584] TT#38200 Rename debian/postinst to debian/ngcp-ngcpcfg.postinst
+  * [29493ec] TT#38200 Split NGCP::Template perl modules into its own package
+  * [a67e635] TT#38200 Add missing Replaces ngcp-ngcpcfg to libngcp-template-perl
+  * [7480ebe] TT#28113 Rename instead of overwriting the target config file
+  * [6730c66] TT#18176 Remove redundant check
+  * [f034e86] TT#18176 Replace explicit prints to STDERR with warn
+  * [b6983c6] TT#18176 Detect unknown hostname patterns
+  * [8fc2906] TT#40300 Use «readlink -f» for the destination file of the mv
+  * [ae25a37] TT#38200 Add support for virtual LI distributed role
+  * [80f70d8] TT#36755 Add internal consistency check for address families
+  * [a691a20] TT#36755 Check whether shared and advertised contain values
+  * [20091c9] TT#36755 Disable v6netmask requirement when there is v6ip
+  * [6e6c308] TT#41050 On error when moving the built template fallback to use copy semantics
+
+  [ Manuel Montecelo ]
+  * [a015a4a] TT#37401 Add whitespace around path
+  * [13bc4ca] TT#37401 Add safety measures, create tmp files before moving to output file
+  * [81c8739] TT#37401 Add "dhcp" property interfaces, to be able to install on VMs
+
+  [ Alexander Lutay ]
+  * [26ba034] TT#37401 Fix 50ecc1544: depends on netcat-openbsd since we use 'nc -U' (not available in 'netcat-traditional')
+  * [e218928] TT#38453 Fix f95eeb2: skip new check_origin() on installer stage
+
+  [ Michael Prokop ]
+  * [66f4772] TT#37391 Fix minor typos
+  * [f95eeb2] TT#38453 Verify remote repository origin in 'check' action (PRO/Carrier)
+
+  [ Richard Fuchs ]
+  * [ca7d053] TT#37224 support setting IPv6 prefix length
+
+  [ Kirill Solomko ]
+  * [c3f54e6] TT#38822 helper/sync-db: ngcp.timezone sync changes
+
+  [ Mykola Malkov ]
+  * [7d04c6e] TT#37113 Use safe 'DROP USER' syntax
+  * [84f0cfb] TT#37113 Lower the debug level of 'FLUSH PRIVILEGES'
+  * [32a6a6b] TT#37113 Fix dropping users
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 24 Jul 2018 13:40:12 +0200
+
 ngcp-ngcpcfg (6.4.0.0+0~mr6.4.0.0) unstable; urgency=medium
 
   [ Alexander Lutay ]
