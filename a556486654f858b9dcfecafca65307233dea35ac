@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aca2d91_a2afa093",
+        "filename": "scripts/services",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-07-30T17:41:23Z",
+      "side": 1,
+      "message": "This can sound a bit confusing, for example reading \"Executing service\" as Starting when the action is Stopping... maybe \"Executing enqueued service actions\"?",
+      "revId": "a556486654f858b9dcfecafca65307233dea35ac",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
