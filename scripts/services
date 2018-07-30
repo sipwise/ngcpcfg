@@ -123,9 +123,17 @@ sort_service_list() {
 }
 
 execute() {
+  local NGCP_SERVICE_ENQUEUE_MODE=yes
+
+  log_info "Clearing out enqueued services actions"
+  ngcp-service --queue-clear
+
   while read line ; do
     exec_wrapper "$line"
   done < "${SORTED_LIST}"
+
+  log_info "Executing enqueued services actions"
+  ngcp-service --queue-run
 }
 
 if [ -d "/run/systemd/system" ]; then
