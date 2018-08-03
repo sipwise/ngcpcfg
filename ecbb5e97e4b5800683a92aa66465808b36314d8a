@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aca2d91_e803370c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-08-03T07:33:55Z",
+      "side": 1,
+      "message": "I think that this verb does not exist, it\u0027s \"queued\", but if Richard gave +2 maybe I am wrong (I checked in a couple of dictionaries too).\n\n(Sorry for not noticing in previous reviews, I sensed something strange but could not put my finger on it).",
+      "range": {
+        "startLine": 7,
+        "startChar": 25,
+        "endLine": 7,
+        "endChar": 33
+      },
+      "revId": "ecbb5e97e4b5800683a92aa66465808b36314d8a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aca2d91_c8087b2b",
+        "filename": "scripts/services",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-08-03T07:33:55Z",
+      "side": 1,
+      "message": "here again",
+      "range": {
+        "startLine": 126,
+        "startChar": 25,
+        "endLine": 126,
+        "endChar": 33
+      },
+      "revId": "ecbb5e97e4b5800683a92aa66465808b36314d8a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aca2d91_a80d3f39",
+        "filename": "scripts/services",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-08-03T07:33:55Z",
+      "side": 1,
+      "message": "and here",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 52
+      },
+      "revId": "ecbb5e97e4b5800683a92aa66465808b36314d8a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aca2d91_8813a35c",
+        "filename": "scripts/services",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-08-03T07:33:55Z",
+      "side": 1,
+      "message": "and here",
+      "range": {
+        "startLine": 135,
+        "startChar": 22,
+        "endLine": 135,
+        "endChar": 30
+      },
+      "revId": "ecbb5e97e4b5800683a92aa66465808b36314d8a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
