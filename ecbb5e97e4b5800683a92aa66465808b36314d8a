@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1aca2d91_c87bdb7a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-08-03T12:36:07Z",
+      "side": 1,
+      "message": "\u003e \"Enqueue\" does exist as a verb (from IT lingo, meaning to add an\n \u003e item to a queue - opposite of dequeue), and it\u0027s past tense and\n \u003e past participle is \"enqueued.\"\n \u003e \n \u003e That being said, I do agree that in these usages \"queued\" would be\n \u003e more appropriate.\n\nFunny, it doesn\u0027t appear in these dictionaries that I checked, maybe it\u0027s something more specific of IT lingo as you said:\n\n  https://dictionary.cambridge.org/spellcheck/english/?q\u003denqueue\n\n  https://www.merriam-webster.com/dictionary/enqueue",
+      "parentUuid": "1aca2d91_0882f352",
+      "range": {
+        "startLine": 7,
+        "startChar": 25,
+        "endLine": 7,
+        "endChar": 33
+      },
+      "revId": "ecbb5e97e4b5800683a92aa66465808b36314d8a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aca2d91_c8087b2b",
         "filename": "scripts/services",
         "patchSetId": 5
