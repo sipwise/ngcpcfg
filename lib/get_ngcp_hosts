@@ -1,0 +1,29 @@
+[%
+# vi: ft=tt2
+
+# Return an array with name for all nodes.
+#
+# @param argv.status    node status [ online, offline, inactive ]
+#                         default value: ['online', 'inactive']
+# @return out           The array of fields "name", e.g.: [ 'sp1', 'sp2' ]
+
+IF !argv.status.size;
+  argv.status = ['online', 'inactive'];
+END;
+
+status = {
+  online = 0
+  offline = 0
+  inactive = 0
+};
+FOREACH val IN argv.status;
+  status.$val = 1;
+END;
+
+out = [];
+FOREACH host IN hosts.keys.sort;
+  NEXT UNLESS status.item(hosts.$host.status);
+  out.push( host );
+END;
+
+-%]
