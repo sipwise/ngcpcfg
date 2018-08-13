@@ -22,6 +22,30 @@
       "revId": "4a166112878d4941cd68e869908a9af7c70e2c4e",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fae47921_1b5fe70f",
+        "filename": "lib/get_ngcp_neighbours",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-08-13T12:58:44Z",
+      "side": 1,
+      "message": "ack",
+      "parentUuid": "fae47921_fb7303b3",
+      "range": {
+        "startLine": 4,
+        "startChar": 64,
+        "endLine": 4,
+        "endChar": 66
+      },
+      "revId": "4a166112878d4941cd68e869908a9af7c70e2c4e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
