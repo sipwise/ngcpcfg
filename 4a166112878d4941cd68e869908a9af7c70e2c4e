@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fae47921_fb7303b3",
+        "filename": "lib/get_ngcp_neighbours",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2018-08-13T12:57:05Z",
+      "side": 1,
+      "message": "probably self is better, the node is definitely not \"me\" :)",
+      "range": {
+        "startLine": 4,
+        "startChar": 64,
+        "endLine": 4,
+        "endChar": 66
+      },
+      "revId": "4a166112878d4941cd68e869908a9af7c70e2c4e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
