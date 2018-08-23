@@ -124,11 +124,13 @@ foreach my $hostname (sort keys %{$yaml->{hosts}}) {
     foreach my $iface (sort @{$host->{interfaces}}) {
         # Manual interface checks.
         if (defined $host->{$iface}->{ip} and
+            $host->{$iface}->{ip} ne '' and
             $host->{$iface}->{ip} ne '127.0.0.1' and
             $iface !~ m/^dummy/) {
             push @{$dupe_ip{$host->{$iface}->{ip}}}, "$hostname/$iface";
         }
         if (defined $host->{$iface}->{hwaddr} and
+            $host->{$iface}->{hwaddr} ne '' and
             $host->{$iface}->{hwaddr} ne '00:00:00:00:00:00') {
             push @{$dupe_mac{$host->{$iface}->{hwaddr}}}, "$hostname/$iface";
         }
