@@ -1,3 +1,19 @@
+ngcp-ngcpcfg (5.5.7.0+0~mr5.5.7.0) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [d1f8f3f] TT#37210 prevent replicating of ngcp.timezone refresh
+  * [769ba8d] Revert "TT#37210 prevent replicating of ngcp.timezone refresh"
+
+  [ Kirill Solomko ]
+  * [11ae22e] TT#38822 helper/sync-db: ngcp.timezone sync changes
+
+  [ Alexander Lutay ]
+  * [bfd79c9] TT#43055 ngcp-network-validator ignore empty duplicate IP/MAC in network.yml
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 27 Aug 2018 19:29:39 +0200
+
 ngcp-ngcpcfg (5.5.6.0+0~mr5.5.6.0) unstable; urgency=medium
 
   [ Kirill Solomko ]
