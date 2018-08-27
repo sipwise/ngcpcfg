@@ -1,3 +1,17 @@
+ngcp-ngcpcfg (6.3.3.0+0~mr6.3.3.0) unstable; urgency=medium
+
+  [ Mykola Malkov ]
+  * [39a3d1e] TT#37113 Use safe 'DROP USER' syntax
+  * [f5fae34] TT#37113 Lower the debug level of 'FLUSH PRIVILEGES'
+  * [53461e2] TT#37113 Fix dropping users
+
+  [ Alexander Lutay ]
+  * [0318674] TT#43055 ngcp-network-validator ignore empty duplicate IP/MAC in network.yml
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 27 Aug 2018 16:13:14 +0200
+
 ngcp-ngcpcfg (6.3.2.0+0~mr6.3.2.0) unstable; urgency=medium
 
   * New release.
