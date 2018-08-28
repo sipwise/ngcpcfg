@@ -1,0 +1,8 @@
+Code-Review+2: Alexander Lutay <alutay@sipwise.com>
+Code-Review+2: Kirill Solomko <ksolomko@sipwise.com>
+Verified+1: Jenkins Jenkins
+Submitted-by: Alexander Lutay <alutay@sipwise.com>
+Submitted-at: Tue, 28 Aug 2018 16:36:02 +0200
+Reviewed-on: http://gerrit.mgm.sipwise.com/23093
+Project: ngcpcfg
+Branch: refs/heads/mr6.4.1
