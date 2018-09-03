@@ -4,6 +4,7 @@
 /.debhelper/
 /files
 /debhelper-build-stamp
+/libngcp-template-perl/
 /ngcp-ngcpcfg/
 /ngcp-ngcpcfg-locker/
 /ngcp-ngcpcfg-testsuite/
