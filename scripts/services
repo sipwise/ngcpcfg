@@ -7,7 +7,10 @@ set -e
 set -u
 
 # support testsuite
+
 FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
+
+# load modules
 
 if ! [ -r "${FUNCTIONS}"/main ] ; then
   printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}">&2
@@ -16,20 +19,7 @@ fi
 
 . "${FUNCTIONS}"/main
 
-# main script
-
-DRYRUN='false'
-if [[ "${1:-}" == "test" ]] || [[ "${1:-}" == "--dry-run" ]]; then
-  DRYRUN='true'
-elif [[ -n "${1:-}" ]] ; then
-  log_error "Unsupported option(s) given: $*"
-  log_info  "Did you mean '--dry-run'?"
-  exit 1
-fi
-log_debug "DRYRUN = $DRYRUN"
-
-TMPFILE="$(mktemp)"
-log_debug "TMPFILE = $TMPFILE"
+# functions
 
 # unify service calls
 unifyer() {
@@ -43,30 +33,6 @@ unifyer() {
     echo "$file" >> "$TMPFILE"
   fi
 }
-
-for dir in ${CONFIG_POOL} ; do
-  #shellcheck disable=SC2106
-  (
-  if ! [[ "${dir}" =~ ^/ ]] ; then
-    log_error "${dir} is not an absolute path"
-    continue
-  fi
-  cd "${dir}"
-  if [ ! -d .git ] ; then
-    log_info "$dir has no support of .services"
-    continue
-  fi
-  for file in $(git status --porcelain | sed 's/^...//') ; do
-    if [ -r "$file" ] && [ -r "${SERVICES_POOL_BASE}/${dir}/${file}".services ] ; then
-      log_debug "unifyer ${SERVICES_POOL_BASE}/${dir}/${file}.services"
-      unifyer "${SERVICES_POOL_BASE}/${dir}/${file}".services
-    elif [ -r "$file" ] && [ -r "${SERVICES_POOL_BASE}/${dir}/$(dirname "$file")"/ngcpcfg.services ] ; then
-      log_debug "unifyer ${SERVICES_POOL_BASE}/${dir}/$(dirname "$file")/ngcpcfg.services"
-      unifyer "${SERVICES_POOL_BASE}/${dir}/$(dirname "$file")/ngcpcfg.services"
-    fi
-  done
-  )
-done
 
 exec_wrapper() {
   if $DRYRUN ; then
@@ -90,11 +56,6 @@ exec_wrapper() {
     exit 1
   fi
 }
-
-if ! [ -s "$TMPFILE" ] ; then
-  log_debug "No services file(s) reported - nothing to do."
-  exit 0
-fi
 
 # get rid of "./" and "//" in file names
 normalize_files() {
@@ -135,6 +96,50 @@ execute() {
   log_info "Executing enqueued services actions"
   ngcp-service queue-run
 }
+
+# main script
+
+DRYRUN='false'
+if [[ "${1:-}" == "test" ]] || [[ "${1:-}" == "--dry-run" ]]; then
+  DRYRUN='true'
+elif [[ -n "${1:-}" ]] ; then
+  log_error "Unsupported option(s) given: $*"
+  log_info  "Did you mean '--dry-run'?"
+  exit 1
+fi
+log_debug "DRYRUN = $DRYRUN"
+
+TMPFILE="$(mktemp)"
+log_debug "TMPFILE = $TMPFILE"
+
+for dir in ${CONFIG_POOL} ; do
+  #shellcheck disable=SC2106
+  (
+  if ! [[ "${dir}" =~ ^/ ]] ; then
+    log_error "${dir} is not an absolute path"
+    continue
+  fi
+  cd "${dir}"
+  if [ ! -d .git ] ; then
+    log_info "$dir has no support of .services"
+    continue
+  fi
+  for file in $(git status --porcelain | sed 's/^...//') ; do
+    if [ -r "$file" ] && [ -r "${SERVICES_POOL_BASE}/${dir}/${file}".services ] ; then
+      log_debug "unifyer ${SERVICES_POOL_BASE}/${dir}/${file}.services"
+      unifyer "${SERVICES_POOL_BASE}/${dir}/${file}".services
+    elif [ -r "$file" ] && [ -r "${SERVICES_POOL_BASE}/${dir}/$(dirname "$file")"/ngcpcfg.services ] ; then
+      log_debug "unifyer ${SERVICES_POOL_BASE}/${dir}/$(dirname "$file")/ngcpcfg.services"
+      unifyer "${SERVICES_POOL_BASE}/${dir}/$(dirname "$file")/ngcpcfg.services"
+    fi
+  done
+  )
+done
+
+if ! [ -s "$TMPFILE" ] ; then
+  log_debug "No services file(s) reported - nothing to do."
+  exit 0
+fi
 
 if [ -d "/run/systemd/system" ]; then
   log_debug "systemd needs daemon-reload so the unit files loaded are in sync"
