@@ -97,6 +97,22 @@ execute() {
   ngcp-service queue-run
 }
 
+systed_daemon_reload_preset() {
+  if [ -d "/run/systemd/system" ]; then
+    log_info "Reloading systemd daemon and preset all services"
+
+    log_debug "systemd needs daemon-reload so the unit files loaded are in sync"
+    log_debug "Running: systemctl daemon-reload 2>&1 || true"
+    systemctl daemon-reload 2>&1 || true
+
+    log_debug "systemd needs preset-all to enable/disabe services (to start them on boot)"
+    log_debug "Running: rm -rf /etc/systemd/system/*.wants/ || true"
+    rm -rf /etc/systemd/system/*.wants/ || true
+    log_debug "Running: systemctl preset-all 2>&1 || true"
+    systemctl preset-all 2>&1 || true
+  fi
+}
+
 # main script
 
 DRYRUN='false'
@@ -108,6 +124,9 @@ elif [[ -n "${1:-}" ]] ; then
   exit 1
 fi
 log_debug "DRYRUN = $DRYRUN"
+
+log_debug "systed_daemon_reload_preset function"
+systed_daemon_reload_preset
 
 TMPFILE="$(mktemp)"
 log_debug "TMPFILE = $TMPFILE"
@@ -139,18 +158,6 @@ done
 if ! [ -s "$TMPFILE" ] ; then
   log_debug "No services file(s) reported - nothing to do."
   exit 0
-fi
-
-if [ -d "/run/systemd/system" ]; then
-  log_debug "systemd needs daemon-reload so the unit files loaded are in sync"
-  log_debug "Running: systemctl daemon-reload 2>&1 || true"
-  systemctl daemon-reload 2>&1 || true
-
-  log_debug "systemd needs preset-all to enable/disabe services (to start them on boot)"
-  log_debug "Running: rm -rf /etc/systemd/system/*.wants/ || true"
-  rm -rf /etc/systemd/system/*.wants/ || true
-  log_debug "Running: systemctl preset-all 2>&1 || true"
-  systemctl preset-all 2>&1 || true
 fi
 
 log_debug "normalize_files function"
