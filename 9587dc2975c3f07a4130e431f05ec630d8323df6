@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9af37de9_290021aa",
+        "filename": "scripts/services",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-09-06T15:59:41Z",
+      "side": 1,
+      "message": "This is mandatory requirements from Mika (c) maintainer,\nsee other scripts in this repo... it is useful for debug and printed in debug mode only... try: DEBUG\u003dtrue ngcpcfg apply \"something\"",
+      "parentUuid": "9af37de9_693e29ba",
+      "revId": "9587dc2975c3f07a4130e431f05ec630d8323df6",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9af37de9_09743d9a",
         "filename": "scripts/services",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9af37de9_092c3d49",
+        "filename": "scripts/services",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-09-06T15:59:41Z",
+      "side": 1,
+      "message": "same as above",
+      "parentUuid": "9af37de9_09743d9a",
+      "revId": "9587dc2975c3f07a4130e431f05ec630d8323df6",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9af37de9_c96d15ce",
         "filename": "scripts/services",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2018-09-06T14:34:58Z",
       "side": 1,
       "message": "and here.",
+      "revId": "9587dc2975c3f07a4130e431f05ec630d8323df6",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9af37de9_e930d9a0",
+        "filename": "scripts/services",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-09-06T15:59:41Z",
+      "side": 1,
+      "message": "same as above",
+      "parentUuid": "9af37de9_c96d15ce",
       "revId": "9587dc2975c3f07a4130e431f05ec630d8323df6",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
