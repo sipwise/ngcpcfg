@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9af37de9_693e29ba",
+        "filename": "scripts/services",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-09-06T14:34:58Z",
+      "side": 1,
+      "message": "IMO duplicating the command as a comment is not very good, as it can get out of date.  I\u0027d comment on the main intent, \"Running: systemctl daemon-reload\", or if the precise command line is useful/necessary, set +x perhaps only for these lines) or create a function \"print_command_and_execute()\" or similar.",
+      "revId": "9587dc2975c3f07a4130e431f05ec630d8323df6",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9af37de9_09743d9a",
+        "filename": "scripts/services",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-09-06T14:34:58Z",
+      "side": 1,
+      "message": "Same here",
+      "revId": "9587dc2975c3f07a4130e431f05ec630d8323df6",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9af37de9_c96d15ce",
+        "filename": "scripts/services",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-09-06T14:34:58Z",
+      "side": 1,
+      "message": "and here.",
+      "revId": "9587dc2975c3f07a4130e431f05ec630d8323df6",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
