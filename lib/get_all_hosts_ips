@@ -10,10 +10,10 @@
 #                         web_int, web_ext, sip_int, sip_ext, ...
 # @param argv.status    node status [ online, offline, inactive ]
 #                         default value: ['online', 'inactive']
-# @return out           The array of hashes with fields "name" and "ip", e.g.:
+# @return out           The array of hashes with fields "name", "ip" and "mask", e.g.:
 #                         [
-#                           { name => 'sp1', ip = '192.168.255.251' },
-#                           { name => 'sp2', ip = '192.168.255.252' }
+#                           { name => 'sp1', ip = '192.168.255.251', mask = '255.255.255.0' },
+#                           { name => 'sp2', ip = '192.168.255.252', mask = '255.255.255.0' }
 #                         ]
 
 IF !argv.status.size;
@@ -41,7 +41,7 @@ FOREACH host IN hosts.keys.sort;
       NEXT IF out.grep('^' _ hosts.$host.$realiface.ip _ '$').size();
       NEXT UNLESS hosts.$host.$realiface.ip;
 
-      out.push({ name = host, ip = hosts.$host.$realiface.ip });
+      out.push({ name = host, ip = hosts.$host.$realiface.ip, mask = hosts.$host.$realiface.netmask });
     END;
   END;
 END;
