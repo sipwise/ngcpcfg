@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9af37de9_69e4e90c",
+        "filename": "scripts/services",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-09-06T16:10:06Z",
+      "side": 1,
+      "message": "\u003e This is mandatory requirements from Mika (c) maintainer,\n \u003e see other scripts in this repo... it is useful for debug and\n \u003e printed in debug mode only... try: DEBUG\u003dtrue ngcpcfg apply\n \u003e \"something\"\n\nIMO if this is a general thing the more the reason to enable +x on DEBUG\u003dtrue or use a wrapper function to print+exec or similar, but OK, not a matter for this commit.",
+      "parentUuid": "9af37de9_290021aa",
+      "revId": "9587dc2975c3f07a4130e431f05ec630d8323df6",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9af37de9_09743d9a",
         "filename": "scripts/services",
         "patchSetId": 1
