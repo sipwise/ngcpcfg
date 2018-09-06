@@ -1,0 +1,15 @@
+[%
+# vi: ft=tt2
+
+# Returns SSH RSA public key from ngcpcfg shared-files storage.
+#
+# @return out   The SSH public key from ngcpcfg shared-files storage.
+-%]
+[% PERL -%]
+  open my $hh, '<', '/etc/ngcp-config/shared-files/ssh/id_rsa.pub' or die "Error opening /etc/ngcp-config/shared-files/ssh/id_rsa.pub";
+  my $ssh_pub_key = <$hh>;
+  close $hh;
+  chomp $ssh_pub_key;
+  die "Fatal error retrieving SSH public key" unless length $ssh_pub_key;
+  $stash->set(out => $ssh_pub_key);
+[% END -%]
