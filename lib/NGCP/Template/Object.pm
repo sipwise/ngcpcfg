@@ -150,6 +150,21 @@ sub get_mgmt_node
     return;
 }
 
+sub get_ssh_pub_key
+{
+    my ($self, $key_type) = @_;
+
+    my $ssh_keys_dir = '/etc/ngcp-config/shared-files/ssh/';
+    my $ssh_key_file = "$ssh_keys_dir/id_${key_type}.pub";
+    open my $fh, '<', $ssh_key_file or die "Error opening $ssh_key_file";
+    my $ssh_pub_key = <$fh>;
+    close $fh;
+    chomp $ssh_pub_key;
+    die "Fatal error retrieving SSH public key" unless length $ssh_pub_key;
+
+    return $ssh_pub_key;
+}
+
 1;
 
 __END__
@@ -209,6 +224,11 @@ Returns the name of the management node calling this function.
 =item $mgmtnode = $t->get_mgmt_node()
 
 Returns the NGCP management node shared name.
+
+=item $ssh_pub_keye = $t->get_ssh_pub_key($key_type)
+
+Returns the SSH public key with $key_type ('rsa', 'ed25519', etc.) from
+the ngcpcfg shared-files storage.
 
 =back
 
