@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use List::Util qw(any);
+use Socket;
 
 sub new
 {
@@ -155,6 +156,24 @@ sub get_mgmt_node
     return;
 }
 
+sub get_netmask_to_prefix
+{
+    my ($self, $netmask) = @_;
+    return 32-(log((unpack 'N', ~inet_aton($netmask))+1) / log(2))
+}
+
+sub get_network_address
+{
+    my ($self, $address, $netmask) = @_;
+    if ($netmask =~ /^\d+$/) {
+        $netmask = (0xffffffff<<(32-$netmask)) & 0xffffffff;
+    }
+    else {
+        $netmask = unpack('N', inet_aton($netmask));
+    }
+    return inet_ntoa(pack 'N', (unpack 'N', inet_aton('192.168.1.2')) & $netmask);
+}
+
 1;
 
 __END__
@@ -214,6 +233,15 @@ Returns the name of the management node calling this function.
 =item $mgmtnode = $t->get_mgmt_node()
 
 Returns the NGCP management node shared name.
+
+=item $prefix = $t->get_netmask_to_prefix($numeric_netmask)
+
+Returns the prefix lentgh of a netmask specified in numeric IPv4 format.
+
+=item $address = $t->get_network_address($host_address, $netmask)
+
+Returns the base network address from a host address and a netmask (given as either
+prefix length of netmask in numeric IPv4 format).
 
 =back
 
