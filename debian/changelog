@@ -1,3 +1,13 @@
+ngcp-ngcpcfg (6.3.2.2+0~mr6.3.2.2) unstable; urgency=medium
+
+  [ Alexander Lutay ]
+  * [ad1e0d0] TT#44061 Reorder all functions in scripts/services on top of the script
+  * [80b22cb] TT#44061 Always reload systemd daemon and preset all units
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 07 Sep 2018 09:59:16 +0200
+
 ngcp-ngcpcfg (6.3.2.1+0~mr6.3.2.1) unstable; urgency=medium
 
   [ Mykola Malkov ]
