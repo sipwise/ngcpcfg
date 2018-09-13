@@ -102,7 +102,7 @@ systed_daemon_reload_preset() {
 }
 
 is_absolute_path() {
-  local dir=$1
+  local dir="$1"
 
   if [[ ! "${dir}" =~ ^/ ]] ; then
     log_error "${dir} is not an absolute path"
@@ -113,7 +113,7 @@ is_absolute_path() {
 }
 
 is_non_git_folder() {
-  local dir=$1
+  local dir="$1"
 
   if [[ ! -d "${dir}/.git" ]] ; then
     log_info "${dir} has no support of .services"
@@ -123,17 +123,61 @@ is_non_git_folder() {
   return 0
 }
 
+generate_list_to_process() {
+  local dir="$1"
+
+  if ${FORCE_ALL_SERVICES} ; then
+    log_debug "calling function find_all_services()"
+    find_all_services "${dir}"
+  else
+    log_debug "calling function find_all_changed_services()"
+    find_all_changed_services "${dir}"
+  fi
+}
+
+find_all_services() {
+  local dir="$1"
+
+  while read -r file ; do
+    if [ ! -r "${file}" ] ; then
+      log_error "Cannot read file '${file}'"
+    fi
+    log_debug "unifyer ${file}"
+    unifyer "${file}"
+  done < <(find "${SERVICES_POOL_BASE}/${dir}" -name \*.services)
+}
+
+find_all_changed_services() {
+  local dir="$1"
+
+  log_debug "${FUNCNAME[0]}(): Working in ${dir}"
+  pushd "${dir}" >/dev/null
+
+  for file in $(git status --porcelain | sed 's/^...//') ; do
+    if [ -r "$file" ] && [ -r "${SERVICES_POOL_BASE}/${dir}/${file}".services ] ; then
+      log_debug "Storing ${SERVICES_POOL_BASE}/${dir}/${file}.services in '${TMPFILE}'"
+      echo "${SERVICES_POOL_BASE}/${dir}/${file}".services
+    elif [ -r "$file" ] && [ -r "${SERVICES_POOL_BASE}/${dir}/$(dirname "$file")"/ngcpcfg.services ] ; then
+      log_debug "Storing ${SERVICES_POOL_BASE}/${dir}/$(dirname "$file")/ngcpcfg.services in '${TMPFILE}'"
+      echo "${SERVICES_POOL_BASE}/${dir}/$(dirname "$file")/ngcpcfg.services"
+    fi
+  done | sort -u >> "${TMPFILE}"
+
+  popd >/dev/null
+}
+
 # main script
 
 DRYRUN='false'
+FORCE_ALL_SERVICES='false'
+
 if [[ "${1:-}" == "test" ]] || [[ "${1:-}" == "--dry-run" ]]; then
   DRYRUN='true'
-elif [[ -n "${1:-}" ]] ; then
-  log_error "Unsupported option(s) given: $*"
-  log_info  "Did you mean '--dry-run'?"
-  exit 1
+elif [[ "${1:-}" == "--force-all-services" ]] ; then
+  FORCE_ALL_SERVICES='true'
 fi
 log_debug "DRYRUN = $DRYRUN"
+log_debug "FORCE_ALL_SERVICES = $FORCE_ALL_SERVICES"
 
 log_debug "systed_daemon_reload_preset function"
 systed_daemon_reload_preset
@@ -144,17 +188,8 @@ log_debug "TMPFILE = $TMPFILE"
 for dir in ${CONFIG_POOL} ; do
   is_absolute_path "${dir}" || continue
   is_non_git_folder "${dir}" || continue
-  pushd "${dir}" >/dev/null
-  for file in $(git status --porcelain | sed 's/^...//') ; do
-    if [ -r "$file" ] && [ -r "${SERVICES_POOL_BASE}/${dir}/${file}".services ] ; then
-      log_debug "Storing ${SERVICES_POOL_BASE}/${dir}/${file}.services in '${TMPFILE}'"
-      echo "${SERVICES_POOL_BASE}/${dir}/${file}".services
-    elif [ -r "$file" ] && [ -r "${SERVICES_POOL_BASE}/${dir}/$(dirname "$file")"/ngcpcfg.services ] ; then
-      log_debug "Storing ${SERVICES_POOL_BASE}/${dir}/$(dirname "$file")/ngcpcfg.services in '${TMPFILE}'"
-      echo "${SERVICES_POOL_BASE}/${dir}/$(dirname "$file")/ngcpcfg.services"
-    fi
-  done | sort -u >> "${TMPFILE}"
-  popd >/dev/null
+
+  generate_list_to_process "${dir}"
 done
 
 if ! [ -s "$TMPFILE" ] ; then
