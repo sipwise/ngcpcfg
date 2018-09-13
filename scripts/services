@@ -21,19 +21,6 @@ fi
 
 # functions
 
-# unify service calls
-unifyer() {
-  file="$1"
-
-  # make sure services are listed just once to
-  # avoid re-execution of services (which will
-  # happen if /etc/foo/ngcpcfg.services exists
-  # and several file inside /etc/foo are modified)
-  if ! grep -q "^${file}$" "$TMPFILE" ; then
-    echo "$file" >> "$TMPFILE"
-  fi
-}
-
 exec_wrapper() {
   if $DRYRUN ; then
     log_info "TEST MODE: Would execute action for ${line}"
@@ -70,6 +57,7 @@ normalize_files() {
 
 # restart monit services before the rest (see MT#9971)
 # restart HA just after monit (see MT#17163)
+# restart other services in alphabetical order
 sort_service_list() {
   SORTED_LIST="$(mktemp)"
   log_debug "SORTED_LIST = $SORTED_LIST"
@@ -79,7 +67,7 @@ sort_service_list() {
   grep "${SERVICES_POOL_BASE}"/etc/ha.d/'.*services' "${NORMALIZED_FILES}" >> \
     "${SORTED_LIST}" || true
   grep -v "${SERVICES_POOL_BASE}"/etc/monit/'.*services' "${NORMALIZED_FILES}"| \
-    grep -v "${SERVICES_POOL_BASE}"/etc/ha.d/'.*services' >> \
+    grep -v "${SERVICES_POOL_BASE}"/etc/ha.d/'.*services' | sort >> \
     "${SORTED_LIST}" || true
 }
 
@@ -159,13 +147,13 @@ for dir in ${CONFIG_POOL} ; do
   pushd "${dir}"
   for file in $(git status --porcelain | sed 's/^...//') ; do
     if [ -r "$file" ] && [ -r "${SERVICES_POOL_BASE}/${dir}/${file}".services ] ; then
-      log_debug "unifyer ${SERVICES_POOL_BASE}/${dir}/${file}.services"
-      unifyer "${SERVICES_POOL_BASE}/${dir}/${file}".services
+      log_debug "Storing ${SERVICES_POOL_BASE}/${dir}/${file}.services in '${TMPFILE}'"
+      echo "${SERVICES_POOL_BASE}/${dir}/${file}".services
     elif [ -r "$file" ] && [ -r "${SERVICES_POOL_BASE}/${dir}/$(dirname "$file")"/ngcpcfg.services ] ; then
-      log_debug "unifyer ${SERVICES_POOL_BASE}/${dir}/$(dirname "$file")/ngcpcfg.services"
-      unifyer "${SERVICES_POOL_BASE}/${dir}/$(dirname "$file")/ngcpcfg.services"
+      log_debug "Storing ${SERVICES_POOL_BASE}/${dir}/$(dirname "$file")/ngcpcfg.services in '${TMPFILE}'"
+      echo "${SERVICES_POOL_BASE}/${dir}/$(dirname "$file")/ngcpcfg.services"
     fi
-  done
+  done | sort -u >> "${TMPFILE}"
   popd
 done
 
