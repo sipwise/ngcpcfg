@@ -62,7 +62,7 @@ normalize_files() {
   NORMALIZED_FILES="$(mktemp)"
   log_debug "NORMALIZED_FILES = $NORMALIZED_FILES"
 
-  while read line ; do
+  while read -r line ; do
     # shellcheck disable=SC2001
     echo "$line" | sed -e 's_\./_/_g ; s_//_/_g' >> "${NORMALIZED_FILES}"
   done < "$TMPFILE"
@@ -89,7 +89,7 @@ execute() {
   log_info "Starting enqueued services actions mode"
   ngcp-service queue-start
 
-  while read line ; do
+  while read -r line ; do
     exec_wrapper "$line"
   done < "${SORTED_LIST}"
 
