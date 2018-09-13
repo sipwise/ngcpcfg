@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9af37de9_1d634e1c",
+        "filename": "scripts/services",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-09-13T21:22:09Z",
+      "side": 1,
+      "message": "Not related to your change, but since you use it... it should be \"uniquifier\" or something like that, although it sounds strange, but unifier is another thing (make things work together well, in unison, or change to have same appearance, etc).\n\nBut this probably can be changed to use \"sort -u\", it\u0027s an idiom that more people will understand easily, and this function maybe can be deleted completely.",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 1
+      },
+      "revId": "1d237e3e167b125e70f7c0bdc6c7ceee0459414e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9af37de9_fd676a23",
+        "filename": "scripts/services",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-09-13T21:22:09Z",
+      "side": 1,
+      "message": "So this can use:\n\n  find \"${SERVICES_POOL_BASE}/${dir}\" -name \u0027*.services\u0027 | sort -u\n\nor if a previous file exists:\n\n  (cat existing_file; find \"${SERVICES_POOL_BASE}/${dir}\" -name \u0027*.services\u0027) | sort -u\n\nand be clearer than this function+unifyer(), IMO.",
+      "range": {
+        "startLine": 150,
+        "startChar": 0,
+        "endLine": 160,
+        "endChar": 1
+      },
+      "revId": "1d237e3e167b125e70f7c0bdc6c7ceee0459414e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9af37de9_dd6ca60a",
+        "filename": "scripts/services",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-09-13T21:22:09Z",
+      "side": 1,
+      "message": "I\u0027d change it for something like:\n\n  for file in $(git status --porcelain | sed \u0027s/^...//\u0027) ; do\n    if [ -r \"$file\" ]; then\n      if [ -r \"${SERVICES_POOL_BASE}/${dir}/${file}\".services ] ; then\n        echo \"${SERVICES_POOL_BASE}/${dir}/${file}\".services\n      elif [ -r \"${SERVICES_POOL_BASE}/${dir}/$(dirname \"$file\")\"/ngcpcfg.services ] ; then\n      echo \"${SERVICES_POOL_BASE}/${dir}/$(dirname \"$file\")/ngcpcfg.services\"\n    fi\n  done | sort -u\n\nNote the last line for making it unique.",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 6
+      },
+      "revId": "1d237e3e167b125e70f7c0bdc6c7ceee0459414e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
