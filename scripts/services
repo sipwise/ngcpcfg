@@ -135,11 +135,55 @@ is_non_git_folder() {
   return 0
 }
 
+generate_list_to_process() {
+  local dir=$1
+
+  if ${FORCE_ALL_SERVICES} ; then
+    log_debug "calling function find_all_services()"
+    find_all_services "${dir}"
+  else
+    log_debug "calling function find_all_changed_services()"
+    find_all_changed_services "${dir}"
+  fi
+}
+
+find_all_services() {
+  local dir=$1
+
+  cd "${dir}"
+  while read -r file ; do
+    if [ ! -r "${file}" ] ; then
+      log_error "Cannot read file '${file}'"
+    fi
+    log_debug "unifyer ${SERVICES_POOL_BASE}/${dir}/${file}.services"
+    unifyer "${SERVICES_POOL_BASE}/${dir}/${file}".services
+  done < "$(find "${SERVICES_POOL_BASE}/${dir}" -name \*.services)"
+}
+
+find_all_changed_services() {
+  local dir=$1
+
+  cd "${dir}"
+  for file in $(git status --porcelain | sed 's/^...//') ; do
+    if [ -r "$file" ] && [ -r "${SERVICES_POOL_BASE}/${dir}/${file}".services ] ; then
+      log_debug "unifyer ${SERVICES_POOL_BASE}/${dir}/${file}.services"
+      unifyer "${SERVICES_POOL_BASE}/${dir}/${file}".services
+    elif [ -r "$file" ] && [ -r "${SERVICES_POOL_BASE}/${dir}/$(dirname "$file")"/ngcpcfg.services ] ; then
+      log_debug "unifyer ${SERVICES_POOL_BASE}/${dir}/$(dirname "$file")/ngcpcfg.services"
+      unifyer "${SERVICES_POOL_BASE}/${dir}/$(dirname "$file")/ngcpcfg.services"
+    fi
+  done
+}
+
 # main script
 
 DRYRUN='false'
+FORCE_ALL_SERVICES='false'
+
 if [[ "${1:-}" == "test" ]] || [[ "${1:-}" == "--dry-run" ]]; then
   DRYRUN='true'
+elif [[ "${1:-}" == "--force-all-services" ]] ; then
+  FORCE_ALL_SERVICES='true'
 elif [[ -n "${1:-}" ]] ; then
   log_error "Unsupported option(s) given: $*"
   log_info  "Did you mean '--dry-run'?"
@@ -156,16 +200,8 @@ log_debug "TMPFILE = $TMPFILE"
 for dir in ${CONFIG_POOL} ; do
   is_apsolute_path "${dir}" || continue
   is_non_git_folder "${dir}" || continue
-  cd "${dir}"
-  for file in $(git status --porcelain | sed 's/^...//') ; do
-    if [ -r "$file" ] && [ -r "${SERVICES_POOL_BASE}/${dir}/${file}".services ] ; then
-      log_debug "unifyer ${SERVICES_POOL_BASE}/${dir}/${file}.services"
-      unifyer "${SERVICES_POOL_BASE}/${dir}/${file}".services
-    elif [ -r "$file" ] && [ -r "${SERVICES_POOL_BASE}/${dir}/$(dirname "$file")"/ngcpcfg.services ] ; then
-      log_debug "unifyer ${SERVICES_POOL_BASE}/${dir}/$(dirname "$file")/ngcpcfg.services"
-      unifyer "${SERVICES_POOL_BASE}/${dir}/$(dirname "$file")/ngcpcfg.services"
-    fi
-  done
+
+  generate_list_to_process "${dir}"
 done
 
 if ! [ -s "$TMPFILE" ] ; then
