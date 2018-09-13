@@ -113,6 +113,28 @@ systed_daemon_reload_preset() {
   fi
 }
 
+is_absolute_path() {
+  local dir=$1
+
+  if ! [[ "${dir}" =~ ^/ ]] ; then
+    log_error "${dir} is not an absolute path"
+    return 1
+  fi
+
+  return 0
+}
+
+is_non_git_folder() {
+  local dir=$1
+
+  if [[ ! -d "${dir}/.git" ]] ; then
+    log_info "${dir} has no support of .services"
+    return 1
+  fi
+
+  return 0
+}
+
 # main script
 
 DRYRUN='false'
@@ -132,15 +154,9 @@ TMPFILE="$(mktemp)"
 log_debug "TMPFILE = $TMPFILE"
 
 for dir in ${CONFIG_POOL} ; do
-  if ! [[ "${dir}" =~ ^/ ]] ; then
-    log_error "${dir} is not an absolute path"
-    continue
-  fi
+  is_absolute_path "${dir}" || continue
+  is_non_git_folder "${dir}" || continue
   pushd "${dir}"
-  if [ ! -d .git ] ; then
-    log_info "$dir has no support of .services"
-    continue
-  fi
   for file in $(git status --porcelain | sed 's/^...//') ; do
     if [ -r "$file" ] && [ -r "${SERVICES_POOL_BASE}/${dir}/${file}".services ] ; then
       log_debug "unifyer ${SERVICES_POOL_BASE}/${dir}/${file}.services"
