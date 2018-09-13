@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9af37de9_225ef3e9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-09-13T09:12:22Z",
+      "side": 1,
+      "message": "s/is rely/relies/",
+      "revId": "7a9179ac43e0ac078e330b4b4be7a02401f1a3a8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9af37de9_0263efb2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-09-13T09:12:22Z",
+      "side": 1,
+      "message": "s/will continue working/works/ (or operates or runs)",
+      "revId": "7a9179ac43e0ac078e330b4b4be7a02401f1a3a8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9af37de9_c25cc7ef",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-09-13T09:12:22Z",
+      "side": 1,
+      "message": "s/so far we still an ability/though we still need the ability/",
+      "revId": "7a9179ac43e0ac078e330b4b4be7a02401f1a3a8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
