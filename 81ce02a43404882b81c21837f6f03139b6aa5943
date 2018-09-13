@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9af37de9_7de49a0c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-09-13T15:04:13Z",
+      "side": 1,
+      "message": "this sounds like etckeeper is broken, I\u0027d suggest to instead mention our underlying problem (that etckeeper gets active during package installation and we can\u0027t rely on it therefore tracking state)",
+      "revId": "81ce02a43404882b81c21837f6f03139b6aa5943",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9af37de9_dddca648",
+        "filename": "scripts/services",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-09-13T15:04:13Z",
+      "side": 1,
+      "message": "I\u0027d like to have the $dir available in log_debug",
+      "revId": "81ce02a43404882b81c21837f6f03139b6aa5943",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9af37de9_9de73e12",
+        "filename": "scripts/services",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-09-13T15:04:13Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "81ce02a43404882b81c21837f6f03139b6aa5943",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9af37de9_3dee12ed",
+        "filename": "scripts/services",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-09-13T15:04:13Z",
+      "side": 1,
+      "message": "it\u0027s style only, though I\u0027d prefer the \"if ! [ -r ...\" style, to keep it more consistent",
+      "revId": "81ce02a43404882b81c21837f6f03139b6aa5943",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9af37de9_5df1d6cc",
+        "filename": "scripts/services",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-09-13T15:04:13Z",
+      "side": 1,
+      "message": "should we abort then?",
+      "revId": "81ce02a43404882b81c21837f6f03139b6aa5943",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
