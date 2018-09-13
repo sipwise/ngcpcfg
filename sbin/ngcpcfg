@@ -124,6 +124,7 @@ case ${1:-} in
     action "$@" ;;
   --debug)         export DEBUG=1 ;      shift ; "$0" "$@" ;;
   --no-db-sync)    export NO_DB_SYNC=1 ; shift ; "$0" "$@" ;;
+  --no-etckeeper-commit)  export NO_ETCKEEPER_COMMIT=1 ; shift ; "$0" "$@" ;;
   --no-validate)   export NO_VALIDATE=1; shift ; "$0" "$@" ;;
   --no-action-failure) export NO_ACTION_FAILURE=1; shift ; "$0" "$@" ;;
   --no-check-origin) export NO_CHECK_ORIGIN=1; shift ; "$0" "$@" ;;

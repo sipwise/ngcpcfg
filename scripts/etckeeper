@@ -18,6 +18,10 @@ timestamp_replacementchars=''
 . "${FUNCTIONS}"/main
 
 # main script
+if [ -n "${NO_ETCKEEPER_COMMIT:-}" ] ; then
+  log_info 'Skipping "etckeeper commit" as requested'
+  exit 0
+fi
 
 log_debug "cd /etc"
 cd /etc
