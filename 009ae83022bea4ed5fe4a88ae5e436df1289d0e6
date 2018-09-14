@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9af37de9_e180e848",
+        "filename": "scripts/services",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-09-14T07:49:13Z",
+      "side": 1,
+      "message": "Pls use a single style - [[",
+      "range": {
+        "startLine": 130,
+        "startChar": 5,
+        "endLine": 130,
+        "endChar": 6
+      },
+      "revId": "009ae83022bea4ed5fe4a88ae5e436df1289d0e6",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
