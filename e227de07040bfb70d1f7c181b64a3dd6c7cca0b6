@@ -34,6 +34,24 @@
       "revId": "e227de07040bfb70d1f7c181b64a3dd6c7cca0b6",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9af37de9_c154c455",
+        "filename": "scripts/services",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-09-14T09:30:16Z",
+      "side": 1,
+      "message": "\u003e suppress output for both commands \u0027\u0026\u003e/dev/null\u0027\n\nWe might want to see the message that dir could not be changed?",
+      "parentUuid": "9af37de9_0199ac6e",
+      "revId": "e227de07040bfb70d1f7c181b64a3dd6c7cca0b6",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
