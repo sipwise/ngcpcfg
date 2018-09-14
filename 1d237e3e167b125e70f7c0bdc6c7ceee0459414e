@@ -48,6 +48,52 @@
     },
     {
       "key": {
+        "uuid": "9af37de9_a19300a3",
+        "filename": "scripts/services",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-09-14T07:53:02Z",
+      "side": 1,
+      "message": "As it was mentioned in some review - better to use pushd/popd within the function",
+      "range": {
+        "startLine": 166,
+        "startChar": 2,
+        "endLine": 166,
+        "endChar": 4
+      },
+      "revId": "1d237e3e167b125e70f7c0bdc6c7ceee0459414e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9af37de9_8190fc96",
+        "filename": "scripts/services",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-09-14T07:53:02Z",
+      "side": 1,
+      "message": "pls use [[ for \u0027if\u0027",
+      "range": {
+        "startLine": 169,
+        "startChar": 7,
+        "endLine": 169,
+        "endChar": 8
+      },
+      "revId": "1d237e3e167b125e70f7c0bdc6c7ceee0459414e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9af37de9_dd6ca60a",
         "filename": "scripts/services",
         "patchSetId": 5
