@@ -16,6 +16,24 @@
       "revId": "e227de07040bfb70d1f7c181b64a3dd6c7cca0b6",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9af37de9_e102286f",
+        "filename": "scripts/services",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-09-14T09:24:03Z",
+      "side": 1,
+      "message": "Ah, nice point. tnx!",
+      "parentUuid": "9af37de9_0199ac6e",
+      "revId": "e227de07040bfb70d1f7c181b64a3dd6c7cca0b6",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
