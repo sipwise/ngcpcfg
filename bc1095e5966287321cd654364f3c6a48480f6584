@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9af37de9_841daa68",
+        "filename": "scripts/services",
+        "patchSetId": 10
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-09-14T09:56:43Z",
+      "side": 1,
+      "message": "i don\u0027t care too much, feel free to do whatever",
+      "parentUuid": "9af37de9_44ffc201",
+      "revId": "bc1095e5966287321cd654364f3c6a48480f6584",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9af37de9_4118d484",
         "filename": "scripts/services",
         "patchSetId": 10
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "AFAIK, we do not use ${1} for number till 10\nhttps://google.github.io/styleguide/shell.xml?showone\u003dVariable_expansion#Variable_expansion\n\n# Preferred style for \u0027special\u0027 variables:\necho \"Positional: $1\" \"$5\" \"$3\"\n# Braces necessary:\necho \"many parameters: ${10}\"",
       "parentUuid": "9af37de9_211dd073",
+      "revId": "bc1095e5966287321cd654364f3c6a48480f6584",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9af37de9_641ac670",
+        "filename": "scripts/services",
+        "patchSetId": 10
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-09-14T09:56:43Z",
+      "side": 1,
+      "message": "ack",
+      "parentUuid": "9af37de9_8106bc1e",
       "revId": "bc1095e5966287321cd654364f3c6a48480f6584",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
