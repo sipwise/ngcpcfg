@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9af37de9_819fdc5e",
+        "filename": "scripts/services",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-09-14T08:56:51Z",
+      "side": 1,
+      "message": "I was thinking to remove unifyer() too, but didn\u0027t want to mix new feature implementation with refactoring :-D\nCommit should be atomic. Also it was PoC to test it. I will prepare something here.",
+      "parentUuid": "9af37de9_1d634e1c",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 1
+      },
+      "revId": "1d237e3e167b125e70f7c0bdc6c7ceee0459414e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9af37de9_fd676a23",
         "filename": "scripts/services",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2018-09-13T21:22:09Z",
       "side": 1,
       "message": "So this can use:\n\n  find \"${SERVICES_POOL_BASE}/${dir}\" -name \u0027*.services\u0027 | sort -u\n\nor if a previous file exists:\n\n  (cat existing_file; find \"${SERVICES_POOL_BASE}/${dir}\" -name \u0027*.services\u0027) | sort -u\n\nand be clearer than this function+unifyer(), IMO.",
+      "range": {
+        "startLine": 150,
+        "startChar": 0,
+        "endLine": 160,
+        "endChar": 1
+      },
+      "revId": "1d237e3e167b125e70f7c0bdc6c7ceee0459414e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9af37de9_a192e055",
+        "filename": "scripts/services",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-09-14T08:56:51Z",
+      "side": 1,
+      "message": "see above",
+      "parentUuid": "9af37de9_fd676a23",
       "range": {
         "startLine": 150,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9af37de9_01abec8a",
+        "filename": "scripts/services",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-09-14T08:56:51Z",
+      "side": 1,
+      "message": "Done in previous review, rebased here",
+      "parentUuid": "9af37de9_a19300a3",
+      "range": {
+        "startLine": 166,
+        "startChar": 2,
+        "endLine": 166,
+        "endChar": 4
+      },
+      "revId": "1d237e3e167b125e70f7c0bdc6c7ceee0459414e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9af37de9_8190fc96",
         "filename": "scripts/services",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "9af37de9_e1afc892",
+        "filename": "scripts/services",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-09-14T08:56:51Z",
+      "side": 1,
+      "message": "I have unitied whole file in the review on TOP of this review.",
+      "parentUuid": "9af37de9_8190fc96",
+      "range": {
+        "startLine": 169,
+        "startChar": 7,
+        "endLine": 169,
+        "endChar": 8
+      },
+      "revId": "1d237e3e167b125e70f7c0bdc6c7ceee0459414e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9af37de9_dd6ca60a",
         "filename": "scripts/services",
         "patchSetId": 5
@@ -105,6 +201,30 @@
       "writtenOn": "2018-09-13T21:22:09Z",
       "side": 1,
       "message": "I\u0027d change it for something like:\n\n  for file in $(git status --porcelain | sed \u0027s/^...//\u0027) ; do\n    if [ -r \"$file\" ]; then\n      if [ -r \"${SERVICES_POOL_BASE}/${dir}/${file}\".services ] ; then\n        echo \"${SERVICES_POOL_BASE}/${dir}/${file}\".services\n      elif [ -r \"${SERVICES_POOL_BASE}/${dir}/$(dirname \"$file\")\"/ngcpcfg.services ] ; then\n      echo \"${SERVICES_POOL_BASE}/${dir}/$(dirname \"$file\")/ngcpcfg.services\"\n    fi\n  done | sort -u\n\nNote the last line for making it unique.",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 6
+      },
+      "revId": "1d237e3e167b125e70f7c0bdc6c7ceee0459414e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9af37de9_c195e440",
+        "filename": "scripts/services",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-09-14T08:56:51Z",
+      "side": 1,
+      "message": "Sure, but I do not want to mix redesign with new feature implementation, lets do it in a separate commit where we try to remove unifier()",
+      "parentUuid": "9af37de9_dd6ca60a",
       "range": {
         "startLine": 168,
         "startChar": 0,
