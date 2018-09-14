@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9af37de9_4163341b",
+        "filename": "scripts/services",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-09-14T09:39:43Z",
+      "side": 1,
+      "message": "\"${1}\"",
+      "revId": "1a2456da05b5edd011a436e6ae7376b8aa575a95",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9af37de9_016d2c04",
+        "filename": "scripts/services",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-09-14T09:39:43Z",
+      "side": 1,
+      "message": "same",
+      "revId": "1a2456da05b5edd011a436e6ae7376b8aa575a95",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
