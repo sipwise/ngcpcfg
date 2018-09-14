@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9af37de9_e1ec6891",
+        "filename": "scripts/services",
+        "patchSetId": 9
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-09-14T09:35:45Z",
+      "side": 1,
+      "message": "this should go to https://gerrit.mgm.sipwise.com/#/c/23493?",
+      "revId": "c5d53d713adcdd2caaa22abcdd49f2050e9843e0",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9af37de9_c102843e",
+        "filename": "scripts/services",
+        "patchSetId": 9
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-09-14T09:35:45Z",
+      "side": 1,
+      "message": "same",
+      "revId": "c5d53d713adcdd2caaa22abcdd49f2050e9843e0",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9af37de9_e1a3484e",
+        "filename": "scripts/services",
+        "patchSetId": 9
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-09-14T09:35:45Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we use either log_warn or abort when using log_error?",
+      "revId": "c5d53d713adcdd2caaa22abcdd49f2050e9843e0",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
