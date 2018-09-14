@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9af37de9_2194b035",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-09-14T09:04:46Z",
+      "side": 1,
+      "message": "Unified",
+      "revId": "539cfaea04d356353a2de4cf8d9c3ed26d8fd31d",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9af37de9_a1a0a091",
+        "filename": "scripts/services",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-09-14T09:04:46Z",
+      "side": 1,
+      "message": "we usually use \"if ! [ ...\" BTW in ngcpcfg",
+      "revId": "539cfaea04d356353a2de4cf8d9c3ed26d8fd31d",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9af37de9_61aab872",
+        "filename": "scripts/services",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-09-14T09:04:46Z",
+      "side": 1,
+      "message": "mika@lunge ~sgit/ngcpcfg (git)-[master|s] % g grep \u0027] ; \u0027 | wc -l\n162\nmika@lunge ~sgit/ngcpcfg (git)-[master|s] % g grep \u0027]; \u0027 | wc -l \n15",
+      "revId": "539cfaea04d356353a2de4cf8d9c3ed26d8fd31d",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
