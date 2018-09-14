@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9af37de9_21e270d6",
+        "filename": "scripts/services",
+        "patchSetId": 6
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-09-14T09:11:20Z",
+      "side": 1,
+      "message": "either /Working in/ or /Switching to/ :)",
+      "revId": "520c0d4f3fd2c2cf8239c63ccd925f1c93216c30",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
