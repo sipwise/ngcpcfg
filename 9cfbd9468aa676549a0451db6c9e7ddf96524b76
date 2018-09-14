@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9af37de9_c1f8447f",
+        "filename": "scripts/services",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-09-14T09:15:12Z",
+      "side": 1,
+      "message": "It is unified completely here https://gerrit.mgm.sipwise.com/#/c/23532/2\n\nBut will backport here for consistency since I need to fix parent commit anyway",
+      "parentUuid": "9af37de9_c1ca844f",
+      "revId": "9cfbd9468aa676549a0451db6c9e7ddf96524b76",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9af37de9_a1c78044",
         "filename": "scripts/services",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-09-14T09:08:57Z",
       "side": 1,
       "message": "if [[ !",
+      "revId": "9cfbd9468aa676549a0451db6c9e7ddf96524b76",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9af37de9_a1f54084",
+        "filename": "scripts/services",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-09-14T09:15:12Z",
+      "side": 1,
+      "message": "correct style AFAIK",
+      "parentUuid": "9af37de9_a1c78044",
       "revId": "9cfbd9468aa676549a0451db6c9e7ddf96524b76",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
