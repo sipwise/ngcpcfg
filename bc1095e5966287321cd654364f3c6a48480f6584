@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9af37de9_44ffc201",
+        "filename": "scripts/services",
+        "patchSetId": 10
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-09-14T09:50:18Z",
+      "side": 1,
+      "message": "new functions with quoted variables were introduced here, should I create separate commit?",
+      "parentUuid": "9af37de9_612cf8ab",
+      "revId": "bc1095e5966287321cd654364f3c6a48480f6584",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9af37de9_4118d484",
         "filename": "scripts/services",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2018-09-14T09:46:46Z",
       "side": 1,
       "message": "same",
+      "revId": "bc1095e5966287321cd654364f3c6a48480f6584",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9af37de9_2404be13",
+        "filename": "scripts/services",
+        "patchSetId": 10
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-09-14T09:50:18Z",
+      "side": 1,
+      "message": "same as above",
+      "parentUuid": "9af37de9_4118d484",
       "revId": "bc1095e5966287321cd654364f3c6a48480f6584",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9af37de9_8106bc1e",
+        "filename": "scripts/services",
+        "patchSetId": 10
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-09-14T09:50:18Z",
+      "side": 1,
+      "message": "AFAIK, we do not use ${1} for number till 10\nhttps://google.github.io/styleguide/shell.xml?showone\u003dVariable_expansion#Variable_expansion\n\n# Preferred style for \u0027special\u0027 variables:\necho \"Positional: $1\" \"$5\" \"$3\"\n# Braces necessary:\necho \"many parameters: ${10}\"",
+      "parentUuid": "9af37de9_211dd073",
+      "revId": "bc1095e5966287321cd654364f3c6a48480f6584",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9af37de9_0112cc62",
         "filename": "scripts/services",
         "patchSetId": 10
@@ -64,6 +118,24 @@
       "writtenOn": "2018-09-14T09:46:46Z",
       "side": 1,
       "message": "\"${1}\"",
+      "revId": "bc1095e5966287321cd654364f3c6a48480f6584",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9af37de9_6103d810",
+        "filename": "scripts/services",
+        "patchSetId": 10
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-09-14T09:50:18Z",
+      "side": 1,
+      "message": "same as above.",
+      "parentUuid": "9af37de9_0112cc62",
       "revId": "bc1095e5966287321cd654364f3c6a48480f6584",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
