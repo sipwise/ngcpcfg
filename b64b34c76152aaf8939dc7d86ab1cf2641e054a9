@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9af37de9_01d1accd",
+        "filename": "scripts/services",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-09-14T09:32:17Z",
+      "side": 1,
+      "message": "I decided to keep it here as additional protection for the refactoring in the future. there is no performance penalty here IMHO, no harm done.",
+      "range": {
+        "startLine": 70,
+        "startChar": 60,
+        "endLine": 70,
+        "endChar": 64
+      },
+      "revId": "b64b34c76152aaf8939dc7d86ab1cf2641e054a9",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
