@@ -68,7 +68,7 @@ if [[ "$a" == "y" ]] || [[ "$a" == "Y" ]] ; then
   # shellcheck disable=SC2086
   rm -f $FILES ; rm -rf /etc/.git
   # make sure we don't leavy any stuff on shared storage
-  rm -rf /var/lib/glusterfs/export/ngcpcfg-share
+  rm -rf /ngcp-data/glusterfs/export/ngcpcfg-share
   rm -rf /mnt/glusterfs/ngcpcfg-share/
 else
   log_info "Skipping as requested."
