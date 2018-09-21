@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9af37de9_0a141cf3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-09-21T06:37:17Z",
+      "side": 1,
+      "message": "s/Clean glustrefs/encrypt: clean glusterfs/",
+      "revId": "e6b3003d9c6591b909efe4fc5ccd77e635bf333b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
