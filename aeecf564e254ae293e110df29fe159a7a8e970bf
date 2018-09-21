@@ -117,6 +117,30 @@
       "revId": "aeecf564e254ae293e110df29fe159a7a8e970bf",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9af37de9_c065d5e1",
+        "filename": "scripts/set",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-09-21T13:11:22Z",
+      "side": 1,
+      "message": "P.S. tested this changes:\n  \nroot@web01a:~# ngcpcfg diff\ndiff --git a/config.yml b/config.yml\nindex 2f465cf..0c181d1 100644\n--- a/config.yml\n+++ b/config.yml\n@@ -13,7 +13,7 @@ asterisk:\n   log:\n     facility: local6\n   rtp:\n-    maxport: 14999\n+    maxport: 14999.2",
+      "parentUuid": "9af37de9_0073ddb2",
+      "range": {
+        "startLine": 47,
+        "startChar": 19,
+        "endLine": 47,
+        "endChar": 28
+      },
+      "revId": "aeecf564e254ae293e110df29fe159a7a8e970bf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
