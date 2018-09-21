@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9af37de9_6a4a8885",
+        "filename": "scripts/set",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-09-21T09:41:56Z",
+      "side": 1,
+      "message": "This should be \"Not quoting...\", I think.",
+      "revId": "79fa29bd6dbaa020bcc9c4216545a0d5f7094f86",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
