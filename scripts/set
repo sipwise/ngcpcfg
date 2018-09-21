@@ -47,7 +47,7 @@ if [[ ${value} =~ ^\'.*\'$ ]] ; then
 else
   log_debug "\$value is NOT quoted, doing so if necessary."
   case ${value} in
-    [0-9]*|\[*\]|\{*\})
+    ^[0-9]*$|^\[.*\]$|^\{.*\}$)
       log_debug "Do not quoting \$value for integers, arrays and hashes."
       ;;
     *)
