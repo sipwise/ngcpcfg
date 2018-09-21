@@ -93,6 +93,30 @@
       "revId": "aeecf564e254ae293e110df29fe159a7a8e970bf",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9af37de9_0073ddb2",
+        "filename": "scripts/set",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-09-21T13:10:30Z",
+      "side": 1,
+      "message": "tested it a bit, I would keep it AS IS.\nwe have validation schema where we say int or str.\n1.1 must be \u0027str\u0027 as it cannot be validated as int. so better to quote it as it is str:\n  \n2018-09-21 15:10:10: Error: Invalid schema detected for /etc/ngcp-config/config.yml\n/etc/ngcp-config/config.yml#0: INVALID\n  - [/asterisk/rtp/maxport] Non-valid data \u002714999.2\u0027, expected an int",
+      "parentUuid": "9af37de9_40520515",
+      "range": {
+        "startLine": 47,
+        "startChar": 19,
+        "endLine": 47,
+        "endChar": 28
+      },
+      "revId": "aeecf564e254ae293e110df29fe159a7a8e970bf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
