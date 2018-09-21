@@ -46,6 +46,29 @@
       "revId": "aeecf564e254ae293e110df29fe159a7a8e970bf",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9af37de9_2d6dba04",
+        "filename": "scripts/set",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2018-09-21T12:50:34Z",
+      "side": 1,
+      "message": "Maybe include a period to also allow decimal numbers?",
+      "range": {
+        "startLine": 47,
+        "startChar": 19,
+        "endLine": 47,
+        "endChar": 28
+      },
+      "revId": "aeecf564e254ae293e110df29fe159a7a8e970bf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
