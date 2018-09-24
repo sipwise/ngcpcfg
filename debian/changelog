@@ -1,3 +1,35 @@
+ngcp-ngcpcfg (7.0.0.0+0~mr7.0.0.0) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [d50b168] TT#39609 cdr-export: furnished charge info and HEADER_xy fields
+
+  [ Guillem Jover ]
+  * [ecbb5e9] TT#36167 Add support for enqueued ngcp-services
+  * [236b56d] TT#43306 NGCP::Template::Object: Only match li_dist exactly
+  * [769ef92] TT#37257 NGCP::Template::Object: Add new ngcp.get_ssh_pub_key function
+
+  [ Alexander Lutay ]
+  * [425540d] TT#42706 Add ngcpcfg libraries: get_ngcp_hosts/get_ngcp_neighbours
+  * [ffedf0a] TT#43055 ngcp-network-validator ignore empty duplicate IP/MAC in network.yml
+  * [bc8ae9e] TT#43306 Workaround argv.role='*' case in ngcp.has_role()
+  * [84e3367] TT#8405 Enable YML schema validation on 'ngcpcfg check/build/apply'
+  * [8e43bf3] TT#38200 Add libngcp-template-perl to debian/.gitignore
+  * [e72faea] TT#44061 Reorder all functions in scripts/services on top of the script
+  * [89fd54e] TT#44061 Always reload systemd daemon and preset all units
+  * [5bc3385] TT#42869 Revert "MT#21671 add get_ndb_ips"
+  * [4b71ba3] TT#37257 Fix shellcheck warning: read without -r will mangle backslashes. [SC2162]
+  * [7fa3b63] TT#37257 Fix unnecessary subshell call and remove 'shellcheck disable'
+  * [1a2456d] TT#37257 Structure the code inside scripts/services for further refactoring
+  * [b64b34c] TT#37257 Restart services in alphabetical order and remove unifyer()
+  * [bc1095e] TT#37257 Add option 'ngcpcfg apply --force-all-services' to force all services restart
+  * [474b5bd] TT#37257 Unified scripts/services to Sipwise/Google shell style
+  * [dfb0053] TT#37257 encrypt: clean glusterfs data in new data storage '/ngcp-data/glusterfs/'
+  * [203cdf9] TT#44516 Fix quoting logic for script 'set' for values like '10G'
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 24 Sep 2018 18:58:05 +0200
+
 ngcp-ngcpcfg (6.5.0.0+0~mr6.5.0.0) unstable; urgency=medium
 
   [ Guillem Jover ]
