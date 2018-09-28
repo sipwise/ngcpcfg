@@ -67,6 +67,7 @@ my $schema_iface = YAML::XS::LoadFile($schema_tmpl_iface_file)
 
 # Data to track some manual out-of-schema validation.
 my %miss_peer;
+my %miss_iface;
 my %dupe_dbnode;
 my %dupe_ip;
 my %dupe_mac;
@@ -122,6 +123,11 @@ foreach my $hostname (sort keys %{$yaml->{hosts}}) {
 
     # Fill the interface entries.
     foreach my $iface (sort @{$host->{interfaces}}) {
+        if (not exists $host->{$iface}) {
+            $miss_iface{$iface}++;
+            next;
+        }
+
         # Manual interface checks.
         if (defined $host->{$iface}->{ip} and
             $host->{$iface}->{ip} ne '' and
@@ -202,6 +208,8 @@ foreach my $hostname (sort keys %{$yaml->{hosts}}) {
     my $hostmap = $schema->{mapping}->{hosts}->{mapping}->{$hostname};
 
     foreach my $iface (sort @{$host->{interfaces}}) {
+        next unless exists $host->{$iface};
+
         foreach my $slave (split ' ', $host->{$iface}->{bond_slaves} // '') {
             my $slavemap = $hostmap->{mapping}->{$slave};
 
@@ -236,6 +244,7 @@ eval {
 
 # Perform out-of-schema checks.
 $errors += miss_check(\%miss_peer, '[/hosts/<host>] Missing peer');
+$errors += miss_check(\%miss_iface, '[/hosts/<host>/<iface>] Missing interface');
 $errors += dupe_check(\%dupe_dbnode, '[/hosts/<host>/dbnode] Duplicate dbnode index');
 $errors += dupe_check(\%dupe_ip, '[/hosts/<host>/<iface>/ip] Duplicate interface IP');
 $errors += dupe_check(\%dupe_mac, '[/hosts/<host>/<iface>/hwaddr] Duplicate interface MAC');
