@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9af37de9_6b4f2593",
+        "filename": "sbin/ngcp-network-validator",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-09-28T11:47:53Z",
+      "side": 1,
+      "message": "Maybe:\n  \nMissing interface description defined in \u0027/hosts/\u003chost\u003e/interfaces\u0027",
+      "range": {
+        "startLine": 247,
+        "startChar": 61,
+        "endLine": 247,
+        "endChar": 78
+      },
+      "revId": "b6f61c80109a1c0bba926fc0ffdd5721598dc9b3",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
