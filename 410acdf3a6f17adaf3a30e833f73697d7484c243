@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9af37de9_ce55ffc6",
+        "filename": "sbin/ngcp-network-validator",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-09-28T14:21:37Z",
+      "side": 1,
+      "message": "I think it is a typo here,\n  \n- [/\u003chosts\u003e/\u003chost\u003e/interfaces]\n+ [/hosts/\u003chost\u003e/interfaces]",
+      "range": {
+        "startLine": 247,
+        "startChar": 108,
+        "endLine": 247,
+        "endChar": 115
+      },
+      "revId": "410acdf3a6f17adaf3a30e833f73697d7484c243",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
