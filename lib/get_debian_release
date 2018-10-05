@@ -15,9 +15,9 @@
     $debian_codename = 'jessie';
   } elsif ($debian_version =~ /^9\.*/) {
     $debian_codename = 'stretch';
-  } elsif ($debian_version =~ /^10\.*/) {
+  } elsif ($debian_version =~ /(^10\.*)|(^buster.*)/) {
     $debian_codename = 'buster';
-  } elsif ($debian_version =~ /^11\.*/) {
+  } elsif ($debian_version =~ /(^11\.*)|(^bullseye.*)/) {
     $debian_codename = 'bullseye';
   }
   die "Fatal error retrieving Debian release codename [$debian_codename]" unless length $debian_codename;
