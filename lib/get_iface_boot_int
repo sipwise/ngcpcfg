@@ -1,0 +1,26 @@
+[%
+# vi: ft=tt2
+
+# Returns the number of physical device with boot_int.
+#
+# @param argv.host      The current host for IP interface name mapping.
+# @return out           The interface number.
+
+out = '';
+FOREACH iface IN hosts.${argv.host}.interfaces;
+  FOREACH realiface IN hosts.${argv.host}.keys;
+    NEXT IF realiface != iface;
+    NEXT UNLESS hosts.${argv.host}.$realiface.type.grep('^boot_int$').size();
+    IF hosts.${argv.host}.$realiface.bond_slaves.size();
+      boot_if = hosts.${argv.host}.$realiface.bond_slaves;
+    ELSE;
+      boot_if = hosts.${argv.host}.$realiface;
+    END;
+  END;
+END;
+-%]
+[% PERL -%]
+  my $boot_if = "[% boot_if %]";
+  $boot_if =~ s/^.+(\d+).+$/$1/;
+  $stash->set(out => $boot_if);
+[% END -%]
