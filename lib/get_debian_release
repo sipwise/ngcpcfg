@@ -19,6 +19,8 @@
     $debian_codename = 'buster';
   } elsif ($debian_version =~ /^11\.*/) {
     $debian_codename = 'bullseye';
+  } elsif ($debian_version =~ /^[[:alnum:]]+\.*\/sid/) {
+    $debian_codename = (split /\//, $debian_version, 2)[0];
   }
   die "Fatal error retrieving Debian release codename [$debian_codename]" unless length $debian_codename;
   die "Fatal error retrieving Debian release version [$debian_version]" unless length $debian_version;
