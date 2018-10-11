@@ -15,7 +15,7 @@ console_output() {
 
   # indent depending on number of characters in date output
   timestamp_replacementchars="$(printf -- "%s: " "$timestamp" | sed 's/./ /g')"
-  printf -- "$timestamp: $*"
+  printf -- "$timestamp $HNAME: $*"
 }
 # }}}
 
