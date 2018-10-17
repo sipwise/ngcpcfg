@@ -162,18 +162,18 @@ foreach my $hostname (sort keys %{$yaml->{hosts}}) {
         # Consistency checks.
         if (defined $host->{$iface}->{dhcp}) {
             $ifacemap->{mapping}->{ip}->{required} = 'no';
+            $ifacemap->{mapping}->{netmask}->{required} = 'no';
             $ifacemap->{mapping}->{v6ip}->{required} = 'no';
         } elsif (defined $host->{$iface}->{ip}) {
             $ifacemap->{mapping}->{ip}->{required} = 'yes';
+            $ifacemap->{mapping}->{netmask}->{required} = 'yes';
             $ifacemap->{mapping}->{v6ip}->{required} = 'no';
         } elsif (defined $host->{$iface}->{v6ip}) {
             $ifacemap->{mapping}->{ip}->{required} = 'no';
+            $ifacemap->{mapping}->{netmask}->{required} = 'no';
             $ifacemap->{mapping}->{v6ip}->{required} = 'yes';
         }
 
-        if (defined $host->{$iface}->{ip}) {
-            $ifacemap->{mapping}->{netmask}->{required} = 'yes';
-        }
         if (defined $host->{$iface}->{netmask} or
             (defined $host->{$iface}->{shared_ip} and
              @{$host->{$iface}->{shared_ip}}) or
