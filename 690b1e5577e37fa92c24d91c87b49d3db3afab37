@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ad58531_3362d0d9",
+        "filename": "sbin/ngcp-network-validator",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-10-17T13:16:10Z",
+      "side": 1,
+      "message": "Couldn\u0027t we move this between lines 176 and 178 then?",
+      "revId": "690b1e5577e37fa92c24d91c87b49d3db3afab37",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
