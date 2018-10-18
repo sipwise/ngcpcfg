@@ -16,6 +16,24 @@
       "revId": "690b1e5577e37fa92c24d91c87b49d3db3afab37",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad58531_7320584a",
+        "filename": "sbin/ngcp-network-validator",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-10-18T07:49:37Z",
+      "side": 1,
+      "message": "Good point!",
+      "parentUuid": "5ad58531_3362d0d9",
+      "revId": "690b1e5577e37fa92c24d91c87b49d3db3afab37",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
