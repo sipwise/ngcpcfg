@@ -1,3 +1,19 @@
+ngcp-ngcpcfg (6.4.2.1+0~mr6.4.2.1) unstable; urgency=medium
+
+  [ Alexander Lutay ]
+  * [caa52b6] TT#43055 ngcp-network-validator ignore empty duplicate IP/MAC in network.yml
+  * [0266da6] TT#43306 Workaround argv.role='*' case in ngcp.has_role()
+  * [ea177b9] TT#44061 Reorder all functions in scripts/services on top of the script
+  * [1cf7c9b] TT#44061 Always reload systemd daemon and preset all units
+
+  [ Guillem Jover ]
+  * [a68a400] TT#44257 Improve reporting on missing interface definitions
+  * [8be6267] TT#45728 Stop requiring netmask when we do not require ip
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 23 Oct 2018 14:18:23 +0200
+
 ngcp-ngcpcfg (6.4.2.0+0~mr6.4.2.0) unstable; urgency=medium
 
   * New release.
