@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5ad58531_c53f35d5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-10-29T12:57:49Z",
+      "side": 1,
+      "message": "\u003e there are tickets in Mantis were we tried to enable error detection\n \u003e it tt2 templates toolkit. The problem comes from non-initialized\n \u003e variables which we use a lot and they are reported as\n \u003e warnings/errors :-(\n\nHmm, then if something like that happens, we can fine-tune the grep to exclude errors in those cases?\n\nOr do you think that it\u0027s better to not attempt to fix this at all?",
+      "parentUuid": "5ad58531_059add14",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 60
+      },
+      "revId": "1d514a4b2c2410f338e0a2672fd37bf52b206410",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ad58531_e59eb106",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2018-10-29T12:18:09Z",
       "side": 1,
       "message": "Maybe show the fool path here? where to find ngcpcfg.test.PwGvShIm9G ?",
+      "range": {
+        "startLine": 33,
+        "startChar": 28,
+        "endLine": 33,
+        "endChar": 75
+      },
+      "revId": "1d514a4b2c2410f338e0a2672fd37bf52b206410",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad58531_a52549c3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-10-29T12:57:49Z",
+      "side": 1,
+      "message": "\u003e Maybe show the fool path here? where to find ngcpcfg.test.PwGvShIm9G\n \u003e ?\n\nActually that\u0027s the full path, the files are created locally in the current dir, and not under /tmp or similar.\n\n  mmontecelo@mmontecelo-laptop /run/user/1000 $ tt_tmp_output_file_base\u003dexample; mktemp ngcpcfg.\"${tt_tmp_output_file_base}\".XXXXXXXXXX\n  ngcpcfg.example.y4doH6Iy6k\n\n  mmontecelo@mmontecelo-laptop /run/user/1000 $ ls -l $PWD/ngcpcfg.*\n  -rw------- 1 mmontecelo mmontecelo 0 Oct 29 13:54 /run/user/1000/ngcpcfg.example.y4doH6Iy6k\n\n\nWe need to use /tmp/ in the template string, or use --tmpdir for that.",
+      "parentUuid": "5ad58531_e59eb106",
       "range": {
         "startLine": 33,
         "startChar": 28,
@@ -82,6 +130,48 @@
         "endLine": 105,
         "endChar": 18
       },
+      "revId": "1d514a4b2c2410f338e0a2672fd37bf52b206410",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad58531_05365d03",
+        "filename": "helper/build_config",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-10-29T12:57:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ad58531_45f9054d",
+      "range": {
+        "startLine": 105,
+        "startChar": 14,
+        "endLine": 105,
+        "endChar": 18
+      },
+      "revId": "1d514a4b2c2410f338e0a2672fd37bf52b206410",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad58531_2531590c",
+        "filename": "helper/build_config",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-10-29T12:57:49Z",
+      "side": 1,
+      "message": "\u003e Maybe worth to mute STDERR as -q is not muting errors if any\n \u003e 2\u003e/dev/null\n\nHmm, since the file is guaranteed to be created as per the previous line, I don\u0027t think that there can be any error except no memory on the system, disk failure or something really bad/exceptional that could be worth to know about.  But OK, let\u0027s do it, if only to maintain the style.",
+      "parentUuid": "5ad58531_65fc013f",
       "revId": "1d514a4b2c2410f338e0a2672fd37bf52b206410",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
