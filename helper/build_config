@@ -102,12 +102,18 @@ log_debug "      and: move ${tt_tmp_output_file} ${output_file}"
 # We need to use «readlink -f» so that we do not destroy any symlink pointing
 # to the real file, which we were previously preserving while using «cat».
 if "$TT_WRAPPER" "${input_file}" > "${tt_tmp_output_file}" 2>/dev/null &&
+   ! grep -q -E '^file error' "${tt_tmp_output_file}" 2>/dev/null &&
    move "${tt_tmp_output_file}" "$(readlink -f "${output_file}")" ; then
   log_info "Generating ${output_file}: OK"
   RC=0
 else
   log_error "Generating ${output_file} based on ${input_file}: FAILED"
   RC=1
+
+  if [[ -r "${tt_tmp_output_file}" ]] && grep -q '^file error' "${tt_tmp_output_file}" ; then
+    log_error "from generated file:"
+    log_error "  $(grep '^file error' "${tt_tmp_output_file}")"
+  fi
 
   log_info "NOTE: Check those files for valid syntax and encoding:"
   for f in "${input_file}" ${host_conf:-} ${local_conf:-} "$NGCPCTL_CONFIG" "${NETWORK_CONFIG:-}" ${EXTRA_CONFIG_FILES:-} "$CONSTANTS_CONFIG" ; do
