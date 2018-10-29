@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ad58531_059add14",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-10-29T12:18:09Z",
+      "side": 1,
+      "message": "there are tickets in Mantis were we tried to enable error detection it tt2 templates toolkit. The problem comes from non-initialized variables which we use a lot and they are reported as warnings/errors :-(",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 60
+      },
+      "revId": "1d514a4b2c2410f338e0a2672fd37bf52b206410",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad58531_e59eb106",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-10-29T12:18:09Z",
+      "side": 1,
+      "message": "Maybe show the fool path here? where to find ngcpcfg.test.PwGvShIm9G ?",
+      "range": {
+        "startLine": 33,
+        "startChar": 28,
+        "endLine": 33,
+        "endChar": 75
+      },
+      "revId": "1d514a4b2c2410f338e0a2672fd37bf52b206410",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad58531_65fc013f",
+        "filename": "helper/build_config",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-10-29T12:18:09Z",
+      "side": 1,
+      "message": "Maybe worth to mute STDERR as -q is not muting errors if any \n2\u003e/dev/null",
+      "revId": "1d514a4b2c2410f338e0a2672fd37bf52b206410",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad58531_45f9054d",
+        "filename": "helper/build_config",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-10-29T12:18:09Z",
+      "side": 1,
+      "message": "Maybe add ^\n  \ngrep -q \u0027^file error\u0027\n\nto match all the following cases.\n\nAlso maybe -E",
+      "range": {
+        "startLine": 105,
+        "startChar": 14,
+        "endLine": 105,
+        "endChar": 18
+      },
+      "revId": "1d514a4b2c2410f338e0a2672fd37bf52b206410",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
