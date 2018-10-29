@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "5ad58531_408d737a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-10-29T14:27:30Z",
+      "side": 1,
+      "message": "Yeah I think that it\u0027s better to use /tmp as base.  I changed that but in another commit though, for clarity.",
+      "parentUuid": "5ad58531_20ff0703",
+      "range": {
+        "startLine": 33,
+        "startChar": 28,
+        "endLine": 33,
+        "endChar": 75
+      },
+      "revId": "1d514a4b2c2410f338e0a2672fd37bf52b206410",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ad58531_65fc013f",
         "filename": "helper/build_config",
         "patchSetId": 2
