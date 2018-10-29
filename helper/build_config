@@ -78,7 +78,7 @@ TT_WRAPPER="${HELPER}/tt2-wrapper"
 
 # generate in a temporary location, then move if successful
 tt_tmp_output_file_base="$(basename "${output_file}")"
-tt_tmp_output_file="$(mktemp ngcpcfg."${tt_tmp_output_file_base}".XXXXXXXXXX)"
+tt_tmp_output_file="$(mktemp --tmpdir ngcpcfg."${tt_tmp_output_file_base}".XXXXXXXXXX)"
 
 # XXX: Docker breaks sane Unix expectations when moving a file into /etc/hosts,
 # as it creates a bind mount on that pathname. We need to use an implementation
