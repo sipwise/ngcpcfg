@@ -1,0 +1,2 @@
+file error - parse error - input file handle line 1: unexpected end of directive
+  [% IF %]
