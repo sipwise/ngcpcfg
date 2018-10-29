@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5ad58531_80935ba3",
+        "filename": "helper/build_config",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-10-29T14:27:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ad58531_a50c2943",
+      "revId": "b17bb9396c6b6841a9981774daa22b3bb0726eb0",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ad58531_85092d34",
         "filename": "helper/build_config",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2018-10-29T13:15:54Z",
       "side": 1,
       "message": "-E",
+      "revId": "b17bb9396c6b6841a9981774daa22b3bb0726eb0",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad58531_60906f96",
+        "filename": "helper/build_config",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-10-29T14:27:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ad58531_85092d34",
       "revId": "b17bb9396c6b6841a9981774daa22b3bb0726eb0",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
