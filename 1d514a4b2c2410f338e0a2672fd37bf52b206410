@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5ad58531_65064122",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-10-29T13:15:54Z",
+      "side": 1,
+      "message": "My comment was JFYI only here, no need to change anything.",
+      "parentUuid": "5ad58531_c53f35d5",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 60
+      },
+      "revId": "1d514a4b2c2410f338e0a2672fd37bf52b206410",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ad58531_e59eb106",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "\u003e Maybe show the fool path here? where to find ngcpcfg.test.PwGvShIm9G\n \u003e ?\n\nActually that\u0027s the full path, the files are created locally in the current dir, and not under /tmp or similar.\n\n  mmontecelo@mmontecelo-laptop /run/user/1000 $ tt_tmp_output_file_base\u003dexample; mktemp ngcpcfg.\"${tt_tmp_output_file_base}\".XXXXXXXXXX\n  ngcpcfg.example.y4doH6Iy6k\n\n  mmontecelo@mmontecelo-laptop /run/user/1000 $ ls -l $PWD/ngcpcfg.*\n  -rw------- 1 mmontecelo mmontecelo 0 Oct 29 13:54 /run/user/1000/ngcpcfg.example.y4doH6Iy6k\n\n\nWe need to use /tmp/ in the template string, or use --tmpdir for that.",
       "parentUuid": "5ad58531_e59eb106",
+      "range": {
+        "startLine": 33,
+        "startChar": 28,
+        "endLine": 33,
+        "endChar": 75
+      },
+      "revId": "1d514a4b2c2410f338e0a2672fd37bf52b206410",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad58531_20ff0703",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-10-29T13:15:54Z",
+      "side": 1,
+      "message": "I always though mktemp creates tmp into /tmp 0_o\n\nFrom \"man\" it does it if you just call \"mktemp\":\n\u003e root@web01a:~# mktemp \n\u003e /tmp/tmp.IxnxtaXByV\nwhile with TEMPLATE you really need --tmpdir invocation.\n\nIMHO, It is not a good idea to write the files into the current folder. I am afraid we will crate garbage files in a random places in this case... Isn\u0027t it?",
+      "parentUuid": "5ad58531_a52549c3",
       "range": {
         "startLine": 33,
         "startChar": 28,
