@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ad58531_c02a832c",
+        "filename": "helper/build_config",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2018-10-29T15:38:49Z",
+      "side": 1,
+      "message": "Yes please use the --tmpdir option.",
+      "revId": "7880618da269842b1e248a48dedaaee2800d67d3",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
