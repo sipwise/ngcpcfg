@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ae2911b_4c65bfdf",
+        "filename": "helper/build_config",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-10-30T08:08:19Z",
+      "side": 1,
+      "message": "This grep is called 3 times. I guess the output can be written to variable.",
+      "range": {
+        "startLine": 105,
+        "startChar": 5,
+        "endLine": 105,
+        "endChar": 9
+      },
+      "revId": "a08147001a0b2c9ec66e18f680a3a3b078dc2da5",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
