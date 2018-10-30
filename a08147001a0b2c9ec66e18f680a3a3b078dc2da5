@@ -22,6 +22,30 @@
       "revId": "a08147001a0b2c9ec66e18f680a3a3b078dc2da5",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ae2911b_8cf727f5",
+        "filename": "helper/build_config",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-10-30T09:25:18Z",
+      "side": 1,
+      "message": "\u003e This grep is called 3 times. I guess the output can be written to\n \u003e variable.\n\ntl;dr: I was thinking about it when implementing it, since I also don\u0027t like repeating lines, but I didn\u0027t find it a clear win in this case.\n\nLonger explanation:\n\nSince the 1st command is the first condition of an if statement (*), doing it in other way becomes more messy than it already is.\n\nThe grep can only be performed after that 1st condition and the output file is created, and thus cannot be taken to above the if, so we would have to for example create an empty var \"error_output\" and then assign to it.\n\nAlso, it has to be performed before the 3rd condition/action of \"move\", so we would have to find a way to propagate its exit code or a subsequent test of the emptiness of error_output var before the \"move\".\n\nSo we would have to find a way to assign to that empty string in that 2nd condition \"in place\" while at the same time propagating the exit for the subsequent \"move\", which will make it a bit more long and unreadable.  Or otherwise unfold the 3 if conditions in nested \"ifs\" or something and do it in separate lines.\n\nThe latter would be my preferred option, but again as per the side note in (*), it doesn\u0027t fit the style of the script or Sipwise in general, so I refrain from doing it.\n\nIn both of these cases, the number of lines and \"visual complexity\"/state of the conditions would increase.\n\nSo, in the end, I didn\u0027t see the avoidance of repeating grep a clear net win, probably the contrary, so that\u0027s why I left it this way.\n\n(*) That\u0027s why I don\u0027t like to use \"if shell_command; then...\" directly, I think that it\u0027s an antipattern and complicates cases like this without adding to the complexity/ugliness of the condition.  But I adapt to the style of the script, and all Sipwise scripts seem to do this in general.",
+      "parentUuid": "3ae2911b_4c65bfdf",
+      "range": {
+        "startLine": 105,
+        "startChar": 5,
+        "endLine": 105,
+        "endChar": 9
+      },
+      "revId": "a08147001a0b2c9ec66e18f680a3a3b078dc2da5",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
