@@ -71,6 +71,14 @@ else
   bailout
 fi
 
+# test invalid tt2 processing
+if [[ $(cat testsuite/test-invalid-template) == "foo" ]] ; then
+  echo "template test-invalid-template is OK"
+else
+  echo "Error with [ngcp-config/templates/]testsuite/test-invalid-template.tt2" >&2
+  bailout
+fi
+
 # test precedence of files
 if [[ $(cat testsuite/precedence/all/test) == "test.custom.tt2" ]] ; then
   echo "precedence test is OK"
