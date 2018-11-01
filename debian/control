@@ -26,7 +26,7 @@ Build-Depends:
  libsys-hostname-long-perl,
  libtemplate-perl,
  libyaml-libyaml-perl,
- netcat-openbsd | netcat,
+ netcat-openbsd,
  pkwalify,
  python3-pytest,
  xsltproc,
