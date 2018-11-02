@@ -351,8 +351,8 @@ record_commit_id() {
 }
 
 is_git_clean() {
-  log_debug "git status | grep -qE 'working (directory|tree) clean'"
-  if git status | grep -qE 'working (directory|tree) clean'; then
+  log_debug "call 'git status --porcelain=v2'. it must have no output"
+  if [ -z "$(git status --porcelain=v2)" ]; then
     return 0
   else
     return 1
