@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ae2911b_d5624ead",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-11-02T14:00:23Z",
+      "side": 1,
+      "message": "There are plenty of further usages of \u0027git status\u0027 inside scripts/*, so the commit message is kind of misleading.\n\n(Also it would be good to have tests for that)",
+      "revId": "476be99f2550d6a16f57eca51ffee4152662b00c",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
