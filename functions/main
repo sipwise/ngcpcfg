@@ -349,6 +349,15 @@ record_commit_id() {
     echo "$latest_commit" > "${STATE_FILES_DIR}/build"
   fi
 }
+
+is_git_clean() {
+  log_debug "git status | grep -qE 'working (directory|tree) clean'"
+  if git status | grep -qE 'working (directory|tree) clean'; then
+    return 0
+  else
+    return 1
+  fi
+}
 ## }}}
 
 ## END OF FILE #################################################################
