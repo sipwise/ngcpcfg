@@ -70,6 +70,24 @@
       "revId": "476be99f2550d6a16f57eca51ffee4152662b00c",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ae2911b_75cefa84",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-11-02T17:14:58Z",
+      "side": 1,
+      "message": "Sure, I saw it, moreover we have such test there:\nregex \u003d re.compile(r\"nothing to commit, working (tree|directory)\")\n\nwhile it uses git.status() which is coming from ... ?\nI think from fixtures/gitrepo.py while there is no any porcelain and adding it is a Python :-(",
+      "parentUuid": "3ae2911b_d5300ea1",
+      "revId": "476be99f2550d6a16f57eca51ffee4152662b00c",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
