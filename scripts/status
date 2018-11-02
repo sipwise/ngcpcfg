@@ -60,8 +60,7 @@ check_local_state() {
   log_info "OK:   has been initialised already"
 
   log_info "Checking state of configuration files:"
-  log_debug "git status | grep -qE 'working (directory|tree) clean"
-  if git status | grep -qE 'working (directory|tree) clean' ; then
+  if is_git_clean ; then
     log_info "OK:   nothing to commit"
   else
     if git diff-index --name-only HEAD | grep -q . ; then
@@ -87,8 +86,7 @@ check_etc_state() {
   cd /etc
 
   log_info "Checking state of /etc files:"
-  log_debug "git status | grep -qE 'working (directory|tree) clean'"
-  if git status | grep -qE 'working (directory|tree) clean' ; then
+  if is_git_clean ; then
     log_info "OK:   nothing to commit"
   else
     log_info "ACTION_NEEDED: configuration files changed (execute 'etckeeper commit [message]')"
