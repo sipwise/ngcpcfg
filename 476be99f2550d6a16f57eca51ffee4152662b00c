@@ -52,6 +52,24 @@
       "revId": "476be99f2550d6a16f57eca51ffee4152662b00c",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ae2911b_d5300ea1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-11-02T14:29:52Z",
+      "side": 1,
+      "message": "\u003e How do you see it? Can I have one test-case as example for further\n \u003e copy\u0026paste. I do not know python :-(\n\nSee e.g. t/test_git.py",
+      "parentUuid": "3ae2911b_55f65ed8",
+      "revId": "476be99f2550d6a16f57eca51ffee4152662b00c",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
