@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ae2911b_122c6caa",
+        "filename": "functions/main",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-11-02T11:35:59Z",
+      "side": 1,
+      "message": "Should we also add porcelain version ? --porcelain\u003dv1 ?",
+      "revId": "98be36724d5cff3c096779473e40e6752c101f1b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
