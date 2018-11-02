@@ -135,6 +135,24 @@
       "revId": "98be36724d5cff3c096779473e40e6752c101f1b",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ae2911b_55c1be7f",
+        "filename": "functions/main",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-11-02T13:38:36Z",
+      "side": 1,
+      "message": "nice catch!\nImproved.",
+      "parentUuid": "3ae2911b_d5edae26",
+      "revId": "98be36724d5cff3c096779473e40e6752c101f1b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
