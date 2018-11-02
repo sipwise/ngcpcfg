@@ -23,8 +23,7 @@ check_for_outstanding_commits()  {
   log_debug "cd $NGCPCTL_MAIN"
   cd "$NGCPCTL_MAIN"
 
-  log_debug "git status | grep -qE 'working (directory|tree) clean'"
-  if git status | grep -qE 'working (directory|tree) clean' ; then
+  if is_git_clean ; then
     return 1 # nothing to commit
   else
     return 0 # outstanding commits

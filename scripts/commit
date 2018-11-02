@@ -67,8 +67,7 @@ else
   msg="$*"
 fi
 
-log_debug "git status | grep -qE 'working (directory|tree) clean'"
-if git status | grep -qE 'working (directory|tree) clean' ; then
+if is_git_clean ; then
    log_info "OK:   nothing to commit."
 else
   log_debug "git add . ; git commit -a -m \"\$msg [\$(date --rfc-3339=ns)]\""

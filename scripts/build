@@ -81,7 +81,7 @@ if ! $MODIFIED_ONLY ; then
 else
   log_info "Considering modified files only due to --modified-only option."
 
-  if git status | grep -qE 'working (directory|tree) clean' ; then
+  if is_git_clean ; then
     log_info "No changes found, nothing to do."
     exit 0
   fi

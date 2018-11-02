@@ -53,7 +53,7 @@ fi
 log_debug "git add ."
 git add .
 
-if ! git status | grep -qE 'working (directory|tree) clean' ; then
+if ! is_git_clean ; then
   log_debug "git commit -a -m \"initial version of ngcpcfg on $HNAME\""
   git commit -a -m "initial version of ngcpcfg on $HNAME" >/dev/null
 fi
