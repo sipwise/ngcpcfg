@@ -47,3 +47,18 @@ def test_status_output(cli, gitrepo):
             # before it was "working directory"
             regex = re.compile(r"nothing to commit, working (tree|directory)")
             assert re.search(regex, out)
+
+            ex, out, error = git.status('--porcelain=v2')
+            assert out == ""
+            assert error == ""
+            assert ex == 0
+
+            # create new file
+            newfile = os.path.join(git.root, 'newfile')
+            with open(newfile, 'w') as fd:
+                fd.write('#!/bin/sh\necho "Hello World"\n')
+
+            ex, out, error = git.status('--porcelain=v2')
+            assert out == '''? newfile\n'''
+            assert error == ""
+            assert ex == 0
