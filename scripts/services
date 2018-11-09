@@ -83,6 +83,9 @@ execute() {
 
   log_info "Executing enqueued services actions"
   ngcp-service queue-run
+
+  log_info "Synchronizing current with expected services state"
+  ngcp-service sync-state
 }
 
 systed_daemon_reload_preset() {
