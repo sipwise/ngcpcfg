@@ -1,3 +1,31 @@
+ngcp-ngcpcfg (7.0.1.0+0~mr7.0.1.0) unstable; urgency=medium
+
+  [ Guillem Jover ]
+  * [d5d91d3] TT#44257 Improve reporting on missing interface definitions
+  * [4894342] TT#45728 Stop requiring netmask when we do not require ip
+  * [b3a88d1] TT#43700 Run ngcp-service sync-state after queue service execution
+  * [74fc46a] TT#43700 Set new NGCPCFG_RUNNING environment variable
+
+  [ Michael Prokop ]
+  * [668dad8] TT#45401 lib/get_debian_release: support Debian/buster + Debian/bullseye.
+    Thanks to Manuel Montecelo for improving my initial version
+  * [ffa7452] TT#37401 Ensure to always have netcat-openbsd available
+  * [0e84ac6] TT#44969 Provide test cases for `git status --porcelain` mode
+
+  [ Alexander Lutay ]
+  * [a2edb11] TT#45613 Print hostname for every line where ngcpcfg is executed
+  * [b9c6270] TT#45613 Improve a2edb11: debug messages can be printed before $HNAME is initialised
+  * [9b7ce2a] TT#44969 Extract git status check to common function (for further refactoring)
+  * [7f92e24] TT#44969 Stop parsing 'git status' output, use '--porcelain' mode
+
+  [ Manuel Montecelo ]
+  * [20fb1d9] TT#46601 Generate temporary files under /tmp
+  * [a529f8e] TT#46601 Detect and report errors parsing tt2 templates
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 12 Nov 2018 22:39:23 +0100
+
 ngcp-ngcpcfg (7.0.0.0+0~mr7.0.0.0) unstable; urgency=medium
 
   [ Rene Krenn ]
