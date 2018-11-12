@@ -10,6 +10,9 @@ if [ "$UID" -ne 0 ] ; then
   exit 1
 fi
 
+# Notify subprocesses we are running.
+export NGCPCFG_RUNNING=1
+
 # support for testsuite
 FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
 SCRIPTS="${SCRIPTS:-/usr/share/ngcp-ngcpcfg/scripts/}"
