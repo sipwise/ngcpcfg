@@ -70,6 +70,23 @@
       "revId": "e1020347fdbcd68fda6638a0c69827ccc77b27c1",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ae2911b_4981268f",
+        "filename": "scripts/services",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-11-13T12:13:59Z",
+      "side": 1,
+      "message": "Should we add a \"log_debug ...\" here?",
+      "revId": "e1020347fdbcd68fda6638a0c69827ccc77b27c1",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
