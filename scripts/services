@@ -171,6 +171,7 @@ find_all_changed_services() {
 
 # main script
 
+RUNNING_FILE="${RUN_DIR}/ngcpcfg-services.running"
 DRYRUN='false'
 FORCE_ALL_SERVICES='false'
 
@@ -181,6 +182,12 @@ elif [[ "${1:-}" == "--force-all-services" ]]; then
 fi
 log_debug "DRYRUN = ${DRYRUN}"
 log_debug "FORCE_ALL_SERVICES = ${FORCE_ALL_SERVICES}"
+
+if ! ${DRYRUN}; then
+  log_debug "creating current execution filesystem trail"
+  trap 'rm -f "${RUNNING_FILE}"' EXIT ERR
+  echo $$ >"${RUNNING_FILE}"
+fi
 
 log_debug "systed_daemon_reload_preset function"
 systed_daemon_reload_preset
