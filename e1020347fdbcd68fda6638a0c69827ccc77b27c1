@@ -73,6 +73,23 @@
     },
     {
       "key": {
+        "uuid": "3ae2911b_6c3750e4",
+        "filename": "scripts/services",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2018-11-13T14:12:40Z",
+      "side": 1,
+      "message": "Should the services script prevent itself from running when another instance is already executing? Otherwise we can run into a race condition (one instance deleting the file created by another). Or is this approach good enough for now?",
+      "revId": "e1020347fdbcd68fda6638a0c69827ccc77b27c1",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ae2911b_4981268f",
         "filename": "scripts/services",
         "patchSetId": 2
