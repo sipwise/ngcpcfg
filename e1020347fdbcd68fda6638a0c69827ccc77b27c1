@@ -22,6 +22,30 @@
       "revId": "e1020347fdbcd68fda6638a0c69827ccc77b27c1",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ae2911b_89894ecd",
+        "filename": "scripts/services",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2018-11-13T11:16:45Z",
+      "side": 1,
+      "message": "Dry-run should usually not write anything to disk, as it\u0027s not supposed to do anything anyway. My assumption is also that when we are under dryrun we might be running as non-root, such as from a test suite, so we would fail in that case.",
+      "parentUuid": "3ae2911b_8954ae54",
+      "range": {
+        "startLine": 186,
+        "startChar": 7,
+        "endLine": 186,
+        "endChar": 13
+      },
+      "revId": "e1020347fdbcd68fda6638a0c69827ccc77b27c1",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
