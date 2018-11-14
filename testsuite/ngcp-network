@@ -52,6 +52,40 @@ ${CMD} --input-file=network-config/network_pro.yml --output-file=testfiles/eth42
        --host=sp1 --set-interface=eth42 --ip=1.2.3.4 --netmask=255.255.255.248
 assertEqualFiles testfiles/eth42.yml network-config/eth42.yml
 
+# test IPv4/IPv6 with many options
+${CMD} --input-file=network-config/network_pro.yml --output-file=testfiles/eth46.yml \
+       --host=sp1 --set-interface=eth46 \
+       --hwaddr c0:ff:ee:15:90:0d --mtu 7777 \
+       --ip=127.11.22.33 --netmask=255.0.0.0 --gateway 127.11.22.254 \
+       --ipv6 2001:aaaa:1111:bbbb:2222:cccc:3333 --netmask-ipv6 64 --gateway-ipv6 2001:aaaa:1111:bbbb:2222:cccc:1 \
+       --dns 127.0.0.1 --dns 1.1.1.1 --dns ::1 --dns 2606:4700:4700::1111
+${CMD} --input-file=network-config/network_pro.yml --output-file=testfiles/eth46.yml \
+       --host=sp1 --set-interface=bond0 \
+       --bond-mode active-backup --bond-miimon '100' --bond-slaves 'eth11 eth22' \
+       --ip 10.10.10.2 netmask 255.0.0.0 --gateway 10.10.10.254
+${CMD} --input-file=network-config/network_pro.yml --output-file=testfiles/eth46.yml \
+       --host=sp1 --set-interface=eth11 \
+       --hwaddr 00:00:00:00:00:11 --mtu 1111 \
+       --dhcp yes
+${CMD} --input-file=network-config/network_pro.yml --output-file=testfiles/eth46.yml \
+       --host=sp1 --set-interface=eth22 \
+       --hwaddr 00:00:00:00:00:22 --mtu 2222 \
+       --dhcp yes
+${CMD} --input-file=network-config/network_pro.yml --output-file=testfiles/eth46.yml \
+       --host=sp1 --set-interface=vlan1111 \
+       --vlan-raw-device bond0 \
+       --ip 10.11.11.11 netmask 255.0.0.0 --gateway 10.11.11.254
+${CMD} --input-file=network-config/network_pro.yml --output-file=testfiles/eth46.yml \
+       --host=sp1 --set-interface=vlan2222 \
+       --vlan-raw-device bond0 \
+       --ip 10.22.22.22 netmask 255.0.0.0 --gateway 10.22.22.254
+${CMD} --input-file=network-config/network_pro.yml --output-file=testfiles/eth46.yml \
+       --host=sp1 --set-interface=vlan3333 \
+       --vlan-raw-device bond0 \
+       --ip 10.33.33.33 netmask 255.0.0.0 --gateway 10.33.33.254
+cat testfiles/eth46.yml
+assertEqualFiles testfiles/eth46.yml network-config/eth46.yml
+
 # verify deployment steps
 ROLE=sp1; PEER=sp2; DEFAULT_INSTALL_DEV=eth0; INTERNAL_DEV=eth1;
 
