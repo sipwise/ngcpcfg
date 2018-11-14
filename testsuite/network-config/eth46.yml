@@ -1,0 +1,70 @@
+---
+hosts:
+  sp1:
+    bond0:
+      bond_miimon: '100'
+      bond_mode: active-backup
+      bond_slaves: eth11 eth22
+      gateway: 10.10.10.254
+      ip: 10.10.10.2
+      netmask: 255.0.0.0
+    eth11:
+      dhcp: yes
+      hwaddr: 11:11:11:11:11:11
+      mtu: 1111
+    eth22:
+      dhcp: yes
+      hwaddr: 22:22:22:22:22:22
+      mtu: 2222
+    eth46:
+      dns_nameservers:
+      - 127.0.0.1
+      - 1.1.1.1
+      - ::1
+      - 2606:4700:4700::1111
+      gateway: 127.11.22.254
+      hwaddr: c0:ff:ee:15:90:0d
+      ip: 127.11.22.33
+      netmask: 255.0.0.0
+      v6gateway: 2001:aaaa:1111:bbbb:2222:cccc:3333:0001
+      v6ip: 2001:aaaa:1111:bbbb:2222:cccc:3333:dddd
+      v6netmask: '64'
+    interfaces:
+    - lo
+    - eth46
+    - bond0
+    - eth11
+    - eth22
+    - vlan1111
+    - vlan2222
+    - vlan3333
+    lo:
+      ip: 127.0.0.1
+      netmask: 255.255.255.0
+      type:
+      - sip_int
+      - ha_int
+      - web_ext
+      - sip_ext
+      - rtp_ext
+      - ssh_ext
+      - mon_ext
+    role:
+    - proxy
+    - lb
+    - mgmt
+    vlan1111:
+      gateway: 10.11.11.254
+      ip: 10.11.11.11
+      netmask: 255.0.0.0
+      vlan_raw_device: bond0
+    vlan2222:
+      gateway: 10.22.22.254
+      ip: 10.22.22.22
+      netmask: 255.0.0.0
+      vlan_raw_device: bond0
+    vlan3333:
+      gateway: 10.33.33.254
+      ip: 10.33.33.33
+      netmask: 255.0.0.0
+      vlan_raw_device: bond0
