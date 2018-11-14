@@ -40,6 +40,7 @@ my $dbnode;
 my $dhcp;
 my @dns_nameservers;
 my $gateway;
+my $v6gateway;
 my $help;
 my $hwaddr;
 my $inputfile = '/etc/ngcp-config/network.yml';
@@ -76,6 +77,7 @@ GetOptions(
     'dhcp=s'             => \$dhcp,
     'dns=s'              => \@dns_nameservers,
     'gateway=s'          => \$gateway,
+    'gateway-ipv6=s'     => \$v6gateway,
     'help'               => \$help,
     'host=s'             => \$host,
     'hwaddr=s'           => \$hwaddr,
@@ -143,7 +145,7 @@ foreach my $opt (
     $internal_iface,   $ip,            $ip_v6,     $move_from,
     $move_to,          $netmask,       $peer,      @remove_host,
     @remove_interface, @roles,         @type,      $vlan_raw_device,
-    $netmask_ip_v6
+    $netmask_ip_v6,    $v6gateway
   )
 {
     if ( defined $opt && $opt =~ /\s/msx ) {
@@ -284,6 +286,7 @@ sub set_interface {
         'v6netmask'       => $netmask_ip_v6,
         'shared_ip'       => $shared_ip,
         'shared_v6ip'     => $shared_ip_v6,
+        'v6gateway'       => $v6gateway,
         'v6ip'            => $ip_v6,
         'vlan_raw_device' => $vlan_raw_device,
     };
@@ -678,6 +681,10 @@ Set dns_nameservers configuration to specified argument.
 Can be specified multiple times in one single command line.
 
 =item B<--gateway>=I<IP>
+
+Set gateway configuration to specified argument.
+
+=item B<--gateway-ipv6>=I<IP>
 
 Set gateway configuration to specified argument.
 
