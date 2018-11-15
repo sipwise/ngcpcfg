@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ae2911b_a72551c3",
+        "filename": "testsuite/ngcp-network",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000020
+      },
+      "writtenOn": "2018-11-15T13:05:34Z",
+      "side": 1,
+      "message": "input and output files are equal. Is it intended?",
+      "range": {
+        "startLine": 57,
+        "startChar": 7,
+        "endLine": 57,
+        "endChar": 73
+      },
+      "revId": "54d16e84bec2ebe7af139e2243e34fd62bf214fc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
