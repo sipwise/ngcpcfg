@@ -38,6 +38,7 @@ my $clone_from;
 my $clone_to;
 my $dbnode;
 my $dhcp;
+my $v6dhcp;
 my @dns_nameservers;
 my $gateway;
 my $v6gateway;
@@ -48,8 +49,11 @@ my $internal_iface;
 my $ip;
 my $ip_v6;
 my $man;
+my $manual;
+my $v6manual;
 my $move_from;
 my $move_to;
+my $mtu;
 my $netmask;
 my $netmask_ip_v6;
 my $outputfile = $inputfile;
@@ -75,6 +79,7 @@ GetOptions(
     'clone-to=s'         => \$clone_to,
     'dbnode:i'           => \$dbnode,
     'dhcp=s'             => \$dhcp,
+    'dhcp-ipv6=s'        => \$v6dhcp,
     'dns=s'              => \@dns_nameservers,
     'gateway=s'          => \$gateway,
     'gateway-ipv6=s'     => \$v6gateway,
@@ -86,8 +91,11 @@ GetOptions(
     'ip=s'               => \$ip,
     'ipv6=s'             => \$ip_v6,
     'man'                => \$man,
+    'manual=s'           => \$manual,
+    'manual-ipv6=s'      => \$v6manual,
     'move-from=s'        => \$move_from,
     'move-to=s'          => \$move_to,
+    'mtu=s'              => \$mtu,
     'netmask=s'          => \$netmask,
     'netmask-ipv6=s'     => \$netmask_ip_v6,
     'output-file=s'      => \$outputfile,
@@ -145,7 +153,8 @@ foreach my $opt (
     $internal_iface,   $ip,            $ip_v6,     $move_from,
     $move_to,          $netmask,       $peer,      @remove_host,
     @remove_interface, @roles,         @type,      $vlan_raw_device,
-    $netmask_ip_v6,    $v6gateway
+    $netmask_ip_v6,    $v6gateway,     $mtu,       $v6dhcp,
+    $manual,           $v6manual
   )
 {
     if ( defined $opt && $opt =~ /\s/msx ) {
@@ -282,12 +291,16 @@ sub set_interface {
         'gateway'         => $gateway,
         'hwaddr'          => $hwaddr,
         'ip'              => $ip,
+        'manual'          => $manual,
+        'mtu'             => $mtu,
         'netmask'         => $netmask,
         'v6netmask'       => $netmask_ip_v6,
         'shared_ip'       => $shared_ip,
         'shared_v6ip'     => $shared_ip_v6,
+        'v6dhcp'          => $v6dhcp,
         'v6gateway'       => $v6gateway,
         'v6ip'            => $ip_v6,
+        'v6manual'        => $v6manual,
         'vlan_raw_device' => $vlan_raw_device,
     };
 
@@ -675,6 +688,10 @@ is provide it will use the next value available (max + 1).
 
 Set dhcp to yes or no, to use dhcp to set up this interface.
 
+=item B<--dhcp-ipv6>=I<yes|no>
+
+Set dhcp to yes or no, to use dhcp to set up this interface with IPv6.
+
 =item B<--dns>=I<nameserver>
 
 Set dns_nameservers configuration to specified argument.
@@ -720,6 +737,14 @@ Set ip configuration (IPv6 address) to specified argument. If set to B<auto>
 and the selected interface is available on the running host then the IP
 address will be determined based on its current settings.
 
+=item B<--manual>=I<yes|no>
+
+Set interface method set-up to "manual" (man interfaces(5)) for IPv4.
+
+=item B<--manual-ipv6>=I<yes|no>
+
+Set interface method set-up to "manual" (man interfaces(5)) for IPv6.
+
 =item B<--move-from>=I<source>
 
 Move item from specified level (being host for B<--role> and interface for
@@ -731,6 +756,10 @@ used in combination with B<--move-to>.
 Move item to specified level (being host for B<--role> and interface for
 B<--type>). The item needs to be chosen via B<--type> or B<--role>. To be
 used in combination with B<--move-to>.
+
+=item B<--mtu>=I<MTU>
+
+Set MTU configuration (Maximum Transmission Unit of the network device) to specified argument.
 
 =item B<--netmask>=I<IP>
 
