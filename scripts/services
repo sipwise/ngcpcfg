@@ -156,7 +156,7 @@ find_all_changed_services() {
   log_debug "${FUNCNAME[0]}(): Working in ${dir}"
   pushd "${dir}" >/dev/null
 
-  for file in $(git status --porcelain | sed 's/^...//') ; do
+  for file in $(git status -uall --porcelain | sed 's/^...//') ; do
     if [[ -r "${file}" ]] && [[ -r "${SERVICES_POOL_BASE}/${dir}/${file}".services ]]; then
       log_debug "Storing ${SERVICES_POOL_BASE}/${dir}/${file}.services in '${TMPFILE}'"
       echo "${SERVICES_POOL_BASE}/${dir}/${file}".services
