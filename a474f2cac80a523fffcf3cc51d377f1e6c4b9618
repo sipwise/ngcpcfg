@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ae2911b_e79eb906",
+        "filename": "testsuite/ngcp-network",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-11-15T10:00:42Z",
+      "side": 1,
+      "message": "BTW, why do you need this mv? I think you can compare:\n  \n\u003e assertEqualFiles testfiles/tmp_eth46.yml network-config/eth46.yml\n\nor create  testfiles/eth46.yml in line 56:\n  \n\u003e cp network-config/network_pro.yml testfiles/eth46.yml\n\nWhy do you need a one more file here?",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 61
+      },
+      "revId": "a474f2cac80a523fffcf3cc51d377f1e6c4b9618",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
