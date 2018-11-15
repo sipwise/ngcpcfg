@@ -22,6 +22,30 @@
       "revId": "54d16e84bec2ebe7af139e2243e34fd62bf214fc",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ae2911b_672f69a2",
+        "filename": "testsuite/ngcp-network",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-11-15T13:09:30Z",
+      "side": 1,
+      "message": "\u003e input and output files are equal. Is it intended?\n\nYes, to avoid moving output to input to the next command all the time.  I was worried/sceptical, but it works fine after many runs.\n\nI suppose that it reads everything in memory, and only in the end it writes the result.",
+      "parentUuid": "3ae2911b_a72551c3",
+      "range": {
+        "startLine": 57,
+        "startChar": 7,
+        "endLine": 57,
+        "endChar": 73
+      },
+      "revId": "54d16e84bec2ebe7af139e2243e34fd62bf214fc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
