@@ -22,6 +22,30 @@
       "revId": "a474f2cac80a523fffcf3cc51d377f1e6c4b9618",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ae2911b_e7b5997e",
+        "filename": "testsuite/ngcp-network",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-11-15T10:12:44Z",
+      "side": 1,
+      "message": "Right, changed.",
+      "parentUuid": "3ae2911b_e79eb906",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 61
+      },
+      "revId": "a474f2cac80a523fffcf3cc51d377f1e6c4b9618",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
