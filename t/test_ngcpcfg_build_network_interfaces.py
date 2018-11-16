@@ -25,6 +25,10 @@ def test_network_interfaces(ngcpcfgcli, tmpdir):
     print(out.stdout.replace("\\n", "\n"))
     print("stderr:")
     print(out.stderr.replace("\\n", "\n"))
+    print("current dir: {}".format(os.getcwd()))
+    print("symlink to template in fixtures/repos/templates/etc/network/interfaces.tt2 pointing to:")
+    template_path = os.readlink("fixtures/repos/templates/etc/network/interfaces.tt2")
+    print(template_path)
 
     regex1 = re.compile(r"Generating .*/etc/network/interfaces: OK")
     assert re.search(regex1, out.stdout)
