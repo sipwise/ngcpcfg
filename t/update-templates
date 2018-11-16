@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -e
+
+EXTRACT_DIR=/results/extract-templates
+
+mkdir -p ${EXTRACT_DIR}
+cd ${EXTRACT_DIR}
+
+apt-get update
+apt-get download ngcp-templates-ce
+dpkg --path-exclude='*' --path-include=/etc/ngcp-config/templates/etc/network/interfaces.tt2 --extract ngcp-templates*.deb ${EXTRACT_DIR}
+mv -v ${EXTRACT_DIR}/etc/ngcp-config/templates/etc/network/interfaces.tt2 /results/extracted-templates-interfaces.tt2
+rm -rf ${EXTRACT_DIR}
