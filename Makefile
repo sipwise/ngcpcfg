@@ -67,5 +67,5 @@ perlcheck:
 
 test:
 	mkdir -p $(RESULTS)
-	cd t ; py.test-3 --junit-xml=../$(RESULTS)/pytest.xml -v
+	cd t ; ./update-templates ; py.test-3 --junit-xml=../$(RESULTS)/pytest.xml -v
 # EOF
