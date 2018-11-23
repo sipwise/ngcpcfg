@@ -65,8 +65,8 @@ hook_setup() {
   fi
 
   if ! [ -d "$target_directory" ] ; then
-    log_error "Hook target directory $target_directory not a directory. Exiting."
-    exit 1
+    log_error "Hook target directory $target_directory not a directory. Creating it."
+    mkdir -p "$target_directory"
   fi
 
   for hook in "${HOOKS}"/* ; do
