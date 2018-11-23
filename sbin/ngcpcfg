@@ -35,7 +35,20 @@ else
   . "${FUNCTIONS}"/main
 fi
 
+trap 'ngcpcfg_restore_perms;' ERR EXIT
+
 # helper functions
+
+ngcpcfg_restore_perms() {
+  # Must be the last command in every 'ngcpcfg' call as git resets POSIX permissions!
+  trap '' ERR EXIT
+  log_debug "Restore permissions from .ngcpcfg_perms as git might reset them"
+  if [ ! -x "${HELPER}"/restore-permissions ]; then
+    log_error "Missing helper to restore permissions '${HELPER}/restore-permissions'. Exiting."
+    exit 1
+  fi
+  "${HELPER}"/restore-permissions "${NGCPCTL_MAIN}"
+}
 
 action() {
   ACTION="$1"
