@@ -35,7 +35,32 @@ else
   . "${FUNCTIONS}"/main
 fi
 
+ngcpcfg_update_perms
+trap 'ngcpcfg_restore_perms;' ERR EXIT
+
 # helper functions
+
+ngcpcfg_update_perms() {
+  # Must be the first command in every 'ngcpcfg' call as git resets POSIX permissions!
+  log_debug 'Generate new .ngcpcfg_perms'
+  if [ -x "${NGCPCTL_MAIN}/.git/hooks/pre-commit" ] ; then
+    "${NGCPCTL_MAIN}/.git/hooks/pre-commit"
+  else
+    log_error "Missing pre-commit hook, cannot store permissions, aborting to prevent damage"
+    exit 1
+  fi
+}
+
+ngcpcfg_restore_perms() {
+  # Must be the last command in every 'ngcpcfg' call as git resets POSIX permissions!
+  trap '' ERR EXIT
+  log_debug "Restore permissions from .ngcpcfg_perms as git might reset them"
+  if [ ! -x "${HELPER}"/restore-permissions ]; then
+    log_error "Missing helper to restore permissions '${HELPER}/restore-permissions'. Exiting."
+    exit 1
+  fi
+  "${HELPER}"/restore-permissions "${NGCPCTL_MAIN}"
+}
 
 action() {
   ACTION="$1"
