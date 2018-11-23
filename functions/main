@@ -52,8 +52,8 @@ log_debug() {
 hook_setup() {
   log_debug "hook_setup ${1:-}"
 
-  if ! [ -d /usr/share/ngcp-ngcpcfg/hooks ] ; then
-    log_debug "Directory /usr/share/ngcp-ngcpcfg/hooks doesn't exist."
+  if ! [ -d "${HOOKS}" ] ; then
+    log_debug "Directory ${HOOKS} does not exist."
     return 0
   fi
 
@@ -69,10 +69,10 @@ hook_setup() {
     exit 1
   fi
 
-  for hook in /usr/share/ngcp-ngcpcfg/hooks/* ; do
+  for hook in "${HOOKS}"/* ; do
     [ -r "$hook" ] || continue
     log_debug "Creating symlink for $hook in $target_directory"
-    ln -sf "$hook" "$target_directory"/
+    ln -sf "$(readlink -f "$hook")" "$target_directory"/
   done
 }
 

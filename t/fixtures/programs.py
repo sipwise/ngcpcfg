@@ -16,6 +16,7 @@ def ngcpcfgcli(tmpdir, *args):
             'NGCPCFG':   'fixtures/ngcpcfg.cfg',
             'SCRIPTS':   '../scripts/',
             'HELPER':    '../helper/',
+            'HOOKS':     '../hooks/',
             'PERL5LIB':  '../lib/',
             'NGCP_SOCKETFILE': '/tmp/ngcpcfg.socket',
         }

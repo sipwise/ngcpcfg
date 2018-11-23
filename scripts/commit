@@ -9,6 +9,7 @@ set -o pipefail
 # support testsuite
 FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
 HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
+HOOKS="${HOOKS:-/usr/share/ngcp-ngcpcfg/hooks/}"
 SCRIPTS="${SCRIPTS:-/usr/share/ngcp-ngcpcfg/scripts/}"
 
 if ! [ -r "${FUNCTIONS}"/main ] ; then

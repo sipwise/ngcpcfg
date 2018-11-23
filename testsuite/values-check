@@ -21,6 +21,7 @@ cp -a "${testsuite}"/* .
 
 export FUNCTIONS="$testsuite/../functions/"
 export HELPER="$testsuite/../helper/"
+export HOOKS="$testsuite/../hooks/"
 export SCRIPTS="$testsuite/../scripts/"
 
 echo -n "Testing ngcpcfg without any arguments: "
