@@ -22,6 +22,7 @@ cp -a "${testsuite}"/* .
 export FUNCTIONS="$testsuite/../functions/"
 export HELPER="$testsuite/../helper/"
 export SCRIPTS="$testsuite/../scripts/"
+export HOOKS="$testsuite/../hooks/"
 
 echo -n "Testing ngcpcfg without any arguments: "
 if "$testsuite"/../sbin/ngcpcfg 2>&1 | grep -q "^Usage:$" ; then
