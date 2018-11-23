@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1adf8d57_3748735b",
+        "filename": "functions/main",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-11-23T14:15:03Z",
+      "side": 1,
+      "message": "We need Mika\u0027s comments here IMHO.\nMaybe we should do this for tests only?",
+      "parentUuid": "1adf8d57_b72463af",
+      "revId": "6ba2c1bb8701d6fe7386b6656b6261a3402581e3",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1adf8d57_973a87cc",
         "filename": "sbin/ngcpcfg",
         "patchSetId": 8
