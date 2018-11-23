@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1adf8d57_b72463af",
+        "filename": "functions/main",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2018-11-23T14:12:46Z",
+      "side": 1,
+      "message": "So this right here is a major hack, and perhaps what we should be doing is to call the initialize command with adequate recursion protections in place?",
+      "revId": "6ba2c1bb8701d6fe7386b6656b6261a3402581e3",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1adf8d57_973a87cc",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2018-11-23T14:12:46Z",
+      "side": 1,
+      "message": "Added this to make the hooks stuff work.",
+      "revId": "6ba2c1bb8701d6fe7386b6656b6261a3402581e3",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
