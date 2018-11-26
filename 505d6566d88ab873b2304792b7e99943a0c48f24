@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1adf8d57_ca25065d",
+        "filename": "functions/main",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-11-26T15:14:04Z",
+      "side": 1,
+      "message": "This could be a Warning or Info instead of error now that the function changed, not sure what\u0027s best.",
+      "revId": "505d6566d88ab873b2304792b7e99943a0c48f24",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1adf8d57_aa2aba2a",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-11-26T15:14:04Z",
+      "side": 1,
+      "message": "I suppose that a simple echo would do, but OK.",
+      "revId": "505d6566d88ab873b2304792b7e99943a0c48f24",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1adf8d57_6a1df20e",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 9
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-11-26T15:14:04Z",
+      "side": 1,
+      "message": "Does it work with, or need, the \";\" ?",
+      "revId": "505d6566d88ab873b2304792b7e99943a0c48f24",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
