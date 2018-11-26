@@ -19,6 +19,7 @@ def ngcpcfgcli(tmpdir, *args):
             'HOOKS':     '../hooks/',
             'PERL5LIB':  '../lib/',
             'NGCP_SOCKETFILE': '/tmp/ngcpcfg.socket',
+            'NGCP_TESTSUITE': 'true',
         }
         testenv.update(env)
 

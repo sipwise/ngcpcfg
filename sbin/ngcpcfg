@@ -133,7 +133,7 @@ else
 fi
 
 ngcpcfg_update_perms
-trap 'ngcpcfg_restore_perms;' ERR EXIT
+trap 'ngcpcfg_restore_perms' ERR EXIT
 
 case ${1:-} in
   apply|\
