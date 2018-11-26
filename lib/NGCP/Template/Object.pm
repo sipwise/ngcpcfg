@@ -25,26 +25,25 @@ sub has_role
         $hostname = 'self';
     }
 
-    # The LI role has a virtual role counterpart, which is active only in
-    # distributed mode. We only check for exact matches, as we do not want
-    # to grab a regex that would match multiple cases.
-    if ('li_dist' eq $role) {
-        if ($self->{config}{cluster_sets}{type} eq 'distributed') {
-            $role = 'li';
-        } else {
-            return 0;
-        }
-    }
+    my %roles = map { $_ => 1 } @{$self->{config}{hosts}{$hostname}{role}};
 
-    if (any { m/^$role$/ } @{$self->{config}{hosts}{$hostname}{role}}) {
-        # The LI roles are a bit special, they use additional keys to get
-        # enabled, so we handle them here.
-        if ('li' =~ m/^$role$/) {
-            return $self->{config}{intercept}{enable} eq 'yes';
-        } else {
-            # Otherwise, unconditionally enable the role.
-            return 1;
+    # We need to handle the LI case at the end, because it is conditional on
+    # other keys, so we cannot make it match on wildcards before the others.
+    my $has_li = exists $roles{li};
+    delete $roles{li};
+
+    return 1 if any { m/^$role$/ } keys %roles;
+
+    if ($has_li) {
+        my $li_role = 'li';
+
+        # The LI role has a virtual role counterpart, which is active only
+        # in distributed mode.
+        if ($self->{config}{cluster_sets}{type} eq 'distributed') {
+            $li_role = 'li_dist';
         }
+        return $self->{config}{intercept}{enable} eq 'yes'
+            if $li_role =~ m/^$role$/;
     }
 
     return 0;
