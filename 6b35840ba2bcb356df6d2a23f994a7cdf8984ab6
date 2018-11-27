@@ -118,6 +118,30 @@
       "revId": "6b35840ba2bcb356df6d2a23f994a7cdf8984ab6",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1adf8d57_2d48245b",
+        "filename": "functions/main",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-11-27T10:15:50Z",
+      "side": 1,
+      "message": "Oh, right, external commands /bin/true... even in bash.\nAnd fully agree about the style, this is why we follow Google Shell style... I just do not recall such points here. Need to recheck.",
+      "parentUuid": "1adf8d57_8d3a78cc",
+      "range": {
+        "startLine": 68,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 46
+      },
+      "revId": "6b35840ba2bcb356df6d2a23f994a7cdf8984ab6",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
