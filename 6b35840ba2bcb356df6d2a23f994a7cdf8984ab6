@@ -94,6 +94,30 @@
       "revId": "6b35840ba2bcb356df6d2a23f994a7cdf8984ab6",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1adf8d57_8d3a78cc",
+        "filename": "functions/main",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-11-27T10:02:55Z",
+      "side": 1,
+      "message": "\u003e OK. My point is that boolean is faster than strings comparison.\n\nIs that true in this case?\n\nIn traditional languages it\u0027s true, although probably the difference is negligible outside of tight loops.\n\nBut in shell, unless it has specific \"smart\" way to go about it, true/false would invoke either a command built-in (in bash it\u0027s also a built-in) or if not invokes the external commands /bin/true and /bin/false (that\u0027s why those two commands exist); so it\u0027s way way slower for the shells that don\u0027t have it as a built-in -- maybe dash?  Don\u0027t know.\n\nEven for the ones that have a built-in like bash, the string \"true\" or \"false\" has to be processed by the lexer to map it to the built-in command, which again involves string comparisons.\n\n\ntl;dr: I think that we should base our decision more as a matter of style than speed (and TBH, I also don\u0027t like this style much).  I don\u0027t have numbers though, so it\u0027s a legit question -- if we have numbers and it\u0027s true that performance matters in this case, sure, let\u0027s add it to the weight of the balance.",
+      "parentUuid": "1adf8d57_ad0d3439",
+      "range": {
+        "startLine": 68,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 46
+      },
+      "revId": "6b35840ba2bcb356df6d2a23f994a7cdf8984ab6",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
