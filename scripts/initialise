@@ -18,6 +18,15 @@ fi
 
 # main script
 
+while (( "$#" )); do
+  case "${1}" in
+    --without_shared)
+      WITHOUT_SHARED='true'
+      shift
+      ;;
+  esac
+done
+
 log_debug "cd $NGCPCTL_MAIN"
 cd "$NGCPCTL_MAIN"
 
@@ -60,8 +69,10 @@ if ! is_git_clean ; then
 fi
 
 if type -p init_ha &>/dev/null ; then
-  log_debug "init_ha function"
-  init_ha
+  if ! "${WITHOUT_SHARED:-false}" ; then
+    log_debug "init_ha function"
+    init_ha
+  fi
 fi
 
 if ! [ -r /etc/.gitignore ] ; then

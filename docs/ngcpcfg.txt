@@ -379,11 +379,19 @@ installed.
 
 Display usage information and exit.
 
-  **initialise**::
+  **initialise [--without_shared]**::
 
 If ngcpcfg was installed but isn't configured yet the 'initialise' option sets
 up ngcpcfg accordingly. Follow the instructions from the <<setup_instructions,
-Setup instructions>> section.
+Setup instructions>> section. Option allows to '--without_shared' skips shared
+repository setup (which is necessary on High Availability setup only).
+
+  **init-shared**::
+
+The ngcpcfg configures shared repository to synchronise configurations between
+all nodes in installation. In is necessary if ngcpcfg was initialised using
+option '--without_shared'. Note: Feature is available in the High Availability
+setup only.
 
   **init-mgmt** <server>::
 
