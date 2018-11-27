@@ -145,6 +145,7 @@ case ${1:-} in
   diff|\
   encrypt|\
   init-mgmt|\
+  init-shared|\
   initialise|\
   log|\
   pull|\
