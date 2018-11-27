@@ -22,6 +22,30 @@
       "revId": "6b35840ba2bcb356df6d2a23f994a7cdf8984ab6",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1adf8d57_4a2fd6a1",
+        "filename": "functions/main",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-11-27T09:17:54Z",
+      "side": 1,
+      "message": "I honestly like the strings comparison more then boolean usage... I had some sad stories long time ago about booleans... I would keep it AS IS if possible.\n\nP.S. need to check Google code style about that point... as we need to follow it. Meanwhile I want to submit this ASAP so nightly upgrade test to trunk will not fail.",
+      "parentUuid": "1adf8d57_ca3aa6e7",
+      "range": {
+        "startLine": 68,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 46
+      },
+      "revId": "6b35840ba2bcb356df6d2a23f994a7cdf8984ab6",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
