@@ -65,7 +65,7 @@ hook_setup() {
   fi
 
   if ! [ -d "$target_directory" ] ; then
-    if [ "${NGCP_TESTSUITE}" = "true" ]; then
+    if [ "${NGCP_TESTSUITE:-false}" = "true" ]; then
       log_info "Hook target directory $target_directory not a directory. Creating it."
       mkdir -p "$target_directory"
     else
