@@ -132,10 +132,12 @@ else
   . "${FUNCTIONS}"/main
 fi
 
-ngcpcfg_update_perms
-trap 'ngcpcfg_restore_perms' ERR EXIT
-
 case ${1:-} in
+  init-mgmt|\
+  init-shared|\
+  initialise)
+    action "$@"
+    ;;
   apply|\
   build|\
   check|\
@@ -144,9 +146,6 @@ case ${1:-} in
   decrypt|\
   diff|\
   encrypt|\
-  init-mgmt|\
-  init-shared|\
-  initialise|\
   log|\
   pull|\
   push|\
@@ -157,7 +156,10 @@ case ${1:-} in
   set|\
   del|\
   patch)
-    action "$@" ;;
+    ngcpcfg_update_perms
+    trap 'ngcpcfg_restore_perms' ERR EXIT
+    action "$@"
+    ;;
   --debug)         export DEBUG=1 ;      shift ; "$0" "$@" ;;
   --no-db-sync)    export NO_DB_SYNC=1 ; shift ; "$0" "$@" ;;
   --no-validate)   export NO_VALIDATE=1; shift ; "$0" "$@" ;;
