@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1adf8d57_03a659c1",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-11-29T09:17:19Z",
+      "side": 1,
+      "message": "Option \u0027--without_shared\u0027 allows to skip",
+      "range": {
+        "startLine": 386,
+        "startChar": 30,
+        "endLine": 386,
+        "endChar": 71
+      },
+      "revId": "b2605d64575355b60b9b1e9e0ec623eac3c998d3",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1adf8d57_23a155aa",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-11-29T09:17:19Z",
+      "side": 1,
+      "message": "it",
+      "range": {
+        "startLine": 392,
+        "startChar": 27,
+        "endLine": 392,
+        "endChar": 29
+      },
+      "revId": "b2605d64575355b60b9b1e9e0ec623eac3c998d3",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
