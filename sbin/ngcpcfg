@@ -135,7 +135,9 @@ fi
 case ${1:-} in
   init-mgmt|\
   init-shared|\
-  initialise)
+  initialise|\
+  show|\
+  values)
     action "$@"
     ;;
   apply|\
@@ -150,9 +152,7 @@ case ${1:-} in
   pull|\
   push|\
   services|\
-  show|\
   status|\
-  values|\
   set|\
   del|\
   patch)
