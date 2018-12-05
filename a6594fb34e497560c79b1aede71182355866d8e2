@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1adf8d57_cc0d1939",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2018-12-05T15:11:27Z",
+      "side": 1,
+      "message": "s/slowed down them/slowed them down/ IMO",
+      "revId": "a6594fb34e497560c79b1aede71182355866d8e2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
