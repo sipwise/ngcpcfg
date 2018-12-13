@@ -88,7 +88,7 @@ execute() {
   ngcp-service sync-state
 }
 
-systed_daemon_reload_preset() {
+systemd_daemon_reload_preset() {
   if [[ -d "/run/systemd/system" ]]; then
     log_info "Reloading systemd daemon and preset all services"
 
@@ -189,8 +189,8 @@ if ! ${DRYRUN}; then
   echo $$ >"${RUNNING_FILE}"
 fi
 
-log_debug "systed_daemon_reload_preset function"
-systed_daemon_reload_preset
+log_debug "systemd_daemon_reload_preset function"
+systemd_daemon_reload_preset
 
 TMPFILE="$(mktemp)"
 log_debug "TMPFILE = ${TMPFILE}"
