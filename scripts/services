@@ -83,7 +83,9 @@ execute() {
 
   log_info "Executing enqueued services actions"
   ngcp-service queue-run
+}
 
+services_sync_state() {
   log_info "Synchronizing current with expected services state"
   ngcp-service sync-state
 }
@@ -202,19 +204,21 @@ for dir in ${CONFIG_POOL} ; do
   generate_list_to_process "${dir}"
 done
 
-if [[ ! -s "${TMPFILE}" ]]; then
-  log_debug "No services file(s) reported - nothing to do."
-  exit 0
+if [[ -s "${TMPFILE}" ]]; then
+  log_debug "normalize_files function"
+  normalize_files
+
+  log_debug "sort_service_list function"
+  sort_service_list
+
+  log_debug "execute function"
+  execute
+else
+  log_debug "No services file(s) reported - no explicit service state changed."
 fi
 
-log_debug "normalize_files function"
-normalize_files
-
-log_debug "sort_service_list function"
-sort_service_list
-
-log_debug "execute function"
-execute
+log_debug "services_sync_state function"
+services_sync_state
 
 if [[ -n "${DEBUG:-}" ]]; then
   log_debug "Not removing temporary files"
