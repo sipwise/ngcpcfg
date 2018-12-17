@@ -10,6 +10,8 @@ set -u
 
 FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
 
+CLEANUP_FILES=()
+
 # load modules
 
 if [[ ! -r "${FUNCTIONS}"/main ]]; then
@@ -49,6 +51,8 @@ normalize_files() {
   NORMALIZED_FILES="$(mktemp)"
   log_debug "NORMALIZED_FILES = ${NORMALIZED_FILES}"
 
+  CLEANUP_FILES+=("${NORMALIZED_FILES}")
+
   while read -r line ; do
     # shellcheck disable=SC2001
     echo "${line}" | sed -e 's_\./_/_g ; s_//_/_g' >> "${NORMALIZED_FILES}"
@@ -61,6 +65,8 @@ normalize_files() {
 sort_service_list() {
   SORTED_LIST="$(mktemp)"
   log_debug "SORTED_LIST = ${SORTED_LIST}"
+
+  CLEANUP_FILES+=("${SORTED_LIST}")
 
   grep "${SERVICES_POOL_BASE}"/etc/monit/'.*services' "${NORMALIZED_FILES}" > \
     "${SORTED_LIST}" || true
@@ -197,6 +203,8 @@ systed_daemon_reload_preset
 TMPFILE="$(mktemp)"
 log_debug "TMPFILE = ${TMPFILE}"
 
+CLEANUP_FILES+=("${TMPFILE}")
+
 for dir in ${CONFIG_POOL} ; do
   is_absolute_path "${dir}" || continue
   is_non_git_folder "${dir}" || continue
@@ -223,6 +231,6 @@ services_sync_state
 if [[ -n "${DEBUG:-}" ]]; then
   log_debug "Not removing temporary files"
 else
-  rm -f "${TMPFILE}" "${NORMALIZED_FILES}" "${SORTED_LIST}"
+  rm -f "${CLEANUP_FILES[@]}"
 fi
 ## END OF FILE #################################################################
