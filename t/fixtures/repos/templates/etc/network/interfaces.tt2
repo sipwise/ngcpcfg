@@ -3,10 +3,18 @@
 [%
 hostname = ngcp.get_hostname();
 
+PROCESS '/usr/lib/ngcp-ngcpcfg/get_ngcp_version';
+ngcp_version = out;
+
 # in SPCE there's no proper hostname, but "self", default to it
 UNLESS hosts.${hostname};
    hostname = 'self';
 END;
+
+# array to track which options were already printed (to avoid reprinting when
+# there are several stanzas of the interface, e.g. ipv4+ipv6 with manual common
+# set-up for bonding options)
+hardware_options_printed = [ ];
 
 MACRO print_start_interface BLOCK;
    "# ${interface} ----------------------\n";
@@ -38,13 +46,14 @@ MACRO print_bond_fields BLOCK;
       "  bond-downdelay ${iface.bond_downdelay}\n";
    END;
    IF iface.bond_xmit_hash_policy;
-      "  bond-xmit-hash-policy ${iface.bond_xmit_hash_policy}\n";
+      "  bond-xmit_hash_policy ${iface.bond_xmit_hash_policy}\n";
    END;
 END;
 
 MACRO print_hwaddress BLOCK;
-   IF iface.hwaddr;
-      "  hwaddress ${iface.hwaddr}\n";
+   IF iface.hwaddr and iface.hwaddr != '00:00:00:00:00:00';
+      "  # skipped hwaddress since it is not supported by NGCP version ${ngcp_version}\n";
+      "  #hwaddress ${iface.hwaddr}\n";
    END;
 END;
 
@@ -59,8 +68,20 @@ MACRO print_mtu BLOCK;
 END;
 
 MACRO print_hardware_options BLOCK;
-   print_hwaddress;
-   print_mtu;
+   found='no';
+   FOREACH i IN hardware_options_printed;
+      IF i == iface_name;
+         # "  # hw options already printed for interface ${i} == ${iface_name}\n";
+         found='yes';
+         LAST;
+      END;
+   END;
+
+   UNLESS found == 'yes';
+      hardware_options_printed.push(iface_name);
+      print_hwaddress;
+      print_mtu;
+   END;
 END;
 
 MACRO print_address_v4 BLOCK;
@@ -210,10 +231,18 @@ MACRO print_interface BLOCK;
      "iface ${interface} inet6 loopback\n";
    ELSE;
 
+      # print bond fields of bond interfaces separately, to happen only once
+      # even when ipv4 and ipv6 are used at the same time
+      IF interface.match('^bond[0-9]+$');
+         "iface ${interface} inet manual\n";
+         print_bond_fields(iface=iface);
+         print_hardware_options(iface=iface, iface_name=interface);
+      END;
+
       # ipv4
       IF iface.manual == 'yes';
          "iface ${interface} inet manual\n";
-         print_hardware_options(iface=iface);
+         print_hardware_options(iface=iface, iface_name=interface);
          print_up_down_v4(iface=iface);
       ELSIF iface.dhcp == 'yes';
          "iface ${interface} inet dhcp\n";
@@ -222,6 +251,12 @@ MACRO print_interface BLOCK;
          print_address_v4(iface=iface);
          print_netmask_v4(iface=iface);
          print_gateway_v4(iface=iface);
+      ELSIF interface.match('^bond[0-9]+$');
+         # default for some installations in Carrier when bonds don't have any
+         # ip=IP/dhcp=yes configuration, and "manual" is not mandatory
+         "iface ${interface} inet manual\n";
+         print_hardware_options(iface=iface, iface_name=interface);
+         print_up_down_v4(iface=iface);
       ELSE;
          ipv4=no;
       END;
@@ -229,8 +264,7 @@ MACRO print_interface BLOCK;
       # ipv4-related fields
       IF iface.ip or iface.dhcp == 'yes';
          # common, they can be attached to any protocol of the interface
-         print_hardware_options(iface=iface);
-         print_bond_fields(iface=iface);
+         print_hardware_options(iface=iface, iface_name=interface);
          print_vlan_raw_device(iface=iface);
 
          print_dns_nameservers_v4(iface=iface);
@@ -240,7 +274,7 @@ MACRO print_interface BLOCK;
       # ipv6
       IF iface.v6manual == 'yes';
          "iface ${interface} inet6 manual\n";
-         print_hardware_options(iface=iface);
+         print_hardware_options(iface=iface, iface_name=interface);
          print_up_down_v6(iface=iface);
       ELSIF iface.v6dhcp == 'yes';
          "iface ${interface} inet6 dhcp\n";
@@ -256,8 +290,7 @@ MACRO print_interface BLOCK;
       # ipv6-related fields
       IF iface.v6ip or iface.v6dhcp == 'yes';
          # common, they can be attached to any protocol of the interface
-         print_hardware_options(iface=iface);
-         print_bond_fields(iface=iface);
+         print_hardware_options(iface=iface, iface_name=interface);
          print_vlan_raw_device(iface=iface);
 
          print_dns_nameservers_v6(iface=iface);
@@ -265,7 +298,7 @@ MACRO print_interface BLOCK;
       END;
 
       # disable "Duplicate Address Detection", it creates problems with HA resource transfer
-      IF iface.shared_v6ip;
+      IF iface.shared_v6ip.size;
          "  dad-attempts 0\n";
          "  pre-up echo 0 > /proc/sys/net/ipv6/conf/${interface}/accept_dad\n";
       END;
@@ -296,8 +329,8 @@ FOREACH interface IN all_interfaces;
          print_start_interface(interface=phys_interface);
          "iface ${phys_interface} inet manual\n";
          "  pre-up ethtool -K ${phys_interface} sg off\n";
-         print_hardware_options(iface=iface);
-         print_up_down_v4(iface=iface);
+         print_hardware_options(iface=phys_interface, iface_name=phys_interface);
+         print_up_down_v4(iface=phys_interface);
          print_end_interface();
 
          # remove now to not process again, but lists do not allow to remove
