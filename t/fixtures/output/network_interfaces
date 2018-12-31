@@ -14,13 +14,14 @@ iface eth22 inet manual
 
 # bond0 ----------------------
 auto bond0
+iface bond0 inet manual
+  bond-slaves eth11 eth22
+  bond-mode active-backup
+  bond-miimon 100
 iface bond0 inet static
   address 10.10.10.2
   netmask 255.0.0.0
   gateway 10.10.10.254
-  bond-slaves eth11 eth22
-  bond-mode active-backup
-  bond-miimon 100
 # --------------------------------------------
 
 # lo ----------------------
@@ -35,13 +36,13 @@ iface eth46 inet static
   address 127.11.22.33
   netmask 255.0.0.0
   gateway 127.11.22.254
-  hwaddress c0:ff:ee:15:90:0d
+  # skipped hwaddress since it is not supported by NGCP version 
+  #hwaddress c0:ff:ee:15:90:0d
   dns-nameservers 127.0.0.1 1.1.1.1
 iface eth46 inet6 static
   address 2001:aaaa:1111:bbbb:2222:cccc:3333:dddd
   netmask 64
   gateway 2001:aaaa:1111:bbbb:2222:cccc:3333:0001
-  hwaddress c0:ff:ee:15:90:0d
   dns-nameservers ::1 2606:4700:4700::1111
 # --------------------------------------------
 
