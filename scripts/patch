@@ -142,6 +142,10 @@ patch_apply() {
     bad_files+=("${patch}")
   fi
 
+  if [[ -f "${template}" && -f "${customtt}" ]] ; then
+    chmod --reference="${template}" "${customtt}"
+    chown --reference="${template}" "${customtt}"
+  fi
   rm -f "${patch_output}"
 }
 
