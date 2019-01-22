@@ -90,6 +90,10 @@ execute() {
   log_info "Executing enqueued services actions"
   ngcp-service queue-show
   ngcp-service queue-run
+
+  log_info "Executing enqueued policy-rc.d actions"
+  ngcp-service --queue=policy-rc.d queue-show
+  ngcp-service --queue=policy-rc.d queue-run
 }
 
 services_sync_state() {
