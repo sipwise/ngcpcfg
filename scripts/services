@@ -88,8 +88,8 @@ execute() {
   done < "${SORTED_LIST}"
 
   log_info "Executing enqueued services actions"
-  ngcp-service queue-show
-  ngcp-service queue-run
+  ngcp-service --queue=default,policy-rc.d queue-show
+  ngcp-service --queue=default,policy-rc.d queue-run
 }
 
 services_sync_state() {
