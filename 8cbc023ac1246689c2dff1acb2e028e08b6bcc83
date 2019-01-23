@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da1255d7_b2e6c6e6",
+        "filename": "lib/get_all_v6ips",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-01-23T13:17:39Z",
+      "side": 1,
+      "message": "Why not simply use the Net::IP module, it would be a matter of just doing:\n\n  my $fullip \u003d Net::IP-\u003enew($ip);\n  $ip-\u003eip;\n\nwhile pulling and pushing the values into the stash etc.",
+      "revId": "8cbc023ac1246689c2dff1acb2e028e08b6bcc83",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
