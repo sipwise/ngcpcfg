@@ -34,6 +34,24 @@
       "revId": "2b300892694f216c1cb41753568476f5aabd1f3e",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da1255d7_723f2e26",
+        "filename": "scripts/services",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-01-23T13:31:52Z",
+      "side": 1,
+      "message": "Maybe we should merge queues here to prevent double restart?\nas often ngcp-panel receives tt2 templates changes together with perl code/package upgrades.",
+      "parentUuid": "da1255d7_72728e7e",
+      "revId": "2b300892694f216c1cb41753568476f5aabd1f3e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
