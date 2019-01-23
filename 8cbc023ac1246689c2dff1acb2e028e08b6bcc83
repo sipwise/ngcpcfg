@@ -34,6 +34,24 @@
       "revId": "8cbc023ac1246689c2dff1acb2e028e08b6bcc83",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da1255d7_124b52b2",
+        "filename": "lib/get_all_v6ips",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2019-01-23T14:06:54Z",
+      "side": 1,
+      "message": "That\u0027s actually interesting behaviour by Net::IP. For IPv6 addresses, the \"normal\" format is the abbreviated short format, and the expanded full format you basically never see anywhere, while for IPv4 it\u0027s exactly the other way around. Which makes me a bit suspicious about the default behaviour of the module possibly being changed at some point.\n\nThe output is also slightly different. Net::IP produces full length :0000: while this TT2 snippet leaves it as :0:\n\nWhat was/is the purpose of expanding IPv6 addresses like this anyway? Git log says this was added 6 years ago and my memory isn\u0027t that good :)",
+      "parentUuid": "da1255d7_b2e6c6e6",
+      "revId": "8cbc023ac1246689c2dff1acb2e028e08b6bcc83",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
