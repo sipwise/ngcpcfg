@@ -16,6 +16,24 @@
       "revId": "2b300892694f216c1cb41753568476f5aabd1f3e",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da1255d7_72728e7e",
+        "filename": "scripts/services",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-01-23T11:11:26Z",
+      "side": 1,
+      "message": "\u003e I assume ngcp-service will fail its execution here if the feature\n \u003e isn\u0027t supported yet? Do we want to check for this (since we try to\n \u003e avoid versioned dependencies) or do we rely on having this\n \u003e available through our branching/tagging release process?\n\nIMO it\u0027s sufficient if the error is noise and with a clear-ish message.\n\nAlso the tools should have the same versions, unless some package is updated to a later version while the rest of the system is left behind, which probably never happens?  Or do you have some case in mind in which this can routinely happen?\n\nOf course, if we detect problems in the field we can reconsider :)",
+      "parentUuid": "da1255d7_b257e6c9",
+      "revId": "2b300892694f216c1cb41753568476f5aabd1f3e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
