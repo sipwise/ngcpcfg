@@ -16,6 +16,24 @@
       "revId": "8cbc023ac1246689c2dff1acb2e028e08b6bcc83",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da1255d7_f278befa",
+        "filename": "lib/get_all_v6ips",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000006
+      },
+      "writtenOn": "2019-01-23T13:46:29Z",
+      "side": 1,
+      "message": "Not sure about what you mean with Net::IP module.\nWhile not being a Perl expert, I\u0027ve re-used the implementation from lib/get_all_shared_v6ips and lib/get_all_shared_v6ips_for_host, which @Rfuchs did some time ago AFAIK.\nFeel free to amend it, but don\u0027t forget to change all 4 of the scripts which use format argument. ;)",
+      "parentUuid": "da1255d7_b2e6c6e6",
+      "revId": "8cbc023ac1246689c2dff1acb2e028e08b6bcc83",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
