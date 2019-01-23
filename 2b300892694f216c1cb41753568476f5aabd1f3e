@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da1255d7_b257e6c9",
+        "filename": "scripts/services",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-01-23T10:49:38Z",
+      "side": 1,
+      "message": "I assume ngcp-service will fail its execution here if the feature isn\u0027t supported yet? Do we want to check for this (since we try to avoid versioned dependencies) or do we rely on having this available through our branching/tagging release process?",
+      "revId": "2b300892694f216c1cb41753568476f5aabd1f3e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
