@@ -6,6 +6,7 @@
 #
 # @param argv.host      The host to get all IPs for.
 # @param argv.type      The interface type or empty string for all types.
+# @param argv.format    Optional reformatting of IPv6 addresses.
 # @param argv.status    node status [ online, offline, inactive ]
 #                         default value: ['online', 'inactive']
 # @return out           The array of IPs.
@@ -37,9 +38,19 @@ IF status.item(hosts.${argv.host}.status);
     FOREACH realiface IN hosts.${argv.host}.keys;
       NEXT IF realiface != iface;
       NEXT UNLESS hosts.${argv.host}.$realiface.type.grep('^' _ argv.type _ '$').size();
-      NEXT UNLESS hosts.${argv.host}.$realiface.v6ip.defined;
 
-      out.push(hosts.${argv.host}.$realiface.v6ip);
+      FOREACH ip IN hosts.${argv.host}.$realiface.v6ip;
+        IF argv.format == 'expand';
+          WHILE ip.match('::') && ip.match(':', 1).size < 8;
+            ip = ip.replace('::', '::0:');
+          END;
+          ip = ip.replace('::', ':');
+          ip = ip.replace('^:', '0:');
+          ip = ip.replace(':$', ':0');
+        END;
+        NEXT UNLESS ip;
+        out.push(ip);
+      END;
     END;
   END;
 END;
