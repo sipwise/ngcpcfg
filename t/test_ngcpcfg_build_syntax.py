@@ -27,13 +27,13 @@ def test_bad_syntax(ngcpcfgcli, tmpdir):
     print(out.stderr.replace("\\n", "\n"))
 
     regex1 = re.compile(r"NOTE: Check those files for valid syntax and "
-                        "encoding.*etc/bad-syntax\.txt\.tt2.*or inspecting "
-                        "temporary /tmp/ngcpcfg\.bad-syntax\.txt\.")
+                        "encoding.*etc/bad-syntax.txt.tt2.*or inspecting "
+                        "temporary /tmp/ngcpcfg.bad-syntax.txt.")
     assert re.search(regex1, out.stdout)
 
     regex2 = re.compile(r"Error: Generating /tmp/ngcp-.*-pytest-output.*"
                         "/etc/bad-syntax.txt based on .*"
-                        "/etc/bad-syntax\.txt\.tt2: FAILED")
+                        "/etc/bad-syntax.txt.tt2: FAILED")
     assert re.search(regex2, out.stderr)
 
     regex3 = re.compile(r"Error:   file error - parse error - input file "
