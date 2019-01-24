@@ -52,6 +52,24 @@
       "revId": "2b300892694f216c1cb41753568476f5aabd1f3e",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da1255d7_1d73634f",
+        "filename": "scripts/services",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-01-24T07:28:06Z",
+      "side": 1,
+      "message": "\u003e IMO it\u0027s sufficient if the error is noise and with a clear-ish\n \u003e message.\n\nFine for me too :)\n\n \u003e Also the tools should have the same versions, unless some package\n \u003e is updated to a later version while the rest of the system is left\n \u003e behind, which probably never happens?  Or do you have some case in\n \u003e mind in which this can routinely happen?\n\nWhen backporting such features and forgetting about one project is the most common situation I\u0027m aware of. I just wanted to raise awareness, it\u0027s fine for me as-is if we all agree. :)\n\n \u003e Of course, if we detect problems in the field we can reconsider :)\n\nSure :)",
+      "parentUuid": "da1255d7_72728e7e",
+      "revId": "2b300892694f216c1cb41753568476f5aabd1f3e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
