@@ -22,10 +22,10 @@ FOREACH iface IN hosts.${argv.host}.interfaces;
        hosts.${argv.host}.$realiface.netmask;
 -%]
 [%    PERL -%]
-        use Net::IPv4Addr qw(ipv4_network);
+        use Net::Netmask;
 
-        my ($ip, $netmask) = ipv4_network("[% hosts.${argv.host}.${realiface}.ip %]/[% hosts.${argv.host}.${realiface}.netmask %]");
-        $stash->set('out' => "$ip/$netmask");
+        my $network = Net::Netmask->new("[% hosts.${argv.host}.${realiface}.ip %]/[% hosts.${argv.host}.${realiface}.netmask %]");
+        $stash->set(out => $network->desc);
 [%    END -%]
 [%
     END;
