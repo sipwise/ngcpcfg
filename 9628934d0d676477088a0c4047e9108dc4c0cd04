@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da1255d7_723cc92f",
+        "filename": "lib/NGCP/Template/Object.pm",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2019-01-28T17:15:33Z",
+      "side": 1,
+      "message": "That\u0027s not enough, as it doesn\u0027t eliminate leading zeroes, i.e. ...:00ab vs ...:ab",
+      "revId": "9628934d0d676477088a0c4047e9108dc4c0cd04",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
