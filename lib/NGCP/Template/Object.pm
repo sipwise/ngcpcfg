@@ -165,6 +165,20 @@ sub get_ssh_pub_key
     return $ssh_pub_key;
 }
 
+sub net_ip_expand
+{
+    my ($self, $ip) = @_;
+
+    while ($ip =~ m/::/ && (() = $ip =~ m/:/g) < 8) {
+        $ip =~ s/::/::0:/;
+    }
+    $ip =~ s/::/:/;
+    $ip =~ s/^:/0:/;
+    $ip =~ s/:$/:0/;
+
+    return $ip;
+}
+
 1;
 
 __END__
@@ -229,6 +243,10 @@ Returns the NGCP management node shared name.
 
 Returns the SSH public key with $key_type ('rsa', 'ed25519', etc.) from
 the ngcpcfg shared-files storage.
+
+=item $ip = $t->net_ip_expand($ipaddr)
+
+Returns the expanded form of the IP address. Supports IPv4 and IPv6.
 
 =back
 
