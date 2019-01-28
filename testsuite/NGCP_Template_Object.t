@@ -5,7 +5,7 @@ use warnings;
 
 use Test::More;
 
-plan tests => 25;
+plan tests => 28;
 
 use_ok('NGCP::Template::Object');
 
@@ -95,3 +95,14 @@ is($obj->get_mgmt_node(), 'sp', 'spce has sp as mgmt node');
     local $obj->{config}{general}{ngcp_type} = 'carrier';
     is($obj->get_mgmt_node(), 'web01', 'carrier has web01 as mgmt node');
 }
+
+# Check net_ip_expand().
+is($obj->net_ip_expand('1:2::5:20'),
+    '1:2:0:0:0:0:5:20',
+    'normalize IPv6 1:2::5:20');
+is($obj->net_ip_expand('001:2::0005:020'),
+    '001:2:0:0:0:0:0005:020',
+    'normalize IPv6 001::0005:020');
+is($obj->net_ip_expand('1::0'),
+    '1:0:0:0:0:0:0:0',
+    'normalize IPv6 1::0');
