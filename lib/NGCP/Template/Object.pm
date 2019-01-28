@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use List::Util qw(any);
+use Net::IP;
 
 sub new
 {
@@ -164,6 +165,17 @@ sub get_ssh_pub_key
     return $ssh_pub_key;
 }
 
+sub net_ip_expand
+{
+    my $ipaddr = shift;
+    my $ip = Net::IP->new($ipaddr);
+
+    # XXX: For compatibility with the old ad-hoc macros, we reduce the
+    # duplicate 0s into a single 0. We might be able to drop this in the
+    # future in case it does not cause problems.
+    return $ip->ip =~ s/0000/0/gr;
+}
+
 1;
 
 __END__
@@ -228,6 +240,10 @@ Returns the NGCP management node shared name.
 
 Returns the SSH public key with $key_type ('rsa', 'ed25519', etc.) from
 the ngcpcfg shared-files storage.
+
+=item $ip = $t->net_ip_expand($ipaddr)
+
+Returns the expanded form of the IP address. Supports IPv4 and IPv6.
 
 =back
 
