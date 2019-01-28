@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use List::Util qw(any);
+use Net::IP;
 
 sub new
 {
@@ -167,16 +168,10 @@ sub get_ssh_pub_key
 
 sub net_ip_expand
 {
-    my ($self, $ip) = @_;
+    my ($self, $ipaddr) = @_;
+    my $ip = Net::IP->new($ipaddr);
 
-    while ($ip =~ m/::/ && (() = $ip =~ m/:/g) < 8) {
-        $ip =~ s/::/::0:/;
-    }
-    $ip =~ s/::/:/;
-    $ip =~ s/^:/0:/;
-    $ip =~ s/:$/:0/;
-
-    return $ip;
+    return $ip->ip;
 }
 
 1;
