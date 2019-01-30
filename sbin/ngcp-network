@@ -587,29 +587,28 @@ if (@remove_interface) {
     }
 }
 
-if ( @roles && ( !defined $move_from || !defined $move_to ) ) {
-    foreach my $role (@roles) {
-        logger("set_role($role)");
-        set_role($role);
+if ( !defined $move_from || !defined $move_to ) {
+    if ( @roles ) {
+        foreach my $role (@roles) {
+            logger("set_role($role)");
+            set_role($role);
+        }
     }
-}
 
-if ( defined $peer && ( !defined $move_from || !defined $move_to ) ) {
-    logger("set_yml_config('peer', $peer)");
-    set_yml_config( 'peer', $peer );
-}
+    if ( defined $peer ) {
+        logger("set_yml_config('peer', $peer)");
+        set_yml_config( 'peer', $peer );
+    }
 
-if ( defined $internal_iface
-    && ( !defined $move_from || !defined $move_to ) )
-{
-    logger("set_yml_config('internal_iface', $internal_iface)");
-    set_yml_config( 'internal_iface', $internal_iface );
-}
+    if ( defined $internal_iface ) {
+        logger("set_yml_config('internal_iface', $internal_iface)");
+        set_yml_config( 'internal_iface', $internal_iface );
+    }
 
-if ( defined $dbnode && ( !defined $move_from || !defined $move_to ) )
-{
-    logger("set_dbnode($dbnode)");
-    set_dbnode($dbnode);
+    if ( defined $dbnode ) {
+        logger("set_dbnode($dbnode)");
+        set_dbnode($dbnode);
+    }
 }
 
 
