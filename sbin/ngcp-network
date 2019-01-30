@@ -64,6 +64,9 @@ my @roles;
 my @set_interface;
 my $shared_ip;
 my $shared_ip_v6;
+my $sysname;
+my $sysdescr;
+my $syslocation;
 my @type;
 my $verbose;
 my $version;
@@ -106,6 +109,9 @@ GetOptions(
     'set-interface=s'    => \@set_interface,
     'shared-ip=s'        => \$shared_ip,
     'shared-ipv6=s'      => \$shared_ip_v6,
+    'sysname=s'          => \$sysname,
+    'sysdescr=s'         => \$sysdescr,
+    'syslocation=s'      => \$syslocation,
     'type=s'             => \@type,
     'verbose'            => \$verbose,
     'version'            => \$version,
@@ -449,6 +455,15 @@ sub set_dbnode {
     return;
 }
 
+sub set_sysattr {
+    my ($attr, $value) = @_;
+
+    if ( defined $value ) {
+        logger("set_yml_config('$attr', $value)");
+        set_yml_config($attr, $value);
+    }
+}
+
 sub clone_settings {
     my $from = shift;
     my $to   = shift;
@@ -609,6 +624,10 @@ if ( !defined $move_from || !defined $move_to ) {
         logger("set_dbnode($dbnode)");
         set_dbnode($dbnode);
     }
+
+    set_sysattr('sysname', $sysname);
+    set_sysattr('sysdescr', $sysdescr);
+    set_sysattr('syslocation', $syslocation);
 }
 
 
@@ -812,6 +831,22 @@ Set shared_ip configuration to specified argument.
 =item B<--shared-ipv6>=I<IP>
 
 Set shared_v6ip configuration to specified argument.
+
+=item B<--sysname>=I<name>
+
+The SNMP system name for this host. If not specified, the SNMP daemon will
+default to use a name based on the hostname.
+
+=item B<--sysdescr>=I<descr>
+
+The SNMP system description for this host. If not specified the SNMP daemon
+will default to a description including the current NGCP version, and
+the current host roles.
+
+=item B<--syslocation>=I<location>
+
+The SNMP system location for this host. If not specified the SNMP daemon
+will default to a generic location.
 
 =item B<--type>=I<name>
 
