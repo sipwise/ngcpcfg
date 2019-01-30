@@ -379,13 +379,22 @@ sub remove_interface {
     return;
 }
 
-sub set_yml_config {
-    my $setting = shift or croak 'Usage: set_yml_config <setting> <value>';
-    my $value   = shift or croak 'Usage: set_yml_config <setting> <value>';
+sub set_host_key {
+    my $key   = shift or croak 'Usage: set_host_key <key> <value>';
+    my $value = shift or croak 'Usage: set_host_key <key> <value>';
 
-    $yaml->{hosts}->{$host}->{$setting} = "$value";
-    logger("\$yaml->{hosts}->{\$host}->{$setting} = $value");
+    $yaml->{hosts}->{$host}->{$key} = "$value";
+    logger("\$yaml->{hosts}->{\$host}->{$key} = $value");
     return;
+}
+
+sub set_host_key_cond {
+    my ($key, $value) = @_;
+
+    if ( defined $value ) {
+        logger("set_host_key('$key', $value)");
+        set_host_key($key, $value);
+    }
 }
 
 sub set_iface_config {
@@ -445,7 +454,7 @@ sub set_dbnode {
         $new_dbnode = $max + 1;
         logger("use $new_dbnode");
     }
-    set_yml_config('dbnode', $new_dbnode);
+    set_host_key('dbnode', $new_dbnode);
     return;
 }
 
@@ -595,15 +604,8 @@ if ( !defined $move_from || !defined $move_to ) {
         }
     }
 
-    if ( defined $peer ) {
-        logger("set_yml_config('peer', $peer)");
-        set_yml_config( 'peer', $peer );
-    }
-
-    if ( defined $internal_iface ) {
-        logger("set_yml_config('internal_iface', $internal_iface)");
-        set_yml_config( 'internal_iface', $internal_iface );
-    }
+    set_host_key_cond('peer', $peer);
+    set_host_key_cond('internal_iface', $internal_iface);
 
     if ( defined $dbnode ) {
         logger("set_dbnode($dbnode)");
