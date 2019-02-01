@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da1255d7_3cc1802f",
+        "filename": "sbin/ngcp-network",
+        "patchSetId": 2
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2019-02-01T15:33:35Z",
+      "side": 1,
+      "message": "I guess it can be simplified more - remove \"if(@roles)\" condition. foreach cycle works well if array is empty",
+      "range": {
+        "startLine": 591,
+        "startChar": 3,
+        "endLine": 591,
+        "endChar": 19
+      },
+      "revId": "b61b3630fed78b34285b049d34fd9db11cc17fdd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
