@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da1255d7_bcb450d1",
+        "filename": "sbin/ngcp-network",
+        "patchSetId": 3
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2019-02-01T15:30:25Z",
+      "side": 1,
+      "message": "I suppose this function can be used to set other attributes as well",
+      "revId": "5dcbcf671fc19358870d9d0ee1425bb965b4dd8d",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
