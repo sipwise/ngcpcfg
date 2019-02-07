@@ -56,6 +56,8 @@ my $move_to;
 my $mtu;
 my $netmask;
 my $netmask_ip_v6;
+my $offload_lro;
+my $offload_tso;
 my $outputfile = $inputfile;
 my $peer;
 my @remove_host;
@@ -101,6 +103,8 @@ GetOptions(
     'mtu=s'              => \$mtu,
     'netmask=s'          => \$netmask,
     'netmask-ipv6=s'     => \$netmask_ip_v6,
+    'offload-lro=s'      => \$offload_lro,
+    'offload-tso=s'      => \$offload_tso,
     'output-file=s'      => \$outputfile,
     'peer=s'             => \$peer,
     'remove-host=s'      => \@remove_host,
@@ -300,6 +304,8 @@ sub set_interface {
         'manual'          => $manual,
         'mtu'             => $mtu,
         'netmask'         => $netmask,
+        'offload_lro'     => $offload_lro,
+        'offload_tso'     => $offload_tso,
         'v6netmask'       => $netmask_ip_v6,
         'shared_ip'       => $shared_ip,
         'shared_v6ip'     => $shared_ip_v6,
@@ -779,6 +785,14 @@ Set netmask configuration to specified argument.
 =item B<--netmask-ipv6>=I<length>
 
 Set IPv6 netmask (prefix length) configuration to specified argument.
+
+=item B<--offload-lro>=I<yes|no>
+
+Set Large Receive Offload (LRO) to yes or no (on/off) for this interface.
+
+=item B<--offload-tso>=I<yes|no>
+
+Set TCP Segmentation Offload (TSO) to yes or no (on/off) for this interface.
 
 =item B<--output-file>=I<filename>
 
