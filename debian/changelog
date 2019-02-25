@@ -1,3 +1,26 @@
+ngcp-ngcpcfg (7.2.1.0+0~mr7.2.1.0) unstable; urgency=medium
+
+  [ Andrew Pogrebennyk ]
+  * [180e591] TT#50100 scripts/patch: preserve file permissions when creating customtt
+  * [8cbc023] TT#50701 lib/get_all_v6ips[_for_host]: support format parameter to expand IPv6 addr
+
+  [ Guillem Jover ]
+  * [8337f62] TT#50752 services: Execute queue-show before queue-run
+  * [9c58d67] TT#50701 Switch from Net::IPv4Addr to Net::Netmask
+  * [b61b363] TT#50651 Refactor conditional into an enclosing one
+  * [ecf613e] TT#50651 Rework host key setting
+  * [b163563] TT#50651 Add support for new SNMP host attributes
+
+  [ Michael Prokop ]
+  * [8005eea] TT#46601 tests: avoid DeprecationWarnings with Python >=3.6
+
+  [ Manuel Montecelo ]
+  * [6921fc2] TT#50981 Implement offload-lro/-tso for /e/n/interfaces, ngcp-network command
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 25 Feb 2019 22:58:18 +0100
+
 ngcp-ngcpcfg (7.2.0.0+0~mr7.2.0.0) unstable; urgency=medium
 
   [ Guillem Jover ]
