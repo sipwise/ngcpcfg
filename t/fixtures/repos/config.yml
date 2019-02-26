@@ -1,7 +1,8 @@
 ---
 tests:
 cluster_sets:
-  default:
+  sets:
+  - name: default
     dispatcher_id: '50'
   default_set: default
   type: central
