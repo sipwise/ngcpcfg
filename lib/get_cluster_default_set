@@ -1,0 +1,16 @@
+[%
+# vi: ft=tt2
+
+# Return a hash containing name and dispatcher_id of the default cluster set.
+#
+# @return out           The hash.
+
+out = {};
+default_set = cluster_sets.default_set;
+
+FOREACH set IN cluster_sets.sets;
+  NEXT UNLESS set.name == default_set;
+  out = set;
+END;
+
+-%]
