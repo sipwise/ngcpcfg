@@ -37,16 +37,15 @@ ELSE;
   set_hosts = hosts.keys.sort;
 END;
 
-FOREACH set IN cluster_sets.keys;
-  NEXT IF (set == 'default_set' || set == 'type');
-  theset = { dispatcher_id = cluster_sets.$set.dispatcher_id };
+FOREACH set IN cluster_sets.sets;
+  theset = { dispatcher_id = set.dispatcher_id };
   theset.ips = [];
 
   FOREACH host IN set_hosts;
     NEXT UNLESS status.item(hosts.$host.status);
     NEXT UNLESS ngcp.has_role(host, argv.role);
     FOREACH iface IN hosts.$host.interfaces;
-      NEXT UNLESS hosts.$host.$iface.cluster_sets.grep('^' _ set _ '$').size();
+      NEXT UNLESS hosts.$host.$iface.cluster_sets.grep('^' _ set.name _ '$').size();
       NEXT UNLESS hosts.$host.$iface.type.grep('^' _ argv.type _ '$').size();
       NEXT UNLESS hosts.$host.$iface.ip;
       theset.ips.push(hosts.$host.$iface.ip) UNLESS theset.ips.defined(hosts.$host.$iface.ip);

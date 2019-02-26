@@ -25,10 +25,9 @@ END;
 
 out = [];
 
-FOREACH set IN cluster_sets.keys;
-  NEXT IF (set == "default_set" || set == "type");
+FOREACH set IN cluster_sets.sets;
   blktmp.processed_hosts = {};
-  theset = { dispatcher_id = cluster_sets.$set.dispatcher_id };
+  theset = { dispatcher_id = set.dispatcher_id };
   theset.ips = [];
 
   FOREACH host IN hosts.keys.sort;
@@ -37,7 +36,7 @@ FOREACH set IN cluster_sets.keys;
     NEXT UNLESS ngcp.has_role(host, argv.role);
     peer = hosts.$host.peer;
     FOREACH iface IN hosts.$host.interfaces;
-      NEXT UNLESS hosts.$host.$iface.cluster_sets.grep('^' _ set _ '$').size();
+      NEXT UNLESS hosts.$host.$iface.cluster_sets.grep('^' _ set.name _ '$').size();
       NEXT UNLESS hosts.$host.$iface.type.grep('^' _ argv.type _ '$').size();
       blktmp.processed_hosts.$peer = 1;
       FOREACH ip IN hosts.$host.$iface.shared_ip;
