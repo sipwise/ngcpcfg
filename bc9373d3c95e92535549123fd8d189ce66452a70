@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9a0c5dc1_672532c1",
+        "filename": "lib/get_all_cluster_sets",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2019-02-27T14:35:40Z",
+      "side": 1,
+      "message": "You are right.\nI thought it was not possible :-)",
+      "parentUuid": "9a0c5dc1_27aa9a1a",
+      "range": {
+        "startLine": 33,
+        "startChar": 11,
+        "endLine": 33,
+        "endChar": 19
+      },
+      "revId": "bc9373d3c95e92535549123fd8d189ce66452a70",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a0c5dc1_675e5247",
         "filename": "lib/get_cluster_default_set",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2019-02-27T14:21:32Z",
       "side": 1,
       "message": "You probably want LAST here to avoid traversing the remainder of the array?",
+      "revId": "bc9373d3c95e92535549123fd8d189ce66452a70",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a0c5dc1_272f3aa3",
+        "filename": "lib/get_cluster_default_set",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2019-02-27T14:35:40Z",
+      "side": 1,
+      "message": "Good suggestion",
+      "parentUuid": "9a0c5dc1_675e5247",
       "revId": "bc9373d3c95e92535549123fd8d189ce66452a70",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
