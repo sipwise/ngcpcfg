@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a0c5dc1_dfc936ae",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-03-07T15:16:23Z",
+      "side": 1,
+      "message": "restarted",
+      "range": {
+        "startLine": 285,
+        "startChar": 60,
+        "endLine": 285,
+        "endChar": 68
+      },
+      "revId": "adab2edac53a99896e2fe69d494b4abfde4d3608",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a0c5dc1_ffd4fa47",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-03-07T15:16:23Z",
+      "side": 1,
+      "message": "it is not clean what \"normally\" is, maybe:\n  \nThe *--force-all-services* option causes all services to be restarted, including services without changes in config files.",
+      "range": {
+        "startLine": 286,
+        "startChar": 6,
+        "endLine": 286,
+        "endChar": 29
+      },
+      "revId": "adab2edac53a99896e2fe69d494b4abfde4d3608",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
