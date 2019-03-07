@@ -45,6 +45,30 @@
       "revId": "adab2edac53a99896e2fe69d494b4abfde4d3608",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a0c5dc1_1f37ceb1",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-03-07T15:26:34Z",
+      "side": 1,
+      "message": "\u003e it is not clean what \"normally\" is, maybe:\n \u003e \n \u003e The *--force-all-services* option causes all services to be\n \u003e restarted, including services without changes in config files.\n\nOK, I like it better.  \"normally\" in this context meant \"whatever is done when this option is not used\", i.e., the default of the command \"services\".",
+      "parentUuid": "9a0c5dc1_ffd4fa47",
+      "range": {
+        "startLine": 286,
+        "startChar": 6,
+        "endLine": 286,
+        "endChar": 29
+      },
+      "revId": "adab2edac53a99896e2fe69d494b4abfde4d3608",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
