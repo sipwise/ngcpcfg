@@ -19,13 +19,16 @@ fi
 usage() {
   printf "ngcpcfg build -- supported command line options:
 
---ignore-branch-check - do not fail build if branch doesn't match 'master'\n\n"
+--ignore-branch-check         - do not fail build if branch doesn't match 'master'
+--ignore-shared-storage-check - skip check of shared storage\n\n"
 }
 
 CHECK_BRANCH=true
+CHECK_SHARED_STORAGE=true
 while [ -n "${1:-}" ] ; do
   case "$1" in
     *--ignore-branch-check*) CHECK_BRANCH=false ; shift ;;
+    *--ignore-shared-storage-check*) CHECK_SHARED_STORAGE=false ; shift ;;
     *--help*)   usage ; exit 0 ;;
     *) break ;;
   esac
@@ -192,6 +195,11 @@ check_configs_conflicts() {
 }
 
 check_shared_storage() {
+  if ! ${CHECK_SHARED_STORAGE} ; then
+    log_info "Option --ignore-shared-storage-check is enabled, skipping."
+    return 0
+  fi
+
   # ensure there are no outstanding pull actions,
   # unless --no-action-failure is used (ignore then)
   if ! type -p execute_check_shared_storage &>/dev/null ; then

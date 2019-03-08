@@ -19,22 +19,19 @@ fi
 . "${FUNCTIONS}"/main
 
 MODIFIED_ONLY=false
-CHECK_BRANCH=true
+check_args=()
 if [ -n "${1:-}" ] ; then
   case "$1" in
     *--modified-only*) MODIFIED_ONLY=true ; shift ;;
-    *--ignore-branch-check*) CHECK_BRANCH=false ; shift ;;
+    *--ignore-branch-check*) check_args+=( --ignore-branch-check ) ; shift ;;
+    *--ignore-shared-storage-check*) check_args+=( --ignore-shared-storage-check ) ; shift ;;
   esac
 fi
 
 # Sanity check the YAML and schema files.
 # NOTE: we can't blindly pass "$@" to the check script,
 #       so explicitly check and add option as needed
-if "$CHECK_BRANCH" ; then
-  "${SCRIPTS}"/check
-else
-  "${SCRIPTS}"/check --ignore-branch-check
-fi
+"${SCRIPTS}"/check "${check_args[@]}"
 
 "${SCRIPTS}"/patch "$@"
 
