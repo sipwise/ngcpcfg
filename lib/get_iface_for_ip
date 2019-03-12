@@ -5,7 +5,12 @@
 #
 # @param argv.host      The current host for IP interface name mapping.
 # @param argv.ip        The IP address to map.
+# @param argv.type      Type of interface: [ 'default', 'cloud'].
 # @return out           The interface name of the given IP.
+
+IF !argv.type.size;
+  argv.type = 'default';
+END;
 
 out = '';
 FOREACH key IN hosts.${argv.host}.keys;
@@ -17,7 +22,11 @@ FOREACH key IN hosts.${argv.host}.keys;
         hosts.${argv.host}.${key}.shared_ip.size > 0;
     FOREACH shared_ip IN hosts.${argv.host}.${key}.shared_ip;
       IF shared_ip == argv.ip;
-        out = "$key:$loop.index";
+        IF argv.type == 'cloud';
+          out = hosts.${argv.host}.${key}.cloud_interface;
+        ELSE;
+          out = "$key:$loop.index";
+        END;
         RETURN;
       END;
     END;
