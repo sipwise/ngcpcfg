@@ -1,0 +1,41 @@
+[%
+# vi: ft=tt2
+
+# Returns the network address of a certain shared IP address for a given host.
+#
+# @param argv.host        The hostname to get the interface from.
+# @param argv.shared_ip   The shared IP assigned to some interface
+#
+# @return out             The network address in CDIR format.
+
+out = '';
+
+IF !hosts.${argv.host}.defined;
+  argv.host = 'self';
+END;
+
+IF !argv.shared_ip.size;
+  RETURN;
+END;
+
+FOREACH iface IN hosts.${argv.host}.interfaces;
+  FOREACH realiface IN hosts.${argv.host}.keys;
+    NEXT IF realiface != iface;
+    NEXT UNLESS hosts.${argv.host}.$realiface.shared_ip.grep('^' _ argv.shared_ip _ '$').size();
+
+    IF hosts.${argv.host}.$realiface.netmask;
+-%]
+[%    PERL -%]
+        use Net::Netmask;
+
+        my $network = Net::Netmask->new("[% argv.shared_ip %]/[% hosts.${argv.host}.${realiface}.netmask %]");
+        $stash->set(out => $network->desc);
+[%    END -%]
+[%
+    END;
+
+    RETURN;
+  END;
+END;
+
+-%]
