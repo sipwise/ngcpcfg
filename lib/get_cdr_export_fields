@@ -75,6 +75,9 @@ X_cdr_id_map.DESTINATION_SUBSCRIBER_ID = "destination_voip_subscribers.id";
 X_cdr_id_map.INIT_TIME = "CONCAT(FROM_UNIXTIME(FLOOR(accounting.cdr.init_time)), \".\", SUBSTRING_INDEX(accounting.cdr.init_time, \".\", -1)) as cdr_init_time";
 X_cdr_id_map.START_TIME = "CONCAT(FROM_UNIXTIME(FLOOR(accounting.cdr.start_time)), \".\", SUBSTRING_INDEX(accounting.cdr.start_time, \".\", -1)) as cdr_start_time";
 X_cdr_id_map.END_TIME = "CONCAT(FROM_UNIXTIME(FLOOR(accounting.cdr.start_time + accounting.cdr.duration)), \".\", SUBSTRING_INDEX(accounting.cdr.start_time + accounting.cdr.duration, \".\", -1)) as cdr_end_time";
+X_cdr_id_map.INIT_TIME_TRUNCATED = "FROM_UNIXTIME(FLOOR(accounting.cdr.init_time)) as cdr_init_time_truncated";
+X_cdr_id_map.START_TIME_TRUNCATED = "FROM_UNIXTIME(FLOOR(accounting.cdr.start_time)) as cdr_start_time_truncated";
+X_cdr_id_map.END_TIME_TRUNCATED = "FROM_UNIXTIME(FLOOR(accounting.cdr.start_time + accounting.cdr.duration)) as cdr_end_time_truncated";
 X_cdr_id_map.SOURCE_CARRIER_ZONE = "COALESCE(source_carrier_bbz.zone, \"onnet\")";
 X_cdr_id_map.SOURCE_CARRIER_DETAIL = "COALESCE(source_carrier_bbz.detail, \"platform internal\")";
 X_cdr_id_map.SOURCE_CUSTOMER_ZONE = "source_customer_bbz.zone";
@@ -102,6 +105,10 @@ X_cdr_id_map.TIMEZONE = cdr_timezone _ " as cdr_timezone";
 X_cdr_id_map.INIT_TIME_LOCALIZED = "CONCAT(" _ from_unixtime_tz("FLOOR(accounting.cdr.init_time)",cdr_timezone) _ ", \".\", SUBSTRING_INDEX(accounting.cdr.init_time, \".\", -1)) as cdr_init_time_localized";
 X_cdr_id_map.START_TIME_LOCALIZED = "CONCAT(" _ from_unixtime_tz("FLOOR(accounting.cdr.start_time)",cdr_timezone) _ ", \".\", SUBSTRING_INDEX(accounting.cdr.start_time, \".\", -1)) as cdr_start_time_localized";
 X_cdr_id_map.END_TIME_LOCALIZED = "CONCAT(" _ from_unixtime_tz("FLOOR(accounting.cdr.start_time + accounting.cdr.duration)",cdr_timezone) _ ", \".\", SUBSTRING_INDEX(accounting.cdr.start_time + accounting.cdr.duration, \".\", -1)) as cdr_end_time_localized";
+
+X_cdr_id_map.INIT_TIME_LOCALIZED_TRUNCATED = from_unixtime_tz("FLOOR(accounting.cdr.init_time)",cdr_timezone) _ " as cdr_init_time_localized_truncated";
+X_cdr_id_map.START_TIME_LOCALIZED_TRUNCATED = from_unixtime_tz("FLOOR(accounting.cdr.start_time)",cdr_timezone) _ " as cdr_start_time_localized_truncated";
+X_cdr_id_map.END_TIME_LOCALIZED_TRUNCATED = from_unixtime_tz("FLOOR(accounting.cdr.start_time + accounting.cdr.duration)",cdr_timezone) _ " as cdr_end_time_localized_truncated";
 
 X_cdr_id_map.FURNISHED_CHARGING_INFO = "COALESCE(" _ cdr_direction_provider_type_select("cdr_tag", "cdr_tag_data", "tag_id", "val", "destination", "customer", "furnished_charging_info") _ ',"") as furnished_charging_info';
 
@@ -138,8 +145,10 @@ X_cdr_id_map.PILOT_FIRST_NON_PRIMARY_ALIAS_USERNAME_BEFORE_AFTER = "IF(" _ edr_t
 X_cdr_id_map.TIMESTAMP = "from_unixtime(accounting.events.timestamp)";
 
 X_cdr_id_map.EVENT_TIMESTAMP = "CONCAT(FROM_UNIXTIME(FLOOR(accounting.events.timestamp)), \".\", SUBSTRING_INDEX(accounting.events.timestamp, \".\", -1)) as event_timestamp";
+X_cdr_id_map.EVENT_TIMESTAMP_TRUNCATED = "FROM_UNIXTIME(FLOOR(accounting.events.timestamp)) as event_timestamp_truncated";
 X_cdr_id_map.EVENT_TIMEZONE = edr_timezone _ " as event_timezone";
 X_cdr_id_map.EVENT_TIMESTAMP_LOCALIZED = "CONCAT(" _ from_unixtime_tz("FLOOR(accounting.events.timestamp)",edr_timezone) _ ", \".\", SUBSTRING_INDEX(accounting.events.timestamp, \".\", -1)) as event_timestamp_localized";
+X_cdr_id_map.EVENT_TIMESTAMP_LOCALIZED_TRUNCATED = from_unixtime_tz("FLOOR(accounting.events.timestamp)",edr_timezone) _ " as event_timestamp_localized_truncated";
 
 # Translate the fields.
 
