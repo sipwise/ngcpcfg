@@ -169,7 +169,7 @@ validate_config() {
   done
 
   if [ "$rc" = "0" ] ; then
-    log_info "yml configs were validated successfuly"
+    log_info "yml configs were validated successfully"
   else
     if [ -n "${NO_VALIDATE:-}" ] ; then
       log_info "DANGEROUS ZONE: invalid configs detected, continue anyway due to option '--no-validate'"
