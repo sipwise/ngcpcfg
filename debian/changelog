@@ -1,3 +1,12 @@
+ngcp-ngcpcfg (7.1.3.0+0~mr7.1.3.0) unstable; urgency=medium
+
+  [ Andrew Pogrebennyk ]
+  * [3a40e4c] TT#50701 lib/get_all_v6ips[_for_host]: support format parameter to expand IPv6 addr
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 01 Apr 2019 16:33:45 +0200
+
 ngcp-ngcpcfg (7.1.2.0+0~mr7.1.2.0) unstable; urgency=medium
 
   [ Andrew Pogrebennyk ]
