@@ -58,6 +58,15 @@ my $netmask;
 my $netmask_ip_v6;
 my $offload_lro;
 my $offload_tso;
+my $openvpn_ca_file;
+my $openvpn_ca_template;
+my $openvpn_ca_inline;
+my $openvpn_cert_file;
+my $openvpn_cert_template;
+my $openvpn_cert_inline;
+my $openvpn_key_file;
+my $openvpn_key_template;
+my $openvpn_key_inline;
 my $outputfile = $inputfile;
 my $peer;
 my @remove_host;
@@ -105,6 +114,15 @@ GetOptions(
     'netmask-ipv6=s'     => \$netmask_ip_v6,
     'offload-lro=s'      => \$offload_lro,
     'offload-tso=s'      => \$offload_tso,
+    'openvpn-ca-file=s'  => \$openvpn_ca_file,
+    'openvpn-ca-template=s' => \$openvpn_ca_template,
+    'openvpn-ca-inline=s' => \$openvpn_ca_inline,
+    'openvpn-cert-file=s' => \$openvpn_cert_file,
+    'openvpn-cert-template=s' => \$openvpn_cert_template,
+    'openvpn-cert-inline=s' => \$openvpn_cert_inline,
+    'openvpn-key-file=s' => \$openvpn_key_file,
+    'openvpn-key-template=s' => \$openvpn_key_template,
+    'openvpn-key-inline=s' => \$openvpn_key_inline,
     'output-file=s'      => \$outputfile,
     'peer=s'             => \$peer,
     'remove-host=s'      => \@remove_host,
@@ -306,6 +324,15 @@ sub set_interface {
         'netmask'         => $netmask,
         'offload_lro'     => $offload_lro,
         'offload_tso'     => $offload_tso,
+        'openvpn_ca_file' => $openvpn_ca_file,
+        'openvpn_ca_template' => $openvpn_ca_template,
+        'openvpn_ca_inline' => $openvpn_ca_inline,
+        'openvpn_cert_file' => $openvpn_cert_file,
+        'openvpn_cert_template' => $openvpn_cert_template,
+        'openvpn_cert_inline' => $openvpn_cert_inline,
+        'openvpn_key_file' => $openvpn_key_file,
+        'openvpn_key_template' => $openvpn_key_template,
+        'openvpn_key_inline' => $openvpn_key_inline,
         'v6netmask'       => $netmask_ip_v6,
         'shared_ip'       => $shared_ip,
         'shared_v6ip'     => $shared_ip_v6,
@@ -793,6 +820,22 @@ Set Large Receive Offload (LRO) to yes or no (on/off) for this interface.
 =item B<--offload-tso>=I<yes|no>
 
 Set TCP Segmentation Offload (TSO) to yes or no (on/off) for this interface.
+
+=item B<--openvpn->I<what>B<->I<how>=I<value>
+
+Set one of the OpenVPN config options. I<what> can be one of B<ca> (certificate authority PEM),
+B<cert> (certificate PEM), or B<key> (private key PEM). I<how> can be one of B<file>
+(name of a local file including full path), B<template> (same as B<file> but the name can include
+placeholders, such as B<%h>, B<%c>, etc), or B<inline> (the actual contents of a PEM file).
+
+A PEM specified as B<inline> takes precendence over a file specified via B<file>, which in turn
+takes precendce over a file specified via B<template>.
+
+Usage examples:
+
+B<--openvpn-ca-file=/etc/openvpn/foobar.bundle>
+B<--openvpn-cert-template=/etc/openvpn/%c-%h.crt>
+B<--openvpn-key-inline=$(</root/openvpn.key)>
 
 =item B<--output-file>=I<filename>
 
