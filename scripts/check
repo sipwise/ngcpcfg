@@ -160,9 +160,9 @@ validate_config() {
         continue
       fi
 
-      if ! pkwalify -s -f "${schema}" "${f}" >/dev/null 2>&1 ; then
+      if ! pkwalify -s -m 'YAML::XS' -f "${schema}" "${f}" >/dev/null 2>&1 ; then
         log_error "Invalid schema detected for ${f}"
-        pkwalify -f "${schema}" "${f}" >&2 || true
+        pkwalify -m 'YAML::XS' -f "${schema}" "${f}" >&2 || true
         rc=1
       fi
     fi
