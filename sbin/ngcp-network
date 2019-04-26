@@ -828,7 +828,7 @@ B<cert> (certificate PEM), or B<key> (private key PEM). I<how> can be one of B<f
 (name of a local file including full path), B<template> (same as B<file> but the name can include
 placeholders, such as B<%h>, B<%c>, etc), or B<inline> (the actual contents of a PEM file).
 
-A PEM specified as B<inline> takes precendence over a file specified via B<file>, which in turn
+A PEM specified as B<inline> takes precedence over a file specified via B<file>, which in turn
 takes precendce over a file specified via B<template>.
 
 Usage examples:

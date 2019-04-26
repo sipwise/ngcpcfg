@@ -246,7 +246,7 @@ check_configs_conflicts
 
 check_shared_storage || exit $?
 
-log_info "configs were checked successfuly"
+log_info "configs were checked successfully"
 exit 0
 
 ## END OF FILE #################################################################

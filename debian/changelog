@@ -700,7 +700,7 @@ ngcp-ngcpcfg (0.23.0.0+0~mr3.6.0.0) unstable; urgency=low
   * [f726fd2] MT#8503 Add helper to fetch dispatcher ids
 
   [ Alexander Lutay ]
-  * [6c74dde] MT#8117 Swtich defaults from 127.0.0.1 to localhost
+  * [6c74dde] MT#8117 Switch defaults from 127.0.0.1 to localhost
   * [f8326b4] MT#8763 Add backward compatibility for mr3.4->mr3.5 PRO upgrade
   * [9ed2741] MT#9333 Improve error logging for tt2-daemon
 
@@ -946,7 +946,7 @@ ngcp-ngcpcfg (0.12.0) unstable; urgency=low
   * Update configuration files according to recent development
   * Add fileformat_version helper script for usage inside upgrade scripts
   * Error out if encoding of a central configuration file isn't ASCII nor UTF-8
-  * tt2-wrapper: explicitely set utf8 mode for stdout
+  * tt2-wrapper: explicitly set utf8 mode for stdout
   * Run xsltproc with --nonet option
   * Add config.yml/constants.yml testfiles for new sip:provider releases
 
@@ -1008,7 +1008,7 @@ ngcp-ngcpcfg (0.11.0) unstable; urgency=low
       precedence of configuration files,...)
 
   * High Availability Setup:
-    - Do not add host to host list if build operation was successfull
+    - Do not add host to host list if build operation was successful
     - Fix typo in warning message (registerted<->registered)
     - Support --nobuild option to skip build process when pushing
       changes
