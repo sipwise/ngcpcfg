@@ -1,0 +1,9 @@
+Verified+1: Jenkins Jenkins
+Code-Review+2: Alexander Lutay <alutay@sipwise.com>
+Code-Review+2: Manuel Montecelo <mmontecelo@sipwise.com>
+Code-Review+2: Mykola Malkov <mmalkov@sipwise.com>
+Submitted-by: Michael Prokop <mprokop@sipwise.com>
+Submitted-at: Tue, 30 Apr 2019 14:29:35 +0200
+Reviewed-on: http://gerrit.mgm.sipwise.com/29425
+Project: ngcpcfg
+Branch: refs/heads/master
