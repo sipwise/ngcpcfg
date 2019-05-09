@@ -113,13 +113,16 @@ sort_service_list() {
   SORTED_LIST="$(mktemp)"
   log_debug "SORTED_LIST = $SORTED_LIST"
 
-  grep "${SERVICES_POOL_BASE}"/etc/monit/'.*services' "${NORMALIZED_FILES}" > \
-    "${SORTED_LIST}" || true
-  grep "${SERVICES_POOL_BASE}"/etc/ha.d/'.*services' "${NORMALIZED_FILES}" >> \
-    "${SORTED_LIST}" || true
-  grep -v "${SERVICES_POOL_BASE}"/etc/monit/'.*services' "${NORMALIZED_FILES}"| \
-    grep -v "${SERVICES_POOL_BASE}"/etc/ha.d/'.*services' >> \
-    "${SORTED_LIST}" || true
+  for dir in monit ha.d; do
+    grep "${SERVICES_POOL_BASE}"/etc/${dir}/'.*services' \
+      "${NORMALIZED_FILES}" >> "${SORTED_LIST}" || true
+  done
+
+  # Sort loads the entire contents before outputting, and we are appending
+  # instead of truncating, so this should be safe.
+  # shellcheck disable=SC2094
+  sort "${NORMALIZED_FILES}" "${SORTED_LIST}" | uniq -u \
+    >> "${SORTED_LIST}" || true
 }
 
 execute() {
