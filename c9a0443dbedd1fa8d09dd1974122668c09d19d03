@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a41bdd9_a540ea08",
+        "filename": "scripts/services",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-05-09T12:44:55Z",
+      "side": 1,
+      "message": "maybe:\n  truncate -s 0 \"${SORTED_LIST}\"\n\nIt looks closer to average Sipwise shell code, IMHO.\n\n...but, it is just created \n\u003e SORTED_LIST\u003d\"$(mktemp)\"\nwhy do we need this at all?",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 27
+      },
+      "revId": "c9a0443dbedd1fa8d09dd1974122668c09d19d03",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a41bdd9_8548462f",
+        "filename": "scripts/services",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-05-09T12:44:55Z",
+      "side": 1,
+      "message": "I would agree with Jenkins here, read and write the same file works until works.",
+      "revId": "c9a0443dbedd1fa8d09dd1974122668c09d19d03",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
