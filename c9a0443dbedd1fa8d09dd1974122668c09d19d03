@@ -81,6 +81,24 @@
       "revId": "c9a0443dbedd1fa8d09dd1974122668c09d19d03",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a41bdd9_454b1eb1",
+        "filename": "scripts/services",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-05-09T15:19:04Z",
+      "side": 1,
+      "message": "I would say it is undetermined behavior. It will work until it fail... some optimizations in the next bash versions... etc. LGTM if believe it is safe.",
+      "parentUuid": "9a41bdd9_e5b592d0",
+      "revId": "c9a0443dbedd1fa8d09dd1974122668c09d19d03",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
