@@ -99,6 +99,24 @@
       "revId": "c9a0443dbedd1fa8d09dd1974122668c09d19d03",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a41bdd9_e5bb5274",
+        "filename": "scripts/services",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-05-09T17:23:37Z",
+      "side": 1,
+      "message": "I don\u0027t think bash could break this. This is how sort works, it needs to slurp the entire contents before outputting anything, so there should never be any problem with it ending up reading its own output, or with any overwriting as we always append. I\u0027d say all this is guaranteed by POSIX. :)",
+      "parentUuid": "9a41bdd9_454b1eb1",
+      "revId": "c9a0443dbedd1fa8d09dd1974122668c09d19d03",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
