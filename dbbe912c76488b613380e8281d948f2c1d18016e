@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a41bdd9_65f982c8",
+        "filename": "scripts/services",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-05-09T12:46:55Z",
+      "side": 1,
+      "message": "Today morning I have checked this... it is unnecessary.\n\u003e root@web01a:~# cat /etc/ngcp-config/templates/etc/sysctl.d/ngcpcfg.services\n\u003e #!/bin/bash\n\u003e ...\n\u003e sysctl -q --system\n\u003e root@web01a:~# \n\n\nIt executed the first now, as all the rest are queued by ngcp-service.",
+      "revId": "dbbe912c76488b613380e8281d948f2c1d18016e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a41bdd9_45523edf",
+        "filename": "scripts/services",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-05-09T12:46:55Z",
+      "side": 1,
+      "message": "number?",
+      "range": {
+        "startLine": 62,
+        "startChar": 49,
+        "endLine": 62,
+        "endChar": 51
+      },
+      "revId": "dbbe912c76488b613380e8281d948f2c1d18016e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
