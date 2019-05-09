@@ -59,6 +59,7 @@ normalize_files() {
   done < "${TMPFILE}"
 }
 
+# restart sysctl services before the rest (see TT#58703)
 # restart monit services before the rest (see MT#9971)
 # restart HA just after monit (see MT#17163)
 # restart other services in alphabetical order
@@ -68,7 +69,7 @@ sort_service_list() {
 
   CLEANUP_FILES+=("${SORTED_LIST}")
 
-  for dir in monit ha.d; do
+  for dir in sysctl.d monit ha.d; do
     grep "${SERVICES_POOL_BASE}"/etc/${dir}/'.*services' \
       "${NORMALIZED_FILES}" >> "${SORTED_LIST}" || true
   done
