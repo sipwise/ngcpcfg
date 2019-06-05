@@ -154,7 +154,7 @@ foreach my $hostname (sort keys %{$yaml->{hosts}}) {
             $ifacemap->{mapping}->{bond_slaves}->{required} = 'yes';
         } elsif ($iface =~ m/^eth/) {
             $ifacemap->{mapping}->{hwaddr}->{required} = 'yes';
-        } elsif ($iface =~ m/^vlan/) {
+        } elsif ($iface =~ m/^vlan/ && $iface !~ m/:/) {
             $ifacemap->{mapping}->{type}->{required} = 'yes';
             $ifacemap->{mapping}->{vlan_raw_device}->{required} = 'yes';
         } elsif ($iface =~ m/^idrac/) {
