@@ -148,12 +148,13 @@ foreach my $hostname (sort keys %{$yaml->{hosts}}) {
             mapping => dclone($schema_iface->{ifacemap}),
         };
 
-        if ($iface =~ m/^bond/) {
+        if ($iface =~ m/^bond/ && $iface !~ m/:/) {
             $ifacemap->{mapping}->{bond_miimon}->{required} = 'yes';
             $ifacemap->{mapping}->{bond_mode}->{required} = 'yes';
             $ifacemap->{mapping}->{bond_slaves}->{required} = 'yes';
         } elsif ($iface =~ m/^vlan/) {
-            $ifacemap->{mapping}->{vlan_raw_device}->{required} = 'yes';
+            $ifacemap->{mapping}->{vlan_raw_device}->{required} = 'yes'
+                if $iface !~ m/:/;
         }
 
         $hostmap->{mapping}->{$iface} = $ifacemap;
