@@ -156,11 +156,15 @@ foreach my $hostname (sort keys %{$yaml->{hosts}}) {
             $ifacemap->{mapping}->{hwaddr}->{required} = 'yes';
         } elsif ($iface =~ m/^vlan/) {
             $ifacemap->{mapping}->{type}->{required} = 'yes';
-            $ifacemap->{mapping}->{ip}->{required} = 'yes';
-            $ifacemap->{mapping}->{netmask}->{required} = 'yes';
             $ifacemap->{mapping}->{vlan_raw_device}->{required} = 'yes';
         } elsif ($iface =~ m/^idrac/) {
             $ifacemap->{mapping}->{type}->{required} = 'yes';
+        }
+
+        # Interface aliases.
+        if ($iface =~ m/:/) {
+            $ifacemap->{mapping}->{ip}->{required} = 'yes';
+            $ifacemap->{mapping}->{netmask}->{required} = 'yes';
         }
 
         # Consistency checks.
