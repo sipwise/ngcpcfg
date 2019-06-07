@@ -87,6 +87,24 @@
       "revId": "8c8d60a9448aecaec4f098278eefaf669909774a",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a50d1a3_62265218",
+        "filename": "sbin/ngcp-network-validator",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-06-07T13:10:02Z",
+      "side": 1,
+      "message": "I personally keep it in one line... 85 symbols is good enough here... AFAIK it is recommendation and not a hard limit in 80 symbols. Right?",
+      "parentUuid": "3a50d1a3_a2345a4a",
+      "revId": "8c8d60a9448aecaec4f098278eefaf669909774a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
