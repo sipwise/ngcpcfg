@@ -1,0 +1,7 @@
+Verified+1: Jenkins Jenkins
+Code-Review+2: Mykola Malkov <mmalkov@sipwise.com>
+Submitted-by: Guillem Jover <gjover@sipwise.com>
+Submitted-at: Fri, 07 Jun 2019 15:28:11 +0200
+Reviewed-on: http://gerrit.mgm.sipwise.com/30494
+Project: ngcpcfg
+Branch: refs/heads/mr7.3
