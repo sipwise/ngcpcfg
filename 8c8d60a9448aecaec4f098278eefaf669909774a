@@ -51,6 +51,24 @@
       "revId": "8c8d60a9448aecaec4f098278eefaf669909774a",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a50d1a3_62f972c8",
+        "filename": "sbin/ngcp-network-validator",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-06-07T08:56:50Z",
+      "side": 1,
+      "message": "Urgs, only now I noticed the missing \";\" at the end of line 159, thx4pointer! Is it only me who finds this non-obvious on first sight? If so, nvm :) Otherwise I\u0027d find:\n\nif ($iface !~ m/:/) {\n  $ifacemap-\u003e....\n}\n\nway more obvious/clear (yes, this isn\u0027t as dense perl style, I\u0027m aware :))",
+      "parentUuid": "3a50d1a3_02ee6e22",
+      "revId": "8c8d60a9448aecaec4f098278eefaf669909774a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
