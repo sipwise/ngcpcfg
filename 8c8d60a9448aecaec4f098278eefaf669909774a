@@ -33,6 +33,24 @@
       "revId": "8c8d60a9448aecaec4f098278eefaf669909774a",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a50d1a3_02ee6e22",
+        "filename": "sbin/ngcp-network-validator",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-06-07T08:44:07Z",
+      "side": 1,
+      "message": "I believe it is a search for \"aliases\" using \":\" as a pattern, like \"eth0:1\". Right?",
+      "parentUuid": "3a50d1a3_c25ba62d",
+      "revId": "8c8d60a9448aecaec4f098278eefaf669909774a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
