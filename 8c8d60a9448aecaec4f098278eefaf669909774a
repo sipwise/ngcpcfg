@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a50d1a3_62417239",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-06-07T06:42:19Z",
+      "side": 1,
+      "message": "Sorry for the nitpick, but this could be more verbose about *why* this change is necessary and what exactly is getting changed (because that\u0027s not clear without looking at the code)? :)",
+      "revId": "8c8d60a9448aecaec4f098278eefaf669909774a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a50d1a3_c25ba62d",
+        "filename": "sbin/ngcp-network-validator",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-06-07T06:42:19Z",
+      "side": 1,
+      "message": "Might be just my lack of perl knowledge, but I don\u0027t understand this change at all. What\u0027s the \"if $iface !~ m/:/;\" supposed to do at this stage?",
+      "revId": "8c8d60a9448aecaec4f098278eefaf669909774a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
