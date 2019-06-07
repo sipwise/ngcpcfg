@@ -105,6 +105,24 @@
       "revId": "8c8d60a9448aecaec4f098278eefaf669909774a",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a50d1a3_027e6ee4",
+        "filename": "sbin/ngcp-network-validator",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-06-07T13:11:33Z",
+      "side": 1,
+      "message": "Well my terminals are really 79-80 chars wide. :D",
+      "parentUuid": "3a50d1a3_62265218",
+      "revId": "8c8d60a9448aecaec4f098278eefaf669909774a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
