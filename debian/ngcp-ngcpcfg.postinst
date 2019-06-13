@@ -12,6 +12,8 @@ case "$1" in
 	grep -q '^ngcp-config$' .gitignore || echo 'ngcp-config' >> .gitignore
 	git commit -a -m "initial commit"
       fi
+
+      addgroup --system _ngcp-admin
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
