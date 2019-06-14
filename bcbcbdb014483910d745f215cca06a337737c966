@@ -86,6 +86,24 @@
       "revId": "bcbcbdb014483910d745f215cca06a337737c966",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a50d1a3_8377ddd3",
+        "filename": "debian/ngcp-ngcpcfg.postinst",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2019-06-14T14:06:02Z",
+      "side": 1,
+      "message": "I would agree but this is how it\u0027s done everywhere else. --quiet sounds good to me.",
+      "parentUuid": "3a50d1a3_c3dc0549",
+      "revId": "bcbcbdb014483910d745f215cca06a337737c966",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
