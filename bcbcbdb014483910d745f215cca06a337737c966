@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a50d1a3_431a3519",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-06-14T09:10:46Z",
+      "side": 1,
+      "message": "Is it OK if \"LGI\" is showing up here being mentioned explicitly? (ngcpcfg is public/open source)",
+      "revId": "bcbcbdb014483910d745f215cca06a337737c966",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a50d1a3_03d3cd39",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-06-14T09:10:46Z",
+      "side": 1,
+      "message": "Can we wrap this (and stuff below) at 72 chars or something like that to make it more readable? :)",
+      "revId": "bcbcbdb014483910d745f215cca06a337737c966",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a50d1a3_c3dc0549",
+        "filename": "debian/ngcp-ngcpcfg.postinst",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-06-14T09:10:46Z",
+      "side": 1,
+      "message": "Should we check for `getent group _ngcp-admin ...` here before invoking this to not spill out \"addgroup: The group `_ngcp-admin\u0027 already exists as a system group. Exiting.\n\" on every package installation?",
+      "revId": "bcbcbdb014483910d745f215cca06a337737c966",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
