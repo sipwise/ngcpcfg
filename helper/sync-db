@@ -25,7 +25,7 @@ my $dbport = $config->{database}->{central}->{dbport};
 open my $SWFH, '<', '/etc/mysql/sipwise.cnf';
 my $dbpass = join ' ', <$SWFH>;
 close $SWFH;
-$dbpass =~ s/^.*SIPWISE_DB_PASSWORD=\'([^\']+)\'.*$/$1/;
+$dbpass =~ s/^\s*SIPWISE_DB_PASSWORD=\'([^\']+)\'.*$/$1/;
 chomp $dbpass;
 my $dbuser = 'sipwise';
 my $dbname = $config->{ossbss}->{provisioning}->{database}->{name};
