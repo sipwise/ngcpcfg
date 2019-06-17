@@ -208,14 +208,13 @@ sub sync_db_timezones {
     }
 
     my ($tzinfo_version, undef, undef) = capture {
-        system('dpkg -s tzdata | grep Version:');
+        system('dpkg-query -f "\${Version}" -W tzdata');
     };
-
-    unless ($tzinfo_version && $tzinfo_version =~ /Version:\s*(\S+)/) {
+    unless ($tzinfo_version) {
         print "Error: Could not retrieve tzdata package version\n";
         return;
     }
-    $tzinfo_version = $1;
+    chomp $tzinfo_version;
 
     my $pe = $dbh->{PrintError};
     $dbh->{PrintError} = 0;
