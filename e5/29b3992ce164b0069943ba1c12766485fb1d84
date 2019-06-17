@@ -1,0 +1,8 @@
+Verified+1: Jenkins Jenkins
+Code-Review+2: Manuel Montecelo <mmontecelo@sipwise.com>
+Code-Review+2: Alexander Lutay <alutay@sipwise.com>
+Submitted-by: Guillem Jover <gjover@sipwise.com>
+Submitted-at: Mon, 17 Jun 2019 13:38:48 +0200
+Reviewed-on: http://gerrit.mgm.sipwise.com/30565
+Project: ngcpcfg
+Branch: refs/heads/mr6.5.4
