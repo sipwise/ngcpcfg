@@ -109,6 +109,10 @@ fi
 # Notify subprocesses we are running.
 export NGCPCFG_RUNNING=1
 
+export NGCPCFG_PID=$$
+logger -t ngcpcfg --id="${NGCPCFG_PID}" -- "******************************************************"
+logger -t ngcpcfg --id="${NGCPCFG_PID}" -- "Running: $0 $*"
+
 # support for testsuite
 FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
 SCRIPTS="${SCRIPTS:-/usr/share/ngcp-ngcpcfg/scripts/}"
@@ -125,7 +129,7 @@ if [[ "${1:-}" == "decrypt" ]] ; then
   # the part we need for executing ngcpcfg itself
   log_debug() {
     if [ -n "${DEBUG:-}" ] ; then
-      logger -t ngcpcfg -- "Debug: $*"
+      logger -t ngcpcfg --id="${NGCPCFG_PID}" -- "Debug: $*"
       echo ; echo "DEBUG: $*" ; echo # newlines to avoid messup with cmdline output
     fi
   }
