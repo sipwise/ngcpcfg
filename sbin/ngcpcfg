@@ -108,6 +108,8 @@ fi
 # Notify subprocesses we are running.
 export NGCPCFG_RUNNING=1
 
+export NGCPCFG_PID=$$
+
 # support for testsuite
 FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
 SCRIPTS="${SCRIPTS:-/usr/share/ngcp-ngcpcfg/scripts/}"
