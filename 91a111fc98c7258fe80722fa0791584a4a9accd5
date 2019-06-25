@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa1b9901_20fcce3d",
+        "filename": "functions/main",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-06-25T12:03:32Z",
+      "side": 1,
+      "message": "Why not use --id\u003dPID ?",
+      "revId": "91a111fc98c7258fe80722fa0791584a4a9accd5",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
