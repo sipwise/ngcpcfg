@@ -16,6 +16,24 @@
       "revId": "91a111fc98c7258fe80722fa0791584a4a9accd5",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa1b9901_0e1d3b73",
+        "filename": "functions/main",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-06-26T13:35:15Z",
+      "side": 1,
+      "message": "Good idea, unfortunately it will stop working when/if we migrate from user root:\n  \n       --id[\u003did]\n              ...\n              Note  that  the  system  logging infrastructure (for example systemd when listening on /dev/log) may follow local socket credentials to overwrite the PID specified in the message.  logger(1) is able to set those socket\n              credentials to the given id, but only if you have root permissions and a process with the specified PID exists, otherwise the socket credentials are not modified and the problem is silently ignored.",
+      "parentUuid": "fa1b9901_20fcce3d",
+      "revId": "91a111fc98c7258fe80722fa0791584a4a9accd5",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
