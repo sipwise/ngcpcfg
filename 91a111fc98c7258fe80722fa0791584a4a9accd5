@@ -34,6 +34,24 @@
       "revId": "91a111fc98c7258fe80722fa0791584a4a9accd5",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa1b9901_09877562",
+        "filename": "functions/main",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-06-26T15:32:21Z",
+      "side": 1,
+      "message": "Now. PS5 cannot be submitted as new format doesn\u0027t match rsyslog rule:\n\n:syslogtag, isequal, \"ngcpcfg:\" {\n\nbecause it is now \"ngcpcfg[12345]:\" AFAIK.\nIMHO we should migrate there to:\n\n:syslogtag, contains, \"ngcpcfg\" {\n  -/var/log/ngcp/ngcpcfg.log;SipwiseTraditionalSevFormat\n  stop\n}\n\n\n\nAlso just noticed there:\n:programname, isequal, \"perl-fcgi\" {\n  -/var/log/ngcp/ngcpcfg-api.log\n  stop\n}\n\nIs wrong and doesn\u0027t work and absorb ngcp-panel logs... as there are a lot of \"perl-fcgi\" processes:\n\nSTR: try wget http://127.0.0.1:3000/ssh/id_rsa_pub\"  on PRO and check the log... will report this separately.",
+      "parentUuid": "fa1b9901_0e1d3b73",
+      "revId": "91a111fc98c7258fe80722fa0791584a4a9accd5",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
