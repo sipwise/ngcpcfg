@@ -1,11 +1,11 @@
-# DOCKER_NAME=ngcpcfg-stretch
-FROM docker.mgm.sipwise.com/sipwise-stretch:latest
+# DOCKER_NAME=ngcpcfg-buster
+FROM docker.mgm.sipwise.com/sipwise-buster:latest
 
 # Important! Update this no-op ENV variable when this Dockerfile
 # is updated with the current date. It will force refresh of all
 # of the base images and things like `apt-get update` won't be using
 # old cached versions when the Dockerfile is built.
-ENV REFRESHED_AT 2018-11-01
+ENV REFRESHED_AT 2019-06-27
 
 RUN apt-get update
 
@@ -16,7 +16,7 @@ RUN apt-get install --assume-yes netcat-openbsd libhash-merge-perl libtemplate-p
 # misc stuff for execution/debugging/devel
 RUN apt-get install --assume-yes fakeroot git lsof make strace
 # test execution; we need the backport of python3-junitxml from our own
-# repository since it's not part of Debian/stretch
+# repository since it's not part of Debian/buster
 # files that get-code generates
 COPY t/sources.list.d/builddeps.list /etc/apt/sources.list.d/
 COPY t/sources.list.d/preferences /etc/apt/preferences.d/
@@ -35,14 +35,14 @@ WORKDIR /code/
 #
 # you need to put the proper NGCP sources at t/sources.list.d/builddeps.list
 # for instance, trunk:
-# echo "deb https://deb.sipwise.com/autobuild/ release-trunk-stretch main" > t/sources.list.d/builddeps.list
+# echo "deb https://deb.sipwise.com/autobuild/ release-trunk-buster main" > t/sources.list.d/builddeps.list
 #
-# % docker build --tag="ngcpcfg-stretch" -f ./t/Dockerfile .
-# % docker run --rm -i -t -v $(pwd):/code:rw ngcpcfg-stretch:latest bash
+# % docker build --tag="ngcpcfg-buster" -f ./t/Dockerfile .
+# % docker run --rm -i -t -v $(pwd):/code:rw ngcpcfg-buster:latest bash
 #
 # Use the existing docker image:
-# % docker pull docker.mgm.sipwise.com/ngcpcfg-stretch
-# % docker run --rm -i -t -v $(pwd):/code:rw docker.mgm.sipwise.com/ngcpcfg-stretch:latest bash
+# % docker pull docker.mgm.sipwise.com/ngcpcfg-buster
+# % docker run --rm -i -t -v $(pwd):/code:rw docker.mgm.sipwise.com/ngcpcfg-buster:latest bash
 #
 # Inside docker (the command is in history, just press UP button):
 #   cd /code && ./t/testrunner
