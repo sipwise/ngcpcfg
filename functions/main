@@ -219,6 +219,7 @@ generate_template_list() {
 
   local filelist_prepared=$(mktemp)
   local filelist_final=$(mktemp)
+  local filelist_sorted=$(mktemp)
 
   for dir in ${CONFIG_POOL} ; do
     [ -n "${dir}" ] || ( echo "${dir} doesn't exist" >&2 ; continue )
@@ -323,16 +324,23 @@ generate_template_list() {
     echo "$line" >> "${filelist_final}"
   done
 
-  # output file list, make sure we provide the file names just once
-  sort -u ${filelist_final}
+  sort -u ${filelist_final} >${filelist_sorted}
+
+  # Output file list, make sure we provide the file names just once, and
+  # special case the ngcp-service files, as they are a second stage source
+  # of data required during configuration file building, which depends at
+  # the same time on the main YAML files.
+  grep ngcp-service ${filelist_sorted} || true
+  grep -v ngcp-service ${filelist_sorted} || true
 
   if [ -n "${DEBUG:-}" ] ; then
     # send to stderr since stdout is used from outside
     log_debug "Not removing temporary filelist files since we are in debug mode:" >&2
     log_debug "  filelist_prepared = ${filelist_prepared}" >&2
     log_debug "  filelist_final    = ${filelist_final}" >&2
+    log_debug "  filelist_sorted   = ${filelist_sorted}" >&2
   else
-    rm -f "${filelist_prepared}" "${filelist_final}"
+    rm -f "${filelist_prepared}" "${filelist_final}" "${filelist_sorted}"
   fi
 
   unset filelist_prepared filelist_final
