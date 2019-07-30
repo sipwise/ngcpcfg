@@ -64,7 +64,8 @@ Actions:
 
   # display only if ngcp-ngcpcfg-ha is available
   if [ -r /usr/share/ngcp-ngcpcfg/functions/ha_features ] ; then
-    printf "  push [<opts>]       push modifications to other systems (shared storage setup only)\n"
+    printf "  push [<opts>]       push modifications to other node(s) (shared storage setup only)\n"
+    printf "  push-parallel       push modifications to other node(s) in parallel (shared storage setup only)\n"
     printf "  pull                retrieve modifications from shared storage (shared storage setup only)\n"
   fi
 
@@ -151,6 +152,7 @@ case ${1:-} in
   log|\
   pull|\
   push|\
+  push-parallel|\
   services|\
   status|\
   set|\
