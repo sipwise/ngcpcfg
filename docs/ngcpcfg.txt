@@ -445,6 +445,19 @@ _/etc/ngcp-config/systems.cfg_ are used. The magic word 'all' can be used as a '
 to push the changes on all the nodes from the network.yml except the local one.
 Note: This option is available in the High Availability setup only.
 
+  **push-parallel** [--apply-on-all-nodes] [<host(s)>]::
+
+Like the action 'push' above, action 'push-parallel' pushes modifications to
+shared repository and remote systems _in parallel_. After changes have been
+pushed to the node the _apply_ operation will be executed on remote system
+to rebuild the configuration files. All the actions performed on HA inactive
+nodes only (unless the option '--apply-on-all-nodes' is specified).
+If hostname(s) or IP address(es) is given as argument then the changes will be
+pushed to the shared repository and to the given hosts only.
+If no host has been specified then 'push' will hapens to all HA inactive nodes.
+All 'ngcpcfg' output is muted on STDOUT but available in log file
+'/var/log/ngcp/ngcpcfg-parallel.log' on the each node respectively.
+
   **services** [--dry-run]::
 
 Execute any defined service actions for modified configuration files. If the
