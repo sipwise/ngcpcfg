@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ebf954cc_6e5f84f2",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-08-01T12:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83d4f90a_04096b36",
+      "range": {
+        "startLine": 450,
+        "startChar": 74,
+        "endLine": 450,
+        "endChar": 76
+      },
+      "revId": "6a687eeb22dfcb84b74595b6172ff63b788cf400",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28f27552_bad6e868",
         "filename": "docs/ngcpcfg.txt",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2019-07-31T16:34:56Z",
       "side": 1,
       "message": "the",
+      "range": {
+        "startLine": 451,
+        "startChar": 57,
+        "endLine": 451,
+        "endChar": 58
+      },
+      "revId": "6a687eeb22dfcb84b74595b6172ff63b788cf400",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "60053303_7e5c9942",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-08-01T12:25:28Z",
+      "side": 1,
+      "message": "But changeS are plural there, still the?",
+      "parentUuid": "28f27552_bad6e868",
       "range": {
         "startLine": 451,
         "startChar": 57,
@@ -117,6 +165,78 @@
     },
     {
       "key": {
+        "uuid": "7674edaa_97a1ddf7",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-08-01T12:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c4906f0_8d534ce9",
+      "range": {
+        "startLine": 452,
+        "startChar": 14,
+        "endLine": 452,
+        "endChar": 18
+      },
+      "revId": "6a687eeb22dfcb84b74595b6172ff63b788cf400",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3d1323b_5fd5e6f2",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-08-01T12:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1229f265_1e085a23",
+      "range": {
+        "startLine": 452,
+        "startChar": 60,
+        "endLine": 452,
+        "endChar": 61
+      },
+      "revId": "6a687eeb22dfcb84b74595b6172ff63b788cf400",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59479aa1_01651abe",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-08-01T12:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "083a41f6_a3956198",
+      "range": {
+        "startLine": 452,
+        "startChar": 68,
+        "endLine": 452,
+        "endChar": 74
+      },
+      "revId": "6a687eeb22dfcb84b74595b6172ff63b788cf400",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4d7402a_e31d4a10",
         "filename": "docs/ngcpcfg.txt",
         "patchSetId": 2
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "049718f1_44913472",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-08-01T12:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4d7402a_e31d4a10",
+      "range": {
+        "startLine": 453,
+        "startChar": 51,
+        "endLine": 453,
+        "endChar": 52
+      },
+      "revId": "6a687eeb22dfcb84b74595b6172ff63b788cf400",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc0eedc2_950685f3",
         "filename": "docs/ngcpcfg.txt",
         "patchSetId": 2
@@ -151,6 +295,30 @@
       "writtenOn": "2019-07-31T16:34:56Z",
       "side": 1,
       "message": "remove",
+      "range": {
+        "startLine": 454,
+        "startChar": 6,
+        "endLine": 454,
+        "endChar": 10
+      },
+      "revId": "6a687eeb22dfcb84b74595b6172ff63b788cf400",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3adc1a58_82dcd0a0",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-08-01T12:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc0eedc2_950685f3",
       "range": {
         "startLine": 454,
         "startChar": 6,
@@ -232,6 +400,78 @@
     },
     {
       "key": {
+        "uuid": "8853cdbb_d4719b3d",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-08-01T12:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d3074b7_3a7ba465",
+      "range": {
+        "startLine": 455,
+        "startChar": 2,
+        "endLine": 455,
+        "endChar": 35
+      },
+      "revId": "6a687eeb22dfcb84b74595b6172ff63b788cf400",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a58ec33a_b0c10fba",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-08-01T12:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c094793_14f40803",
+      "range": {
+        "startLine": 455,
+        "startChar": 45,
+        "endLine": 455,
+        "endChar": 53
+      },
+      "revId": "6a687eeb22dfcb84b74595b6172ff63b788cf400",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "428f4ec7_15c6ce54",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-08-01T12:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "886c92e3_bfd27c1a",
+      "range": {
+        "startLine": 455,
+        "startChar": 76,
+        "endLine": 455,
+        "endChar": 78
+      },
+      "revId": "6a687eeb22dfcb84b74595b6172ff63b788cf400",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ae0a2df_4e4d8728",
         "filename": "docs/ngcpcfg.txt",
         "patchSetId": 2
@@ -243,6 +483,30 @@
       "writtenOn": "2019-07-31T16:34:56Z",
       "side": 1,
       "message": "and the actions performed only on the given hosts.",
+      "range": {
+        "startLine": 456,
+        "startChar": 36,
+        "endLine": 456,
+        "endChar": 59
+      },
+      "revId": "6a687eeb22dfcb84b74595b6172ff63b788cf400",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "34d88b55_5283cc5b",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-08-01T12:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ae0a2df_4e4d8728",
       "range": {
         "startLine": 456,
         "startChar": 36,
@@ -324,6 +588,78 @@
     },
     {
       "key": {
+        "uuid": "0e8f5e95_61fa6d4d",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-08-01T12:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a39368d0_ed7190a3",
+      "range": {
+        "startLine": 457,
+        "startChar": 6,
+        "endLine": 457,
+        "endChar": 14
+      },
+      "revId": "6a687eeb22dfcb84b74595b6172ff63b788cf400",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d3adaf0_92d965c8",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-08-01T12:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37f18232_f522c68e",
+      "range": {
+        "startLine": 457,
+        "startChar": 34,
+        "endLine": 457,
+        "endChar": 35
+      },
+      "revId": "6a687eeb22dfcb84b74595b6172ff63b788cf400",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "abadac39_ebf099f8",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-08-01T12:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f82d6eb_76f93dc7",
+      "range": {
+        "startLine": 457,
+        "startChar": 47,
+        "endLine": 457,
+        "endChar": 53
+      },
+      "revId": "6a687eeb22dfcb84b74595b6172ff63b788cf400",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f9a73f3_fb9bdbfc",
         "filename": "docs/ngcpcfg.txt",
         "patchSetId": 2
@@ -335,6 +671,30 @@
       "writtenOn": "2019-07-31T16:34:56Z",
       "side": 1,
       "message": "the",
+      "range": {
+        "startLine": 458,
+        "startChar": 56,
+        "endLine": 458,
+        "endChar": 57
+      },
+      "revId": "6a687eeb22dfcb84b74595b6172ff63b788cf400",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f3014212_dab40e7e",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-08-01T12:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f9a73f3_fb9bdbfc",
       "range": {
         "startLine": 458,
         "startChar": 56,
@@ -370,6 +730,30 @@
     },
     {
       "key": {
+        "uuid": "fb9cd626_1579a9ab",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-08-01T12:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bed03def_861e860b",
+      "range": {
+        "startLine": 459,
+        "startChar": 54,
+        "endLine": 459,
+        "endChar": 66
+      },
+      "revId": "6a687eeb22dfcb84b74595b6172ff63b788cf400",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "943780f4_2e865377",
         "filename": "docs/ngcpcfg.txt",
         "patchSetId": 2
@@ -381,6 +765,24 @@
       "writtenOn": "2019-07-31T16:34:56Z",
       "side": 1,
       "message": "Hmm I see we have all other PRO/CARRIER-only commands documented here too, it would be nice to show these doc entries only when the providing packages are available or relevant (say [- IF PRO --], but otherwise I guess this needs to be stated explicitly like in the other PRO-only commands.",
+      "revId": "6a687eeb22dfcb84b74595b6172ff63b788cf400",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "58aa8cb8_950ce531",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-08-01T12:25:28Z",
+      "side": 1,
+      "message": "there is no IF PRO in manuals, added standard here:\n\u003e Note: This option is available in the High Availability setup only.",
+      "parentUuid": "943780f4_2e865377",
       "revId": "6a687eeb22dfcb84b74595b6172ff63b788cf400",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
