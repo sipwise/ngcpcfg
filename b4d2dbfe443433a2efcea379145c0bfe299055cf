@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28939725_786a8388",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-08-01T12:42:57Z",
+      "side": 1,
+      "message": "hosts",
+      "range": {
+        "startLine": 458,
+        "startChar": 6,
+        "endLine": 458,
+        "endChar": 10
+      },
+      "revId": "b4d2dbfe443433a2efcea379145c0bfe299055cf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ac1b614_cb6dce6a",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-08-01T12:42:57Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 460,
+        "startChar": 40,
+        "endLine": 460,
+        "endChar": 43
+      },
+      "revId": "b4d2dbfe443433a2efcea379145c0bfe299055cf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "57b1feb7_dd6e7896",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-08-01T12:42:57Z",
+      "side": 1,
+      "message": "\"setups\", but I see this is a copy\u0026paste from the other instances, so \"inconsistency!\". :)",
+      "range": {
+        "startLine": 461,
+        "startChar": 56,
+        "endLine": 461,
+        "endChar": 61
+      },
+      "revId": "b4d2dbfe443433a2efcea379145c0bfe299055cf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70ad2145_2b55e2c9",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-08-01T12:42:57Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 461,
+        "startChar": 34,
+        "endLine": 461,
+        "endChar": 37
+      },
+      "revId": "b4d2dbfe443433a2efcea379145c0bfe299055cf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
