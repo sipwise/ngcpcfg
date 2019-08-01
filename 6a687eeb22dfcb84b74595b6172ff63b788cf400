@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "3b3f4869_c13a5623",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-08-01T12:39:36Z",
+      "side": 1,
+      "message": "Yeah.",
+      "parentUuid": "60053303_7e5c9942",
+      "range": {
+        "startLine": 451,
+        "startChar": 57,
+        "endLine": 451,
+        "endChar": 58
+      },
+      "revId": "6a687eeb22dfcb84b74595b6172ff63b788cf400",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c4906f0_8d534ce9",
         "filename": "docs/ngcpcfg.txt",
         "patchSetId": 2
@@ -783,6 +807,24 @@
       "side": 1,
       "message": "there is no IF PRO in manuals, added standard here:\n\u003e Note: This option is available in the High Availability setup only.",
       "parentUuid": "943780f4_2e865377",
+      "revId": "6a687eeb22dfcb84b74595b6172ff63b788cf400",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c8b6ad9_4f68d6ce",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-08-01T12:39:36Z",
+      "side": 1,
+      "message": "Yeah like that.",
+      "parentUuid": "58aa8cb8_950ce531",
       "revId": "6a687eeb22dfcb84b74595b6172ff63b788cf400",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
