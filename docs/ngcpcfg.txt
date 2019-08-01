@@ -29,12 +29,12 @@ Taxonomy
 
 *central yml files*:: *.yml files inside _/etc/ngcp-config/_
 
-*High Availability setup*:: ngcpcfg running in a cluster setup (e.g.
+*High Availability setups*:: ngcpcfg running in a cluster setup (e.g.
 sip:providerPRO or sip:carrier), depends on Debian package ngcp-ngcpcfg-ha.
 
 *local repository*:: the directory _/etc/ngcp-config/_, being a Git repository
 
-*remote systems*:: the other nodes inside a High Availability setup, as defined
+*remote systems*:: the other nodes inside a High Availability setups, as defined
 in _/etc/ngcp-config/systems.cfg_
 
 *shared repository*:: Git repository shared amongst nodes inside a High
@@ -87,10 +87,10 @@ Configuration file priority: constants.yml takes precedence over
 all files in _/etc/ngcp-config/config.d/_, over config.local.yml,
 over config.$HOSTNAME.yml, over config.yml.
 
-High Availability setup specific configuration files
+High Availability setups specific configuration files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* _/etc/ngcp_ha_node_: defines node name in the High Availability setup, usually
+* _/etc/ngcp_ha_node_: defines node name in High Availability setups, usually
 being _sp1_ for the first node and _sp2_ for the second node.
 
 * _/etc/ngcp-config/systems.cfg_: configuration file that specifies to which
@@ -110,23 +110,23 @@ file is usually provided by a Debian package.
 template file. $HA_NODE is determined using the content of /etc/ngcp_ha_node
 (usually being _sp1_ for the first node and _sp2_ for the second node on the
 Sipwise Next Generation Platform). Whereas _*customtt.tt2_ files are used on all
-nodes in a High Availability setup the _*.tt2.$HA_NODE*_ file is specific for
+nodes in a High Availability setups the _*.tt2.$HA_NODE*_ file is specific for
 the single node only. A common use case is master vs. slave configuration of a
 service. The configuration file is usually provided by a Debian package.
-Note: Feature is available in the High Availability setup only.
+Note: Feature is available in High Availability setups only.
 
 * _/etc/ngcp-config/templates/etc/foobar/baz.tt2.$PAIRNAME_: pair specific
 template file. Given a PRO pair in a CARRIER environment where two nodes are
 named _web01a_ and _web01b_ then $PAIRNAME corresponds to _web01_. This is
 useful if there are multiple pairs available but only a specific pair of them
 should include some specific configuration.
-Note: Feature is available in the High Availability setup only.
+Note: Feature is available in High Availability setups only.
 
 * _/etc/ngcp-config/templates/etc/foobar/baz.tt2.$HOSTNAME_: hostname specific
 template file. While $HA_NODE is usually bound to _sp1_ for the first node and
 _sp2_ via /etc/ngcp_ha_node it's possible to use host specific template file by
 referring to its hostname ($HOSTNAME is determined via (hostname(1)).
-Note: Feature is available in the High Availability setup only.
+Note: Feature is available in High Availability setups only.
 
 * _/etc/ngcp-config/templates/etc/foobar/baz.customtt.tt2_: system specific
 template file, but configuration usually isn't provided by a Debian package and
@@ -137,19 +137,19 @@ specific template file. Regarding $HA_NODE the same as for _baz.tt2.$HA_NODE_
 applies (see the previous bullet), but the configuration file usually isn't
 provided by a Debian package but can be modified independently from any
 Debian package mechanism.
-Note: Feature is available in the High Availability setup only.
+Note: Feature is available in High Availability setups only.
 
 * _/etc/ngcp-config/templates/etc/foobar/baz.customtt.tt2.$PAIRNAME_:
 configuration file similar to
 _/etc/ngcp-config/templates/etc/foobar/baz.tt2.$PAIRNAME_ but it's guaranteed
 that the file won't be part of any Debian package mechanism.  Note: Feature is
-available in the High Availability setup only.
+available in High Availability setups only.
 
 * _/etc/ngcp-config/templates/etc/foobar/baz.customtt.tt2.$HOSTNAME_:
 configuration file similar to
 _/etc/ngcp-config/templates/etc/foobar/baz.tt2.$HOSTNAME_ but it's guaranteed
 that the file won't be part of any Debian package mechanism.  Note: Feature is
-available in the High Availability setup only.
+available in High Availability setups only.
 
 [IMPORTANT]
 Configuration file precedence (highest to lowest): 
@@ -257,7 +257,7 @@ If this option is enabled then ngcpcfg instead doesn't abort on outstanding
 pull actions. This option should be used with care and only if you know
 what you're doing.
 
-Note: This option is available in the High Availability setup only.
+Note: This option is available in High Availability setups only.
 
   **--no-validate** <action> [<further_options>]::
 
@@ -293,7 +293,7 @@ current active branch doesn't match 'master'.
 The option *--ignore-shared-storage-check* can be used to skip check of shared
 storage, for example in situations like when the HA_INT addresses are being
 changed, because the communication is not possible in that scenario.
-In the High Availability setup possibly outstanding pull actions are
+In High Availability setups possibly outstanding pull actions are
 checked as well.
 
   **build** [--ignore-branch-check] [--ignore-shared-storage-check] [--modified-only] [<files_or_directories>|<pattern>]::
@@ -332,7 +332,7 @@ it should be used with care!.
 Option _--all_ is an alias for _--branches_ + _--reset-master_ + _--stashes_ +
 _--tracked-files_ + _--untracked-files_. It should restore local
 /etc/ngcp-config in a clean state.
-Note: The option _--reset-master_ is involved in the High Availability setup only.
+Note: The option _--reset-master_ is involved in High Availability setups only.
 Option _--branches_ proposes to clean all the unnecessary local git branches.
 Active branch will be switched to 'master'.
 Option _--force_ answers 'yes' automatically on all the cleanup questions.
@@ -342,7 +342,7 @@ branch 'master' from origin. It will effectively clean all locally committed and
 not-yet pushed changes.
 Note: Already pushed changes won't be removed while they can be reverted using
 'git revert <commit>'.
-Note: This option is available in the High Availability setup only.
+Note: This option is available in High Availability setups only.
 Option _--stashed_ proposes to clean all the changes in git stash.
 Option _--tracked-files_ resets cached git files and restore all tracked files
 to HEAD of branch master.
@@ -393,14 +393,14 @@ Display usage information and exit.
 If ngcpcfg was installed but isn't configured yet the 'initialise' option sets
 up ngcpcfg accordingly. Follow the instructions from the <<setup_instructions,
 Setup instructions>> section. Option '--without_shared' allows to skip shared
-repository setup (which is necessary on High Availability setup only).
+repository setup (which is necessary on High Availability setups only).
 
   **init-shared**::
 
 The ngcpcfg configures shared repository to synchronise configurations between
 all nodes in installation. It is necessary if ngcpcfg was initialised using
 option '--without_shared'. Note: Feature is available in the High Availability
-setup only.
+setups only.
 
   **init-mgmt** <server>::
 
@@ -427,7 +427,7 @@ execute '--from-customtt' only once during migration on patchtt.
   **pull**::
 
 Retrieve modifications from shared repository.
-Note: This option is available in the High Availability setup only.
+Note: This option is available in High Availability setups only.
 
   **push** [--nobuild] [--noapply] [--shared-only] [<host(s)>]::
 
@@ -443,7 +443,7 @@ as argument then the changes will be pushed to the shared repository and to the
 given hosts only. If no host has been specified then the hosts specified in
 _/etc/ngcp-config/systems.cfg_ are used. The magic word 'all' can be used as a 'host'
 to push the changes on all the nodes from the network.yml except the local one.
-Note: This option is available in the High Availability setup only.
+Note: This option is available in High Availability setups only.
 
   **push-parallel** [--apply-on-all-nodes] [<host(s)>]::
 
@@ -458,7 +458,7 @@ only on the given hosts.
 If no hosts have been specified then the 'push' will hapen to all HA inactive nodes.
 All 'ngcpcfg' output is muted on STDOUT but available in the log file
 '/var/log/ngcp/ngcpcfg-parallel.log' on each node.
-Note: This option is available in the High Availability setup only.
+Note: This option is available in High Availability setups only.
 
   **services** [--dry-run]::
 
@@ -500,7 +500,7 @@ no <change_id> is specified.
 
 Display the current state of the configuration system, like modified
 configuration files and pending actions.
-Note: The _--local-only_ option is available in the High Availability setup
+Note: The _--local-only_ option is available in High Availability setups
 only and disables checking any remote systems (useful when the remote
 system isn't available).
 
@@ -511,7 +511,7 @@ Prints the value of <key> using ngcp config files as source.
 Usage examples
 --------------
 
-The main workflow *without* High Availability setup is:
+The main workflow *without* High Availability setups is:
 
   ngcpcfg status                      # check for pending operations
   $EDITOR /etc/ngcp-config/config.yml # adjust/extend configuration
@@ -526,7 +526,7 @@ single actions, then you can execute:
   ngcpcfg services                    # restart services for modified configs
   ngcpcfg commit "summary of changes" # register changes
 
-The main workflow *with* High Availability setup is:
+The main workflow *with* High Availability setups is:
 
   ngcpcfg status                      # check for pending operations
   ngcpcfg pull                        # retrieve possibly pending updates
@@ -551,7 +551,7 @@ ngcp system.
 Does ngcpcfg require a shared storage?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Only if you are using ngcpcfg in a High Availability setup and using the 'push'
+Only if you are using ngcpcfg in High Availability setups and using the 'push'
 functionality (which is highly recommended in a HA Setup).
 
 How does the configuration management system work?
@@ -663,7 +663,7 @@ To check which remote repository is in use execute
 Setup instructions
 ------------------
 
-Requirements for High Availability setup:
+Requirements for High Availability setups:
 
 * glusterfs is supposed to be set up working and deployed at /mnt/glusterfs
   (as defined via /etc/ngcp-config/ngcpcfg.cfg)
