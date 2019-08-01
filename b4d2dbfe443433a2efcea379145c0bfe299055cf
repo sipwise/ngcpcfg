@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "040d5e0b_c74ec025",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-08-01T16:22:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28939725_786a8388",
+      "range": {
+        "startLine": 458,
+        "startChar": 6,
+        "endLine": 458,
+        "endChar": 10
+      },
+      "revId": "b4d2dbfe443433a2efcea379145c0bfe299055cf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ac1b614_cb6dce6a",
         "filename": "docs/ngcpcfg.txt",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2019-08-01T12:42:57Z",
       "side": 1,
       "message": "remove",
+      "range": {
+        "startLine": 460,
+        "startChar": 40,
+        "endLine": 460,
+        "endChar": 43
+      },
+      "revId": "b4d2dbfe443433a2efcea379145c0bfe299055cf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "862a8991_3e94926d",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-08-01T16:22:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ac1b614_cb6dce6a",
       "range": {
         "startLine": 460,
         "startChar": 40,
@@ -87,6 +135,54 @@
         "startChar": 34,
         "endLine": 461,
         "endChar": 37
+      },
+      "revId": "b4d2dbfe443433a2efcea379145c0bfe299055cf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f62420e8_8d6f7c17",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-08-01T16:22:51Z",
+      "side": 1,
+      "message": "In http://gerrit.mgm.sipwise.com/c/ngcpcfg/+/32145",
+      "parentUuid": "70ad2145_2b55e2c9",
+      "range": {
+        "startLine": 461,
+        "startChar": 34,
+        "endLine": 461,
+        "endChar": 37
+      },
+      "revId": "b4d2dbfe443433a2efcea379145c0bfe299055cf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f986a916_2194ce57",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-08-01T16:22:51Z",
+      "side": 1,
+      "message": "http://gerrit.mgm.sipwise.com/c/ngcpcfg/+/32145\n\nI will not submit this without Mika :-p",
+      "parentUuid": "57b1feb7_dd6e7896",
+      "range": {
+        "startLine": 461,
+        "startChar": 56,
+        "endLine": 461,
+        "endChar": 61
       },
       "revId": "b4d2dbfe443433a2efcea379145c0bfe299055cf",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
