@@ -128,19 +128,6 @@ foreach my $hostname (sort keys %{$yaml->{hosts}}) {
             next;
         }
 
-        # Manual interface checks.
-        if (defined $host->{$iface}->{ip} and
-            $host->{$iface}->{ip} ne '' and
-            $host->{$iface}->{ip} ne '127.0.0.1' and
-            $iface !~ m/^dummy/) {
-            push @{$dupe_ip{$host->{$iface}->{ip}}}, "$hostname/$iface";
-        }
-        if (defined $host->{$iface}->{hwaddr} and
-            $host->{$iface}->{hwaddr} ne '' and
-            $host->{$iface}->{hwaddr} ne '00:00:00:00:00:00') {
-            push @{$dupe_mac{$host->{$iface}->{hwaddr}}}, "$hostname/$iface";
-        }
-
         # Fill the interface.
         my $ifacemap = {
             type => 'map',
@@ -148,9 +135,12 @@ foreach my $hostname (sort keys %{$yaml->{hosts}}) {
             mapping => dclone($schema_iface->{ifacemap}),
         };
 
+        my $hwaddr_dupe_check = 1;
+
         if ($iface =~ /\./) {
             # ethX.Y type vlan interface
             $ifacemap->{mapping}->{type}->{required} = 'yes';
+            $hwaddr_dupe_check = 0;
         } elsif ($iface =~ m/^bond/ && $iface !~ m/:/) {
             $ifacemap->{mapping}->{bond_miimon}->{required} = 'yes';
             $ifacemap->{mapping}->{bond_mode}->{required} = 'yes';
@@ -161,8 +151,23 @@ foreach my $hostname (sort keys %{$yaml->{hosts}}) {
             $ifacemap->{mapping}->{type}->{required} = 'yes';
             $ifacemap->{mapping}->{vlan_raw_device}->{required} = 'yes'
                 if $iface !~ m/:/;
+            $hwaddr_dupe_check = 0;
         } elsif ($iface =~ m/^idrac/) {
             $ifacemap->{mapping}->{type}->{required} = 'yes';
+        }
+
+        # Manual interface checks.
+        if (defined $host->{$iface}->{ip} and
+            $host->{$iface}->{ip} ne '' and
+            $host->{$iface}->{ip} ne '127.0.0.1' and
+            $iface !~ m/^dummy/) {
+            push @{$dupe_ip{$host->{$iface}->{ip}}}, "$hostname/$iface";
+        }
+        if ($hwaddr_dupe_check and
+            defined $host->{$iface}->{hwaddr} and
+            $host->{$iface}->{hwaddr} ne '' and
+            $host->{$iface}->{hwaddr} ne '00:00:00:00:00:00') {
+            push @{$dupe_mac{$host->{$iface}->{hwaddr}}}, "$hostname/$iface";
         }
 
         # Interface aliases.
