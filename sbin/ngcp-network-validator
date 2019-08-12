@@ -148,7 +148,10 @@ foreach my $hostname (sort keys %{$yaml->{hosts}}) {
             mapping => dclone($schema_iface->{ifacemap}),
         };
 
-        if ($iface =~ m/^bond/ && $iface !~ m/:/) {
+        if ($iface =~ /\./) {
+            # ethX.Y type vlan interface
+            $ifacemap->{mapping}->{type}->{required} = 'yes';
+        } elsif ($iface =~ m/^bond/ && $iface !~ m/:/) {
             $ifacemap->{mapping}->{bond_miimon}->{required} = 'yes';
             $ifacemap->{mapping}->{bond_mode}->{required} = 'yes';
             $ifacemap->{mapping}->{bond_slaves}->{required} = 'yes';
