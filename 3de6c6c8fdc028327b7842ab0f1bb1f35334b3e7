@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e47d010b_e85a83ee",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-08-13T17:28:09Z",
+      "side": 1,
+      "message": "This sounds strange to me here, maybe just \"High Availability specific configuration files\"?",
+      "revId": "3de6c6c8fdc028327b7842ab0f1bb1f35334b3e7",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
