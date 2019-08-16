@@ -19,16 +19,34 @@ fi
 
 ## functions {{{
 help() {
-  echo "Usage: ngcpcfg del <file> <option>"
+  echo "Usage: ngcpcfg del [<options>] <file> <option>"
   echo "Example: ngcpcfg del /etc/ngcp-config/config.yml unnecessary.option"
+  echo "Options:"
+  echo "  --diff: show difference for the applied changes"
 }
 
 ## }}}
 
-[ "${#:-}" -ne 2 ] && (help >&2 ; exit 1)
+RC=0
+b_show_diff=false
 
-file="$1"
-option="$2"
+if [ "${#:-}" == "2" ]; then
+  file="$1"
+  option="$2"
+elif [ "${#:-}" == "3" ]; then
+  if [ "$1" == "--diff" ]; then
+    b_show_diff=true
+  else
+    log_error "unsupported option '$1'. Exiting."
+    help >&2
+    exit 1
+  fi
+  file="$2"
+  option="$3"
+else
+  help >&2
+  exit 1
+fi
 
 [ -f "${file}" ] || (log_error "missing ${file}. Exiting." ; exit 1)
 [ -z "${option}" ] && ( log_error "missing option to set. Exiting." ; exit 1)
@@ -55,8 +73,11 @@ EOF
 log_debug "perl -wCSD \"${tmp}\" || RC=$?"
 perl -wCSD "${tmp}" || RC=$?
 
-log_debug "ngcpcfg diff | tail -n +5 || true"
-ngcpcfg diff | tail -n +5 || true
+
+if [ "${RC}" = "0" ] && "${b_show_diff:-false}"; then
+  log_debug "ngcpcfg diff || true"
+  ngcpcfg diff || true
+fi
 
 if [ -n "${DEBUG:-}" ] ; then
   log_debug "Not removing temporary file ${tmp}"

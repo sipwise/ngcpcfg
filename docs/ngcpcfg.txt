@@ -363,9 +363,9 @@ doing the reverse operation of the _encrypt_ option.
 Note: This feature is only available if the ngcp-ngcpcfg-locker package is
 installed.
 
-  **del** <file> <option>::
+  **del** [<options>] <file> <option>::
 
-Delete given <option> in <file>.
+Delete given <option> in <file>. Option '--diff' shows applied changes.
 
   **diff** [<options_for_git_diff>]::
 
@@ -467,11 +467,12 @@ _--dry-run_ option is present the services won't be executed but you'll be
 noticed which service files would be executed if being invoked without the
 _--dry-run__ option.
 
-  **set** <file> <option>=<value>::
+  **set** [<options>] <file> <option>=<value>::
 
 Set given <option> to <value> in <file>. Using this command you can add/change
 the value(s) for every YML file used by ngcpcfg. Use _del_ option to delete the value/option.
-Here you can find the most popular cases for YML configs modification:
+Add option '--diff' to display applied changes, Here you can find the
+most popular cases for YML configs modification:
 
   # change rtpengine max port number:
   ngcpcfg set /etc/ngcp-config/config.yml "rtpproxy.maxport=44123"
@@ -484,7 +485,7 @@ Here you can find the most popular cases for YML configs modification:
   # replace the first element in the array/hash:
   ngcpcfg set /etc/ngcp-config/config.yml "sshd.listen_addresses.0='1.2.3.4'"
   # add the list of hashes to iproute2 section:
-  ngcpcfg set /etc/ngcp-config/config.yml iproute2.rt_tables.APPEND='{"name","my_route","id",205}'
+  ngcpcfg set --diff  /etc/ngcp-config/config.yml iproute2.rt_tables.APPEND='{"name","my_route","id",205}'
   #  iproute2:
   # -  rt_tables: []
   # +  rt_tables:
