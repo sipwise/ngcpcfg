@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df7c60b0_8cb1f9b5",
+        "filename": "t/test_ngcpcfg_set_and_del.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-08-16T12:53:50Z",
+      "side": 1,
+      "message": "Mika, I was unable to make it work under Python.\nWe do not have such tests to reuse here. We have t/test_git.py but it doesn\u0027t help a lot.\nWe need to init ngcpcfg gully, including git/etckeept?\nGood ideas are welcome, IMHO we can submit it now, as currently we span upgrade logs with a lot og sensitive data on mr6.5-\u003emr7.5 upgrade:\nhttps://jenkins.mgm.sipwise.com/job/daily-update-upgrader/68755/artifact/results/upgrade_VM_sp1_mr6.5_mr7.5.log/*view*/\n\nsee output of step  [50/62] Running: /usr/share/ngcp-upgrade/steps/mr7.5/fix_disable_usrloc_dst",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 63
+      },
+      "revId": "437dbc9efea34e2cac7aa07715a68a02786b2ecf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
