@@ -87,6 +87,23 @@
     },
     {
       "key": {
+        "uuid": "1080aa18_70e9ddfd",
+        "filename": "scripts/del",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-08-16T15:45:42Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be using hard-coded \u0027ngcpcfg diff\u0027, but \"${SCRIPTS}/diff\"",
+      "revId": "437dbc9efea34e2cac7aa07715a68a02786b2ecf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3400735_28fe7067",
         "filename": "scripts/set",
         "patchSetId": 4
@@ -115,6 +132,24 @@
       "writtenOn": "2019-08-16T13:27:53Z",
       "side": 1,
       "message": "same here about tail -n +5",
+      "revId": "437dbc9efea34e2cac7aa07715a68a02786b2ecf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c3aeb76_083871ce",
+        "filename": "scripts/set",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-08-16T15:45:42Z",
+      "side": 1,
+      "message": "Same here about ${SCRIPTS}/diff",
+      "parentUuid": "7708c3fc_3e8e0a8a",
       "revId": "437dbc9efea34e2cac7aa07715a68a02786b2ecf",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
