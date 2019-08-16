@@ -182,7 +182,8 @@ class GitLoader:
         return GitRepository(path)
 
     def cleanup(self):
-        delete_tmp_folder(self.localpath)
+        pass
+        #delete_tmp_folder(self.localpath)
 
     def __repr__(self):
         return "GitLoader for '{}'".format(self.localpath)

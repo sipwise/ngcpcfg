@@ -33,3 +33,8 @@ To run only the tests matching 'test_patch_action' execute:
 
 [source,bash]
 py.test-3 -v  -k test_patch_action
+
+When debugging failing tests, disabling capturing output and being more verbose might be useful:
+
+[source,bash]
+py.test-3 -v  -k test_patch_action -s -vv

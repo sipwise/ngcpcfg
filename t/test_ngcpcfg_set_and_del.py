@@ -3,6 +3,7 @@
 import pytest
 import re
 import tempfile
+from pathlib import Path
 
 ###############################################################
 #  ngcpcfg set
@@ -87,7 +88,7 @@ def test_set_wrong_set_option(ngcpcfgcli, tmpdir):
 
 
 @pytest.mark.tt_16903
-def test_set_action_generate_dictionary_digits(ngcpcfgcli, tmpdir):
+def test_set_action_generate_dictionary_digits_no_diff(ngcpcfgcli, tmpdir):
     tmpfile = tmpdir.join("tmpfile.txt")
     tmpfile.write("---\n")
     out = ngcpcfgcli("set", str(tmpfile), "aaa.bbb=123")
@@ -95,26 +96,36 @@ def test_set_action_generate_dictionary_digits(ngcpcfgcli, tmpdir):
 aaa:
   bbb: 123
 '''
-    # TODO: check diff output on out.stdout,
-    # currently it is empty as 'ngcpcfg diff' has no
-    # output due to missing git/etckeepet/commits for git diff.
     assert "" in out.stdout
     assert "" in out.stderr
     assert out.returncode == 0
 
 
 @pytest.mark.tt_51601
-def test_set_action_generate_dictionary_digits_diff(ngcpcfgcli, tmpdir):
-    tmpfile = tmpdir.join("tmpfile.txt")
-    tmpfile.write("---\n")
-    out = ngcpcfgcli("set", "--diff", str(tmpfile), "aaa.bbb=123")
-    assert tmpfile.read() == '''---
+def test_set_action_generate_dictionary_digits_diff(ngcpcfgcli, cli, tmpdir, gitrepo):
+
+    with gitrepo.from_archive(gitrepo.default) as git:
+      with gitrepo.in_folder(git.root) as git:
+        test = Path(git.root, 'tmpfile.txt')
+        with open(test, 'a') as testfile:
+          testfile.write("---\n")
+          git.add(str(test))
+          git.commit('-m', 'Adding a new file')
+          print(git.status())
+
+        with open(test, 'a') as testfile:
+          print("testfile = ", testfile)
+          out = ngcpcfgcli("set", "--diff", str(test), "aaa.bbb=123")
+          regex = re.compile(r".*\+---\n\+aaa:\n\+  bbb: 123\n")
+          assert out.returncode == 0
+          assert re.search(regex, out.stdout)
+          assert "FIXME2" in out.stderr
+
+        with open(test, 'r') as testfile:
+          assert testfile.read() == '''---
 aaa:
   bbb: 123
 '''
-    assert "" in out.stdout
-    assert "" in out.stderr
-    assert out.returncode == 0
 
 
 @pytest.mark.tt_16903
