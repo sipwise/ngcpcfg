@@ -2,6 +2,125 @@
   "comments": [
     {
       "key": {
+        "uuid": "03863d5d_fb2a7226",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-08-16T13:27:53Z",
+      "side": 1,
+      "message": "s/which requires/who require/",
+      "revId": "437dbc9efea34e2cac7aa07715a68a02786b2ecf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eda5da2a_02b59eda",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-08-16T13:27:53Z",
+      "side": 1,
+      "message": "s/,/./ (and I\u0027d add newline before \"Here you can find\")",
+      "revId": "437dbc9efea34e2cac7aa07715a68a02786b2ecf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bea81151_13963ef3",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-08-16T13:27:53Z",
+      "side": 1,
+      "message": "Here\u0027s missing the description that this displays the applied changes",
+      "revId": "437dbc9efea34e2cac7aa07715a68a02786b2ecf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bd1e51b_a5f0a57e",
+        "filename": "scripts/del",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-08-16T13:27:53Z",
+      "side": 1,
+      "message": "s/difference/difference(s)/?",
+      "revId": "437dbc9efea34e2cac7aa07715a68a02786b2ecf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f05e781_d4d8fc9c",
+        "filename": "scripts/del",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-08-16T13:27:53Z",
+      "side": 1,
+      "message": "Not restricting this to \"tail -n 5\" is by indention?\nIf so, I\u0027d mention this in the commit message.",
+      "revId": "437dbc9efea34e2cac7aa07715a68a02786b2ecf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3400735_28fe7067",
+        "filename": "scripts/set",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-08-16T13:27:53Z",
+      "side": 1,
+      "message": "same here (difference(s))?",
+      "revId": "437dbc9efea34e2cac7aa07715a68a02786b2ecf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7708c3fc_3e8e0a8a",
+        "filename": "scripts/set",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-08-16T13:27:53Z",
+      "side": 1,
+      "message": "same here about tail -n +5",
+      "revId": "437dbc9efea34e2cac7aa07715a68a02786b2ecf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df7c60b0_8cb1f9b5",
         "filename": "t/test_ngcpcfg_set_and_del.py",
         "patchSetId": 4
@@ -13,6 +132,47 @@
       "writtenOn": "2019-08-16T12:53:50Z",
       "side": 1,
       "message": "Mika, I was unable to make it work under Python.\nWe do not have such tests to reuse here. We have t/test_git.py but it doesn\u0027t help a lot.\nWe need to init ngcpcfg gully, including git/etckeept?\nGood ideas are welcome, IMHO we can submit it now, as currently we span upgrade logs with a lot og sensitive data on mr6.5-\u003emr7.5 upgrade:\nhttps://jenkins.mgm.sipwise.com/job/daily-update-upgrader/68755/artifact/results/upgrade_VM_sp1_mr6.5_mr7.5.log/*view*/\n\nsee output of step  [50/62] Running: /usr/share/ngcp-upgrade/steps/mr7.5/fix_disable_usrloc_dst",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 63
+      },
+      "revId": "437dbc9efea34e2cac7aa07715a68a02786b2ecf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb48c67d_f6ad01f0",
+        "filename": "t/test_ngcpcfg_set_and_del.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-08-16T13:27:53Z",
+      "side": 1,
+      "message": "s/etckeepet/etckeeper/",
+      "revId": "437dbc9efea34e2cac7aa07715a68a02786b2ecf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e9fceb2_78f902f1",
+        "filename": "t/test_ngcpcfg_set_and_del.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-08-16T13:27:53Z",
+      "side": 1,
+      "message": "I think you meant this comment for test_set_action_generate_dictionary_digits_diff?\n\nRegarding this, I\u0027ll look into this, but I\u0027m also fine with submitting this as-is if it\u0027s important to get this into master/releases.",
+      "parentUuid": "df7c60b0_8cb1f9b5",
       "range": {
         "startLine": 98,
         "startChar": 0,
