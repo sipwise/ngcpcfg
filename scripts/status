@@ -52,7 +52,7 @@ check_local_state() {
   cd "$NGCPCTL_MAIN"
 
   log_info "Checking state of ngcpcfg:"
-  if ! [ -r /etc/ngcp-config/.git/HEAD ] ; then
+  if ! [ -r .git/HEAD ] ; then
     log_warn "ngcpcfg has not been initialised yet. Execute 'ngcpcfg initialise'."
     exit 0
   fi
