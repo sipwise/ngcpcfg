@@ -217,6 +217,24 @@
       "revId": "437dbc9efea34e2cac7aa07715a68a02786b2ecf",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f974cece_a72e03fb",
+        "filename": "t/test_ngcpcfg_set_and_del.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-08-16T16:06:23Z",
+      "side": 1,
+      "message": "I started working on the \"--diff\" support inside the tests at https://gerrit.mgm.sipwise.com/c/ngcpcfg/+/32476\n\nBut it\u0027s *not* finished/working yet, we end up in an unexpected git directory, not entirely sure yet why so, maybe I am even over-complicating things here, need some more quiet minutes to figure this out in more detail.... but JFYI",
+      "parentUuid": "cb48c67d_f6ad01f0",
+      "revId": "437dbc9efea34e2cac7aa07715a68a02786b2ecf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
