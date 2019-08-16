@@ -16,7 +16,7 @@ def test_set_action_missing_all_parameters(ngcpcfgcli, tmpdir):
     out = ngcpcfgcli("set")
     assert tmpfile.read() == '''---\n'''
     assert "" in out.stdout
-    assert "Usage: ngcpcfg set <file> <key>" in out.stderr
+    assert "Usage: ngcpcfg set [<options>] <file> <key>" in out.stderr
     assert out.returncode == 1
 
 
@@ -27,7 +27,7 @@ def test_set_action_missing_first_parameter(ngcpcfgcli, tmpdir):
     out = ngcpcfgcli("set", "test=123")
     assert tmpfile.read() == '''---\n'''
     assert "" in out.stdout
-    assert "Usage: ngcpcfg set <file> <key>" in out.stderr
+    assert "Usage: ngcpcfg set [<options>] <file> <key>" in out.stderr
     assert out.returncode == 1
 
 
@@ -38,7 +38,7 @@ def test_set_action_missing_second_parameter(ngcpcfgcli, tmpdir):
     out = ngcpcfgcli("set", str(tmpfile))
     assert tmpfile.read() == '''---\n'''
     assert "" in out.stdout
-    assert "Usage: ngcpcfg set <file> <key>" in out.stderr
+    assert "Usage: ngcpcfg set [<options>] <file> <key>" in out.stderr
     assert out.returncode == 1
 
 
@@ -75,11 +75,39 @@ def test_set_action_missing_file(ngcpcfgcli, tmpdir):
     assert out.returncode == 1
 
 
+@pytest.mark.tt_51601
+def test_set_wrong_set_option(ngcpcfgcli, tmpdir):
+    tmpfile = tmpdir.join("tmpfile.txt")
+    tmpfile.write("---\n")
+    out = ngcpcfgcli("set", "--something", str(tmpfile), "aaa=123")
+    assert tmpfile.read() == '''---\n'''
+    assert "" in out.stdout
+    assert "Error: unsupported option '--something'. Exiting." in out.stderr
+    assert out.returncode == 1
+
+
 @pytest.mark.tt_16903
 def test_set_action_generate_dictionary_digits(ngcpcfgcli, tmpdir):
     tmpfile = tmpdir.join("tmpfile.txt")
     tmpfile.write("---\n")
     out = ngcpcfgcli("set", str(tmpfile), "aaa.bbb=123")
+    assert tmpfile.read() == '''---
+aaa:
+  bbb: 123
+'''
+    # TODO: check diff output on out.stdout,
+    # currently it is empty as 'ngcpcfg diff' has no
+    # output due to missing git/etckeeper/commits for git diff.
+    assert "" in out.stdout
+    assert "" in out.stderr
+    assert out.returncode == 0
+
+
+@pytest.mark.tt_51601
+def test_set_action_generate_dictionary_digits_diff(ngcpcfgcli, tmpdir):
+    tmpfile = tmpdir.join("tmpfile.txt")
+    tmpfile.write("---\n")
+    out = ngcpcfgcli("set", "--diff", str(tmpfile), "aaa.bbb=123")
     assert tmpfile.read() == '''---
 aaa:
   bbb: 123
@@ -485,7 +513,7 @@ def test_del_action_missing_all_parameters(ngcpcfgcli, tmpdir):
     out = ngcpcfgcli("del")
     assert tmpfile.read() == '''---\n'''
     assert "" in out.stdout
-    assert "Usage: ngcpcfg del <file> <option>" in out.stderr
+    assert "Usage: ngcpcfg del [<options>] <file> <option>" in out.stderr
     assert out.returncode == 1
 
 
@@ -496,7 +524,7 @@ def test_del_action_missing_first_parameter(ngcpcfgcli, tmpdir):
     out = ngcpcfgcli("del", "test.to.be.deleted")
     assert tmpfile.read() == '''---\n'''
     assert "" in out.stdout
-    assert "Usage: ngcpcfg del <file> <option>" in out.stderr
+    assert "Usage: ngcpcfg del [<options>] <file> <option>" in out.stderr
     assert out.returncode == 1
 
 
@@ -507,7 +535,7 @@ def test_del_action_missing_second_parameter(ngcpcfgcli, tmpdir):
     out = ngcpcfgcli("del", str(tmpfile))
     assert tmpfile.read() == '''---\n'''
     assert "" in out.stdout
-    assert "Usage: ngcpcfg del <file> <option>" in out.stderr
+    assert "Usage: ngcpcfg del [<options>] <file> <option>" in out.stderr
     assert out.returncode == 1
 
 
@@ -519,6 +547,25 @@ def test_del_action_missing_file(ngcpcfgcli, tmpdir):
     assert tmpfile.read() == '''---\n'''
     assert "" in out.stdout
     assert "Error: missing /tmp/non_existed_file. Exiting." in out.stderr
+    assert out.returncode == 1
+
+
+@pytest.mark.tt_51601
+def test_del_wrong_del_option(ngcpcfgcli, tmpdir):
+    tmpfile = tmpdir.join("tmpfile.txt")
+    tmpfile.write('''---
+aaa:
+  bbb: '123'
+  ccc: '456'
+''')
+    out = ngcpcfgcli("del", "--something", str(tmpfile), "aaa.bbb")
+    assert tmpfile.read() == '''---
+aaa:
+  bbb: '123'
+  ccc: '456'
+'''
+    assert "" in out.stdout
+    assert "Error: unsupported option '--something'. Exiting." in out.stderr
     assert out.returncode == 1
 
 
