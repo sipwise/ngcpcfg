@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ed83d89e_30eb8b32",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-08-26T15:17:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03863d5d_fb2a7226",
+      "revId": "437dbc9efea34e2cac7aa07715a68a02786b2ecf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eda5da2a_02b59eda",
         "filename": "docs/ngcpcfg.txt",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2019-08-16T13:27:53Z",
       "side": 1,
       "message": "s/,/./ (and I\u0027d add newline before \"Here you can find\")",
+      "revId": "437dbc9efea34e2cac7aa07715a68a02786b2ecf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08b4ca98_069fa334",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-08-26T15:17:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eda5da2a_02b59eda",
       "revId": "437dbc9efea34e2cac7aa07715a68a02786b2ecf",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "988ebdfc_b10d2ac0",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-08-26T15:17:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bea81151_13963ef3",
+      "revId": "437dbc9efea34e2cac7aa07715a68a02786b2ecf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7bd1e51b_a5f0a57e",
         "filename": "scripts/del",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2019-08-16T13:27:53Z",
       "side": 1,
       "message": "s/difference/difference(s)/?",
+      "revId": "437dbc9efea34e2cac7aa07715a68a02786b2ecf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1168256a_322d9786",
+        "filename": "scripts/del",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-08-26T15:17:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bd1e51b_a5f0a57e",
       "revId": "437dbc9efea34e2cac7aa07715a68a02786b2ecf",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "7f767506_dbaed16c",
+        "filename": "scripts/del",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-08-26T15:17:03Z",
+      "side": 1,
+      "message": "Previously idea was to show only 5 lines...\nIt didn\u0027t work here :-) while diff was displayed.\n\nNow we should nothing and show all if \u0027--diff\u0027 is specified.",
+      "parentUuid": "4f05e781_d4d8fc9c",
+      "revId": "437dbc9efea34e2cac7aa07715a68a02786b2ecf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1080aa18_70e9ddfd",
         "filename": "scripts/del",
         "patchSetId": 4
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "a09eb7da_f206e2ee",
+        "filename": "scripts/del",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-08-26T15:17:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1080aa18_70e9ddfd",
+      "revId": "437dbc9efea34e2cac7aa07715a68a02786b2ecf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3400735_28fe7067",
         "filename": "scripts/set",
         "patchSetId": 4
@@ -115,6 +223,24 @@
       "writtenOn": "2019-08-16T13:27:53Z",
       "side": 1,
       "message": "same here (difference(s))?",
+      "revId": "437dbc9efea34e2cac7aa07715a68a02786b2ecf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e81fb022_3c853651",
+        "filename": "scripts/set",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-08-26T15:17:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3400735_28fe7067",
       "revId": "437dbc9efea34e2cac7aa07715a68a02786b2ecf",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
@@ -149,6 +275,42 @@
       "writtenOn": "2019-08-16T15:45:42Z",
       "side": 1,
       "message": "Same here about ${SCRIPTS}/diff",
+      "parentUuid": "7708c3fc_3e8e0a8a",
+      "revId": "437dbc9efea34e2cac7aa07715a68a02786b2ecf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f05f4102_e3e4d2a5",
+        "filename": "scripts/set",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-08-26T15:17:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c3aeb76_083871ce",
+      "revId": "437dbc9efea34e2cac7aa07715a68a02786b2ecf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d422456_f9e66c7b",
+        "filename": "scripts/set",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-08-26T15:17:03Z",
+      "side": 1,
+      "message": "See reply in \"del\" file.",
       "parentUuid": "7708c3fc_3e8e0a8a",
       "revId": "437dbc9efea34e2cac7aa07715a68a02786b2ecf",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
@@ -235,6 +397,66 @@
       "revId": "437dbc9efea34e2cac7aa07715a68a02786b2ecf",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9d163bd_56ef9c74",
+        "filename": "t/test_ngcpcfg_set_and_del.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-08-26T15:17:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb48c67d_f6ad01f0",
+      "revId": "437dbc9efea34e2cac7aa07715a68a02786b2ecf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eff8283e_c3251d7a",
+        "filename": "t/test_ngcpcfg_set_and_del.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-08-26T15:17:03Z",
+      "side": 1,
+      "message": "I need to study Python to help you there :-(\nI do not follow you fully there.",
+      "parentUuid": "f974cece_a72e03fb",
+      "revId": "437dbc9efea34e2cac7aa07715a68a02786b2ecf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bae32d75_73204841",
+        "filename": "t/test_ngcpcfg_set_and_del.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-08-26T15:17:03Z",
+      "side": 1,
+      "message": "The problem detected here: assert \"\" in out.stdout\ndoesn\u0027t NOT ensure stdout is empty AFAIK. it just checks nothing. :-)",
+      "parentUuid": "8e9fceb2_78f902f1",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 63
+      },
+      "revId": "437dbc9efea34e2cac7aa07715a68a02786b2ecf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
