@@ -1,3 +1,12 @@
+ngcp-ngcpcfg (6.5.2.4+0~mr6.5.2.4) unstable; urgency=medium
+
+  [ Andrew Pogrebennyk ]
+  * [77ba98b] TT#50100 scripts/patch: preserve file permissions when creating customtt
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 29 Aug 2019 11:52:37 +0200
+
 ngcp-ngcpcfg (6.5.2.3+0~mr6.5.2.3) unstable; urgency=medium
 
   [ Alexander Lutay ]
