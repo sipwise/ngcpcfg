@@ -4,7 +4,7 @@
 # Iterates YAML config lists and translates them into strings suitable for the
 # cdr-exporter config file.
 #
-# @param argv.type                      One of 'cdr' (default), 'events'.
+# @param argv.type                      One of 'cdr' (default), 'int_cdr', 'events'.
 # @param argv.admin_export_fields
 # @param argv.reseller_export_fields
 # @param argv.export_joins
@@ -14,22 +14,22 @@
 # @return out.joins
 # @return out.conditions
 -%]
-[% MACRO cdr_direction_provider_type_select(dict_table, data_table, dict_col, val_col, direction, provider, type) BLOCK -%]
-(SELECT data.[%- val_col -%] FROM accounting.[%- data_table -%] AS data INNER JOIN accounting.cdr_direction AS dir ON data.direction_id = dir.id INNER JOIN accounting.cdr_provider AS prov ON data.provider_id = prov.id INNER JOIN accounting.[%- dict_table -%] AS dict ON data.[%- dict_col -%] = dict.id WHERE data.cdr_id = accounting.cdr.id AND dir.type = "[%- direction -%]" AND prov.type="[%- provider -%]" AND dict.type="[%- type -%]")
+[% MACRO cdr_direction_provider_type_select(dict_table, data_table, base_table, dict_col, val_col, direction, provider, type) BLOCK -%]
+(SELECT data.[%- val_col -%] FROM accounting.[%- data_table -%] AS data INNER JOIN accounting.cdr_direction AS dir ON data.direction_id = dir.id INNER JOIN accounting.cdr_provider AS prov ON data.provider_id = prov.id INNER JOIN accounting.[%- dict_table -%] AS dict ON data.[%- dict_col -%] = dict.id WHERE data.cdr_id = accounting.[%- base_table -%].id AND dir.type = "[%- direction -%]" AND prov.type="[%- provider -%]" AND dict.type="[%- type -%]")
 [%- END %]
-[% MACRO cdr_direction_provider_type_select_casesensitive(dict_table, data_table, dict_col, val_col, direction, provider, type) BLOCK -%]
-(SELECT data.[%- val_col -%] FROM accounting.[%- data_table -%] AS data INNER JOIN accounting.cdr_direction AS dir ON data.direction_id = dir.id INNER JOIN accounting.cdr_provider AS prov ON data.provider_id = prov.id INNER JOIN accounting.[%- dict_table -%] AS dict ON data.[%- dict_col -%] = dict.id WHERE data.cdr_id = accounting.cdr.id AND dir.type = "[%- direction -%]" AND prov.type="[%- provider -%]" AND BINARY dict.type="[%- type -%]")
+[% MACRO cdr_direction_provider_type_select_casesensitive(dict_table, data_table, base_table, dict_col, val_col, direction, provider, type) BLOCK -%]
+(SELECT data.[%- val_col -%] FROM accounting.[%- data_table -%] AS data INNER JOIN accounting.cdr_direction AS dir ON data.direction_id = dir.id INNER JOIN accounting.cdr_provider AS prov ON data.provider_id = prov.id INNER JOIN accounting.[%- dict_table -%] AS dict ON data.[%- dict_col -%] = dict.id WHERE data.cdr_id = accounting.[%- base_table -%].id AND dir.type = "[%- direction -%]" AND prov.type="[%- provider -%]" AND BINARY dict.type="[%- type -%]")
 [%- END %]
 [% MACRO edr_type_select(dict_table, data_table, dict_col, val_col, type) BLOCK -%]
 (SELECT data.[%- val_col -%] FROM accounting.[%- data_table -%] AS data INNER JOIN accounting.[%- dict_table -%] AS dict ON data.[%- dict_col -%] = dict.id WHERE data.event_id = accounting.events.id AND dict.type="[%- type -%]")
 [%- END %]
-[% MACRO cdr_timezone BLOCK -%]
+[% MACRO cdr_timezone(base_table) BLOCK -%]
 [%
-source_subscriber_timezone = "(SELECT COALESCE((SELECT tz.name FROM billing.v_subscriber_timezone tz WHERE tz.uuid = accounting.cdr.source_user_id LIMIT 1),@@global.time_zone))";
-destination_subscriber_timezone = "(SELECT COALESCE((SELECT tz.name FROM billing.v_subscriber_timezone tz WHERE tz.uuid = accounting.cdr.destination_user_id LIMIT 1),@@global.time_zone))";
+source_subscriber_timezone = "(SELECT COALESCE((SELECT tz.name FROM billing.v_subscriber_timezone tz WHERE tz.uuid = accounting." _ base_table _ ".source_user_id LIMIT 1),@@global.time_zone))";
+destination_subscriber_timezone = "(SELECT COALESCE((SELECT tz.name FROM billing.v_subscriber_timezone tz WHERE tz.uuid = accounting." _ base_table _ ".destination_user_id LIMIT 1),@@global.time_zone))";
 transit_timezone = "(SELECT COALESCE((SELECT t.name FROM ngcp.timezone t LIMIT 1),@@global.time_zone))";
 -%]
-(IF(accounting.cdr.source_user_id = "0",IF(accounting.cdr.destination_user_id = "0",[%- transit_timezone -%],[%- destination_subscriber_timezone -%]),[%- source_subscriber_timezone -%]))
+(IF(accounting.[%- base_table -%].source_user_id = "0",IF(accounting.[%- base_table -%].destination_user_id = "0",[%- transit_timezone -%],[%- destination_subscriber_timezone -%]),[%- source_subscriber_timezone -%]))
 [%- END %]
 [% MACRO edr_timezone BLOCK -%]
 (SELECT COALESCE((SELECT tz.name FROM billing.v_subscriber_timezone tz WHERE tz.subscriber_id = accounting.events.subscriber_id LIMIT 1),@@global.time_zone))
@@ -67,17 +67,17 @@ END;
 
 # Other presets
 # cdr fields:
-X_cdr_id_map.CDR_ID = "accounting.cdr.id";
+X_cdr_id_map.CDR_ID = "accounting." _ X_type _ ".id";
 X_cdr_id_map.EVENT_ID = "accounting.events.id";
 
 X_cdr_id_map.SOURCE_SUBSCRIBER_ID = "source_voip_subscribers.id";
 X_cdr_id_map.DESTINATION_SUBSCRIBER_ID = "destination_voip_subscribers.id";
-X_cdr_id_map.INIT_TIME = "CONCAT(FROM_UNIXTIME(FLOOR(accounting.cdr.init_time)), \".\", SUBSTRING_INDEX(accounting.cdr.init_time, \".\", -1)) as cdr_init_time";
-X_cdr_id_map.START_TIME = "CONCAT(FROM_UNIXTIME(FLOOR(accounting.cdr.start_time)), \".\", SUBSTRING_INDEX(accounting.cdr.start_time, \".\", -1)) as cdr_start_time";
-X_cdr_id_map.END_TIME = "CONCAT(FROM_UNIXTIME(FLOOR(accounting.cdr.start_time + accounting.cdr.duration)), \".\", SUBSTRING_INDEX(accounting.cdr.start_time + accounting.cdr.duration, \".\", -1)) as cdr_end_time";
-X_cdr_id_map.INIT_TIME_TRUNCATED = "FROM_UNIXTIME(FLOOR(accounting.cdr.init_time)) as cdr_init_time_truncated";
-X_cdr_id_map.START_TIME_TRUNCATED = "FROM_UNIXTIME(FLOOR(accounting.cdr.start_time)) as cdr_start_time_truncated";
-X_cdr_id_map.END_TIME_TRUNCATED = "FROM_UNIXTIME(FLOOR(accounting.cdr.start_time + accounting.cdr.duration)) as cdr_end_time_truncated";
+X_cdr_id_map.INIT_TIME = "CONCAT(FROM_UNIXTIME(FLOOR(accounting." _ X_type _ ".init_time)), \".\", SUBSTRING_INDEX(accounting." _ X_type _ ".init_time, \".\", -1)) as cdr_init_time";
+X_cdr_id_map.START_TIME = "CONCAT(FROM_UNIXTIME(FLOOR(accounting." _ X_type _ ".start_time)), \".\", SUBSTRING_INDEX(accounting." _ X_type _ ".start_time, \".\", -1)) as cdr_start_time";
+X_cdr_id_map.END_TIME = "CONCAT(FROM_UNIXTIME(FLOOR(accounting." _ X_type _ ".start_time + accounting." _ X_type _ ".duration)), \".\", SUBSTRING_INDEX(accounting." _ X_type _ ".start_time + accounting." _ X_type _ ".duration, \".\", -1)) as cdr_end_time";
+X_cdr_id_map.INIT_TIME_TRUNCATED = "FROM_UNIXTIME(FLOOR(accounting." _ X_type _ ".init_time)) as cdr_init_time_truncated";
+X_cdr_id_map.START_TIME_TRUNCATED = "FROM_UNIXTIME(FLOOR(accounting." _ X_type _ ".start_time)) as cdr_start_time_truncated";
+X_cdr_id_map.END_TIME_TRUNCATED = "FROM_UNIXTIME(FLOOR(accounting." _ X_type _ ".start_time + accounting." _ X_type _ ".duration)) as cdr_end_time_truncated";
 X_cdr_id_map.SOURCE_CARRIER_ZONE = "COALESCE(source_carrier_bbz.zone, \"onnet\")";
 X_cdr_id_map.SOURCE_CARRIER_DETAIL = "COALESCE(source_carrier_bbz.detail, \"platform internal\")";
 X_cdr_id_map.SOURCE_CUSTOMER_ZONE = "source_customer_bbz.zone";
@@ -93,24 +93,24 @@ X_cdr_id_map.DESTINATION_RESELLER_DETAIL = "destination_reseller_bbz.detail";
 X_cdr_id_map.CONTRACT_EXTERNAL_ID = "billing.contracts.external_id";
 X_cdr_id_map.COMPANY = "billing.contacts.company";
 X_cdr_id_map.SUBSCRIBER_EXTERNAL_ID = "billing.voip_subscribers.external_id";
-X_cdr_id_map.SOURCE_LNP_PREFIX = "accounting.cdr.source_lnp_prefix";
-X_cdr_id_map.DESTINATION_LNP_PREFIX = "accounting.cdr.destination_lnp_prefix";
-X_cdr_id_map.SOURCE_USER_OUT = "accounting.cdr.source_user_out";
-X_cdr_id_map.DESTINATION_USER_OUT = "accounting.cdr.destination_user_out";
-X_cdr_id_map.SOURCE_LNP_TYPE = "accounting.cdr.source_lnp_type";
-X_cdr_id_map.DESTINATION_LNP_TYPE = "accounting.cdr.destination_lnp_type";
+X_cdr_id_map.SOURCE_LNP_PREFIX = "accounting." _ X_type _ ".source_lnp_prefix";
+X_cdr_id_map.DESTINATION_LNP_PREFIX = "accounting." _ X_type _ ".destination_lnp_prefix";
+X_cdr_id_map.SOURCE_USER_OUT = "accounting." _ X_type _ ".source_user_out";
+X_cdr_id_map.DESTINATION_USER_OUT = "accounting." _ X_type _ ".destination_user_out";
+X_cdr_id_map.SOURCE_LNP_TYPE = "accounting." _ X_type _ ".source_lnp_type";
+X_cdr_id_map.DESTINATION_LNP_TYPE = "accounting." _ X_type _ ".destination_lnp_type";
 
-X_cdr_id_map.TIMEZONE = cdr_timezone _ " as cdr_timezone";
+X_cdr_id_map.TIMEZONE = cdr_timezone(X_type) _ " as cdr_timezone";
 
-X_cdr_id_map.INIT_TIME_LOCALIZED = "CONCAT(" _ from_unixtime_tz("FLOOR(accounting.cdr.init_time)",cdr_timezone) _ ", \".\", SUBSTRING_INDEX(accounting.cdr.init_time, \".\", -1)) as cdr_init_time_localized";
-X_cdr_id_map.START_TIME_LOCALIZED = "CONCAT(" _ from_unixtime_tz("FLOOR(accounting.cdr.start_time)",cdr_timezone) _ ", \".\", SUBSTRING_INDEX(accounting.cdr.start_time, \".\", -1)) as cdr_start_time_localized";
-X_cdr_id_map.END_TIME_LOCALIZED = "CONCAT(" _ from_unixtime_tz("FLOOR(accounting.cdr.start_time + accounting.cdr.duration)",cdr_timezone) _ ", \".\", SUBSTRING_INDEX(accounting.cdr.start_time + accounting.cdr.duration, \".\", -1)) as cdr_end_time_localized";
+X_cdr_id_map.INIT_TIME_LOCALIZED = "CONCAT(" _ from_unixtime_tz("FLOOR(accounting." _ X_type _ ".init_time)",cdr_timezone(X_type)) _ ", \".\", SUBSTRING_INDEX(accounting." _ X_type _ ".init_time, \".\", -1)) as cdr_init_time_localized";
+X_cdr_id_map.START_TIME_LOCALIZED = "CONCAT(" _ from_unixtime_tz("FLOOR(accounting." _ X_type _ ".start_time)",cdr_timezone(X_type)) _ ", \".\", SUBSTRING_INDEX(accounting." _ X_type _ ".start_time, \".\", -1)) as cdr_start_time_localized";
+X_cdr_id_map.END_TIME_LOCALIZED = "CONCAT(" _ from_unixtime_tz("FLOOR(accounting." _ X_type _ ".start_time + accounting." _ X_type _ ".duration)",cdr_timezone(X_type)) _ ", \".\", SUBSTRING_INDEX(accounting." _ X_type _ ".start_time + accounting." _ X_type _ ".duration, \".\", -1)) as cdr_end_time_localized";
 
-X_cdr_id_map.INIT_TIME_LOCALIZED_TRUNCATED = from_unixtime_tz("FLOOR(accounting.cdr.init_time)",cdr_timezone) _ " as cdr_init_time_localized_truncated";
-X_cdr_id_map.START_TIME_LOCALIZED_TRUNCATED = from_unixtime_tz("FLOOR(accounting.cdr.start_time)",cdr_timezone) _ " as cdr_start_time_localized_truncated";
-X_cdr_id_map.END_TIME_LOCALIZED_TRUNCATED = from_unixtime_tz("FLOOR(accounting.cdr.start_time + accounting.cdr.duration)",cdr_timezone) _ " as cdr_end_time_localized_truncated";
+X_cdr_id_map.INIT_TIME_LOCALIZED_TRUNCATED = from_unixtime_tz("FLOOR(accounting." _ X_type _ ".init_time)",cdr_timezone(X_type)) _ " as cdr_init_time_localized_truncated";
+X_cdr_id_map.START_TIME_LOCALIZED_TRUNCATED = from_unixtime_tz("FLOOR(accounting." _ X_type _ ".start_time)",cdr_timezone(X_type)) _ " as cdr_start_time_localized_truncated";
+X_cdr_id_map.END_TIME_LOCALIZED_TRUNCATED = from_unixtime_tz("FLOOR(accounting." _ X_type _ ".start_time + accounting." _ X_type _ ".duration)",cdr_timezone(X_type)) _ " as cdr_end_time_localized_truncated";
 
-X_cdr_id_map.FURNISHED_CHARGING_INFO = "COALESCE(" _ cdr_direction_provider_type_select("cdr_tag", "cdr_tag_data", "tag_id", "val", "destination", "customer", "furnished_charging_info") _ ',"") as furnished_charging_info';
+X_cdr_id_map.FURNISHED_CHARGING_INFO = "COALESCE(" _ cdr_direction_provider_type_select("cdr_tag", "cdr_tag_data", X_type, "tag_id", "val", "destination", "customer", "furnished_charging_info") _ ',"") as furnished_charging_info';
 
 # edr fields:
 #X_cdr_id_map.PRIMARY_NUMBER = "(select username from provisioning.voip_dbaliases tmp where tmp.subscriber_id = provisioning.voip_subscribers.id order by is_primary, id limit 1)";
@@ -159,16 +159,16 @@ FOREACH X_f IN argv.admin_export_fields;
     out.admin_fields.push("'" _ X_cdr_id_map.$X_f _ "'");
   # Specify cash balance before/after fields like e.g. source_CuStOmEr_cash_balance_before in config.yml:
   ELSIF (matches = X_f.lower.match('^([a-z]+)_([a-z]+)_([a-z_]*cash_balance)_(before|after)$'));
-    out.admin_fields.push("'" _ cdr_direction_provider_type_select("cdr_cash_balance", "cdr_cash_balance_data", "cash_balance_id", "val_" _ matches.3, matches.0, matches.1, matches.2) _ "'");
+    out.admin_fields.push("'" _ cdr_direction_provider_type_select(X_type _ "_cash_balance", X_type _ "_cash_balance_data", X_type, "cash_balance_id", "val_" _ matches.3, matches.0, matches.1, matches.2) _ "'");
   # Specify time balance before/after fields like e.g. source_CuStOmEr_free_time_balance_after:
   ELSIF (matches = X_f.lower.match('^([a-z]+)_([a-z]+)_([a-z_]*time_balance)_(before|after)$'));
-    out.admin_fields.push("'" _ cdr_direction_provider_type_select("cdr_time_balance", "cdr_time_balance_data", "time_balance_id", "val_" _ matches.3, matches.0, matches.1, matches.2) _ "'");
+    out.admin_fields.push("'" _ cdr_direction_provider_type_select(X_type _ "_time_balance", X_type _ "_time_balance_data", X_type, "time_balance_id", "val_" _ matches.3, matches.0, matches.1, matches.2) _ "'");
   # Specify new cdr relation fields like e.g. source_CuStOmEr_profile_package_id:
   # Note: not to be used in filter conditions.
   ELSIF (matches = X_f.lower.match('^([a-z]+)_([a-z]+)_(profile_package_id|contract_balance_id)$'));
-    out.admin_fields.push("'" _ cdr_direction_provider_type_select("cdr_relation", "cdr_relation_data", "relation_id", "val", matches.0, matches.1, matches.2) _ "'");
+    out.admin_fields.push("'" _ cdr_direction_provider_type_select(X_type _ "_relation", X_type _ "_relation_data", X_type, "relation_id", "val", matches.0, matches.1, matches.2) _ "'");
   ELSIF (matches = X_f.match('^(?i:header)_([a-zA-Z0-9_-]+)$'));
-    out.admin_fields.push("'" _ cdr_direction_provider_type_select_casesensitive("cdr_tag", "cdr_tag_data", "tag_id", "val", "source", "customer", "header=" _ matches.0) _ "'");
+    out.admin_fields.push("'" _ cdr_direction_provider_type_select_casesensitive(X_type _ "_tag", X_type _ "_tag_data", X_type, "tag_id", "val", "source", "customer", "header=" _ matches.0) _ "'");
   # Lowest precendece: other cdr fields, fields joined on your own or 'calculated' (raw sql) fields...:
   ELSE;
     out.admin_fields.push("'" _ X_f _ "'");
@@ -180,13 +180,13 @@ FOREACH X_f IN argv.reseller_export_fields;
   IF X_cdr_id_map.exists(X_f);
     out.reseller_fields.push("'" _ X_cdr_id_map.$X_f _ "'");
   ELSIF (matches = X_f.lower.match('^([a-z]+)_([a-z]+)_([a-z_]*cash_balance)_(before|after)$'));
-    out.reseller_fields.push("'" _ cdr_direction_provider_type_select("cdr_cash_balance", "cdr_cash_balance_data","cash_balance_id","val_" _ matches.3, matches.0, matches.1, matches.2) _ "'");
+    out.reseller_fields.push("'" _ cdr_direction_provider_type_select(X_type _ "_cash_balance", X_type _ "_cash_balance_data", X_type, "cash_balance_id","val_" _ matches.3, matches.0, matches.1, matches.2) _ "'");
   ELSIF (matches = X_f.lower.match('^([a-z]+)_([a-z]+)_([a-z_]*time_balance)_(before|after)$'));
-    out.reseller_fields.push("'" _ cdr_direction_provider_type_select("cdr_time_balance", "cdr_time_balance_data","time_balance_id","val_" _ matches.3, matches.0, matches.1, matches.2) _ "'");
+    out.reseller_fields.push("'" _ cdr_direction_provider_type_select(X_type _ "_time_balance", X_type _ "_time_balance_data", X_type, "time_balance_id","val_" _ matches.3, matches.0, matches.1, matches.2) _ "'");
   ELSIF (matches = X_f.lower.match('^([a-z]+)_([a-z]+)_(profile_package_id|contract_balance_id)$'));
-    out.reseller_fields.push("'" _ cdr_direction_provider_type_select("cdr_relation", "cdr_relation_data", "relation_id", "val", matches.0, matches.1, matches.2) _ "'");
+    out.reseller_fields.push("'" _ cdr_direction_provider_type_select(X_type _ "_relation", X_type _ "_relation_data", X_type, "relation_id", "val", matches.0, matches.1, matches.2) _ "'");
   ELSIF (matches = X_f.match('^(?i:header)_([a-zA-Z0-9_-]+)$'));
-    out.reseller_fields.push("'" _ cdr_direction_provider_type_select_casesensitive("cdr_tag", "cdr_tag_data", "tag_id", "val", "source", "customer", "header=" _ matches.0) _ "'");
+    out.reseller_fields.push("'" _ cdr_direction_provider_type_select_casesensitive(X_type _ "_tag", X_type _ "_tag_data", X_type, "tag_id", "val", "source", "customer", "header=" _ matches.0) _ "'");
   ELSE;
     out.reseller_fields.push("'" _ X_f _ "'");
   END;
@@ -201,8 +201,13 @@ FOREACH X_f IN argv.export_joins;
   ELSE;
     X_table_spec = X_f.table;
   END;
+  IF (matches = X_f.reference_column.lower.match('^(accounting\.)?cdr\.(.+)$'));
+    X_reference_column = "accounting." _ X_type _ "." _ matches.2;
+  ELSE;
+    X_reference_column = X_f.reference_column;
+  END;
 
-  out.joins.push("{ '" _ X_table_spec _ "' => { '" _ X_f.key_column _ "' => '" _ X_f.reference_column _ "' } }");
+  out.joins.push("{ '" _ X_table_spec _ "' => { '" _ X_f.key_column _ "' => '" _ X_reference_column _ "' } }");
 END;
 
 out.conditions = [];
