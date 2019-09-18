@@ -9,6 +9,7 @@ set -u
 
 if [ "${#:-}" -ne 1 ] ; then
   echo "Usage: /usr/share/ngcp-ngcpcfg/helper/build_config <input_file>" >&2
+  echo "Note: environment variables NGCPCTL_MAIN and OUTPUT_DIRECTORY must be defined" >&2
   exit 1
 fi
 
@@ -17,12 +18,15 @@ CONFIG_POOL="${CONFIG_POOL:-/etc}"
 FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
 HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
 
-if ! [ -r "${FUNCTIONS}"/main ] ; then
-  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}" >&2
+: "${NGCPCTL_MAIN?ERROR: Environment variable 'NGCPCTL_MAIN' is NOT defined, cannot continue.}"
+: "${OUTPUT_DIRECTORY?ERROR: Environment variable 'OUTPUT_DIRECTORY' is NOT defined, cannot continue.}"
+
+if ! [ -r "${FUNCTIONS}"/logs ] ; then
+  printf "Error: %s/logs could not be read. Exiting.\n" "${FUNCTIONS}" >&2
   exit 1
 fi
 
-. "${FUNCTIONS}"/main
+. "${FUNCTIONS}"/logs
 
 # main script
 

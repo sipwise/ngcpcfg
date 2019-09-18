@@ -61,6 +61,19 @@ for f in ${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG
 done
 
 build_config_files() {
+  # The helper 'build_config' is not loading 'functions/main', exporting necessary parts
+  export NGCPCTL_MAIN
+  export OUTPUT_DIRECTORY
+  export HA_FILE
+  export PAIR_FILE
+  export HOST_FILE
+  export HOST_CONFIG
+  export LOCAL_CONFIG
+  export NGCPCTL_CONFIG
+  export NETWORK_CONFIG
+  export CONSTANTS_CONFIG
+  export EXTRA_CONFIG_FILES
+
   for file in $(generate_template_list "$@") ; do
     log_debug "${HELPER}/build_config $file"
     "${HELPER}/build_config" "${file}"
