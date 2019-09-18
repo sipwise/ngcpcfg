@@ -2,132 +2,22 @@
 # Purpose:       helper functions for ngcpcfg
 ################################################################################
 
-# console output including timestamps {{{
-timestamp_replacementchars='' # unset by default
+# support for testsuite, assume defaults if unset
+FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
 
-console_output() {
-  if [ -z "${TIME_FORMAT:-}" ] ; then
-    printf -- "$*"
-    return 0
-  fi
-
-  local timestamp="$(date "$TIME_FORMAT")"
-
-  # indent depending on number of characters in date output
-  timestamp_replacementchars="$(printf -- "%s: " "$timestamp" | sed 's/./ /g')"
-  printf -- "$timestamp ${HNAME:-}: $*"
-}
-# }}}
-
-## logging functions {{{
-log_info() {
-  logger -t ngcpcfg -- "$*"
-  console_output "$*\n"
-}
-
-# info without ending newline
-log_info_n() {
-  logger -t ngcpcfg -- "$*"
-  console_output "$*"
-}
-
-log_warn() {
-  logger -t ngcpcfg -- "Warning: $*"
-  console_output "Warning: $*\n"
-}
-
-log_error() {
-  logger -t ngcpcfg -- "Error: $*"
-  console_output "Error: $*\n" >&2
-}
-
-log_debug() {
-  if [ -n "${DEBUG:-}" ] ; then
-    logger -t ngcpcfg -- "Debug: $*"
-    console_output "DEBUG: $*\n" >&2
-  fi
-}
-## }}}
-
-## important variables we depend on to operate successfully {{{
-# support test suite which requires system independent configuration
-if [ -r "${NGCPCFG:-}" ] ; then
-  log_debug "sourcing configuration file ${NGCPCFG:-}"
-  . "${NGCPCFG:-}"
-else
-  if [ -r /etc/ngcp-config/ngcpcfg.cfg ] ; then
-    . /etc/ngcp-config/ngcpcfg.cfg
-    log_debug "sourced configuration file /etc/ngcp-config/ngcpcfg.cfg"
-
-    if [ -d /etc/ngcp-config/ngcpcfg.d ] ; then
-      for file in /etc/ngcp-config/ngcpcfg.d/*.cfg ; do
-        if [ -r "${file}" ]; then
-          . "${file}"
-          log_debug "sourced configuration file '${file}'"
-        fi
-      done
-    fi
-  elif [ -r /etc/ngcp-config-crypted.tgz.gpg ] ; then
-    log_error "Configuration pool locked. Please contact your distributor. Exiting."
-    exit 1
-  else
-    log_error "Could not read configuration file /etc/ngcp-config/ngcpcfg.cfg. Exiting."
-    exit 1
-  fi
-fi
-
-if ! [ -r "${NGCPCTL_CONFIG}" ] ; then
-  log_error "Configuration file ${NGCPCTL_CONFIG} does not exist (unconfigured?) - exiting."
+if ! [ -r "${FUNCTIONS}"/logs ] ; then
+  printf "Error: %s/logs could not be read. Exiting.\n" "${FUNCTIONS}" >&2
   exit 1
 fi
+. "${FUNCTIONS}"/logs
 
-if ! [ -r "${CONSTANTS_CONFIG}" ] ; then
-  log_error "Constants file ${CONSTANTS_CONFIG} does not exist (unconfigured?) - exiting."
+if ! [ -r "${FUNCTIONS}"/init ] ; then
+  log_error "%s/init could not be read. Exiting." "${FUNCTIONS}"
   exit 1
 fi
-
-if ! [ -n "${NETWORK_CONFIG:-}" ] ; then
-  log_warn "NETWORK_CONFIG is not configured in ${NGCPCTL_CONFIG} - continuing anyway."
-elif ! [ -r "${NETWORK_CONFIG}" ] ; then
-  log_error "Constants file ${NETWORK_CONFIG} does not exist (unconfigured?) - exiting."
-  exit 1
-fi
-
-if ! [ -d "${TEMPLATE_POOL_BASE}" ] ; then
-  log_error "No template directory (${TEMPLATE_POOL_BASE}) found - exiting."
-  exit 1
-fi
-
-if [ -d "${EXTRA_CONFIG_DIR:-}" ] && ls "${EXTRA_CONFIG_DIR}"/*.yml &>/dev/null ; then
-  log_debug "EXTRA_CONFIG_DIR is configured and *.yml files are present, setting EXTRA_CONFIG_FILES"
-  EXTRA_CONFIG_FILES=("${EXTRA_CONFIG_DIR}"/*.yml)
-fi
-
-## }}}
-
-## environment variables {{{
-export PN="ngcpcfg"
-export HNAME="$(hostname)"
-export NNAME="$(ngcp-nodename)"
-
-# avoid warnings by perl script complaining about locales
-export LANG=C
-export LC_ALL=C
-
-# make sure it's available in all helper scripts
-[ -n "${DEBUG:-}" ] && export DEBUG
-[ -n "${NO_DB_SYNC:-}" ] && export NO_DB_SYNC
-
-# export for access via build_config etc
-export CONFIG_POOL
-export HOST_CONFIG
-export LOCAL_CONFIG
-export NGCPCTL_CONFIG
-export CONSTANTS_CONFIG
-export NETWORK_CONFIG
-export EXTRA_CONFIG_DIR
-export EXTRA_CONFIG_FILES
-## }}}
+set -o allexport
+. "${FUNCTIONS}"/init
+set +o allexport
 
 ## HA / carrier features {{{
 if [ -r /usr/share/ngcp-ngcpcfg/functions/ha_features ] ; then
