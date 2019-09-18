@@ -1,3 +1,13 @@
+ngcp-ngcpcfg (7.4.2.1+0~mr7.4.2.1) unstable; urgency=medium
+
+  [ Richard Fuchs ]
+  * [b19d7cb] TT#64658 support vlan interfaces in ethX.Y notation
+  * [3f621aa] TT#64658 exclude vlan interfaces from hwaddr dupe check
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 18 Sep 2019 22:35:00 +0200
+
 ngcp-ngcpcfg (7.4.2.0+0~mr7.4.2.0) unstable; urgency=medium
 
   * New release.
