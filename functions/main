@@ -49,78 +49,6 @@ log_debug() {
 }
 ## }}}
 
-hook_setup() {
-  log_debug "hook_setup ${1:-}"
-
-  if ! [ -d "${HOOKS}" ] ; then
-    log_debug "Directory ${HOOKS} does not exist."
-    return 0
-  fi
-
-  local target_directory="$1"
-
-  if [ -z "${1:-}" ] ; then
-    log_error "Missing argument for target directory in hook_setup. Exiting."
-    exit 1
-  fi
-
-  if ! [ -d "$target_directory" ] ; then
-    if [ "${NGCP_TESTSUITE:-false}" = "true" ]; then
-      log_info "Hook target directory $target_directory not a directory. Creating it."
-      mkdir -p "$target_directory"
-    else
-      log_error "Hook target directory $target_directory not a directory. Exiting."
-      exit 1
-    fi
-  fi
-
-  for hook in "${HOOKS}"/* ; do
-    [ -r "$hook" ] || continue
-    log_debug "Creating symlink for $hook in $target_directory"
-    ln -sf "$(readlink -f "$hook")" "$target_directory"/
-  done
-}
-
-compare_active_branch() {
-  log_debug "get_active_branch ${1:-}"
-
-  log_debug "cd $NGCPCTL_MAIN"
-  cd "$NGCPCTL_MAIN"
-
-  local current_branch
-  current_branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
-  log_debug "current_branch = $current_branch"
-  echo "$current_branch"
-}
-
-get_branch_status() {
-  log_debug "cd $NGCPCTL_MAIN"
-  cd "$NGCPCTL_MAIN"
-
-  log_debug "git rev-parse HEAD"
-  local LOCAL=$(git rev-parse HEAD)
-
-  log_debug "git rev-parse @{u}"
-  local REMOTE=$(git rev-parse @{u})
-
-  log_debug "git merge-base HEAD @{u}"
-  local BASE=$(git merge-base HEAD @{u})
-
-  if [ "$LOCAL" = "$REMOTE" ]; then
-    # Up-to-date
-    return 0
-  elif [ "$LOCAL" = "$BASE" ]; then
-    # Need to pull
-    return 1
-  elif [ "$REMOTE" = "$BASE" ]; then
-    # Need to push
-    return 2
-  else
-    # Diverged
-    return 3
-  fi
-}
-
 ## important variables we depend on to operate successfully {{{
 # support test suite which requires system independent configuration
 if [ -r "${NGCPCFG:-}" ] ; then
@@ -214,6 +142,78 @@ fi
 ## }}}
 
 ## functions {{{
+hook_setup() {
+  log_debug "hook_setup ${1:-}"
+
+  if ! [ -d "${HOOKS}" ] ; then
+    log_debug "Directory ${HOOKS} does not exist."
+    return 0
+  fi
+
+  local target_directory="$1"
+
+  if [ -z "${1:-}" ] ; then
+    log_error "Missing argument for target directory in hook_setup. Exiting."
+    exit 1
+  fi
+
+  if ! [ -d "$target_directory" ] ; then
+    if [ "${NGCP_TESTSUITE:-false}" = "true" ]; then
+      log_info "Hook target directory $target_directory not a directory. Creating it."
+      mkdir -p "$target_directory"
+    else
+      log_error "Hook target directory $target_directory not a directory. Exiting."
+      exit 1
+    fi
+  fi
+
+  for hook in "${HOOKS}"/* ; do
+    [ -r "$hook" ] || continue
+    log_debug "Creating symlink for $hook in $target_directory"
+    ln -sf "$(readlink -f "$hook")" "$target_directory"/
+  done
+}
+
+compare_active_branch() {
+  log_debug "get_active_branch ${1:-}"
+
+  log_debug "cd $NGCPCTL_MAIN"
+  cd "$NGCPCTL_MAIN"
+
+  local current_branch
+  current_branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+  log_debug "current_branch = $current_branch"
+  echo "$current_branch"
+}
+
+get_branch_status() {
+  log_debug "cd $NGCPCTL_MAIN"
+  cd "$NGCPCTL_MAIN"
+
+  log_debug "git rev-parse HEAD"
+  local LOCAL=$(git rev-parse HEAD)
+
+  log_debug "git rev-parse @{u}"
+  local REMOTE=$(git rev-parse @{u})
+
+  log_debug "git merge-base HEAD @{u}"
+  local BASE=$(git merge-base HEAD @{u})
+
+  if [ "$LOCAL" = "$REMOTE" ]; then
+    # Up-to-date
+    return 0
+  elif [ "$LOCAL" = "$BASE" ]; then
+    # Need to pull
+    return 1
+  elif [ "$REMOTE" = "$BASE" ]; then
+    # Need to push
+    return 2
+  else
+    # Diverged
+    return 3
+  fi
+}
+
 generate_template_list() {
   [ -n "$TEMPLATE_POOL_BASE" ] || return 1
 
