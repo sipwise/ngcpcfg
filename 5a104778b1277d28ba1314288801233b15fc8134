@@ -68,6 +68,23 @@
       "revId": "5a104778b1277d28ba1314288801233b15fc8134",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eba86612_bc44e772",
+        "filename": "functions/main",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-09-18T18:59:19Z",
+      "side": 1,
+      "message": "Why not do the find here based on the arguments? Not sure whether that would improve things substantially though?",
+      "revId": "5a104778b1277d28ba1314288801233b15fc8134",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
