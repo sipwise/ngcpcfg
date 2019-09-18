@@ -273,6 +273,13 @@ generate_template_list() {
     normalized_filename="${normalized_filename%.customtt.tt2}"
     normalized_filename="${normalized_filename%.tt2}"
 
+    # skipping all further checks IF we have only one entry in 'filelist_prepared' (90% cases)
+    if [[ "$(grep -Ec "^${normalized_filename}" "${filelist_prepared}")" == "1" ]]; then
+      log_debug "Using the only one available file '${line}' matching on '${normalized_filename}'"
+      echo "${line}" >> "${filelist_final}"
+      continue
+    fi
+
     # foo.custom.tt2.hostname
     if [ -n "${HOST_FILE:-}" ] ; then
       if grep -q -- "^${normalized_filename}.customtt.tt2${HOST_FILE}$" "${filelist_prepared}" ; then
