@@ -217,6 +217,7 @@ fi
 generate_template_list() {
   [ -n "$TEMPLATE_POOL_BASE" ] || return 1
 
+  local filelist_allfiles=$(mktemp)
   local filelist_prepared=$(mktemp)
   local filelist_final=$(mktemp)
   local filelist_sorted=$(mktemp)
@@ -224,19 +225,15 @@ generate_template_list() {
   for dir in ${CONFIG_POOL} ; do
     [ -n "${dir}" ] || ( echo "${dir} doesn't exist" >&2 ; continue )
     # iterate over all files
-    for file in $(find "$TEMPLATE_POOL_BASE/${dir}" -name \*.tt2 -o -name \*.tt2"${HA_FILE:-}" -o -name \*.tt2"${HOST_FILE:-}" -o -name \*.tt2"${PAIR_FILE:-}") ; do
-      # *NO* arguments provided via cmdline
-      if [ -z "${1:-}" ] ; then
-        echo "$file" >> "${filelist_prepared}"
-      else
-        # arguments (file list/pattern) provided via cmdline
-        for arg in "$@"; do
-          if echo $file | grep -q -- "${arg}" ; then
-            echo "$file" >> "${filelist_prepared}"
-          fi
-        done
-      fi
-    done
+    find "$TEMPLATE_POOL_BASE/${dir}" -name \*.tt2 -o -name \*.tt2"${HA_FILE:-}" -o -name \*.tt2"${HOST_FILE:-}" -o -name \*.tt2"${PAIR_FILE:-}" > "${filelist_allfiles}"
+    if [ -z "${1:-}" ] ; then
+      cat "${filelist_allfiles}" >> "${filelist_prepared}"
+    else
+      # arguments (file list/pattern) provided via cmdline
+      for arg in "$@"; do
+        grep "${arg}" "${filelist_allfiles}" >> "${filelist_prepared}"
+      done
+    fi
   done
 
   # remove all filenames where a preferred filename exists
@@ -336,14 +333,15 @@ generate_template_list() {
   if [ -n "${DEBUG:-}" ] ; then
     # send to stderr since stdout is used from outside
     log_debug "Not removing temporary filelist files since we are in debug mode:" >&2
+    log_debug "  filelist_allfiles = ${filelist_allfiles}" >&2
     log_debug "  filelist_prepared = ${filelist_prepared}" >&2
     log_debug "  filelist_final    = ${filelist_final}" >&2
     log_debug "  filelist_sorted   = ${filelist_sorted}" >&2
   else
-    rm -f "${filelist_prepared}" "${filelist_final}" "${filelist_sorted}"
+    rm -f "${filelist_allfiles}" ${filelist_prepared}" "${filelist_final}" "${filelist_sorted}"
   fi
 
-  unset filelist_prepared filelist_final
+  unset filelist_allfiles filelist_prepared filelist_final
 }
 
 record_commit_id() {
