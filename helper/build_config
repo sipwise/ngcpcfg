@@ -7,8 +7,8 @@
 set -e
 set -u
 
-if [ "${#:-}" -ne 1 ] ; then
-  echo "Usage: /usr/share/ngcp-ngcpcfg/helper/build_config <input_file>" >&2
+if [ "${#:-}" -ne 2 ] ; then
+  echo "Usage: /usr/share/ngcp-ngcpcfg/helper/build_config <input_file> <output_file>" >&2
   exit 1
 fi
 
@@ -17,32 +17,35 @@ CONFIG_POOL="${CONFIG_POOL:-/etc}"
 FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
 HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
 
-if ! [ -r "${FUNCTIONS}"/main ] ; then
-  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}" >&2
+if ! [ -r "${FUNCTIONS}"/logs ] ; then
+  printf "Error: %s/logs could not be read. Exiting.\n" "${FUNCTIONS}" >&2
   exit 1
 fi
-
-. "${FUNCTIONS}"/main
+. "${FUNCTIONS}"/logs
 
 # main script
 
 input_file="$1"       # like /etc/ngcp-config/templates/etc/mysql/my.cnf.tt2
-# calculate output file {{{
-  x=${input_file##${NGCPCTL_MAIN}/templates/}         # drop leading /etc/ngcp-config
-  y=${x%%.tt2}                                        # drop trailing suffix '.tt2'
-  [ -n "${HA_FILE:-}" ]   && y=${y%%.tt2${HA_FILE}}   # drop trailing suffix '.tt2.sp{1,2}'
-  [ -n "${PAIR_FILE:-}" ] && y=${y%%.tt2${PAIR_FILE}} # drop trailing suffix '.tt2.pairname'
-  [ -n "${HOST_FILE:-}" ] && y=${y%%.tt2${HOST_FILE}} # drop trailing suffix '.tt2.hostname'
-  y=${y%%.customtt}                                   # drop trailing suffix '.customtt'
+output_file="$2"      # like /etc/mysql/my.cnf
+
+if [ -z "${input_file}" ] ; then
+  log_error "Missing <input_file> parameter. Exiting." >&2
+  exit 1
+fi
+
+if [ -z "${output_file}" ] ; then
+  log_error "Missing <output_file> parameter. Exiting." >&2
+  exit 1
+fi
+
 # export variable for usage within {pre,post}build scripts,
 # OUTPUT_DIRECTORY is for customization during testing
 if [ -n "${OUTPUT_DIRECTORY:-}" ] ; then
-  log_debug "Using output directory $OUTPUT_DIRECTORY"
-  export output_file="${OUTPUT_DIRECTORY}/${y}"
+  log_debug "Using output directory ${OUTPUT_DIRECTORY}"
+  export output_file="${OUTPUT_DIRECTORY}/${output_file}"
 else
-  export output_file="${y}"
+  export output_file
 fi
-# }}}
 
 # ensure we don't try to generate a file where a directory with same name exists already
 if [ -d "${output_file}" ] ; then

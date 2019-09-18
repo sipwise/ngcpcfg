@@ -61,9 +61,19 @@ for f in ${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG
 done
 
 build_config_files() {
-  for file in $(generate_template_list "$@") ; do
-    log_debug "${HELPER}/build_config $file"
-    "${HELPER}/build_config" "${file}"
+  for input_file in $(generate_template_list "$@") ; do
+
+    log_debug "calculate output file" # {{{
+    x=${input_file##${NGCPCTL_MAIN}/templates/}         # drop leading /etc/ngcp-config
+    y=${x%%.tt2}                                        # drop trailing suffix '.tt2'
+    [ -n "${HA_FILE:-}" ]   && y=${y%%.tt2${HA_FILE}}   # drop trailing suffix '.tt2.sp{1,2}'
+    [ -n "${PAIR_FILE:-}" ] && y=${y%%.tt2${PAIR_FILE}} # drop trailing suffix '.tt2.pairname'
+    [ -n "${HOST_FILE:-}" ] && y=${y%%.tt2${HOST_FILE}} # drop trailing suffix '.tt2.hostname'
+    output_file=${y%%.customtt}                         # drop trailing suffix '.customtt'
+    # }}}
+
+    log_debug "${HELPER}/build_config ${input_file} ${output_file}"
+    "${HELPER}/build_config" "${input_file}" "${output_file}"
     RC=$((RC + $?))
   done
 
