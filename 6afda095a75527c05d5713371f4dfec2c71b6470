@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "040385f4_fa6a190a",
+        "filename": "scripts/build",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-09-19T12:26:07Z",
+      "side": 1,
+      "message": "I\u0027d use [ ${#VAR[@]} -eq 0 ].",
+      "revId": "6afda095a75527c05d5713371f4dfec2c71b6470",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
