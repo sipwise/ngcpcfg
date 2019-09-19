@@ -224,7 +224,7 @@ generate_template_list() {
   declare -a dirs_to_process=()
 
   for dir in ${CONFIG_POOL} ; do
-    [ -n "${dir}" ] || ( echo "${dir} doesn't exist" >&2 ; continue )
+    [ -n "${dir}" ] || ( log_warn "${dir} doesn't exist" ; continue )
     dirs_to_process+=("${TEMPLATE_POOL_BASE}/${dir}")
   done
 
