@@ -61,9 +61,9 @@ else
 
     if [ -d /etc/ngcp-config/ngcpcfg.d ] ; then
       for file in /etc/ngcp-config/ngcpcfg.d/*.cfg ; do
-        if test -r $file ; then
-          . $file
-	  log_debug "sourced configuration file $file"
+        if [ -r "${file}" ]; then
+          . "${file}"
+          log_debug "sourced configuration file '${file}'"
         fi
       done
     fi
@@ -76,31 +76,31 @@ else
   fi
 fi
 
-if ! [ -r "$NGCPCTL_CONFIG" ] ; then
+if ! [ -r "${NGCPCTL_CONFIG}" ] ; then
   log_error "Configuration file ${NGCPCTL_CONFIG} does not exist (unconfigured?) - exiting."
   exit 1
 fi
 
-if ! [ -r "$CONSTANTS_CONFIG" ] ; then
+if ! [ -r "${CONSTANTS_CONFIG}" ] ; then
   log_error "Constants file ${CONSTANTS_CONFIG} does not exist (unconfigured?) - exiting."
   exit 1
 fi
 
 if ! [ -n "${NETWORK_CONFIG:-}" ] ; then
-  log_warn "NETWORK_CONFIG is not configured in $NGCPCTL_CONFIG - continuing anyway."
-elif ! [ -r "$NETWORK_CONFIG" ] ; then
+  log_warn "NETWORK_CONFIG is not configured in ${NGCPCTL_CONFIG} - continuing anyway."
+elif ! [ -r "${NETWORK_CONFIG}" ] ; then
   log_error "Constants file ${NETWORK_CONFIG} does not exist (unconfigured?) - exiting."
   exit 1
 fi
 
-if ! [ -d "$TEMPLATE_POOL_BASE" ] ; then
+if ! [ -d "${TEMPLATE_POOL_BASE}" ] ; then
   log_error "No template directory (${TEMPLATE_POOL_BASE}) found - exiting."
   exit 1
 fi
 
-if [ -d "${EXTRA_CONFIG_DIR:-}" ] && ls ${EXTRA_CONFIG_DIR}/*.yml &>/dev/null ; then
+if [ -d "${EXTRA_CONFIG_DIR:-}" ] && ls "${EXTRA_CONFIG_DIR}"/*.yml &>/dev/null ; then
   log_debug "EXTRA_CONFIG_DIR is configured and *.yml files are present, setting EXTRA_CONFIG_FILES"
-  EXTRA_CONFIG_FILES=${EXTRA_CONFIG_DIR}/*.yml
+  EXTRA_CONFIG_FILES="${EXTRA_CONFIG_DIR}"/*.yml
 fi
 
 ## }}}
@@ -132,12 +132,12 @@ export EXTRA_CONFIG_FILES
 ## HA / carrier features {{{
 if [ -r /usr/share/ngcp-ngcpcfg/functions/ha_features ] ; then
   . /usr/share/ngcp-ngcpcfg/functions/ha_features
-  set_ha_file # set $HA_FILE for usage in generate_template_list
+  set_ha_file # set ${HA_FILE} for usage in generate_template_list
 fi
 
 if [ -r /usr/share/ngcp-ngcpcfg/functions/carrier_features ] ; then
   . /usr/share/ngcp-ngcpcfg/functions/carrier_features
-  set_host_and_pair_files # set $HOST_FILE + $PAIR_FILE for usage in generate_template_list
+  set_host_and_pair_files # set ${HOST_FILE} + ${PAIR_FILE} for usage in generate_template_list
 fi
 ## }}}
 
@@ -157,38 +157,38 @@ hook_setup() {
     exit 1
   fi
 
-  if ! [ -d "$target_directory" ] ; then
+  if ! [ -d "${target_directory}" ] ; then
     if [ "${NGCP_TESTSUITE:-false}" = "true" ]; then
-      log_info "Hook target directory $target_directory not a directory. Creating it."
-      mkdir -p "$target_directory"
+      log_info "Hook target directory ${target_directory} not a directory. Creating it."
+      mkdir -p "${target_directory}"
     else
-      log_error "Hook target directory $target_directory not a directory. Exiting."
+      log_error "Hook target directory ${target_directory} not a directory. Exiting."
       exit 1
     fi
   fi
 
   for hook in "${HOOKS}"/* ; do
-    [ -r "$hook" ] || continue
-    log_debug "Creating symlink for $hook in $target_directory"
-    ln -sf "$(readlink -f "$hook")" "$target_directory"/
+    [ -r "${hook}" ] || continue
+    log_debug "Creating symlink for ${hook} in ${target_directory}"
+    ln -sf "$(readlink -f "${hook}")" "${target_directory}"/
   done
 }
 
 compare_active_branch() {
   log_debug "get_active_branch ${1:-}"
 
-  log_debug "cd $NGCPCTL_MAIN"
-  cd "$NGCPCTL_MAIN"
+  log_debug "cd ${NGCPCTL_MAIN}"
+  cd "${NGCPCTL_MAIN}"
 
   local current_branch
   current_branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
-  log_debug "current_branch = $current_branch"
-  echo "$current_branch"
+  log_debug "current_branch = ${current_branch}"
+  echo "${current_branch}"
 }
 
 get_branch_status() {
-  log_debug "cd $NGCPCTL_MAIN"
-  cd "$NGCPCTL_MAIN"
+  log_debug "cd ${NGCPCTL_MAIN}"
+  cd "${NGCPCTL_MAIN}"
 
   log_debug "git rev-parse HEAD"
   local LOCAL=$(git rev-parse HEAD)
@@ -199,13 +199,13 @@ get_branch_status() {
   log_debug "git merge-base HEAD @{u}"
   local BASE=$(git merge-base HEAD @{u})
 
-  if [ "$LOCAL" = "$REMOTE" ]; then
+  if [ "${LOCAL}" = "${REMOTE}" ]; then
     # Up-to-date
     return 0
-  elif [ "$LOCAL" = "$BASE" ]; then
+  elif [ "${LOCAL}" = "${BASE}" ]; then
     # Need to pull
     return 1
-  elif [ "$REMOTE" = "$BASE" ]; then
+  elif [ "${REMOTE}" = "${BASE}" ]; then
     # Need to push
     return 2
   else
@@ -215,7 +215,7 @@ get_branch_status() {
 }
 
 generate_template_list() {
-  [ -n "$TEMPLATE_POOL_BASE" ] || return 1
+  [ -n "${TEMPLATE_POOL_BASE}" ] || return 1
 
   local filelist_allfiles=$(mktemp)
   local filelist_prepared=$(mktemp)
@@ -225,7 +225,7 @@ generate_template_list() {
 
   for dir in ${CONFIG_POOL} ; do
     [ -n "${dir}" ] || ( echo "${dir} doesn't exist" >&2 ; continue )
-    dirs_to_process+=("$TEMPLATE_POOL_BASE/${dir}")
+    dirs_to_process+=("${TEMPLATE_POOL_BASE}/${dir}")
   done
 
   # find all files we should process
@@ -256,7 +256,7 @@ generate_template_list() {
       continue
     fi
 
-    normalized_filename="$line"
+    normalized_filename="${line}"
 
     if [ -n "${HA_FILE:-}" ] ; then
       normalized_filename="${normalized_filename%${HA_FILE}}"
@@ -335,7 +335,7 @@ generate_template_list() {
     fi
 
     # another file not matching any previous checks
-    echo "$line" >> "${filelist_final}"
+    echo "${line}" >> "${filelist_final}"
   done
 
   sort -u ${filelist_final} >${filelist_sorted}
@@ -362,8 +362,8 @@ generate_template_list() {
 }
 
 record_commit_id() {
-  log_debug "cd $NGCPCTL_MAIN"
-  cd "$NGCPCTL_MAIN"
+  log_debug "cd ${NGCPCTL_MAIN}"
+  cd "${NGCPCTL_MAIN}"
 
   log_debug "mkdir -p ${STATE_FILES_DIR}"
   mkdir -p "${STATE_FILES_DIR}"
@@ -373,8 +373,8 @@ record_commit_id() {
     echo "dirty" > "${STATE_FILES_DIR}/build"
   else
     local latest_commit=$(git log -1 --format="%H")
-    log_debug "echo $latest_commit > ${STATE_FILES_DIR}/build"
-    echo "$latest_commit" > "${STATE_FILES_DIR}/build"
+    log_debug "echo ${latest_commit} > ${STATE_FILES_DIR}/build"
+    echo "${latest_commit}" > "${STATE_FILES_DIR}/build"
   fi
 }
 
