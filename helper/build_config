@@ -93,8 +93,12 @@ move()
   local src="$1"
   local dst="$2"
 
-  perl -MFile::Copy=mv \
-       -E "mv('${src}', '${dst}') or die 'error: cannot move $src to $dst: \$!\n'"
+  if [ -e /.dockerinit ] || [ -e /.dockerenv ] ; then
+    perl -MFile::Copy=mv \
+         -E "mv('${src}', '${dst}') or die 'error: cannot move $src to $dst: \$!\n'"
+  else
+    mv "${src}" "${dst}"
+  fi
 
   rm -f "${src}"
 }
