@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd329030_e17e4560",
+        "filename": "functions/main",
+        "patchSetId": 4
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-09-19T19:48:20Z",
+      "side": 1,
+      "message": "We should probably preserve the -- here, to avoid surprises.\n\nAlso probably also not worth it, as I assume we do not generally pass in many arguments, but this could be optimized by accumulating all args into a \u0027\\(arg[n]\\|arg[n+1]\\|...\\)\u0027 and then calling grep once. :)",
+      "range": {
+        "startLine": 245,
+        "startChar": 10,
+        "endLine": 245,
+        "endChar": 11
+      },
+      "revId": "9472cfbb0742137c1c64467bac3c20c6ec84fe2f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
