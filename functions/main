@@ -100,7 +100,7 @@ fi
 
 if [ -d "${EXTRA_CONFIG_DIR:-}" ] && ls "${EXTRA_CONFIG_DIR}"/*.yml &>/dev/null ; then
   log_debug "EXTRA_CONFIG_DIR is configured and *.yml files are present, setting EXTRA_CONFIG_FILES"
-  EXTRA_CONFIG_FILES="${EXTRA_CONFIG_DIR}"/*.yml
+  EXTRA_CONFIG_FILES=("${EXTRA_CONFIG_DIR}"/*.yml)
 fi
 
 ## }}}
