@@ -1,3 +1,16 @@
+ngcp-ngcpcfg (6.5.7.0+0~mr6.5.7.0) unstable; urgency=medium
+
+  [ Andrew Pogrebennyk ]
+  * [b663b1e] TT#50100 scripts/patch: preserve file permissions when creating customtt
+
+  [ Richard Fuchs ]
+  * [1072dbc] TT#64658 support vlan interfaces in ethX.Y notation
+  * [e70ebdb] TT#64658 exclude vlan interfaces from hwaddr dupe check
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 19 Sep 2019 18:02:43 +0200
+
 ngcp-ngcpcfg (6.5.6.0+0~mr6.5.6.0) unstable; urgency=medium
 
   [ Manuel Montecelo ]
