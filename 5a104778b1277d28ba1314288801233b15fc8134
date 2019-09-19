@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "feac2fca_497ea4d4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-09-19T07:30:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97556e4e_d0be7267",
+      "range": {
+        "startLine": 11,
+        "startChar": 16,
+        "endLine": 11,
+        "endChar": 19
+      },
+      "revId": "5a104778b1277d28ba1314288801233b15fc8134",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc952740_1d2f97fd",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2019-09-18T09:59:59Z",
       "side": 1,
       "message": "get?",
+      "range": {
+        "startLine": 20,
+        "startChar": 40,
+        "endLine": 20,
+        "endChar": 44
+      },
+      "revId": "5a104778b1277d28ba1314288801233b15fc8134",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f526341_ac0cc151",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-09-19T07:30:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc952740_1d2f97fd",
       "range": {
         "startLine": 20,
         "startChar": 40,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c8560164_172fca23",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-09-19T07:30:50Z",
+      "side": 1,
+      "message": "I have tried to improve commit message here. Please check",
+      "parentUuid": "32165319_f18e4d48",
+      "range": {
+        "startLine": 22,
+        "startChar": 23,
+        "endLine": 22,
+        "endChar": 27
+      },
+      "revId": "5a104778b1277d28ba1314288801233b15fc8134",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eba86612_bc44e772",
         "filename": "functions/main",
         "patchSetId": 3
@@ -82,6 +154,24 @@
       "writtenOn": "2019-09-18T18:59:19Z",
       "side": 1,
       "message": "Why not do the find here based on the arguments? Not sure whether that would improve things substantially though?",
+      "revId": "5a104778b1277d28ba1314288801233b15fc8134",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "870c2644_8d0f6963",
+        "filename": "functions/main",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-09-19T07:30:50Z",
+      "side": 1,
+      "message": "sure possible, but IMHO improve complexity without performance boost.\n\nDisadvantages:\n- we will have to have two find commands, mostly identical, so place for human mistakes in the future.\n- we will have to write smart regexps here to transform \"/etc/aaa /etc/bbb\" to \"-name /etc/aaa* -name /etc/bbb*\" which also add complexity.\n\nThe most popular usecases are:\n - build all # find here change nothing\n - build one/several # one/several grep is fast enough here, IMHO.",
+      "parentUuid": "eba86612_bc44e772",
       "revId": "5a104778b1277d28ba1314288801233b15fc8134",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
