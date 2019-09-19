@@ -116,7 +116,7 @@ else
   fi
 
   log_info "NOTE: Check those files for valid syntax and encoding:"
-  for f in "${input_file}" ${host_conf:-} ${local_conf:-} "$NGCPCTL_CONFIG" "${NETWORK_CONFIG:-}" ${EXTRA_CONFIG_FILES:-} "$CONSTANTS_CONFIG" ; do
+  for f in "${input_file}" ${host_conf:-} ${local_conf:-} "$NGCPCTL_CONFIG" "${NETWORK_CONFIG:-}" "${EXTRA_CONFIG_FILES[@]}" "$CONSTANTS_CONFIG" ; do
     [ -r "$f" ] && log_info "$f"
   done
   log_info "Running /usr/share/ngcp-ngcpcfg/helper/tt2-wrapper <file>"

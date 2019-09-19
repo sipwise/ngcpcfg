@@ -50,7 +50,7 @@ rm -f "${NGCP_SOCKETFILE}"
 "${HELPER}"/tt2-daemon
 
 # Load all the configs in proper order and check their avialability and valid YAML syntax
-for f in ${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG:-} ${EXTRA_CONFIG_FILES:-} ${CONSTANTS_CONFIG:-} ; do
+for f in ${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG:-} "${EXTRA_CONFIG_FILES[@]}" ${CONSTANTS_CONFIG:-} ; do
   if [ -r "$f" ] ; then
     if ! "${HELPER}/tt2-wrapper" "/dev/null" "${f}" ; then
       log_error "tt2-daemon cannot load ${f}:"
@@ -85,10 +85,10 @@ else
 
   trigger_rebuild=false
 
-  if [ -n "${EXTRA_CONFIG_FILES:-}" ] ; then
-    for file in $EXTRA_CONFIG_FILES ; do
+  if [[ "${#EXTRA_CONFIG_FILES[@]]}" == "0" ]]; then
+    for file in "${EXTRA_CONFIG_FILES[@]}" ; do
       if git diff-index --name-only HEAD | grep -qe -- "$(basename "$file")" ; then
-	log_debug "modification in EXTRA_CONFIG_FILES file $file found"
+        log_debug "modification in EXTRA_CONFIG_FILES file ${file} found"
         trigger_rebuild=true
         break # no reason for further checks
       fi
@@ -151,7 +151,7 @@ killall tt2-daemon 2>/dev/null || true
 rm -f "${NGCP_SOCKETFILE}"
 
 # Apply configured file ownership and permissions
-for f in ${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${EXTRA_CONFIG_FILES:-} ; do
+for f in ${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} "${EXTRA_CONFIG_FILES[@]}" ; do
   if [ ! -f "${f}" ]; then
     continue
   fi

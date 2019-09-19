@@ -54,7 +54,7 @@ rm -f "${NGCP_SOCKETFILE}"
 "${HELPER}"/tt2-daemon --quiet
 
 # Load all the configs in proper order and check their avialability and valid YAML syntax
-for f in ${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG:-} ${EXTRA_CONFIG_FILES:-} ${CONSTANTS_CONFIG:-} ; do
+for f in ${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG:-} "${EXTRA_CONFIG_FILES[@]}" ${CONSTANTS_CONFIG:-} ; do
   if [ -r "$f" ] ; then
     if ! "${HELPER}/tt2-wrapper" "/dev/null" "${f}" ; then
       log_error "tt2-daemon cannot load ${f}:"
