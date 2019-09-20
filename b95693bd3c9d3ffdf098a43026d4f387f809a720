@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab3152e_842312e6",
+        "filename": "scripts/build",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-09-20T13:36:15Z",
+      "side": 0,
+      "message": "If we want to abort the file in the first broken file (as per commit message), then it\u0027s fine.  I\u0027m fine with this, so I +2 this in the case that you want to go ahead.\n\nIf not, maybe you can add \"|| RC\u003d$?\" to the previous lines, so it keeps processing files, but it still exits with error in the end.",
+      "revId": "b95693bd3c9d3ffdf098a43026d4f387f809a720",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
