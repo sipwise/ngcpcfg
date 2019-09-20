@@ -28,7 +28,7 @@ def test_bad_syntax(ngcpcfgcli, tmpdir):
 
     regex1 = re.compile(r"NOTE: Check those files for valid syntax and "
                         "encoding.*etc/bad-syntax.txt.tt2.*or inspecting "
-                        "temporary /tmp/ngcpcfg.bad-syntax.txt.")
+                        "temporary /tmp/ngcpcfg.PID[0-9]+")
     assert re.search(regex1, out.stdout)
 
     regex2 = re.compile(r"Error: Generating /tmp/ngcp-.*-pytest-output.*"
