@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "340a4e76_974745ad",
+        "filename": "helper/build_config",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-09-20T13:33:12Z",
+      "side": 0,
+      "message": "From the commit introducing this (6e6c308), the file is actually a \"copy\" rather than a move, as I understand it, thus the need to add remove to keep the same semantics as \"move\" and not leave files behind.\n\nSo, instead of deleting the \"rm\" command, just move it to the line after the perl command, it should be only necessary in that case.",
+      "revId": "32dfdb9a5d89ee8d9231928ea454bf6de5e3c621",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
