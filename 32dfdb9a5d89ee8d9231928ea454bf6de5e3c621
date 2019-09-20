@@ -34,6 +34,24 @@
       "revId": "32dfdb9a5d89ee8d9231928ea454bf6de5e3c621",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38c84716_93a9a0c0",
+        "filename": "helper/build_config",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-09-20T13:46:16Z",
+      "side": 0,
+      "message": "Actually yeah, this should be unnecessary and we should just remove it, perhaps I had some different code initially, or I did this out of paranoia, cannot recall now. :)",
+      "parentUuid": "95f32ab5_8c2b3df0",
+      "revId": "32dfdb9a5d89ee8d9231928ea454bf6de5e3c621",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
