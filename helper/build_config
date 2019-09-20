@@ -7,8 +7,8 @@
 set -e
 set -u
 
-if [ "${#:-}" -ne 2 ] ; then
-  echo "Usage: /usr/share/ngcp-ngcpcfg/helper/build_config <input_file> <output_file>" >&2
+if [ "${#:-}" -ne 3 ] ; then
+  echo "Usage: /usr/share/ngcp-ngcpcfg/helper/build_config <input_file> <output_file> <tmp_file>" >&2
   exit 1
 fi
 
@@ -28,6 +28,7 @@ fi
 input_file="$1"       # like /etc/ngcp-config/templates/etc/mysql/my.cnf.tt2
 output_file="$2"      # like /etc/mysql/my.cnf
 output_file_dirname="$(dirname "${output_file}")" # like /etc/mysql
+tmp_output_file="$3"
 
 if [ -z "${input_file}" ] ; then
   log_error "Missing <input_file> parameter. Exiting." >&2
@@ -36,6 +37,11 @@ fi
 
 if [ -z "${output_file}" ] ; then
   log_error "Missing <output_file> parameter. Exiting." >&2
+  exit 1
+fi
+
+if [ -z "${tmp_output_file}" ] ; then
+  log_error "Missing <tmp_output_file> parameter. Exiting." >&2
   exit 1
 fi
 
@@ -81,10 +87,6 @@ umask 0077
 
 TT_WRAPPER="${HELPER}/tt2-wrapper"
 
-# generate in a temporary location, then move if successful
-tt_tmp_output_file_base="$(basename "${output_file}")"
-tt_tmp_output_file="$(mktemp --tmpdir ngcpcfg."${tt_tmp_output_file_base}".XXXXXXXXXX)"
-
 # XXX: Docker breaks sane Unix expectations when moving a file into /etc/hosts,
 # as it creates a bind mount on that pathname. We need to use an implementation
 # that will fallback to use copy semantics in that case, but will default to
@@ -106,22 +108,22 @@ move()
 }
 
 log_debug "Output file ${output_file} based on ${input_file}"
-log_debug "Executing: $TT_WRAPPER ${input_file} > ${tt_tmp_output_file}"
-log_debug "      and: move ${tt_tmp_output_file} ${output_file}"
+log_debug "Executing: $TT_WRAPPER ${input_file} > ${tmp_output_file}"
+log_debug "      and: move ${tmp_output_file} ${output_file}"
 # We need to use «readlink -f» so that we do not destroy any symlink pointing
 # to the real file, which we were previously preserving while using «cat».
-if "$TT_WRAPPER" "${input_file}" > "${tt_tmp_output_file}" 2>/dev/null &&
-   ! grep -q -E '^file error' "${tt_tmp_output_file}" 2>/dev/null &&
-   move "${tt_tmp_output_file}" "$(readlink -f "${output_file}")" ; then
+if "$TT_WRAPPER" "${input_file}" > "${tmp_output_file}" 2>/dev/null &&
+   ! grep -q -E '^file error' "${tmp_output_file}" 2>/dev/null &&
+   move "${tmp_output_file}" "$(readlink -f "${output_file}")" ; then
   log_info "Generating ${output_file}: OK"
   RC=0
 else
   log_error "Generating ${output_file} based on ${input_file}: FAILED"
   RC=1
 
-  if [[ -r "${tt_tmp_output_file}" ]] && grep -q -E '^file error' "${tt_tmp_output_file}" ; then
+  if [[ -r "${tmp_output_file}" ]] && grep -q -E '^file error' "${tmp_output_file}" ; then
     log_error "from generated file:"
-    log_error "  $(grep -E '^file error' "${tt_tmp_output_file}")"
+    log_error "  $(grep -E '^file error' "${tmp_output_file}")"
   fi
 
   log_info "NOTE: Check those files for valid syntax and encoding:"
@@ -129,7 +131,7 @@ else
     [ -r "$f" ] && log_info "$f"
   done
   log_info "Running /usr/share/ngcp-ngcpcfg/helper/tt2-wrapper <file>"
-  log_info "or inspecting temporary ${tt_tmp_output_file}"
+  log_info "or inspecting temporary ${tmp_output_file}"
   log_info "should provide more details."
 fi
 
