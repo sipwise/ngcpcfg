@@ -46,6 +46,30 @@
       "revId": "9472cfbb0742137c1c64467bac3c20c6ec84fe2f",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "686733fb_1ae66cbb",
+        "filename": "functions/main",
+        "patchSetId": 4
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-09-20T08:31:44Z",
+      "side": 1,
+      "message": "re:  \u0027\\(arg[n]\\|arg[n+1]\\|...\\)\u0027\n\nwe will still have a loop to build a grep string.\nalso after the first grep \"${filelist_allfiles}\" will be RAM  cache so all further greps will be extreamly fast.\nalso we normally build one/several/all files... so usually there will be one/several greps only...\n\nIMHO complexity here increase probably of mistakes and give no benefits in speed. Better safe then sorry.",
+      "parentUuid": "723e03b5_ebabc94c",
+      "range": {
+        "startLine": 245,
+        "startChar": 10,
+        "endLine": 245,
+        "endChar": 11
+      },
+      "revId": "9472cfbb0742137c1c64467bac3c20c6ec84fe2f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
