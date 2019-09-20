@@ -16,6 +16,24 @@
       "revId": "32dfdb9a5d89ee8d9231928ea454bf6de5e3c621",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e6285e3d_0ab0acb7",
+        "filename": "helper/build_config",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-09-20T12:22:55Z",
+      "side": 1,
+      "message": "Because they are different? So two lines will stay.",
+      "parentUuid": "96175ff5_66e680bb",
+      "revId": "32dfdb9a5d89ee8d9231928ea454bf6de5e3c621",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
