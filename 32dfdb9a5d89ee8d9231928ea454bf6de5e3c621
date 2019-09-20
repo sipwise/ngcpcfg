@@ -52,6 +52,24 @@
       "revId": "32dfdb9a5d89ee8d9231928ea454bf6de5e3c621",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd95aac6_cf4015a9",
+        "filename": "helper/build_config",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-09-20T14:12:22Z",
+      "side": 0,
+      "message": "So... should I keep it for perl case of remove completely like it was in PS1 ?",
+      "parentUuid": "38c84716_93a9a0c0",
+      "revId": "32dfdb9a5d89ee8d9231928ea454bf6de5e3c621",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
