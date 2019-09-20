@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "ae84c3ff_c9403f0a",
+        "filename": "functions/main",
+        "patchSetId": 4
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-09-20T08:43:57Z",
+      "side": 1,
+      "message": "Demonstration:\n\n[sipwise-lab-trunk] sipwise@spce:~$ sudo ngcpcfg build \"-q ssh\"\n2019-09-20 10:42:32 spce: yml configs were validated successfully\n2019-09-20 10:42:32 spce: configs were checked successfully\n2019-09-20 10:42:32 spce: No patchtt files found, nothing to patch.\nLoading /etc/ngcp-config/config.yml in memory: OK \nLoading /etc/ngcp-config/network.yml in memory: OK \nLoading /etc/ngcp-config/constants.yml in memory: OK \ngrep: invalid option -- \u0027 \u0027\nUsage: grep [OPTION]... PATTERNS [FILE]...\nTry \u0027grep --help\u0027 for more information.",
+      "parentUuid": "a6ca7003_719a7fae",
+      "range": {
+        "startLine": 245,
+        "startChar": 10,
+        "endLine": 245,
+        "endChar": 11
+      },
+      "revId": "9472cfbb0742137c1c64467bac3c20c6ec84fe2f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "047589b1_f252c10b",
         "filename": "functions/main",
         "patchSetId": 4
