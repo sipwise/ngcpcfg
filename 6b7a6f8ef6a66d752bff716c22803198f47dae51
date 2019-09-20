@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "780000ad_6a99d14e",
+        "filename": "scripts/build",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-09-20T15:08:34Z",
+      "side": 1,
+      "message": "We\u0027ll need to remove the temp dir I guess",
+      "revId": "6b7a6f8ef6a66d752bff716c22803198f47dae51",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
