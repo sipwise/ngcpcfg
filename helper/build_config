@@ -100,8 +100,6 @@ move()
   else
     mv "${src}" "${dst}"
   fi
-
-  rm -f "${src}"
 }
 
 log_debug "Output file ${output_file} based on ${input_file}"
