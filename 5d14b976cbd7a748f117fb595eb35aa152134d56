@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ff66b80_f8245161",
+        "filename": "debian/control",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-09-20T12:59:56Z",
+      "side": 1,
+      "message": "why do we need this? Ruby?\n\nFor 6+ years in Sipwise I never used/saw ngcpcfg manuals in PDF. Maybe we can deprecate/clean it and remove Ruby depencency here?\n\nSure, ask Mika.",
+      "revId": "5d14b976cbd7a748f117fb595eb35aa152134d56",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
