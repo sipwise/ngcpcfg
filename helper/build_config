@@ -27,6 +27,7 @@ fi
 
 input_file="$1"       # like /etc/ngcp-config/templates/etc/mysql/my.cnf.tt2
 output_file="$2"      # like /etc/mysql/my.cnf
+output_file_dirname="$(dirname "${output_file}")" # like /etc/mysql
 
 if [ -z "${input_file}" ] ; then
   log_error "Missing <input_file> parameter. Exiting." >&2
@@ -43,6 +44,7 @@ fi
 if [ -n "${OUTPUT_DIRECTORY:-}" ] ; then
   log_debug "Using output directory ${OUTPUT_DIRECTORY}"
   export output_file="${OUTPUT_DIRECTORY}/${output_file}"
+  output_file_dirname="${OUTPUT_DIRECTORY}/${output_file_dirname}"
 else
   export output_file
 fi
@@ -57,15 +59,15 @@ fi
 if [ -r "${NGCPCTL_MAIN}/templates/${output_file}.prebuild" ] ; then
   log_info "Executing prebuild for ${output_file}"
   bash "${NGCPCTL_MAIN}/templates/${output_file}.prebuild"
-elif [ -r "${NGCPCTL_MAIN}/templates/$(dirname "${output_file}")/ngcpcfg.prebuild" ] ; then
+elif [ -r "${NGCPCTL_MAIN}/templates/${output_file_dirname}/ngcpcfg.prebuild" ] ; then
   log_info "Executing prebuild for ${output_file}"
-  bash "${NGCPCTL_MAIN}/templates/$(dirname "${output_file}")/ngcpcfg.prebuild"
+  bash "${NGCPCTL_MAIN}/templates/${output_file_dirname}/ngcpcfg.prebuild"
 fi
 
 # if output directory does not exist yet, create it
-if ! [ -d "$(dirname "${output_file}")" ] ; then
+if ! [ -d "${output_file_dirname}" ] ; then
   umask 0022 # directory permissions should be '755'
-  mkdir -p "$(dirname "${output_file}")"
+  mkdir -p "${output_file_dirname}"
 fi
 
 # assume safe defaults
@@ -144,9 +146,9 @@ fi
 if [ -r "${NGCPCTL_MAIN}/templates/${output_file}.postbuild" ] ; then
   log_info "Executing postbuild for ${output_file}"
   bash "${NGCPCTL_MAIN}/templates/${output_file}.postbuild"
-elif [ -r "${NGCPCTL_MAIN}/templates/$(dirname "${output_file}")/ngcpcfg.postbuild" ] ; then
+elif [ -r "${NGCPCTL_MAIN}/templates/${output_file_dirname}/ngcpcfg.postbuild" ] ; then
   log_info "Executing postbuild for ${output_file}"
-  bash "${NGCPCTL_MAIN}/templates/$(dirname "${output_file}")/ngcpcfg.postbuild"
+  bash "${NGCPCTL_MAIN}/templates/${output_file_dirname}/ngcpcfg.postbuild"
 fi
 
 exit $RC
