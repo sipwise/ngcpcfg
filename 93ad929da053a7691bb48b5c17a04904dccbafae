@@ -34,6 +34,41 @@
       "revId": "93ad929da053a7691bb48b5c17a04904dccbafae",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b7f1ea5_7f941b83",
+        "filename": "helper/build_config",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-09-20T13:53:20Z",
+      "side": 1,
+      "message": "\u003e But we have it here:\n\u003e \n\u003e if \"$TT_WRAPPER\" \"${input_file}\" \u003e \"${tmp_output_file}\"\n\nThat\u0027s true as of today, but there are ~70 lines in between this and the other line that you mention (line 115), and code can change without noticing this assumption or be copy-pasted to another case in which the code does a \"\u003e\u003e\" instead of \"\u003e\", and there\u0027s a problem.\n\nI think that the usual assumption when one is modifying code at line 105 is \"I get a temporary file, so it\u0027s a new empty file\", because that\u0027s what happens most of the time, so one might change it to \"\u003e\u003e\" without even thinking that it might not be an empty file.\n\nActually, maybe what it should happen is that it\u0027s the caller the one that should be cleaning this file, so this file doesn\u0027t have to worry about this.\n\nAnyway, just my 2 cents, for me you can submit as is if you prefer it without cleaning.",
+      "parentUuid": "ba5982d1_a0c6e5cf",
+      "revId": "93ad929da053a7691bb48b5c17a04904dccbafae",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9699391a_efc03619",
+        "filename": "scripts/build",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-09-20T13:53:20Z",
+      "side": 1,
+      "message": "Maybe clean here, before calling the script.",
+      "revId": "93ad929da053a7691bb48b5c17a04904dccbafae",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
