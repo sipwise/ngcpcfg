@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "53bdf7e2_e0b8f9bd",
+        "filename": "functions/main",
+        "patchSetId": 4
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-09-20T08:45:49Z",
+      "side": 1,
+      "message": "And even worth, with argument `-q ssh` (no quotes) it\u0027s just hanging at:\n\n[sipwise-lab-trunk] sipwise@spce:~$ sudo ngcpcfg build -q ssh\n2019-09-20 10:44:20 spce: yml configs were validated successfully\n2019-09-20 10:44:20 spce: configs were checked successfully\n2019-09-20 10:44:20 spce: No patchtt files found, nothing to patch.\nLoading /etc/ngcp-config/config.yml in memory: OK \nLoading /etc/ngcp-config/network.yml in memory: OK \nLoading /etc/ngcp-config/constants.yml in memory: OK",
+      "parentUuid": "ae84c3ff_c9403f0a",
+      "range": {
+        "startLine": 245,
+        "startChar": 10,
+        "endLine": 245,
+        "endChar": 11
+      },
+      "revId": "9472cfbb0742137c1c64467bac3c20c6ec84fe2f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "047589b1_f252c10b",
         "filename": "functions/main",
         "patchSetId": 4
