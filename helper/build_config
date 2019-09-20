@@ -98,11 +98,11 @@ move()
   if [ -e /.dockerinit ] || [ -e /.dockerenv ] ; then
     perl -MFile::Copy=mv \
          -E "mv('${src}', '${dst}') or die 'error: cannot move $src to $dst: \$!\n'"
+    # from the commit 6e6c308: it was actually a "copy" rather than a "move"
+    rm -f "${src}"
   else
     mv "${src}" "${dst}"
   fi
-
-  rm -f "${src}"
 }
 
 log_debug "Output file ${output_file} based on ${input_file}"
