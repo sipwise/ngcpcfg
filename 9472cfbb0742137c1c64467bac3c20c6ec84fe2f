@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fbcd5a38_e7265bb8",
+        "filename": "functions/main",
+        "patchSetId": 4
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-09-20T08:42:04Z",
+      "side": 1,
+      "message": "It is actually a comment for ELSE section. Agree should be moved there otherwise confusing.",
+      "parentUuid": "4e473eed_4a27a31d",
+      "revId": "9472cfbb0742137c1c64467bac3c20c6ec84fe2f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "963dff99_cfc66642",
         "filename": "functions/main",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2019-09-20T08:37:04Z",
       "side": 1,
       "message": "No need for \"\u003e\u003e\" here but can use \"\u003e\" instead, now that we don\u0027t loop over it anymore?",
+      "revId": "9472cfbb0742137c1c64467bac3c20c6ec84fe2f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4dd36c1_94097a9a",
+        "filename": "functions/main",
+        "patchSetId": 4
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-09-20T08:42:04Z",
+      "side": 1,
+      "message": "I though about this. I would keep it as it is safe AND someone can add later one more logic/processing above and \"\u003e\" might overwrite it. Isn\u0027t it?",
+      "parentUuid": "963dff99_cfc66642",
       "revId": "9472cfbb0742137c1c64467bac3c20c6ec84fe2f",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
@@ -142,6 +178,24 @@
       "writtenOn": "2019-09-20T08:37:04Z",
       "side": 1,
       "message": "Also unset dirs_to_process?",
+      "revId": "9472cfbb0742137c1c64467bac3c20c6ec84fe2f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e716152b_5035d731",
+        "filename": "functions/main",
+        "patchSetId": 4
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-09-20T08:42:04Z",
+      "side": 1,
+      "message": "Right. But AFAIK bash do unset all local variables on function exit. and \"declare -a\" inside the function is always local AFAIK. But sure, let\u0027s be consistent here.",
+      "parentUuid": "047589b1_f252c10b",
       "revId": "9472cfbb0742137c1c64467bac3c20c6ec84fe2f",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
