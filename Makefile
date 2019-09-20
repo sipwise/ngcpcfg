@@ -15,34 +15,31 @@ RESULTS ?= results
 
 all: docs
 
-docs: html pdf epub man
+docs: html pdf man
 
 html:
-	asciidoc docs/ngcpcfg.txt
+	asciidoctor docs/ngcpcfg.txt
 
 pdf:
-	a2x --icons -a toc -a toclevels=3 -a docinfo -f pdf docs/ngcpcfg.txt
-
-epub:
-	a2x --icons -a toc -a toclevels=3 -a docinfo -f epub docs/ngcpcfg.txt
+	asciidoctor-pdf \
+	  -a toc \
+	  -a toclevels=3 \
+	  -a docinfo \
+	  docs/ngcpcfg.txt
 
 man:
-	asciidoc -d manpage -b docbook docs/ngcpcfg.txt
-	sed -i 's/<emphasis role="strong">/<emphasis role="bold">/' docs/ngcpcfg.xml
-	xsltproc --nonet /usr/share/xml/docbook/stylesheet/nwalsh/manpages/docbook.xsl docs/ngcpcfg.xml
-	pod2man --section=8 sbin/ngcp-network > ngcp-network.8
-	pod2man --section=8 sbin/ngcp-sync-constants > ngcp-sync-constants.8
-	pod2man --section=8 sbin/ngcp-sync-grants > ngcp-sync-grants.8
+	asciidoctor -d manpage -b manpage docs/ngcpcfg.txt
+	pod2man --section=8 sbin/ngcp-network > docs/ngcp-network.8
+	pod2man --section=8 sbin/ngcp-sync-constants > docs/ngcp-sync-constants.8
+	pod2man --section=8 sbin/ngcp-sync-grants > docs/ngcp-sync-grants.8
 
 
 clean:
-	rm -f docs/ngcpcfg.xml docs/ngcpcfg.epub docs/ngcpcfg.html docs/ngcpcfg.pdf
-	rm -f ngcpcfg.8 ngcp-network.8 ngcp-sync-constants.8 ngcp-sync-grants.8
+	rm -f docs/ngcpcfg.html docs/ngcpcfg.pdf
+	rm -f docs/ngcpcfg.8 docs/ngcp-network.8 docs/ngcp-sync-constants.8 docs/ngcp-sync-grants.8
 	rm -rf t/__pycache__ t/fixtures/__pycache__/ t/*.pyc
 
 dist-clean: clean
-	rm -f docs/ngcpcfg.html docs/ngcpcfg.pdf
-	rm -f docs/ngcpcfg.epub ngcpcfg.8
 	rm -rf results
 
 # check for syntax errors

@@ -5,9 +5,8 @@ Maintainer: Sipwise Development Team <support@sipwise.com>
 Homepage: https://www.sipwise.com/
 Standards-Version: 3.9.8
 Build-Depends:
- asciidoc,
+ asciidoctor,
  debhelper-compat (= 12),
- docbook-xsl,
  git,
  libcapture-tiny-perl,
  libclone-perl,
@@ -28,7 +27,7 @@ Build-Depends:
  netcat-openbsd,
  pkwalify,
  python3-pytest,
- xsltproc,
+ ruby-asciidoctor-pdf,
 
 Package: libngcp-template-perl
 Section: perl
