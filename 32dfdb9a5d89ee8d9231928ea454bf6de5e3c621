@@ -34,6 +34,24 @@
       "revId": "32dfdb9a5d89ee8d9231928ea454bf6de5e3c621",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "61c7a4eb_cae30e49",
+        "filename": "helper/build_config",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-09-20T13:56:07Z",
+      "side": 1,
+      "message": "They cannot be different or the previous behavior would be broken. You refactored:\n\n  $(dirname \"${output_file}\")\n\ninto two different assignments, instead of just moving that here as in:\n\n  output_file_dirname\u003d$(dirname \"${output_file}\")",
+      "parentUuid": "e6285e3d_0ab0acb7",
+      "revId": "32dfdb9a5d89ee8d9231928ea454bf6de5e3c621",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
