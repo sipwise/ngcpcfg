@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96175ff5_66e680bb",
+        "filename": "helper/build_config",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-09-20T11:53:08Z",
+      "side": 1,
+      "message": "Why not simply set output_file_dirname once in here instead of multiple times with confusing sources?",
+      "revId": "32dfdb9a5d89ee8d9231928ea454bf6de5e3c621",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
