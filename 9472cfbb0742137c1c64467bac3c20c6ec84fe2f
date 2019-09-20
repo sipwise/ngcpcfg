@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "4e473eed_4a27a31d",
+        "filename": "functions/main",
+        "patchSetId": 4
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-09-20T08:37:04Z",
+      "side": 1,
+      "message": "not sure what you meant with this, but this comment might be a bit misleading, since the following two lines of code don\u0027t restrict it in any way?",
+      "revId": "9472cfbb0742137c1c64467bac3c20c6ec84fe2f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "963dff99_cfc66642",
+        "filename": "functions/main",
+        "patchSetId": 4
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-09-20T08:37:04Z",
+      "side": 1,
+      "message": "No need for \"\u003e\u003e\" here but can use \"\u003e\" instead, now that we don\u0027t loop over it anymore?",
+      "revId": "9472cfbb0742137c1c64467bac3c20c6ec84fe2f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd329030_e17e4560",
         "filename": "functions/main",
         "patchSetId": 4
@@ -70,6 +104,23 @@
       "revId": "9472cfbb0742137c1c64467bac3c20c6ec84fe2f",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "047589b1_f252c10b",
+        "filename": "functions/main",
+        "patchSetId": 4
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-09-20T08:37:04Z",
+      "side": 1,
+      "message": "Also unset dirs_to_process?",
+      "revId": "9472cfbb0742137c1c64467bac3c20c6ec84fe2f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
