@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "73f75488_8aeadd8b",
+        "filename": "helper/build_config",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-09-20T15:23:21Z",
+      "side": 1,
+      "message": "line 42:\n\n# export variable for usage within {pre,post}build scripts,\n# OUTPUT_DIRECTORY is for customization during testing\n\nbut missing export in line 29 is really interesting :-D\n\nFeel free to improve this!",
+      "parentUuid": "0aca8449_09aa0552",
+      "revId": "32dfdb9a5d89ee8d9231928ea454bf6de5e3c621",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96175ff5_66e680bb",
         "filename": "helper/build_config",
         "patchSetId": 3
