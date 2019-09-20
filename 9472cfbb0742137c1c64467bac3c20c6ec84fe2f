@@ -22,6 +22,30 @@
       "revId": "9472cfbb0742137c1c64467bac3c20c6ec84fe2f",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "723e03b5_ebabc94c",
+        "filename": "functions/main",
+        "patchSetId": 4
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-09-20T08:29:01Z",
+      "side": 1,
+      "message": "I believe you highlited wrong place for \u0027--\u0027\nit should like this, right?\n  \n\u003e grep \"${arg}\" -- \"${filelist_allfiles}\" \u003e\u003e \"${filelist_prepared}\"\n\nAs we want to have:\n  \ngrep \"/etc/default/ngcp-roles\" -- \"/tmp/sometmpfiles\" \u003e\u003e \"/tmp/anothertmpfile\"\n\nwhere /tmp/sometmpfiles is:\n\n....\n/etc/ngcp-config/templates/etc/default/ngcp-roles.tt2\n/etc/ngcp-config/templates/etc/default/ngcp-roles.customtt.tt2\n/etc/ngcp-config/templates/etc/default/ngcp-roles.tt2.sp1\n/etc/ngcp-config/templates/etc/default/ngcp-roles.tt2.sp2\n...",
+      "parentUuid": "bd329030_e17e4560",
+      "range": {
+        "startLine": 245,
+        "startChar": 10,
+        "endLine": 245,
+        "endChar": 11
+      },
+      "revId": "9472cfbb0742137c1c64467bac3c20c6ec84fe2f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
