@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "5da87b57_1c3d3f80",
+        "filename": "helper/build_config",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-09-20T14:48:26Z",
+      "side": 1,
+      "message": "I do not see the reason here, but I will add it if you insist. \n\nAlso I can add a comment to line 113:\n\n# Care about \"\u003e\" below, do not trust tmp file you receive.\n\nWill be be enough?\n\nP.S. we do remove the file on \"mv\" anyway, so I would keep it AS IS.",
+      "parentUuid": "8b7f1ea5_7f941b83",
+      "revId": "93ad929da053a7691bb48b5c17a04904dccbafae",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9699391a_efc03619",
         "filename": "scripts/build",
         "patchSetId": 3
@@ -66,6 +84,24 @@
       "writtenOn": "2019-09-20T13:53:20Z",
       "side": 1,
       "message": "Maybe clean here, before calling the script.",
+      "revId": "93ad929da053a7691bb48b5c17a04904dccbafae",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d10f7ad0_5cda170c",
+        "filename": "scripts/build",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-09-20T14:48:26Z",
+      "side": 1,
+      "message": "I would say definitely not here.\nif build_config doesn\u0027t trust tmp tile, it should erase it.",
+      "parentUuid": "9699391a_efc03619",
       "revId": "93ad929da053a7691bb48b5c17a04904dccbafae",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
