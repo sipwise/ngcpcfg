@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c098762c_0ebe09df",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-09-20T08:53:18Z",
+      "side": 1,
+      "message": "s/About of/About/",
+      "revId": "855d827be6daf5ac9acb5e481756a286635edad4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eb1fa37_ad9e64ea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-09-20T08:53:18Z",
+      "side": 1,
+      "message": "s/hundreed/hundred/",
+      "revId": "855d827be6daf5ac9acb5e481756a286635edad4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2313ccb4_18a8ff42",
+        "filename": "debian/ngcp-ngcpcfg.install",
+        "patchSetId": 10
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-09-20T08:53:18Z",
+      "side": 1,
+      "message": "wrap-and-sort :)",
+      "revId": "855d827be6daf5ac9acb5e481756a286635edad4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
