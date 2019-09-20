@@ -215,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "8d02c1e5_e45ce8cd",
+        "filename": "functions/main",
+        "patchSetId": 4
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-09-20T08:47:37Z",
+      "side": 1,
+      "message": "Hm... I thought -- must be used BEFORE filename we grep.\nand AFTER grep condition. But it looks like both \"works on my machine\" (c):\n\n10:45:40 ✔ taurus:~$ grep -c a /etc/hosts\n11\n10:45:43 ✔ taurus:~$ grep -c a -- /etc/hosts\n11\n10:45:46 ✔ taurus:~$ grep -c -- a /etc/hosts\n11\n10:45:51 ✔ taurus:~$",
+      "parentUuid": "ae84c3ff_c9403f0a",
+      "range": {
+        "startLine": 245,
+        "startChar": 10,
+        "endLine": 245,
+        "endChar": 11
+      },
+      "revId": "9472cfbb0742137c1c64467bac3c20c6ec84fe2f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "047589b1_f252c10b",
         "filename": "functions/main",
         "patchSetId": 4
