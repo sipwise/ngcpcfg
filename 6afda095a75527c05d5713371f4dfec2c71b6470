@@ -16,6 +16,24 @@
       "revId": "6afda095a75527c05d5713371f4dfec2c71b6470",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4456ad1b_03f9d467",
+        "filename": "scripts/build",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-09-20T08:35:32Z",
+      "side": 1,
+      "message": "Converted to array size check, but I prefer to compare strings to avoid issue when array is not defined for some reason and no number returned. I hope it will be accepted here. :-D",
+      "parentUuid": "040385f4_fa6a190a",
+      "revId": "6afda095a75527c05d5713371f4dfec2c71b6470",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
