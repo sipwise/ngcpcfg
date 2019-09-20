@@ -16,6 +16,24 @@
       "revId": "7f7afd57b67b6dad595f8dcce1878eb2150f8c1e",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c977b92a_b099c823",
+        "filename": "scripts/build",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-09-20T13:52:43Z",
+      "side": 1,
+      "message": "A way to fix this would be to create instead a temp dir, and then use a stable filename within.",
+      "parentUuid": "5a9f0eeb_62a6fc92",
+      "revId": "7f7afd57b67b6dad595f8dcce1878eb2150f8c1e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
