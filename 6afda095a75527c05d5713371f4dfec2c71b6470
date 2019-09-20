@@ -104,6 +104,24 @@
       "revId": "6afda095a75527c05d5713371f4dfec2c71b6470",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e58582f5_c672d790",
+        "filename": "scripts/check",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-09-20T09:15:46Z",
+      "side": 1,
+      "message": "yes, AFAIK in bash:\n\n\"${array[@]}\" !\u003d \"some ${array[@]} thing\"\n\nthe first one has a special meaning, to escape every element...\n\nthis is why shellcheck forces us to use:\n\n\u0027echo \"${array[*]}\"\u0027 instead of \u0027echo \"${array[@]}\"\u0027\n\n\nSure I can be wrong. Today I am no longer sure in anything (re: grep --).",
+      "parentUuid": "6ee6c1b4_effcc54e",
+      "revId": "6afda095a75527c05d5713371f4dfec2c71b6470",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
