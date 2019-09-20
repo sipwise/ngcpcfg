@@ -107,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "a6ca7003_719a7fae",
+        "filename": "functions/main",
+        "patchSetId": 4
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-09-20T08:40:32Z",
+      "side": 1,
+      "message": "I don\u0027t understand your comment, Alex. :)\n\nThe \"--\" ends processing of command line options, and we don\u0027t want to get any \"-...\" provided by the user as argument to be processed as grep option?\n\nSo IMO it should preserve same behavior as before and be:\n\n  grep -- \"${arg}\" \"${filelist_allifiles}\" \u003e\u003e ....",
+      "parentUuid": "686733fb_1ae66cbb",
+      "range": {
+        "startLine": 245,
+        "startChar": 10,
+        "endLine": 245,
+        "endChar": 11
+      },
+      "revId": "9472cfbb0742137c1c64467bac3c20c6ec84fe2f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "047589b1_f252c10b",
         "filename": "functions/main",
         "patchSetId": 4
