@@ -16,6 +16,24 @@
       "revId": "93ad929da053a7691bb48b5c17a04904dccbafae",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba5982d1_a0c6e5cf",
+        "filename": "helper/build_config",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-09-20T13:39:53Z",
+      "side": 1,
+      "message": "But we have it here:\n\nif \"$TT_WRAPPER\" \"${input_file}\" \u003e \"${tmp_output_file}\"",
+      "parentUuid": "7e354bd7_6ae80f65",
+      "revId": "93ad929da053a7691bb48b5c17a04904dccbafae",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
