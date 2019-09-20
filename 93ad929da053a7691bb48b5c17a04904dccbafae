@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e354bd7_6ae80f65",
+        "filename": "helper/build_config",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-09-20T13:10:08Z",
+      "side": 1,
+      "message": "I\u0027d do an else here, or in the next line after the if:\n\n  echo -n \u003e \"${tmp_output_file}\"\n\nIn order to make sure that we start with a clean slate, and there\u0027s no content/garbage from previous executions/iterations.  (This is, to maintain the \"invariant\" that newly created temp files are always empty).",
+      "revId": "93ad929da053a7691bb48b5c17a04904dccbafae",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
