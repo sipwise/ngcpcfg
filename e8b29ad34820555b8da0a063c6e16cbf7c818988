@@ -16,6 +16,24 @@
       "revId": "e8b29ad34820555b8da0a063c6e16cbf7c818988",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f49f498b_2ae84753",
+        "filename": "scripts/build",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-09-20T11:02:05Z",
+      "side": 1,
+      "message": "Good point! I will remove it.",
+      "parentUuid": "b92379dc_e7a02ccf",
+      "revId": "e8b29ad34820555b8da0a063c6e16cbf7c818988",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
