@@ -70,6 +70,24 @@
       "revId": "32dfdb9a5d89ee8d9231928ea454bf6de5e3c621",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf153351_526f4202",
+        "filename": "helper/build_config",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-09-20T14:43:27Z",
+      "side": 0,
+      "message": "‎[04:15:19 PM] ‎alutay‎: mmontecelo, gjover, https://gerrit.mgm.sipwise.com/#/c/ngcpcfg/+/33695/  should I remove or keep rm for Perl case?\n‎[04:15:34 PM] ‎alutay‎: just to be sure we are ACK here\n‎[04:16:02 PM] ‎gjover‎: alutay: remove the rm :)\n‎[04:16:21 PM] ‎gjover‎: the perl code should either mv it or abort\n‎[04:16:32 PM] ‎gjover‎: then the shell code should also fail (I\u0027m assuming set -e here)\n‎[04:16:59 PM] ‎mmontecelo‎: yeah, that\u0027s why understood from gjover\u0027s comment\n‎[04:17:54 PM] ‎mmontecelo‎: with \" We\u0027ll use perl\u0027s File::Copy which gives us the exact semantics we need.\" from the original implementation, I thought that it had actually a semantic of \"copy\"\n‎[04:40:51 PM] ‎alutay‎: mmontecelo, last time, should I remove \"rm\" or it is necessary for Perl case?\n‎[04:42:39 PM] ‎mmontecelo‎: alutay: remove \"rm\"\n‎[04:42:47 PM] ‎alutay‎: ack",
+      "parentUuid": "bd95aac6_cf4015a9",
+      "revId": "32dfdb9a5d89ee8d9231928ea454bf6de5e3c621",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
