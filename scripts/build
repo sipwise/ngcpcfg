@@ -74,14 +74,12 @@ build_config_files() {
 
     log_debug "${HELPER}/build_config ${input_file} ${output_file}"
     "${HELPER}/build_config" "${input_file}" "${output_file}"
-    RC=$((RC + $?))
   done
 
   record_commit_id
 }
 
 # main script
-RC=0
 
 if ! $MODIFIED_ONLY ; then
   build_config_files "$@"
@@ -196,6 +194,6 @@ if [ -f "${CONSTANTS_CONFIG:-}" ]; then
   fi
 fi
 
-exit "$RC"
+exit 0
 
 ## END OF FILE #################################################################
