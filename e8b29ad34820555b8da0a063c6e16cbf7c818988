@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b92379dc_e7a02ccf",
+        "filename": "scripts/build",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-09-20T10:01:07Z",
+      "side": 1,
+      "message": "I think that it\u0027s the other way around, \"if not zero\" / \"if not empty\"?\n\nAlso this does not not seem necessary, because if there are no elements in the array, the for-loop in the line below has 0 iterations, does not execute.  Example:\n\n  $ a\u003d()\n  $ for e in \"${a[@]}\"; do echo \"element: ${e}\"; done\n  $ [empty output, the body of the for-loop didn\u0027t execute any time]\n\nSo, in summary, I think that the \"if\" in line 88 is not needed, but if it was, I think that it\u0027s the wrong condition.",
+      "revId": "e8b29ad34820555b8da0a063c6e16cbf7c818988",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
