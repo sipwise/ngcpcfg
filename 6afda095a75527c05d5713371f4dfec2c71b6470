@@ -51,6 +51,24 @@
       "revId": "6afda095a75527c05d5713371f4dfec2c71b6470",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d48857f_84148b51",
+        "filename": "scripts/build",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-09-20T09:10:04Z",
+      "side": 1,
+      "message": "May I skip this as we have tons of places still.. there will be one mass update to fix all of them.\n\nAlso we have to add sheebang to every file, as currently shellcheck doesn\u0027t scan most of them... and then tons of shellcheck warnings have to be fixed... looking for a assist here ;-)",
+      "parentUuid": "261d0081_2ede349c",
+      "revId": "6afda095a75527c05d5713371f4dfec2c71b6470",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
