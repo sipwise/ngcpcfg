@@ -16,6 +16,24 @@
       "revId": "5d14b976cbd7a748f117fb595eb35aa152134d56",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a0e97a30_b706b1f4",
+        "filename": "debian/control",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-09-20T13:01:18Z",
+      "side": 1,
+      "message": "\u003e For 6+ years in Sipwise I never used/saw ngcpcfg manuals in PDF. Maybe we can deprecate/clean it and remove Ruby depencency here?\n\n(I\u0027m fine with this too)",
+      "parentUuid": "5ff66b80_f8245161",
+      "revId": "5d14b976cbd7a748f117fb595eb35aa152134d56",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
