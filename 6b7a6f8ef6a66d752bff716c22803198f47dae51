@@ -16,6 +16,24 @@
       "revId": "6b7a6f8ef6a66d752bff716c22803198f47dae51",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "00b91cfa_ab8bbb93",
+        "filename": "scripts/build",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-09-20T15:10:33Z",
+      "side": 1,
+      "message": "Right, I was planning it... but lost.",
+      "parentUuid": "780000ad_6a99d14e",
+      "revId": "6b7a6f8ef6a66d752bff716c22803198f47dae51",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
