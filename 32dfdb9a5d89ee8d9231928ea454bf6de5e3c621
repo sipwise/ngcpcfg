@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "0aca8449_09aa0552",
+        "filename": "helper/build_config",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-09-20T15:01:16Z",
+      "side": 1,
+      "message": "Not sure why this line has a export, seems unnecessary and different from its setting in line #29?\n\nIf it needs it, maybe next line for output_file_dirname also needs it?",
+      "revId": "32dfdb9a5d89ee8d9231928ea454bf6de5e3c621",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96175ff5_66e680bb",
         "filename": "helper/build_config",
         "patchSetId": 3
