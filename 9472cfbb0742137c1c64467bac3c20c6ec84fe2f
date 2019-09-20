@@ -239,6 +239,30 @@
     },
     {
       "key": {
+        "uuid": "f73742bf_f82bed96",
+        "filename": "functions/main",
+        "patchSetId": 4
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-09-20T08:48:45Z",
+      "side": 1,
+      "message": "\u003e $ sudo ngcpcfg build -q ssh\n\n\nNow I see you point. Moved -- to Guillem\u0027s possition.",
+      "parentUuid": "8d02c1e5_e45ce8cd",
+      "range": {
+        "startLine": 245,
+        "startChar": 10,
+        "endLine": 245,
+        "endChar": 11
+      },
+      "revId": "9472cfbb0742137c1c64467bac3c20c6ec84fe2f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "047589b1_f252c10b",
         "filename": "functions/main",
         "patchSetId": 4
