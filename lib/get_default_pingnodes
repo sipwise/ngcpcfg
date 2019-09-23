@@ -5,26 +5,28 @@
 #
 # @param argv.dns       A boolean selecting whether to add DNS IPs.
 # @return out           List of pingnodes.
+
+host = ngcp.get_hostname();
+out = [];
+
+FOREACH iface IN hosts.${host}.interfaces;
+  FOREACH realiface IN hosts.${host}.keys;
+    IF realiface == iface;
+      IF hosts.${host}.$realiface.gateway;
+
+        out.push(hosts.${host}.$realiface.gateway);
+
+        IF argv.dns == 'yes';
+          FOREACH dns_server_ip IN hosts.${host}.${realiface}.dns_nameservers;
+            out.push(dns_server_ip);
+          END;
+        END;
+
+      END;
+    END;
+  END;
+END;
+
+out = out.sort;
+
 -%]
-[% PERL -%]
-  my $gateway = (split(" ", `ip route | grep default`))[2];
-  my @nodes = ($gateway);
-
-[% IF argv.dns == 'yes' %]
-  my @dnsnodes = (split(" ", `grep -v '^#' /etc/resolv.conf | grep nameserver | cut -f2 -d' '|xargs`));
-
-  foreach my $host (@dnsnodes) {
-    my $res = `/bin/ping -c 1 -s 164 $host -W 1 2>/dev/null`;
-    if ($res =~ '1 received') {
-      if ($res =~ 'truncated') {
-        print "#$host reply truncated\n";
-      } else {
-        push(@nodes, $host);
-      }
-    } else {
-      print "# $host error\n";
-    }
-  }
-[% END %]
-  $stash->set(out => \@nodes);
-[% END -%]
