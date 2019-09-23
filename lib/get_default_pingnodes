@@ -3,6 +3,7 @@
 
 # Returns a list of IPs to ping.
 #
+# @param argv.gw        A boolean selecting whether to add GW IP.
 # @param argv.dns       A boolean selecting whether to add DNS IPs.
 # @return out           List of pingnodes.
 
@@ -14,7 +15,9 @@ FOREACH iface IN hosts.${host}.interfaces;
     IF realiface == iface;
       IF hosts.${host}.$realiface.gateway;
 
-        out.push(hosts.${host}.$realiface.gateway);
+        IF argv.gw == 'yes';
+          out.push(hosts.${host}.$realiface.gateway);
+        END;
 
         IF argv.dns == 'yes';
           FOREACH dns_server_ip IN hosts.${host}.${realiface}.dns_nameservers;
