@@ -141,6 +141,7 @@ case ${1:-} in
   init-mgmt|\
   init-shared|\
   initialise|\
+  message|\
   show|\
   values)
     action "$@"
