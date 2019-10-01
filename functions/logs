@@ -21,35 +21,40 @@ console_output() {
 # }}}
 
 ## logging functions {{{
-log_info() {
+log_only() {
   logger -t ngcpcfg --id="${NGCPCFG_PID}" -- "$*"
+}
+
+log_info() {
+  log_only "$*"
   console_output "$*\n"
 }
 
 # info without ending newline
 log_info_n() {
-  logger -t ngcpcfg --id="${NGCPCFG_PID}" -- "$*"
+  log_only "$*"
   console_output "$*"
 }
 
 log_warn() {
-  logger -t ngcpcfg --id="${NGCPCFG_PID}" -- "Warning: $*"
+  log_only "Warning: $*"
   console_output "Warning: $*\n"
 }
 
+# warning without ending newline
 log_warn_n() {
-  logger -t ngcpcfg --id="${NGCPCFG_PID}" -- "Warning: $*"
+  log_only "Warning: $*"
   console_output "Warning: $*"
 }
 
 log_error() {
-  logger -t ngcpcfg --id="${NGCPCFG_PID}" -- "Error: $*"
+  log_only "Error: $*"
   console_output "Error: $*\n" >&2
 }
 
 log_debug() {
   if [ -n "${DEBUG:-}" ] ; then
-    logger -t ngcpcfg --id="${NGCPCFG_PID}" -- "Debug: $*"
+    log_only "Debug: $*"
     console_output "DEBUG: $*\n" >&2
   fi
 }
