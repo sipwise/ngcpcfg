@@ -18,6 +18,7 @@ def test_network_interfaces(ngcpcfgcli, tmpdir):
                          'NGCP_SOCKETFILE': '/tmp/ngcpcfg.socket',
                          'OUTPUT_DIRECTORY': tmpdir,
                          'NGCPCFG': 'fixtures/ngcpcfg_network_interfaces.cfg',
+                         'STATE_FILES_DIR': tmpdir+'/var/lib/ngcpcfg/state/',
                      })
 
     # debug, only printed in logs in case of error
