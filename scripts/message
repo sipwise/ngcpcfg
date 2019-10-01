@@ -1,0 +1,95 @@
+#!/bin/bash
+# Purpose: message something into ngcpcfg logs and/or screen
+################################################################################
+
+set -e
+set -u
+
+# support testsuite
+FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
+HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
+SCRIPTS="${SCRIPTS:-/usr/share/ngcp-ngcpcfg/scripts/}"
+
+if ! [ -r "${FUNCTIONS}"/main ] ; then
+  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}">&2
+  exit 1
+fi
+
+. "${FUNCTIONS}"/main
+
+## functions {{{
+help() {
+  cat << EOF
+  Usage: ngcpcfg message [<options>] -- <message>"
+
+  Example: ngcpcfg message "The message will be printed to STDOUT AND added into logs"
+           ngcpcfg message --log-only --log-warn "The warning will be in logs only"
+
+  Options:"
+    --debug: tread message level as debug message
+    --error: tread message level as error message
+    --info:  tread message level as info (default level)
+    --log-only:  add message to ngcpcfg log only
+    --warning:  tread message level as warning message
+EOF
+}
+
+## }}}
+
+debug=false
+error=false
+help=false
+info=false
+warning=false
+
+clean_options="debug,error,info,help,warning"
+if ! _opt_temp=$(getopt --name "$0" -o +h --long ${clean_options} -- "$@") ; then
+  log_error "Missing message to store. Try 'ngcpcfg message --help' for more information."
+  exit 1
+fi
+eval set -- "${_opt_temp}"
+
+if [ -z "$1" ]; then
+  help 2>&1
+  exit 1
+fi
+
+while : ; do
+  case "$1" in
+    --debug)     debug=true    ;;
+    --error)     error=true    ;;
+    --info)      info=true     ;;
+    --help)      help=true     ;;
+    --warning)   warning=true  ;;
+    --) shift ; break ;;
+  esac
+  shift
+done
+
+message="$*"
+
+if "${help}" ; then
+  help
+  exit 0
+fi
+
+if ! "${debug}" && ! "${error}" && ! "${warning}"; then
+  info=true
+fi
+
+if "${error}"; then
+  log_error "${message}"
+elif "${warning}"; then
+  log_warn "${message}"
+elif "${info}"; then
+  log_info "${message}"
+elif "${debug}"; then
+  log_debug "${debug}"
+else
+  log_error "Something went wrong. We should not be here"
+  exit 1
+fi
+
+exit 0
+
+## END OF FILE #################################################################
