@@ -37,6 +37,11 @@ log_warn() {
   console_output "Warning: $*\n"
 }
 
+log_warn_n() {
+  logger -t ngcpcfg --id="${NGCPCFG_PID}" -- "Warning: $*"
+  console_output "Warning: $*"
+}
+
 log_error() {
   logger -t ngcpcfg --id="${NGCPCFG_PID}" -- "Error: $*"
   console_output "Error: $*\n" >&2
