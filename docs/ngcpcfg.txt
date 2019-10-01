@@ -277,6 +277,11 @@ some initial files have to be generated from templates before ngcpcfg final setu
 
 Ignore schema validation results for YAML files (syntax check is still performed).
 
+  **--summary-only** <action> [<further_options>]::
+
+Hide all the output except the last one summary line.
+Useful for integration of ngcpcfg in other scripts/tools.
+
   **--validate** <action> [<further_options>]::
 
 Force schema validation for YAML files even if validation is disabled in config.
