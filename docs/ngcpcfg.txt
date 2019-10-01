@@ -263,6 +263,11 @@ Note: This option is available in High Availability setups only.
 
 Ignore schema validation results for YAML files (syntax check is still performed).
 
+  **--summary-only** <action> [<further_options>]::
+
+Hide all the output expect the last one summary line.
+Useful for integration ngcpcfg into another scripts/tools.
+
   **--validate** <action> [<further_options>]::
 
 Force schema validation for YAML files even if validation is disabled in config.
