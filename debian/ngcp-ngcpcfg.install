@@ -29,6 +29,7 @@ scripts/diff                usr/share/ngcp-ngcpcfg/scripts/
 scripts/etckeeper           usr/share/ngcp-ngcpcfg/scripts/
 scripts/initialise          usr/share/ngcp-ngcpcfg/scripts/
 scripts/log                 usr/share/ngcp-ngcpcfg/scripts/
+scripts/message             usr/share/ngcp-ngcpcfg/scripts/
 scripts/patch               usr/share/ngcp-ngcpcfg/scripts/
 scripts/services            usr/share/ngcp-ngcpcfg/scripts/
 scripts/set                 usr/share/ngcp-ngcpcfg/scripts/
