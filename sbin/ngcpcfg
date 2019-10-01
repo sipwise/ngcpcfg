@@ -80,6 +80,7 @@ Actions:
   set [<opts>]        set YAML option in defined file
   del [<opts>]        delete YAML option from defined file
   patch [<opts>]      create customtt files using patchtt and templates
+  message [<opts>]    write a message into ngcpcfg log file
 " "$PN"
 
   # display only if ngcp-ngcpcfg-ha is available
@@ -161,6 +162,7 @@ case ${1:-} in
   init-mgmt|\
   init-shared|\
   initialise|\
+  message|\
   show|\
   values)
     action "$@"
