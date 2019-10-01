@@ -415,6 +415,12 @@ it will report a warning and exit.
 
 Prints the log of local changes. Expand all changes if '-p' option is specified.
 
+  **message** [<options>] <message>::
+
+Store _message_ into ngcpcfg log file with appropriate/requested log level.
+Supported log levels are '--debug', '--error', '--info' (default log level)
+and '--warning'.
+
   **patch** [--help | --from-customtt [<cusomtt file(s)>] | <patchtt file(s)>]::
 
 Generate customtt files using default templates and patchtt files.
