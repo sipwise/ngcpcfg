@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8536c29a_8fc27959",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-10-01T18:14:54Z",
+      "side": 1,
+      "message": "Hmm, why not shell functions instead? I\u0027m not sure I understand the need for this command which seems entirely internal?",
+      "revId": "f0b5001d932d6d7ece6bc4a336301b1099d55476",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
