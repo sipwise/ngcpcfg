@@ -33,10 +33,24 @@ ngcpcfg_restore_perms() {
 }
 
 action() {
+  local rc=0
   ACTION="$1"
   shift
-  log_debug "${SCRIPTS}/${ACTION} $*"
-  "${SCRIPTS}/${ACTION}" "$@"
+
+  if [ "${SUMMARY_ONLY:-0}" == "1" ]; then
+    log_debug "${SCRIPTS}/${ACTION} $* >/dev/null 2>&1"
+    "${SCRIPTS}/${ACTION}" "$@" >/dev/null 2>&1 || rc=$?
+  else
+    log_debug "${SCRIPTS}/${ACTION} $*"
+    "${SCRIPTS}/${ACTION}" "$@" || rc=$?
+  fi
+
+  if [ "${rc}" == "0" ]; then
+    log_info "Succesfully executed '${ACTION}' on '${HNAME}'"
+  else
+    log_error "Failed to call action '${ACTION}' on '${HNAME}' (see logs on '${HNAME}')"
+    exit "${rc}"
+  fi
 }
 
 usage() {
@@ -173,6 +187,7 @@ case ${1:-} in
   --no-action-failure) export NO_ACTION_FAILURE=1; shift ; "$0" "$@" ;;
   --no-check-origin) export NO_CHECK_ORIGIN=1; shift ; "$0" "$@" ;;
   --validate)   export VALIDATE=1; shift ; "$0" "$@" ;;
+  --summary-only) export SUMMARY_ONLY=1; shift ; "$0" "$@" ;;
   -h|--help|help)       usage   ; exit 0;;
   -v|--version|version) version ; exit 0;;
   *)          usage 1; exit 1;;
