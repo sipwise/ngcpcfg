@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49699dd9_1c0253dc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-10-02T12:30:00Z",
+      "side": 1,
+      "message": "s/errors/error/",
+      "revId": "683042b67eec0376c6a8446ecd8a5b72ca040b5f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "331391d5_6bef8feb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-10-02T12:30:00Z",
+      "side": 1,
+      "message": "s/help/helps/",
+      "revId": "683042b67eec0376c6a8446ecd8a5b72ca040b5f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
