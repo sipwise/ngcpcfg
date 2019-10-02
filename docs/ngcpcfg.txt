@@ -259,6 +259,20 @@ what you're doing.
 
 Note: This option is available in High Availability setups only.
 
+  **--no-db-sync** <action> [<further_options>]::
+
+Skip DB synchronisation part of 'commit' action. Normally it
+should NOT be skipped as it is mandatory part of ngcpcfg routine.
+Necessary during the new installation of distributed platform setup when
+database is not yet installed/available.
+
+  **--no-check-origin** <action> [<further_options>]::
+
+Skip Git branch origin check (part of 'check' action). Normally it
+should NOT be skipped as it is mandatory selfcheck part of ngcpcfg.
+Necessary during the new installation of distributed platform setup when
+some initial files have to be generated from templates before ngcpcfg final setup.
+
   **--no-validate** <action> [<further_options>]::
 
 Ignore schema validation results for YAML files (syntax check is still performed).
