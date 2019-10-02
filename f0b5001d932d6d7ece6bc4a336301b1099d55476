@@ -16,6 +16,24 @@
       "revId": "f0b5001d932d6d7ece6bc4a336301b1099d55476",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dfaa0239_5ea60f9c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-02T09:30:20Z",
+      "side": 1,
+      "message": "We have a shell function already\n/usr/share/ngcp-ngcpcfg/functions/logs\n\nAnd I tried to use it initially. Unfortunately several defaults have to be initialized every time:\nTIME_FORMAT , HNAME, NGCPCFG_PID, DEBUG which are coming from different sources like /etc/ngcp-config/ngcpcfg.cfg + hostname + ENV vars, /usr/sbin/ngcpcfg... \nAnd all this have to be done on peer host over ngcp-ssh...\n\nI have tried to init all of them inside /usr/share/ngcp-ngcpcfg/functions/logs but the code for push-parallel was still ugly and what is more important had a duplicates.\n\nAt the end I decided to create \"ngcpcfg message\" to store messages in logs where necessary and have a nice clean code without duplicates. I partially agree about \"internal functionality\" but I suspect we will use it more as we just started care about ngcpcfg problems/limitains on Carrier.\n\nExample of further improvements here is:\n  \n\u003e ngcpcfg message --show-last-call all\n[1] 11:18:09 [SUCCESS] db01a\nSuccessfully executed \u0027apply\u0027 on \u0027db01a\u0027\n[2] 11:18:10 [SUCCESS] prx01a\nSuccessfully executed \u0027apply\u0027 on \u0027prx01a\u0027\n[3] 11:18:10 [SUCCESS] lb01a\nSuccessfully executed \u0027apply\u0027 on \u0027lb01a\u0027\n[4] 11:18:28 [SUCCESS] web01b\nSuccessfully executed \u0027apply\u0027 on \u0027web01b\u0027\n[5] 11:18:29 [SUCCESS] prx01b\nSuccessfully executed \u0027apply\u0027 on \u0027prx01b\u0027 \n[6] 11:18:29 [SUCCESS] lb01b\nSuccessfully executed \u0027apply\u0027 on \u0027lb01b\u0027 \n[7] 11:18:32 [SUCCESS] db01b\nSuccessfully executed \u0027apply\u0027 on \u0027db01b\u0027\n2019-10-02 11:18:32 web01a: \u003d\u003d Successfully finished \u0027ngcpcfg message\u0027\n\n\nWhich is at the end is:\n  \n\u003e root@web01a:~# tail -100 /var/log/ngcp/ngcpcfg.log | grep \"finished\" |tail -1\n\u003e Oct  2 11:18:32 sp1 (notice) ngcpcfg[900]: \u003d\u003d Succesfully finished \u0027ngcpcfg push-parallel\u0027\n\u003e root@web01a:~# \n\n\netc...",
+      "parentUuid": "8536c29a_8fc27959",
+      "revId": "f0b5001d932d6d7ece6bc4a336301b1099d55476",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
