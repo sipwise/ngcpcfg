@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "faf96996_1e88def9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-02T13:02:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abd73904_cbaf6ddd",
+      "revId": "d92b98f6b5758de9140b190f03420aaf6fea238d",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd1f5d35_11ed89a2",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2019-10-02T12:27:24Z",
       "side": 1,
       "message": "s/tools/tool/",
+      "revId": "d92b98f6b5758de9140b190f03420aaf6fea238d",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3227ef6_b851c2bb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-02T13:02:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd1f5d35_11ed89a2",
       "revId": "d92b98f6b5758de9140b190f03420aaf6fea238d",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c720cf55_78062f40",
+        "filename": "scripts/message",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-02T13:02:16Z",
+      "side": 1,
+      "message": "Removed indention.",
+      "parentUuid": "f236cb5f_f9c17d0f",
+      "revId": "d92b98f6b5758de9140b190f03420aaf6fea238d",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71663832_972fb77e",
         "filename": "scripts/message",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2019-10-02T12:27:24Z",
       "side": 1,
       "message": "s/\"// (and maybe add a newline instead)",
+      "revId": "d92b98f6b5758de9140b190f03420aaf6fea238d",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfd0b062_d47ee044",
+        "filename": "scripts/message",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-02T13:02:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71663832_972fb77e",
       "revId": "d92b98f6b5758de9140b190f03420aaf6fea238d",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "5714e8cb_9e869188",
+        "filename": "scripts/message",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-02T13:02:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3616fc5d_ac216fd8",
+      "revId": "d92b98f6b5758de9140b190f03420aaf6fea238d",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eaba0e9d_e4d22da3",
         "filename": "scripts/message",
         "patchSetId": 4
@@ -98,6 +188,24 @@
       "writtenOn": "2019-10-02T12:27:24Z",
       "side": 1,
       "message": "I\u0027d use consistent indention between options and their usage text",
+      "revId": "d92b98f6b5758de9140b190f03420aaf6fea238d",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f92d0be_248e2c34",
+        "filename": "scripts/message",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-02T13:02:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eaba0e9d_e4d22da3",
       "revId": "d92b98f6b5758de9140b190f03420aaf6fea238d",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "f7bfac47_13608b15",
+        "filename": "scripts/message",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-02T13:02:16Z",
+      "side": 1,
+      "message": "Uf... yes. You are right. \nCannot parse command?",
+      "parentUuid": "f6aea4ee_238a455c",
+      "revId": "d92b98f6b5758de9140b190f03420aaf6fea238d",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e33d0c8_852393dc",
         "filename": "scripts/message",
         "patchSetId": 4
@@ -132,6 +258,24 @@
       "writtenOn": "2019-10-02T12:27:24Z",
       "side": 1,
       "message": "Did you mean \"help \u003e\u00262\"?",
+      "revId": "d92b98f6b5758de9140b190f03420aaf6fea238d",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1013290_c8e4fd23",
+        "filename": "scripts/message",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-02T13:02:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e33d0c8_852393dc",
       "revId": "d92b98f6b5758de9140b190f03420aaf6fea238d",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "e9c51003_8782e865",
+        "filename": "scripts/message",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-02T13:02:16Z",
+      "side": 1,
+      "message": "Hope... message should be mandatory.\n$1 is dirty here already. Moved code to the top.",
+      "parentUuid": "77a437e4_ec5df499",
+      "revId": "d92b98f6b5758de9140b190f03420aaf6fea238d",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2995ff67_12322b9e",
         "filename": "scripts/message",
         "patchSetId": 4
@@ -166,6 +328,24 @@
       "writtenOn": "2019-10-02T12:27:24Z",
       "side": 1,
       "message": "What is your expected behavior here with \"message --debug ....\"? Should this print something to STDOUT or not?\nAre you actually trying to implement severity/piority levels or is it about visibility to enduser?",
+      "revId": "d92b98f6b5758de9140b190f03420aaf6fea238d",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68745162_b879f944",
+        "filename": "scripts/message",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-02T13:02:16Z",
+      "side": 1,
+      "message": "--debug here has not a lot of sense, just tried to be consistent. Should I drop it?\n\nroot@web01a:~# ngcpcfg message --debug test\nroot@web01a:~# ngcpcfg --debug message --debug test\n2019-10-02 14:57:57 : DEBUG: sourced configuration file /etc/ngcp-config/ngcpcfg.cfg\n2019-10-02 14:57:57 : DEBUG: sourced configuration file \u0027/etc/ngcp-config/ngcpcfg.d/shared_storage.cfg\u0027\n2019-10-02 14:57:57 web01a: DEBUG: /usr/share/ngcp-ngcpcfg/scripts//message --debug test\n2019-10-02 14:57:57 web01a: DEBUG: sourced configuration file /etc/ngcp-config/ngcpcfg.cfg\n2019-10-02 14:57:57 web01a: DEBUG: sourced configuration file \u0027/etc/ngcp-config/ngcpcfg.d/shared_storage.cfg\u0027\n2019-10-02 14:57:57 web01a: DEBUG: true\ntest\nroot@web01a:~#\n\n\n\nbut for some reason it actually didn\u0027t work right now.... checking.",
+      "parentUuid": "2995ff67_12322b9e",
       "revId": "d92b98f6b5758de9140b190f03420aaf6fea238d",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
