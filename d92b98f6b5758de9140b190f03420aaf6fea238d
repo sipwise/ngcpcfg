@@ -349,6 +349,24 @@
       "revId": "d92b98f6b5758de9140b190f03420aaf6fea238d",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e452038_c0cdc415",
+        "filename": "scripts/message",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-02T13:28:24Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "68745162_b879f944",
+      "revId": "d92b98f6b5758de9140b190f03420aaf6fea238d",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
