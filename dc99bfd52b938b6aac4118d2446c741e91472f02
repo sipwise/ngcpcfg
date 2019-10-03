@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57396f48_3340f07d",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-10-03T14:10:15Z",
+      "side": 1,
+      "message": "seems odd here",
+      "range": {
+        "startLine": 282,
+        "startChar": 36,
+        "endLine": 282,
+        "endChar": 39
+      },
+      "revId": "dc99bfd52b938b6aac4118d2446c741e91472f02",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
