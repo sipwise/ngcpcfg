@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dab323e4_2a52baa9",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-04T14:07:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffd4e949_cda69ac7",
+      "range": {
+        "startLine": 483,
+        "startChar": 60,
+        "endLine": 483,
+        "endChar": 89
+      },
+      "revId": "0112d137613566a7eda8f2d903acdcc4f6b2eb64",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df1f1fd3_f4e2ddde",
         "filename": "docs/ngcpcfg.txt",
         "patchSetId": 1
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "d2f30e75_36c32f66",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-04T14:07:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df1f1fd3_f4e2ddde",
+      "range": {
+        "startLine": 485,
+        "startChar": 26,
+        "endLine": 485,
+        "endChar": 33
+      },
+      "revId": "0112d137613566a7eda8f2d903acdcc4f6b2eb64",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "877fdd4a_b4c91483",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-04T14:07:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f593a6c_d9909eed",
+      "range": {
+        "startLine": 485,
+        "startChar": 74,
+        "endLine": 485,
+        "endChar": 75
+      },
+      "revId": "0112d137613566a7eda8f2d903acdcc4f6b2eb64",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90460fe1_97a4870e",
         "filename": "docs/ngcpcfg.txt",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2019-10-04T12:35:01Z",
       "side": 1,
       "message": "to the",
+      "range": {
+        "startLine": 486,
+        "startChar": 32,
+        "endLine": 486,
+        "endChar": 33
+      },
+      "revId": "0112d137613566a7eda8f2d903acdcc4f6b2eb64",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad35a37c_d8a54363",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-04T14:07:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90460fe1_97a4870e",
       "range": {
         "startLine": 486,
         "startChar": 32,
@@ -163,6 +259,54 @@
     },
     {
       "key": {
+        "uuid": "708ae826_3d244aca",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-04T14:07:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f28d73e_5c5036a0",
+      "range": {
+        "startLine": 491,
+        "startChar": 76,
+        "endLine": 491,
+        "endChar": 77
+      },
+      "revId": "0112d137613566a7eda8f2d903acdcc4f6b2eb64",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4bcdc17e_d8ba9c85",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-04T14:07:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fea7420f_a98ba4ba",
+      "range": {
+        "startLine": 491,
+        "startChar": 32,
+        "endLine": 491,
+        "endChar": 33
+      },
+      "revId": "0112d137613566a7eda8f2d903acdcc4f6b2eb64",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e664988f_f49d1bfc",
         "filename": "docs/ngcpcfg.txt",
         "patchSetId": 1
@@ -232,6 +376,78 @@
     },
     {
       "key": {
+        "uuid": "8602928b_8040fe39",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-04T14:07:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e664988f_f49d1bfc",
+      "range": {
+        "startLine": 492,
+        "startChar": 44,
+        "endLine": 492,
+        "endChar": 45
+      },
+      "revId": "0112d137613566a7eda8f2d903acdcc4f6b2eb64",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4645bf8c_6c5b13c4",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-04T14:07:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab8e1b0b_a60b376e",
+      "range": {
+        "startLine": 492,
+        "startChar": 14,
+        "endLine": 492,
+        "endChar": 19
+      },
+      "revId": "0112d137613566a7eda8f2d903acdcc4f6b2eb64",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8e61387_263fde79",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-04T14:07:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e1136f4_2a04949e",
+      "range": {
+        "startLine": 492,
+        "startChar": 70,
+        "endLine": 492,
+        "endChar": 102
+      },
+      "revId": "0112d137613566a7eda8f2d903acdcc4f6b2eb64",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8af4227_f4fa2bd1",
         "filename": "docs/ngcpcfg.txt",
         "patchSetId": 1
@@ -243,6 +459,30 @@
       "writtenOn": "2019-10-04T12:35:01Z",
       "side": 1,
       "message": "\"is used/specfied, \" perhaps?",
+      "range": {
+        "startLine": 494,
+        "startChar": 25,
+        "endLine": 494,
+        "endChar": 34
+      },
+      "revId": "0112d137613566a7eda8f2d903acdcc4f6b2eb64",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c8339c0_1665c3ef",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-04T14:07:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8af4227_f4fa2bd1",
       "range": {
         "startLine": 494,
         "startChar": 25,
@@ -278,6 +518,30 @@
     },
     {
       "key": {
+        "uuid": "1646a656_9cf27ef3",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-04T14:07:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b66f2db7_e587c88f",
+      "range": {
+        "startLine": 495,
+        "startChar": 71,
+        "endLine": 495,
+        "endChar": 74
+      },
+      "revId": "0112d137613566a7eda8f2d903acdcc4f6b2eb64",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de0f1caa_36b7eda3",
         "filename": "docs/ngcpcfg.txt",
         "patchSetId": 1
@@ -301,6 +565,30 @@
     },
     {
       "key": {
+        "uuid": "5c7fbd4d_fc6404d5",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-04T14:07:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de0f1caa_36b7eda3",
+      "range": {
+        "startLine": 496,
+        "startChar": 72,
+        "endLine": 496,
+        "endChar": 75
+      },
+      "revId": "0112d137613566a7eda8f2d903acdcc4f6b2eb64",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e02b5cc_1e167502",
         "filename": "docs/ngcpcfg.txt",
         "patchSetId": 1
@@ -312,6 +600,30 @@
       "writtenOn": "2019-10-04T12:35:01Z",
       "side": 1,
       "message": "\"any issue is detected\" / \"issues are detected\"",
+      "range": {
+        "startLine": 497,
+        "startChar": 46,
+        "endLine": 497,
+        "endChar": 66
+      },
+      "revId": "0112d137613566a7eda8f2d903acdcc4f6b2eb64",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa8d7ef7_ead27b93",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-04T14:07:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e02b5cc_1e167502",
       "range": {
         "startLine": 497,
         "startChar": 46,
