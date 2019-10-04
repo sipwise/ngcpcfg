@@ -22,6 +22,30 @@
       "revId": "dc99bfd52b938b6aac4118d2446c741e91472f02",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a0eac71_9a9edf02",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-04T07:14:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57396f48_3340f07d",
+      "range": {
+        "startLine": 282,
+        "startChar": 36,
+        "endLine": 282,
+        "endChar": 39
+      },
+      "revId": "dc99bfd52b938b6aac4118d2446c741e91472f02",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
