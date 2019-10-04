@@ -23,7 +23,7 @@ END;
 out = [];
 FOREACH host IN hosts.keys.sort;
   NEXT UNLESS status.item(hosts.$host.status);
-  NEXT IF host == ngcp.get_nodename();
+  NEXT IF host == ngcp.get_hostname();
   out.push( host );
 END;
 
