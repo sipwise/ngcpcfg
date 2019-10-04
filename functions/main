@@ -32,6 +32,33 @@ fi
 ## }}}
 
 ## functions {{{
+main_action() {
+  local rc=0
+  ACTION="$1"
+  shift
+
+  [ -z "${SUMMARY_ONLY:-}" ] && SUMMARY_ONLY=0
+
+  if [ "${SUMMARY_ONLY}" == "1" ]; then
+    log_debug "${SCRIPTS}/${ACTION} $* >(logger -t ngcpcfg --id=\"${NGCPCFG_PID}\") >/dev/null 2>&1"
+    "${SCRIPTS}/${ACTION}" "$@" >(logger -t ngcpcfg --id="${NGCPCFG_PID}") >/dev/null 2>&1 || rc=$?
+  else
+    log_debug "${SCRIPTS}/${ACTION} $*"
+    "${SCRIPTS}/${ACTION}" "$@" || rc=$?
+  fi
+
+  if [ "${rc}" == "0" ]; then
+    local msg="Successfully executed '${ACTION}' on '${HNAME}'"
+    [ "${SUMMARY_ONLY}" == "1" ] || log_only "${msg}"
+    [ "${SUMMARY_ONLY}" == "0" ] || log_info "${msg}"
+  else
+    local msg="Failed to call action '${ACTION}' on '${HNAME}' (see logs on '${HNAME}')"
+    [ "${SUMMARY_ONLY}" == "1" ] || log_only "Error: ${msg}"
+    [ "${SUMMARY_ONLY}" == "0" ] || log_error "${msg}"
+    exit "${rc}"
+  fi
+}
+
 hook_setup() {
   log_debug "hook_setup ${1:-}"
 
