@@ -469,19 +469,40 @@ _/etc/ngcp-config/systems.cfg_ are used. The magic word 'all' can be used as a '
 to push the changes on all the nodes from the network.yml except the local one.
 Note: This option is available in High Availability setups only.
 
-  **push-parallel** [--apply-on-all-nodes] [<host(s)>]::
+  **push-parallel** [<options>] [all|sp1|sp2|<host(s)>]::
 
 Like the action 'push' above, action 'push-parallel' pushes modifications to the
 shared repository and remote systems _in parallel_. After the changes have been
 pushed to the nodes the _apply_ operation will be executed on the remote systems
-to rebuild the configuration files. All the actions are only performed on HA inactive
-nodes (unless the option '--apply-on-all-nodes' is specified).
+to rebuild the configuration files and restart services if necessary.
+
+The operations 'build' and 'apply' can be skipped on remote side using options
+'--nobuild' and/or '--noapply'  (similar to action 'push'). The action 'push' can be
+skipped on local side using option '--skip-shared-storage-push'.
+
+If no hosts have been specified then the 'push' will happen to all HA inactive nodes only
+(unless the option '--apply-on-all-nodes' is specified).
+Note: HA switchover might happens if you are pushing changes which trigger HA restart.
+In this case you should NOT push peer nodes simultaneously (the option
+'--apply-on-all-nodes' is dangerous in this case,
+as cause HA restart on both sp1 and sp2 HA nodes simultaneously).
+
+The 'host' can be defined as 'sp1' or 'sp2' which is a ngcpcfg filter where to push/apply.
+The actions will be performed if HA node hostname is 'sp1' or 'sp2' ignoring HA active state.
+It is safe to push all sp1 nodes at once, as peer will be activated in case of current node HA restart.
+
+If the special host 'all' defined the push will be performed in parallel in two steps:
+ - the first step pushes and applies changes to all sp1 nodes (ignoring HA state),
+ - the second step pushes and applies changes to all sp2 nodes (ignoring HA state).
+Note: the second step will NOT be executed if some issues detected on the first step.
+
 If one or multiple hostnames or IP addresses are given as arguments then the
 changes will be only pushed to the shared repository and the actions performed
 only on the given hosts.
-If no hosts have been specified then the 'push' will hapen to all HA inactive nodes.
+
 All 'ngcpcfg' output is muted on STDOUT but available in the log file
-'/var/log/ngcp/ngcpcfg-parallel.log' on each node.
+'/var/log/ngcp/ngcpcfg.log' on each node.
+
 Note: This option is available in High Availability setups only.
 
   **services** [--dry-run]::
