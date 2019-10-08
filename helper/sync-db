@@ -21,14 +21,8 @@ foreach my $file (@ARGV) {
 # rw connection to central node
 my $dbhost = $config->{database}->{central}->{dbhost};
 my $dbport = $config->{database}->{central}->{dbport};
-
-open my $SWFH, '<', '/etc/mysql/sipwise.cnf';
-my $dbpass = join ' ', <$SWFH>;
-close $SWFH;
-$dbpass =~ s/^\s*SIPWISE_DB_PASSWORD=\'([^\']+)\'.*$/$1/;
-chomp $dbpass;
-my $dbuser = 'sipwise';
 my $dbname = $config->{ossbss}->{provisioning}->{database}->{name};
+my $dbcredentials = "/etc/mysql/sipwise_extra.cnf";
 
 unless(defined $dbhost) {
   print "Error: Could not determine provisioning db hostname\n";
@@ -40,14 +34,6 @@ unless(defined $dbport) {
 }
 unless(defined $dbname) {
   print "Error: Could not determine provisioning db name\n";
-  exit 1;
-}
-unless(defined $dbuser) {
-  print "Error: Could not determine provisioning db user\n";
-  exit 1;
-}
-unless(defined $dbpass) {
-  print "Error: Could not determine provisioning db password\n";
   exit 1;
 }
 
@@ -76,10 +62,11 @@ exit 0;
 
 sub db_connect
 {
-	my $dbh = DBI->connect("DBI:mysql:database=${dbname};host=${dbhost};port=${dbport}",
-						$dbuser, $dbpass, { PrintError => 1 });
+	my $dbh = DBI->connect("DBI:mysql:database=${dbname};host=${dbhost};port=${dbport};"
+                        . "mysql_read_default_file=${dbcredentials}",
+						"", "", { PrintError => 1 });
 	unless(defined $dbh) {
-		print "Error: Could not connect to database '$dbname' at '$dbhost:$dbport' as '${dbuser}': $DBI::errstr\n";
+		print "Error: Could not connect to database '$dbname' at '$dbhost:$dbport' using '${dbcredentials}': $DBI::errstr\n";
 		exit 1;
 	}
 	return $dbh;
