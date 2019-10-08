@@ -1,3 +1,46 @@
+ngcp-ngcpcfg (8.0.1.0+0~mr8.0.1.0) unstable; urgency=medium
+
+  [ Richard Fuchs ]
+  * [c2372f3] TT#64658 support vlan interfaces in ethX.Y notation
+  * [ff016f1] TT#64658 exclude vlan interfaces from hwaddr dupe check
+
+  [ Alexander Lutay ]
+  * [ff2bd49] TT#63758 Improve English for 'High Availability setups' notes
+  * [8c210c1] TT#51601 Stop printing diff on ngcpcfg set/del by default.
+  * [ef9ebde] TT#65907 Speedup generate_template_list() by removing unnecessary loops
+  * [9afac63] TT#65907 Speedup 'ngcpcfg build' (2-3 seconds faster when we build all files)
+  * [8717d0a] TT#65907 Move functions/main functions into "functions" section
+  * [85dd35a] TT#65907 Update functions/main to follow Sipwise/Google shell style
+  * [366101f] TT#65907 Use log_warn instead of 'echo' to dump warning into ngcpcfg logs
+  * [80ead12] TT#65907 Convert EXTRA_CONFIG_FILES from string to array to make shellcheck happy here
+  * [8209a5a] TT#65907 Speedup 'ngcpcfg build' on 20% percent (when we build all files)
+  * [1141490] TT#65907 Speedup 'ngcpcfg build' on 25% for non-docker installations
+  * [f4e5c0b] TT#65907 Write ngcpcfg PID into ngcpcfg.log file
+  * [250cb64] TT#65907 Remove unnecessary subshell calls in helper build_config
+  * [db586ad] TT#65907 Remove unnecessary 'rm' command (as we move files)
+  * [e9b980f] TT#65907 Remove confusing 'RC' variable from scripts/build ('set -e' in use)
+  * [ead10ac] TT#65907 Speedup 'ngcpcfg apply' on 1.5 seconds (re-use the same tmp file)
+  * [48fa673] TT#33255 Generate HA pingnodes from network.yml
+  * [1758f7c] TT#33255 lib/get_default_pingnodes: add GW IP if allowed/necessary only
+  * [90b1ff6] TT#63758 Add new function 'log_warn_n' for 'ngcpcfg push-parallel'
+  * [3b3c4a1] TT#63758 TT#55162 Fix tests after migration to group 'ngcp-admin'
+  * [66638c0] TT#63758 Fix tests test_ngcpcfg_build_network_interfaces to use temporary folder
+  * [15537ab] TT#63758 Add missing ngcpcfg options description to manuals
+  * [fa3593a] TT#63758 Add --summary-only option support
+  * [6862f18] TT#63758 Update ngcpcfg manuals for the 'push-parallel' case
+  * [f4ac5ca] TT#63758 Move function  'action' from ngcpcfg to function/main->main_action()
+  * [48c767d] TT#63758 Fix lib/get_ngcp_neighbours on Carrier. Use get_hostname() instead of get_nodename()
+
+  [ Rene Krenn ]
+  * [2f69005] TT#66157 cdr_fields helper: select the cdr base table
+
+  [ Guillem Jover ]
+  * [adeb7f0] TT#66224 Switch from asciidoc to asciidoctor
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 08 Oct 2019 09:11:10 +0200
+
 ngcp-ngcpcfg (8.0.0.0+0~mr8.0.0.0) unstable; urgency=medium
 
   [ Guillem Jover ]
