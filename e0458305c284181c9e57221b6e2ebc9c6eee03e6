@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45a86b2a_71760609",
+        "filename": "helper/sync-db",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-10-08T17:34:18Z",
+      "side": 1,
+      "message": "Good. Setting these as undef would mean DBI might end up using the DBI_USER and DBI_PASS environment variables which are also a security risk.",
+      "range": {
+        "startLine": 67,
+        "startChar": 6,
+        "endLine": 67,
+        "endChar": 12
+      },
+      "revId": "e0458305c284181c9e57221b6e2ebc9c6eee03e6",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
