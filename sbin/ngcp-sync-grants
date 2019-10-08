@@ -12,8 +12,6 @@ use YAML::XS;
 use Readonly;
 
 Readonly my $GRANTS_SCHEMA => '/etc/mysql/grants.yml';
-Readonly my $DEFAULT_MYSQL_USER => "sipwise";
-Readonly my $MYSQL_CREDENTIALS => "/etc/mysql/sipwise.cnf";
 Readonly my $DB_CFG => "/etc/default/ngcp-db";
 Readonly my $DEFAULT_DBHOST => "127.0.0.1";
 Readonly my $DEFAULT_DBPORT => "3306";
@@ -63,13 +61,14 @@ sub pwgen {
 
 sub connect_db {
     my ($dbhost, $dbport) = @_;
-    my ($mysql_user, $mysql_pass) = get_mysql_credentials();
+    my $dbcredentials = "/etc/mysql/sipwise_extra.cnf";
 
-    $dbh = DBI->connect("DBI:mysql:database=mysql;host=$dbhost;port=$dbport",
-                        $mysql_user, $mysql_pass,
+    $dbh = DBI->connect("DBI:mysql:database=mysql;host=$dbhost;port=$dbport;"
+                        . "mysql_read_default_file=${dbcredentials}",
+                        "", "",
                         { PrintError => 0 })
         or die "Can't connect to MySQL database 'mysql': ". $DBI::errstr;
-    log_debug("connected to $dbhost:$dbport as $mysql_user");
+    log_debug("connected to $dbhost:$dbport using '${dbcredentials}'");
     $dbh->do("SET sql_log_bin=0")
         or die "Cannot set sql_log_bin=0: ".$DBI::errstr;
 
@@ -94,22 +93,6 @@ sub logger {
 sub log_info  { logger(shift, 0); }
 sub log_debug { logger(shift, 1); }
 sub log_warn  { logger(shift, 2); }
-
-sub get_mysql_credentials {
-    my $mysql_user = $DEFAULT_MYSQL_USER;
-    my $mysql_pass;
-
-    my $mysql_creds = Config::Tiny->read($MYSQL_CREDENTIALS)
-        or die "Cannot open $MYSQL_CREDENTIALS: $ERRNO";
-
-    if ($mysql_pass = $mysql_creds->{_}{SIPWISE_DB_PASSWORD}) {
-        $mysql_pass =~ s/^['"]|['"]$//g;
-    } else {
-        die "Cannot parse mysql credentials file $MYSQL_CREDENTIALS";
-    }
-
-    return ($mysql_user, $mysql_pass);
-}
 
 sub get_hostname {
 
