@@ -46,6 +46,30 @@
       "revId": "e0458305c284181c9e57221b6e2ebc9c6eee03e6",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "968278a5_7adfd844",
+        "filename": "helper/sync-db",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-10-09T10:14:30Z",
+      "side": 1,
+      "message": "Yes good. I was just suspicious of the empty string so checked the DBI docs, and it looks right to me.",
+      "parentUuid": "ca3857ac_97c9e435",
+      "range": {
+        "startLine": 67,
+        "startChar": 6,
+        "endLine": 67,
+        "endChar": 12
+      },
+      "revId": "e0458305c284181c9e57221b6e2ebc9c6eee03e6",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
