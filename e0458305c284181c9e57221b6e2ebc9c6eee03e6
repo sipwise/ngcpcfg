@@ -94,6 +94,30 @@
       "revId": "e0458305c284181c9e57221b6e2ebc9c6eee03e6",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a2e060f2_8038e9b6",
+        "filename": "helper/sync-db",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2019-10-09T16:55:22Z",
+      "side": 1,
+      "message": "sry, i missed 400 file permission of /etc/mysql/sipwise_extra.cnf.\nworks with both \"\" and undef credential parameters.",
+      "parentUuid": "505efa11_4dc6f947",
+      "range": {
+        "startLine": 67,
+        "startChar": 6,
+        "endLine": 67,
+        "endChar": 12
+      },
+      "revId": "e0458305c284181c9e57221b6e2ebc9c6eee03e6",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
