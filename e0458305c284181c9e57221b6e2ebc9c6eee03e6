@@ -22,6 +22,30 @@
       "revId": "e0458305c284181c9e57221b6e2ebc9c6eee03e6",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca3857ac_97c9e435",
+        "filename": "helper/sync-db",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-09T10:03:31Z",
+      "side": 1,
+      "message": "To be sure, I set here empty string, not undef, so we are fine. Right? I believe yes, as you gave me +2.\n\nP.S. it is a code from Perl DBI best practices.",
+      "parentUuid": "45a86b2a_71760609",
+      "range": {
+        "startLine": 67,
+        "startChar": 6,
+        "endLine": 67,
+        "endChar": 12
+      },
+      "revId": "e0458305c284181c9e57221b6e2ebc9c6eee03e6",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
