@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7caa2e7d_e1106a57",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-10-11T22:03:39Z",
+      "side": 1,
+      "message": "You can use the concatenation operator like this:\n\n  $dsn .\u003d \"appended text\";\n\nYou could also probably refactor the code to call connect and log_debug once, by doing something like:\n\n  my $db_user \u003d \u0027\u0027;\n  my $db_auth_from \u003d \"\u0027$SIPWISE_EXTRA_CNF\u0027\";\n\n  if ($mysql_root) {\n    $db_user \u003d \u0027root\u0027;\n    $db_auth_from \u003d \"user \u0027$db_user\u0027\";\n  } else {\n    $dsn .\u003d \"...\";\n  }\n\n  ...-\u003econnect($dsn, $db_user, ...)\n    or die \"... using $db_auth_from\" ...;\n  log_debug(\"... using $db_auth_from\");\n\n?",
+      "revId": "1a986c0b3ff300b62383b091fdae4b5854ea70eb",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "54250e9a_cf9f0ccc",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-10-11T22:03:39Z",
+      "side": 1,
+      "message": "unnecessary ;",
+      "range": {
+        "startLine": 100,
+        "startChar": 4,
+        "endLine": 100,
+        "endChar": 6
+      },
+      "revId": "1a986c0b3ff300b62383b091fdae4b5854ea70eb",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
