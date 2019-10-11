@@ -13,8 +13,7 @@ use IPC::System::Simple qw(system capturex);
 use Readonly;
 #----------------------------------------------------------------------
 Readonly my $CONSTANTS_YML => "/etc/ngcp-config/constants.yml";
-Readonly my $DEFAULT_MYSQL_USER => "sipwise";
-Readonly my $MYSQL_CREDENTIALS => "/etc/mysql/sipwise.cnf";
+Readonly my $SIPWISE_EXTRA_CNF => "/etc/mysql/sipwise_extra.cnf";
 Readonly my $DB_CFG => "/etc/default/ngcp-db";
 Readonly my $PW_UNDEF => "PW_UNDEF";
 Readonly my $DEFAULT_DBHOST => "127.0.0.1";
@@ -76,31 +75,6 @@ sub pwgen {
     return join "", @randoms;
 }
 
-sub get_sipwise_db_password {
-
-    my $mysql_creds = Config::Tiny->read($MYSQL_CREDENTIALS)
-        or die "Cannot open $MYSQL_CREDENTIALS: $ERRNO";
-
-    if (my $mysql_pass = $mysql_creds->{_}{SIPWISE_DB_PASSWORD}) {
-        $mysql_pass =~ s/^['"]|['"]$//g;
-        return $mysql_pass;
-    } else {
-        die "Cannot parse mysql credentials file $MYSQL_CREDENTIALS";
-    }
-
-    return;
-}
-
-sub get_mysql_credentials {
-
-    return ('root', '') if $mysql_root;
-
-    my $mysql_user = $DEFAULT_MYSQL_USER;
-    my $mysql_pass = get_sipwise_db_password();
-
-    return ($mysql_user, $mysql_pass);
-}
-
 sub get_nodename {
     my @lines = capturex( [ 0 ], "/usr/sbin/ngcp-nodename");
     my $l = shift @lines;
@@ -112,13 +86,22 @@ sub get_nodename {
 
 sub connect_db {
     my ($dbhost, $dbport) = @_;
-    my ($mysql_user, $mysql_pass) = get_mysql_credentials();
+    my $dsn = "DBI:mysql:database=mysql;host=${dbhost};port=${dbport}";
+    my $dbuser = '';
+    my $dbpass = '';
+    my $dbauthmsg = "'$SIPWISE_EXTRA_CNF'";
 
-    $dbh = DBI->connect("DBI:mysql:database=mysql;host=$dbhost;port=$dbport",
-                            $mysql_user, $mysql_pass,
-                             { PrintError => 1 })
-        or die "Can't connect to MySQL database 'mysql': ". $DBI::errstr;
-    log_debug("connected to $dbhost:$dbport as $mysql_user");
+    if ($mysql_root) {
+      $dbuser = 'root';
+      $dbauthmsg = "user '$dbuser'";
+    } else {
+      $dsn .= ";mysql_read_default_file=$SIPWISE_EXTRA_CNF";
+    }
+
+    $dbh = DBI->connect($dsn, $dbuser, $dbpass, { PrintError => 1 })
+        or die "Can't connect to MySQL database 'mysql' using $dbauthmsg: ". $DBI::errstr;
+    log_debug("connected to $dbhost:$dbport using $dbauthmsg");
+
     $dbh->do("SET sql_log_bin=0")
         or die "Cannot set sql_log_bin=0: ".$DBI::errstr;
 
@@ -240,10 +223,6 @@ sub sync_mysql_data {
     my $rc = 0;
 
     my $data = get_user_pass($yml->{credentials}{mysql});
-
-    # special handling for user sipwise as it is not in constants.yml
-    push @$data, { user => $DEFAULT_MYSQL_USER,
-                   pass => get_sipwise_db_password() };
 
     foreach my $pair (@{$data}) {
         if (defined $pair->{user} and defined $pair->{pass}) {
