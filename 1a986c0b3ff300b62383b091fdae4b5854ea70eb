@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "09f527da_20bb4c1d",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-14T11:36:23Z",
+      "side": 1,
+      "message": "Yeah! Your code is much better!",
+      "parentUuid": "7caa2e7d_e1106a57",
+      "revId": "1a986c0b3ff300b62383b091fdae4b5854ea70eb",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54250e9a_cf9f0ccc",
         "filename": "sbin/ngcp-sync-constants",
         "patchSetId": 5
@@ -30,6 +48,30 @@
       "writtenOn": "2019-10-11T22:03:39Z",
       "side": 1,
       "message": "unnecessary ;",
+      "range": {
+        "startLine": 100,
+        "startChar": 4,
+        "endLine": 100,
+        "endChar": 6
+      },
+      "revId": "1a986c0b3ff300b62383b091fdae4b5854ea70eb",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d258d680_148707fd",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-14T11:36:23Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "54250e9a_cf9f0ccc",
       "range": {
         "startLine": 100,
         "startChar": 4,
