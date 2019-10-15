@@ -78,7 +78,8 @@ Actions:
   fi
 
   printf "\
-  values <key>        print key value from YAML configuration files
+  values <key>        obsolete synonym for 'get'
+  get <key>           print key value from YAML configuration files
   help                display this help screen and exit
   version             display program version and exit
 \n"
@@ -134,6 +135,7 @@ case ${1:-} in
   init-mgmt|\
   init-shared|\
   initialise|\
+  get|\
   show|\
   values)
     main_action "$@"
