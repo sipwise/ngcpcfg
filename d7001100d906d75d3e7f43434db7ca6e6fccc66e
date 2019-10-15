@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4fe4a400_b17da880",
+        "filename": "scripts/gc",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-15T20:21:36Z",
+      "side": 1,
+      "message": "\u003e Is the idea to stop cleaning up there?\n\nYes, asked you  https://gerrit.mgm.sipwise.com/#/c/templates/+/34185/2/debian/ngcp-templates-pro.postinst@13  :-D\n\n\u003e and it seems better to keep this information together in the same repo?\n\nWe can abandone this. The goal here is to have a framework to remove all kind of garbage we have.\n\nCurrently all cleanup happens 1) silently 2) only during the upgrade 3) in random .postinst scripts.\n\nWith \u0027ngcpcfg gc\u0027 all of them in one place, we can trigger it any time and it is triggered automatically on apply. \nWe will also see the output -\u003e it will force us to clean list of files here. etc.\n\nSure we can just abandon this. no problems.",
+      "parentUuid": "72dbcc5a_5a4edf08",
+      "revId": "d7001100d906d75d3e7f43434db7ca6e6fccc66e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "618bc13d_eece086e",
         "filename": "scripts/gc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2019-10-15T14:40:59Z",
       "side": 1,
       "message": "This seems somewhat unrelated to ngcpcfg purpose. As in it encodes policy into a framework that should provide mechanism only?",
+      "revId": "d7001100d906d75d3e7f43434db7ca6e6fccc66e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0577771e_a7ffc9b5",
+        "filename": "scripts/gc",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-15T20:21:36Z",
+      "side": 1,
+      "message": "It is from templates.postinst and I suspected it is also kind of garbage removal :-D",
+      "parentUuid": "618bc13d_eece086e",
       "revId": "d7001100d906d75d3e7f43434db7ca6e6fccc66e",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
