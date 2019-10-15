@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "88fa1e64_8e651fcf",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-15T11:23:46Z",
+      "side": 1,
+      "message": "ACK, done.",
+      "parentUuid": "1a9040f6_0c7a2739",
+      "revId": "3e74405a5775e7e5434350a3e40e0050510e5a54",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b24db2c_82742182",
         "filename": "sbin/ngcpcfg",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "662a06b9_1550324d",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-15T11:23:46Z",
+      "side": 1,
+      "message": "Done\n\n\u003e \"Options available in High Availability setups only:\"\n\nIt is actions... I am trying to keep those naming convention:\n\nngcpcfg [\u003cglobal_options\u003e] \u003caction\u003e [\u003coptions\u003e]\n\notherwise it is hard to distinguish between them.",
+      "parentUuid": "4b24db2c_82742182",
+      "revId": "3e74405a5775e7e5434350a3e40e0050510e5a54",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac67611e_753d08d1",
         "filename": "sbin/ngcpcfg",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2019-10-15T10:27:29Z",
       "side": 1,
       "message": "Why \"extra actions\" here? It\u0027s also an HA specific feature, IIRC?",
+      "revId": "3e74405a5775e7e5434350a3e40e0050510e5a54",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58438f47_81b789d3",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-15T11:23:46Z",
+      "side": 1,
+      "message": "\"locker\" features are available on CE, so not a HA... maybe we should merge ngcp-ngcpcfg-locker into ngcp-ngcpcfg, but this is what we have now.",
+      "parentUuid": "ac67611e_753d08d1",
       "revId": "3e74405a5775e7e5434350a3e40e0050510e5a54",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
