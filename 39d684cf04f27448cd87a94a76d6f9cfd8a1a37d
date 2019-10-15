@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "653f6be6_b2a3eb93",
+        "filename": "scripts/values",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-10-15T09:29:52Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we issue/log a warning notice about its deprecation then?",
+      "revId": "39d684cf04f27448cd87a94a76d6f9cfd8a1a37d",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
