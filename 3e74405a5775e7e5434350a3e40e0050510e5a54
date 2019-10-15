@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9040f6_0c7a2739",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-10-15T10:27:29Z",
+      "side": 1,
+      "message": "wrong ordering/placement of show (you should use `sort` inside your editor :))",
+      "revId": "3e74405a5775e7e5434350a3e40e0050510e5a54",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b24db2c_82742182",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-10-15T10:27:29Z",
+      "side": 1,
+      "message": "s/only/specific/? Or if you\u0027d like to make it more obvious that it\u0027s available only in HA setups something like \"Options available in High Availability setups only:\"?",
+      "revId": "3e74405a5775e7e5434350a3e40e0050510e5a54",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac67611e_753d08d1",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-10-15T10:27:29Z",
+      "side": 1,
+      "message": "Why \"extra actions\" here? It\u0027s also an HA specific feature, IIRC?",
+      "revId": "3e74405a5775e7e5434350a3e40e0050510e5a54",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
