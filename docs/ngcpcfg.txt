@@ -403,6 +403,10 @@ defined password and save the result as /etc/ngcp-config-crypted.tgz.gpg.
 Note: This feature is only available if the ngcp-ngcpcfg-locker package is
 installed.
 
+  **get** <key>::
+
+Prints the value of <key> using ngcp config files as source.
+
   **help**::
 
 Display usage information and exit.
@@ -548,7 +552,7 @@ system isn't available).
 
   **values** <key>::
 
-Prints the value of <key> using ngcp config files as source.
+Obsolete synonym for 'get'.
 
 Usage examples
 --------------
