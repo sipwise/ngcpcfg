@@ -34,6 +34,24 @@
       "revId": "39d684cf04f27448cd87a94a76d6f9cfd8a1a37d",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e92510ad_a197dd12",
+        "filename": "scripts/values",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-10-15T09:37:06Z",
+      "side": 1,
+      "message": "I don\u0027t see any usage of `ngcpcfg values ...2\u003e\u00261` in our code, so it should be safe to print a warning on stderr, ACK",
+      "parentUuid": "320644a0_49d9c2fb",
+      "revId": "39d684cf04f27448cd87a94a76d6f9cfd8a1a37d",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
