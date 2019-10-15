@@ -48,30 +48,33 @@ else
   bailout
 fi
 
-echo "Testing ngcpcfg values: database.dbhost"
-value=$("$testsuite"/../sbin/ngcpcfg values database.dbhost)
-if [ "${value}" != "localhost" ] ; then
-  echo "Error caught: database.dbhost != 'localhost'"
-  bailout
-fi
+for action in values get ; do
+  echo "Testing ngcpcfg ${action} database.dbhost"
+  value=$("$testsuite"/../sbin/ngcpcfg "${action}" database.dbhost)
+  if [ "${value}" != "localhost" ] ; then
+    echo "Error caught: database.dbhost != 'localhost' (action '${action}')"
+    bailout
+  fi
 
-echo "Testing ngcpcfg values: ossbss.provisioning.database.user"
-value=$("$testsuite"/../sbin/ngcpcfg values ossbss.provisioning.database.user)
-if [ "${value}" != "soap" ] ; then
-  echo "Error caught: ossbss.provisioning.database.user != 'soap'"
-  bailout
-fi
+  echo "Testing ngcpcfg ${action} ossbss.provisioning.database.user"
+  value=$("$testsuite"/../sbin/ngcpcfg "${action}" ossbss.provisioning.database.user)
+  if [ "${value}" != "soap" ] ; then
+    echo "Error caught: ossbss.provisioning.database.user != 'soap' (action '${action}')"
+    bailout
+  fi
 
-echo "Testing ngcpcfg values: www_admin.fees_csv.element_order"
-value=$("$testsuite"/../sbin/ngcpcfg values www_admin.fees_csv.element_order)
-if [ "${value}" != "destination zone zone_detail onpeak_init_rate \
-onpeak_init_interval onpeak_follow_rate onpeak_follow_interval \
-offpeak_init_rate offpeak_init_interval offpeak_follow_rate \
-offpeak_follow_interval use_free_time" ] ;
-then
-  echo "Error caught: www_admin.fees_csv.element_order != expected value"
-  bailout
-fi
+
+  echo "Testing ngcpcfg ${action} www_admin.fees_csv.element_order"
+  value=$("$testsuite"/../sbin/ngcpcfg "${action}" www_admin.fees_csv.element_order)
+  if [ "${value}" != "destination zone zone_detail onpeak_init_rate \
+  onpeak_init_interval onpeak_follow_rate onpeak_follow_interval \
+  offpeak_init_rate offpeak_init_interval offpeak_follow_rate \
+  offpeak_follow_interval use_free_time" ] ;
+  then
+    echo "Error caught: www_admin.fees_csv.element_order != expected value (action '${action}')"
+    bailout
+  fi
+done
 
 rm -rf "$TMPDIR"
 
