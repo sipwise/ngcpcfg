@@ -57,9 +57,19 @@ request_confirmation() {
 rm_file() {
   local file="$1"
 
-  log_info "gc: removing file '${file}'"
-  if request_confirmation ; then
+  if [ ! -f "${folder}" ]; then
+    log_warn "File '${folder}' not found"
+    return 0
+  fi
+
+  if [ -s "${file}" ]; then
+    log_info "gc: removing empty file '${file}'"
     rm -f "${file}"
+  else
+    log_info "gc: removing file '${file}'"
+    if request_confirmation ; then
+      rm -f "${file}"
+    fi
   fi
 }
 
@@ -118,6 +128,13 @@ clean_etckeeper_files() {
   rm_conf "/etc/mysql/sipwise.cnf"                     # Remove after the nearest LTS.
 }
 
+############################################################
+# NOTE: Clean arbitrary/non-NGCP files which are unnecessary
+############################################################
+clean_arbitrary_files() {
+  rm_conf "/var/log/monit.log"        # Monit logs in /var/log/ngcp/monit.log
+}
+
 ################################################################
 # NOTE: Clean init scripts for non-Sipwise packages ONLY
 # (otherwise remove init script installation inside the package)
@@ -127,6 +144,9 @@ clean_obsolete_init_scripts() {
   rm_sysv "glusterfs-server"
   rm_sysv "grafana-server"
 }
+
+
+/var/log/monit.log
 
 # main script
 
@@ -142,6 +162,7 @@ while [ -n "${1:-}" ] ; do
 done
 
 clean_etckeeper_files         # backup is available in etckeeper/git
+clean_arbitrary_files         # backup is not available!
 clean_obsolete_init_scripts   # backup is available inside Debian packages
 
 exit 0
