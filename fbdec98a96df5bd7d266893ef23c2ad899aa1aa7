@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80b6a7e2_91041a96",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-10-15T09:44:02Z",
+      "side": 1,
+      "message": "Hm, are you sure it doesn\u0027t need the \"main_action \"$@\"\" from \"values\" here?",
+      "revId": "fbdec98a96df5bd7d266893ef23c2ad899aa1aa7",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
