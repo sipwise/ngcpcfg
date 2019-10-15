@@ -1,0 +1,149 @@
+#!/bin/bash
+# Purpose: clean obsolete and/or no longer necessary ngcp files
+################################################################################
+
+set -e
+set -u
+
+# support testsuite
+FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
+HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
+
+if ! [ -r "${FUNCTIONS}"/main ] ; then
+  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}" >&2
+  exit 1
+fi
+
+. "${FUNCTIONS}"/main
+
+log_debug "cd ${NGCPCTL_MAIN}"
+cd "${NGCPCTL_MAIN}"
+
+### Functions
+
+usage() {
+  printf "ngcpcfg gc [<OPTIONS>]
+
+  Clean obsolete and no longer necessary NGCP files.
+
+  Supported command line options:
+
+  --force        - perform cleanup without asking the confirmation
+\n"
+}
+
+request_confirmation() {
+  if "${FORCE:-false}" ; then
+    log_info "Forcing action due to option '--force'"
+    return 0
+  fi
+
+  log_info_n "Please confirm 'yes' or 'no': "
+
+  # clearing STDIN
+  while read -r -t 0; do read -r; done
+
+  while true ; do
+    read a
+    case "${a,,}" in
+      yes) return 0 ;;
+      no) return 1 ;;
+      *) log_info_n "Please answer 'yes' or 'no': " ;;
+    esac
+    unset a
+  done
+}
+
+rm_file() {
+  local file="$1"
+
+  log_info "gc: removing file '${file}'"
+  if request_confirmation ; then
+    rm -f "${file}"
+  fi
+}
+
+rm_folder() {
+  local folder="$1"
+
+  if [ ! -d "${folder}" ]; then
+    log_warn "Folder '${folder}' not found"
+    return 0
+  fi
+
+  if [ -z "$(ls -A "${folder}")" ]; then
+    log_info "gc: removing empty folder '${folder}'"
+    rmdir "${folder}"
+  else
+    log_info "gc: removing NOT empty folder '${folder}', listing:"
+    ls -A -1 "${folder}"
+    if request_confirmation ; then
+      rm -rf "${folder:?}"
+    fi
+  fi
+}
+
+rm_conf() {
+  local object="$1"
+
+  if [ -f "${object}" ]; then
+    rm_file "${object}"
+  elif [ -d "${object}" ]; then
+    rm_dir "${object}"
+  else
+    log_debug "gc: '${object}' not found"
+  fi
+}
+
+rm_sysv() {
+  local service="$1"
+
+  log_debug "gc: update-rc.d -f ${service} remove"
+  if update-rc.d -f "${service}" remove ; then
+    log_info "Removed SysV init script for service '${service}'"
+  else
+    log_warn "Failed to remove SysV init script for service '${service}' (see error above)"
+  fi
+}
+
+###########################################################
+# NOTE: Clean ONLY files generated from NGCP tt2 templates!
+###########################################################
+clean_etckeeper_files() {
+  # obsolete in mr8.0
+  rm_conf "/etc/ngcp-sems/dsm/audio_cache.conf"        # Remove after the nearest LTS.
+  rm_conf "/etc/ngcp-sems/dsm/party_call_control.conf" # Remove after the nearest LTS.
+  rm_conf "/etc/ngcp-sems/dsm/party_call_control.dsm"  # Remove after the nearest LTS.
+  # obsolete in mr8.1
+  rm_conf "/etc/mysql/sipwise.cnf"                     # Remove after the nearest LTS.
+}
+
+################################################################
+# NOTE: Clean init scripts for non-Sipwise packages ONLY
+# (otherwise remove init script installation inside the package)
+################################################################
+clean_obsolete_init_scripts() {
+  rm_sysv "asterisk"
+  rm_sysv "glusterfs-server"
+  rm_sysv "grafana-server"
+}
+
+# main script
+
+FORCE=false
+
+while [ -n "${1:-}" ] ; do
+  option=$1
+  case "${option}" in
+    --help) usage ; exit 0 ;;
+    --force) FORCE=true ; shift ;;
+    *) break ;;
+  esac
+done
+
+clean_etckeeper_files         # backup is available in etckeeper/git
+clean_obsolete_init_scripts   # backup is available inside Debian packages
+
+exit 0
+
+## END OF FILE #################################################################

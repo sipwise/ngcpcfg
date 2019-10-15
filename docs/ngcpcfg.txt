@@ -295,7 +295,7 @@ Actions and action specific options
 
   **apply** [--force-all-services] [<commit_message>]::
 
-Executes the _build_, _services_ and _commit_ commands in a batch
+Executes the _build_, _gc_, _services_ and _commit_ commands in a batch
 (assuming each command worked as expected). This option serves as a shortcut for
 the most commonly executed commands. If there are any outstanding changes that
 need to be committed, then the commit message needs to be provided. This is
@@ -402,6 +402,10 @@ Encrypt /etc/ngcp-config and all resulting configuration files with a user
 defined password and save the result as /etc/ngcp-config-crypted.tgz.gpg.
 Note: This feature is only available if the ngcp-ngcpcfg-locker package is
 installed.
+
+  **gc** [<options>]::
+
+Perform garbage collection to remove obsolete and no longer necessary files.
 
   **get** <key>::
 
