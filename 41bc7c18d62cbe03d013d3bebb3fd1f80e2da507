@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04b2ba5b_68c940eb",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-10-15T14:51:54Z",
+      "side": 1,
+      "message": "To have a more visually grouped output I\u0027d use instead:\n\nActions (High Availability):\n\nActions (extra):\n\n  or\n\nActions (optional):\n\n  or\n\nActions (plugins):",
+      "range": {
+        "startLine": 66,
+        "startChar": 12,
+        "endLine": 66,
+        "endChar": 56
+      },
+      "revId": "41bc7c18d62cbe03d013d3bebb3fd1f80e2da507",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
