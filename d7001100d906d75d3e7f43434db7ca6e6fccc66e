@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72dbcc5a_5a4edf08",
+        "filename": "scripts/gc",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-10-15T14:40:59Z",
+      "side": 1,
+      "message": "Hmm, why this in addition to the cleanup in templates? Is the idea to stop cleaning up there?\n\nI\u0027m not sure this feels right though, as the removals happen in the templates.git repo, and it seems better to keep this information together in the same repo?",
+      "revId": "d7001100d906d75d3e7f43434db7ca6e6fccc66e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "618bc13d_eece086e",
+        "filename": "scripts/gc",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-10-15T14:40:59Z",
+      "side": 1,
+      "message": "This seems somewhat unrelated to ngcpcfg purpose. As in it encodes policy into a framework that should provide mechanism only?",
+      "revId": "d7001100d906d75d3e7f43434db7ca6e6fccc66e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
