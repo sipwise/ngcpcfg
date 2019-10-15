@@ -38,6 +38,7 @@ fi
 
 "${SCRIPTS}"/build
 "${SCRIPTS}"/services "$@"
+"${SCRIPTS}"/gc --force "$@"
 "${SCRIPTS}"/commit "$@"
 
 # We "commit" AFTER we "build", therefore the state information is out of date

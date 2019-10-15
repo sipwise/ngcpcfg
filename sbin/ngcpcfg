@@ -47,6 +47,7 @@ Actions:
   commit [<msg>]      commit and record changes (without pushing)
   del [<opts>]        delete YAML option from defined file
   diff [<opts>]       display pending configuration changes
+  gc [<opts>]         garbage collector (clean no longer unnecessary config files)
   get <key>           print key value from YAML configuration files
   help                display this help screen and exit
   initialise          initialise setup (to be executed only once on setup)
@@ -154,6 +155,7 @@ case ${1:-} in
   decrypt|\
   diff|\
   encrypt|\
+  gc|\
   log|\
   pull|\
   push|\
