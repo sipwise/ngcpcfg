@@ -16,6 +16,24 @@
       "revId": "36a11888d60a8725881cb01c055924244b199fa2",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6574c995_8e40f9e5",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 7
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-15T20:10:38Z",
+      "side": 1,
+      "message": "See https://gerrit.mgm.sipwise.com/#/c/ngcpcfg/+/34237/3/scripts/values@1\n\n1) it is printed to STDERR, while all code we have uses output from STDOUT, actually it is nice to see it and remove \"ngcpcfg values\" usage where possible. See https://gerrit.mgm.sipwise.com/#/c/templates/+/34277/ + uhttps://gerrit.mgm.sipwise.com/#/c/templates/+/34277/\nIt was detected just due to the warning above and IMHO ngcpcfg values there is slow and unnecessary.",
+      "parentUuid": "cc1d61ef_f295b3aa",
+      "revId": "36a11888d60a8725881cb01c055924244b199fa2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }

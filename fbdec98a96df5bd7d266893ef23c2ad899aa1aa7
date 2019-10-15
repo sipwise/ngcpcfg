@@ -16,6 +16,24 @@
       "revId": "fbdec98a96df5bd7d266893ef23c2ad899aa1aa7",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cce355d9_54b589f7",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-15T20:10:38Z",
+      "side": 1,
+      "message": "I miss this your question initially. Is it still topical?",
+      "parentUuid": "80b6a7e2_91041a96",
+      "revId": "fbdec98a96df5bd7d266893ef23c2ad899aa1aa7",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
