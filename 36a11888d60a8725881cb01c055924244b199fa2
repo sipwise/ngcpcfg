@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc1d61ef_f295b3aa",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 7
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-10-15T14:55:08Z",
+      "side": 1,
+      "message": "Hmm, while I tend to like to print this kind of warnings so that we can migrate. In this case this will mean we need to all kinds of version-specific code in mr-independent repos that need to work with old releases too. :/",
+      "revId": "36a11888d60a8725881cb01c055924244b199fa2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
