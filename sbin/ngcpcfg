@@ -40,51 +40,54 @@ usage() {
   printf "Usage: %s <action> [<opts>]
 
 Actions:
-  check [<path>]      validate YAML configuration files
-  build [<opts>]      generate/update configuration files
-  services [<opts>]   execute service handlers for modified configuration files
-  commit [<msg>]      commit and record changes (without pushing)
   apply [<msg>]       a short-cut for build-services-commit
-  diff [<opts>]       display pending configuration changes
-  status [<opts>]     display status of configuration file
-  log [<opts>]        show log of config changes
-  show [<id>]         show latest config change (or <id> if specified)
+  build [<opts>]      generate/update configuration files
+  check [<path>]      validate YAML configuration files
   clean [<opts>]      clean /etc/ngcp-config folder configs/templates (see available options)
-  set [<opts>]        set YAML option in defined file
+  commit [<msg>]      commit and record changes (without pushing)
   del [<opts>]        delete YAML option from defined file
+  diff [<opts>]       display pending configuration changes
+  get <key>           print key value from YAML configuration files
+  help                display this help screen and exit
+  initialise          initialise setup (to be executed only once on setup)
+  log [<opts>]        show log of config changes
   patch [<opts>]      create customtt files using patchtt and templates
+  services [<opts>]   execute service handlers for modified configuration files
+  set [<opts>]        set YAML option in defined file
+  show [<id>]         show latest config change (or <id> if specified)
+  status [<opts>]     display status of configuration file
+  values <key>        obsolete synonym for 'get'
+  version             display program version and exit
+
 " "$PN"
 
   # display only if ngcp-ngcpcfg-ha is available
   if [ -r /usr/share/ngcp-ngcpcfg/functions/ha_features ] ; then
+    printf "The High Availability setup only actions:\n"
     printf "  push [<opts>]       push modifications to other node(s) (shared storage setup only)\n"
     printf "  push-parallel       push modifications to other node(s) in parallel (shared storage setup only)\n"
     printf "  pull                retrieve modifications from shared storage (shared storage setup only)\n"
+    printf "\n"
+  fi
+
+
+  if [ -r /usr/share/ngcp-ngcpcfg/scripts/encrypt ] || \
+     [ -r /usr/share/ngcp-ngcpcfg/scripts/init-mgmt ]; then
+    printf "The extra action(s):\n"
   fi
 
   # display only if ngcp-ngcpcfg-locker is available
   if [ -r /usr/share/ngcp-ngcpcfg/scripts/encrypt ] ; then
-    printf "  encrypt             encrypt /etc/ngcp-config and all resulting configuration files\n"
     printf "  decrypt             decrypt /etc/ngcp-config-crypted.tgz.gpg and restore config files\n"
+    printf "  encrypt             encrypt /etc/ngcp-config and all resulting configuration files\n"
   fi
-
-  printf "\
-  initialise          initialise setup (to be executed only once on setup)
-"
 
   # display only if init-mgmt is available
   if [ -r /usr/share/ngcp-ngcpcfg/scripts/init-mgmt ] ; then
     printf "  init-mgmt <srv>     set up mgmt server for Carrier ONLY environment (to be executed only once)\n"
   fi
 
-  printf "\
-  values <key>        obsolete synonym for 'get'
-  get <key>           print key value from YAML configuration files
-  help                display this help screen and exit
-  version             display program version and exit
-\n"
-
-  printf "For further usage information and options see the ngcpcfg(8) man page.\n"
+  printf "\nFor further usage information and options see the ngcpcfg(8) man page.\n"
 }
 
 version() {
