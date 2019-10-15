@@ -104,6 +104,24 @@
       "revId": "3e74405a5775e7e5434350a3e40e0050510e5a54",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d618bae_661eb774",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-15T11:27:28Z",
+      "side": 1,
+      "message": "This is the current status https://paste.mgm.sipwise.com/show/5975/",
+      "parentUuid": "58438f47_81b789d3",
+      "revId": "3e74405a5775e7e5434350a3e40e0050510e5a54",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
