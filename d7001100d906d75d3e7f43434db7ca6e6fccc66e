@@ -2,6 +2,91 @@
   "comments": [
     {
       "key": {
+        "uuid": "30743780_a4dd5a96",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-10-16T12:35:23Z",
+      "side": 1,
+      "message": "\"no longer unnecessary\"? 8-)",
+      "revId": "d7001100d906d75d3e7f43434db7ca6e6fccc66e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5be8c23_2b2a1e10",
+        "filename": "scripts/gc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-10-16T12:35:23Z",
+      "side": 1,
+      "message": "s/the/for/",
+      "revId": "d7001100d906d75d3e7f43434db7ca6e6fccc66e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20e4b976_91f259bf",
+        "filename": "scripts/gc",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-10-16T12:35:23Z",
+      "side": 1,
+      "message": "non-empty?",
+      "revId": "d7001100d906d75d3e7f43434db7ca6e6fccc66e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d759c54d_ae4d3297",
+        "filename": "scripts/gc",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-10-16T12:35:23Z",
+      "side": 1,
+      "message": "you\u0027re mixing \"removing\" and \"removed\", keep it consistent?",
+      "revId": "d7001100d906d75d3e7f43434db7ca6e6fccc66e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "376f3df3_231308a5",
+        "filename": "scripts/gc",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-10-16T12:35:23Z",
+      "side": 1,
+      "message": "hm, this will spill warnings on every single \"apply\" run then for services that have been removed already? (also if it fails then i\u0027d expect log_error)",
+      "revId": "d7001100d906d75d3e7f43434db7ca6e6fccc66e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72dbcc5a_5a4edf08",
         "filename": "scripts/gc",
         "patchSetId": 5
