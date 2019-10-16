@@ -34,6 +34,24 @@
       "revId": "36a11888d60a8725881cb01c055924244b199fa2",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56f18ffa_05d7f255",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 7
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-10-16T11:10:14Z",
+      "side": 1,
+      "message": "I\u0027m not worried about where the output goes, but about having to add yet more compat code in things like vagrant-ngcp where we use values, and we\u0027ll need to do stuff like:\n\n  if ngcpcfg has get\n    ngcpcfg get\n  elif ngcpcfg has values\n    ngcpcfg values\n  else\n    manual fallback",
+      "parentUuid": "6574c995_8e40f9e5",
+      "revId": "36a11888d60a8725881cb01c055924244b199fa2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
