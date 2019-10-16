@@ -52,6 +52,24 @@
       "revId": "36a11888d60a8725881cb01c055924244b199fa2",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7eb7a8ff_fa1fab45",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 7
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-16T12:01:39Z",
+      "side": 1,
+      "message": "This is a price for migration.\nAll the repos which have branches support will be just migrated from values-\u003eget, I am preparing reviews here.\n\nAs for release-independent repos like vagrant, yes, like you said. But honestly vagrant/vmbuilder/jenkins-config are only the repos on my mind.",
+      "parentUuid": "56f18ffa_05d7f255",
+      "revId": "36a11888d60a8725881cb01c055924244b199fa2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
