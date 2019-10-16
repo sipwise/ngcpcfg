@@ -124,6 +124,24 @@
       "revId": "36a11888d60a8725881cb01c055924244b199fa2",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e578b283_87ddb9b1",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 7
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-16T13:43:01Z",
+      "side": 1,
+      "message": "Maybe we should consider to make them release specific... maybe for vagrant-ngcp.git  it is a time... sure sometimes mass backports will be necessary...",
+      "parentUuid": "b1f3187c_09abee51",
+      "revId": "36a11888d60a8725881cb01c055924244b199fa2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
