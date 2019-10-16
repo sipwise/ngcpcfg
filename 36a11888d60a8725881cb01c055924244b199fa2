@@ -88,6 +88,24 @@
       "revId": "36a11888d60a8725881cb01c055924244b199fa2",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c211d0e5_329fe7ac",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 7
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-16T12:53:20Z",
+      "side": 1,
+      "message": "\u003e ... do we actually have any supported systems out there that don\u0027t provide \u0027ngcpcfg values\u0027 yet and where we need to do the manual fallback?\n\nyes. \"vagrant up ce-2.8\" forever/until we need this :-)\nkeep in mind some vagrant provisioning scripts are built-in into vagrant.box files. Maybe we should start branching it but this is a separate topic.\n\nI am find with warning here and adding wrappers where it is necessary until it is necessary. 99% are internal tools.",
+      "parentUuid": "f6161023_aa837911",
+      "revId": "36a11888d60a8725881cb01c055924244b199fa2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
