@@ -106,6 +106,24 @@
       "revId": "36a11888d60a8725881cb01c055924244b199fa2",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b1f3187c_09abee51",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 7
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-10-16T13:29:33Z",
+      "side": 1,
+      "message": "I\u0027m also fine with the warning, and it also means users will not get caught off-guard in case they did not notice the deprecation. I guess I just find it slightly annoying that we cannot ever remove this kind of support for ancient releases from some of the version-agnostic repos, even for versions that we are not even supporting any longer. :)",
+      "parentUuid": "c211d0e5_329fe7ac",
+      "revId": "36a11888d60a8725881cb01c055924244b199fa2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
