@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c256d48_3cee5b04",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2019-10-17T08:42:22Z",
+      "side": 1,
+      "message": "else {exit 1;}\n\n?",
+      "revId": "b462c15f3928a3e8af68e1d6ad52be0234ed479b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
