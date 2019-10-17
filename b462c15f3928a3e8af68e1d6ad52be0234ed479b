@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "de889ea4_64a17125",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-10-17T11:08:47Z",
+      "side": 1,
+      "message": "Perhaps use IO::Prompt::Tiny instead? We are using that too in ngcp-support. Although I see ngcp-panel uses IO::Prompt. It would be nice to standardize on one. When I checking for such support, I recall checking them all, and deciding on ::Tiny as the best for what we generally want.",
+      "revId": "b462c15f3928a3e8af68e1d6ad52be0234ed479b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c256d48_3cee5b04",
         "filename": "sbin/ngcp-sync-constants",
         "patchSetId": 1
