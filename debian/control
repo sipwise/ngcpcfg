@@ -16,6 +16,7 @@ Build-Depends:
  libdbi-perl,
  libhash-merge-perl,
  libio-interface-perl,
+ libio-prompt-perl,
  libipc-system-simple-perl,
  libnet-netmask-perl,
  libreadonly-perl,
