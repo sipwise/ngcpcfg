@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "3670483a_b6bcd07a",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-10-17T14:22:12Z",
+      "side": 1,
+      "message": "As mentioned I checked the various implementations and what IO::Prompter is doing is over the top, for what we need.\n\nI\u0027ve prepared now a review to switch ngcp-panel to use IO::Prompt::Tiny, and another for BulkProcessor.",
+      "parentUuid": "c9566e7f_3ff41647",
+      "revId": "b462c15f3928a3e8af68e1d6ad52be0234ed479b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c256d48_3cee5b04",
         "filename": "sbin/ngcp-sync-constants",
         "patchSetId": 1
