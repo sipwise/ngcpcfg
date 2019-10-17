@@ -26,8 +26,8 @@ scripts/clean               usr/share/ngcp-ngcpcfg/scripts/
 scripts/commit              usr/share/ngcp-ngcpcfg/scripts/
 scripts/del                 usr/share/ngcp-ngcpcfg/scripts/
 scripts/diff                usr/share/ngcp-ngcpcfg/scripts/
-scripts/get                 usr/share/ngcp-ngcpcfg/scripts/
 scripts/etckeeper           usr/share/ngcp-ngcpcfg/scripts/
+scripts/get                 usr/share/ngcp-ngcpcfg/scripts/
 scripts/initialise          usr/share/ngcp-ngcpcfg/scripts/
 scripts/log                 usr/share/ngcp-ngcpcfg/scripts/
 scripts/patch               usr/share/ngcp-ngcpcfg/scripts/
