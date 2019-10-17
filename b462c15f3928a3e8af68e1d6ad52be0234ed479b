@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "053d627f_87f53b2f",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-10-17T11:09:37Z",
+      "side": 1,
+      "message": "Ah hah, no, even worse the panel uses IO::Prompt_er_! So we\u0027d be using three different implementations. :D",
+      "parentUuid": "de889ea4_64a17125",
+      "revId": "b462c15f3928a3e8af68e1d6ad52be0234ed479b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c256d48_3cee5b04",
         "filename": "sbin/ngcp-sync-constants",
         "patchSetId": 1
