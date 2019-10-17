@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c9566e7f_3ff41647",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-17T12:48:31Z",
+      "side": 1,
+      "message": "Converted to IO::Prompter used by ngcp-panel...\n\nhttps://metacpan.org/pod/IO::Prompter#Completing-from-your-own-input-history\n\nCAVEATS\n\n    Several features of this module are known to have problems under Windows. If using that platform, you may have more success (and less distress) by trying IO::Prompt::Tiny, IO::Prompt::Simple, or IO::Prompt::Hooked first.\n\n\n\nOh....",
+      "parentUuid": "053d627f_87f53b2f",
+      "revId": "b462c15f3928a3e8af68e1d6ad52be0234ed479b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c256d48_3cee5b04",
         "filename": "sbin/ngcp-sync-constants",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "writtenOn": "2019-10-17T08:42:22Z",
       "side": 1,
       "message": "else {exit 1;}\n\n?",
+      "revId": "b462c15f3928a3e8af68e1d6ad52be0234ed479b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e32e4acb_100a77fc",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-17T12:48:31Z",
+      "side": 1,
+      "message": "Right... I had die here... but in last second optimisation moved it to line 105",
+      "parentUuid": "0c256d48_3cee5b04",
       "revId": "b462c15f3928a3e8af68e1d6ad52be0234ed479b",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
