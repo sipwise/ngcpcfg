@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "c462cb67_1a71d0f9",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-10-18T21:23:41Z",
+      "side": 1,
+      "message": "TBH I don\u0027t see why we need to introduce a new dependency here on IO::Prompter, this is not preserving an existing implementation, this is new code with new deps.\n\nAlso ngcp-support already uses IO::Prompt::Tiny since mr5.3, so both modules are already present there w/o pulling in new packages.",
+      "parentUuid": "6bb210ec_6da3e491",
+      "revId": "b462c15f3928a3e8af68e1d6ad52be0234ed479b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c256d48_3cee5b04",
         "filename": "sbin/ngcp-sync-constants",
         "patchSetId": 1
