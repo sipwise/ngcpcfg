@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "6bb210ec_6da3e491",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-18T07:31:56Z",
+      "side": 1,
+      "message": "I have to backport this to LTS mr7.5.1+ at least.\nSo I would keep it in the current state.\nI am fine to migrate it to IO::Prompt::Tiny in trunk,\nI believe we should stay on IO::Prompter for old releases (to match ngcp-panel there). ACK?",
+      "parentUuid": "3670483a_b6bcd07a",
+      "revId": "b462c15f3928a3e8af68e1d6ad52be0234ed479b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c256d48_3cee5b04",
         "filename": "sbin/ngcp-sync-constants",
         "patchSetId": 1
