@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "78291048_7c4695e5",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-21T09:31:37Z",
+      "side": 1,
+      "message": "Because I have to backport the fix to mr7.5.1+ at least (maybe even further if is requested).\nThe old releases have IO:Prompts installed and no IO::Prompt::Tiny\n\nShould I submit this to trunk AS IS and backport + migrade IO::Prompter -\u003e IO::Prompt::Tiny  in trunk?",
+      "parentUuid": "c462cb67_1a71d0f9",
+      "revId": "b462c15f3928a3e8af68e1d6ad52be0234ed479b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c256d48_3cee5b04",
         "filename": "sbin/ngcp-sync-constants",
         "patchSetId": 1
