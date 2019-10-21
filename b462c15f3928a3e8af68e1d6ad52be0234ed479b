@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "976d5eaa_26da4d9d",
+        "filename": "sbin/ngcp-sync-constants",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-10-21T13:50:06Z",
+      "side": 1,
+      "message": "Oh, so these do not have ngcp-support-access installed? Ok then.\n\nSure, then let\u0027s use IO::Prompter and then switch to IO::Prompt::Tiny in trunk only. (Even then I don\u0027t see much danger in pulling in a new module such as IO::Prompt::Tiny in a backport, but I\u0027m fine being conservative too. :)",
+      "parentUuid": "78291048_7c4695e5",
+      "revId": "b462c15f3928a3e8af68e1d6ad52be0234ed479b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c256d48_3cee5b04",
         "filename": "sbin/ngcp-sync-constants",
         "patchSetId": 1
