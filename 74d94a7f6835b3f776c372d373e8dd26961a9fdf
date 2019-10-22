@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1baca2c0_7961f652",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-10-22T22:51:24Z",
+      "side": 1,
+      "message": "did you mean s/by/but/?",
+      "revId": "74d94a7f6835b3f776c372d373e8dd26961a9fdf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
