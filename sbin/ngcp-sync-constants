@@ -11,7 +11,7 @@ use YAML::XS;
 use Getopt::Long;
 use IPC::System::Simple qw(system capturex);
 use Readonly;
-use IO::Prompter;
+use Term::ReadPassword;
 #----------------------------------------------------------------------
 Readonly my $CONSTANTS_YML => "/etc/ngcp-config/constants.yml";
 Readonly my $SIPWISE_EXTRA_CNF => "/etc/mysql/sipwise_extra.cnf";
@@ -104,8 +104,8 @@ sub connect_db {
     } else {
       warn "Cannot connect to MySQL database 'mysql' using $dbauthmsg: $DBI::errstr\n";
       if ($mysql_root) {
-        printf "\nPlease provide valid password for MariaDB user '$dbuser': ";
-        $dbpass = prompt('', -echo=>'*', -v, -hNONE);
+        $dbpass = read_password("Please provide valid password for MariaDB user '$dbuser': ",
+                                undef, 1);
 
         $dbh = DBI->connect($dsn, $dbuser, $dbpass, { PrintError => 0 })
             or die "Cannot connect to MySQL database 'mysql' using $dbauthmsg with provided password: $DBI::errstr\n";
