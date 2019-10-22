@@ -58,6 +58,7 @@ Depends:
  libdbi-perl,
  libhash-merge-perl,
  libio-interface-perl,
+ libio-prompter-perl,
  libipc-system-simple-perl,
  libnet-netmask-perl,
  libngcp-template-perl,
