@@ -46,7 +46,7 @@ killall tt2-daemon 2>/dev/null || true
 if [ -n "${NGCP_SOCKETFILE:-}" ] ; then
   log_debug "Using $NGCP_SOCKETFILE as tt2-daemon socket file as set via 'NGCP_SOCKETFILE'."
 else
-  NGCP_SOCKETFILE='/var/run/ngcpcfg.socket'
+  NGCP_SOCKETFILE='/run/ngcpcfg.socket'
 fi
 rm -f "${NGCP_SOCKETFILE}"
 

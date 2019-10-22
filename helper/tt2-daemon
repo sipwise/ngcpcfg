@@ -38,7 +38,7 @@ sub daemonize {
 }
 
 sub get_server_socket {
-    my $NGCP_SOCKETFILE = $ENV{'NGCP_SOCKETFILE'} //= '/var/run/ngcpcfg.socket';
+    my $NGCP_SOCKETFILE = $ENV{'NGCP_SOCKETFILE'} //= '/run/ngcpcfg.socket';
 
     my $server = IO::Socket::UNIX->new(
         'Type'      => SOCK_STREAM(),

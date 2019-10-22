@@ -1,7 +1,7 @@
 [client]
 
 port                              = [% database.dbport %]
-socket                            = /var/run/mysqld/mysqld.sock
+socket                            = /run/mysqld/mysqld.sock
 default_character_set             = utf8
 
 #----------------------------------------------------------------
@@ -21,7 +21,7 @@ syslog
 
 user                              = mysql
 port                              = [% database.dbport %]
-socket                            = /var/run/mysqld/mysqld.sock
+socket                            = /run/mysqld/mysqld.sock
 
 max_connections                   = 2048
 back_log                          = 128
@@ -43,7 +43,7 @@ datadir                           = /var/lib/mysql
 tmpdir                            = /tmp
 language                          = /usr/share/mysql/english
 log-error                         = /var/log/mysql/mysqld.err
-pid-file                          = /var/run/mysqld/mysqld.pid
+pid-file                          = /run/mysqld/mysqld.pid
 log_slow_queries                  = /var/log/mysql/slow-queries.log
 log_output                        = FILE
 long_query_time                   = 5

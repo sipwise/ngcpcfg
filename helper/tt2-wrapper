@@ -1,6 +1,6 @@
 #!/bin/bash
 
-NGCP_SOCKETFILE="${NGCP_SOCKETFILE:-/var/run/ngcpcfg.socket}"
+NGCP_SOCKETFILE="${NGCP_SOCKETFILE:-/run/ngcpcfg.socket}"
 
 if [ ! -e "$NGCP_SOCKETFILE" ] ; then
   echo "ERROR: Wrong ngcpcfg tt2-daemon socket file: $NGCP_SOCKETFILE" >&2
