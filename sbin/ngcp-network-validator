@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Storable qw(dclone);
+use List::Util qw(any);
 use Getopt::Long qw(:config posix_default no_ignorecase auto_help auto_version);
 use Pod::Usage;
 use YAML::XS qw();
@@ -68,6 +69,7 @@ my $schema_iface = YAML::XS::LoadFile($schema_tmpl_iface_file)
 # Data to track some manual out-of-schema validation.
 my %miss_peer;
 my %miss_iface;
+my %miss_iface_api_int;
 my %dupe_dbnode;
 my %dupe_ip;
 my %dupe_mac;
@@ -169,6 +171,10 @@ foreach my $hostname (sort keys %{$yaml->{hosts}}) {
             $host->{$iface}->{hwaddr} ne '00:00:00:00:00:00') {
             push @{$dupe_mac{$host->{$iface}->{hwaddr}}}, "$hostname/$iface";
         }
+        if ($iface ne 'lo' and
+            any { $_ eq 'api_int' } @{$host->{$iface}->{type}}) {
+            $miss_iface_api_int{$iface}++;
+        }
 
         # Interface aliases.
         if ($iface =~ m/:/) {
@@ -254,6 +260,7 @@ eval {
 # Perform out-of-schema checks.
 $errors += miss_check(\%miss_peer, '[/hosts/<host>] Missing peer');
 $errors += miss_check(\%miss_iface, '[/hosts/<host>/<iface>] Missing definition for interface declared in [/hosts/<host>/interfaces]');
+$errors += miss_check(\%miss_iface_api_int, '[/hosts/<host>/<iface>] Interface cannot have api_int type');
 $errors += dupe_check(\%dupe_dbnode, '[/hosts/<host>/dbnode] Duplicate dbnode index');
 $errors += dupe_check(\%dupe_ip, '[/hosts/<host>/<iface>/ip] Duplicate interface IP');
 $errors += dupe_check(\%dupe_mac, '[/hosts/<host>/<iface>/hwaddr] Duplicate interface MAC');
