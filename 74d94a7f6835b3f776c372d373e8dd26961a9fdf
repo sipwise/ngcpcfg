@@ -16,6 +16,24 @@
       "revId": "74d94a7f6835b3f776c372d373e8dd26961a9fdf",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b9e3fc6_1a77c214",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-23T08:50:08Z",
+      "side": 1,
+      "message": "Up to Kirill here... and we probably should check all the customers for non-lo api_into to have the answer \"Why?\" it it there. To prevent HUGE problems in several years on their upgrade.\n\n\nP.S. should we have upgrade check_step to catch this BEFORE the upgrade and not in the middle of upgrade? IMHO YES. Otherwise apply at the end of upgrade will fail.",
+      "parentUuid": "1baca2c0_7961f652",
+      "revId": "74d94a7f6835b3f776c372d373e8dd26961a9fdf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
