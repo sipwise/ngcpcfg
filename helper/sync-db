@@ -62,82 +62,85 @@ exit 0;
 
 sub db_connect
 {
-	my $dbh = DBI->connect("DBI:mysql:database=${dbname};host=${dbhost};port=${dbport};"
-                        . "mysql_read_default_file=${dbcredentials}",
-						"", "", { PrintError => 1 });
-	unless(defined $dbh) {
-		print "Error: Could not connect to database '$dbname' at '$dbhost:$dbport' using '${dbcredentials}': $DBI::errstr\n";
-		exit 1;
-	}
-	return $dbh;
+    my $dbh = DBI->connect("DBI:mysql:database=${dbname};host=${dbhost};port=${dbport};"
+                           . "mysql_read_default_file=${dbcredentials}",
+                           "", "", { PrintError => 1 });
+    unless (defined $dbh) {
+        print "Error: Could not connect to database '$dbname' at '$dbhost:$dbport' using '${dbcredentials}': $DBI::errstr\n";
+        exit 1;
+    }
+    return $dbh;
 }
 
 sub generic_enum_sync {
-	my $dbh = shift;
-	my $config_hash = shift;
-	my $usr_pref = shift;
-	my $dom_pref = shift;
-	my $peer_pref = shift;
-	my $pref_name = shift;
-	my $sth = $dbh->prepare("select id from voip_preferences where attribute=?");
-	$sth->execute($pref_name);
-	my $res = $sth->fetchrow_hashref();
-	unless(defined $res) {
-	  print "Error: Could not find preference '$pref_name' in db\n";
-	  return;
-	}
-	my $pref_id = $res->{id};
-	$sth->finish;
+    my $dbh = shift;
+    my $config_hash = shift;
+    my $usr_pref = shift;
+    my $dom_pref = shift;
+    my $peer_pref = shift;
+    my $pref_name = shift;
 
-	my $enum_insert_sth = $dbh->prepare("insert into voip_preferences_enum (preference_id, label, value, usr_pref, dom_pref, peer_pref) values(?, ?, ?, ?, ?, ?)");
-	my $enum_update_sth = $dbh->prepare("update voip_preferences_enum set value=? where id=?");
-	my $enum_delete_sth = $dbh->prepare("delete from voip_preferences_enum where id=?");
-	$sth = $dbh->prepare("select id, label, value from voip_preferences_enum where preference_id=?");
-	$sth->execute($pref_id);
+    my $sth = $dbh->prepare("select id from voip_preferences where attribute=?");
+    $sth->execute($pref_name);
+    my $res = $sth->fetchrow_hashref();
+    unless (defined $res) {
+        print "Error: Could not find preference '$pref_name' in db\n";
+        return;
+    }
+    my $pref_id = $res->{id};
+    $sth->finish;
 
-	my $db_hash = $sth->fetchall_hashref('label');
-	$sth->finish;
+    my $enum_insert_sth = $dbh->prepare("insert into voip_preferences_enum (preference_id, label, value, usr_pref, dom_pref, peer_pref) values(?, ?, ?, ?, ?, ?)");
+    my $enum_update_sth = $dbh->prepare("update voip_preferences_enum set value=? where id=?");
+    my $enum_delete_sth = $dbh->prepare("delete from voip_preferences_enum where id=?");
+    $sth = $dbh->prepare("select id, label, value from voip_preferences_enum where preference_id=?");
+    $sth->execute($pref_id);
 
-	foreach my $row (keys %{$db_hash}) {
-	  $row = $db_hash->{$row};
-	  next if($row->{label} eq 'default');
-	  if(!exists $config_hash->{$row->{label}}) {
-	    print "$pref_name $row->{label} does not exist anymore in config, delete from db\n";
-	    $enum_delete_sth->execute($row->{id});
-	  } elsif($config_hash->{$row->{label}} ne $row->{value}) {
-	    print "update $pref_name $row->{label}=$row->{value} to $row->{label}=$config_hash->{$row->{label}} in db\n";
-	    $enum_update_sth->execute($config_hash->{$row->{label}}, $row->{id});
-	    delete $config_hash->{$row->{label}};
-	  } else {
-	    print "$pref_name $row->{label}=$row->{value} is sync between config and db\n";
-	    delete $config_hash->{$row->{label}};
-	  }
-	}
-	foreach my $label(keys %{$config_hash}) {
-	  print "insert new $pref_name $label=$config_hash->{$label} from config into db\n";
-	  $enum_insert_sth->execute($pref_id, $label, $config_hash->{$label},
-								$usr_pref ? 1 : 0, $dom_pref ? 1 : 0, $peer_pref ? 1: 0);
-	}
+    my $db_hash = $sth->fetchall_hashref('label');
+    $sth->finish;
 
-	$enum_insert_sth->finish;
-	$enum_update_sth->finish;
-	$enum_delete_sth->finish;
-	return 1;
+    foreach my $row (keys %{$db_hash}) {
+        $row = $db_hash->{$row};
+        next if $row->{label} eq 'default';
+        if (!exists $config_hash->{$row->{label}}) {
+            print "$pref_name $row->{label} does not exist anymore in config, delete from db\n";
+            $enum_delete_sth->execute($row->{id});
+        } elsif ($config_hash->{$row->{label}} ne $row->{value}) {
+            print "update $pref_name $row->{label}=$row->{value} to $row->{label}=$config_hash->{$row->{label}} in db\n";
+            $enum_update_sth->execute($config_hash->{$row->{label}}, $row->{id});
+            delete $config_hash->{$row->{label}};
+        } else {
+            print "$pref_name $row->{label}=$row->{value} is sync between config and db\n";
+            delete $config_hash->{$row->{label}};
+        }
+    }
+    foreach my $label (keys %{$config_hash}) {
+        print "insert new $pref_name $label=$config_hash->{$label} from config into db\n";
+        $enum_insert_sth->execute($pref_id, $label, $config_hash->{$label},
+                                  $usr_pref ? 1 : 0, $dom_pref ? 1 : 0,
+                                  $peer_pref ? 1: 0);
+    }
+
+    $enum_insert_sth->finish;
+    $enum_update_sth->finish;
+    $enum_delete_sth->finish;
+
+    return 1;
 }
 
 ## kamailio.lb.extra_sockets handling: ##############################
 sub sync_extra_sockets {
-	return generic_enum_sync(@_, 'outbound_socket');
+    return generic_enum_sync(@_, 'outbound_socket');
 }
 
 ## rtp_* interfaces handling: ##############################
 sub sync_rtp_interfaces {
-	return generic_enum_sync(@_, 'rtp_interface');
+    return generic_enum_sync(@_, 'rtp_interface');
 }
 #
 ## smsc_* interfaces handling: ##############################
 sub sync_smsc_peers {
-	return generic_enum_sync(@_, 'smsc_peer');
+    return generic_enum_sync(@_, 'smsc_peer');
 }
 
 ## general.timezone handling: ##############################
@@ -247,6 +250,5 @@ SQL
 
     return 1;
 }
-
 
 ## END OF FILE #################################################################
