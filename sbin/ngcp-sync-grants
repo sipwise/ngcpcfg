@@ -67,10 +67,10 @@ sub connect_db {
                         . "mysql_read_default_file=${dbcredentials}",
                         "", "",
                         { PrintError => 0 })
-        or die "Can't connect to MySQL database 'mysql': ". $DBI::errstr;
+        or die "Can't connect to MySQL database 'mysql': $DBI::errstr\n";
     log_debug("connected to $dbhost:$dbport using '${dbcredentials}'");
     $dbh->do("SET sql_log_bin=0")
-        or die "Cannot set sql_log_bin=0: ".$DBI::errstr;
+        or die "Cannot set sql_log_bin=0: $DBI::errstr\n";
 
     return;
 }
@@ -167,7 +167,7 @@ sub apply_grants {
                     $new_user = 1;
                 } elsif ($DBI::errstr !~ /There is no such grant defined/) {
                     print "USER: $user HOST: $host\n";
-                    die sprintf "Cannot revoke privileges from %s\@%s: %s",
+                    die sprintf "Cannot revoke privileges from %s\@%s: %s\n",
                         $user, $host, $DBI::errstr;
                 }
             }
@@ -181,7 +181,7 @@ sub apply_grants {
                 $dbh->do("GRANT $s_grant TO '$user'\@'$host' $s_suffix");
                 if ($DBI::errstr &&
                     $DBI::errstr !~ /Table\s+'\S+\.\S+'\s+doesn't\s+exist/) {
-                    die "Cannot grant privileges: ".$DBI::errstr;
+                    die "Cannot grant privileges: $DBI::errstr\n";
                 } elsif ($DBI::errstr) {
                     $log_offset = 0;
                     log_warn("Cannot apply grant: ".$DBI::errstr);
@@ -247,7 +247,7 @@ sub apply_drop_users {
     my $ch_sel = $dbh->prepare(<<SQL)
 SELECT Host FROM mysql.user WHERE User = ? AND Host LIKE ?
 SQL
-        or die "Cannot prepare: ".$DBI::errstr;
+        or die "Cannot prepare: $DBI::errstr\n";
 
     my $rc = 0;
 
@@ -262,10 +262,10 @@ SQL
         foreach my $host_rx (@$ref) {
             $host_rx =~ s/\*/%/g;
             $ch_sel->execute($user, $host_rx)
-                or die "Cannot select user $user -- $host_rx: ".$DBI::errstr;
+                or die "Cannot select user $user -- $host_rx: $DBI::errstr\n";
             while (my ($host) = $ch_sel->fetchrow_array) {
                 $dbh->do("DROP USER '$user'\@'$host'")
-                    or die "Cannot drop user $user -- $host: ".$DBI::errstr;
+                    or die "Cannot drop user $user -- $host: $DBI::errstr\n";
                 log_info(sprintf "drop: %s\@%s", $user, $host);
                 $rc++;
             }
@@ -281,7 +281,7 @@ sub set_user_protected_password {
     my ($user, $host) = @_;
     my ($random_pass) = $dbh->selectrow_array("SELECT PASSWORD(?)",
                                               undef, pwgen());
-    die "Cannot generate password: ".$DBI::errstr if $DBI::err;
+    die "Cannot generate password: $DBI::errstr\n" if $DBI::err;
     unless ($random_pass =~ /^\*(\S+)\s*$/) {
         die "Cannot parse generated password: $random_pass";
     }
@@ -293,16 +293,16 @@ SELECT COUNT(User)
  WHERE User = ?
    AND Host = ?
 SQL
-    die "Cannot select grant temp user: ".$DBI::errstr if $DBI::err;
+    die "Cannot select grant temp user: $DBI::errstr\n" if $DBI::err;
 
     unless ($temp_user_count) {
         $dbh->do("CREATE USER '$user'\@'$host'");
-        die "Cannot create grant temp user: ".$DBI::errstr if $DBI::err;
+        die "Cannot create grant temp user: $DBI::errstr\n" if $DBI::err;
     }
 
     $dbh->do("UPDATE user SET Password = ? WHERE User = ? AND Host = ?",
              undef, $random_pass, $user, $host);
-    die sprintf "Cannot update %s@%s with generated password, %s",
+    die sprintf "Cannot update %s@%s with generated password, %s\n",
         $user, $host, $DBI::errstr if $DBI::err;
 
     return;
@@ -334,7 +334,7 @@ sub grants_helper {
         $dbh->do("GRANT $s_grant TO '$user'\@'$host' $s_suffix");
         if ($DBI::errstr &&
             $DBI::errstr !~ /Table\s+'\S+\.\S+'\s+doesn't\s+exist/) {
-            die "Cannot grant privileges: ".$DBI::errstr;
+            die "Cannot grant privileges: $DBI::errstr\n";
         } elsif ($DBI::errstr) {
             $log_offset = 0;
             log_warn("Cannot apply grant: ".$DBI::errstr);
@@ -355,7 +355,7 @@ sub grants_helper {
     die "Error in checking grants" if $#$temp_grants < 0;
 
     $dbh->do("DROP USER '$user'\@'$host'");
-    die "Cannot drop grant temp user: ".$DBI::errstr if $DBI::err;
+    die "Cannot drop grant temp user: $DBI::errstr\n" if $DBI::err;
     flush_privs();
 
     @$grants = ( map { $_->[0] } @$temp_grants );
@@ -404,7 +404,7 @@ sub check_grants {
     if ($DBI::errstr
         && ($DBI::errstr !~ /There is no such grant defined/ &&
             $DBI::errstr !~ /fetch[()]+ without execute[()]+/)) {
-            die sprintf "Cannot select grants for %s\@%s: %s",
+            die sprintf "Cannot select grants for %s\@%s: %s\n",
                 $user, $host, $DBI::errstr;
     }
 
@@ -440,7 +440,7 @@ sub check_grants {
 sub flush_privs {
     log_debug("flush privileges");
     $dbh->do("FLUSH PRIVILEGES")
-        or die "Cannot flush privileges: ".$DBI::errstr;
+        or die "Cannot flush privileges: $DBI::errstr\n";
 
     return;
 }
@@ -459,7 +459,7 @@ sub main {
 
     connect_db($dbhost, $dbport);
 
-    $dbh->begin_work or die "Cannot start transaction: ".$DBI::errstr;
+    $dbh->begin_work or die "Cannot start transaction: $DBI::errstr\n";
 
     eval {
         my $rc = 0;
@@ -489,7 +489,7 @@ sub main {
         die "Error: $@";
     }
 
-    $dbh->commit or die "Cannot commit transaction: ".$DBI::errstr;
+    $dbh->commit or die "Cannot commit transaction: $DBI::errstr\n";
     $dbh->disconnect;
 
     if ($recreate_user) {

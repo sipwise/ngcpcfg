@@ -64,10 +64,9 @@ sub db_connect
 {
     my $dbh = DBI->connect("DBI:mysql:database=${dbname};host=${dbhost};port=${dbport};"
                            . "mysql_read_default_file=${dbcredentials}",
-                           "", "", { PrintError => 1 });
+                           "", "", { PrintError => 0 });
     unless (defined $dbh) {
-        print "Error: Could not connect to database '$dbname' at '$dbhost:$dbport' using '${dbcredentials}': $DBI::errstr\n";
-        exit 1;
+        die "Error: Could not connect to database '$dbname' at '$dbhost:$dbport' using '${dbcredentials}': $DBI::errstr\n";
     }
     return $dbh;
 }
@@ -148,14 +147,12 @@ sub sync_general_timezone {
     my $dbh = shift;
     my $tz = shift;
     my $ok = 1;
-    my $pe = $dbh->{PrintError};
     my ($sql_log_bin) = $dbh->selectrow_array('SELECT @@sql_log_bin');
 
     eval {
         die "Error: general.timezone value is not set\n" unless $tz;
 
         $dbh->do("SET sql_log_bin=0");
-        $dbh->{PrintError} = 0;
 
         my ($current_tz) = $dbh->selectrow_array(<<SQL);
 SELECT name FROM ngcp.timezone
@@ -178,7 +175,6 @@ SQL
         print $@;
         $ok = 0;
     }
-    $dbh->{PrintError} = $pe;
     $dbh->do("SET sql_log_bin=$sql_log_bin");
 
     return $ok;
@@ -206,12 +202,10 @@ sub sync_db_timezones {
     }
     chomp $tzinfo_version;
 
-    my $pe = $dbh->{PrintError};
-    $dbh->{PrintError} = 0;
     my $sql = '';
     my $p_rs = $RS;
     eval {
-        $dbh->begin_work() or die "Cannot start tx: ".$DBI::errstr;
+        $dbh->begin_work() or die "Cannot start tx: $DBI::errstr\n";
         my ($cur_tzinfo_version) = $dbh->selectrow_array(<<SQL)
 SELECT version
   FROM ngcp.tzinfo_version
@@ -240,7 +234,6 @@ SQL
     };
     local $RS = $p_rs;
     $err = $EVAL_ERROR;
-    $dbh->{PrintError} = $pe;
     if ($err) {
         print $err,"sql: $sql\n";
         $dbh->rollback();

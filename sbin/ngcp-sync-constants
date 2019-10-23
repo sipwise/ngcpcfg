@@ -99,16 +99,16 @@ sub connect_db {
       $dsn .= ";mysql_read_default_file=$SIPWISE_EXTRA_CNF";
     }
 
-    if ( $dbh = DBI->connect($dsn, $dbuser, $dbpass, { PrintError => 1 }) ) {
+    if ($dbh = DBI->connect($dsn, $dbuser, $dbpass, { PrintError => 0 })) {
       log_debug("connected to $dbhost:$dbport using $dbauthmsg");
     } else {
-      printf "Can't connect to MySQL database 'mysql' using $dbauthmsg.\n". $DBI::errstr;
+      warn "Cannot connect to MySQL database 'mysql' using $dbauthmsg: $DBI::errstr\n";
       if ($mysql_root) {
         printf "\nPlease provide valid password for MariaDB user '$dbuser': ";
         $dbpass = prompt('', -echo=>'*', -v, -hNONE);
 
-        $dbh = DBI->connect($dsn, $dbuser, $dbpass, { PrintError => 1 })
-          or die "Can't connect to MySQL database 'mysql' using $dbauthmsg with provided password.\n". $DBI::errstr;
+        $dbh = DBI->connect($dsn, $dbuser, $dbpass, { PrintError => 0 })
+            or die "Cannot connect to MySQL database 'mysql' using $dbauthmsg with provided password: $DBI::errstr\n";
         log_debug("connected to $dbhost:$dbport using $dbauthmsg with provided password.");
       } else {
         exit 1;
@@ -116,7 +116,7 @@ sub connect_db {
     }
 
     $dbh->do("SET sql_log_bin=0")
-        or die "Cannot set sql_log_bin=0: ".$DBI::errstr;
+        or die "Cannot set sql_log_bin=0: $DBI::errstr\n";
 
     return;
 }
@@ -148,9 +148,9 @@ sub adjust_replication_master_info {
     my ($user, $pass) = @_;
 
     my $ch = $dbh->prepare("show slave status")
-        or die "Cannot prepare: ".$DBI::errstr;
+        or die "Cannot prepare: $DBI::errstr\n";
 
-    $ch->execute() or die "Cannot execute: ".$DBI::errstr;
+    $ch->execute() or die "Cannot execute: $DBI::errstr\n";
 
     my $fields = $ch->{NAME};
     my $vals   = $ch->fetchall_arrayref();
@@ -164,14 +164,14 @@ sub adjust_replication_master_info {
 
     if (defined $data{Master_Server_Id}) {
         $dbh->do("STOP SLAVE");
-        die "Cannot stop slave: ".$DBI::errstr if $DBI::err;
+        die "Cannot stop slave: $DBI::errstr\n" if $DBI::err;
 
         log_info("* updating replication password for user $user");
 
         $dbh->do("CHANGE MASTER TO MASTER_PASSWORD=?", undef, $pass);
 
         $dbh->do("START SLAVE");
-        die "Cannot start slave: ".$DBI::errstr if $DBI::err;
+        die "Cannot start slave: $DBI::errstr\n" if $DBI::err;
     }
 
     return;
@@ -197,7 +197,7 @@ UPDATE user
 SQL
 
     $sth_sel->execute($pass, $user)
-        or die "Cannot execute: ".$DBI::errstr;
+        or die "Cannot execute: $DBI::errstr\n";
 
     my ($count, $match) = $sth_sel->fetchrow_array();
     $count //= 0;
@@ -209,7 +209,7 @@ SQL
         }
         unless ($test_mode) {
             my $rows = $sth_upd->execute($pass, $user, $pass)
-                or die "Cannot update: ".$DBI::errstr;
+                or die "Cannot update: $DBI::errstr\n";
             if ($rows != $count) {
                 log_warn(sprintf
                     "User update was supposed to affect %d rows but changed %d",
@@ -258,7 +258,7 @@ sub flush_privs {
     return if $test_mode;
     log_debug("flush priveleges");
     $dbh->do('FLUSH PRIVILEGES')
-        or die "Can't flush MySQL privileges: ". $DBI::errstr;
+        or die "Cannot flush MySQL privileges: $DBI::errstr\n";
 
     return;
 }
@@ -288,7 +288,7 @@ sub main {
 
     connect_db($dbhost, $dbport);
 
-    $dbh->begin_work or die "Cannot start transaction: ".$DBI::errstr;
+    $dbh->begin_work or die "Cannot start transaction: $DBI::errstr\n";
 
     eval {
 
