@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bc14bbe_c206a9c4",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-23T13:34:09Z",
+      "side": 1,
+      "message": "This doesn\u0027t follow the correct ngcpcfg logic:\n\nngcpcfg [\u003cglobal_options\u003e] \u003caction\u003e [\u003caction_options\u003e]\n\n\n--join is IMHO action_option, as it is related to init-shared and not to ngcpcfg itself. Isn\u0027t it?\n\nIMHO, it should be:\n\nngcpcfg init-shared --join\n\n\nBTW, I am lost, we have \"initialize\", \"init-shared\" and \"init-mgmt\". The last one is for Carrier, what is the difference of the first and the second? Initialize for CE, and init-shared for PRO? \n\n\nInstaller calling \"ngcpcfg initialise --without_shared\" 0_o",
+      "range": {
+        "startLine": 428,
+        "startChar": 0,
+        "endLine": 428,
+        "endChar": 26
+      },
+      "revId": "1ec72f88f5c2ce99fe0168d162551e30604062af",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "904bbdac_17d18f35",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-23T13:34:09Z",
+      "side": 1,
+      "message": "It is not necessary here. it is a \u003cglobal\u003e options like:\n\n\"ngcpcfg --debug initialize\"\n\nYou need an \u003caction\u003e option:\n\n\"ngcpcfg initialize --join\"\n\nthey always pass to \"scripts\" so just check/use it in scripts/initialize\n\nSee \"man ngcpcfg\" about global options.",
+      "revId": "1ec72f88f5c2ce99fe0168d162551e30604062af",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
