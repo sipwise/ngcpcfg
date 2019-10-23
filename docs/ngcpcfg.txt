@@ -421,6 +421,13 @@ all nodes in installation. It is necessary if ngcpcfg was initialised using
 option '--without_shared'. Note: This feature is available in High Availability
 setups only.
 
+  **--join init-shared**::
+
+The ngcpcfg configuration is taken from already configured shared repository
+This option sohuld be used only for configuration of the node which is joining
+the existing cluster. Note: This feature is available in High Availability
+setups only.
+
   **init-mgmt** <server>::
 
 Set up specified '<server>' for usage as shared repository whereas '<server>'
