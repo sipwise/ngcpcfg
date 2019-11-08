@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "017f479d_264d29a8",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2019-11-08T12:27:06Z",
+      "side": 1,
+      "message": "initialize - creates git repo in /etc/ngcp-config, adds it to etckeeper .gitignore\n\ninit-shared - creates origin for ngcp-config git repo\n\ninit-mgmt - the same as above but for carrier\n\n\u003e Installer calling \"ngcpcfg initialise --without_shared\" 0_o\n\nYes, this is a common step for all installations. Then if it is PRO or CARRIER init-shared is called then if it is CARRIER init-mgmt.",
+      "parentUuid": "1bc14bbe_c206a9c4",
+      "range": {
+        "startLine": 428,
+        "startChar": 0,
+        "endLine": 428,
+        "endChar": 26
+      },
+      "revId": "1ec72f88f5c2ce99fe0168d162551e30604062af",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "904bbdac_17d18f35",
         "filename": "sbin/ngcpcfg",
         "patchSetId": 2
