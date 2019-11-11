@@ -37,6 +37,9 @@ transit_timezone = "(SELECT COALESCE((SELECT t.name FROM ngcp.timezone t LIMIT 1
 [% MACRO from_unixtime_tz(column, timezone) BLOCK -%]
 CONVERT_TZ(FROM_UNIXTIME([%- column -%]),@@session.time_zone,[%- timezone -%])
 [%- END %]
+[% MACRO from_tz(column, timezone) BLOCK -%]
+CONVERT_TZ([%- column -%],@@session.time_zone,[%- timezone -%])
+[%- END %]
 [%
 
 out = {};
@@ -101,6 +104,8 @@ X_cdr_id_map.SOURCE_LNP_TYPE = "accounting.cdr.source_lnp_type";
 X_cdr_id_map.DESTINATION_LNP_TYPE = "accounting.cdr.destination_lnp_type";
 
 X_cdr_id_map.TIMEZONE = cdr_timezone _ " as cdr_timezone";
+
+X_cdr_id_map.UPDATE_TIME_LOCALIZED = from_tz("accounting.cdr.update_time",cdr_timezone("base_table"));
 
 X_cdr_id_map.INIT_TIME_LOCALIZED = "CONCAT(" _ from_unixtime_tz("FLOOR(accounting.cdr.init_time)",cdr_timezone) _ ", \".\", SUBSTRING_INDEX(accounting.cdr.init_time, \".\", -1)) as cdr_init_time_localized";
 X_cdr_id_map.START_TIME_LOCALIZED = "CONCAT(" _ from_unixtime_tz("FLOOR(accounting.cdr.start_time)",cdr_timezone) _ ", \".\", SUBSTRING_INDEX(accounting.cdr.start_time, \".\", -1)) as cdr_start_time_localized";
