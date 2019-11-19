@@ -203,7 +203,6 @@ sub sync_db_timezones {
     chomp $tzinfo_version;
 
     my $sql = '';
-    my $p_rs = $RS;
     eval {
         $dbh->begin_work() or die "Cannot start tx: $DBI::errstr\n";
         my ($cur_tzinfo_version) = $dbh->selectrow_array(<<SQL)
@@ -217,13 +216,24 @@ SQL
         open(my $sql_stream, "<", \$out)
             or die "Cannot open sql stream: $ERRNO\n";
         binmode($sql_stream);
-        local $RS = ";\n";
         $dbh->do('USE mysql')
             or die "Cannot use mysql database: $DBI::errstr\n";
+        my $batch;
+        my $delim = ';';
         while ($sql = <$sql_stream>) {
-            map {
-                $dbh->do($_) or die "Cannot insert timezone data: $DBI::errstr\n";
-            } split /;\s+/, $sql; # multiple one line statements
+            if ($sql =~ m#^\s*\\d\s+(\S+)#) {
+                $delim = $1;
+            } else {
+                if ($sql =~ /^([^\Q$delim\E]*)\Q$delim\E/) {
+                    if ($1) {
+                        $batch .= $1;
+                    }
+                    $dbh->do($batch) or die "Cannot insert timezone data: $DBI::errstr\n";
+                    $batch = undef;
+                } else {
+                    $batch .= $sql;
+                }
+            }
         }
         close $sql_stream;
         $dbh->do(<<SQL, undef, $tzinfo_version, $tzinfo_version)
@@ -232,7 +242,6 @@ INSERT INTO ngcp.tzinfo_version SET version = ?
 SQL
             or die "Cannot insert into ngcp.tzinfo_version: $DBI::errstr\n";
     };
-    local $RS = $p_rs;
     $err = $EVAL_ERROR;
     if ($err) {
         print $err,"sql: $sql\n";
