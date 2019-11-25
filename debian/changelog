@@ -1,3 +1,33 @@
+ngcp-ngcpcfg (8.2.0.0+0~mr8.2.0.0) unstable; urgency=medium
+
+  [ Alexander Lutay ]
+  * [e045830] TT#68032 Migrate from 'mysql -p${SIPWISE_DB_PASSWORD}' to Perl DBI defaults-extra-file=""
+  * [1ab8c9a] TT#68032 Migrate from 'mysql -p${SIPWISE_DB_PASSWORD}' to Perl DBI defaults-extra-file=""
+  * [36a1188] TT#68710 Rename 'ngcpcfg values' to 'ngcpcfg get'
+  * [6e101bf] TT#68710 Sort ngcpcfg actions alphabetically in ngcpcfg help
+  * [1808324] TT#69050 ngcp-sync-constants: request 'root' user DB password if cannot connect without password
+  * [606f0fb] TT#69050 Fix 18083249: add libio-prompter-perl as ngcp-ngcpcfg dependency
+
+  [ Guillem Jover ]
+  * [2665215] TT#51701 Switch from deprecated /var/run to /run
+  * [1054cb4] TT#15857 Fix indentation
+  * [f8f3d9e] TT#15857 Fix DBI errors output
+  * [0d270c8] TT#15857 Switch to use Term::ReadPassword
+  * [1ff13b6] TT#15857 ngcp-sync-constants: Ask the MySQL password in a loop
+
+  [ Mykola Malkov ]
+  * [549d2c7] TT#68254 Add --join option to init-shared command
+
+  [ Kirill Solomko ]
+  * [406b4cb] TT#71051 sync-db sync timezone delimiter
+
+  [ Rene Krenn ]
+  * [c6d6455] TT#70155 add UPDATE_TIME_LOCALIZED named cdr export field
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 25 Nov 2019 14:57:56 +0100
+
 ngcp-ngcpcfg (8.1.0.0+0~mr8.1.0.0) unstable; urgency=medium
 
   [ Richard Fuchs ]
