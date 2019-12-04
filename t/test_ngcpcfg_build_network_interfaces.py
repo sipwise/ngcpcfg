@@ -15,7 +15,6 @@ def test_network_interfaces(ngcpcfgcli, tmpdir):
                      "/etc/network/interfaces",
                      env={
                          'NGCP_BASE_TT2': os.getcwd(),
-                         'NGCP_SOCKETFILE': '/tmp/ngcpcfg.socket',
                          'OUTPUT_DIRECTORY': tmpdir,
                          'NGCPCFG': 'fixtures/ngcpcfg_network_interfaces.cfg',
                          'STATE_FILES_DIR': tmpdir+'/var/lib/ngcpcfg/state/',

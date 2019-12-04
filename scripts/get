@@ -13,7 +13,7 @@ get_value() {
   echo "[% $1 %]" > "${input_file}"
   output_file="$(mktemp)"
 
-  if "$TT_WRAPPER" "${input_file}" > "${output_file}" 2>/dev/null ; then
+  if "${HELPER}/tt2-process" "${input_file}" "${output_file}" 2>/dev/null ; then
     cat "${output_file}"
   else
     RC=1
@@ -38,30 +38,10 @@ fi
 
 . "${FUNCTIONS}"/main
 
-TT_WRAPPER="${HELPER}/tt2-wrapper"
-
-# Kill all previous started tt2-daemon Perl processes if they were not stopped properly
-killall tt2-daemon 2>/dev/null || true
-
-if [ -n "${NGCP_SOCKETFILE:-}" ] ; then
-  log_debug "Using $NGCP_SOCKETFILE as tt2-daemon socket file as set via 'NGCP_SOCKETFILE'."
-else
-  NGCP_SOCKETFILE='/run/ngcpcfg.socket'
-fi
-rm -f "${NGCP_SOCKETFILE}"
-
-# Start new tt2-daemon Perl process
-"${HELPER}"/tt2-daemon --quiet
-
 # Load all the configs in proper order and check their avialability and valid YAML syntax
+declare -a configs
 for f in ${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG:-} "${EXTRA_CONFIG_FILES[@]}" ${CONSTANTS_CONFIG:-} ; do
-  if [ -r "$f" ] ; then
-    if ! "${HELPER}/tt2-wrapper" "/dev/null" "${f}" ; then
-      log_error "tt2-daemon cannot load ${f}:"
-      "${HELPER}/tt2-wrapper" "/dev/null" "${f}"
-      exit 1
-    fi
-  fi
+  configs+=("${f}")
 done
 
 # main script
@@ -74,10 +54,6 @@ if [[ $res =~ ^ARRAY\(0x.+\)$ ]] ; then
 else
   echo "$res"
 fi
-
-# Kill all previous started tt2-daemon Perl processes
-killall tt2-daemon 2>/dev/null || true
-rm -f "${NGCP_SOCKETFILE}"
 
 exit "$RC"
 
