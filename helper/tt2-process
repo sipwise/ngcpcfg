@@ -1,0 +1,145 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+use Getopt::Long;
+use File::Basename;
+use File::Path qw(make_path);
+use File::Copy qw(mv);
+use POSIX qw(:sys_wait_h);
+use Hash::Merge qw(merge);
+use YAML::XS qw(LoadFile);
+use NGCP::Template;
+
+my %options;
+
+GetOptions(\%options.
+    "q|quiet",
+    "c|config=@",
+);
+
+setup();
+process(%options);
+
+exit;
+
+sub setup {
+    my $NGCP_BASE_TT2 = $ENV{'NGCP_BASE_TT2'} //= '/';
+    chdir $NGCP_BASE_TT2
+        or die "error: cannot chdir to $NGCP_BASE_TT2: $!\n";
+#    open(STDIN,  '<', '/dev/null') or die "error: cannot read /dev/null: $!\n";
+#    open(STDOUT, '>', '/dev/null') or die "error: cannot write to /dev/null: $!\n";
+}
+
+sub process {
+    my %options = @_;
+    my $config = {};
+    my %loaded_ymls = ();
+
+    foreach my $file (@{$options{config}}) {
+        next if exists $loaded_ymls{$file};
+        $loaded_ymls{$file} = undef;
+
+        print "Loading $file in memory:" unless $options{quiet};
+        my $hm = Hash::Merge->new('RIGHT_PRECEDENT');
+        $config = $hm->merge($config, LoadFile($file));
+        print " OK \n" unless $options{quiet};
+    }
+
+    my $tt = NGCP::Template->new();
+
+    while (@ARGV) {
+        my $input = shift @ARGV;
+        my $output = shift @ARGV;
+
+        my $pid = fork();
+        if (not defined $pid) {
+            die "error: cannot fork child process to process $input: $!\n";
+        }
+        next if $pid != 0;
+
+        # Export variable for usage within {pre,post}build scripts,
+        # OUTPUT_DIRECTORY is for customization during testing.
+        ## no critic (Variables::RequireLocalizedPunctuationVars)
+        if (exists $ENV{OUTPUT_DIRECTORY}) {
+            $ENV{output_file} = "$ENV{OUTPUT_DIRECTORY}/$output";
+        } else {
+            $ENV{output_file} = $output;
+        }
+
+        my $input_dirname = dirname($input);
+        my $output_basename = basename($output);
+        my $output_dirname = dirname($output);
+
+        # Execute prebuild script.
+        for my $prebuild ((
+            "$input_dirname/$output_basename.prebuild",
+            "$input_dirname/ngcpcfg.prebuild")) {
+            next unless -e $prebuild;
+
+            print "Executing prebuild for $output\n";
+            system $prebuild or die "error: execution of prebuild script failed\n";
+            last;
+        }
+
+        # If output directory does not exist yet, create it
+        if (not -d $output_dirname) {
+            ## no critic (ValuesAndExpressions::ProhibitLeadingZeros)
+            make_path($output_dirname, mode => 0022);
+        }
+
+        # Assume safe defaults.
+        umask 0077;
+
+        my $newfile = "$output.ngcpcfg-new";
+
+        open my $outfh, '>', "$newfile"
+            or die "error: cannot open template new file $newfile: $!\n";
+        open my $infh, '<', $input
+            or die "error: cannot open file '$input' for reading: $!\n";
+        $tt->process($infh, $config, $outfh)
+            or die $tt->error;
+        close $infh;
+        close $outfh;
+
+        # XXX: Docker breaks sane Unix expectations when moving a file into
+        # /etc/hosts, as it creates a bind mount on that pathname. We need to
+        # use an implementation that will fallback to use copy semantics in
+        # that case, but will default to use rename semantics to avoid races
+        # on ETXTBSY on executable files.
+        # <https://github.com/moby/moby/issues/22281>
+        mv($newfile, $output)
+            or die "error: cannot rename $newfile to $output: $!\n";
+
+        print "Generating $input -> $output: OK\n";
+
+        if (-l $output) {
+            warn "warning: File $output is a symlink - NOT adjusting permissions\n";
+        } else {
+            # Set permissions for generated config based on the ones of the
+            # template, plus dropping all write permissions.
+            ## no critic (ValuesAndExpressions::ProhibitLeadingZeros)
+            my $mode = (stat $input)[2] & ~0222;
+
+            chmod $mode, $output;
+        }
+
+        # Execute postbuild script.
+        for my $prebuild ((
+            "$input_dirname/$output_basename.postbuild",
+            "$input_dirname/ngcpcfg.postbuild")) {
+            next unless -e $prebuild;
+
+            print "Executing postbuid for $output\n";
+            system $prebuild or die "error: execution of postbuild script failed\n";
+            last;
+        }
+
+        exit 0;
+    }
+
+    1 while waitpid(-1, WNOHANG) > 0;
+
+    return;
+}
