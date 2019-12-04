@@ -5,12 +5,12 @@ FROM docker.mgm.sipwise.com/sipwise-buster:latest
 # is updated with the current date. It will force refresh of all
 # of the base images and things like `apt-get update` won't be using
 # old cached versions when the Dockerfile is built.
-ENV REFRESHED_AT 2019-06-27
+ENV REFRESHED_AT 2020-01-13
 
 RUN apt-get update
 
 # sourcecode test dependencies
-RUN apt-get install --assume-yes netcat-openbsd libhash-merge-perl libtemplate-perl \
+RUN apt-get install --assume-yes libhash-merge-perl libtemplate-perl \
   libyaml-libyaml-perl libyaml-tiny-perl libyaml-perl \
   libdata-validate-ip-perl libio-interface-perl libregexp-ipv6-perl
 # misc stuff for execution/debugging/devel
