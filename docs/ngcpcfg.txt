@@ -248,6 +248,13 @@ NGCP systems) as well as stderr.
 
 Display usage information and exit.
 
+  **--jobs[=<n>]** <action> [<further_options>]::
+
+The _build_ and _apply_ actions process templates in parallel by default.
+This option can be used to control the number of jobs used to process
+templates, '0' for an unlimited amount, and '1' for serial execution to
+for example get ordered output.
+
   **--no-action-failure** <action> [<further_options>]::
 
 The _check_ and _apply_ actions check for any possibly outstanding pull
