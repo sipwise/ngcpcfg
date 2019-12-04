@@ -1,0 +1,190 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+use Getopt::Long qw(:config posix_default bundling_values no_ignorecase);
+use Cwd qw(realpath);
+use File::Basename;
+use File::Path qw(make_path);
+use File::Copy qw(mv);
+use POSIX qw(:sys_wait_h);
+use Hash::Merge qw(merge);
+use YAML::XS qw(LoadFile);
+use NGCP::Template;
+
+my %options = (
+    help => sub { usage(); exit 0; },
+);
+
+GetOptions(\%options,
+    'help|?',
+    'quiet|q',
+    'config|c=s@',
+);
+
+setup();
+exit process(%options);
+
+sub usage {
+    print <<HELP
+Usage: $0 [<option>...] (<input> <output>)...
+
+Options:
+  -c, --config <files>      List of comma-separated config YAML files.
+                              Option can appear multiple times.
+  -q, --quiet               Do not print progress information.
+  -h, --help                This help message.
+HELP
+}
+
+sub error {
+    die "Error: @_\n";
+}
+
+sub info {
+    print "@_\n";
+}
+
+sub setup {
+    my $NGCP_BASE_TT2 = $ENV{'NGCP_BASE_TT2'} //= '/';
+    chdir $NGCP_BASE_TT2
+        or error("Cannot chdir to $NGCP_BASE_TT2: $!");
+}
+
+sub process_template {
+    my ($tt, $config, $input, $output) = @_;
+
+    my $newfile = "$output.ngcpcfg-new";
+
+    open my $outfh, '>', $newfile
+        or error("Cannot open template new file $newfile: $!");
+    open my $infh, '<', $input
+        or error("Cannot open file '$input' for reading: $!");
+    $tt->process($infh, $config, $outfh)
+        or error("Cannot process template '$input':\n  " . $tt->error());
+    close $infh;
+    close $outfh;
+
+    # XXX: Docker breaks sane Unix expectations when moving a file into
+    # /etc/hosts, as it creates a bind mount on that pathname. We need to
+    # use an implementation that will fallback to use copy semantics in
+    # that case, but will default to use rename semantics to avoid races
+    # on ETXTBSY on executable files.
+    # <https://github.com/moby/moby/issues/22281>
+    #
+    # In addition we need to dereference any target symlink, so that we do
+    # not destroy any symlink pointing to the real file.
+    my $target = realpath($output);
+    mv($newfile, $target)
+        or error("Cannot rename $newfile to $target: $!");
+}
+
+sub process {
+    my %options = @_;
+    my $config = {};
+    my %loaded_ymls = ();
+
+    foreach my $file (@{$options{config}}) {
+        next if exists $loaded_ymls{$file};
+        $loaded_ymls{$file} = undef;
+
+        print "Loading $file in memory:" unless $options{quiet};
+        my $hm = Hash::Merge->new('RIGHT_PRECEDENT');
+        $config = $hm->merge($config, LoadFile($file));
+        print " OK \n" unless $options{quiet};
+    }
+
+    my $tt = NGCP::Template->new();
+
+    while (@ARGV) {
+        my $input = shift @ARGV;
+        my $output = shift @ARGV;
+
+        my $pid = fork;
+        if (not defined $pid) {
+            error("Cannot fork child process to process $input: $!");
+        }
+        next if $pid != 0;
+
+        # Export variable for usage within {pre,post}build scripts,
+        # OUTPUT_DIRECTORY is for customization during testing.
+        ## no critic (Variables::RequireLocalizedPunctuationVars)
+        if (length $ENV{OUTPUT_DIRECTORY}) {
+            $output = "$ENV{OUTPUT_DIRECTORY}/$output";
+        }
+
+        # Ensure we do not try to generate a file where a directory with same
+        # name exists already.
+        if (-d $output) {
+            error("Generating file $output not possible, it's an existing directory.");
+        }
+
+        my $input_dirname = dirname($input);
+        my $output_basename = basename($output);
+        my $output_dirname = dirname($output);
+
+        # Execute prebuild script.
+        for my $prebuild ((
+            "$input_dirname/$output_basename.prebuild",
+            "$input_dirname/ngcpcfg.prebuild")) {
+            next unless -e $prebuild;
+
+            info("Executing prebuild for $output");
+            system $prebuild or error("Execution of prebuild script failed");
+            last;
+        }
+
+        # If output directory does not exist yet, create it
+        if (not -d $output_dirname) {
+            ## no critic (ValuesAndExpressions::ProhibitLeadingZeros)
+            make_path($output_dirname, { mode => 0022 });
+        }
+
+        # Assume safe defaults.
+        umask 0077;
+
+        eval {
+            process_template($tt, $config, $input, $output);
+        };
+        if ($@) {
+            warn $@;
+            error("Generating $output based on $input: FAILED");
+        } else {
+            info("Generating $output: OK");
+        }
+
+        if (-l $output) {
+            warn "Warning: File $output is a symlink - NOT adjusting permissions\n";
+        } else {
+            # Set permissions for generated config based on the ones of the
+            # template, plus dropping all write permissions.
+            ## no critic (ValuesAndExpressions::ProhibitLeadingZeros)
+            my $mode = (stat $input)[2] & ~0222;
+
+            chmod $mode, $output;
+        }
+
+        # Execute postbuild script.
+        for my $prebuild ((
+            "$input_dirname/$output_basename.postbuild",
+            "$input_dirname/ngcpcfg.postbuild")) {
+            next unless -e $prebuild;
+
+            info("Executing postbuid for $output");
+            system $prebuild or error("Execution of postbuild script failed");
+            last;
+        }
+
+        exit 0;
+    }
+
+    my $rc = 0;
+    while (1) {
+        my $pid = waitpid(-1, WNOHANG);
+        last if $pid < 0;
+        $rc = 1 if $pid > 0 && $? != 0;
+    }
+
+    return $rc;
+}

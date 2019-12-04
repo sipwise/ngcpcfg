@@ -18,7 +18,6 @@ def ngcpcfgcli(tmpdir, *args):
             'HELPER':    '../helper/',
             'HOOKS':     '../hooks/',
             'PERL5LIB':  '../lib/',
-            'NGCP_SOCKETFILE': '/tmp/ngcpcfg.socket',
             'NGCP_TESTSUITE': 'true',
             'CONFIG_USER':  'nobody',
             'CONFIG_GROUP': 'root',
