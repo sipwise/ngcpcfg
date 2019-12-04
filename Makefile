@@ -1,10 +1,14 @@
 # for syntax checks
-BASH_SCRIPTS =	scripts/* functions/* etc/ngcp-config/ngcpcfg.cfg helper/build_config sbin/ngcpcfg helper/tt2-wrapper
+BASH_SCRIPTS = \
+	scripts/* \
+	functions/* \
+	etc/ngcp-config/ngcpcfg.cfg \
+	sbin/ngcpcfg
 PERL_SCRIPTS = \
 	lib/NGCP/Template.pm \
 	helper/sort-yml \
 	helper/sync-db \
-	helper/tt2-daemon \
+	helper/tt2-process \
 	helper/validate-yml helper/fileformat_version \
 	sbin/ngcp-network \
 	sbin/ngcp-network-validator \
@@ -53,5 +57,5 @@ perlcheck:
 
 test:
 	mkdir -p $(RESULTS)
-	cd t ; py.test-3 --junit-xml=../$(RESULTS)/pytest.xml -v
+	cd t ; py.test-3 --junit-xml=../$(RESULTS)/pytest.xml -vv -l
 # EOF

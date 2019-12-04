@@ -16,9 +16,16 @@ The following command line provides an example invocation:
 
 [source,bash]
 cd t # we're assuming in the following command line that you're inside this testing folder
-HELPER=../helper HOOKS=../hooks CONFIG_POOL=/etc/ NGCPCFG=./fixtures/ngcpcfg.cfg SCRIPTS=../scripts/ FUNCTIONS=../functions/ \
-NGCP_BASE_TT2=/tmp/pytest-of-root/pytest-XX/test_YYY/ NGCP_SOCKETFILE=/tmp/ngcpcfg.socket OUTPUT_DIRECTORY=/tmp/  \
-TEMPLATE_POOL_BASE=/tmp/pytest-of-root/pytest-XX/test_YYY ../sbin/ngcpcfg [...]
+HELPER=../helper \
+HOOKS=../hooks \
+CONFIG_POOL=/etc/ \
+NGCPCFG=./fixtures/ngcpcfg.cfg \
+SCRIPTS=../scripts/ \
+FUNCTIONS=../functions/ \
+NGCP_BASE_TT2=/tmp/pytest-of-root/pytest-XX/test_YYY/ \
+OUTPUT_DIRECTORY=/tmp/  \
+TEMPLATE_POOL_BASE=/tmp/pytest-of-root/pytest-XX/test_YYY \
+../sbin/ngcpcfg [...]
 
 Test runs
 ----------
