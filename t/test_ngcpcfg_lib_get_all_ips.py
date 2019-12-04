@@ -14,7 +14,6 @@ def test_all_ips(ngcpcfgcli, tmpdir):
                      "/etc/kamailio/lb/db/dispatcher",
                      env={
                          'NGCP_BASE_TT2': os.getcwd(),
-                         'NGCP_SOCKETFILE': '/tmp/ngcpcfg.socket',
                          'OUTPUT_DIRECTORY': tmpdir,
                          'NGCPCFG':   'fixtures/ngcpcfg_pro.cfg',
                      })
@@ -36,7 +35,6 @@ def test_all_ips_carrier(ngcpcfgcli, tmpdir):
                      "/etc/kamailio/lb/db/dispatcher",
                      env={
                          'NGCP_BASE_TT2': os.getcwd(),
-                         'NGCP_SOCKETFILE': '/tmp/ngcpcfg.socket',
                          'OUTPUT_DIRECTORY': tmpdir,
                          'NGCPCFG':   'fixtures/ngcpcfg_carrier.cfg',
                      })
