@@ -168,6 +168,8 @@ case ${1:-} in
     main_action "$@"
     ;;
   --debug)         export DEBUG=1 ;      shift ; "$0" "$@" ;;
+  --jobs)          export NGCP_JOBS=0; shift ; "$0" "$@" ;;
+  --jobs=*)        export NGCP_JOBS="${1##--jobs=}"; shift ; "$0" "$@" ;;
   --no-db-sync)    export NO_DB_SYNC=1 ; shift ; "$0" "$@" ;;
   --no-validate)   export NO_VALIDATE=1; shift ; "$0" "$@" ;;
   --no-action-failure) export NO_ACTION_FAILURE=1; shift ; "$0" "$@" ;;
