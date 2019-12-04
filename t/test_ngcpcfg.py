@@ -29,7 +29,6 @@ def test_simple_build_template_ok(ngcpcfgcli):
     out = ngcpcfgcli("build", "--ignore-branch-check",
                      "/etc/apt/apt.conf.d/71_no_recommended",
                      env={
-                         'NGCP_SOCKETFILE': '/tmp/ngcpcfg.socket',
                          'OUTPUT_DIRECTORY': tmpdir,
                          })
     regex = re.compile(r"Generating " +
@@ -45,7 +44,6 @@ def test_fail_on_existing_dir_matching_output_filename(ngcpcfgcli, tmpdir):
     os.makedirs(tmpdir + output)
     out = ngcpcfgcli("build", "--ignore-branch-check", output,
                      env={
-                         'NGCP_SOCKETFILE': '/tmp/ngcpcfg.socket',
                          'OUTPUT_DIRECTORY': tmpdir,
                          })
     regex = re.compile("Error: Generating file " +
