@@ -248,6 +248,13 @@ NGCP systems) as well as stderr.
 
 Display usage information and exit.
 
+  **--no-parallel** <action> [<further_options>]::
+
+The _build_ and _apply_ actions process templates in parallel by default.
+This option can be used to run the template processing serially, so that
+the output is ordered, otherwise when running in parallel the template
+processor is executed with both 'nice' and 'ionice'.
+
   **--no-action-failure** <action> [<further_options>]::
 
 The _check_ and _apply_ actions check for any possibly outstanding pull
