@@ -35,38 +35,30 @@ fi
 
 "${SCRIPTS}"/patch "$@"
 
-# Kill all previous started tt2-daemon Perl processes if they were not stopped properly
-killall tt2-daemon 2>/dev/null || true
+declare -a CONFIGS
 
-if [ -n "${NGCP_SOCKETFILE:-}" ] ; then
-  log_debug "Using $NGCP_SOCKETFILE as tt2-daemon socket file as set via 'NGCP_SOCKETFILE'."
+if [ -n "${NO_PARALLEL:-}" ] ; then
+  CONFIGS+=("--no-parallel")
 else
-  NGCP_SOCKETFILE='/run/ngcpcfg.socket'
+  RUNNER="nice -n 19 ionice -c 3"
 fi
 
-rm -f "${NGCP_SOCKETFILE}"
-
-# Start new tt2-daemon Perl process
-"${HELPER}"/tt2-daemon
-
-# Load all the configs in proper order and check their avialability and valid YAML syntax
 for f in ${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG:-} "${EXTRA_CONFIG_FILES[@]}" ${CONSTANTS_CONFIG:-} ; do
   if [ -r "$f" ] ; then
-    if ! "${HELPER}/tt2-wrapper" "/dev/null" "${f}" ; then
-      log_error "tt2-daemon cannot load ${f}:"
-      "${HELPER}/tt2-wrapper" "/dev/null" "${f}"
-      exit 1
-    fi
+    CONFIGS+=("$f")
   fi
 done
 
 build_config_files() {
-  # prepare tmp file to be reused hundred times inside "${HELPER}/build_config"
-  tmp_output_dir="$(mktemp -d --tmpdir ngcpcfg.PID"${NGCPCFG_PID}".XXXXXXXXXX)"
-  tmp_output_file="${tmp_output_dir}/tmp_output_file"
+  declare -a args
+  if [ ${#CONFIGS[@]} -gt 0 ]; then
+    for conf in "${CONFIGS[@]}"; do
+      args+=("-c" "${conf}")
+    done
+  fi
 
+  declare -a iofiles
   for input_file in $(generate_template_list "$@") ; do
-
     log_debug "calculate output file" # {{{
     x=${input_file##${NGCPCTL_MAIN}/templates/}         # drop leading /etc/ngcp-config
     y=${x%%.tt2}                                        # drop trailing suffix '.tt2'
@@ -76,14 +68,13 @@ build_config_files() {
     output_file=${y%%.customtt}                         # drop trailing suffix '.customtt'
     # }}}
 
-    log_debug "${HELPER}/build_config ${input_file} ${output_file}"
-    "${HELPER}/build_config" "${input_file}" "${output_file}" "${tmp_output_file}"
+    iofiles+=("$input_file" "$output_file")
   done
 
-  record_commit_id
+  log_debug "${RUNNER} ${HELPER}/tt2-process ${args[*]} ${iofiles[*]}"
+  ${RUNNER} "${HELPER}/tt2-process" "${args[@]}" "${iofiles[@]}"
 
-  rm -f "${tmp_output_file}"
-  rmdir "${tmp_output_dir}"
+  record_commit_id
 }
 
 # main script
@@ -158,10 +149,6 @@ else
      build_config_files "${file_list}"
   fi
 fi
-
-# Kill all previous started tt2-daemon Perl processes
-killall tt2-daemon 2>/dev/null || true
-rm -f "${NGCP_SOCKETFILE}"
 
 # Apply configured file ownership and permissions
 for f in ${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} "${EXTRA_CONFIG_FILES[@]}" ; do

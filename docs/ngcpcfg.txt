@@ -315,7 +315,7 @@ changed, because the communication is not possible in that scenario.
 In High Availability setups possibly outstanding pull actions are
 checked as well.
 
-  **build** [--ignore-branch-check] [--ignore-shared-storage-check] [--modified-only] [<files_or_directories>|<pattern>]::
+  **build** [--ignore-branch-check] [--ignore-shared-storage-check] [--modified-only] [--no-parallel] [<files_or_directories>|<pattern>]::
 
 Generate configuration files, based on values defined the central yml files and
 based on the templates in the configuration tree (/etc/ngcp-config/templates by
@@ -328,6 +328,9 @@ The option *--ignore-shared-storage-check* can be used to pass down to the
 "check" subcommand in order to skip check of shared storage, for example in
 situations like when the HA_INT addresses are being changed, because the
 communication is not possible in that scenario.
+The option *--no-parallel* can be used to run the template processing
+serially, so that the output is ordered, otherwise when running in parallel
+the template processor is executed with 'nice' and 'ionice'.
 If a central yml file is modified it builds all configuration files.
 If changes are in template files only just the according template files are
 considered for rebuild. If a file (e.g. _/etc/rsyslog.conf_) or directory (e.g.
