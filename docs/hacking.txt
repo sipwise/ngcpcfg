@@ -16,16 +16,15 @@ scripts and build system.
 Templating
 ----------
 
-Of very significant note here are the 'tt2-daemon' and 'tt2-wrapper' tandem,
-which perform most of the work when processing the templates. The daemon is
-a long-lived process that gets interacted with via a socket, and receives
-"commands" from the 'tt2-wrapper'. The YAML configuration files are loaded
-so that they only need to be validated and processed once. And then each
-template file to be processed is fed to the daemon and the result returned
-via the wrapper. All the configuration loaded from the YAML files is
-flattened into a dot-separated namespaced tree, which can be accessed
-directly by any template file even if no other code has references to those
-configurations.
+Of very significant note is the 'tt2-process' helper, which performs most
+of the work when processing the templates. This process is started only
+once during the whole ngcpcfg run, and loads and validates all the YAML
+files, and then processes each input/output pairs on an independent process
+to parallelize the execution.
+
+All the configuration loaded from the YAML files is flattened into a
+dot-separated namespaced tree, which can be accessed directly by any
+template file even if no other code has references to those configurations.
 
 /////////////////////////////
 // vim: ft=asciidoc tw=80 ai
