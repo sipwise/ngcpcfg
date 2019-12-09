@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7d9df06_ea96d1fc",
+        "filename": "scripts/build",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-12-09T11:48:16Z",
+      "side": 1,
+      "message": "\"${args[*]}\" missing?",
+      "revId": "8f4215462e3331e2746279148435275babf54d7d",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "160533e2_a14243eb",
+        "filename": "scripts/get",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-12-09T11:48:16Z",
+      "side": 1,
+      "message": "Maybe K.I.S.S? Easy to read/edit:\n  \ndeclare -a configs\nconfigs+\u003d(\"${NGCPCTL_CONFIG:-}\")\nconfigs+\u003d(\"${HOST_CONFIG:-}\")\nconfigs+\u003d(\"${LOCAL_CONFIG:-}\")\nconfigs+\u003d(\"${NETWORK_CONFIG:-}\")\nconfigs+\u003d(\"${EXTRA_CONFIG_FILES[@]}\")\nconfigs+\u003d(\"${CONSTANTS_CONFIG:-}\")\n\n\nBTW, where do we load them into tt2-process ?\nAlso \"-c\" should be added to load them, right?",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 4
+      },
+      "revId": "8f4215462e3331e2746279148435275babf54d7d",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
