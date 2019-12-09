@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "570e4c2b_f80b40c8",
+        "filename": "helper/tt2-wrapper",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-12-09T11:41:08Z",
+      "side": 0,
+      "message": "I believe you can remove dependencies on netcat-openbsd now.",
+      "range": {
+        "startLine": 10,
+        "startChar": 12,
+        "endLine": 10,
+        "endChar": 18
+      },
+      "revId": "e6028ba2cd987229ff30bfce74d4e07b330d8aab",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
