@@ -21,7 +21,7 @@ sub has_role
 {
     my ($self, $hostname, $role) = @_;
 
-    if (not defined $self->{config}{hosts}{$hostname}) {
+    if (not exists $self->{config}{hosts}{$hostname}) {
         $hostname = 'self';
     }
 
@@ -79,8 +79,8 @@ sub get_nodename
 
     die "Fatal error retrieving nodename [$nodename]" unless length $nodename;
 
-    if (defined $self->{config}{hosts}{self} and
-        not defined $self->{config}{hosts}{$nodename}) {
+    if (exists $self->{config}{hosts}{self} and
+        not exists $self->{config}{hosts}{$nodename}) {
         $nodename = 'self';
     }
 
@@ -93,7 +93,7 @@ sub get_peername
 {
     my ($self, $hostname) = @_;
 
-    if (not defined $self->{config}{hosts}{$hostname}) {
+    if (not exists $self->{config}{hosts}{$hostname}) {
         $hostname = 'self';
     }
 
@@ -104,7 +104,7 @@ sub get_firstname
 {
     my ($self, $hostname) = @_;
 
-    if (not defined $self->{config}{hosts}{$hostname}) {
+    if (not exists $self->{config}{hosts}{$hostname}) {
         return 'self';
     } else {
         my $peername = $self->get_peername($hostname);
