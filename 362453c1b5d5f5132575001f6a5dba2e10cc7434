@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b80000a4_5bda1506",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-12-11T08:28:15Z",
+      "side": 1,
+      "message": "nit: the ticket is resolved LONG time ago... submit it as IS will lead to the old ticket number in new release -\u003e might confuse someone, etc.",
+      "range": {
+        "startLine": 7,
+        "startChar": 3,
+        "endLine": 7,
+        "endChar": 8
+      },
+      "revId": "362453c1b5d5f5132575001f6a5dba2e10cc7434",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
