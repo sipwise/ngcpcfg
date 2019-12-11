@@ -53,5 +53,6 @@ perlcheck:
 
 test:
 	mkdir -p $(RESULTS)
+	prove -v -Ilib t >$(RESULTS)/perl-modules.tap
 	cd t ; py.test-3 --junit-xml=../$(RESULTS)/pytest.xml -v
 # EOF
