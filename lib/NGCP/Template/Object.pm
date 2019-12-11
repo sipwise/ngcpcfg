@@ -107,8 +107,9 @@ sub get_firstname
     if (not exists $self->{config}{hosts}{$hostname}) {
         return 'self';
     } else {
+        my @hosts = ($hostname);
         my $peername = $self->get_peername($hostname);
-        my @hosts = ($hostname, $peername);
+        push @hosts, $peername if defined $peername;
 
         return (sort @hosts)[0];
     }
