@@ -3,6 +3,7 @@ RESULTS ?= results
 all: test
 
 test:
+	prove -v -I../lib . >$(RESULTS)/perl-modules.tap
 	bash ./ngcp-network > $(RESULTS)/ngcp-network.tap
 
 clean:
