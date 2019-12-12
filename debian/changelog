@@ -1,3 +1,10 @@
+ngcp-ngcpcfg (6.5.7.1+0~mr6.5.7.1) unstable; urgency=medium
+
+  [ Alexander Lutay ]
+  * [3b261a4] TT#63758 Fix lib/get_ngcp_neighbours on Carrier. Use get_hostname() instead of get_nodename()
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 12 Dec 2019 12:02:52 +0100
+
 ngcp-ngcpcfg (6.5.7.0+0~mr6.5.7.0) unstable; urgency=medium
 
   [ Andrew Pogrebennyk ]
