@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aed23f59_30477b6c",
+        "filename": "Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-12-12T09:57:26Z",
+      "side": 1,
+      "message": "are you sure Jenkins track test results here?\nI see nothing in https://jenkins.mgm.sipwise.com/job/ngcpcfg-binaries/1874/tapResults/\n\nOR build will be aborted on no-zero exit code from prove?",
+      "revId": "5e97d0d610ee2b0dfef1610a269ad37ecc36a4e6",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
