@@ -22,6 +22,30 @@
       "revId": "c0fd95912633eaea745a6f8593d9e19046868bb1",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "449867db_034981d3",
+        "filename": "testsuite/NGCP_Template_Object.t",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-12-12T13:50:53Z",
+      "side": 1,
+      "message": "Yes, this is supposed to be a pure refactoring. And one reason that speak for the switch to use Net::IP, which was a concern for Andrew AFAIR at the time, but as show here with the current code we do not get proper normalization anyway. :)",
+      "parentUuid": "a82d56a9_f8ea8f04",
+      "range": {
+        "startLine": 103,
+        "startChar": 1,
+        "endLine": 105,
+        "endChar": 36
+      },
+      "revId": "c0fd95912633eaea745a6f8593d9e19046868bb1",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
