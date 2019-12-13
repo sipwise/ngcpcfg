@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "377be4b6_88a9c0ce",
+        "filename": "t/Dockerfile",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-12-13T08:24:34Z",
+      "side": 1,
+      "message": "nit: maybe fully sort the list alphabetically while at it?",
+      "revId": "7a03ad2344370e1e28e088957d601cf6a0b2861c",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abb8c685_72d3535d",
+        "filename": "testsuite/NGCP_Template_Object.t",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-12-13T08:24:34Z",
+      "side": 1,
+      "message": "Hm, I would have assumed that switching from our custom IP expansion to Net::IP would give us identical behavior and we don\u0027t need to adopt tests (if so just add further ones), or am I misunderstanding the tests here?",
+      "revId": "7a03ad2344370e1e28e088957d601cf6a0b2861c",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
