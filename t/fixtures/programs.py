@@ -22,13 +22,13 @@ def ngcpcfgcli(tmpdir, *args):
             'NGCP_TESTSUITE': 'true',
             'CONFIG_USER':  'nobody',
             'CONFIG_GROUP': 'root',
-            'CONFIG_CHMOD': '0755',
+            'CONFIG_CHMOD': '0644',
             'CONSTANTS_CONFIG_USER':  'nobody',
             'CONSTANTS_CONFIG_GROUP': 'root',
-            'CONSTANTS_CONFIG_CHMOD': '0755',
+            'CONSTANTS_CONFIG_CHMOD': '0644',
             'NETWORK_CONFIG_USER':  'nobody',
             'NETWORK_CONFIG_GROUP': 'root',
-            'NETWORK_CONFIG_CHMOD': '0755'
+            'NETWORK_CONFIG_CHMOD': '0644',
         }
         testenv.update(env)
 
