@@ -53,5 +53,5 @@ perlcheck:
 
 test:
 	mkdir -p $(RESULTS)
-	cd t ; py.test-3 --junit-xml=../$(RESULTS)/pytest.xml -v
+	cd t ; py.test-3 --junit-xml=../$(RESULTS)/pytest.xml -vv -l
 # EOF
