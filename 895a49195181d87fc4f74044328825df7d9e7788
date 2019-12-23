@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca5eea24_35ce2838",
+        "filename": "scripts/get",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-12-23T12:21:48Z",
+      "side": 1,
+      "message": "It doesn\u0027t work\n\nroot@web01a:~# ngcpcfg get general.companyname\n2019-12-23 11:57:29 web01a: Generating /tmp/tmp.nejXKk0aSQ: OK\nroot@web01a:~#\n\nbecause you forget to load all YMLs here (pass them to tt2-process). Maybe it should load them automatically?",
+      "revId": "895a49195181d87fc4f74044328825df7d9e7788",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3f34597b_48f357db",
+        "filename": "scripts/get",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-12-23T12:21:48Z",
+      "side": 1,
+      "message": "mute STDOUT here , otherwise those printed:\n\n\u003e 2019-12-23 11:58:38 web01a: Generating /tmp/tmp.pThGEgzJTW: OK",
+      "revId": "895a49195181d87fc4f74044328825df7d9e7788",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
