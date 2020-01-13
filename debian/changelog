@@ -1,3 +1,10 @@
+ngcp-ngcpcfg (8.0.3.0+0~mr8.0.3.0) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [31aed7f] TT#71051 sync-db sync timezone delimiter
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 13 Jan 2020 15:20:30 +0100
+
 ngcp-ngcpcfg (8.0.2.0+0~mr8.0.2.0) unstable; urgency=medium
 
   * New release.
