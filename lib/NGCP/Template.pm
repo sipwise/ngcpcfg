@@ -25,6 +25,7 @@ sub new
         ABSOLUTE => 1,
         RELATIVE => 1,
         EVAL_PERL => 1,
+        PLUGIN_BASE => 'NGCP::Template::Plugin',
         %{$config},
     });
 
