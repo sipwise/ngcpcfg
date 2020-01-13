@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df117615_37e51348",
+        "filename": "lib/NGCP/Template/Plugin/Utils.pm",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2020-01-13T21:13:52Z",
+      "side": 1,
+      "message": "nit: Here I tend to still use qw().",
+      "revId": "449c2a28955453f3b873825059a2c723320f9962",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7dc2858e_047fc5ae",
+        "filename": "lib/NGCP/Template/Plugin/Utils.pm",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2020-01-13T21:13:52Z",
+      "side": 1,
+      "message": "nit: For empty imports I tend to use just ().",
+      "revId": "449c2a28955453f3b873825059a2c723320f9962",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b566a468_5018d08b",
+        "filename": "lib/NGCP/Template/Plugin/Utils.pm",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2020-01-13T21:13:52Z",
+      "side": 1,
+      "message": "nit: Inconsistent blank lines. I\u0027d write it instead as:\n\n{\n  my ...\n\n  return ..\n}",
+      "revId": "449c2a28955453f3b873825059a2c723320f9962",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a188db5_7d9b4bac",
+        "filename": "lib/NGCP/Template/Plugin/Utils.pm",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2020-01-13T21:13:52Z",
+      "side": 1,
+      "message": "Could you add some POD here following the pattern of the other modules in the hierarchy? :)",
+      "revId": "449c2a28955453f3b873825059a2c723320f9962",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
