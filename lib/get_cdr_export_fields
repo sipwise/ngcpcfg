@@ -202,7 +202,7 @@ END;
 
 out.joins = [];
 FOREACH X_f IN argv.export_joins;
-  IF X_f.alias.length > 0;
+  IF X_f.alias && X_f.alias.length > 0;
     X_table_spec = X_f.table _ ' ' _ X_f.alias;
   ELSE;
     X_table_spec = X_f.table;
