@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a475f01_6274c771",
+        "filename": "docs/ngcpcfg.txt",
+        "patchSetId": 12
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2020-01-14T16:47:54Z",
+      "side": 1,
+      "message": "--no-parallel should probably be described here.",
+      "revId": "028f432716e52ca12d1da69f073ae7778153c4a9",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7afbf769_73feeb63",
+        "filename": "scripts/build",
+        "patchSetId": 12
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2020-01-14T16:47:54Z",
+      "side": 1,
+      "message": "root@sp1:~# time ngcpcfg --no-parallel apply \"new templates\"\n2020-01-14 17:46:48 sp1: yml configs were validated successfully\n2020-01-14 17:46:48 sp1: Checking state of local storage:\n2020-01-14 17:46:48 sp1: OK:   nothing to pull\n2020-01-14 17:46:48 sp1: configs were checked successfully\n2020-01-14 17:46:49 sp1: No patchtt files found, nothing to patch.\n/usr/share/ngcp-ngcpcfg/scripts//build: line 74: RUNNER: unbound variable\n\nreal\t0m1.988s\nuser\t0m1.466s\nsys\t0m0.454s\nroot@sp1:~#",
+      "revId": "028f432716e52ca12d1da69f073ae7778153c4a9",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
