@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3503b7fe_fa7a80f3",
+        "filename": "scripts/build",
+        "patchSetId": 11
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2020-01-14T15:56:15Z",
+      "side": 1,
+      "message": "add ${RUNNER} here?",
+      "revId": "25e625892559e2731d3d680c4898010ff2d6f537",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
