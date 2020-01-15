@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fb6da5c_bd9b8201",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-01-15T15:28:51Z",
+      "side": 1,
+      "message": "Parallelise? :-P\n\n(I don\u0027t mind, but IIRC you\u0027re more fan of British English)",
+      "range": {
+        "startLine": 7,
+        "startChar": 9,
+        "endLine": 7,
+        "endChar": 20
+      },
+      "revId": "0db77f1c22a17306f86504056e781fe7b8e1e874",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe23a5f8_f3ecd402",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-01-15T15:28:51Z",
+      "side": 1,
+      "message": "scaffolding",
+      "range": {
+        "startLine": 10,
+        "startChar": 25,
+        "endLine": 10,
+        "endChar": 35
+      },
+      "revId": "0db77f1c22a17306f86504056e781fe7b8e1e874",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "054da630_765e560b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-01-15T15:28:51Z",
+      "side": 1,
+      "message": "Why is that, because it assumes that all systems will have at least 2 vCPUs, or because the removal of two processes + IPC removes a ton of overhead, or because it avoids validating the files twice, or what?\n\nI\u0027m fine if you leave it as is, but just curious where you got the number, and I thought that other readers of the commit might have the same question.",
+      "range": {
+        "startLine": 17,
+        "startChar": 54,
+        "endLine": 18,
+        "endChar": 12
+      },
+      "revId": "0db77f1c22a17306f86504056e781fe7b8e1e874",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
