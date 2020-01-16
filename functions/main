@@ -19,18 +19,6 @@ set -o allexport
 . "${FUNCTIONS}"/init
 set +o allexport
 
-## HA / carrier features {{{
-if [ -r /usr/share/ngcp-ngcpcfg/functions/ha_features ] ; then
-  . /usr/share/ngcp-ngcpcfg/functions/ha_features
-  set_ha_file # set ${HA_FILE} for usage in generate_template_list
-fi
-
-if [ -r /usr/share/ngcp-ngcpcfg/functions/carrier_features ] ; then
-  . /usr/share/ngcp-ngcpcfg/functions/carrier_features
-  set_host_and_pair_files # set ${HOST_FILE} + ${PAIR_FILE} for usage in generate_template_list
-fi
-## }}}
-
 ## functions {{{
 main_action() {
   local rc=0
@@ -132,6 +120,18 @@ get_branch_status() {
 }
 
 generate_template_list() {
+  ## HA / carrier features {{{
+  if [ -r /usr/share/ngcp-ngcpcfg/functions/ha_features ] ; then
+    . /usr/share/ngcp-ngcpcfg/functions/ha_features
+    set_ha_file # set ${HA_FILE}
+  fi
+
+  if [ -r /usr/share/ngcp-ngcpcfg/functions/carrier_features ] ; then
+    . /usr/share/ngcp-ngcpcfg/functions/carrier_features
+    set_host_and_pair_files # set ${HOST_FILE} + ${PAIR_FILE}
+  fi
+  ## }}}
+
   [ -n "${TEMPLATE_POOL_BASE}" ] || return 1
 
   local filelist_allfiles=$(mktemp)
