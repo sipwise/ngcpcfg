@@ -6,6 +6,8 @@ use warnings;
 use parent qw(Template::Plugin);
 
 use MIME::Base64 ();
+use Data::Dumper ();
+use Config::General ();
 
 sub new {
     my ($class, $context, @params) = @_;
@@ -18,6 +20,22 @@ sub new {
 sub encode_base64 {
     my ($self, @params) = @_;
     return MIME::Base64::encode($params[0], '');
+}
+
+sub to_perl {
+    my ($self, @params) = @_;
+    return Data::Dumper::Dumper($params[0]);
+}
+
+sub to_config_general {
+    my ($self, @params) = @_;
+    my $conf = Config::General->new();
+    return $conf->save_string($params[0]);
+}
+
+sub get_ref {
+    my ($self, @params) = @_;
+    return ref $params[0];
 }
 
 1;
@@ -47,7 +65,19 @@ using Template::Plugin mechanism.
 
 =item [% encoded = Utils.encode_base64(unencoded) %]
 
-Converts give input String to base64.
+Converts the given input String to base64.
+
+=item [% serialized = Utils.to_perl(object) %]
+
+Serializes the given input object to string (perl syntax).
+
+=item [% serialized = Utils.to_config_general(object) %]
+
+Serializes the given input object to string (Config::General syntax).
+
+=item [% Utils.get_ref(object) %]
+
+Get the variable type.
 
 =back
 
