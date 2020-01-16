@@ -8,21 +8,34 @@ use Cwd qw(realpath);
 use File::Basename;
 use File::Path qw(make_path);
 use File::Copy qw(mv);
+use File::Find;
 use Time::Piece;
 use POSIX qw(:sys_wait_h);
 use Hash::Merge qw(merge);
 use YAML::XS qw(LoadFile);
 use NGCP::Template;
 
+my $DEBUG = $ENV{DEBUG} || 0;
 my $HNAME = $ENV{HNAME} // '';
 my $TIME_FORMAT = $ENV{TIME_FORMAT} // '%F %T';
 $TIME_FORMAT =~ s/^\+//;
+
+my $NGCPCTL_MAIN = $ENV{NGCPCTL_MAIN};
+my $TEMPLATE_POOL_BASE = $ENV{TEMPLATE_POOL_BASE};
+my $CONFIG_POOL = $ENV{CONFIG_POOL} // '';
+
+my $HA_FILE = $ENV{HA_FILE};
+my $HOST_FILE = $ENV{HOST_FILE};
+my $PAIR_FILE = $ENV{PAIR_FILE};
 
 my %options = (
     help => sub { usage(); exit 0; },
     jobs => qx(nproc) // 1,
 );
 chomp $options{jobs};
+
+error("NGCPCTL_MAIN is not defined") unless $NGCPCTL_MAIN;
+error("TEMPLATE_POOL_BASE is not defined") unless $TEMPLATE_POOL_BASE;
 
 GetOptions(\%options,
     'help|?',
@@ -36,7 +49,7 @@ exit process(%options);
 
 sub usage {
     print <<HELP
-Usage: $0 [<option>...] (<input> <output>)...
+Usage: $0 [<option>...] <input>...
 
 Options:
   -c, --config <files>      List of comma-separated config YAML files.
@@ -69,6 +82,12 @@ sub info {
     return if $options{quiet};
     my $prefix = output_prefix();
     print "$prefix: @_\n";
+}
+
+sub debug {
+    return unless $DEBUG;
+    my $prefix = output_prefix();
+    warn "$prefix: DEBUG @_\n";
 }
 
 sub setup {
@@ -181,6 +200,128 @@ sub process_input {
     }
 }
 
+sub generate_iofiles {
+    debug("Generating template file list from '$CONFIG_POOL'");
+
+    # Scan all directories.
+    my @scan_dirs;
+    foreach my $dir (split ' ', $CONFIG_POOL) {
+        if (! -d $dir) {
+            warning("$dir does not exist");
+            next;
+        }
+        debug("Scanning $TEMPLATE_POOL_BASE/$dir");
+        push @scan_dirs, "$TEMPLATE_POOL_BASE/$dir";
+    }
+    return if @scan_dirs == 0;
+
+    # Scan all template files within the directories.
+    my %filenames_scan;
+
+    my $scan_regex = "(?:\.customtt)?\.tt2";
+    my $scan_pro_regex;
+    foreach my $part (($HA_FILE, $HOST_FILE, $PAIR_FILE)) {
+        next unless defined $part;
+        $scan_pro_regex .= "|$part";
+    }
+    $scan_regex .= "(?:$scan_pro_regex)?" if defined $scan_pro_regex;
+    debug("Scan regex $scan_regex");
+
+    my $scan_tt2 = sub {
+        # Ignoring foo.patchtt.tt2.* completely (it is not a tt2 template to
+        # be built).
+        if (m/.*\.patchtt\.tt2(?:.*)?$/) {
+            debug("Ignored patchtt file '$_'");
+            return;
+        }
+        debug("Filename scanned $_");
+        if (s/$scan_regex$//) {
+            debug("Filename matched $_ => $File::Find::name");
+            $filenames_scan{$_}{$File::Find::name} = 1;
+        }
+    };
+
+    find({
+        wanted => $scan_tt2,
+        follow => 1,
+        follow_skip => 2,
+        no_chdir => 1,
+    }, @scan_dirs);
+
+    # List of filenames, controlled by the user.
+    my %filenames_set;
+
+    # Argument(s) (file list/pattern) provided via cmdline.
+    if (@ARGV == 0) {
+        %filenames_set = %filenames_scan;
+    } else {
+        # Limit processing to requested file(s) only.
+        foreach my $file (keys %filenames_scan) {
+            foreach my $match (@ARGV) {
+                if ($file =~ m/$match/) {
+                    $filenames_set{$file} = $filenames_scan{$file};
+                    last;
+                }
+            }
+        }
+    }
+
+    # Prepare the list of variant extension in order:
+    #  foo.customtt.tt2.hostname > foo.customtt.tt2.pairname >
+    #  foo.customtt.tt2.spX > foo.customtt.tt2 > foo.tt2.hostname >
+    #  foo.tt2.pairname > foo.tt2.spX > foo.tt2
+    my @match_ext;
+    # foo.custom.tt2.hostname
+    push @match_ext, ".customtt.tt2$HOST_FILE" if defined $HOST_FILE;
+    # foo.custom.tt2.pairname
+    push @match_ext, ".customtt.tt2$PAIR_FILE" if defined $PAIR_FILE;
+    # foo.customtt.tt2.sp{1,2}
+    push @match_ext, ".customtt.tt2$HA_FILE" if defined $HA_FILE;
+    # foo.customtt.tt2
+    push @match_ext, ".customtt.tt2";
+    # foo.tt2.hostname
+    push @match_ext, ".tt2$HOST_FILE" if defined $HOST_FILE;
+    # foo.tt2.pairname
+    push @match_ext, ".tt2$PAIR_FILE" if defined $PAIR_FILE;
+    # foo.tt2.sp{1,2}
+    push @match_ext, ".tt2$HA_FILE" if defined $HA_FILE;
+    # foo.tt2
+    push @match_ext, ".tt2";
+
+    # Generate the output file list. Make sure we provide the file names just
+    # once, and special case the ngcp-service files, as they are a second
+    # stage source of data required during configuration file building, which
+    # depends at the same time on the main YAML files.
+    my %filenames_pre;
+    my %filenames;
+
+    foreach my $file (keys %filenames_set) {
+        # Select the preferred filename.
+        foreach my $ext (@match_ext) {
+            if (exists $filenames_set{$file}{"$file$ext"}) {
+                my $output = ($file =~ s{\Q$NGCPCTL_MAIN\E/templates/}{}r);
+                if ($file =~ m/ngcp-service/) {
+                    $filenames_pre{"$file$ext"} = $output;
+                } else {
+                    $filenames{"$file$ext"} = $output;
+                }
+                last;
+            }
+        }
+    }
+
+    my @filenames_pre = map { {
+        input => $_,
+        output => $filenames_pre{$_},
+    } } sort keys %filenames_pre;
+    my @filenames = map { {
+        input => $_,
+        output => $filenames{$_},
+    } } sort keys %filenames;
+
+    return (@filenames_pre, @filenames);
+}
+
 sub process {
     my %options = @_;
     my $config = {};
@@ -204,9 +345,9 @@ sub process {
     my $rc = 0;
     my $tt = NGCP::Template->new();
 
-    while (@ARGV) {
-        my $input = shift @ARGV;
-        my $output = shift @ARGV;
+    foreach my $file (generate_iofiles()) {
+        my $input = $file->{input};
+        my $output = $file->{output};
 
         error('Missing input file') unless defined $input;
         error("Missing output file for $input") unless defined $output;
