@@ -48,6 +48,18 @@ for f in ${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG
 done
 
 build_config_files() {
+  ## HA / carrier features {{{
+  if [ -r /usr/share/ngcp-ngcpcfg/functions/ha_features ] ; then
+    . /usr/share/ngcp-ngcpcfg/functions/ha_features
+    set_ha_file # set ${HA_FILE}
+  fi
+
+  if [ -r /usr/share/ngcp-ngcpcfg/functions/carrier_features ] ; then
+    . /usr/share/ngcp-ngcpcfg/functions/carrier_features
+    set_host_and_pair_files # set ${HOST_FILE} + ${PAIR_FILE}
+  fi
+  ## }}}
+
   declare -a iofiles
   for input_file in $(generate_template_list "$@") ; do
     log_debug "calculate output file" # {{{
