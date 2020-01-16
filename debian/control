@@ -25,6 +25,8 @@ Build-Depends:
  libtemplate-perl,
  libterm-readpassword-perl,
  libyaml-libyaml-perl,
+ libconfig-general-perl,
+ libmime-base64-perl,
  pkwalify,
  python3-pytest,
 
@@ -65,6 +67,8 @@ Depends:
  libsys-hostname-long-perl,
  libterm-readpassword-perl,
  libyaml-libyaml-perl,
+ libconfig-general-perl,
+ libmime-base64-perl,
  ngcp-system-tools,
  pkwalify,
  psmisc,
