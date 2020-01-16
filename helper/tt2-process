@@ -174,7 +174,7 @@ sub process_input {
         "$input_dirname/ngcpcfg.postbuild")) {
         next unless -e $postbuild;
 
-        info("Executing postbuid for $output");
+        info("Executing postbuild for $output");
         system("bash $postbuild") == 0
             or error("Execution of postbuild script '$postbuild' failed: $?");
         last;
