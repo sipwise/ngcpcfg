@@ -132,7 +132,7 @@ sub process_input {
         "$input_dirname/ngcpcfg.prebuild")) {
         next unless -e $prebuild;
 
-        info("Executing prebuild for $output");
+        info("Executing $prebuild for $output");
         system("bash $prebuild") == 0
             or error("Execution of prebuild script '$prebuild' failed: $?");
         last;
@@ -174,7 +174,7 @@ sub process_input {
         "$input_dirname/ngcpcfg.postbuild")) {
         next unless -e $postbuild;
 
-        info("Executing postbuild for $output");
+        info("Executing $postbuild for $output");
         system("bash $postbuild") == 0
             or error("Execution of postbuild script '$postbuild' failed: $?");
         last;
