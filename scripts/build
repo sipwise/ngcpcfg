@@ -48,6 +48,15 @@ for f in ${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG
 done
 
 build_config_files() {
+  ## HA / carrier features {{{
+  if command -v set_ha_file >/dev/null; then
+    set_ha_file # set ${HA_FILE}
+  fi
+  if command -v set_host_and_pair_files >/dev/null; then
+    set_host_and_pair_files # set ${HOST_FILE} + ${PAIR_FILE}
+  fi
+  ## }}}
+
   declare -a iofiles
   for input_file in $(generate_template_list "$@") ; do
     log_debug "calculate output file" # {{{
