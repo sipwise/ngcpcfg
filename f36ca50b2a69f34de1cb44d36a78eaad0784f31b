@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ccabfb57_5820f161",
+        "filename": "helper/tt2-process",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2020-01-17T08:55:22Z",
+      "side": 1,
+      "message": "Ok great. Open question: how to use tt2-process manually like above to get it working?",
+      "parentUuid": "0c647a8f_e902c25e",
+      "revId": "f36ca50b2a69f34de1cb44d36a78eaad0784f31b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2eba47c5_5caf782c",
         "filename": "helper/tt2-process",
         "patchSetId": 3
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "It helped debugging for me, but I can remove the scanned one. :)",
       "parentUuid": "2eba47c5_5caf782c",
+      "revId": "f36ca50b2a69f34de1cb44d36a78eaad0784f31b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08796fc5_f27db061",
+        "filename": "helper/tt2-process",
+        "patchSetId": 3
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2020-01-17T08:55:22Z",
+      "side": 1,
+      "message": "I absolutely like the debugging feature and wouldn\u0027t drop it. What I\u0027m talking about is that the listed files isn\u0027t restricted to the provided list of arguments (as in: only look into /etc/cron.d/ in my example). If you feel like that\u0027s not important enough, fine for me - I just find it a bit confusing :)",
+      "parentUuid": "06656754_b6d2b760",
       "revId": "f36ca50b2a69f34de1cb44d36a78eaad0784f31b",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
