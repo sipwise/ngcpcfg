@@ -34,6 +34,24 @@
       "revId": "fc6f64fe4ec4ac825c3736451104a97fa5d72787",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "61b6f8d7_7b7d55ba",
+        "filename": "scripts/build",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2020-01-17T16:53:14Z",
+      "side": 1,
+      "message": "Hmm, right, don\u0027t know how I missed that one, as I recall the thought of checking these.\n\nAlso it seems the encrypt one is missing the PAIR_FILE and HOST_FILE, and hardcodes sp1/sp2. :/",
+      "parentUuid": "7729b438_cf3df3b0",
+      "revId": "fc6f64fe4ec4ac825c3736451104a97fa5d72787",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
