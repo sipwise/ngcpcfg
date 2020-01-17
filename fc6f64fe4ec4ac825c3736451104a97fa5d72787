@@ -16,6 +16,24 @@
       "revId": "fc6f64fe4ec4ac825c3736451104a97fa5d72787",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed28d2cc_fa0a9457",
+        "filename": "scripts/build",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2020-01-17T16:13:28Z",
+      "side": 1,
+      "message": "ACK to Mika.\n\nBTW what exactly we are trying to safe here?\nboth functions are 5 lines with mainly one \"cat\" inside.\nSure you can do this, but isn\u0027t it useless?\n\nOr you need to move it here, to move everything together into Perl?",
+      "parentUuid": "7729b438_cf3df3b0",
+      "revId": "fc6f64fe4ec4ac825c3736451104a97fa5d72787",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
