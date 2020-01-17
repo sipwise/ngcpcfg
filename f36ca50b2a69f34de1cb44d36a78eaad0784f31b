@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94514102_1e2b2389",
+        "filename": "helper/tt2-process",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2020-01-17T08:03:16Z",
+      "side": 1,
+      "message": "Just checking: is the removal of \u003coutput\u003e by intention?\n\nIts usage is a bit unclear to me right now:\n\n[sipwise-lab-trunk] sipwise@sp1:~$ sudo DEBUG\u003d1 NGCPCTL_MAIN\u003d/etc/ngcp-config TEMPLATE_POOL_BASE\u003d/etc/ngcp-config/templates /usr/share/ngcp-ngcpcfg/helper//tt2-process -c /etc/ngcp-config/config.yml -c /etc/ngcp-config/network.yml -c /etc/ngcp-config/constants.yml /etc/ngcp-config/templates//etc/cron.d/ngcp-voisniff.tt2 /etc/cron.d/ngcp-voisniff\n2020-01-17 09:01:14 : Building configurations with 2 concurrent jobs\n2020-01-17 09:01:14 : Loading /etc/ngcp-config/config.yml in memory: OK \n2020-01-17 09:01:14 : Loading /etc/ngcp-config/network.yml in memory: OK \n2020-01-17 09:01:14 : Loading /etc/ngcp-config/constants.yml in memory: OK \n2020-01-17 09:01:14 : DEBUG Generating template file list from \u0027\u0027\n\n[sipwise-lab-trunk] sipwise@sp1:~$ sudo DEBUG\u003d1 NGCPCTL_MAIN\u003d/etc/ngcp-config TEMPLATE_POOL_BASE\u003d/etc/ngcp-config/templates /usr/share/ngcp-ngcpcfg/helper//tt2-process -c /etc/ngcp-config/config.yml -c /etc/ngcp-config/network.yml -c /etc/ngcp-config/constants.yml /etc/ngcp-config/templates//etc/cron.d/ngcp-voisniff.tt2 \n2020-01-17 09:01:18 : Building configurations with 2 concurrent jobs\n2020-01-17 09:01:18 : Loading /etc/ngcp-config/config.yml in memory: OK \n2020-01-17 09:01:18 : Loading /etc/ngcp-config/network.yml in memory: OK \n2020-01-17 09:01:18 : Loading /etc/ngcp-config/constants.yml in memory: OK \n2020-01-17 09:01:18 : DEBUG Generating template file list from \u0027\u0027\n\n\nWhile with the previous behavior (so what\u0027s present in current trunk without this review) we get:\n\n[sipwise-lab-trunk] sipwise@sp1:~$ sudo DEBUG\u003d1 NGCPCTL_MAIN\u003d/etc/ngcp-config TEMPLATE_POOL_BASE\u003d/etc/ngcp-config/templates /usr/share/ngcp-ngcpcfg/helper//tt2-process -c /etc/ngcp-config/config.yml -c /etc/ngcp-config/network.yml -c /etc/ngcp-config/constants.yml /etc/ngcp-config/templates//etc/cron.d/ngcp-voisniff.tt2 \n2020-01-17 08:59:58 : Building configurations with 2 concurrent jobs\n2020-01-17 08:59:58 : Loading /etc/ngcp-config/config.yml in memory: OK \n2020-01-17 08:59:58 : Loading /etc/ngcp-config/network.yml in memory: OK \n2020-01-17 08:59:58 : Loading /etc/ngcp-config/constants.yml in memory: OK \n2020-01-17 08:59:58 : Error: Missing output file for /etc/ngcp-config/templates//etc/cron.d/ngcp-voisniff.tt2\n\n[sipwise-lab-trunk] sipwise@sp1:~$ sudo DEBUG\u003d1 NGCPCTL_MAIN\u003d/etc/ngcp-config TEMPLATE_POOL_BASE\u003d/etc/ngcp-config/templates /usr/share/ngcp-ngcpcfg/helper//tt2-process -c /etc/ngcp-config/config.yml -c /etc/ngcp-config/network.yml -c /etc/ngcp-config/constants.yml /etc/ngcp-config/templates//etc/cron.d/ngcp-voisniff.tt2 /etc/cron.d/ngcp-voisniff\n2020-01-17 09:00:11 : Building configurations with 2 concurrent jobs\n2020-01-17 09:00:11 : Loading /etc/ngcp-config/config.yml in memory: OK \n2020-01-17 09:00:11 : Loading /etc/ngcp-config/network.yml in memory: OK \n2020-01-17 09:00:11 : Loading /etc/ngcp-config/constants.yml in memory: OK \n2020-01-17 09:00:11 : Generating /etc/cron.d/ngcp-voisniff: OK",
+      "revId": "f36ca50b2a69f34de1cb44d36a78eaad0784f31b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2eba47c5_5caf782c",
+        "filename": "helper/tt2-process",
+        "patchSetId": 3
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2020-01-17T08:03:16Z",
+      "side": 1,
+      "message": "When executing `sudo DEBUG\u003d1 ngcpcfg build /etc/cron.d/` then we get quite a long list of files that are actually not relevant for the build:\n\n$ sudo DEBUG\u003d1 ngcpcfg build /etc/cron.d\n[...]\n2020-01-17 08:53:07 sp1: DEBUG Filename scanned /etc/ngcp-config/templates//var/sipwise/.screenrc.postbuild\n2020-01-17 08:53:07 sp1: DEBUG Filename scanned /etc/ngcp-config/templates//var/sipwise/.bash_aliases.postbuild\n2020-01-17 08:53:07 sp1: DEBUG Filename scanned /etc/ngcp-config/templates//var/sipwise/.ssh\n2020-01-17 08:53:07 sp1: DEBUG Filename scanned /etc/ngcp-config/templates//var/sipwise/.ssh/authorized_keys.tt2\n2020-01-17 08:53:07 sp1: DEBUG Filename matched /etc/ngcp-config/templates//var/sipwise/.ssh/authorized_keys \u003d\u003e /etc/ngcp-config/templates//var/sipwise/.ssh/authorized_keys.tt2\n2020-01-17 08:53:07 sp1: DEBUG Filename scanned /etc/ngcp-config/templates//var/sipwise/.ssh/authorized_keys.postbuild\n2020-01-17 08:53:07 sp1: Generating /etc/cron.d/logrotate_maxsize: OK\n2020-01-17 08:53:07 sp1: Generating /etc/cron.d/ngcp-cdr-exporter: OK\n2020-01-17 08:53:07 sp1: Generating /etc/cron.d/ngcp-cleanup-tools: OK\n2020-01-17 08:53:07 sp1: Generating /etc/cron.d/ngcp-credit-warning: OK\n2020-01-17 08:53:07 sp1: Generating /etc/cron.d/ngcp-emergency-mode: OK\n2020-01-17 08:53:07 sp1: Generating /etc/cron.d/ngcp-event-exporter: OK\n2020-01-17 08:53:07 sp1: Generating /etc/cron.d/ngcp-faxserver: OK\n2020-01-17 08:53:07 sp1: Generating /etc/cron.d/ngcp-fileshare-cleanup: OK\n2020-01-17 08:53:07 sp1: Generating /etc/cron.d/ngcp-fraud-notifier: OK\n2020-01-17 08:53:07 sp1: Generating /etc/cron.d/ngcp-int-cdr-exporter: OK\n2020-01-17 08:53:07 sp1: Generating /etc/cron.d/ngcp-invoice-gen: OK\n2020-01-17 08:53:07 sp1: Generating /etc/cron.d/ngcp-logfs: OK\n2020-01-17 08:53:07 sp1: Generating /etc/cron.d/ngcp-reminder: OK\n2020-01-17 08:53:07 sp1: Generating /etc/cron.d/ngcp-rtcengine-session-cleanup: OK\n2020-01-17 08:53:07 sp1: Generating /etc/cron.d/ngcp-voisniff: OK\n[...]\n$ sudo DEBUG\u003d1 ngcpcfg build /etc/cron.d/ 2\u003e\u00261 | grep -ce \u0027Filename \\(scanned\\|matched\\)\u0027\n1241\n\nNot sure if that\u0027s expected behavior from your PoV (at least it isn\u0027t for me) :)",
+      "revId": "f36ca50b2a69f34de1cb44d36a78eaad0784f31b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
