@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c56c18a_0d9cb204",
+        "filename": "functions/main",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2020-01-17T07:17:54Z",
+      "side": 0,
+      "message": "Are you sure that we can just drop ha_features here?\nBecause in ha_features we don\u0027t just have set_ha_file, but we have several functions defined for usage within ngcpcfg, namely:\n\nset_ha_file()\nha_setup_ngcpcfg_init()\nha_setup_ngcpcfg_join()\ninit_ha()\nexecute_check_remote()\nexecute_check_shared_storage()\npull()\npush()",
+      "revId": "5bbca27d35becc1e8afc1068cf862faa14abe4a3",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "037c7c38_f869f2d1",
+        "filename": "functions/main",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2020-01-17T07:17:54Z",
+      "side": 0,
+      "message": "And here we have set_host_and_pair_files(), but also init-mgmt()",
+      "revId": "5bbca27d35becc1e8afc1068cf862faa14abe4a3",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
