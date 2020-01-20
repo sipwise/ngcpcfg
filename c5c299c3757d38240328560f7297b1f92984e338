@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e09c2451_08684f26",
+        "filename": "helper/tt2-process",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2020-01-20T13:07:01Z",
+      "side": 1,
+      "message": "In this case I made || explicit to cover the case of both undefined and empty string. :)",
+      "parentUuid": "73c93134_cb30dfbe",
+      "range": {
+        "startLine": 19,
+        "startChar": 24,
+        "endLine": 19,
+        "endChar": 26
+      },
+      "revId": "c5c299c3757d38240328560f7297b1f92984e338",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1210fdc4_e1adc3e5",
         "filename": "helper/tt2-process",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2020-01-20T12:48:57Z",
       "side": 1,
       "message": "Is it correct to use s/// here? I\u0027ve got \n\nCan\u0027t modify constant item in substitution (s///) at xz.pl line 3, near \"s/$xz$// ) \"\n\nerror with such a code.",
+      "range": {
+        "startLine": 241,
+        "startChar": 23,
+        "endLine": 241,
+        "endChar": 39
+      },
+      "revId": "c5c299c3757d38240328560f7297b1f92984e338",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ededc11_c34bc771",
+        "filename": "helper/tt2-process",
+        "patchSetId": 6
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2020-01-20T13:07:01Z",
+      "side": 1,
+      "message": "Yes it should. Here\u0027s a \"one-liner\" verifier:\n\n  perl -Mstrict -Mwarnings -E \u0027my $regex \u003d \"(?:\\.customtt)?\\.tt2\"; my $foo \u003d \"lala.tt2\"; if ($foo !~ s/$regex$//) { say \"match: $foo\" } else { say \"no match: $foo\" }\u0027",
+      "parentUuid": "1210fdc4_e1adc3e5",
       "range": {
         "startLine": 241,
         "startChar": 23,
