@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73c93134_cb30dfbe",
+        "filename": "helper/tt2-process",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2020-01-20T12:43:29Z",
+      "side": 1,
+      "message": "I remember somewhere in another review there was replacement of \u0027||\u0027 to \u0027//\u0027. May be you remember it (or even an author :))?",
+      "range": {
+        "startLine": 19,
+        "startChar": 24,
+        "endLine": 19,
+        "endChar": 26
+      },
+      "revId": "c5c299c3757d38240328560f7297b1f92984e338",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
