@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "eac725ec_82889270",
+        "filename": "helper/tt2-process",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2020-01-20T12:46:48Z",
+      "side": 1,
+      "message": "I do not know.\nWhat I did is: ngcp-ppa -k gerrit_gjover_parallel-tt2  on pro-trunk.mgm.sipwise.com and repeated steps described above, you can check it yourself on pro-trunk.mgm.sipwise.com.\n\n\nP.S is installing PPA gerrit_gjover_parallel-tt2 all what I need to test this?",
+      "parentUuid": "db0d7357_81b04fc0",
+      "range": {
+        "startLine": 221,
+        "startChar": 21,
+        "endLine": 221,
+        "endChar": 43
+      },
+      "revId": "dd80250b3d3eddd892e061c592f53b079f2139f0",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9bd3e60_581b67af",
         "filename": "scripts/build",
         "patchSetId": 4
