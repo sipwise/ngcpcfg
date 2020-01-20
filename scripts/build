@@ -62,8 +62,10 @@ build_config_files() {
     iofiles+=("$input_file" "$output_file")
   done
 
-  log_debug "${HELPER}/tt2-process ${ARGS[*]} ${iofiles[*]}"
-  "${HELPER}/tt2-process" "${ARGS[@]}" "${iofiles[@]}"
+  RUNNER="nice -n 19 ionice -c 3"
+
+  log_debug "${RUNNER} ${HELPER}/tt2-process ${ARGS[*]} ${iofiles[*]}"
+  ${RUNNER} "${HELPER}/tt2-process" "${ARGS[@]}" "${iofiles[@]}"
 
   record_commit_id
 }
