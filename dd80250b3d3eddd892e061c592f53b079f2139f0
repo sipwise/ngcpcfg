@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "db0d7357_81b04fc0",
+        "filename": "helper/tt2-process",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2020-01-20T11:05:49Z",
+      "side": 1,
+      "message": "That was due to these variables not being exported, now that this is fixed in the -ha repo this should work here too, see the loop below (in the new code), which adds the host extensions at the end of the scan_regex. Or do you mean that even with the exports this does not work anyway?",
+      "parentUuid": "a78fe0b5_ad55c110",
+      "range": {
+        "startLine": 221,
+        "startChar": 21,
+        "endLine": 221,
+        "endChar": 43
+      },
+      "revId": "dd80250b3d3eddd892e061c592f53b079f2139f0",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9bd3e60_581b67af",
         "filename": "scripts/build",
         "patchSetId": 4
