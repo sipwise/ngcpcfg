@@ -326,7 +326,52 @@ sub generate_iofiles {
         $filenames{$_}
     } (sort(@filenames_prio), sort(@filenames_norm));
 
-    return @filenames;
+    return \@filenames;
+}
+
+sub proc_pool_runner {
+    my ($code, $filelist) = @_;
+    my $nprocs = 0;
+    my $rc = 0;
+
+    foreach my $file (@{$filelist}) {
+        my $pid = fork;
+        if (not defined $pid) {
+            error("Cannot fork child process to process $file->{input}: $!");
+        }
+        if ($pid != 0) {
+            # We are the parent.
+            $nprocs++;
+
+            # If we have queued enough work, wait for some to finish.
+            if ($options{jobs} > 0 && $nprocs >= $options{jobs}) {
+                my $kid = waitpid(-1, 0);
+                $nprocs-- if $kid > 0;
+                $rc = 1 if $kid > 0 && $? != 0;
+            }
+
+            # Queue more work if available.
+            next;
+        }
+
+        $code->($file);
+
+        exit 0;
+    }
+
+    # Reap any remaining zombies.
+    while (1) {
+        my $pid = waitpid(-1, 0);
+        last if $pid < 0;
+        $nprocs--;
+        $rc = 1 if $? != 0;
+    }
+
+    if ($nprocs != 0) {
+        warning("queued or reaped more jobs than expected, remaining $nprocs");
+    }
+
+    return $rc;
 }
 
 sub process {
@@ -348,46 +393,13 @@ sub process {
         print " OK \n" unless $options{quiet};
     }
 
-    my $nprocs = 0;
-    my $rc = 0;
     my $tt = NGCP::Template->new();
+    my $rc;
 
-    foreach my $file (generate_iofiles()) {
-        my $pid = fork;
-        if (not defined $pid) {
-            error("Cannot fork child process to process $file->{input}: $!");
-        }
-        if ($pid != 0) {
-            # We are the parent.
-            $nprocs++;
-
-            # If we have queued enough work, wait for some to finish.
-            if ($options{jobs} > 0 && $nprocs >= $options{jobs}) {
-                my $kid = waitpid(-1, 0);
-                $nprocs-- if $kid > 0;
-                $rc = 1 if $kid > 0 && $? != 0;
-            }
-
-            # Queue more work if available.
-            next;
-        }
-
+    $rc = proc_pool_runner(sub {
+        my $file = shift;
         process_input($tt, $config, $file);
-
-        exit 0;
-    }
-
-    # Reap any remaining zombies.
-    while (1) {
-        my $pid = waitpid(-1, 0);
-        last if $pid < 0;
-        $nprocs--;
-        $rc = 1 if $? != 0;
-    }
-
-    if ($nprocs != 0) {
-        warning("queued or reaped more jobs than expected, remaining $nprocs");
-    }
+    }, generate_iofiles());
 
     return $rc;
 }
