@@ -121,16 +121,27 @@ sub process_template {
         or error("Cannot rename $newfile to $target: $!");
 }
 
-sub process_input {
-    my ($tt, $config, $input, $output) = @_;
+sub run_hook {
+    my ($hook, $file) = @_;
 
-    # Export variable for usage within {pre,post}build scripts,
-    # OUTPUT_DIRECTORY is for customization during testing.
-    ## no critic (Variables::RequireLocalizedPunctuationVars)
-    if (length $ENV{OUTPUT_DIRECTORY}) {
-        $output = "$ENV{OUTPUT_DIRECTORY}/$output";
-    }
-    $ENV{output_file} = $output;
+    return unless exists $file->{$hook};
+
+    my $hookfile = $file->{$hook};
+
+    # Export variable for usage within hook scripts.
+    local $ENV{output_file} = $file->{output};
+
+    # Execute hook script.
+    info("Executing $hookfile for $file->{output}");
+    system("bash $hookfile") == 0
+        or error("Execution of $hook script '$hookfile' failed: $?");
+}
+
+sub process_input {
+    my ($tt, $config, $file) = @_;
+
+    my $input = $file->{input};
+    my $output = $file->{output};
 
     # Ensure we do not try to generate a file where a directory with same
     # name exists already.
@@ -138,23 +149,11 @@ sub process_input {
         error("Generating file $output not possible, it's an existing directory.");
     }
 
-    my $input_dirname = dirname($input);
-    my $output_basename = basename($output);
-    my $output_dirname = dirname($output);
-
     # Execute prebuild script.
-    for my $prebuild ((
-        "$input_dirname/$output_basename.prebuild",
-        "$input_dirname/ngcpcfg.prebuild")) {
-        next unless -e $prebuild;
-
-        info("Executing $prebuild for $output");
-        system("bash $prebuild") == 0
-            or error("Execution of prebuild script '$prebuild' failed: $?");
-        last;
-    }
+    run_hook('prebuild', $file);
 
     # If output directory does not exist yet, create it
+    my $output_dirname = dirname($output);
     if (not -d $output_dirname) {
         ## no critic (ValuesAndExpressions::ProhibitLeadingZeros)
         make_path($output_dirname, { mode => 0755 });
@@ -185,16 +184,7 @@ sub process_input {
     }
 
     # Execute postbuild script.
-    for my $postbuild ((
-        "$input_dirname/$output_basename.postbuild",
-        "$input_dirname/ngcpcfg.postbuild")) {
-        next unless -e $postbuild;
-
-        info("Executing $postbuild for $output");
-        system("bash $postbuild") == 0
-            or error("Execution of postbuild script '$postbuild' failed: $?");
-        last;
-    }
+    run_hook('postbuild', $file);
 }
 
 sub generate_iofiles {
@@ -281,12 +271,32 @@ sub generate_iofiles {
             if (exists $filenames_scan{$file}{"$file$ext"}) {
                 my $input = "$file$ext";
                 my $output = ($file =~ s{\Q$NGCPCTL_MAIN\E/templates/}{}r);
+                # Add OUTPUT_DIRECTORY for customization during testing.
+                if (length $ENV{OUTPUT_DIRECTORY}) {
+                    $output = "$ENV{OUTPUT_DIRECTORY}/$output";
+                }
+
                 if ($file =~ m/ngcp-service/) {
                     push @filenames_prio, $input;
                 } else {
                     push @filenames_norm, $input;
                 }
-                $filenames{$input} = $output;
+                $filenames{$input} = {
+                    output => $output,
+                };
+
+                # Select prebuild and postbuild scripts.
+                my $input_dirname = dirname($input);
+                my $output_basename = basename($output);
+                foreach my $hook (qw(prebuild postbuild)) {
+                    foreach my $hookfile ((
+                        "$input_dirname/$output_basename.$hook",
+                        "$input_dirname/ngcpcfg.$hook")) {
+                        next unless -e $hookfile;
+                        $filenames{$input}{$hook} = $hookfile;
+                    }
+                }
+
                 last;
             }
         }
@@ -294,7 +304,7 @@ sub generate_iofiles {
 
     my @filenames = map { {
         input => $_,
-        output => $filenames{$_},
+        %filenames{$_},
     } } (sort @filenames_prio, sort @filenames_norm);
 
     return @filenames;
@@ -324,12 +334,9 @@ sub process {
     my $tt = NGCP::Template->new();
 
     foreach my $file (generate_iofiles()) {
-        my $input = $file->{input};
-        my $output = $file->{output};
-
         my $pid = fork;
         if (not defined $pid) {
-            error("Cannot fork child process to process $input: $!");
+            error("Cannot fork child process to process $file->{input}: $!");
         }
         if ($pid != 0) {
             # We are the parent.
@@ -346,7 +353,7 @@ sub process {
             next;
         }
 
-        process_input($tt, $config, $input, $output);
+        process_input($tt, $config, $file);
 
         exit 0;
     }
