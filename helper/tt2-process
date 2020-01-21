@@ -137,6 +137,14 @@ sub run_hook {
         or error("Execution of $hook script '$hookfile' failed: $?");
 }
 
+sub run_hook_perfile {
+    my ($hook, $file) = @_;
+
+    return if $file->{$hook} =~ m{/ngcpcfg\.$hook$};
+
+    run_hook($hook, $file);
+}
+
 sub process_input {
     my ($tt, $config, $file) = @_;
 
@@ -150,7 +158,7 @@ sub process_input {
     }
 
     # Execute prebuild script.
-    run_hook('prebuild', $file);
+    run_hook_perfile('prebuild', $file);
 
     # If output directory does not exist yet, create it
     my $output_dirname = dirname($output);
@@ -184,7 +192,7 @@ sub process_input {
     }
 
     # Execute postbuild script.
-    run_hook('postbuild', $file);
+    run_hook_perfile('postbuild', $file);
 }
 
 sub generate_iofiles {
@@ -355,6 +363,15 @@ sub proc_runner {
     return $rc;
 }
 
+sub run_hooks_perdir {
+    my ($hook, $iofiles) = @_;
+
+    return proc_runner(sub {
+        my $file = shift;
+        run_hook($hook, $file);
+    }, [ grep { $_->{$hook} =~ m{/ngcpcfg\.$hook$} } @{$iofiles} ]);
+}
+
 sub process {
     my %options = @_;
     my $config = {};
@@ -378,10 +395,14 @@ sub process {
     my $rc;
     my $iofiles = generate_iofiles();
 
-    $rc = proc_runner(sub {
+    $rc |= run_hooks_perdir('prebuild', $iofiles);
+
+    $rc |= proc_runner(sub {
         my $file = shift;
         process_input($tt, $config, $file);
     }, $iofiles);
+
+    $rc |= run_hooks_perdir('postbuild', $iofiles);
 
     return $rc;
 }
