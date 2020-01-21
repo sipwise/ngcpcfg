@@ -327,9 +327,6 @@ sub process {
         my $input = $file->{input};
         my $output = $file->{output};
 
-        error('Missing input file') unless defined $input;
-        error("Missing output file for $input") unless defined $output;
-
         my $pid = fork;
         if (not defined $pid) {
             error("Cannot fork child process to process $input: $!");
