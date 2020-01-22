@@ -22,6 +22,30 @@
       "revId": "0907fb1e7a2f3fdcedd3a4236aadd460f7c07917",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74cc622c_53914ada",
+        "filename": "helper/tt2-process",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2020-01-22T13:24:30Z",
+      "side": 0,
+      "message": "sysopen, like open will change the perms for the file being created, as this is always a new file (see the extension we use before the final move, to avoid ending up with junk on the destination).\n\nI\u0027m not even sure why this code was here at all TBH, even chmod should always operate on the dereferenced file, and not any symlink. (In C that would the difference between chmod(2) and lchmod(2), but in perl you\u0027d need to use the POSIX module to be able to call lchmod(2) which is rather uncommon thing to do, and in some systems the call will end up being a no-op anyway.)",
+      "parentUuid": "09a119b8_ad072613",
+      "range": {
+        "startLine": 177,
+        "startChar": 8,
+        "endLine": 177,
+        "endChar": 73
+      },
+      "revId": "0907fb1e7a2f3fdcedd3a4236aadd460f7c07917",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
