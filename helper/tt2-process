@@ -6,11 +6,13 @@ use warnings;
 use List::Util qw(any uniq pairmap);
 use Getopt::Long qw(:config posix_default bundling_values no_ignorecase);
 use Cwd qw(realpath);
+use Errno qw(EEXIST);
 use File::Basename;
 use File::Path qw(make_path);
 use File::Copy qw(mv);
 use File::Find;
 use Time::Piece;
+use Fcntl;
 use POSIX qw(:sys_wait_h);
 use Hash::Merge qw(merge);
 use YAML::XS qw(LoadFile);
@@ -102,16 +104,34 @@ sub setup {
 sub process_template {
     my ($tt, $config, $input, $output) = @_;
 
+    # Set permissions for generated config based on the ones of the
+    # template, plus dropping all write permissions.
+    ## no critic (ValuesAndExpressions::ProhibitLeadingZeros)
+    my $umask = umask 0222;
+    my $mode = (stat $input)[2];
+
     my $newfile = "$output.ngcpcfg-new";
 
-    open my $outfh, '>', $newfile
-        or error("Cannot open template new file $newfile: $!");
+    my $outfh;
+    if (!sysopen $outfh, $newfile, O_CREAT | O_EXCL | O_WRONLY, $mode) {
+        if ($! != EEXIST) {
+            error("Cannot open template new file $newfile: $!");
+        }
+        unlink $newfile
+            or error("Cannot remove template new file $newfile: $!");
+
+        sysopen my $outfh, $newfile, O_CREAT | O_EXCL | O_WRONLY, $mode
+            or error("Cannot open template new file $newfile: $!");
+    }
     open my $infh, '<', $input
         or error("Cannot open file '$input' for reading: $!");
     $tt->process($infh, $config, $outfh)
         or error("Cannot process template '$input':\n  " . $tt->error());
     close $infh;
     close $outfh;
+
+    # Restore previous umask.
+    umask $umask;
 
     # XXX: Docker breaks sane Unix expectations when moving a file into
     # /etc/hosts, as it creates a bind mount on that pathname. We need to
@@ -166,9 +186,6 @@ sub process_input {
         make_path($output_dirname, { mode => 0755 });
     }
 
-    # Assume safe defaults.
-    umask 0077;
-
     eval {
         process_template($tt, $config, $input, $output);
     };
@@ -178,12 +195,6 @@ sub process_input {
     } else {
         info("Generating $output: OK");
     }
-
-    # Set permissions for generated config based on the ones of the
-    # template, plus dropping all write permissions.
-    ## no critic (ValuesAndExpressions::ProhibitLeadingZeros)
-    my $mode = (stat $input)[2] & ~0222;
-    chmod $mode, $output;
 
     # Execute postbuild script.
     for my $postbuild ((
