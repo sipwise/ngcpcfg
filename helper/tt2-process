@@ -295,7 +295,7 @@ sub generate_iofiles {
     my @filenames = map { {
         input => $_,
         output => $filenames{$_},
-    } } (sort @filenames_prio, sort @filenames_norm);
+    } } (sort(@filenames_prio), sort(@filenames_norm));
 
     return @filenames;
 }
