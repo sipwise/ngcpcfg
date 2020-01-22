@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09a119b8_ad072613",
+        "filename": "helper/tt2-process",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2020-01-22T13:06:51Z",
+      "side": 0,
+      "message": "Will sysopen change perms for already available file?\nEven it is a symlink on simlink on a file? Or new file will be created on top of symlink?\n\nTesting performance changes here.",
+      "range": {
+        "startLine": 177,
+        "startChar": 8,
+        "endLine": 177,
+        "endChar": 73
+      },
+      "revId": "0907fb1e7a2f3fdcedd3a4236aadd460f7c07917",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
