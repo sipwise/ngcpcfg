@@ -11,6 +11,7 @@ use File::Path qw(make_path);
 use File::Copy qw(mv);
 use File::Find;
 use Time::Piece;
+use Fcntl;
 use POSIX qw(:sys_wait_h);
 use Hash::Merge qw(merge);
 use YAML::XS qw(LoadFile);
@@ -96,9 +97,15 @@ sub setup {
 sub process_template {
     my ($tt, $config, $input, $output) = @_;
 
+    # Set permissions for generated config based on the ones of the
+    # template, plus dropping all write permissions.
+    ## no critic (ValuesAndExpressions::ProhibitLeadingZeros)
+    my $umask = umask 0222;
+    my $mode = (stat $input)[2];
+
     my $newfile = "$output.ngcpcfg-new";
 
-    open my $outfh, '>', $newfile
+    sysopen my $outfh, $newfile, O_CREAT | O_WRONLY, $mode
         or error("Cannot open template new file $newfile: $!");
     open my $infh, '<', $input
         or error("Cannot open file '$input' for reading: $!");
@@ -106,6 +113,9 @@ sub process_template {
         or error("Cannot process template '$input':\n  " . $tt->error());
     close $infh;
     close $outfh;
+
+    # Restore previous umask.
+    umask $umask;
 
     # XXX: Docker breaks sane Unix expectations when moving a file into
     # /etc/hosts, as it creates a bind mount on that pathname. We need to
@@ -160,9 +170,6 @@ sub process_input {
         make_path($output_dirname, { mode => 0755 });
     }
 
-    # Assume safe defaults.
-    umask 0077;
-
     eval {
         process_template($tt, $config, $input, $output);
     };
@@ -171,17 +178,6 @@ sub process_input {
         error("Generating $output based on $input: FAILED");
     } else {
         info("Generating $output: OK");
-    }
-
-    if (-l $output) {
-        warning("File $output is a symlink - NOT adjusting permissions");
-    } else {
-        # Set permissions for generated config based on the ones of the
-        # template, plus dropping all write permissions.
-        ## no critic (ValuesAndExpressions::ProhibitLeadingZeros)
-        my $mode = (stat $input)[2] & ~0222;
-
-        chmod $mode, $output;
     }
 
     # Execute postbuild script.
