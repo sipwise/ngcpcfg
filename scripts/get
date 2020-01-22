@@ -13,7 +13,7 @@ get_value() {
   echo "[% $1 %]" > "${input_file}"
   output_file="$(mktemp)"
 
-  if "${HELPER}/tt2-process" -q "${ARGS[@]}" "${input_file}" "${output_file}"; then
+  if "${HELPER}/tt2-process" -p -q "${ARGS[@]}" "${input_file}" "${output_file}"; then
     cat "${output_file}"
   else
     RC=1

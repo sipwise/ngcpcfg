@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use List::Util qw(any uniq);
+use List::Util qw(any uniq pairmap);
 use Getopt::Long qw(:config posix_default bundling_values no_ignorecase);
 use Cwd qw(realpath);
 use File::Basename;
@@ -37,9 +37,14 @@ error("TEMPLATE_POOL_BASE is not defined") unless $TEMPLATE_POOL_BASE;
 GetOptions(\%options,
     'help|?',
     'quiet|q',
+    'pairs|p',
     'jobs|j:i',
     'config|c=s@',
 );
+
+if (exists $options{pairs} && @ARGV % 2 != 0)
+    error("--pairs requires <input> <output> argument pairs");
+}
 
 setup();
 exit process(%options);
@@ -53,6 +58,7 @@ Options:
                               Option can appear multiple times.
   -j, --jobs [<n>]          Use up to <n> processing jobs (defaults to nproc).
                               Missing argument means no limit of jobs.
+  -p, --pairs               Expect the arguments to be <input> <output> pairs.
   -q, --quiet               Do not print progress information.
   -h, --help                This help message.
 HELP
@@ -199,6 +205,13 @@ sub process_input {
 
 sub generate_iofiles {
     debug("Generating template file list from '$CONFIG_POOL'");
+
+    if (exists $options{pairs}) {
+        return pairmap { {
+            input => $a,
+            output => $b,
+        } } @ARGV;
+    }
 
     # Support for PRO/CARRIER systems.
     my @tt2_hosts;
