@@ -179,16 +179,11 @@ sub process_input {
         info("Generating $output: OK");
     }
 
-    if (-l $output) {
-        warning("File $output is a symlink - NOT adjusting permissions");
-    } else {
-        # Set permissions for generated config based on the ones of the
-        # template, plus dropping all write permissions.
-        ## no critic (ValuesAndExpressions::ProhibitLeadingZeros)
-        my $mode = (stat $input)[2] & ~0222;
-
-        chmod $mode, $output;
-    }
+    # Set permissions for generated config based on the ones of the
+    # template, plus dropping all write permissions.
+    ## no critic (ValuesAndExpressions::ProhibitLeadingZeros)
+    my $mode = (stat $input)[2] & ~0222;
+    chmod $mode, $output;
 
     # Execute postbuild script.
     for my $postbuild ((
