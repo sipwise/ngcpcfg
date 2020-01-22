@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6448d918_f640c711",
+        "filename": "helper/tt2-process",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2020-01-22T13:29:35Z",
+      "side": 1,
+      "message": "What if the file already exists, but with the wrong permissions?",
+      "range": {
+        "startLine": 108,
+        "startChar": 30,
+        "endLine": 108,
+        "endChar": 58
+      },
+      "revId": "ac7093efa6ae9d1ab9cd5bd9f731738d680a30c2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
