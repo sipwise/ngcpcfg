@@ -19,6 +19,47 @@
     },
     {
       "key": {
+        "uuid": "f63383b8_9fdde6fd",
+        "filename": "helper/tt2-process",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2020-01-24T17:12:00Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand what you are saying. So instead I\u0027m going to try to explain how the new code is supposed to work:\n\n- We try to create an \u003coutput\u003e.ngcpcfg-new file (to avoid overwriting the \u003coutput\u003e file in case we fail.\n- We open with a mode that will make sure we always create the file or it will fail (O_CREAT | O_EXCL).\n- If the fail existed (due for ex. to a previous aborted run or similar, then we delete the \u003coutput\u003e.ngcpcfg-new, and try to open again.\n- We always set the permissions on the new file, so that when it gets moved to its final \u003coutput\u003e name it gets proper values. In case the destination is a symlink, then it will just disappear, and then we do not need to check whether \u003coutput\u003e is a symlink or not to avoid chmod()ing it.",
+      "parentUuid": "d4bb6f34_dbf80525",
+      "revId": "75ad4e4fdf2a51243f36344572cf9786e24a3cb9",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "492cbf20_876ef42c",
+        "filename": "helper/tt2-process",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2020-01-24T17:12:00Z",
+      "side": 1,
+      "message": "Hmm had seen this the other day, but it seems I forgot in the interim. Will fix.",
+      "range": {
+        "startLine": 123,
+        "startChar": 16,
+        "endLine": 123,
+        "endChar": 18
+      },
+      "revId": "75ad4e4fdf2a51243f36344572cf9786e24a3cb9",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa3a06eb_15d75d8c",
         "filename": "helper/tt2-process",
         "patchSetId": 5
@@ -30,6 +71,24 @@
       "writtenOn": "2020-01-24T15:48:38Z",
       "side": 1,
       "message": "what\u0027s the \"previous umask\" setting then, 0222?\nCan/could this umask setting change any behavior of the following prebuild/postscript runs BTW?",
+      "revId": "75ad4e4fdf2a51243f36344572cf9786e24a3cb9",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e2a150e4_086e72e2",
+        "filename": "helper/tt2-process",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2020-01-24T17:12:00Z",
+      "side": 1,
+      "message": "The previous umask is whatever it was before the «umask 0222» call. But it\u0027s true that this looks like a regression, and I should leave alone the original «umask 0077», which will be restored here for the subsequent executions. Nice catch!",
+      "parentUuid": "aa3a06eb_15d75d8c",
       "revId": "75ad4e4fdf2a51243f36344572cf9786e24a3cb9",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
