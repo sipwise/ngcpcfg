@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4bb6f34_dbf80525",
+        "filename": "helper/tt2-process",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2020-01-24T15:48:38Z",
+      "side": 1,
+      "message": "Just to clarify: every output file that gets \"touched\" is adjusted here, not just the ones that created from scratch?\nJust checking, to avoid that files that aren\u0027t modified in terms of content still get the permissions based on their input file, so if only the permissions are modified this still shows up on the output file.",
+      "revId": "75ad4e4fdf2a51243f36344572cf9786e24a3cb9",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa3a06eb_15d75d8c",
+        "filename": "helper/tt2-process",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2020-01-24T15:48:38Z",
+      "side": 1,
+      "message": "what\u0027s the \"previous umask\" setting then, 0222?\nCan/could this umask setting change any behavior of the following prebuild/postscript runs BTW?",
+      "revId": "75ad4e4fdf2a51243f36344572cf9786e24a3cb9",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
