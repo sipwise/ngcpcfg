@@ -1,3 +1,11 @@
+ngcp-ngcpcfg (8.1.1.2+0~mr8.1.1.2) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [33f8c37] TT#74153 add utils Template::Plugin
+  * [9af8d51] TT#74153 add Utils methods
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 28 Jan 2020 15:31:22 +0100
+
 ngcp-ngcpcfg (8.1.1.1+0~mr8.1.1.1) unstable; urgency=medium
 
   * New release.
