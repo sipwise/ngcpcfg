@@ -258,7 +258,7 @@ sub sync_mysql_data {
 
 sub flush_privs {
     return if $test_mode;
-    log_debug("flush priveleges");
+    log_debug("flush privileges");
     $dbh->do('FLUSH PRIVILEGES')
         or die "Cannot flush MySQL privileges: $DBI::errstr\n";
 

@@ -51,7 +51,7 @@ FILES=$(get_config_file_list)
 # shellcheck disable=SC2086
 tar zcf "$TARGZ" /etc/ngcp-config/ $FILES /etc/.git
 if gpg --symmetric "$TARGZ" ; then
-  log_info "Successfully created crypted ngcpcfg configuration archive ${TARGZ}.gpg"
+  log_info "Successfully created encrypted ngcpcfg configuration archive ${TARGZ}.gpg"
   # ensure we don't leave the unencrypted version behind
   rm -f "${TARGZ}"
 else

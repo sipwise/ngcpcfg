@@ -2,7 +2,7 @@ ngcp-ngcpcfg (8.3.0.0+0~mr8.3.0.0) unstable; urgency=medium
 
   [ Guillem Jover ]
   * [d09d18d] TT#50701 NGCP::Template::Object: Use exists instead of defined
-  * [de9aaca] TT#50701 NGCP::Tempalte::Object: Handle empty peername for self in firstname
+  * [de9aaca] TT#50701 NGCP::Template::Object: Handle empty peername for self in firstname
   * [5bcd29f] TT#50701 test: Add unit tests for NGCP::Template::Object
   * [c0fd959] TT#50701 Refactor IPv6 address expansion into an object function
   * [e1749f7] TT#71952 Fix permissions of yaml files
@@ -684,7 +684,7 @@ ngcp-ngcpcfg (0.29.0.0+0~mr4.3.0.0) unstable; urgency=medium
   * [c89f72e] MT#15141 Hide debug output to keep old ngcpcfg output style
   * [e8f7ce8] MT#15803 Add ngcpcfg log/show scripts to improve usability
   * [cad0d3c] MT#15803 Introducing the new function to provide current branch status
-  * [550067a] MT#15803 Check oustanding pull actions only (ignore outstanding push actions)
+  * [550067a] MT#15803 Check outsanding pull actions only (ignore outstanding push actions)
   * [50b08a3] MT#11097 Fix warning 'keys on reference is experimental' in ngcp-network
 
   [ Guillem Jover ]
@@ -1156,7 +1156,7 @@ ngcp-ngcpcfg (0.10.0) unstable; urgency=low
   * Make sure customtt.tt2 template files are preferred over
     non-customtt.tt2 files in non-HA setups.
   * encrypt/decrypt: get rid of ngcpcfg-share on glusterfs and
-    local cache on encrypt and try to restore it iff possible or otherwis
+    local cache on encrypt and try to restore it iff possible or otherwise
   * Fix unset variable if calling ngcpcfg without any options
     and having ngcpcfg-locker installed.
   * Usage text: correctly indent optional features.

@@ -67,7 +67,7 @@ fi
 
 # commit message
 if [ -z "${1:-}" ] ; then
-  msg="commiting uncommented changes"
+  msg="committing uncommented changes"
 else
   msg="$*"
 fi

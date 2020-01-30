@@ -109,7 +109,7 @@ systemd_daemon_reload_preset() {
     log_debug "Running: systemctl daemon-reload 2>&1 || true"
     systemctl daemon-reload 2>&1 || true
 
-    log_debug "systemd needs preset-all to enable/disabe services (to start them on boot)"
+    log_debug "systemd needs preset-all to enable/disable services (to start them on boot)"
     log_debug "Running: rm -rf /etc/systemd/system/*.wants/ || true"
     rm -rf /etc/systemd/system/*.wants/ || true
     log_debug "Running: systemctl preset-all 2>&1 || true"

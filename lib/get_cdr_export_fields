@@ -175,7 +175,7 @@ FOREACH X_f IN argv.admin_export_fields;
     out.admin_fields.push("'" _ cdr_direction_provider_type_select(X_base_type _ "_relation", X_type _ "_relation_data", "base_table", "relation_id", "val", matches.0, matches.1, matches.2) _ "'");
   ELSIF (matches = X_f.match('^(?i:header)_([a-zA-Z0-9_-]+)$'));
     out.admin_fields.push("'" _ cdr_direction_provider_type_select_casesensitive(X_base_type _ "_tag", X_type _ "_tag_data", "base_table", "tag_id", "val", "source", "customer", "header=" _ matches.0) _ "'");
-  # Lowest precendece: other cdr fields, fields joined on your own or 'calculated' (raw sql) fields...:
+  # Lowest precedence: other cdr fields, fields joined on your own or 'calculated' (raw sql) fields...:
   ELSE;
     out.admin_fields.push("'" _ X_f _ "'");
   END;
