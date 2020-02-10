@@ -1,3 +1,10 @@
+ngcp-ngcpcfg (7.5.3.1+0~mr7.5.3.1) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [eb300b7] TT#71051 sync-db sync timezone delimiter
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 10 Feb 2020 16:36:29 +0100
+
 ngcp-ngcpcfg (7.5.3.0+0~mr7.5.3.0) unstable; urgency=medium
 
   [ Alexander Lutay ]
