@@ -1,2 +1,11 @@
 ---
 tests:
+database:
+  dbhost: localhost
+  dbport: 3306
+ossbss:
+  provisioning:
+    database:
+      name: provisioning
+      user: soap
+      pass: hEuxXrzLF43X93ULhoNu

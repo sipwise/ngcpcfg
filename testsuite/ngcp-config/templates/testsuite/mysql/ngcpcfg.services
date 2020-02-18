@@ -1,5 +1,0 @@
-#!/bin/bash
-
-ngcp-service mysql restart
-
-# vim: ft=sh
