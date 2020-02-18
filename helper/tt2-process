@@ -203,10 +203,10 @@ sub generate_iofiles {
     debug("Generating template file list from '$CONFIG_POOL'");
 
     if (exists $options{pairs}) {
-        return pairmap { {
+        return [ pairmap { {
             input => $a,
             output => $b,
-        } } @ARGV;
+        } } @ARGV ];
     }
 
     # Support for PRO/CARRIER systems.
