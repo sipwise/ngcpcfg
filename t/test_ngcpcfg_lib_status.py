@@ -19,7 +19,7 @@ def test_status_carrier(ngcpcfgcli, tmpdir):
                      })
     regex = re.compile(r"Generating " +
                        tmpdir +
-                       r"//etc/status.cfg: OK")
+                       r"/etc/status.cfg: OK")
     assert re.search(regex, out.stdout)
     output_file = os.path.join(tmpdir, "etc/status.cfg")
     test_file = "fixtures/output/status.cfg_carrier"

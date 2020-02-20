@@ -416,8 +416,8 @@ dome dummy customtt message
     assert "Successfully created '" + str(template_path) + \
         "/apt/apt.conf.d/71_no_recommended.customtt.tt2.sp1'" in out.stdout
     assert 'Requested patchtt operation has finished successfully.' in out.stdout
-    assert "Generating " + str(tmpdir) + "/output/" + str(tmpdir) + \
-        "//etc/apt/apt.conf.d/71_no_recommended: OK" in out.stdout
+    assert "Generating " + str(tmpdir) + "/output" + str(tmpdir) + \
+        "/etc/apt/apt.conf.d/71_no_recommended: OK" in out.stdout
     # disabled for the moment, see https://gerrit.mgm.sipwise.com/#/c/17739/4/t/test_ngcpcfg_patch.py@99
     #assert out.stderr == "b''"
 
@@ -537,8 +537,8 @@ dome dummy customtt message
     assert "Successfully created '" + str(template_path) + \
         "/dummy/dummy.customtt.tt2'" in out.stdout
     assert 'Requested patchtt operation has finished successfully.' in out.stdout
-    assert "Generating " + str(tmpdir) + "/output/" + str(tmpdir) + \
-        "//etc/apt/apt.conf.d/71_no_recommended: OK" in out.stdout
+    assert "Generating " + str(tmpdir) + "/output" + str(tmpdir) + \
+        "/etc/apt/apt.conf.d/71_no_recommended: OK" in out.stdout
     # disabled for the moment, see https://gerrit.mgm.sipwise.com/#/c/17739/4/t/test_ngcpcfg_patch.py@99
     #assert out.stderr == "b''"
 

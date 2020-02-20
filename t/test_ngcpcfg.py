@@ -33,7 +33,7 @@ def test_simple_build_template_ok(ngcpcfgcli):
                          })
     regex = re.compile(r"Generating " +
                        tmpdir +
-                       r"//etc/apt/apt.conf.d/71_no_recommended: OK")
+                       r"/etc/apt/apt.conf.d/71_no_recommended: OK")
     assert re.search(regex, out.stdout)
 
 
@@ -47,7 +47,7 @@ def test_fail_on_existing_dir_matching_output_filename(ngcpcfgcli, tmpdir):
                          'OUTPUT_DIRECTORY': tmpdir,
                          })
     regex = re.compile("Error: Generating file " +
-                       tmpdir + "/" + output +
+                       tmpdir + output +
                        r" not possible, it\'s an existing directory.")
     assert re.search(regex, out.stderr)
     assert out.returncode == 1

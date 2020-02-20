@@ -223,8 +223,8 @@ sub generate_iofiles {
             warning("$dir does not exist");
             next;
         }
-        debug("Scanning $TEMPLATE_POOL_BASE/$dir");
-        push @scan_dirs, "$TEMPLATE_POOL_BASE/$dir";
+        debug("Scanning $TEMPLATE_POOL_BASE$dir");
+        push @scan_dirs, "$TEMPLATE_POOL_BASE$dir";
     }
     return if @scan_dirs == 0;
 
@@ -289,10 +289,10 @@ sub generate_iofiles {
         foreach my $ext (@match_ext) {
             if (exists $filenames_scan{$file}{"$file$ext"}) {
                 my $input = "$file$ext";
-                my $output = ($file =~ s{\Q$NGCPCTL_MAIN\E/templates/}{}r);
+                my $output = ($file =~ s{\Q$NGCPCTL_MAIN\E/templates}{}r);
                 # Add OUTPUT_DIRECTORY for customization during testing.
                 if (length $ENV{OUTPUT_DIRECTORY}) {
-                    $output = "$ENV{OUTPUT_DIRECTORY}/$output";
+                    $output = "$ENV{OUTPUT_DIRECTORY}$output";
                 }
 
                 if ($file =~ m/ngcp-service/) {
