@@ -1,3 +1,10 @@
+ngcp-ngcpcfg (8.1.1.3+0~mr8.1.1.3) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [529ad65] TT#76458 fix edr old/new profile fields
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 26 Feb 2020 15:16:20 +0100
+
 ngcp-ngcpcfg (8.1.1.2+0~mr8.1.1.2) unstable; urgency=medium
 
   [ Rene Krenn ]
