@@ -32,14 +32,12 @@ FOREACH host IN hosts.keys;
   NEXT UNLESS ngcp.has_role(host, argv.role);
 
   FOREACH iface IN hosts.$host.interfaces;
-    FOREACH realiface IN hosts.$host.keys;
-      NEXT IF realiface != iface;
-      NEXT UNLESS hosts.$host.$realiface.type.grep('^' _ argv.type _ '$').size();
-      NEXT IF out.grep('^' _ hosts.$host.$realiface.ip _ '$').size();
-      NEXT UNLESS hosts.$host.$realiface.ip;
+    NEXT UNLESS hosts.$host.exists(iface);
+    NEXT UNLESS hosts.$host.$iface.type.grep('^' _ argv.type _ '$').size();
+    NEXT IF out.grep('^' _ hosts.$host.$iface.ip _ '$').size();
+    NEXT UNLESS hosts.$host.$iface.ip;
 
-      out.push(hosts.$host.$realiface.ip);
-    END;
+    out.push(hosts.$host.$iface.ip);
   END;
 END;
 out = out.sort;

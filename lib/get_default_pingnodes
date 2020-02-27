@@ -11,21 +11,16 @@ host = ngcp.get_hostname();
 out = [];
 
 FOREACH iface IN hosts.${host}.interfaces;
-  FOREACH realiface IN hosts.${host}.keys;
-    IF realiface == iface;
-      IF hosts.${host}.$realiface.gateway;
+  NEXT UNLESS hosts.${host}.exists(iface);
+  NEXT UNLESS hosts.${host}.$iface.gateway;
 
-        IF argv.gw == 'yes';
-          out.push(hosts.${host}.$realiface.gateway);
-        END;
+  IF argv.gw == 'yes';
+    out.push(hosts.${host}.$iface.gateway);
+  END;
 
-        IF argv.dns == 'yes';
-          FOREACH dns_server_ip IN hosts.${host}.${realiface}.dns_nameservers;
-            out.push(dns_server_ip);
-          END;
-        END;
-
-      END;
+  IF argv.dns == 'yes';
+    FOREACH dns_server_ip IN hosts.${host}.${iface}.dns_nameservers;
+      out.push(dns_server_ip);
     END;
   END;
 END;

@@ -14,24 +14,20 @@ END;
 
 out = '';
 FOREACH iface IN hosts.${argv.host}.interfaces;
-  FOREACH realiface IN hosts.${argv.host}.keys;
-    NEXT IF realiface != iface;
-    NEXT UNLESS hosts.${argv.host}.$realiface.type.grep('^' _ argv.type _ '$').size();
+  NEXT UNLESS hosts.${argv.host}.exists(iface);
+  NEXT UNLESS hosts.${argv.host}.$iface.type.grep('^' _ argv.type _ '$').size();
 
-    IF hosts.${argv.host}.$realiface.ip AND
-       hosts.${argv.host}.$realiface.netmask;
--%]
-[%    PERL -%]
+  IF hosts.${argv.host}.$iface.ip AND
+     hosts.${argv.host}.$iface.netmask;
+    PERL -%]
         use Net::Netmask;
 
-        my $network = Net::Netmask->new("[% hosts.${argv.host}.${realiface}.ip %]/[% hosts.${argv.host}.${realiface}.netmask %]");
+        my $network = Net::Netmask->new("[% hosts.${argv.host}.${iface}.ip %]/[% hosts.${argv.host}.${iface}.netmask %]");
         $stash->set(out => $network->desc);
-[%    END -%]
-[%
-    END;
-
-    RETURN;
+[%  END;
   END;
+
+  RETURN;
 END;
 
 -%]

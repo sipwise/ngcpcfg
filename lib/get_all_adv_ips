@@ -34,16 +34,14 @@ FOREACH host IN hosts.keys.sort;
   NEXT IF blktmp.processed_hosts.$host.defined;
 
   FOREACH iface IN hosts.$host.interfaces;
-    FOREACH realiface IN hosts.$host.keys;
-      NEXT IF realiface != iface;
-      NEXT UNLESS hosts.$host.$realiface.type.grep('^' _ argv.type _ '$').size();
+    NEXT UNLESS hosts.$host.exists(iface);
+    NEXT UNLESS hosts.$host.$iface.type.grep('^' _ argv.type _ '$').size();
 
-      peer = hosts.$host.peer;
-      blktmp.processed_hosts.$peer = 1;
-      FOREACH ip IN hosts.$host.$realiface.advertised_ip;
-        NEXT UNLESS ip;
-        out.push(ip);
-      END;
+    peer = hosts.$host.peer;
+    blktmp.processed_hosts.$peer = 1;
+    FOREACH ip IN hosts.$host.$iface.advertised_ip;
+      NEXT UNLESS ip;
+      out.push(ip);
     END;
   END;
 END;

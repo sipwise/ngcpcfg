@@ -30,12 +30,10 @@ END;
 out = [];
 IF status.item(hosts.${argv.host}.status);
   FOREACH iface IN hosts.${argv.host}.interfaces;
-    FOREACH realiface IN hosts.${argv.host}.keys;
-      NEXT IF realiface != iface;
-      NEXT UNLESS hosts.${argv.host}.$realiface.type.grep('^' _ argv.type _ '$').size();
+    NEXT UNLESS hosts.${argv.host}.exists(iface);
+    NEXT UNLESS hosts.${argv.host}.$iface.type.grep('^' _ argv.type _ '$').size();
 
-      out.push(realiface);
-    END;
+    out.push(iface);
   END;
 END;
 out = out.sort;
