@@ -34,12 +34,11 @@ FOREACH host IN hosts.keys;
   FOREACH iface IN hosts.$host.interfaces;
     NEXT UNLESS hosts.$host.exists(iface);
     NEXT UNLESS hosts.$host.$iface.type.grep('^' _ argv.type _ '$').size();
-    NEXT IF out.grep('^' _ hosts.$host.$iface.ip _ '$').size();
     NEXT UNLESS hosts.$host.$iface.ip;
 
     out.push(hosts.$host.$iface.ip);
   END;
 END;
-out = out.sort;
+out = out.sort.unique;
 
 -%]

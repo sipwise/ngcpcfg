@@ -9,6 +9,11 @@
     PROCESS '../lib/get_all_ips';
     sip_int_ips = out;
   END;
+
+  argv.role = '.*';
+  argv.type = '.*';
+  PROCESS '../lib/get_all_ips';
+  all_ips = out;
 -%]
 id(int,auto) setid(int) destination(str) priority(int) flags(int) description(str)
 [% idx = 1 -%]
@@ -24,4 +29,8 @@ id(int,auto) setid(int) destination(str) priority(int) flags(int) description(st
 [% FOREACH ip IN sip_int_ips -%]
 [% idx %]:9:sip\:[% ip %]\:[% kamailio.proxy.port %]:1:0:proxy[% loop.count %]
 [% idx = idx + 1 -%]
+[% END -%]
+
+[% FOREACH ip IN all_ips -%]
+- [% ip %]
 [% END -%]
