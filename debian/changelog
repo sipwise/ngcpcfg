@@ -1,3 +1,10 @@
+ngcp-ngcpcfg (7.5.2.3+0~mr7.5.2.3) unstable; urgency=medium
+
+  [ Richard Fuchs ]
+  * [d5b7fc7] TT#76801 support output of just addresses for RTP interfaces
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 03 Mar 2020 16:40:53 +0100
+
 ngcp-ngcpcfg (7.5.2.2+0~mr7.5.2.2) unstable; urgency=medium
 
   [ Kirill Solomko ]
