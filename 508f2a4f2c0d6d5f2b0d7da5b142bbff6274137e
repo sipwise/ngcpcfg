@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1838c6f_4a30fbc1",
+        "filename": "t/fixtures/output/dispatcher_carrier",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2020-03-03T15:50:10Z",
+      "side": 1,
+      "message": "Maybe we should also add a fixture with duplicate IPs to ensure it\u0027s removing duplicates as expected?",
+      "revId": "508f2a4f2c0d6d5f2b0d7da5b142bbff6274137e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d994870_483404a1",
+        "filename": "t/test_ngcpcfg_lib_get_all_ips.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2020-03-03T15:50:10Z",
+      "side": 1,
+      "message": "What about marking it with a @pytest.mark....?",
+      "revId": "508f2a4f2c0d6d5f2b0d7da5b142bbff6274137e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
