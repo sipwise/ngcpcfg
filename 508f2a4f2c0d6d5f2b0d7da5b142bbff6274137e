@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "60546476_bfa3ddfd",
+        "filename": "t/fixtures/output/dispatcher_carrier",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2020-03-03T18:58:11Z",
+      "side": 1,
+      "message": "The loopback already contains duplicates! One for each node. That\u0027s why I made it return all IPs for the cluster. :)",
+      "parentUuid": "d1838c6f_4a30fbc1",
+      "revId": "508f2a4f2c0d6d5f2b0d7da5b142bbff6274137e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d994870_483404a1",
         "filename": "t/test_ngcpcfg_lib_get_all_ips.py",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2020-03-03T15:50:10Z",
       "side": 1,
       "message": "What about marking it with a @pytest.mark....?",
+      "revId": "508f2a4f2c0d6d5f2b0d7da5b142bbff6274137e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58ee5d9d_63383f86",
+        "filename": "t/test_ngcpcfg_lib_get_all_ips.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2020-03-03T18:58:11Z",
+      "side": 1,
+      "message": "I guess I could use the TT number for this review, but I honestly do not know what this is good for. Also when running this with unstable pytest I got warnings about these being unknown marks or similar? :D",
+      "parentUuid": "4d994870_483404a1",
       "revId": "508f2a4f2c0d6d5f2b0d7da5b142bbff6274137e",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
