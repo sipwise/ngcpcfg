@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e261cec1_c8a8bd52",
+        "filename": "t/fixtures/output/dispatcher_carrier",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2020-03-05T08:05:35Z",
+      "side": 1,
+      "message": "Ahhhh, the \"- 127.0.0.1\" from t/fixtures/output/dispatcher + t/fixtures/output/dispatcher_carrier + t/fixtures/output/dispatcher_pro? I\u0027m afaid I still not sure I fully understand what\u0027s going on in your test scenarios, hm",
+      "parentUuid": "60546476_bfa3ddfd",
+      "revId": "508f2a4f2c0d6d5f2b0d7da5b142bbff6274137e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d994870_483404a1",
         "filename": "t/test_ngcpcfg_lib_get_all_ips.py",
         "patchSetId": 1
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "I guess I could use the TT number for this review, but I honestly do not know what this is good for. Also when running this with unstable pytest I got warnings about these being unknown marks or similar? :D",
       "parentUuid": "4d994870_483404a1",
+      "revId": "508f2a4f2c0d6d5f2b0d7da5b142bbff6274137e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cb7b3fb_41c9993c",
+        "filename": "t/test_ngcpcfg_lib_get_all_ips.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2020-03-05T08:05:35Z",
+      "side": 1,
+      "message": "See https://docs.pytest.org/en/latest/example/markers.html for the underlying idea of it.\nI wasn\u0027t aware of the \"warnings about these being unknown marks or similar\" of python3-pytest 4.6.9-1, would have to look into this, so nvm for the time being :)",
+      "parentUuid": "58ee5d9d_63383f86",
       "revId": "508f2a4f2c0d6d5f2b0d7da5b142bbff6274137e",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
