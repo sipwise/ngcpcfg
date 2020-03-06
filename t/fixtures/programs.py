@@ -9,9 +9,11 @@ from collections import namedtuple
 def ngcpcfgcli(tmpdir, *args):
     """Execute ``ngcpcfg``."""
 
+    testbin = os.path.abspath('fixtures/bin');
+
     def run(*args, env={}):
         testenv = {
-            'PATH':      'fixtures/bin:/usr/bin:/bin:/usr/sbin:/sbin',
+            'PATH':      testbin + ':/usr/bin:/bin:/usr/sbin:/sbin',
             'FUNCTIONS': '../functions/',
             'NGCPCFG':   'fixtures/ngcpcfg.cfg',
             'SCRIPTS':   '../scripts/',
