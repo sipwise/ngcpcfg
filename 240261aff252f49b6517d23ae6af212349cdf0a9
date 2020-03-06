@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1611b60_40743cb1",
+        "filename": "t/fixtures/bin/logger",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2020-03-06T21:44:32Z",
+      "side": 1,
+      "message": "Doesn\u0027t this need something like \u003e /dev/null ?",
+      "revId": "240261aff252f49b6517d23ae6af212349cdf0a9",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
