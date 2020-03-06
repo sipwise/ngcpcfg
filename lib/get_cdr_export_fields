@@ -118,6 +118,9 @@ X_cdr_id_map.END_TIME_LOCALIZED_TRUNCATED = from_unixtime_tz("FLOOR(base_table.s
 
 X_cdr_id_map.FURNISHED_CHARGING_INFO = "COALESCE(" _ cdr_direction_provider_type_select("cdr_tag", "cdr_tag_data", "base_table", "tag_id", "val", "destination", "customer", "furnished_charging_info") _ ',"") as furnished_charging_info';
 
+X_cdr_id_map.CONCURRENT_CALLS_COUNT = "COALESCE(" _ cdr_direction_provider_type_select("cdr_tag", "cdr_tag_data", "base_table", "tag_id", "val", "source", "customer", "concurrent_calls_count") _ ',"") as concurrent_calls_count';
+X_cdr_id_map.CONCURRENT_CALLS_QUOTA = "COALESCE(" _ cdr_direction_provider_type_select("cdr_tag", "cdr_tag_data", "base_table", "tag_id", "val", "source", "customer", "concurrent_calls_quota") _ ',"") as concurrent_calls_quota';
+
 # edr fields:
 #X_cdr_id_map.PRIMARY_NUMBER = "(select username from provisioning.voip_dbaliases tmp where tmp.subscriber_id = provisioning.voip_subscribers.id order by is_primary, id limit 1)";
 X_cdr_id_map.PILOT_SUBSCRIBER_ID = edr_type_select(X_base_type _ "_relation","events_relation_data","base_table","relation_id","val","pilot_subscriber_id");
