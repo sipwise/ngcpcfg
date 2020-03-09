@@ -1,3 +1,15 @@
+ngcp-ngcpcfg (8.1.3.0+0~mr8.1.3.0) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [1f9e236] TT#74153 add utils Template::Plugin
+  * [c6c16dd] TT#74153 add Utils methods
+  * [0bd9b80] TT#76458 fix edr old/new profile fields
+
+  [ Richard Fuchs ]
+  * [ca7d0a8] TT#76801 support output of just addresses for RTP interfaces
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 09 Mar 2020 11:06:25 +0100
+
 ngcp-ngcpcfg (8.1.2.0+0~mr8.1.2.0) unstable; urgency=medium
 
   * New release.
