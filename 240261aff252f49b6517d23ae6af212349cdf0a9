@@ -16,6 +16,24 @@
       "revId": "240261aff252f49b6517d23ae6af212349cdf0a9",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97d81ebf_21fa5e04",
+        "filename": "t/fixtures/bin/logger",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2020-03-09T13:51:45Z",
+      "side": 1,
+      "message": "I don\u0027t think it matters even if passed stuff on stdin.",
+      "parentUuid": "f1611b60_40743cb1",
+      "revId": "240261aff252f49b6517d23ae6af212349cdf0a9",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
