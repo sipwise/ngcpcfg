@@ -1,3 +1,28 @@
+ngcp-ngcpcfg (8.3.1.0+0~mr8.3.1.0) unstable; urgency=medium
+
+  [ Guillem Jover ]
+  * [3b7d832] TT#69069 Do not allow multiple interfaces with api_int type per node
+  * [00af5f7] TT#71952 tt2-process: Refactor hook setup and handling
+  * [59d95f0] TT#71952 tt2-process: Refactor process pool runner
+  * [a528548] TT#71952 tt2-process: Always return an array ref from generate_iofiles
+  * [6b9e569] TT#71952 Integrate ngcpcfg functional tests into t testsuite
+  * [9e7c14e] TT#37401 tt2-process: Fix path handling to avoid duplicate slashes
+  * [d1ad545] TT#76851 Remove unnecessary inner-loop for interface access
+  * [b4610d4] TT#76851 Fix logic to return non-repeated entries in get_all_hosts_ips
+  * [3fc866d] TT#76851 Properly set fixtures/bin in PATH
+  * [ca61353] TT#76851 Add mock logger program for testsuite runs
+  * [d9ab5d1] TT#76851 Register pytest marks in pytest.ini
+  * [ec07460] TT#76851 Extend get_all_ips test cases
+  * [c40ab49] TT#76851 Reduce complexity for get_all_ips uniqueness guarantees
+
+  [ Rene Krenn ]
+  * [5001800] TT#76458 fix edr old/new profile fields
+
+  [ Richard Fuchs ]
+  * [5258a40] TT#76801 support output of just addresses for RTP interfaces
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 16 Mar 2020 11:16:30 +0100
+
 ngcp-ngcpcfg (8.3.0.0+0~mr8.3.0.0) unstable; urgency=medium
 
   [ Guillem Jover ]
