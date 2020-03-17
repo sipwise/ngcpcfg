@@ -13,6 +13,7 @@
 # @return out.reseller_fields
 # @return out.joins
 # @return out.conditions
+  USE Utils;
 -%]
 [% MACRO cdr_direction_provider_type_select(dict_table, data_table, base_table, dict_col, val_col, direction, provider, type) BLOCK -%]
 (SELECT data.[%- val_col -%] FROM accounting.[%- data_table -%] AS data INNER JOIN accounting.cdr_direction AS dir ON data.direction_id = dir.id INNER JOIN accounting.cdr_provider AS prov ON data.provider_id = prov.id INNER JOIN accounting.[%- dict_table -%] AS dict ON data.[%- dict_col -%] = dict.id WHERE data.cdr_id = [%- base_table -%].id AND dir.type = "[%- direction -%]" AND prov.type="[%- provider -%]" AND dict.type="[%- type -%]")
@@ -160,6 +161,13 @@ X_cdr_id_map.EVENT_TIMESTAMP_LOCALIZED_TRUNCATED = from_unixtime_tz("FLOOR(base_
 
 out.admin_fields = [];
 FOREACH X_f IN argv.admin_export_fields;
+  IF ("HASH" == Utils.get_ref(X_f));
+    IF X_f.active;
+      X_f = X_f.name;
+    ELSE;
+      NEXT;
+    END;
+  END;
   # Explicitly declared fields have highest precedence:
   IF X_cdr_id_map.exists(X_f);
     out.admin_fields.push("'" _ X_cdr_id_map.$X_f _ "'");
@@ -183,6 +191,13 @@ END;
 
 out.reseller_fields = [];
 FOREACH X_f IN argv.reseller_export_fields;
+  IF ("HASH" == Utils.get_ref(X_f));
+    IF X_f.active;
+      X_f = X_f.name;
+    ELSE;
+      NEXT;
+    END;
+  END;
   IF X_cdr_id_map.exists(X_f);
     out.reseller_fields.push("'" _ X_cdr_id_map.$X_f _ "'");
   ELSIF (matches = X_f.lower.match('^([a-z]+)_([a-z]+)_([a-z_]*cash_balance)_(before|after)$'));
