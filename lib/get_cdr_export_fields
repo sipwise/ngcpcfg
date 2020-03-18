@@ -119,13 +119,13 @@ X_cdr_id_map.END_TIME_LOCALIZED_TRUNCATED = from_unixtime_tz("FLOOR(base_table.s
 
 X_cdr_id_map.FURNISHED_CHARGING_INFO = "COALESCE(" _ cdr_direction_provider_type_select("cdr_tag", "cdr_tag_data", "base_table", "tag_id", "val", "destination", "customer", "furnished_charging_info") _ ',"") as furnished_charging_info';
 
-X_cdr_id_map.CONCURRENT_CALLS_COUNT = "COALESCE(" _ cdr_direction_provider_type_select("cdr_tag", "cdr_tag_data", "base_table", "tag_id", "val", "source", "customer", "concurrent_calls_count") _ ',"") as source_concurrent_calls_count';
-X_cdr_id_map.CONCURRENT_CALLS_QUOTA = "COALESCE(" _ cdr_direction_provider_type_select("cdr_tag", "cdr_tag_data", "base_table", "tag_id", "val", "source", "customer", "concurrent_calls_count_customer") _ ',"") as source_concurrent_calls_count_customer';
-X_cdr_id_map.CONCURRENT_CALLS_QUOTA = "COALESCE(" _ cdr_direction_provider_type_select("cdr_tag", "cdr_tag_data", "base_table", "tag_id", "val", "source", "customer", "concurrent_calls_quota") _ ',"") as source_concurrent_calls_quota';
+X_cdr_id_map.SOURCE_CONCURRENT_CALLS_COUNT = "COALESCE(" _ cdr_direction_provider_type_select("cdr_tag", "cdr_tag_data", "base_table", "tag_id", "val", "source", "customer", "concurrent_calls_count") _ ',"") as source_concurrent_calls_count';
+X_cdr_id_map.SOURCE_CONCURRENT_CALLS_COUNT_CUSTOMER = "COALESCE(" _ cdr_direction_provider_type_select("cdr_tag", "cdr_tag_data", "base_table", "tag_id", "val", "source", "customer", "concurrent_calls_count_customer") _ ',"") as source_concurrent_calls_count_customer';
+X_cdr_id_map.SOURCE_CONCURRENT_CALLS_QUOTA = "COALESCE(" _ cdr_direction_provider_type_select("cdr_tag", "cdr_tag_data", "base_table", "tag_id", "val", "source", "customer", "concurrent_calls_quota") _ ',"") as source_concurrent_calls_quota';
 
-X_cdr_id_map.CONCURRENT_CALLS_COUNT = "COALESCE(" _ cdr_direction_provider_type_select("cdr_tag", "cdr_tag_data", "base_table", "tag_id", "val", "destination", "customer", "concurrent_calls_count") _ ',"") as destination_concurrent_calls_count';
-X_cdr_id_map.CONCURRENT_CALLS_QUOTA = "COALESCE(" _ cdr_direction_provider_type_select("cdr_tag", "cdr_tag_data", "base_table", "tag_id", "val", "destination", "customer", "concurrent_calls_count_customer") _ ',"") as destination_concurrent_calls_count_customer';
-X_cdr_id_map.CONCURRENT_CALLS_QUOTA = "COALESCE(" _ cdr_direction_provider_type_select("cdr_tag", "cdr_tag_data", "base_table", "tag_id", "val", "destination", "customer", "concurrent_calls_quota") _ ',"") as destination_concurrent_calls_quota';
+X_cdr_id_map.DESTINATION_CONCURRENT_CALLS_COUNT = "COALESCE(" _ cdr_direction_provider_type_select("cdr_tag", "cdr_tag_data", "base_table", "tag_id", "val", "destination", "customer", "concurrent_calls_count") _ ',"") as destination_concurrent_calls_count';
+X_cdr_id_map.DESTINATION_CONCURRENT_CALLS_COUNT_CUSTOMER = "COALESCE(" _ cdr_direction_provider_type_select("cdr_tag", "cdr_tag_data", "base_table", "tag_id", "val", "destination", "customer", "concurrent_calls_count_customer") _ ',"") as destination_concurrent_calls_count_customer';
+X_cdr_id_map.DESTINATION_CONCURRENT_CALLS_QUOTA = "COALESCE(" _ cdr_direction_provider_type_select("cdr_tag", "cdr_tag_data", "base_table", "tag_id", "val", "destination", "customer", "concurrent_calls_quota") _ ',"") as destination_concurrent_calls_quota';
 
 # edr fields:
 #X_cdr_id_map.PRIMARY_NUMBER = "(select username from provisioning.voip_dbaliases tmp where tmp.subscriber_id = provisioning.voip_subscribers.id order by is_primary, id limit 1)";
