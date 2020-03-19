@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6119a3d0_cb6ce443",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2020-03-19T18:56:00Z",
+      "side": 1,
+      "message": "Hmmm, who is triggering these parallel runs? Is this coming from ngcpcfg itself, or something else? Is there danger of dropping content from the later process? Or is there no ordering involved?\n\nIt feels to me that regardless of the above, using a lock file would be the proper course of action here?",
+      "revId": "2344b9e59f22485743f6d14fe8e212fd78e3fba8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
