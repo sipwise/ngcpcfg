@@ -16,6 +16,29 @@
       "revId": "2344b9e59f22485743f6d14fe8e212fd78e3fba8",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0af663c_e7b25a86",
+        "filename": "hooks/pre-commit",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2020-03-20T08:17:15Z",
+      "side": 1,
+      "message": "See commit 6e6c308ba5679474cec92e75d6d16a9fdaba478b to this repo,\nis it still topical for modern Docker version we have nowadays?",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 2
+      },
+      "revId": "2344b9e59f22485743f6d14fe8e212fd78e3fba8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
