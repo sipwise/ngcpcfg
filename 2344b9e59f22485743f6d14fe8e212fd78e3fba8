@@ -75,6 +75,30 @@
       "revId": "2344b9e59f22485743f6d14fe8e212fd78e3fba8",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bc463d3_5665b135",
+        "filename": "hooks/pre-commit",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2020-03-20T14:31:37Z",
+      "side": 1,
+      "message": "The mentioned workaround is needed (even now) as /etc/hosts is not a common file within container but is a special bind mount thing. /etc/ngcp-config/.ngcpcfg_perms is a common file so we can do whatever we want with it inside the container.\n\nHere are successful docker builds with this PPA:\n\nstretch https://jenkins.mgm.sipwise.com/job/docker-build-spce/1228/\n\nbuster https://jenkins.mgm.sipwise.com/job/docker-build-spce/1227",
+      "parentUuid": "b0af663c_e7b25a86",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 2
+      },
+      "revId": "2344b9e59f22485743f6d14fe8e212fd78e3fba8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
