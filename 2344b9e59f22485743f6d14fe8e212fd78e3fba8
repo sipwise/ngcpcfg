@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "440b9dd3_891e0e17",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2020-03-20T08:19:59Z",
+      "side": 1,
+      "message": "Ops do upgrade huge carriers in parallel, different people upgrades different proxy servers, etc.\n\nJenkins start noticing this problems, because Mykola created carrier-upgrade test which upgrade proxy nodes in parallel like Ops do.\n\nLock will affect default use case here, as the last \"ngcpcfg push\" in upgrade scenario will fail for some users due to lock. Maybe we should \"wait\" instead of \"fail\" if lock exist. More (ugly? in shell) code should be written in this case. This approach was a simple solution for corrupted file we can have.\n\nPlease share your vision here.",
+      "parentUuid": "6119a3d0_cb6ce443",
+      "revId": "2344b9e59f22485743f6d14fe8e212fd78e3fba8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0af663c_e7b25a86",
         "filename": "hooks/pre-commit",
         "patchSetId": 1
