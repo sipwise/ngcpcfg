@@ -118,6 +118,20 @@ aaa:
 
 
 @pytest.mark.tt_16903
+def test_set_action_generate_dictionary_digits_equal_sign(ngcpcfgcli, tmpdir):
+    tmpfile = tmpdir.join("tmpfile.txt")
+    tmpfile.write("---\n")
+    out = ngcpcfgcli("set", str(tmpfile), "aaa.bbb=ccc=123")
+    assert tmpfile.read() == '''---
+aaa:
+  bbb: ccc=123
+'''
+    assert "" in out.stdout
+    assert "" in out.stderr
+    assert out.returncode == 0
+
+
+@pytest.mark.tt_16903
 def test_set_action_generate_dictionary_bool_fail(ngcpcfgcli, tmpdir):
     tmpfile = tmpdir.join("tmpfile.txt")
     tmpfile.write("---\n")
