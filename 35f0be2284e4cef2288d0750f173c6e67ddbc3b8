@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aaefe72f_99ad2ea5",
+        "filename": "t/test_ngcpcfg_set_and_del.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2020-03-23T12:08:20Z",
+      "side": 1,
+      "message": "this should have been the ticket number of this review, which would need adding in the py-test.ini file too.",
+      "range": {
+        "startLine": 120,
+        "startChar": 13,
+        "endLine": 120,
+        "endChar": 21
+      },
+      "revId": "35f0be2284e4cef2288d0750f173c6e67ddbc3b8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
