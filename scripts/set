@@ -52,8 +52,10 @@ fi
 [ -z "${data}" ] && (log_error "missing data to set. Exiting." ; exit 1)
 
 log_debug "Received data: ${data}"
-option="${data/=*/}"
-value="${data/*=/}"
+option="${data%%=*}"
+value="${data#*=}"
+log_debug "Parsed option: ${option}"
+log_debug "Parsed value: ${value}"
 
 [ -z "${option}" ] && ( log_error "missing option to set. Exiting." ; exit 1)
 [ -z "${value}" ] && ( log_error "missing value to set. Exiting." ; exit 1)
