@@ -26,7 +26,9 @@ man:
 	pod2man --section=8 sbin/ngcp-network > docs/ngcp-network.8
 	pod2man --section=8 sbin/ngcp-sync-constants > docs/ngcp-sync-constants.8
 	pod2man --section=8 sbin/ngcp-sync-grants > docs/ngcp-sync-grants.8
-
+	pod2man --section=3perl lib/NGCP/Template.pm > docs/NGCP::Template.3perl
+	pod2man --section=3perl lib/NGCP/Template/Object.pm > docs/NGCP::Template::Object.3perl
+	pod2man --section=3perl lib/NGCP/Template/Plugin/Utils.pm > docs/NGCP::Template::Plugin::Utils.3perl
 
 clean:
 	rm -f docs/ngcpcfg.8 docs/ngcp-network.8 docs/ngcp-sync-constants.8 docs/ngcp-sync-grants.8
