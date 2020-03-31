@@ -24,12 +24,16 @@ docs: man
 man:
 	asciidoctor -d manpage -b manpage docs/ngcpcfg.txt
 	pod2man --section=8 sbin/ngcp-network > docs/ngcp-network.8
+	pod2man --section=8 sbin/ngcp-network-validator > docs/ngcp-network-validator.8
 	pod2man --section=8 sbin/ngcp-sync-constants > docs/ngcp-sync-constants.8
 	pod2man --section=8 sbin/ngcp-sync-grants > docs/ngcp-sync-grants.8
-
+	pod2man --section=3pm lib/NGCP/Template.pm > docs/NGCP::Template.3pm
+	pod2man --section=3pm lib/NGCP/Template/Object.pm > docs/NGCP::Template::Object.3pm
+	pod2man --section=3pm lib/NGCP/Template/Plugin/Utils.pm > docs/NGCP::Template::Plugin::Utils.3pm
 
 clean:
-	rm -f docs/ngcpcfg.8 docs/ngcp-network.8 docs/ngcp-sync-constants.8 docs/ngcp-sync-grants.8
+	rm -f docs/*.8
+	rm -f docs/*.3pm
 	rm -rf t/__pycache__ t/fixtures/__pycache__/ t/*.pyc
 
 dist-clean: clean
