@@ -1,9 +1,7 @@
 [%
 # vi: ft=tt2
 
-# Returns the name of the management node calling this function.
-#
-# @return out           The mgmt name (e.g. 'web01' or 'db01').
+# This is a deprecated alias for get_mgmt_node.
 
 out = ngcp.get_mgmt_name();
 
