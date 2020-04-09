@@ -196,11 +196,12 @@ foreach my $hostname (sort keys %{$yaml->{hosts}}) {
             $ifacemap->{mapping}->{v6ip}->{required} = 'yes';
         }
 
-        if (defined $host->{$iface}->{netmask} or
-            (defined $host->{$iface}->{shared_ip} and
+        if (defined $host->{$iface}->{netmask} and
+             ($host->{$iface}->{shared_ip_only} || 'no') eq 'no' and
+            ((defined $host->{$iface}->{shared_ip} and
              @{$host->{$iface}->{shared_ip}}) or
             (defined $host->{$iface}->{advertised_ip} and
-             @{$host->{$iface}->{advertised_ip}})) {
+             @{$host->{$iface}->{advertised_ip}}))) {
             $ifacemap->{mapping}->{ip}->{required} = 'yes';
         }
         if (defined $host->{$iface}->{v6netmask} or
