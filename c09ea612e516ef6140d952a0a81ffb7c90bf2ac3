@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "828dd33a_6e2d625e",
+        "filename": "sbin/ngcp-network-validator",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2020-04-09T17:37:10Z",
+      "side": 1,
+      "message": "I\u0027m actually a bit unsure about the requirement for a /32 netmask here, thinking that there might be legitimate use cases for interfaces with just a floating IP plus a subnet behind it. But then again maybe not? Any idea anyone?",
+      "revId": "c09ea612e516ef6140d952a0a81ffb7c90bf2ac3",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
