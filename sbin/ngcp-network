@@ -74,6 +74,7 @@ my @remove_interface;
 my @roles;
 my @set_interface;
 my $shared_ip;
+my $shared_ip_only;
 my $shared_ip_v6;
 my $sysname;
 my $sysdescr;
@@ -130,6 +131,7 @@ GetOptions(
     'role=s'             => \@roles,
     'set-interface=s'    => \@set_interface,
     'shared-ip=s'        => \$shared_ip,
+    'shared-ip-only=s'   => \$shared_ip_only,
     'shared-ipv6=s'      => \$shared_ip_v6,
     'sysname=s'          => \$sysname,
     'sysdescr=s'         => \$sysdescr,
@@ -182,7 +184,7 @@ foreach my $opt (
     $move_to,          $netmask,       $peer,      @remove_host,
     @remove_interface, @roles,         @type,      $vlan_raw_device,
     $netmask_ip_v6,    $v6gateway,     $mtu,       $v6dhcp,
-    $manual,           $v6manual
+    $manual,           $v6manual,      $shared_ip_only
   )
 {
     if ( defined $opt && $opt =~ /\s/msx ) {
@@ -335,6 +337,7 @@ sub set_interface {
         'openvpn_key_inline' => $openvpn_key_inline,
         'v6netmask'       => $netmask_ip_v6,
         'shared_ip'       => $shared_ip,
+        'shared_ip_only'  => $shared_ip_only,
         'shared_v6ip'     => $shared_ip_v6,
         'v6dhcp'          => $v6dhcp,
         'v6gateway'       => $v6gateway,
@@ -877,6 +880,11 @@ option multiple times.
 =item B<--shared-ip>=I<IP>
 
 Set shared_ip configuration to specified argument.
+
+=item B<--shared-ip-only>=I<yes|no>
+
+Allow or disallow usage of having just a shared IP address configured without
+static IP address.
 
 =item B<--shared-ipv6>=I<IP>
 
