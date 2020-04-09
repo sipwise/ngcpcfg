@@ -31,8 +31,7 @@ FOREACH host IN hosts.keys.sort;
   NEXT UNLESS ngcp.has_role(host, argv.role);
   peer = hosts.$host.peer;
   blktmp.processed_hosts.$peer = 1;
-  matches = host.match('^(\w+[0-9])[ab]$');
-  out.push(matches.0);
+  out.push(ngcp.get_pairname(host));
 END;
 out = out.sort;
 
