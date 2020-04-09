@@ -89,6 +89,20 @@ sub get_nodename
     return $nodename;
 }
 
+sub get_pairname
+{
+    my ($self, $hostname) = @_;
+
+    my $ngcp_type = $self->{config}{general}{ngcp_type};
+    if ($ngcp_type eq 'carrier') {
+        if ($hostname =~ m/^(\w+[0-9])[ab]?$/) {
+            return $1;
+        }
+    }
+
+    return 'sp';
+}
+
 sub get_peername
 {
     my ($self, $hostname) = @_;
@@ -215,6 +229,11 @@ Returns the hostname of the node calling this function.
 =item $nodename = $t->get_nodename()
 
 Returns the nodename of the node calling this function.
+
+=item $pairname = $t->get_pairname($hostname)
+
+Returns the pair name for a given $hostname. This is the shared HA name for
+a pair of nodes (for example 'db01' for 'db01a').
 
 =item $peername = $t->get_peername($hostname)
 
