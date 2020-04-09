@@ -115,20 +115,6 @@ sub get_firstname
     }
 }
 
-sub get_mgmt_name
-{
-    my ($self) = shift;
-    my $filename = '/etc/ngcp_mgmt_node';
-
-    open my $hh, '<', $filename or die "Error opening $filename";
-    my $mgmt_name = <$hh>;
-    close $hh;
-    chomp $mgmt_name;
-    die "Fatal error retrieving mgmt_name [$mgmt_name]" unless length $mgmt_name;
-
-    return $mgmt_name;
-}
-
 sub get_mgmt_node
 {
     my ($self) = shift;
@@ -148,6 +134,14 @@ sub get_mgmt_node
     }
 
     return;
+}
+
+sub get_mgmt_name
+{
+    my ($self) = shift;
+
+    warnings::warnif('deprecated', 'deprecated alias for get_mgmt_node()');
+    return $self->get_mgmt_node();
 }
 
 sub get_ssh_pub_key
@@ -231,13 +225,14 @@ Returns the peer name for a given $hostname.
 Returns the (alphabetically) first hostname of a node pair for a given
 $hostname.
 
-=item $mgmtname = $t->get_mgmt_name()
-
-Returns the name of the management node calling this function.
-
 =item $mgmtnode = $t->get_mgmt_node()
 
 Returns the NGCP management node shared name.
+
+=item $mgmtname = $t->get_mgmt_name()
+
+This function is a deprecated alias for $t->get_mgmt_node(). It will be
+removed in the future.
 
 =item $ssh_pub_keye = $t->get_ssh_pub_key($key_type)
 
