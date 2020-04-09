@@ -52,6 +52,24 @@
       "revId": "c09ea612e516ef6140d952a0a81ffb7c90bf2ac3",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51f725dd_3c9d9e00",
+        "filename": "sbin/ngcp-network-validator",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000018
+      },
+      "writtenOn": "2020-04-09T19:20:13Z",
+      "side": 1,
+      "message": "My point is for carrier with 15 proxy pairs for RTP_EXT we have just because we have to use 30 public IPV4 addresses. So for service interfaces, it makes sense. Maybe flag in interface sharediponly makes some additional sense.",
+      "parentUuid": "cc1c2673_63f80fe4",
+      "revId": "c09ea612e516ef6140d952a0a81ffb7c90bf2ac3",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
