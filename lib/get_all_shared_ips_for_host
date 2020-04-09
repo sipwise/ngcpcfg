@@ -7,6 +7,7 @@
 # @param argv.type      The interface type or empty string for all types.
 # @param argv.status    node status [ online, offline, inactive ]
 #                         default value: ['online', 'inactive']
+# @param argv.format    Return a flat list (default) or a list of hashes ('hash')
 # @return out           The array of shared IPs.
 
 IF !hosts.${argv.host}.defined;
@@ -38,7 +39,21 @@ IF status.item(hosts.${argv.host}.status);
 
     FOREACH ip IN hosts.${argv.host}.$iface.shared_ip;
       NEXT UNLESS ip;
-      out.push(ip);
+      IF argv.format == 'hash';
+        PERL;
+          use Net::Netmask;
+          my $network = Net::Netmask->new("[% ip %]/[% hosts.${argv.host}.$iface.netmask %]");
+          $stash->set(netmask_bits => $network->bits);
+        END;
+        out.push({
+          ip = ip,
+          interface = iface,
+          netmask = hosts.${argv.host}.$iface.netmask,
+          bits = netmask_bits
+        });
+      ELSE;
+        out.push(ip);
+      END;
     END;
   END;
 END;
