@@ -34,6 +34,24 @@
       "revId": "c09ea612e516ef6140d952a0a81ffb7c90bf2ac3",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc1c2673_63f80fe4",
+        "filename": "sbin/ngcp-network-validator",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2020-04-09T19:11:41Z",
+      "side": 1,
+      "message": "The HA stack does allow it, yes. I was more wondering if it made for a valid use case. Removing a local IP address is fine, but if the address has a subnet associated with it, then removing it also removes outbound routing to that subnet. Not sure if it makes sense to do that.",
+      "parentUuid": "af392c60_30119f65",
+      "revId": "c09ea612e516ef6140d952a0a81ffb7c90bf2ac3",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
