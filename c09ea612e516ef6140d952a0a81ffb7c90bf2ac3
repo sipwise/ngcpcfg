@@ -16,6 +16,24 @@
       "revId": "c09ea612e516ef6140d952a0a81ffb7c90bf2ac3",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af392c60_30119f65",
+        "filename": "sbin/ngcp-network-validator",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000018
+      },
+      "writtenOn": "2020-04-09T19:08:00Z",
+      "side": 1,
+      "message": "http://www.linux-ha.org/doc/man-pages/re-ra-IPaddr2.html\nI think any mask as allowed, but for sure I have to test.",
+      "parentUuid": "828dd33a_6e2d625e",
+      "revId": "c09ea612e516ef6140d952a0a81ffb7c90bf2ac3",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
