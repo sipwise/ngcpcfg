@@ -118,6 +118,30 @@
       "revId": "5a82d60dfe3272651a55ebd9791cb27a18056172",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98676d9a_340d8e0f",
+        "filename": "t/fixtures/ngcpcfg.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2020-04-14T14:11:09Z",
+      "side": 0,
+      "message": "Well another option would be to not name this constants_* which might get confusing and just make them ngcp-type specific, repurpose some other variable, or have a complete config.yml per ngcp-type (with the implied duplication), not sure whether that might seem better though? :)",
+      "parentUuid": "b4a1f0c1_da1d7b21",
+      "range": {
+        "startLine": 6,
+        "startChar": 60,
+        "endLine": 6,
+        "endChar": 74
+      },
+      "revId": "5a82d60dfe3272651a55ebd9791cb27a18056172",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
