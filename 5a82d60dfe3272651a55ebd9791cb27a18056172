@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2347ba50_9cd58ce0",
+        "filename": "t/fixtures/ngcpcfg.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2020-04-14T13:25:22Z",
+      "side": 0,
+      "message": "hmm I don\u0027t see config.local.yml being obsoleted/removed here?",
+      "range": {
+        "startLine": 6,
+        "startChar": 60,
+        "endLine": 6,
+        "endChar": 74
+      },
+      "revId": "5a82d60dfe3272651a55ebd9791cb27a18056172",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
