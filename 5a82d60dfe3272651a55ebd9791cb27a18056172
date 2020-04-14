@@ -94,6 +94,30 @@
       "revId": "5a82d60dfe3272651a55ebd9791cb27a18056172",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4a1f0c1_da1d7b21",
+        "filename": "t/fixtures/ngcpcfg.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2020-04-14T14:00:56Z",
+      "side": 0,
+      "message": "I guess config.local.yml never actually existed? That seems to be the case, ok...",
+      "parentUuid": "7ccba9f4_d3c0389b",
+      "range": {
+        "startLine": 6,
+        "startChar": 60,
+        "endLine": 6,
+        "endChar": 74
+      },
+      "revId": "5a82d60dfe3272651a55ebd9791cb27a18056172",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
