@@ -70,6 +70,30 @@
       "revId": "5a82d60dfe3272651a55ebd9791cb27a18056172",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ccba9f4_d3c0389b",
+        "filename": "t/fixtures/ngcpcfg.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2020-04-14T13:56:17Z",
+      "side": 0,
+      "message": "If someone adds code to the test suite to use that file then it will have no effect. But I think I\u0027m missing something, because I\u0027m not sure I understand the concern.",
+      "parentUuid": "d5560a05_51c92553",
+      "range": {
+        "startLine": 6,
+        "startChar": 60,
+        "endLine": 6,
+        "endChar": 74
+      },
+      "revId": "5a82d60dfe3272651a55ebd9791cb27a18056172",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
