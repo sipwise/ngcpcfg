@@ -46,6 +46,30 @@
       "revId": "5a82d60dfe3272651a55ebd9791cb27a18056172",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5560a05_51c92553",
+        "filename": "t/fixtures/ngcpcfg.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2020-04-14T13:50:06Z",
+      "side": 0,
+      "message": "Sure, but what if config.local.yml is used for something else? That cannot happen?",
+      "parentUuid": "df9ce5e1_1bbc63f6",
+      "range": {
+        "startLine": 6,
+        "startChar": 60,
+        "endLine": 6,
+        "endChar": 74
+      },
+      "revId": "5a82d60dfe3272651a55ebd9791cb27a18056172",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
