@@ -177,8 +177,8 @@ FOREACH X_f IN argv.admin_export_fields;
     END;
   END;
   # Explicitly declared fields have highest precedence:
-  IF X_cdr_id_map.exists(X_f);
-    out.admin_fields.push("'" _ X_cdr_id_map.$X_f _ "'");
+  IF X_cdr_id_map.exists(X_f.upper);
+    out.admin_fields.push("'" _ X_cdr_id_map.${X_f.upper} _ "'");
   # Specify cash balance before/after fields like e.g. source_CuStOmEr_cash_balance_before in config.yml:
   ELSIF (matches = X_f.lower.match('^([a-z]+)_([a-z]+)_([a-z_]*cash_balance)_(before|after)$'));
     out.admin_fields.push("'" _ cdr_direction_provider_type_select(X_base_type _ "_cash_balance", X_type _ "_cash_balance_data", "base_table", "cash_balance_id", "val_" _ matches.3, matches.0, matches.1, matches.2) _ "'");
@@ -206,8 +206,8 @@ FOREACH X_f IN argv.reseller_export_fields;
       NEXT;
     END;
   END;
-  IF X_cdr_id_map.exists(X_f);
-    out.reseller_fields.push("'" _ X_cdr_id_map.$X_f _ "'");
+  IF X_cdr_id_map.exists(X_f.upper);
+    out.reseller_fields.push("'" _ X_cdr_id_map.${X_f.uppper} _ "'");
   ELSIF (matches = X_f.lower.match('^([a-z]+)_([a-z]+)_([a-z_]*cash_balance)_(before|after)$'));
     out.reseller_fields.push("'" _ cdr_direction_provider_type_select(X_base_type _ "_cash_balance", X_type _ "_cash_balance_data", "base_table", "cash_balance_id","val_" _ matches.3, matches.0, matches.1, matches.2) _ "'");
   ELSIF (matches = X_f.lower.match('^([a-z]+)_([a-z]+)_([a-z_]*time_balance)_(before|after)$'));
