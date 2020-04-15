@@ -184,7 +184,7 @@ END;
 out.reseller_fields = [];
 FOREACH X_f IN argv.reseller_export_fields;
   IF X_cdr_id_map.exists(X_f.upper);
-    out.reseller_fields.push("'" _ X_cdr_id_map.${X_f.uppper} _ "'");
+    out.reseller_fields.push("'" _ X_cdr_id_map.${X_f.upper} _ "'");
   ELSIF (matches = X_f.lower.match('^([a-z]+)_([a-z]+)_([a-z_]*cash_balance)_(before|after)$'));
     out.reseller_fields.push("'" _ cdr_direction_provider_type_select(X_base_type _ "_cash_balance", X_type _ "_cash_balance_data", "base_table", "cash_balance_id","val_" _ matches.3, matches.0, matches.1, matches.2) _ "'");
   ELSIF (matches = X_f.lower.match('^([a-z]+)_([a-z]+)_([a-z_]*time_balance)_(before|after)$'));
