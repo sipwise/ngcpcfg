@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74d5a4f1_78984271",
+        "filename": "lib/get_cdr_export_fields",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2020-04-15T15:22:01Z",
+      "side": 1,
+      "message": "typo \"triple p\"",
+      "range": {
+        "startLine": 210,
+        "startChar": 54,
+        "endLine": 210,
+        "endChar": 60
+      },
+      "revId": "da1b76af3b0f5ed3949535f55388d4a08bc04468",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
