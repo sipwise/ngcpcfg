@@ -1,3 +1,19 @@
+ngcp-ngcpcfg (8.2.3.0+0~mr8.2.3.0) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [c1875e7] TT#76458 fix edr old/new profile fields
+
+  [ Richard Fuchs ]
+  * [9210cd0] TT#76801 support output of just addresses for RTP interfaces
+
+  [ Alexander Lutay ]
+  * [fbb7e52] TT#78170 Fix option/value parsing for 'ngcpcfg set' in case if value has sign =
+
+  [ Mykola Malkov ]
+  * [8e55ae9] TT#76658 Use temp file to prepare ngcpcfg_perms file
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 27 Apr 2020 21:29:41 +0200
+
 ngcp-ngcpcfg (8.2.2.0+0~mr8.2.2.0) unstable; urgency=medium
 
   * New release.
