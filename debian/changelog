@@ -1,3 +1,16 @@
+ngcp-ngcpcfg (7.5.4.1+0~mr7.5.4.1) unstable; urgency=medium
+
+  [ Richard Fuchs ]
+  * [0500907] TT#76801 support output of just addresses for RTP interfaces
+
+  [ Alexander Lutay ]
+  * [859264c] TT#78170 Fix option/value parsing for 'ngcpcfg set' in case if value has sign =
+
+  [ Mykola Malkov ]
+  * [b3c4c03] TT#76658 Use temp file to prepare ngcpcfg_perms file
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 27 Apr 2020 18:41:56 +0200
+
 ngcp-ngcpcfg (7.5.4.0+0~mr7.5.4.0) unstable; urgency=medium
 
   [ Kirill Solomko ]
