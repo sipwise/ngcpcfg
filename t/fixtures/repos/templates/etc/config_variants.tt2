@@ -1,0 +1,2 @@
+ha enabled: [% ha.enabled %]
+pair enabled: [% pair.enabled %]

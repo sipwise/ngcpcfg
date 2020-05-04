@@ -11,6 +11,20 @@ if ! [ -r "${FUNCTIONS}"/logs ] ; then
 fi
 . "${FUNCTIONS}"/logs
 
+## HA / carrier features {{{
+if [ -r "${FUNCTIONS}"/ha_features ] ; then
+  . "${FUNCTIONS}"/ha_features
+  # Set ${HA_FILE}, used by ngcpcfg.cfg, tt2-process and encrypt.
+  set_ha_file
+fi
+
+if [ -r "${FUNCTIONS}"/carrier_features ] ; then
+  . "${FUNCTIONS}"/carrier_features
+  # Set ${HOST_FILE} + ${PAIR_FILE}, used by ngcpcfg.cfg and tt2-process.
+  set_host_and_pair_files
+fi
+## }}}
+
 if ! [ -r "${FUNCTIONS}"/init ] ; then
   log_error "%s/init could not be read. Exiting." "${FUNCTIONS}"
   exit 1
@@ -18,18 +32,6 @@ fi
 set -o allexport
 . "${FUNCTIONS}"/init
 set +o allexport
-
-## HA / carrier features {{{
-if [ -r "${FUNCTIONS}"/ha_features ] ; then
-  . "${FUNCTIONS}"/ha_features
-  set_ha_file # set ${HA_FILE} for usage in generate_template_list
-fi
-
-if [ -r "${FUNCTIONS}"/carrier_features ] ; then
-  . "${FUNCTIONS}"/carrier_features
-  set_host_and_pair_files # set ${HOST_FILE} + ${PAIR_FILE} for usage in generate_template_list
-fi
-## }}}
 
 ## functions {{{
 main_action() {

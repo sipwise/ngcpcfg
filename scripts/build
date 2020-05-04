@@ -41,7 +41,7 @@ if [ -n "${NGCP_JOBS:-}" ] ; then
   ARGS+=("--jobs=${NGCP_JOBS}")
 fi
 
-for f in ${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG:-} "${EXTRA_CONFIG_FILES[@]}" ${CONSTANTS_CONFIG:-} ; do
+for f in ${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${HA_CONFIG:-} ${PAIR_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG:-} "${EXTRA_CONFIG_FILES[@]}" ${CONSTANTS_CONFIG:-} ; do
   if [ -r "$f" ] ; then
     ARGS+=("-c" "$f")
   fi
@@ -78,9 +78,16 @@ else
     fi
   done
 
+  declare -a configs
+  for config in "${HA_CONFIG}" "${PAIR_CONFIG}"; do
+    if [ -n "${config}" ]; then
+      configs+=("-e" "$(basename "${config}")")
+    fi
+  done
   if git diff-index --name-only HEAD | grep -q \
          -e "$(basename "$NGCPCTL_CONFIG")" \
          -e "$(basename "$HOST_CONFIG")" \
+         "${configs[@]}" \
          -e "$(basename "$LOCAL_CONFIG")" \
          -e "$(basename "$NETWORK_CONFIG")" \
          -e "$(basename "$CONSTANTS_CONFIG")" ; then

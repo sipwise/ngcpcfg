@@ -64,3 +64,25 @@ def test_get_action_missing_item(ngcpcfgcli, tmpdir):
     assert "\\n" in out.stdout
     assert "" in out.stderr
     assert out.returncode == 0
+
+
+@pytest.mark.get
+def test_get_action_config_ha(ngcpcfgcli, tmpdir):
+    out = ngcpcfgcli("get", "ha.enabled",
+                     env={
+                         'NGCPCFG':   'fixtures/ngcpcfg_pro.cfg',
+                     })
+    assert "yes" in out.stdout
+    assert "" in out.stderr
+    assert out.returncode == 0
+
+
+@pytest.mark.get
+def test_get_action_config_pair(ngcpcfgcli, tmpdir):
+    out = ngcpcfgcli("get", "pair.enabled",
+                     env={
+                         'NGCPCFG':   'fixtures/ngcpcfg_pro.cfg',
+                     })
+    assert "yes" in out.stdout
+    assert "" in out.stderr
+    assert out.returncode == 0

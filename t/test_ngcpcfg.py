@@ -1,5 +1,6 @@
 #!/usr/bin/env py.test-3
 
+import filecmp
 import os
 import pytest
 import re
@@ -35,6 +36,42 @@ def test_simple_build_template_ok(ngcpcfgcli):
                        tmpdir +
                        r"/etc/apt/apt.conf.d/71_no_recommended: OK")
     assert re.search(regex, out.stdout)
+
+
+@pytest.mark.build
+def test_simple_build_template_no_ha_no_carrier(ngcpcfgcli):
+    tmpdir = tempfile.mkdtemp(prefix='ngcp-', suffix='-pytest-output')
+    out = ngcpcfgcli("build", "--ignore-branch-check", "/etc/config_variants",
+                     env={
+                         'NGCP_BASE_TT2': os.getcwd(),
+                         'OUTPUT_DIRECTORY': tmpdir,
+                         })
+    regex = re.compile(r"Generating " + tmpdir + r"/etc/config_variants: OK")
+    assert re.search(regex, out.stdout)
+    output_file = os.path.join(tmpdir, "etc/config_variants")
+    test_file = "fixtures/output/config_variants"
+    assert os.path.exists(output_file)
+    assert os.path.exists(test_file)
+    assert filecmp.cmp(output_file, test_file)
+
+
+@pytest.mark.build
+def test_simple_build_template_pro(ngcpcfgcli):
+    tmpdir = tempfile.mkdtemp(prefix='ngcp-', suffix='-pytest-output')
+    out = ngcpcfgcli("build", "--ignore-branch-check",
+                     "/etc/config_variants",
+                     env={
+                         'NGCP_BASE_TT2': os.getcwd(),
+                         'OUTPUT_DIRECTORY': tmpdir,
+                         'NGCPCFG':   'fixtures/ngcpcfg_pro.cfg',
+                         })
+    regex = re.compile(r"Generating " + tmpdir + r"/etc/config_variants: OK")
+    assert re.search(regex, out.stdout)
+    output_file = os.path.join(tmpdir, "etc/config_variants")
+    test_file = "fixtures/output/config_variants_pro"
+    assert os.path.exists(output_file)
+    assert os.path.exists(test_file)
+    assert filecmp.cmp(output_file, test_file)
 
 
 @pytest.mark.tt_17401
