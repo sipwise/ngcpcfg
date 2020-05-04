@@ -7,7 +7,7 @@ set -e
 set -u
 
 if [ "${#:-}" -ne 1 ] ; then
-  echo "Usage: /usr/share/ngcp-ngcpcfg/helper/restore-permissions <ngcpcfg_directory>" >&2
+  echo "Usage: $0 <ngcpcfg_directory>" >&2
   exit 1
 fi
 

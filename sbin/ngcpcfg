@@ -62,7 +62,7 @@ Actions:
 " "$PN"
 
   # display only if ngcp-ngcpcfg-ha is available
-  if [ -r /usr/share/ngcp-ngcpcfg/functions/ha_features ] ; then
+  if [ -r "${FUNCTIONS}"/ha_features ] ; then
     printf "Actions (High Availability):\n"
     printf "  push [<opts>]       push modifications to other node(s) (shared storage setup only)\n"
     printf "  push-parallel       push modifications to other node(s) in parallel (shared storage setup only)\n"
@@ -71,19 +71,19 @@ Actions:
   fi
 
 
-  if [ -r /usr/share/ngcp-ngcpcfg/scripts/encrypt ] || \
-     [ -r /usr/share/ngcp-ngcpcfg/scripts/init-mgmt ]; then
+  if [ -r "${SCRIPTS}"/encrypt ] || \
+     [ -r "${SCRIPTS}"/init-mgmt ]; then
     printf "Actions (extra):\n"
   fi
 
   # display only if ngcp-ngcpcfg-locker is available
-  if [ -r /usr/share/ngcp-ngcpcfg/scripts/encrypt ] ; then
+  if [ -r "${SCRIPTS}"/encrypt ] ; then
     printf "  decrypt             decrypt /etc/ngcp-config-crypted.tgz.gpg and restore config files\n"
     printf "  encrypt             encrypt /etc/ngcp-config and all resulting configuration files\n"
   fi
 
   # display only if init-mgmt is available
-  if [ -r /usr/share/ngcp-ngcpcfg/scripts/init-mgmt ] ; then
+  if [ -r "${SCRIPTS}"/init-mgmt ] ; then
     printf "  init-mgmt <srv>     set up mgmt server for Carrier ONLY environment (to be executed only once)\n"
   fi
 

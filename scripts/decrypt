@@ -12,6 +12,10 @@ set -o pipefail
 # provide the main functions we need for successful execution of the
 # decrypt function
 
+# support for testsuite, assume defaults if unset
+FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
+HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
+
 timestamp_replacementchars='' # unset by default
 
 console_output() {
@@ -65,7 +69,7 @@ Please execute the following command on one node
 as soon as glusterfs share is mounted again:
 
   git clone --bare /etc/ngcp-config /mnt/glusterfs/ngcpcfg-share
-  /usr/share/ngcp-ngcpcfg/helper/restore-permissions /mnt/glusterfs/ngcpcfg-share
+  ${HELPER}/restore-permissions /mnt/glusterfs/ngcpcfg-share
 
 "
     return 0
@@ -76,7 +80,7 @@ as soon as glusterfs share is mounted again:
   else
     log_info "Copying git repository to shared storage."
     git clone --bare /etc/ngcp-config /mnt/glusterfs/ngcpcfg-share | sed "s/^/$timestamp_replacementchars/"
-    /usr/share/ngcp-ngcpcfg/helper/restore-permissions /mnt/glusterfs/ngcpcfg-share
+    "${HELPER}"/restore-permissions /mnt/glusterfs/ngcpcfg-share
   fi
 }
 
@@ -107,7 +111,7 @@ else
 fi
 
 # only for PRO/CARRIER
-if [ -r /usr/share/ngcp-ngcpcfg/functions/ha_features ] ; then
+if [ -r "${FUNCTIONS}"/ha_features ] ; then
   setup_shared_config
 else
   log_info "Ignoring shared configuration (PRO/CARRIER only)."
