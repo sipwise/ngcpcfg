@@ -34,9 +34,10 @@ FOREACH X_host IN hosts.keys;
     X_tgl = X_types.grep('^rtp_.');
     NEXT IF X.tgl.size() == 0;
 
-    X_type = X_tgl.0;
-    X_type = X_type.remove('^rtp_');
-    X_out.$X_type = 1;
+    FOREACH X_type IN X_tgl;
+      X_type = X_type.remove('^rtp_');
+      X_out.$X_type = 1;
+    END;
   END;
 END;
 
