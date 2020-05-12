@@ -47,8 +47,7 @@ IF status.item(hosts.$X_host.status);
   FOREACH X_iface IN hosts.$X_host.interfaces;
     X_ifc = hosts.$X_host.$X_iface;
     X_types = X_ifc.type.grep('^rtp_.');
-    IF X_types.size();
-      X_type = X_types.0;
+    FOREACH X_type IN X_types;
       X_type = X_type.remove('^rtp_');
 
       IF X_format == 'list';
