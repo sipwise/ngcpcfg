@@ -1,3 +1,10 @@
+ngcp-ngcpcfg (6.5.8.2+0~mr6.5.8.2) unstable; urgency=medium
+
+  [ Richard Fuchs ]
+  * [0d73732] TT#81265 support multiple parallel RTP interface types
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 14 May 2020 14:30:51 +0200
+
 ngcp-ngcpcfg (6.5.8.1+0~mr6.5.8.1) unstable; urgency=medium
 
   * New release.
