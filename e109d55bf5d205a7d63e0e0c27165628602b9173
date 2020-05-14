@@ -22,6 +22,30 @@
       "revId": "e109d55bf5d205a7d63e0e0c27165628602b9173",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21983ab4_587c8fc8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2020-05-14T13:12:49Z",
+      "side": 1,
+      "message": "Thanks, I\u0027ll fix. I also enabled yesterday spellchecking in vim, which was not aware until then it was available! :D",
+      "parentUuid": "dae708ca_ac8b224e",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 7
+      },
+      "revId": "e109d55bf5d205a7d63e0e0c27165628602b9173",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
