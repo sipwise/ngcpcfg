@@ -56,6 +56,8 @@ exit 1 unless(sync_general_timezone($dbh,
 
 exit 1 unless(sync_db_timezones($dbh));
 
+exit 1 unless(sync_li_admins($dbh, $config->{www_admin}->{lawful_intercept_admins}));
+
 $dbh->disconnect;
 
 exit 0;
@@ -243,6 +245,43 @@ SQL
             or die "Cannot insert into ngcp.tzinfo_version: $DBI::errstr\n";
     };
     $err = $EVAL_ERROR;
+    if ($err) {
+        print $err;
+        $dbh->rollback();
+        return;
+    }
+    $dbh->commit();
+
+    return 1;
+}
+
+## add LI admins into MariaDB ##############################
+sub sync_li_admins {
+    my ($dbh, $li_admins) = @_;
+
+    my $sql = '';
+    eval {
+        $dbh->begin_work() or die "Cannot start tx: $DBI::errstr\n";
+        $dbh->do('USE billing')
+            or die "Cannot use billing database: $DBI::errstr\n";
+
+        #clear previously set LI admins;
+        $dbh->do(<<SQL)
+UPDATE billing.admins
+SET lawful_intercept = 0
+SQL
+        or die "Could not set lawful_intercept flag: ".$DBI::errstr;
+
+        foreach my $li_admin (@{$li_admins}) {
+            $dbh->do(<<SQL, undef, $li_admin)
+UPDATE billing.admins
+SET lawful_intercept = 1
+WHERE login = ?
+SQL
+            or die "Could not insert admin: ".$DBI::errstr;
+        }
+    };
+    my $err = $EVAL_ERROR;
     if ($err) {
         print $err;
         $dbh->rollback();
