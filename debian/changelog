@@ -1,3 +1,34 @@
+ngcp-ngcpcfg (8.5.0.0+0~mr8.5.0.0) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [586e8e5] TT#76675 concurrent_call_count+quota cdrexport fields
+  * [d303f91] TT#77005 enable/disable a cdr export field
+  * [9a47a8a] TT#76675 rename concurrent_call cdrexport fields
+  * [da1b76a] TT#76675 ignore case of cdrexport fields
+
+  [ Mykola Malkov ]
+  * [2344b9e] TT#76658 Use temp file to prepare ngcpcfg_perms file
+
+  [ Alexander Lutay ]
+  * [35f0be2] TT#78170 Fix option/value parsing for 'ngcpcfg set' in case if value has sign =
+
+  [ Guillem Jover ]
+  * [6dd411e] TT#78652 Generate and install perl module and program man pages
+  * [4d4823c] TT#79701 Deprecate ngcp.get_mgmt_name and lib/get_mgmt_name
+  * [7b37cd6] TT#79701 Add general.ngcp_type support to test fixtures
+  * [a75df8e] TT#79701 Add support for ngcp.get_pairname
+  * [4bdc9f5] TT#81051 Use environment variables instead of absolute pathnames
+  * [354e757] TT#81050 Add HA_CONFIG and PAIR_CONFIG support
+
+  [ Kirill Solomko ]
+  * [1554ea0] TT#76675 fix a typo in get_cdr_export_fields
+
+  [ Richard Fuchs ]
+  * [571ffd8] TT#79550 allow interfaces with just shared IP
+  * [35e8e97] TT#81265 support multiple parallel RTP interface types
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 19 May 2020 11:11:21 +0200
+
 ngcp-ngcpcfg (8.4.0.0+0~mr8.4.0.0) unstable; urgency=medium
 
   [ Guillem Jover ]
