@@ -36,7 +36,7 @@ usage() {
   # make sure to output errors on stderr
   [ "${1:-}" = "1" ] && exec >&2
 
-  printf "%s - Configuration Management System\n\n" "$PN"
+  printf "%s - Configuration Management System\\n\\n" "$PN"
   printf "Usage: %s <action> [<opts>]
 
 Actions:
@@ -63,43 +63,43 @@ Actions:
 
   # display only if ngcp-ngcpcfg-ha is available
   if [ -r "${FUNCTIONS}"/ha_features ] ; then
-    printf "Actions (High Availability):\n"
-    printf "  push [<opts>]       push modifications to other node(s) (shared storage setup only)\n"
-    printf "  push-parallel       push modifications to other node(s) in parallel (shared storage setup only)\n"
-    printf "  pull                retrieve modifications from shared storage (shared storage setup only)\n"
-    printf "\n"
+    printf "Actions (High Availability):\\n"
+    printf "  push [<opts>]       push modifications to other node(s) (shared storage setup only)\\n"
+    printf "  push-parallel       push modifications to other node(s) in parallel (shared storage setup only)\\n"
+    printf "  pull                retrieve modifications from shared storage (shared storage setup only)\\n"
+    printf "\\n"
   fi
 
 
   if [ -r "${SCRIPTS}"/encrypt ] || \
      [ -r "${SCRIPTS}"/init-mgmt ]; then
-    printf "Actions (extra):\n"
+    printf "Actions (extra):\\n"
   fi
 
   # display only if ngcp-ngcpcfg-locker is available
   if [ -r "${SCRIPTS}"/encrypt ] ; then
-    printf "  decrypt             decrypt /etc/ngcp-config-crypted.tgz.gpg and restore config files\n"
-    printf "  encrypt             encrypt /etc/ngcp-config and all resulting configuration files\n"
+    printf "  decrypt             decrypt /etc/ngcp-config-crypted.tgz.gpg and restore config files\\n"
+    printf "  encrypt             encrypt /etc/ngcp-config and all resulting configuration files\\n"
   fi
 
   # display only if init-mgmt is available
   if [ -r "${SCRIPTS}"/init-mgmt ] ; then
-    printf "  init-mgmt <srv>     set up mgmt server for Carrier ONLY environment (to be executed only once)\n"
+    printf "  init-mgmt <srv>     set up mgmt server for Carrier ONLY environment (to be executed only once)\\n"
   fi
 
-  printf "\nFor further usage information and options see the ngcpcfg(8) man page.\n"
+  printf "\\nFor further usage information and options see the ngcpcfg(8) man page.\\n"
 }
 
 version() {
   versinfo=$(dpkg-query -f "\${Version}" -W ngcp-ngcpcfg 2>/dev/null)
   [ -n "${versinfo:-}" ] || versinfo='information not available'
-  printf "ngcpcfg, version %s\n" "${versinfo}"
+  printf "ngcpcfg, version %s\\n" "${versinfo}"
 }
 
 # Main code
 
 if [ "$UID" -ne 0 ] ; then
-  printf "Error: ngcpcfg requires root permissions. Exiting.\n" >&2
+  printf "Error: ngcpcfg requires root permissions. Exiting.\\n" >&2
   exit 1
 fi
 
@@ -117,7 +117,7 @@ HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
 HOOKS="${HOOKS:-/usr/share/ngcp-ngcpcfg/hooks/}"
 
 if ! [ -r "${FUNCTIONS}/main" ] ; then
-  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}" >&2
+  printf "Error: %s/main could not be read. Exiting.\\n" "${FUNCTIONS}" >&2
   exit 1
 fi
 
@@ -131,6 +131,7 @@ if [[ "${1:-}" == "decrypt" ]] ; then
     fi
   }
 else
+  # shellcheck source=functions/main
   . "${FUNCTIONS}"/main
 fi
 
@@ -143,7 +144,7 @@ case ${1:-} in
     main_action "$@"
     ;;
   values)
-    printf "Note: 'ngcpcfg values' is obsolete, use 'ngcpcfg get'\n" >&2
+    printf "Note: 'ngcpcfg values' is obsolete, use 'ngcpcfg get'\\n" >&2
     main_action "$@"
     ;;
   apply|\

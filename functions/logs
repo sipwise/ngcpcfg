@@ -8,15 +8,17 @@ export timestamp_replacementchars='' # unset by default
 
 console_output() {
   if [ -z "${TIME_FORMAT:-}" ] ; then
-    printf -- "$*"
+    printf -- "%s" "$*"
     return 0
   fi
 
-  local timestamp="$(date "$TIME_FORMAT")"
+  local timestamp
+  timestamp="$(date "$TIME_FORMAT")"
 
   # indent depending on number of characters in date output
-  export timestamp_replacementchars="$(printf -- "%s: " "$timestamp" | sed 's/./ /g')"
-  printf -- "$timestamp ${HNAME:-}: $*"
+  export timestamp_replacementchars
+  timestamp_replacementchars="$(printf -- "%s: " "$timestamp" | sed 's/./ /g')"
+  printf -- "%s" "$timestamp ${HNAME:-}: $*"
 }
 # }}}
 
@@ -27,7 +29,7 @@ log_only() {
 
 log_info() {
   log_only "$*"
-  console_output "$*\n"
+  console_output "$*\\n"
 }
 
 # info without ending newline
@@ -38,7 +40,7 @@ log_info_n() {
 
 log_warn() {
   log_only "Warning: $*"
-  console_output "Warning: $*\n"
+  console_output "Warning: $*\\n"
 }
 
 # warning without ending newline
@@ -49,13 +51,13 @@ log_warn_n() {
 
 log_error() {
   log_only "Error: $*"
-  console_output "Error: $*\n" >&2
+  console_output "Error: $*\\n" >&2
 }
 
 log_debug() {
   if [ -n "${DEBUG:-}" ] ; then
     log_only "Debug: $*"
-    console_output "DEBUG: $*\n" >&2
+    console_output "DEBUG: $*\\n" >&2
   fi
 }
 ## }}}

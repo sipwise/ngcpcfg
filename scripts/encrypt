@@ -10,10 +10,11 @@ FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
 HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
 
 if ! [ -r "${FUNCTIONS}"/main ] ; then
-  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}" >&2
+  printf "Error: %s/main could not be read. Exiting.\\n" "${FUNCTIONS}" >&2
   exit 1
 fi
 
+# shellcheck source=functions/main
 . "${FUNCTIONS}"/main
 
 get_config_file_list() {
@@ -62,7 +63,7 @@ else
 fi
 
 log_info_n "Now really erase all configuration files managed by ngcpcfg? [y/N] "
-a='' ; read a
+a='' ; read -r a
 if [[ "$a" == "y" ]] || [[ "$a" == "Y" ]] ; then
   rm -rf "$NGCPCTL_MAIN" ; rm -f "$TARGZ"
   # shellcheck disable=SC2086

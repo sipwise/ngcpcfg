@@ -10,17 +10,18 @@ FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
 HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
 
 if ! [ -r "${FUNCTIONS}"/main ] ; then
-  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}" >&2
+  printf "Error: %s/main could not be read. Exiting.\\n" "${FUNCTIONS}" >&2
   exit 1
 fi
 
+# shellcheck source=functions/main
 . "${FUNCTIONS}"/main
 
 usage() {
   printf "ngcpcfg build -- supported command line options:
 
 --ignore-branch-check         - do not fail build if branch doesn't match 'master'
---ignore-shared-storage-check - skip check of shared storage\n\n"
+--ignore-shared-storage-check - skip check of shared storage\\n\\n"
 }
 
 CHECK_BRANCH=true
@@ -40,7 +41,8 @@ check_branch() {
     return 0
   fi
 
-  local current_branch=$(compare_active_branch 'master')
+  local current_branch
+  current_branch=$(compare_active_branch 'master')
   if [ "$current_branch" = 'master' ] ; then
     log_debug "Current branch is 'master', continuing."
   else
@@ -66,6 +68,7 @@ check_origin() {
   cd "${NGCPCTL_MAIN}"
 
   if [ -r /etc/default/ngcp-roles ]; then
+    # shellcheck disable=SC1091
     . /etc/default/ngcp-roles
   else
     NGCP_IS_MGMT="yes"

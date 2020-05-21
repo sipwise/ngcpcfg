@@ -11,10 +11,11 @@ HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
 SCRIPTS="${SCRIPTS:-/usr/share/ngcp-ngcpcfg/scripts/}"
 
 if ! [ -r "${FUNCTIONS}"/main ] ; then
-  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}" >&2
+  printf "Error: %s/main could not be read. Exiting.\\n" "${FUNCTIONS}" >&2
   exit 1
 fi
 
+# shellcheck source=functions/main
 . "${FUNCTIONS}"/main
 
 cd "${NGCPCTL_MAIN}"
@@ -40,7 +41,7 @@ request_confirmation() {
   while read -r -t 0; do read -r; done
 
   while true ; do
-    read a
+    read -r a
     case "${a,,}" in
       yes) return 0 ;;
       no) return 1 ;;
@@ -294,8 +295,7 @@ tracked_files=false
 untracked_files=false
 
 clean_options="all,branches,force,help,reset-master,stashes,tracked-files,untracked-files"
-_opt_temp=$(getopt --name "$0" -o +h --long ${clean_options} -- "$@")
-if [ $? -ne 0 ]; then
+if ! _opt_temp=$(getopt --name "$0" -o +h --long ${clean_options} -- "$@") ; then
   log_error "Try 'ngcpcfg clean --help' for more information."
   exit 1
 fi

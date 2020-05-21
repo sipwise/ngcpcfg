@@ -10,10 +10,11 @@ FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
 HOOKS="${HOOKS:-/usr/share/ngcp-ngcpcfg/hooks/}"
 
 if ! [ -r "${FUNCTIONS}"/main ] ; then
-  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}">&2
+  printf "Error: %s/main could not be read. Exiting.\\n" "${FUNCTIONS}">&2
   exit 1
 fi
 
+# shellcheck source=functions/main
 . "${FUNCTIONS}"/main
 
 # main script

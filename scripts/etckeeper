@@ -10,11 +10,12 @@ set -o pipefail
 FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
 
 if ! [ -r "${FUNCTIONS}"/main ] ; then
-  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}">&2
+  printf "Error: %s/main could not be read. Exiting.\\n" "${FUNCTIONS}">&2
   exit 1
 fi
 
 timestamp_replacementchars=''
+# shellcheck source=functions/main
 . "${FUNCTIONS}"/main
 
 # main script
