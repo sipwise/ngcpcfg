@@ -15,6 +15,7 @@ if ! [ -r "${FUNCTIONS}"/main ] ; then
   exit 1
 fi
 
+# shellcheck disable=SC1090
 . "${FUNCTIONS}"/main
 
 cd "${NGCPCTL_MAIN}"
@@ -42,9 +43,9 @@ patch_search() {
   local fileslist
   fileslist=$(mktemp)
 
-  local a="\.sp[12]?"
-  local b="\.(web|db|prx|lb|slb)[0-9]+[ab]?"
-  local awk_regexp=".*${name}\.tt2(${a}|${b})?$"
+  local a="\\.sp[12]?"
+  local b="\\.(web|db|prx|lb|slb)[0-9]+[ab]?"
+  local awk_regexp=".*${name}\\.tt2(${a}|${b})?$"
 
   for dir in ${CONFIG_POOL} ; do
     [ -n "${dir}" ] || log_error "${dir} doesn't exist"
@@ -115,15 +116,15 @@ patch_apply() {
   patch_output=$(mktemp)
 
   local patch_opts=()
-  patch_opts+=(--input="${patch}")
-  patch_opts+=(--prefix=/dev/null)  # do not produce .orig backup files
-  patch_opts+=(--reject-file=-)     # do not produce .rej file
+  patch_opts+=("--input=${patch}")
+  patch_opts+=("--prefix=/dev/null")  # do not produce .orig backup files
+  patch_opts+=("--reject-file=-")     # do not produce .rej file
   patch_opts+=(-F0 -N)              # disable fuzzy logic to be as safe as possible
   if "${apply}" ; then
-    patch_opts+=(--output="${customtt}")
+    patch_opts+=("--output=${customtt}")
   else
     patch_opts+=(--dry-run)
-    patch_opts+=(--output=/dev/null)
+    patch_opts+=("--output=/dev/null")
   fi
 
   log_debug "Generating customtt '${customtt}' from '${patch}' (apply=${apply})"
@@ -221,7 +222,7 @@ patch_import_customtt() {
 }
 
 patch_import() {
-  declare -a files=($(patch_search "customtt" "$@"))
+  mapfile -t files < <(patch_search "customtt" "$@")
 
   log_debug "Validating customtt files"
   for customtt in "${files[@]}" ; do
@@ -243,7 +244,7 @@ patch_import() {
 }
 
 patch_patch() {
-  declare -a files=($(patch_search "patchtt" "$@"))
+  mapfile -t files < <(patch_search "patchtt" "$@")
 
   for patch in "${files[@]}" ; do
     log_info "Validating patch '${patch}'"
@@ -274,7 +275,7 @@ patch_footer() {
     fi
   else
     log_error "Some operations above finished with an error for the file(s):"
-    bad_files_unique=($(echo "${bad_files[@]}" | tr ' ' '\n' | sort -u))
+    mapfile -t bad_files_unique < <(echo "${bad_files[@]}" | tr ' ' '\n' | sort -u)
     printf '\t%s\n' "${bad_files_unique[@]}"
     RC=1
   fi

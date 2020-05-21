@@ -7,15 +7,18 @@
 # support test suite which requires system independent configuration
 if [ -r "${NGCPCFG:-}" ] ; then
   log_debug "sourcing configuration file ${NGCPCFG:-}"
+  # shellcheck disable=SC1090
   . "${NGCPCFG:-}"
 else
   if [ -r /etc/ngcp-config/ngcpcfg.cfg ] ; then
+    # shellcheck disable=SC1091
     . /etc/ngcp-config/ngcpcfg.cfg
     log_debug "sourced configuration file /etc/ngcp-config/ngcpcfg.cfg"
 
     if [ -d /etc/ngcp-config/ngcpcfg.d ] ; then
       for file in /etc/ngcp-config/ngcpcfg.d/*.cfg ; do
         if [ -r "${file}" ]; then
+          # shellcheck disable=SC1090
           . "${file}"
           log_debug "sourced configuration file '${file}'"
         fi
@@ -40,7 +43,7 @@ if ! [ -r "${CONSTANTS_CONFIG}" ] ; then
   exit 1
 fi
 
-if ! [ -n "${NETWORK_CONFIG:-}" ] ; then
+if [ -z "${NETWORK_CONFIG:-}" ] ; then
   log_warn "NETWORK_CONFIG is not configured in ${NGCPCTL_CONFIG} - continuing anyway."
 elif ! [ -r "${NETWORK_CONFIG}" ] ; then
   log_error "Constants file ${NETWORK_CONFIG} does not exist (unconfigured?) - exiting."
@@ -61,8 +64,10 @@ fi
 
 ## environment variables {{{
 export PN="ngcpcfg"
-export HNAME="$(hostname)"
-export NNAME="$(ngcp-nodename)"
+export HNAME
+HNAME="$(hostname)"
+export NNAME
+NNAME="$(ngcp-nodename)"
 
 # avoid warnings by perl script complaining about locales
 export LANG=C
