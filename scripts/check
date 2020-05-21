@@ -14,6 +14,7 @@ if ! [ -r "${FUNCTIONS}"/main ] ; then
   exit 1
 fi
 
+# shellcheck disable=SC1090
 . "${FUNCTIONS}"/main
 
 usage() {
@@ -40,7 +41,8 @@ check_branch() {
     return 0
   fi
 
-  local current_branch=$(compare_active_branch 'master')
+  local current_branch
+  current_branch=$(compare_active_branch 'master')
   if [ "$current_branch" = 'master' ] ; then
     log_debug "Current branch is 'master', continuing."
   else
@@ -66,6 +68,7 @@ check_origin() {
   cd "${NGCPCTL_MAIN}"
 
   if [ -r /etc/default/ngcp-roles ]; then
+    # shellcheck disable=SC1091
     . /etc/default/ngcp-roles
   else
     NGCP_IS_MGMT="yes"

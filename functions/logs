@@ -8,15 +8,17 @@ export timestamp_replacementchars='' # unset by default
 
 console_output() {
   if [ -z "${TIME_FORMAT:-}" ] ; then
-    printf -- "$*"
+    printf -- "%s" "$*"
     return 0
   fi
 
-  local timestamp="$(date "$TIME_FORMAT")"
+  local timestamp
+  timestamp="$(date "$TIME_FORMAT")"
 
   # indent depending on number of characters in date output
-  export timestamp_replacementchars="$(printf -- "%s: " "$timestamp" | sed 's/./ /g')"
-  printf -- "$timestamp ${HNAME:-}: $*"
+  export timestamp_replacementchars
+  timestamp_replacementchars="$(printf -- "%s: " "$timestamp" | sed 's/./ /g')"
+  printf -- "%s" "$timestamp ${HNAME:-}: $*"
 }
 # }}}
 

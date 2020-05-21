@@ -17,7 +17,8 @@ if ! [ -r "${FUNCTIONS}"/main ] ; then
 fi
 
 timestamp_replacementchars=''
-.  "${FUNCTIONS}"/main
+# shellcheck disable=SC1090
+. "${FUNCTIONS}"/main
 
 # main script
 log_debug "cd $NGCPCTL_MAIN"
