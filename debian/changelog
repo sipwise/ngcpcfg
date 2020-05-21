@@ -1,3 +1,16 @@
+ngcp-ngcpcfg (6.5.9.1+0~mr6.5.9.1) unstable; urgency=medium
+
+  [ Mykola Malkov ]
+  * [761c3d0] TT#76658 Use temp file to prepare ngcpcfg_perms file
+
+  [ Kirill Solomko ]
+  * [02717e6] TT#71051 sync-db sync timezone delimiter
+
+  [ Richard Fuchs ]
+  * [b332e00] TT#81265 support multiple parallel RTP interface types
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 21 May 2020 16:13:35 +0200
+
 ngcp-ngcpcfg (6.5.9.0+0~mr6.5.9.0) unstable; urgency=medium
 
   * New release.
