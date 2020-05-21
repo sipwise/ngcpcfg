@@ -36,7 +36,7 @@ usage() {
   # make sure to output errors on stderr
   [ "${1:-}" = "1" ] && exec >&2
 
-  printf "%s - Configuration Management System\n\n" "$PN"
+  printf "%s - Configuration Management System\n\\n" "$PN"
   printf "Usage: %s <action> [<opts>]
 
 Actions:
@@ -87,7 +87,7 @@ Actions:
     printf "  init-mgmt <srv>     set up mgmt server for Carrier ONLY environment (to be executed only once)\n"
   fi
 
-  printf "\nFor further usage information and options see the ngcpcfg(8) man page.\n"
+  printf "\nFor further usage information and options see the ngcpcfg(8) man page.\\n"
 }
 
 version() {
@@ -131,6 +131,7 @@ if [[ "${1:-}" == "decrypt" ]] ; then
     fi
   }
 else
+  # shellcheck disable=SC1090
   . "${FUNCTIONS}"/main
 fi
 
