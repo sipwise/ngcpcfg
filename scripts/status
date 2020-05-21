@@ -10,11 +10,12 @@ set -o pipefail
 FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
 
 if ! [ -r "${FUNCTIONS}"/main ] ; then
-  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}">&2
+  printf "Error: %s/main could not be read. Exiting.\\n" "${FUNCTIONS}">&2
   exit 1
 fi
 
 timestamp_replacementchars=''
+# shellcheck disable=SC1090
 . "${FUNCTIONS}"/main
 
 # main script
@@ -27,7 +28,7 @@ fi
 usage() {
   printf "ngcpcfg status -- supported command line options:
 
---local-only - do not check state on any remote host(s) (HA/PRO only)\n\n"
+--local-only - do not check state on any remote host(s) (HA/PRO only)\\n\\n"
 }
 
 # shellcheck disable=SC2034
@@ -96,7 +97,8 @@ check_etc_state() {
 check_branch() {
   log_info "Checking currently active branch:"
 
-  local current_branch=$(compare_active_branch 'master')
+  local current_branch
+  current_branch=$(compare_active_branch 'master')
   if [ "$current_branch" = 'master' ] ; then
     log_info "OK:   branch master active"
   else
@@ -140,14 +142,15 @@ check_reboot_requests() {
 }
 
 check_pending_build() {
-  log_debug "$FUNCNAME"
+  log_debug "${FUNCNAME[@]}"
 
   log_debug "cd $NGCPCTL_MAIN"
   cd "$NGCPCTL_MAIN"
 
   log_info "Checking state of pending builds:"
 
-  local latest_commit=$(git log -1 --format="%H")
+  local latest_commit
+  latest_commit=$(git log -1 --format="%H")
   log_debug "latest_commit = $latest_commit"
 
   if ! [ -f "${STATE_FILES_DIR}/build" ] ; then
@@ -156,7 +159,8 @@ check_pending_build() {
     return 0
   fi
 
-  local latest_build_commit=$(cat "${STATE_FILES_DIR}/build")
+  local latest_build_commit
+  latest_build_commit=$(cat "${STATE_FILES_DIR}/build")
   log_debug "latest_build_commit = $latest_build_commit"
 
   if [ -n "$latest_commit" ] && [ -n "$latest_build_commit" ] ; then

@@ -12,12 +12,13 @@ HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
 SCRIPTS="${SCRIPTS:-/usr/share/ngcp-ngcpcfg/scripts/}"
 
 if ! [ -r "${FUNCTIONS}"/main ] ; then
-  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}" >&2
+  printf "Error: %s/main could not be read. Exiting.\\n" "${FUNCTIONS}" >&2
   exit 1
 fi
 
 timestamp_replacementchars=''
-.  "${FUNCTIONS}"/main
+# shellcheck disable=SC1090
+. "${FUNCTIONS}"/main
 
 # main script
 log_debug "cd $NGCPCTL_MAIN"
@@ -27,7 +28,7 @@ log_debug "git diff $*"
 git diff "$@"
 
 # added files
-log_debug "git status --porcelain | awk '/^\?\? / {print \$2}'"
+log_debug "git status --porcelain | awk '/^\\?\\? / {print \$2}'"
 if git status --porcelain | awk '/^\?\? / {print $2}' | grep -q . ; then
   log_info "* New but not yet registered files inside ${NGCPCTL_MAIN}:"
   git status --porcelain | awk '/^\?\? / {print $2}' | sed "s/^/$timestamp_replacementchars/"

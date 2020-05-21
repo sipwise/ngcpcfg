@@ -12,10 +12,11 @@ HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
 SCRIPTS="${SCRIPTS:-/usr/share/ngcp-ngcpcfg/scripts/}"
 
 if ! [ -r "${FUNCTIONS}"/main ] ; then
-  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}">&2
+  printf "Error: %s/main could not be read. Exiting.\\n" "${FUNCTIONS}">&2
   exit 1
 fi
 
+# shellcheck disable=SC1090
 . "${FUNCTIONS}"/main
 
 # based on check_local_state() from scripts/status

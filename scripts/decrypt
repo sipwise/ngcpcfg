@@ -20,7 +20,7 @@ timestamp_replacementchars='' # unset by default
 
 console_output() {
   if [ -z "${TIME_FORMAT:-}" ] ; then
-    printf -- "$*"
+    printf -- "%s" "$*"
     return 0
   fi
 
@@ -29,12 +29,12 @@ console_output() {
 
   # indent depending on number of characters in date output
   timestamp_replacementchars="$(printf -- "%s: " "$timestamp" | sed 's/./ /g')"
-  printf -- "$timestamp: $*"
+  printf -- "%s" "$timestamp: $*"
 }
 
 log_info() {
   logger -t ngcpcfg --id="${NGCPCFG_PID}" -- "$*"
-  console_output "$*\n"
+  console_output "$*\\n"
 }
 
 # info without ending newline
@@ -45,18 +45,18 @@ log_info_n() {
 
 log_warn() {
   logger -t ngcpcfg --id="${NGCPCFG_PID}" -- "Warning: $*"
-  console_output "Warning: $*\n"
+  console_output "Warning: $*\\n"
 }
 
 log_error() {
   logger -t ngcpcfg --id="${NGCPCFG_PID}" -- "Error: $*"
-  console_output "Error: $*\n" >&2
+  console_output "Error: $*\\n" >&2
 }
 
 log_debug() {
   if [ -n "${DEBUG:-}" ] ; then
     logger -t ngcpcfg --id="${NGCPCFG_PID}" -- "Debug: $*"
-    console_output "DEBUG: $*\n"
+    console_output "DEBUG: $*\\n"
   fi
 }
 # }}}

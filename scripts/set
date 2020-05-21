@@ -11,10 +11,11 @@ HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
 SCRIPTS="${SCRIPTS:-/usr/share/ngcp-ngcpcfg/scripts/}"
 
 if ! [ -r "${FUNCTIONS}"/main ] ; then
-  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}">&2
+  printf "Error: %s/main could not be read. Exiting.\\n" "${FUNCTIONS}">&2
   exit 1
 fi
 
+# shellcheck disable=SC1090
 . "${FUNCTIONS}"/main
 
 ## functions {{{
@@ -87,7 +88,7 @@ my \$valref = \\\$yaml;
 
 for my \$component (split(/\\./, "${option}")) {
   if (ref(\$valref) eq 'SCALAR' && defined(\$\$valref)) {
-    print STDERR ("Key resolved to a SCALAR at '\$component'; cannot continue.\n");
+    print STDERR ("Key resolved to a SCALAR at '\$component'; cannot continue.\\n");
     exit(1);
   }
   elsif (\$component =~ /^\\d+\$/ && (!defined(\$\$valref) || ref(\$\$valref) eq 'ARRAY')) {
@@ -100,7 +101,7 @@ for my \$component (split(/\\./, "${option}")) {
     \$valref = \\\$\$valref->{\$component};
   }
   else {
-    print STDERR ("Key resolved to a " . ref(\$\$valref) . " reference; refusing to overwrite.\n");
+    print STDERR ("Key resolved to a " . ref(\$\$valref) . " reference; refusing to overwrite.\\n");
     exit(1);
   }
 }
@@ -114,7 +115,7 @@ elsif (ref(\$\$valref) eq 'HASH' && ref(${value}) eq 'HASH') {
   \$\$valref = ${value};
 }
 else {
-  print STDERR ("Key resolved to a " . ref(\$\$valref) . " reference; refusing to overwrite.\n");
+  print STDERR ("Key resolved to a " . ref(\$\$valref) . " reference; refusing to overwrite.\\n");
   exit(1);
 }
 

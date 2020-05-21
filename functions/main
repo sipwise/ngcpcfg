@@ -1,24 +1,28 @@
 # Filename:      /usr/share/ngcp-ngcpcfg/functions/main
 # Purpose:       helper functions for ngcpcfg
 ################################################################################
+# shellcheck shell=bash
 
 # support for testsuite, assume defaults if unset
 FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
 
 if ! [ -r "${FUNCTIONS}"/logs ] ; then
-  printf "Error: %s/logs could not be read. Exiting.\n" "${FUNCTIONS}" >&2
+  printf "Error: %s/logs could not be read. Exiting.\\n" "${FUNCTIONS}" >&2
   exit 1
 fi
+# shellcheck disable=SC1090
 . "${FUNCTIONS}"/logs
 
 ## HA / carrier features {{{
 if [ -r "${FUNCTIONS}"/ha_features ] ; then
+  # shellcheck disable=SC1090
   . "${FUNCTIONS}"/ha_features
   # Set ${HA_FILE}, used by ngcpcfg.cfg, tt2-process and encrypt.
   set_ha_file
 fi
 
 if [ -r "${FUNCTIONS}"/carrier_features ] ; then
+  # shellcheck disable=SC1090
   . "${FUNCTIONS}"/carrier_features
   # Set ${HOST_FILE} + ${PAIR_FILE}, used by ngcpcfg.cfg and tt2-process.
   set_host_and_pair_files
@@ -30,6 +34,7 @@ if ! [ -r "${FUNCTIONS}"/init ] ; then
   exit 1
 fi
 set -o allexport
+# shellcheck disable=SC1090
 . "${FUNCTIONS}"/init
 set +o allexport
 
@@ -97,7 +102,7 @@ compare_active_branch() {
   log_debug "get_active_branch ${1:-}"
 
   log_debug "cd ${NGCPCTL_MAIN}"
-  cd "${NGCPCTL_MAIN}"
+  cd "${NGCPCTL_MAIN}" || return
 
   local current_branch
   current_branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
@@ -107,16 +112,19 @@ compare_active_branch() {
 
 get_branch_status() {
   log_debug "cd ${NGCPCTL_MAIN}"
-  cd "${NGCPCTL_MAIN}"
+  cd "${NGCPCTL_MAIN}" || return
 
   log_debug "git rev-parse HEAD"
-  local LOCAL=$(git rev-parse HEAD)
+  local LOCAL
+  LOCAL=$(git rev-parse HEAD)
 
   log_debug "git rev-parse @{u}"
-  local REMOTE=$(git rev-parse @{u})
+  local REMOTE
+  REMOTE=$(git rev-parse '@{u}')
 
   log_debug "git merge-base HEAD @{u}"
-  local BASE=$(git merge-base HEAD @{u})
+  local BASE
+  BASE=$(git merge-base HEAD '@{u}')
 
   if [ "${LOCAL}" = "${REMOTE}" ]; then
     # Up-to-date
@@ -135,7 +143,7 @@ get_branch_status() {
 
 record_commit_id() {
   log_debug "cd ${NGCPCTL_MAIN}"
-  cd "${NGCPCTL_MAIN}"
+  cd "${NGCPCTL_MAIN}" || return
 
   log_debug "mkdir -p ${STATE_FILES_DIR}"
   mkdir -p "${STATE_FILES_DIR}"
@@ -144,7 +152,8 @@ record_commit_id() {
   if git status --porcelain | grep -q . ; then
     echo "dirty" > "${STATE_FILES_DIR}/build"
   else
-    local latest_commit=$(git log -1 --format="%H")
+    local latest_commit
+    latest_commit=$(git log -1 --format="%H")
     log_debug "echo ${latest_commit} > ${STATE_FILES_DIR}/build"
     echo "${latest_commit}" > "${STATE_FILES_DIR}/build"
   fi
