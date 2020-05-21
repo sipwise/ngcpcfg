@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5822fc4_168d827d",
+        "filename": "scripts/patch",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2020-05-21T15:48:55Z",
+      "side": 1,
+      "message": "I\u0027d appreciate if someone could think this through whether I got those mapfiles right (also see \nhttps://github.com/koalaman/shellcheck/wiki/SC2207)",
+      "revId": "e768a1c898001c9035e412f4e7789432c0f8b863",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
