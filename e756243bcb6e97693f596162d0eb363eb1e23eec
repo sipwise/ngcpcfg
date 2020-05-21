@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65ed62b6_c3ea7af1",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2020-05-21T15:12:44Z",
+      "side": 1,
+      "message": "What is this fixing?",
+      "range": {
+        "startLine": 39,
+        "startChar": 47,
+        "endLine": 39,
+        "endChar": 52
+      },
+      "revId": "e756243bcb6e97693f596162d0eb363eb1e23eec",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
