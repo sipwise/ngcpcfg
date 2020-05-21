@@ -46,6 +46,30 @@
       "revId": "e756243bcb6e97693f596162d0eb363eb1e23eec",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a036f47a_f0381050",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2020-05-21T17:44:19Z",
+      "side": 1,
+      "message": "Suspected something like that, but it seems very inconsequential as it does not change the end result at all. As the link says this tag has been discontinued as would be expected. :) I don\u0027t see these being reverted in the new revision though?",
+      "parentUuid": "015b0f8b_8f1d7506",
+      "range": {
+        "startLine": 39,
+        "startChar": 47,
+        "endLine": 39,
+        "endChar": 52
+      },
+      "revId": "e756243bcb6e97693f596162d0eb363eb1e23eec",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
