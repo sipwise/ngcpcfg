@@ -22,6 +22,30 @@
       "revId": "2966bfe9d22dbf3dcf82eb9b851891bb5ab0c296",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3f81aec_78e38d0a",
+        "filename": "helper/sync-db",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1000051
+      },
+      "writtenOn": "2020-05-22T14:56:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a4edca1_8bf59ad4",
+      "range": {
+        "startLine": 275,
+        "startChar": 7,
+        "endLine": 275,
+        "endChar": 46
+      },
+      "revId": "2966bfe9d22dbf3dcf82eb9b851891bb5ab0c296",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
