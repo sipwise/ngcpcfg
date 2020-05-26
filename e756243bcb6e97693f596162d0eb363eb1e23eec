@@ -70,6 +70,30 @@
       "revId": "e756243bcb6e97693f596162d0eb363eb1e23eec",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba09d505_d8489b85",
+        "filename": "sbin/ngcpcfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2020-05-26T07:46:42Z",
+      "side": 1,
+      "message": "I replaced only the first occurrence of them and forgot to set \"g\" switch in sed cmdline, sorry and thanks for spotting! Fixed",
+      "parentUuid": "a036f47a_f0381050",
+      "range": {
+        "startLine": 39,
+        "startChar": 47,
+        "endLine": 39,
+        "endChar": 52
+      },
+      "revId": "e756243bcb6e97693f596162d0eb363eb1e23eec",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
