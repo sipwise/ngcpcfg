@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b794c9ba_9f4aaa8a",
+        "filename": "scripts/diff",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2020-05-26T16:11:43Z",
+      "side": 1,
+      "message": "Why this also?",
+      "range": {
+        "startLine": 31,
+        "startChar": 43,
+        "endLine": 31,
+        "endChar": 50
+      },
+      "revId": "630460140aef6d2987ad033912c187a27e040be7",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79f67d48_4eac8eec",
+        "filename": "scripts/patch",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2020-05-26T16:11:43Z",
+      "side": 1,
+      "message": "Or the escaping here?",
+      "revId": "630460140aef6d2987ad033912c187a27e040be7",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
