@@ -16,6 +16,24 @@
       "revId": "0dda93ad973873757be24bdf3ac03459f89ead9e",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d95220e4_9515d3db",
+        "filename": "functions/logs",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2020-05-27T21:54:21Z",
+      "side": 1,
+      "message": "Sorry for this and thanks for pointing to it, suggested fix is here:\n\n  http://gerrit.mgm.sipwise.com/c/ngcpcfg/+/40297",
+      "parentUuid": "9938c208_508e9ac3",
+      "revId": "0dda93ad973873757be24bdf3ac03459f89ead9e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
