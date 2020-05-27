@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9938c208_508e9ac3",
+        "filename": "functions/logs",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2020-05-27T18:25:21Z",
+      "side": 1,
+      "message": "This breaks output from log_info and others that include \\n in the format string and so results in:\n\n2020-05-27 20:01:29 spce: /var has no support of .services\\n2020-05-27 20:01:29 spce: Synchronizing current with expected services state\\n2020-05-27 20:01:30 spce: Executing sync-db: \\n                     rtp_interface ext\u003dext is sync between config and db\n                     rtp_interface int\u003dint is sync between config and db\n                     smsc_peer default_smsc\u003ddefault_smsc is sync between config and db\n2020-05-27 20:01:30 spce: OK:   nothing to commit.\\n2020-05-27 20:01:30 spce: Synchronizing MySQL grants/credentials\\nroot@spce:~#",
+      "revId": "0dda93ad973873757be24bdf3ac03459f89ead9e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
