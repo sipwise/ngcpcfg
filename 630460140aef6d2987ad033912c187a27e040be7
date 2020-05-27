@@ -63,6 +63,24 @@
       "revId": "630460140aef6d2987ad033912c187a27e040be7",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a79d379c_60a23ee2",
+        "filename": "scripts/patch",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2020-05-27T06:46:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79f67d48_4eac8eec",
+      "revId": "630460140aef6d2987ad033912c187a27e040be7",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
