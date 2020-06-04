@@ -279,7 +279,9 @@ SQL
         my $vals;
         foreach my $li_admin (@{$cfg_admins}) {
             unless ($li_admin->{username} && $li_admin->{email}) {
-                print "A Lawful Intercept Administrator does not have username or password set\n";
+                print "A Lawful Intercept Administrator does not have username or email set\n";
+                #make sure these users don't get deleted from in the final step
+                delete $existent_admins->{$li_admin->{username}} if (exists $existent_admins->{$li_admin->{username}});
                 next;
             }
             if (!exists $existent_admins->{$li_admin->{username}} ||
@@ -307,6 +309,17 @@ call_data = VALUES(call_data)
 SQL
             or die "Could not insert admin: ".$DBI::errstr;
         }
+
+        if ($existent_admins->{administrator}) {
+            #don't delete the default user 'administrator'
+            $dbh->do(<<SQL)
+UPDATE billing.admins
+SET lawful_intercept = 0 WHERE login = 'administrator'
+SQL
+            or die "Could not update default administrator: ".$DBI::errstr;
+            delete $existent_admins->{administrator};
+        }
+
         my @admins_to_delete = keys %$existent_admins;
         if (scalar @admins_to_delete) {
             my $placeholders = join ", ", ("?") x @admins_to_delete;
