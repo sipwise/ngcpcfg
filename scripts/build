@@ -42,7 +42,7 @@ if [ -n "${NGCP_JOBS:-}" ] ; then
   ARGS+=("--jobs=${NGCP_JOBS}")
 fi
 
-for f in ${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${HA_CONFIG:-} ${PAIR_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG:-} "${EXTRA_CONFIG_FILES[@]}" ${CONSTANTS_CONFIG:-} ; do
+for f in ${NGCPCTL_CONFIG:-} ${HA_CONFIG:-} ${PAIR_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG:-} "${EXTRA_CONFIG_FILES[@]}" ${CONSTANTS_CONFIG:-} ; do
   if [ -r "$f" ] ; then
     ARGS+=("-c" "$f")
   fi
@@ -87,8 +87,8 @@ else
   done
   if git diff-index --name-only HEAD | grep -q \
          -e "$(basename "$NGCPCTL_CONFIG")" \
-         -e "$(basename "$HOST_CONFIG")" \
          "${configs[@]}" \
+         -e "$(basename "$HOST_CONFIG")" \
          -e "$(basename "$LOCAL_CONFIG")" \
          -e "$(basename "$NETWORK_CONFIG")" \
          -e "$(basename "$CONSTANTS_CONFIG")" ; then
@@ -138,7 +138,7 @@ else
 fi
 
 # Apply configured file ownership and permissions
-for f in ${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} "${EXTRA_CONFIG_FILES[@]}" ; do
+for f in ${NGCPCTL_CONFIG:-} ${HA_CONFIG:-} ${PAIR_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} "${EXTRA_CONFIG_FILES[@]}" ; do
   if [ ! -f "${f}" ]; then
     continue
   fi

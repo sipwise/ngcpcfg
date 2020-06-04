@@ -232,7 +232,7 @@ check_shared_storage() {
 }
 
 if [ "$*" = "" ] ; then
-  config_files="${NGCPCTL_CONFIG:-} ${HOST_CONFIG:-} ${HA_CONFIG:-} ${PAIR_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG:-} ${EXTRA_CONFIG_FILES[*]} ${CONSTANTS_CONFIG:-}"
+  config_files="${NGCPCTL_CONFIG:-} ${HA_CONFIG:-} ${PAIR_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG:-} ${EXTRA_CONFIG_FILES[*]} ${CONSTANTS_CONFIG:-}"
 else
   config_files="$*"
 fi
