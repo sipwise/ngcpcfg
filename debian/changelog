@@ -1,3 +1,10 @@
+ngcp-ngcpcfg (8.4.1.2+0~mr8.4.1.2) unstable; urgency=medium
+
+  [ Flaviu Mates ]
+  * [6b66343] TT#76111 - Refresh DB admins when executing ngcpcfg apply
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 04 Jun 2020 16:47:51 +0200
+
 ngcp-ngcpcfg (8.4.1.1+0~mr8.4.1.1) unstable; urgency=medium
 
   * New release.
