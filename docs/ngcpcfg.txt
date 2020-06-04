@@ -58,6 +58,15 @@ $EDITOR, webfrontend,...
 * _/etc/ngcp-config/config.$HOSTNAME.yml_: host specific configuration file,
 depending on the hostname (:= $HOSTNAME) of the system.
 
+* _/etc/ngcp-config/config.$PAIRNAME.yml_: pair specific configuration file,
+depending on the pairname (:= $PAIRNAME) of the system (for example _sp_ on
+CE/PRO or _web01_ on CARRIER).
+
+* _/etc/ngcp-config/config.$HA_NODE.yml_: HA node specific configuration file,
+depending on the HA node name of the system. $HA_NODE is determined using the
+content of /etc/ngcp_ha_node (usually being _sp1_ for the first node and _sp2_
+for the second node).
+
 * _/etc/ngcp-config/config.local.yml_: local configuration, not being host
 specific.
 
@@ -85,7 +94,8 @@ Files with suffix '.cfg' inside this directory are sourced after
 [IMPORTANT]
 Configuration file priority: constants.yml takes precedence over
 all files in _/etc/ngcp-config/config.d/_, over config.local.yml,
-over config.$HOSTNAME.yml, over config.yml.
+over config.$HOSTNAME.yml, over config.$PAIRNAME.yml,
+over config.$HA_NODE.yml, over config.yml.
 
 High Availability specific configuration files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
