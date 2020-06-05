@@ -56,8 +56,6 @@ exit 1 unless(sync_general_timezone($dbh,
 
 exit 1 unless(sync_db_timezones($dbh));
 
-exit 1 unless(sync_li_admins($dbh, $config->{www_admin}->{lawful_intercept_admins}));
-
 $dbh->disconnect;
 
 exit 0;
@@ -245,80 +243,6 @@ SQL
             or die "Cannot insert into ngcp.tzinfo_version: $DBI::errstr\n";
     };
     $err = $EVAL_ERROR;
-    if ($err) {
-        print $err;
-        $dbh->rollback();
-        return;
-    }
-    $dbh->commit();
-
-    return 1;
-}
-
-## add LI admins into MariaDB ##############################
-sub sync_li_admins {
-    my ($dbh, $cfg_admins) = @_;
-
-    my $sql = '';
-    eval {
-        $dbh->begin_work() or die "Cannot start tx: $DBI::errstr\n";
-        $dbh->do('USE billing')
-            or die "Cannot use billing database: $DBI::errstr\n";
-
-        my $existent_admins = $dbh->selectall_hashref(<<SQL, 'login')
-SELECT login, email
-FROM billing.admins
-WHERE lawful_intercept = 1
-SQL
-        or die "Could not select existent admins: ".$DBI::errstr;
-
-        #generate random password
-        my @chars = ("A".."Z", "a".."z", "0".."9");
-        my $password;
-        $password .= $chars[rand @chars] for 1..54;
-        my $vals;
-        foreach my $li_admin (@{$cfg_admins}) {
-            unless ($li_admin->{username} && $li_admin->{email}) {
-                print "A Lawful Intercept Administrator does not have username or password set\n";
-                next;
-            }
-            if (!exists $existent_admins->{$li_admin->{username}} ||
-                !$existent_admins->{$li_admin->{username}}->{email} || ($li_admin->{email} ne $existent_admins->{$li_admin->{username}}->{email})) {
-                #new admin or updated email
-                $vals and $vals .= ",";
-                $vals .= "('".$li_admin->{username}."','".$li_admin->{email}."','".$password."', 1, 1, 1, 1)";
-            }
-            #delete all admins that have been found in config.yml and use the remaining ones for the delete statement
-            delete $existent_admins->{$li_admin->{username}};
-        }
-        if ($vals) {
-            #insert new admins or update email
-            $dbh->do(<<SQL)
-INSERT INTO billing.admins
-(login, email, saltedpass, is_superuser, lawful_intercept, billing_data, call_data)
-VALUES
-$vals
-ON DUPLICATE KEY UPDATE
-email = VALUES (email),
-is_superuser = VALUES(is_superuser),
-lawful_intercept = VALUES(lawful_intercept),
-billing_data = VALUES(billing_data),
-call_data = VALUES(call_data)
-SQL
-            or die "Could not insert admin: ".$DBI::errstr;
-        }
-        my @admins_to_delete = keys %$existent_admins;
-        if (scalar @admins_to_delete) {
-            my $placeholders = join ", ", ("?") x @admins_to_delete;
-            #delete admins not found in config.yml
-            $dbh->do(<<SQL, undef, @admins_to_delete)
-DELETE FROM billing.admins
-WHERE login IN ($placeholders)
-SQL
-            or die "Could not insert admin: ".$DBI::errstr;
-        }
-    };
-    my $err = $EVAL_ERROR;
     if ($err) {
         print $err;
         $dbh->rollback();
