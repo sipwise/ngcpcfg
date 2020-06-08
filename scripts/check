@@ -231,6 +231,34 @@ check_shared_storage() {
   fi
 }
 
+check_patchtt_customtt_permissions_and_ownership() {
+  log_debug "Checking permissions and ownership of patchtt and customtt files:"
+
+  local files=()
+  # shellcheck disable=SC2086
+  mapfile -d $'\0' files < <( find ${CONFIG_POOL} \( -name '*.patchtt*' -o -name '*.customtt*' \) -print0 )
+
+  local rc=0
+  for f in "${files[@]}"; do
+    log_debug "Processing file: ${f}"
+    local f_base="${f/.patchtt/}"
+    f_base="${f_base/.customtt/}"
+    if [[ ! -e "${f_base}" ]]; then
+      log_error "Base file corresponding to customtt/patchtt file '${f}' not found"
+      rc=1
+      continue
+    fi
+    if [[ "$(stat --format '%u:%g %A' "${f}")" != "$(stat --format '%u:%g %A' "${f_base}")" ]]; then
+      log_error "Permissions of customtt/patchtt file and base file differ"
+      ls -l "${f}" "${f_base}"
+      rc=1
+      continue
+    fi
+  done
+
+  return "${rc}"
+}
+
 if [ "$*" = "" ] ; then
   config_files="${NGCPCTL_CONFIG:-} ${HA_CONFIG:-} ${PAIR_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG:-} ${EXTRA_CONFIG_FILES[*]} ${CONSTANTS_CONFIG:-}"
 else
@@ -246,6 +274,8 @@ if "${VALIDATE_SCHEMA:-false}" || [ "${VALIDATE:-0}" = "1" ] ; then
   validate_config
 fi
 check_configs_conflicts
+
+check_patchtt_customtt_permissions_and_ownership
 
 check_shared_storage || exit $?
 
