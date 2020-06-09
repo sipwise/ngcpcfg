@@ -236,7 +236,7 @@ check_patchtt_customtt_permissions_and_ownership() {
 
   local files=()
   # shellcheck disable=SC2086
-  mapfile -d $'\0' files < <( find ${CONFIG_POOL} \( -name '*.patchtt*' -o -name '*.customtt*' \) -print0 )
+  mapfile -d $'\0' files < <( find ${CONFIG_POOL} \( -name '*.patchtt*' -o -name '*.customtt*' \) -print0 | sort )
 
   local rc=0
   for f in "${files[@]}"; do
@@ -249,7 +249,7 @@ check_patchtt_customtt_permissions_and_ownership() {
       continue
     fi
     if [[ "$(stat --format '%u:%g %A' "${f}")" != "$(stat --format '%u:%g %A' "${f_base}")" ]]; then
-      log_error "Permissions of customtt/patchtt file and base file differ"
+      log_error "Permissions of customtt/patchtt file '${f}' and base file differ"
       ls -l "${f}" "${f_base}"
       rc=1
       continue
