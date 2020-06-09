@@ -236,7 +236,7 @@ check_patchtt_customtt_permissions_and_ownership() {
 
   local files=()
   # shellcheck disable=SC2086
-  mapfile -d $'\0' files < <( find ${CONFIG_POOL} \( -name '*.patchtt*' -o -name '*.customtt*' \) -print0 )
+  mapfile -d $'\0' files < <( find ${CONFIG_POOL} \( -name '*.patchtt*' -o -name '*.customtt*' \) -print0 | sort )
 
   local rc=0
   for f in "${files[@]}"; do
