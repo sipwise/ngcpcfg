@@ -22,6 +22,12 @@ def test_ngcpcfg_check_patchtt_customtt_perms(ngcpcfgcli, tmpdir):
                          'fixtures/ngcpcfg_check_patchtt_customtt_perms.cfg',
                      })
 
+    path=os.getcwd()
+    find="find " + path + "-name ngcpcfg_check_patchtt_customtt_perms"
+    os.system(find)
+    print(out.stdout)
+    print(out.stderr)
+
     # debug, only printed in logs in case of error
     print("stdout:")
     print(out.stdout.replace("\\n", "\n"))
