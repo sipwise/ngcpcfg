@@ -46,6 +46,30 @@
       "revId": "181fd378ecd6303eb5a74653ae81fbcc7dc170df",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d40d7f49_8820d425",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2020-06-15T08:52:51Z",
+      "side": 1,
+      "message": "Hm, we have 2 tickets with this problem. There are some good ideas in https://sipwise.my.workfront.com/issue/view?ID\u003d5ee38ce1008345d3f84ec65da09fee09\n\n\u003e Alex\n\n\u003e IMHO, should should merge ngcp-update into ngcp-upgrade. Unrelated topic here, JFYI only.\n\n\u003e We had a stories where users where using one instead another one.... so it confusing.\n\n\u003e We should create upgrade scenario \"latest hotfixes\" which performs simple steps and report done.\n\n\u003e It is a task for another ticket one day.\n\nI guess it\u0027s a good way to solve the described problem.",
+      "parentUuid": "e4d31297_7f36883a",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 36
+      },
+      "revId": "181fd378ecd6303eb5a74653ae81fbcc7dc170df",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
