@@ -23,6 +23,10 @@ ngcpcfg_update_perms() {
 }
 
 ngcpcfg_restore_perms() {
+  if ${SKIP_RESTORE_PERMS:-false} ; then
+    log_debug "skip restore-permissions"
+    return 0
+  fi
   # Must be the last command in every 'ngcpcfg' call as git resets POSIX permissions!
   trap '' ERR EXIT
   log_debug "Restore permissions from .ngcpcfg_perms as git might reset them"

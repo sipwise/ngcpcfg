@@ -53,7 +53,7 @@ check_local_state() {
   cd "$NGCPCTL_MAIN"
 
   log_info "Checking state of ngcpcfg:"
-  if ! [ -r /etc/ngcp-config/.git/HEAD ] ; then
+  if ! [ -r "${NGCPCTL_MAIN}/.git/HEAD" ] ; then
     log_warn "ngcpcfg has not been initialised yet. Execute 'ngcpcfg initialise'."
     exit 0
   fi
@@ -83,10 +83,10 @@ check_local_state() {
 check_etc_state() {
   log_debug "check_etc_state"
 
-  log_debug "cd /etc"
-  cd /etc
+  log_debug "cd ${NGCPCTL_BASE}"
+  cd "${NGCPCTL_BASE}"
 
-  log_info "Checking state of /etc files:"
+  log_info "Checking state of ${NGCPCTL_BASE} files:"
   if is_git_clean ; then
     log_info "OK:   nothing to commit"
   else
