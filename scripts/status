@@ -28,7 +28,8 @@ fi
 usage() {
   printf "ngcpcfg status -- supported command line options:
 
---local-only - do not check state on any remote host(s) (HA/PRO only)\n\n"
+--local-only - do not check state on any remote host(s) (HA/PRO only)\n\n
+--update-process - we are in the middle of an update, skip pull and build check (HA/PRO only)\n\n"
 }
 
 # shellcheck disable=SC2034
@@ -36,10 +37,12 @@ usage() {
 # used on ngcpcfg-ha/functions/ha_features.execute_check_remote()
 CHECK_REMOTE=true
 REMOTE_INVOKED=false
+UPDATE_INVOKED=false
 while [ -n "${1:-}" ] ; do
   case "$1" in
     *--local-only*) CHECK_REMOTE=false ; shift ;;
     *--remote*)     REMOTE_INVOKED=true ; shift ;; # used when invoking ngcpcfg status remotely
+    *--update-process*) UPDATE_INVOKED=true; shift;;
     *--help*)   usage ; exit 0 ;;
     *) break ;;
   esac
@@ -115,8 +118,12 @@ check_push() {
 
 check_shared_storage() {
   if type -p execute_check_shared_storage &>/dev/null ; then
-    log_debug "execute_check_shared_storage function, action all"
-    execute_check_shared_storage all
+    if ${UPDATE_INVOKED} ; then
+      log_info "Ignoring pull --update-process option is enabled."
+    else
+      log_debug "execute_check_shared_storage function, action all"
+      execute_check_shared_storage all
+    fi
   fi
 }
 
@@ -144,6 +151,10 @@ check_reboot_requests() {
 check_pending_build() {
   log_debug "${FUNCNAME[@]}"
 
+  if ${UPDATE_INVOKED} ; then
+    log_info "Ignoring build --update-process option is enabled."
+    return 0
+  fi
   log_debug "cd $NGCPCTL_MAIN"
   cd "$NGCPCTL_MAIN"
 
