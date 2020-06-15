@@ -22,6 +22,30 @@
       "revId": "181fd378ecd6303eb5a74653ae81fbcc7dc170df",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4d31297_7f36883a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2020-06-15T08:32:34Z",
+      "side": 1,
+      "message": "more info in the ticket but this is related to ngcp-update not ngcp-upgrade",
+      "parentUuid": "2052198c_9d48b3f7",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 36
+      },
+      "revId": "181fd378ecd6303eb5a74653ae81fbcc7dc170df",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
