@@ -198,6 +198,7 @@ foreach my $hostname (sort keys %{$yaml->{hosts}}) {
 
         if (any { $_ eq 'ha_int' or $_ =~ /^(ssh|mon)_/ } @{$host->{$iface}->{type}}) {
             $host->{$iface}->{shared_ip_only} = 'no';
+            $host->{$iface}->{shared_v6ip_only} = 'no';
         }
 
         if (defined $host->{$iface}->{netmask} and
@@ -208,7 +209,8 @@ foreach my $hostname (sort keys %{$yaml->{hosts}}) {
              @{$host->{$iface}->{advertised_ip}}))) {
             $ifacemap->{mapping}->{ip}->{required} = 'yes';
         }
-        if (defined $host->{$iface}->{v6netmask} or
+        if (defined $host->{$iface}->{v6netmask} and
+             ($host->{$iface}->{shared_v6ip_only} || 'no') eq 'no' and
             (defined $host->{$iface}->{shared_v6ip} and
              @{$host->{$iface}->{shared_v6ip}})) {
             $ifacemap->{mapping}->{v6ip}->{required} = 'yes';
