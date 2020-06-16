@@ -5,7 +5,9 @@
 #
 # @param argv.host      The host to get all shared IPs for.
 # @param argv.type      The interface type or empty string for all types.
-# @param argv.format    Optional reformatting of IPv6 addresses.
+# @param argv.format    Return addresses in short format (default), expanded
+#                         format ('expand'), or as a hash with netmask info
+#                         ('hash')
 # @param argv.status    node status [ online, offline, inactive ]
 #                         default value: ['online', 'inactive']
 # @return out           The array of shared IPs.
@@ -42,6 +44,9 @@ IF status.item(hosts.${argv.host}.status);
         ip = ngcp.net_ip_expand(ip);
       END;
       NEXT UNLESS ip;
+      IF argv.format == 'hash';
+        ip = { ip = ip, interface = iface, netmask = hosts.${argv.host}.$iface.v6_netmask };
+      END;
       out.push(ip);
     END;
   END;
