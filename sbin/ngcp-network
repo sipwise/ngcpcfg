@@ -76,6 +76,7 @@ my @set_interface;
 my $shared_ip;
 my $shared_ip_only;
 my $shared_ip_v6;
+my $shared_ipv6_only;
 my $sysname;
 my $sysdescr;
 my $syslocation;
@@ -133,6 +134,7 @@ GetOptions(
     'shared-ip=s'        => \$shared_ip,
     'shared-ip-only=s'   => \$shared_ip_only,
     'shared-ipv6=s'      => \$shared_ip_v6,
+    'shared-ipv6-only=s' => \$shared_ipv6_only,
     'sysname=s'          => \$sysname,
     'sysdescr=s'         => \$sysdescr,
     'syslocation=s'      => \$syslocation,
@@ -184,7 +186,8 @@ foreach my $opt (
     $move_to,          $netmask,       $peer,      @remove_host,
     @remove_interface, @roles,         @type,      $vlan_raw_device,
     $netmask_ip_v6,    $v6gateway,     $mtu,       $v6dhcp,
-    $manual,           $v6manual,      $shared_ip_only
+    $manual,           $v6manual,      $shared_ip_only,
+    $shared_ipv6_only
   )
 {
     if ( defined $opt && $opt =~ /\s/msx ) {
@@ -339,6 +342,7 @@ sub set_interface {
         'shared_ip'       => $shared_ip,
         'shared_ip_only'  => $shared_ip_only,
         'shared_v6ip'     => $shared_ip_v6,
+        'shared_ipv6_only'=> $shared_ipv6_only,
         'v6dhcp'          => $v6dhcp,
         'v6gateway'       => $v6gateway,
         'v6ip'            => $ip_v6,
@@ -889,6 +893,10 @@ static IP address.
 =item B<--shared-ipv6>=I<IP>
 
 Set shared_v6ip configuration to specified argument.
+
+=item B<--shared-ipv6-only>=I<yes|no>
+
+Same as B<--shared-ip-only> but for IPv6 addresses.
 
 =item B<--sysname>=I<name>
 
