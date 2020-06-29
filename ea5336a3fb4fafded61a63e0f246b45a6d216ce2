@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57026f50_3c3a4ed1",
+        "filename": "debian/control",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2020-06-29T22:09:01Z",
+      "side": 1,
+      "message": "This needs to be added to the libngcp-template-perl binary package too.",
+      "revId": "ea5336a3fb4fafded61a63e0f246b45a6d216ce2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
