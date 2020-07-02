@@ -38,6 +38,16 @@ sub get_ref {
     return ref $params[0];
 }
 
+sub file_exists {
+    my ($self, @params) = @_;
+    return -e $params[0];
+}
+
+sub file_readable {
+    my ($self, @params) = @_;
+    return -r $params[0];
+}
+
 1;
 
 __END__
