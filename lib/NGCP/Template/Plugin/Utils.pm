@@ -8,7 +8,6 @@ use parent qw(Template::Plugin);
 use MIME::Base64 ();
 use Data::Dumper ();
 use Config::General ();
-use Crypt::PK::RSA ();
 
 sub new {
     my ($class, $context, @params) = @_;
@@ -37,26 +36,6 @@ sub to_config_general {
 sub get_ref {
     my ($self, @params) = @_;
     return ref $params[0];
-}
-
-sub get_private_key_pem {
-    my ($self, @params) = @_;
-    return unless $params[0];
-    return unless keys %{$params[0]};
-    my $pk = Crypt::PK::RSA->new();
-    $pk->import_key($params[0]);
-    die('not a private key: ' . Data::Dumper::Dumper($params[0])) unless $pk->is_private();
-    return $pk->export_key_pem('private');
-}
-
-sub get_public_key_pem {
-    my ($self, @params) = @_;
-    return unless $params[0];
-    return unless keys %{$params[0]};
-    my $pk = Crypt::PK::RSA->new();
-    $pk->import_key($params[0]);
-    die('not a public key: ' . Data::Dumper::Dumper($params[0])) if $pk->is_private();
-    return $pk->export_key_pem('public');
 }
 
 1;
@@ -99,14 +78,6 @@ Serializes the given input object to string (Config::General syntax).
 =item [% Utils.get_ref(object) %]
 
 Get the variable type.
-
-=item [% pem = Utils.get_private_key_pem(private key) %]
-
-Converts the given RSA private key (JWK data structure) to .pem.
-
-=item [% pem = Utils.get_public_key_pem(public key) %]
-
-Converts the given RSA public key (JWK data structure) to .pem.
 
 =back
 
