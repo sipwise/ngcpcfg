@@ -33,6 +33,24 @@
       "revId": "c4a3dc6f2127fb87cd86e5b0d4323d625accf8e1",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "395fd794_ae591e47",
+        "filename": "t/fixtures/repos/.ngcpcfg_perms",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-07-03T16:17:59Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t think this should be committed?\n\nIt\u0027s a way to change permissions when testing, and induce the failure from \"ngcpcfg check\" that we want to test if we detect.\n\nI don\u0027t think that there\u0027s other way to make that these permissions are different?",
+      "parentUuid": "facb4508_603ebbdd",
+      "revId": "c4a3dc6f2127fb87cd86e5b0d4323d625accf8e1",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
