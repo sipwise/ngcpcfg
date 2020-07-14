@@ -1,3 +1,28 @@
+ngcp-ngcpcfg (8.5.1.0+0~mr8.5.1.0) unstable; urgency=medium
+
+  [ Michael Prokop ]
+  * [d5863ed] TT#82051 Support GitHub actions + workflows using Debian package builds + shellcheck
+  * [0dda93a] TT#82051 Shellcheck fixes
+  * [2088c32] TT#82051 shellcheck fix for console_output() to expand escape sequences
+
+  [ Flaviu Mates ]
+  * [2fa5756] TT#76111 - Refresh DB admins when executing ngcpcfg apply
+  * [6ed9515] Revert "TT#76111 - Refresh DB admins when executing ngcpcfg apply"
+
+  [ Guillem Jover ]
+  * [4e67890] TT#81050 Fix precedence of HA_CONFIG and PAIR_CONFIG config.yml variants
+  * [2ea01dd] TT#81050 Document HA_CONFIG and PAIR_CONFIG config.yml variants
+
+  [ Richard Fuchs ]
+  * [85422ef] TT#83357 add --shared-ipv6-only option
+
+  [ Rene Krenn ]
+  * [3cce8c3] TT#84330 util methods to render .pem file content
+  * [c26a7ec] Revert "TT#84330 util methods to render .pem file content"
+  * [778e243] TT#84330 file test util methods
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 14 Jul 2020 11:54:00 +0200
+
 ngcp-ngcpcfg (8.5.0.0+0~mr8.5.0.0) unstable; urgency=medium
 
   [ Rene Krenn ]
