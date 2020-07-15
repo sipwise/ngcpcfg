@@ -1,3 +1,10 @@
+ngcp-ngcpcfg (5.5.12.2+0~mr5.5.12.2) unstable; urgency=medium
+
+  [ Michael Prokop ]
+  * [35959fa] TT#86451 hooks/pre-commit: ensure to always execute in main ngcpcfg directory
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 15 Jul 2020 15:41:04 +0200
+
 ngcp-ngcpcfg (5.5.12.1+0~mr5.5.12.1) unstable; urgency=medium
 
   [ Richard Fuchs ]
