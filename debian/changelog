@@ -1,3 +1,13 @@
+ngcp-ngcpcfg (7.5.5.1+0~mr7.5.5.1) unstable; urgency=medium
+
+  [ Richard Fuchs ]
+  * [a364b09] TT#81265 support multiple parallel RTP interface types
+
+  [ Michael Prokop ]
+  * [8fae9cd] TT#86451 hooks/pre-commit: ensure to always execute in main ngcpcfg directory
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 20 Jul 2020 13:01:07 +0200
+
 ngcp-ngcpcfg (7.5.5.0+0~mr7.5.5.0) unstable; urgency=medium
 
   [ Richard Fuchs ]
