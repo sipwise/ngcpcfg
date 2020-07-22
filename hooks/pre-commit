@@ -7,11 +7,7 @@ set -e
 # ensure we're in the appropriate git directory (/etc/ngcp-config/ by default),
 # we don't rely on ${NGCPCTL_MAIN} just in case we're invoked directly,
 # e.g. via `/etc/ngcp-config/.git/hooks/pre-commit` (outside of ngcpcfg)
-cd "$(dirname "${0}")"
-if git rev-parse --git-dir >/dev/null 2>&1 ; then
-  git_dir="$(git rev-parse --git-dir)"
-  cd "$(dirname "${git_dir}")"
-fi
+cd "$(dirname "${0}")/../../"
 
 if ! git rev-parse --git-dir >/dev/null 2>&1 ; then
   echo "Warning: $(pwd) is not a git repository, ignoring $0"
