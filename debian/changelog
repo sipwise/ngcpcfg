@@ -1,3 +1,10 @@
+ngcp-ngcpcfg (7.5.5.2+0~mr7.5.5.2) unstable; urgency=medium
+
+  [ Mykola Malkov ]
+  * [cd2d5ec] TT#86451 Fix switching to appropriate git dir
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 24 Jul 2020 15:37:38 +0200
+
 ngcp-ngcpcfg (7.5.5.1+0~mr7.5.5.1) unstable; urgency=medium
 
   [ Richard Fuchs ]
