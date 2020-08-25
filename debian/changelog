@@ -1,3 +1,17 @@
+ngcp-ngcpcfg (8.4.3.0+0~mr8.4.3.0) unstable; urgency=medium
+
+  [ Flaviu Mates ]
+  * [4c5099b] TT#76111 - Refresh DB admins when executing ngcpcfg apply
+  * [6586e3c] Revert "TT#76111 - Refresh DB admins when executing ngcpcfg apply"
+
+  [ Michael Prokop ]
+  * [fa899ba] TT#86451 hooks/pre-commit: ensure to always execute in main ngcpcfg directory
+
+  [ Mykola Malkov ]
+  * [ccb29d7] TT#86451 Fix switching to appropriate git dir
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 25 Aug 2020 16:50:15 +0200
+
 ngcp-ngcpcfg (8.4.2.0+0~mr8.4.2.0) unstable; urgency=medium
 
   * New release.
