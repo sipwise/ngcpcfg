@@ -1,3 +1,13 @@
+ngcp-ngcpcfg (6.5.11.0+0~mr6.5.11.0) unstable; urgency=medium
+
+  [ Michael Prokop ]
+  * [e9f376f] TT#86451 hooks/pre-commit: ensure to always execute in main ngcpcfg directory
+
+  [ Mykola Malkov ]
+  * [fd521b8] TT#86451 Fix switching to appropriate git dir
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 25 Aug 2020 17:42:57 +0200
+
 ngcp-ngcpcfg (6.5.10.0+0~mr6.5.10.0) unstable; urgency=medium
 
   [ Mykola Malkov ]
