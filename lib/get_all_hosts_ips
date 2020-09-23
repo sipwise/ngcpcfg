@@ -39,7 +39,7 @@ FOREACH host IN hosts.keys.sort;
     NEXT UNLESS hosts.$host.exists(iface);
     NEXT UNLESS hosts.$host.$iface.type.grep('^' _ argv.type _ '$').size();
     NEXT UNLESS hosts.$host.$iface.ip;
-    NEXT UNLESS seen_ips.exists(hosts.$host.$iface.ip);
+    NEXT IF     seen_ips.exists(hosts.$host.$iface.ip);
 
     seen_ips.${hosts.$host.$iface.ip} = 1;
     out.push({ name = host, ip = hosts.$host.$iface.ip });
