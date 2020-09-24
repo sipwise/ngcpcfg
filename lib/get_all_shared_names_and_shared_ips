@@ -1,0 +1,53 @@
+[%
+# vi: ft=tt2
+
+# Return an array of hashes with shared_name and shared_ip within a given
+# type for all nodes.
+#
+# @param argv.role      The role of the node to process, one of:
+#                         proxy, lb, mgmt
+# @param argv.type      The interface type of a node to extract the IP
+#                       from, one of:
+#                         web_int, web_ext, sip_int, sip_ext, ...
+# @param argv.status    node status [ online, offline, inactive ]
+#                         default value: ['online', 'inactive']
+# @return out           The array of hashes with fields "name" and "ip", e.g.:
+#                         [
+#                           { name => 'prx01', ip = '192.168.255.240' },
+#                           { name => 'prx02', ip = '192.168.255.250' }
+#                         ]
+
+IF !argv.status.size;
+  argv.status = ['online', 'inactive'];
+END;
+
+status = {
+  online = 0
+  offline = 0
+  inactive = 0
+};
+FOREACH val IN argv.status;
+  status.$val = 1;
+END;
+
+blktmp.processed_hosts = {};
+out = [];
+FOREACH host IN hosts.keys.sort;
+  NEXT UNLESS status.item(hosts.$host.status);
+  NEXT UNLESS ngcp.has_role(host, argv.role);
+  NEXT IF blktmp.processed_hosts.$host.defined;
+
+  FOREACH iface IN hosts.$host.interfaces;
+    NEXT UNLESS hosts.$host.exists(iface);
+    NEXT UNLESS hosts.$host.$iface.type.grep('^' _ argv.type _ '$').size();
+
+    peer = hosts.$host.peer;
+    blktmp.processed_hosts.$peer = 1;
+    FOREACH ip IN hosts.$host.$iface.shared_ip;
+      NEXT UNLESS ip;
+      out.push({ name = ngcp.get_pairname(host) ip = ip });
+    END;
+  END;
+END;
+
+-%]
