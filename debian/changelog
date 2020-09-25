@@ -1,3 +1,10 @@
+ngcp-ngcpcfg (9.0.1.2+0~mr9.0.1.2) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [d8b72f9] TT#94201 Add 'get_all_shared_names_and_shared_ips' ngcpcfg helper
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 25 Sep 2020 17:41:05 +0200
+
 ngcp-ngcpcfg (9.0.1.1+0~mr9.0.1.1) unstable; urgency=medium
 
   * New release.
