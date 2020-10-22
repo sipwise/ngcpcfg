@@ -24,6 +24,7 @@ my $debug = 0;
 my $log_offset = 0;
 my $password_length = 20;
 
+my $check_only = 0;
 my $recreate_user = 0;
 
 sub Usage {
@@ -35,6 +36,7 @@ $PROGRAM_NAME [options]
 Options:
     --help|-h|-?     -- this help
     --verbose|-v     -- verbose mode
+    --check|-c       -- check only
     --quiet|-q       -- quiet mode
     --recreate-user  -- recreate user
                         (useful when all user hosts need to be cleared)
@@ -45,6 +47,7 @@ USAGE
 
 GetOptions("h|?|help"       => \&Usage,
            "v|verbose"      => \$debug,
+           "c|check"        => \$check_only,
            "q|quiet"        => sub { $debug = -1 },
            "recreate-user"  => \$recreate_user,
           ) or die Usage();
@@ -142,7 +145,7 @@ sub apply_grants {
         }
         if (ref $ptr->{$key} eq 'HASH') {
             if ($idx == 1 && $recreate_user && !$as) { # local user
-                if (apply_drop_users($key)) {
+                if (!$check_only && apply_drop_users($key)) {
                     flush_privs();
                 }
             }
@@ -160,15 +163,17 @@ sub apply_grants {
             log_info(sprintf "[%s]%s", join('.', @$data), $as ? " as $as" : '') unless $debug;
             $log_offset = 2;
             log_info(sprintf "revoke all from: %s\@%s", $user, $host);
-            $dbh->do("REVOKE ALL PRIVILEGES, GRANT OPTION FROM '$user'\@'$host'");
-            if ($DBI::errstr) {
-                if ($DBI::errstr =~
-                  /revoke all privileges for one or more of the requested users/) {
-                    $new_user = 1;
-                } elsif ($DBI::errstr !~ /There is no such grant defined/) {
-                    print "USER: $user HOST: $host\n";
-                    die sprintf "Cannot revoke privileges from %s\@%s: %s\n",
-                        $user, $host, $DBI::errstr;
+            unless ($check_only) {
+                $dbh->do("REVOKE ALL PRIVILEGES, GRANT OPTION FROM '$user'\@'$host'");
+                if ($DBI::errstr) {
+                    if ($DBI::errstr =~
+                      /revoke all privileges for one or more of the requested users/) {
+                        $new_user = 1;
+                    } elsif ($DBI::errstr !~ /There is no such grant defined/) {
+                        print "USER: $user HOST: $host\n";
+                        die sprintf "Cannot revoke privileges from %s\@%s: %s\n",
+                            $user, $host, $DBI::errstr;
+                    }
                 }
             }
             $rc++;
@@ -178,6 +183,7 @@ sub apply_grants {
                 my ($s_grant, $s_suffix) = split_grant_suffix($grant);
                 log_info(sprintf "grant %s to %s\@%s %s",
                             $s_grant, $user, $host, $s_suffix);
+                next if $check_only;
                 $dbh->do("GRANT $s_grant TO '$user'\@'$host' $s_suffix");
                 if ($DBI::errstr &&
                     $DBI::errstr !~ /Table\s+'\S+\.\S+'\s+doesn't\s+exist/) {
@@ -188,7 +194,7 @@ sub apply_grants {
                     $log_offset = 2;
                 }
             }
-            if ($new_user) {
+            if ($new_user && !$check_only) {
                 set_user_protected_password($user, $host);
             }
         } else {
@@ -356,7 +362,6 @@ sub grants_helper {
 
     $dbh->do("DROP USER '$user'\@'$host'");
     die "Cannot drop grant temp user: $DBI::errstr\n" if $DBI::err;
-    flush_privs();
 
     @$grants = ( map { $_->[0] } @$temp_grants );
 
@@ -459,6 +464,10 @@ sub main {
 
     connect_db($dbhost, $dbport);
 
+    if ($check_only) {
+        log_info("** running in 'check only' mode, no changes are made to the users/grants **");
+    }
+
     $dbh->begin_work or die "Cannot start transaction: $DBI::errstr\n";
 
     eval {
@@ -466,7 +475,7 @@ sub main {
         foreach my $proc (@{$grants->{order}}) {
             SWITCH: for ($proc) {
                 /^drop$/ && do {
-                    if (apply_drop_users()) {
+                    if (!$check_only && apply_drop_users()) {
                         flush_privs();
                     }
                 };
