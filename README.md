@@ -1,6 +1,6 @@
 # ngcpcfg - central and templated based Configuration Management System for NGCP
 
-![Debian Package CI](https://github.com/sipwise/ngcpcfg/workflows/Debian%20Package%20CI/badge.svg)
+![Debian Package CI](https://github.com/sipwise/ngcpcfg/workflows/Debian%20Packaging/badge.svg)
 
 ![Code Testing](https://github.com/sipwise/ngcpcfg/workflows/Code%20Testing/badge.svg)
 
