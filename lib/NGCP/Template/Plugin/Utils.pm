@@ -24,7 +24,9 @@ sub encode_base64 {
 
 sub to_perl {
     my ($self, @params) = @_;
-    return Data::Dumper::Dumper($params[0]);
+    my $d = Data::Dumper->new([ $params[0] ]);
+    $d->Purity(1)->Terse(1)->Deepcopy(1);
+    return $d->Dump;
 }
 
 sub to_config_general {

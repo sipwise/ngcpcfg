@@ -169,55 +169,61 @@ X_cdr_id_map.EVENT_TIMESTAMP_LOCALIZED_TRUNCATED = from_unixtime_tz("FLOOR(base_
 
 out.admin_fields = [];
 FOREACH X_f IN argv.admin_export_fields;
+  f = {};
+  f.name = X_f;
+  f.code = "";
   IF ("HASH" == Utils.get_ref(X_f));
-    IF X_f.enable && X_f.enable.lower == "yes";
-      X_f = X_f.name;
-    ELSE;
-      NEXT;
-    END;
+    f.name = X_f.name || X_f.sql;
+    f.code = X_f.transformation;
   END;
   # Explicitly declared fields have highest precedence:
-  IF X_cdr_id_map.exists(X_f.upper);
-    out.admin_fields.push("'" _ X_cdr_id_map.${X_f.upper} _ "'");
+  IF X_cdr_id_map.exists(f.name.upper);
+    f.sql = "'" _ X_cdr_id_map.${f.name.upper} _ "'";
   # Specify cash balance before/after fields like e.g. source_CuStOmEr_cash_balance_before in config.yml:
-  ELSIF (matches = X_f.lower.match('^([a-z]+)_([a-z]+)_([a-z_]*cash_balance)_(before|after)$'));
-    out.admin_fields.push("'" _ cdr_direction_provider_type_select(X_base_type _ "_cash_balance", X_type _ "_cash_balance_data", "base_table", "cash_balance_id", "val_" _ matches.3, matches.0, matches.1, matches.2) _ "'");
+  ELSIF (matches = f.name.lower.match('^([a-z]+)_([a-z]+)_([a-z_]*cash_balance)_(before|after)$'));
+    f.sql = "'" _ cdr_direction_provider_type_select(X_base_type _ "_cash_balance", X_type _ "_cash_balance_data", "base_table", "cash_balance_id", "val_" _ matches.3, matches.0, matches.1, matches.2) _ "'";
   # Specify time balance before/after fields like e.g. source_CuStOmEr_free_time_balance_after:
-  ELSIF (matches = X_f.lower.match('^([a-z]+)_([a-z]+)_([a-z_]*time_balance)_(before|after)$'));
-    out.admin_fields.push("'" _ cdr_direction_provider_type_select(X_base_type _ "_time_balance", X_type _ "_time_balance_data", "base_table", "time_balance_id", "val_" _ matches.3, matches.0, matches.1, matches.2) _ "'");
+  ELSIF (matches = f.name.lower.match('^([a-z]+)_([a-z]+)_([a-z_]*time_balance)_(before|after)$'));
+    f.sql = "'" _ cdr_direction_provider_type_select(X_base_type _ "_time_balance", X_type _ "_time_balance_data", "base_table", "time_balance_id", "val_" _ matches.3, matches.0, matches.1, matches.2) _ "'";
   # Specify new cdr relation fields like e.g. source_CuStOmEr_profile_package_id:
   # Note: not to be used in filter conditions.
-  ELSIF (matches = X_f.lower.match('^([a-z]+)_([a-z]+)_(profile_package_id|contract_balance_id)$'));
-    out.admin_fields.push("'" _ cdr_direction_provider_type_select(X_base_type _ "_relation", X_type _ "_relation_data", "base_table", "relation_id", "val", matches.0, matches.1, matches.2) _ "'");
-  ELSIF (matches = X_f.match('^(?i:header)_([a-zA-Z0-9_-]+)$'));
-    out.admin_fields.push("'" _ cdr_direction_provider_type_select_casesensitive(X_base_type _ "_tag", X_type _ "_tag_data", "base_table", "tag_id", "val", "source", "customer", "header=" _ matches.0) _ "'");
+  ELSIF (matches = f.name.lower.match('^([a-z]+)_([a-z]+)_(profile_package_id|contract_balance_id)$'));
+    f.sql = "'" _ cdr_direction_provider_type_select(X_base_type _ "_relation", X_type _ "_relation_data", "base_table", "relation_id", "val", matches.0, matches.1, matches.2) _ "'";
+  ELSIF (matches = f.name.match('^(?i:header)_([a-zA-Z0-9_-]+)$'));
+    f.sql = "'" _ cdr_direction_provider_type_select_casesensitive(X_base_type _ "_tag", X_type _ "_tag_data", "base_table", "tag_id", "val", "source", "customer", "header=" _ matches.0) _ "'";
   # Lowest precedence: other cdr fields, fields joined on your own or 'calculated' (raw sql) fields...:
   ELSE;
-    out.admin_fields.push("'" _ X_f _ "'");
+    f.sql = "'" _ f.name _ "'";
+  END;
+  IF X_f.enable && X_f.enable.lower == "yes";
+    out.admin_fields.push(f);
   END;
 END;
 
 out.reseller_fields = [];
 FOREACH X_f IN argv.reseller_export_fields;
+  f = {};
+  f.name = X_f;
+  f.code = "";
   IF ("HASH" == Utils.get_ref(X_f));
-    IF X_f.enable && X_f.enable.lower == "yes";
-      X_f = X_f.name;
-    ELSE;
-      NEXT;
-    END;
+    f.name = X_f.name || X_f.sql;
+    f.code = X_f.transformation;
   END;
-  IF X_cdr_id_map.exists(X_f.upper);
-    out.reseller_fields.push("'" _ X_cdr_id_map.${X_f.upper} _ "'");
-  ELSIF (matches = X_f.lower.match('^([a-z]+)_([a-z]+)_([a-z_]*cash_balance)_(before|after)$'));
-    out.reseller_fields.push("'" _ cdr_direction_provider_type_select(X_base_type _ "_cash_balance", X_type _ "_cash_balance_data", "base_table", "cash_balance_id","val_" _ matches.3, matches.0, matches.1, matches.2) _ "'");
-  ELSIF (matches = X_f.lower.match('^([a-z]+)_([a-z]+)_([a-z_]*time_balance)_(before|after)$'));
-    out.reseller_fields.push("'" _ cdr_direction_provider_type_select(X_base_type _ "_time_balance", X_type _ "_time_balance_data", "base_table", "time_balance_id","val_" _ matches.3, matches.0, matches.1, matches.2) _ "'");
-  ELSIF (matches = X_f.lower.match('^([a-z]+)_([a-z]+)_(profile_package_id|contract_balance_id)$'));
-    out.reseller_fields.push("'" _ cdr_direction_provider_type_select(X_base_type _ "_relation", X_type _ "_relation_data", "base_table", "relation_id", "val", matches.0, matches.1, matches.2) _ "'");
-  ELSIF (matches = X_f.match('^(?i:header)_([a-zA-Z0-9_-]+)$'));
-    out.reseller_fields.push("'" _ cdr_direction_provider_type_select_casesensitive(X_base_type _ "_tag", X_type _ "_tag_data", "base_table", "tag_id", "val", "source", "customer", "header=" _ matches.0) _ "'");
+  IF X_cdr_id_map.exists(f.name.upper);
+    f.sql = "'" _ X_cdr_id_map.${f.name.upper} _ "'";
+  ELSIF (matches = f.name.lower.match('^([a-z]+)_([a-z]+)_([a-z_]*cash_balance)_(before|after)$'));
+    f.sql = "'" _ cdr_direction_provider_type_select(X_base_type _ "_cash_balance", X_type _ "_cash_balance_data", "base_table", "cash_balance_id","val_" _ matches.3, matches.0, matches.1, matches.2) _ "'";
+  ELSIF (matches = f.name.lower.match('^([a-z]+)_([a-z]+)_([a-z_]*time_balance)_(before|after)$'));
+    f.sql = "'" _ cdr_direction_provider_type_select(X_base_type _ "_time_balance", X_type _ "_time_balance_data", "base_table", "time_balance_id","val_" _ matches.3, matches.0, matches.1, matches.2) _ "'";
+  ELSIF (matches = f.name.lower.match('^([a-z]+)_([a-z]+)_(profile_package_id|contract_balance_id)$'));
+    f.sql = "'" _ cdr_direction_provider_type_select(X_base_type _ "_relation", X_type _ "_relation_data", "base_table", "relation_id", "val", matches.0, matches.1, matches.2) _ "'";
+  ELSIF (matches = f.name.match('^(?i:header)_([a-zA-Z0-9_-]+)$'));
+    f.sql = "'" _ cdr_direction_provider_type_select_casesensitive(X_base_type _ "_tag", X_type _ "_tag_data", "base_table", "tag_id", "val", "source", "customer", "header=" _ matches.0) _ "'";
   ELSE;
-    out.reseller_fields.push("'" _ X_f _ "'");
+    f.sql = "'" _ f.name _ "'";
+  END;
+  IF X_f.enable && X_f.enable.lower == "yes";
+    out.reseller_fields.push(f);
   END;
 END;
 
