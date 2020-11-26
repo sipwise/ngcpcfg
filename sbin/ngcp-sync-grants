@@ -195,7 +195,7 @@ sub apply_grants {
                 }
             }
             if ($new_user && !$check_only) {
-                set_user_protected_password($user, $host);
+                create_protected_user($user, $host);
             }
         } else {
             die "Unparsable grants structure elemenent: $key";
@@ -283,7 +283,7 @@ SQL
     return $rc;
 }
 
-sub set_user_protected_password {
+sub create_protected_user {
     my ($user, $host) = @_;
     my ($random_pass) = $dbh->selectrow_array("SELECT PASSWORD(?)",
                                               undef, pwgen());
@@ -331,7 +331,6 @@ sub grants_helper {
     my $user = $TEMP_GRANT_USER;
     my $host = $TEMP_GRANT_HOST;
 
-    set_user_protected_password($user, $host);
     $dbh->do("REVOKE ALL PRIVILEGES, GRANT OPTION FROM '$user'\@'$host'");
 
     foreach my $grant (@$grants) {
@@ -359,9 +358,6 @@ sub grants_helper {
     }
 
     die "Error in checking grants" if $#$temp_grants < 0;
-
-    $dbh->do("DROP USER '$user'\@'$host'");
-    die "Cannot drop grant temp user: $DBI::errstr\n" if $DBI::err;
 
     @$grants = ( map { $_->[0] } @$temp_grants );
 
@@ -472,6 +468,9 @@ sub main {
 
     eval {
         my $rc = 0;
+
+        create_protected_user($TEMP_GRANT_USER, $TEMP_GRANT_HOST);
+
         foreach my $proc (@{$grants->{order}}) {
             SWITCH: for ($proc) {
                 /^drop$/ && do {
@@ -487,6 +486,9 @@ sub main {
                 };
             } # SWITCH
         }
+
+        $dbh->do("DROP USER IF EXISTS '$TEMP_GRANT_USER'\@'$TEMP_GRANT_HOST'");
+        die "Cannot drop temp user: $DBI::errstr\n" if $DBI::err;
 
         if ($rc) {
             flush_privs();
