@@ -306,8 +306,8 @@ SQL
         die "Cannot create grant temp user: $DBI::errstr\n" if $DBI::err;
     }
 
-    $dbh->do("UPDATE user SET Password = ? WHERE User = ? AND Host = ?",
-             undef, $random_pass, $user, $host);
+    $dbh->do("SET PASSWORD FOR '$user'\@'$host' = PASSWORD(?)",
+             undef, $random_pass);
     die sprintf "Cannot update %s@%s with generated password, %s\n",
         $user, $host, $DBI::errstr if $DBI::err;
 

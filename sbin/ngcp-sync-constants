@@ -182,55 +182,61 @@ sub adjust_replication_master_info {
 sub sync_user {
     my ($user, $pass) = @_;
 
-    my $sth_sel = $dbh->prepare(<<SQL);
-SELECT count(User), Password = PASSWORD(?) as matched
+    my ($mysql_version_raw) = $dbh->selectrow_array("SELECT VERSION()");
+    my $mysql_version = $mysql_version_raw =~ s/^(\d+\.\d+).+$/$1/r;
+    my $sth_sel;
+
+    if ($mysql_version >= 10.4) {
+        $sth_sel = $dbh->prepare(<<SQL);
+SELECT Host,
+       JSON_EXTRACT(Priv, '\$.authentication_string') = PASSWORD(?) as matched
+  FROM global_priv
+ WHERE User = ?
+   AND JSON_EXTRACT(Priv, '\$.plugin') = 'mysql_native_password'
+GROUP by matched, Host
+SQL
+    } else {
+        $sth_sel = $dbh->prepare(<<SQL);
+SELECT Host, Password = PASSWORD(?) as matched
   FROM user
  WHERE User = ?
-GROUP by matched
-ORDER by matched ASC
-LIMIT 1
+GROUP by matched, Host
 SQL
+    }
 
     my $sth_upd = $dbh->prepare(<<SQL);
-UPDATE user
-   SET Password=PASSWORD(?)
- WHERE User = ?
-   AND Password != PASSWORD(?)
+SET PASSWORD FOR ?@? = PASSWORD(?)
 SQL
 
     $sth_sel->execute($pass, $user)
         or die "Cannot execute: $DBI::errstr\n";
 
-    my ($count, $match) = $sth_sel->fetchrow_array();
-    $count //= 0;
-    if ($count && !$match) {
+    my ($count, $changed) = (0,0);
+    while (my ($host, $matched) = $sth_sel->fetchrow_array()) {
+        $count++;
+        next if $matched;
         if ($debug) {
-            log_debug(sprintf "%s => %s", $user, $pass);
+            log_debug(sprintf "%s@%s => %s", $user, $host, $pass);
         } else {
-            log_info(sprintf "%s", $user);
+            log_info(sprintf "%s@%s", $user, $host);
         }
         unless ($test_mode) {
-            my $rows = $sth_upd->execute($pass, $user, $pass)
+            $sth_upd->execute($user, $host, $pass)
                 or die "Cannot update: $DBI::errstr\n";
-            if ($rows != $count) {
-                log_warn(sprintf
-                    "User update was supposed to affect %d rows but changed %d",
-                        $count, $rows);
-            }
+            $changed++;
             if ($user eq 'replicator') {
                 adjust_replication_master_info($user, $pass);
             }
         }
-    } elsif (!$count) {
+    }
+    unless ($count) {
         log_debug(sprintf "%s => does not exist in mysql, skipped (check grants.yml and run ngcp-sync-grants)", $user);
-    } else {
-        $count = 0;
     }
 
     $sth_sel->finish;
     $sth_upd->finish;
 
-    return $test_mode ? 0 : $count;
+    return $changed;
 }
 
 sub sync_mysql_data {
