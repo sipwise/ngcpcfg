@@ -43,6 +43,11 @@ if ! type -p gpg &>/dev/null ; then
   exit 1
 fi
 
+if ! tty -s; then
+  log_error "Cannot request gpg password (no tty). Aborting."
+  exit 1
+fi
+
 # ensure created files can be read by root only
 umask 066
 

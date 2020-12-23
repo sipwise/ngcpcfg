@@ -35,6 +35,11 @@ request_confirmation() {
     return 0
   fi
 
+  if ! tty -s; then
+    log_warn "Cannot request confirmation (no tty). Hint: use option '--force'."
+    return 1
+  fi
+
   log_info_n "Please confirm 'yes' or 'no': "
 
   # clearing STDIN
