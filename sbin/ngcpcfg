@@ -138,6 +138,10 @@ else
 fi
 
 case ${1:-} in
+  decrypt)
+    printf "Running 'ngcpcfg decrypt' outside ngcpcfg framework...\n"
+    "${SCRIPTS}/decrypt"
+    ;;
   init-mgmt|\
   init-shared|\
   initialise|\
@@ -155,7 +159,6 @@ case ${1:-} in
   check|\
   clean|\
   commit|\
-  decrypt|\
   diff|\
   encrypt|\
   log|\
