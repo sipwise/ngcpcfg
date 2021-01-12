@@ -25,11 +25,11 @@ console_output() {
   fi
 
   local timestamp
-  timestamp="$(date "$TIME_FORMAT")"
+  timestamp="$(date "${TIME_FORMAT}")"
 
   # indent depending on number of characters in date output
-  timestamp_replacementchars="$(printf -- "%s: " "$timestamp" | sed 's/./ /g')"
-  printf -- "%b" "$timestamp: $*"
+  timestamp_replacementchars="$(printf -- "%s: " "${timestamp}" | sed 's/./ /g')"
+  printf -- "%b" "${timestamp}: $*"
 }
 
 log_info() {
@@ -79,7 +79,7 @@ as soon as glusterfs share is mounted again:
     log_info "Shared storage exists already, ignoring request to (re)install it."
   else
     log_info "Copying git repository to shared storage."
-    git clone --bare /etc/ngcp-config /mnt/glusterfs/ngcpcfg-share | sed "s/^/$timestamp_replacementchars/"
+    git clone --bare /etc/ngcp-config /mnt/glusterfs/ngcpcfg-share | sed "s/^/${timestamp_replacementchars}/"
     "${HELPER}"/restore-permissions /mnt/glusterfs/ngcpcfg-share
   fi
 }
@@ -96,12 +96,12 @@ TARGZ=/etc/ngcp-config-crypted.tgz
 # ensure created files can be read by root only
 umask 066
 
-if ! gpg -d "$TARGZ".gpg > "$TARGZ" ; then
+if ! gpg -d "${TARGZ}".gpg > "${TARGZ}" ; then
   log_error "Error while decrypting ${TARGZ}.gpg"
   RC=1
 else
   cd / # important to extract files at according place
-  if tar zxf "$TARGZ" ; then
+  if tar zxf "${TARGZ}" ; then
     log_info "Successfully restored configuration archive ${TARGZ}.gpg"
     log_info "Now you should be able to run 'ngcpcfg apply' again."
   else
@@ -118,8 +118,8 @@ else
 fi
 
 # don't leave the unencrypted archive behind
-rm -f "$TARGZ"
+rm -f "${TARGZ}"
 
-exit "$RC"
+exit "${RC}"
 
 ## END OF FILE #################################################################
