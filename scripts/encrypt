@@ -20,7 +20,7 @@ fi
 get_config_file_list() {
   for dir in ${CONFIG_POOL} ; do
     # shellcheck disable=SC2044
-    for file in $(find "$TEMPLATE_POOL_BASE/${dir}" -name \*.tt2 -o -name \*.tt2"${HA_FILE:-}") ; do
+    for file in $(find "${TEMPLATE_POOL_BASE}/${dir}" -name \*.tt2 -o -name \*.tt2"${HA_FILE:-}") ; do
       x=${file##${NGCPCTL_MAIN}/templates/}  # drop leading /etc/ngcp-config
       y=${x%%.tt2}                           # drop trailing suffix '.tt2'
       y=${y%%.tt2.sp1}                       # drop trailing suffix '.tt2.sp1'
@@ -46,11 +46,18 @@ fi
 # ensure created files can be read by root only
 umask 066
 
+mapfile -t FILES < <(get_config_file_list)
+if [ "${#FILES[@]}" = "0" ] ; then
+  log_error "No ngcpcfg config files to back up. Aborting."
+  exit 1
+else
+  log_debug "Packing configs: ${FILES[*]}"
+fi
+
 TARGZ=/etc/ngcp-config-crypted.tgz
-FILES=$(get_config_file_list)
-# shellcheck disable=SC2086
-tar zcf "$TARGZ" /etc/ngcp-config/ $FILES /etc/.git
-if gpg --symmetric "$TARGZ" ; then
+
+tar zcf "${TARGZ}" /etc/ngcp-config/ "${FILES[@]}" /etc/.git
+if gpg --symmetric "${TARGZ}" ; then
   log_info "Successfully created encrypted ngcpcfg configuration archive ${TARGZ}.gpg"
   # ensure we don't leave the unencrypted version behind
   rm -f "${TARGZ}"
@@ -64,9 +71,8 @@ fi
 log_info_n "Now really erase all configuration files managed by ngcpcfg? [y/N] "
 a='' ; read -r a
 if [[ "$a" == "y" ]] || [[ "$a" == "Y" ]] ; then
-  rm -rf "$NGCPCTL_MAIN" ; rm -f "$TARGZ"
-  # shellcheck disable=SC2086
-  rm -f $FILES ; rm -rf /etc/.git
+  rm -rf "${NGCPCTL_MAIN}" ; rm -f "${TARGZ}"
+  rm -f "${FILES[@]}" ; rm -rf /etc/.git
   # make sure we don't leavy any stuff on shared storage
   rm -rf /ngcp-data/glusterfs/export/ngcpcfg-share
   rm -rf /mnt/glusterfs/ngcpcfg-share/
