@@ -46,7 +46,6 @@ fi
 # ensure created files can be read by root only
 umask 066
 
-RC=0
 TARGZ=/etc/ngcp-config-crypted.tgz
 FILES=$(get_config_file_list)
 # shellcheck disable=SC2086
@@ -75,6 +74,6 @@ else
   log_info "Skipping as requested."
 fi
 
-exit "$RC"
+exit 0
 
 ## END OF FILE #################################################################
