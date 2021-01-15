@@ -4,25 +4,10 @@
 # Returns the Debian release codename of the node calling this function.
 #
 # @return out   The Debian release codename of the node calling this function.
+
+# XXX: This is a deprecated alias for set_debian_info.
+
+PROCESS '/usr/lib/ngcp-ngcpcfg/set_debian_info';
+out = debian.codename;
+
 -%]
-[% PERL -%]
-  open my $hh, '<', '/etc/debian_version' or die "Error opening /etc/debian_version";
-  my $debian_version = <$hh>;
-  my $debian_codename;
-  close $hh;
-  chomp $debian_version;
-  if ($debian_version =~ /^8\.*/) {
-    $debian_codename = 'jessie';
-  } elsif ($debian_version =~ /^9\.*/) {
-    $debian_codename = 'stretch';
-  } elsif ($debian_version =~ /^10\.*/) {
-    $debian_codename = 'buster';
-  } elsif ($debian_version =~ /^11\.*/) {
-    $debian_codename = 'bullseye';
-  } elsif ($debian_version =~ /^[[:alnum:]]+\.*\/sid/) {
-    $debian_codename = (split /\//, $debian_version, 2)[0];
-  }
-  die "Fatal error retrieving Debian release codename [$debian_codename]" unless length $debian_codename;
-  die "Fatal error retrieving Debian release version [$debian_version]" unless length $debian_version;
-  $stash->set(out => $debian_codename);
-[% END -%]

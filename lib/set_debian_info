@@ -1,0 +1,51 @@
+[%
+# vi: ft=tt2
+
+# Sets the Debian release information for the node calling this function.
+#
+# This sets the global variables:
+#   debian.codename
+#   debian.version
+-%]
+[% PERL -%]
+  my $version_file = '/etc/debian_version';
+  my $debian_codename;
+  my $debian_version;
+  my $debian_version_major;
+
+  open my $hh, '<', $version_file or die "Error opening $version_file";
+  $debian_version = <$hh>;
+  close $hh;
+  chomp $debian_version;
+  die "Fatal error retrieving Debian release version from $version_file"
+    unless length $debian_version;
+
+  my %versions = (
+    8 => 'jessie',
+    9 => 'stretch',
+    10 => 'buster',
+    11 => 'bullseye',
+  );
+  my %codenames = map { $versions{$_} => $_ } keys %versions;
+
+  if ($debian_version =~ m/^([0-9]+)\.[0-9]+/) {
+    $debian_version_major = $1;
+    $debian_codename = $versions{$debian_version_major};
+    die "Error: unsupported Debian release $debian_version"
+      unless defined $debian_codename;
+  } elsif ($debian_version =~ m{^([[:alnum:]]+)/sid}) {
+    $debian_codename = $1;
+    $debian_version_major = $codenames{$debian_codename};
+    die "Error: unsupported Debian codename $debian_codename"
+      unless defined $debian_version_major;
+  } else {
+    die "Fatal error retrieving Debian release codename [$debian_version]";
+  }
+
+  $stash->update({
+    debian => {
+      version => $debian_version_major,
+      codename => $debian_codename,
+    }
+  });
+[% END -%]
