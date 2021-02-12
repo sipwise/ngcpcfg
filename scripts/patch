@@ -28,7 +28,7 @@ patch_help() {
   log_info "The option '--from-customtt' simplifies migration from customtt to patchtt."
   log_info ""
   log_info "Sample:"
-  log_info "  ngcpcfg patch [--help | --from-customtt [<cusomtt file(s)>] | <patchtt file(s)>]"
+  log_info "  ngcpcfg patch [--help | --from-customtt [<customtt file(s)>] | <patchtt file(s)>]"
   log_info ""
   log_info "Run 'man ngcpcfg' for more information."
 }
