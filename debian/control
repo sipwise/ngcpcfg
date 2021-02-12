@@ -6,6 +6,7 @@ Homepage: https://www.sipwise.com/
 Standards-Version: 3.9.8
 Build-Depends:
  asciidoctor,
+ bash-completion (>= 1:2.1-4.2~),
  debhelper-compat (= 12),
  git,
  libcapture-tiny-perl,
