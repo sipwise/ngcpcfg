@@ -1,3 +1,20 @@
+ngcp-ngcpcfg (9.3.1.0+0~mr9.3.1.0) unstable; urgency=medium
+
+  [ Alexander Lutay ]
+  * [055ec2f] TT#106202 Remove unused variable $RC
+  * [eee0a9c] TT#106202 Remove shellcheck mute for warning [SC2086] in 'scripts/encrypt'
+  * [cdfb5a8] TT#106202 Update Shell code style for scripts/decrypt
+
+  [ Guillem Jover ]
+  * [fdac946] TT#108502 Refactor Debian release information gathering
+
+  [ Michael Prokop ]
+  * [960dbeb] TT#108502 Ensure to install lib/set_debian_info
+  * [090e422] TT#111254 Fix typo in docs + patch usage information (cusomtt->customtt)
+  * [817a54d] TT#111254 Provide initial bash completion for ngcpcfg/ngcp-config command
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 15 Feb 2021 17:54:08 +0100
+
 ngcp-ngcpcfg (9.3.0.0+0~mr9.3.0.0) unstable; urgency=medium
 
   [ Michael Prokop ]
