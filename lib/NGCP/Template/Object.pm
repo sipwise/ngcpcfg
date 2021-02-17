@@ -27,25 +27,19 @@ sub has_role
 
     my %roles = map { $_ => 1 } @{$self->{config}{hosts}{$hostname}{role}};
 
-    # We need to handle the LI case at the end, because it is conditional on
-    # other keys, so we cannot make it match on wildcards before the others.
-    my $has_li = exists $roles{li};
-    delete $roles{li};
-
-    return 1 if any { m/^$role$/ } keys %roles;
-
-    if ($has_li) {
-        my $li_role = 'li';
-
-        # The LI role has a virtual role counterpart, which is active only
-        # in distributed mode.
-        if ($self->{config}{cluster_sets}{type} eq 'distributed') {
-            $li_role = 'li_dist';
+    # We need to handle the LI case specially, because it is conditional on
+    # other keys, so we cannot make it match on wildcards unconditionally.
+    if (exists $roles{li}) {
+        if ($self->{config}{intercept}{enable} ne 'yes') {
+            delete $roles{li};
+        } elsif ($self->{config}{cluster_sets}{type} eq 'distributed') {
+            # The LI role has a virtual role companion, which is active only
+            # in distributed mode.
+            $roles{li_dist} = 1;
         }
-        return $self->{config}{intercept}{enable} eq 'yes'
-            if $li_role =~ m/^$role$/;
     }
 
+    return 1 if any { m/^$role$/ } keys %roles;
     return 0;
 }
 

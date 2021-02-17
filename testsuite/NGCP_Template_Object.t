@@ -65,8 +65,8 @@ ok(!$obj->has_role('prx01a', 'li_dist'),
         'host prx01a does not have li_dist virtual roles (with intercept enabled)');
 
     local $obj->{config}->{cluster_sets}{type} = 'distributed';
-    ok(!$obj->has_role('prx01a', 'li'),
-        'host prx01a does not have li role (with cluster_sets as distributed)');
+    ok($obj->has_role('prx01a', 'li'),
+        'host prx01a has li role (with cluster_sets as distributed)');
     ok($obj->has_role('prx01a', 'li_dist'),
         'host prx01a has li_dist virtual role (with cluster_sets as distributed)');
 }
