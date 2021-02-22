@@ -99,7 +99,8 @@ _ngcpcfg()
             if [[ "$cur" == -* ]]; then
                 COMPREPLY=( $( compgen -W '--nobuild --noapply --shared-only' -- "$cur" ) )
             else
-                _known_hosts_real -- "$cur"
+                COMPREPLY=( $( compgen -W 'all' -- "$cur" ) )  # always provide 'all'
+                _known_hosts_real -- "$cur"  # complete SSH known_hosts, /etc/hosts,...
             fi
             return
             ;;
