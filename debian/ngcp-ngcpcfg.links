@@ -1,2 +1,3 @@
 usr/sbin/ngcpcfg usr/sbin/ngcp-config
+usr/share/bash-completion/completions/ngcpcfg usr/share/bash-completion/completions/ngcp-config
 usr/share/man/man8/ngcpcfg.8.gz usr/share/man/man8/ngcp-config.8.gz
