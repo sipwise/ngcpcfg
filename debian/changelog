@@ -1,3 +1,13 @@
+ngcp-ngcpcfg (8.5.5.0+0~mr8.5.5.0) unstable; urgency=medium
+
+  [ Guillem Jover ]
+  * [a70a1c9] TT#111950 Fix li presence when li_dist is in effect
+
+  [ Kirill Solomko ]
+  * [0af3165] TT#97050 add ngcp-sync-grants check only mode
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 05 Apr 2021 14:30:21 +0200
+
 ngcp-ngcpcfg (8.5.4.0+0~mr8.5.4.0) unstable; urgency=medium
 
   [ Marco Capetta ]
