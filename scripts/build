@@ -51,7 +51,7 @@ done
 build_config_files() {
   RUNNER="nice -n 19 ionice -c 3"
 
-  log_debug "${RUNNER} ${HELPER}/tt2-process ${ARGS[*]} $*}"
+  log_debug "${RUNNER} ${HELPER}/tt2-process ${ARGS[*]} $*"
   ${RUNNER} "${HELPER}/tt2-process" "${ARGS[@]}" "$@"
 
   record_commit_id
