@@ -104,10 +104,18 @@ sub setup {
 sub process_template {
     my ($tt, $config, $input, $output) = @_;
 
+    # permissions should be set based on the "base file", since derived files
+    # .customtt.tt2 or .customtt.tt2.web01a often have been created or copied
+    # without the right permissions, whereas the base file usually has the right
+    # permissions (at least if unmodified since shipped from the .deb file)
+    my $input_for_perms = $input;
+    $input_for_perms =~ s/\.customtt\.tt2/.tt2/ig;
+    $input_for_perms =~ s/\.tt2.*/.tt2/ig;
+
     # Set permissions for generated config based on the ones of the
     # template, plus dropping all write permissions.
     my $old_umask = umask 0222;
-    my $mode = (stat $input)[2];
+    my $mode = (stat $input_for_perms)[2];
 
     my $newfile = "$output.ngcpcfg-new";
 
