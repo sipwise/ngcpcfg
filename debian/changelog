@@ -1,3 +1,19 @@
+ngcp-ngcpcfg (9.5.0.0+0~mr9.5.0.0) unstable; urgency=medium
+
+  [ Michael Prokop ]
+  * [9fe4059] TT#111254 Bash completion: support 'all' in "ngcpcfg push ..."
+  * [5037a3a] TT#111254 Provide symlink for ngcp-config shell completion
+  * [fbbe998] TT#119602 Properly handle trap also in case of errors in functions
+
+  [ Guillem Jover ]
+  * [125727b] TT#111950 Fix li presence when li_dist is in effect
+
+  [ Manuel Montecelo ]
+  * [5bc669a] TT#80164 Remove extra '}' at the end of debug message
+  * [02673fd] TT#80164 Use "base file" for permissions when generating config from templates
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 20 Apr 2021 11:59:14 +0200
+
 ngcp-ngcpcfg (9.4.0.0+0~mr9.4.0.0) unstable; urgency=medium
 
   [ Alexander Lutay ]
