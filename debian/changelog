@@ -1,3 +1,10 @@
+ngcp-ngcpcfg (8.5.3.4+0~mr8.5.3.4) unstable; urgency=medium
+
+  [ Manuel Montecelo ]
+  * [c9401b8] TT#80164 Use "base file" for permissions when generating config from templates
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 26 Apr 2021 12:38:10 +0200
+
 ngcp-ngcpcfg (8.5.3.3+0~mr8.5.3.3) unstable; urgency=medium
 
   [ Kirill Solomko ]
