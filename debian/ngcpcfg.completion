@@ -70,6 +70,11 @@ _ngcpcfg()
             fi
             return
             ;;
+        edit)
+            cur=${cur:-/etc/ngcp-config/}
+            _filedir
+            return
+            ;;
         get)
             # XXX - would be nice to get completion based on content of /etc/ngcp-config/*.yml
             return

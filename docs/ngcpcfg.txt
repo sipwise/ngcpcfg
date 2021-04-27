@@ -413,6 +413,11 @@ to specify revisions). If the tool doesn't report anything it means that there
 are neither any uncommitted changes nor any new or removed files (files which are
 not yet (un)registered to the repository).
 
+  **edit**::
+
+Helper to edit the ngcpcfg's YML configuration files in a faster way
+(it prevents unnecessary <TAB> pressing).
+
   **encrypt**::
 
 Encrypt /etc/ngcp-config and all resulting configuration files with a user

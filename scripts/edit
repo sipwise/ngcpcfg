@@ -1,0 +1,76 @@
+#!/bin/bash
+# Purpose: edit ngcp-config's configuration YML file
+################################################################################
+
+set -e
+set -u
+
+# support testsuite
+FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
+HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
+
+if ! [ -r "${FUNCTIONS}"/main ] ; then
+  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}" >&2
+  exit 1
+fi
+
+if [ -z "${EDITOR:-}" ] ; then
+  if [ -x "/usr/bin/vim" ]; then
+    EDITOR="/usr/bin/vim"
+  else
+    printf "Error: Missing \$EDITOR environmanent variable. Exiting.\n" >&2
+    exit 1
+  fi
+fi
+
+# shellcheck disable=SC1090
+. "${FUNCTIONS}"/main
+
+# main script
+RC=0
+file=""
+
+if [ "${#:-}" -ge 1 ] ; then
+  file=$1
+  case ${file,,} in
+    1|config|config.yml)
+      file="${NGCPCTL_MAIN}/config.yml"
+      ;;
+    2|network|network.yml)
+      file="${NGCPCTL_MAIN}/network.yml"
+      ;;
+    3|constants|constants.yml)
+      file="${NGCPCTL_MAIN}/constants.yml"
+      ;;
+    *)
+      echo "Error: Unknown choise '${file}'. Aborting." >&2
+      exit 1
+      ;;
+  esac
+else
+  # Get the list of configs in static order to be constant over the time
+  # and process the main YML configs first: config.yml network.yml constants.yml
+  # NOTE: the file are loaded/merged into ngcpcfg in different order!
+  declare -a CONFIGS
+  for f in ${NGCPCTL_CONFIG:?} ${NETWORK_CONFIG:?} ${CONSTANTS_CONFIG:?} ${HA_CONFIG:-} ${PAIR_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} "${EXTRA_CONFIG_FILES[@]}" ; do
+    if [ -r "$f" ] ; then
+      CONFIGS+=("${f}")
+    fi
+  done
+
+  select f in "${CONFIGS[@]}" ; do
+      if [[ -z "${f}" ]]; then
+        echo "Exit as requested."
+        exit 0
+      else
+        file=$f
+        break
+      fi
+  done
+fi
+
+"${EDITOR}" "${file}" || RC=$?
+
+exit "$RC"
+
+## END OF FILE #################################################################
