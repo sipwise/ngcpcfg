@@ -32,21 +32,24 @@ file=""
 
 if [ "${#:-}" -ge 1 ] ; then
   file=$1
-  case ${file,,} in
-    1|config|config.yml)
-      file="${NGCPCTL_MAIN}/config.yml"
-      ;;
-    2|network|network.yml)
-      file="${NGCPCTL_MAIN}/network.yml"
-      ;;
-    3|constants|constants.yml)
-      file="${NGCPCTL_MAIN}/constants.yml"
-      ;;
-    *)
-      echo "Error: Unknown choise '${file}'. Aborting." >&2
-      exit 1
-      ;;
-  esac
+  # Use magic mapper if no real file provided
+  if [ ! -r "${file}" ]; then
+    case ${file,,} in
+      1|config|config.yml)
+        file="${NGCPCTL_MAIN}/config.yml"
+        ;;
+      2|network|network.yml)
+        file="${NGCPCTL_MAIN}/network.yml"
+        ;;
+      3|constants|constants.yml)
+        file="${NGCPCTL_MAIN}/constants.yml"
+        ;;
+      *)
+        echo "Error: Unknown choice '${file}'. Aborting." >&2
+        exit 1
+        ;;
+    esac
+  fi
 else
   # Get the list of configs in static order to be constant over the time
   # and process the main YML configs first: config.yml network.yml constants.yml
