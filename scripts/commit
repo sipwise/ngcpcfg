@@ -88,9 +88,9 @@ log_debug "${SCRIPTS}/etckeeper"
 if [ -z "${NO_DB_SYNC:-}" ] ; then
     log_info "Synchronizing MySQL grants/credentials"
     ngcp-sync-grants | sed "s/^/$timestamp_replacementchars/"
-    ngcp-sync-constants >/dev/null | sed "s/^/$timestamp_replacementchars/"
+    ngcp-sync-constants | sed "s/^/$timestamp_replacementchars/"
 else
-    log_debug "no-db-sync: skipping 'ngcp-sync-constants'"
+    log_debug "no-db-sync: skipping 'ngcp-sync-grants' + 'ngcp-sync-constants'"
 fi
 
 ## END OF FILE #################################################################
