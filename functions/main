@@ -15,14 +15,14 @@ fi
 
 ## HA / carrier features {{{
 if [ -r "${FUNCTIONS}"/ha_features ] ; then
-  # shellcheck disable=SC1090
+  # shellcheck disable=SC1090,SC1091
   . "${FUNCTIONS}"/ha_features
   # Set ${HA_FILE}, used by ngcpcfg.cfg, tt2-process and encrypt.
   set_ha_file
 fi
 
 if [ -r "${FUNCTIONS}"/carrier_features ] ; then
-  # shellcheck disable=SC1090
+  # shellcheck disable=SC1090,SC1091
   . "${FUNCTIONS}"/carrier_features
   # Set ${HOST_FILE} + ${PAIR_FILE}, used by ngcpcfg.cfg and tt2-process.
   set_host_and_pair_files
