@@ -1,3 +1,10 @@
+ngcp-ngcpcfg (9.4.2.0+0~mr9.4.2.0) unstable; urgency=medium
+
+  [ Alexander Lutay ]
+  * [80aad74] TT#106202 Add tty check for ngcpcfg 'read' calls
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 03 May 2021 23:53:58 +0200
+
 ngcp-ngcpcfg (9.4.1.0+0~mr9.4.1.0) unstable; urgency=medium
 
   [ Michael Prokop ]
