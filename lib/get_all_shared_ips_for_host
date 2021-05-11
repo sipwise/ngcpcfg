@@ -57,6 +57,10 @@ IF status.item(hosts.${argv.host}.status);
     END;
   END;
 END;
-out = out.sort;
+IF argv.format == 'hash';
+  out = out.sort('ip');
+ELSE;
+  out = out.sort;
+END;
 
 -%]
