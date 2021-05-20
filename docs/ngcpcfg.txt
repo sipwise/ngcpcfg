@@ -449,15 +449,6 @@ configuration is taken from already configured shared repository. This option
 should be used only for configuration of the node which is joining the existing
 cluster. Note: This feature is available in High Availability setups only.
 
-  **init-mgmt** <server>::
-
-Set up specified '<server>' for usage as shared repository whereas '<server>'
-usually corresponds to the IP/hostname of the central management system in a
-sip:carrier environment. Further details about the details of the setup
-are available in the <<init-mgmt>> section.
-Note: This feature is only usable on Carrier installations, on PRO installations
-it will report a warning and exit.
-
   **log** [-p]::
 
 Prints the log of local changes. Expand all changes if '-p' option is specified.
@@ -705,29 +696,6 @@ the consequences):
   ngcpcfg commit 'merge conflict on system sp2'
   ngcpcfg pull # just to make sure
   ngcpcfg push # push changes back to the other systems
-
-[[init-mgmt]]
-init-mgmt setup
----------------
-
-This section documents the 'ngcpcfg init-mgmt' feature in more detail.
-This feature is only usable on Carrier installations, on PRO installations
-it will report a warning and exit.
-
-The script deprecates the shared repository /mnt/glusterfs/ngcpcfg-share of the
-local system by renaming it to /mnt/glusterfs/ngcpcfg-share.unused. It then
-registers the two according nodes (the local system plus the second node which
-makes the PRO pair) in /etc/ngcp-config/systems.cfg. It sets the 'mgmgt_server'
-variable in /etc/ngcp-config/carrier.cfg to '<server>'. Then it makes sure that
-the automated login via SSH between the two according nodes as well as the
-<server> works. It clones the local shared repository to the '<server>'. Finally
-it updates the remote origin for the shared repository on both nodes to point to
-'<server>:/mnt/glusterfs/ngcpcfg_<role>' whereas '<role>' corresponds to the
-system's hostname without the trailing 'a' and 'b' suffix.
-
-[NOTE]
-To check which remote repository is in use execute
-'cd /etc/ngcp-config; git remote show origin | grep URL'.
 
 [[setup_instructions]]
 Setup instructions

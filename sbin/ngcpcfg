@@ -77,8 +77,7 @@ Actions:
   fi
 
 
-  if [ -r "${SCRIPTS}"/encrypt ] || \
-     [ -r "${SCRIPTS}"/init-mgmt ]; then
+  if [ -r "${SCRIPTS}"/encrypt ]; then
     printf "Actions (extra):\n"
   fi
 
@@ -86,11 +85,6 @@ Actions:
   if [ -r "${SCRIPTS}"/encrypt ] ; then
     printf "  decrypt             decrypt /etc/ngcp-config-crypted.tgz.gpg and restore config files\n"
     printf "  encrypt             encrypt /etc/ngcp-config and all resulting configuration files\n"
-  fi
-
-  # display only if init-mgmt is available
-  if [ -r "${SCRIPTS}"/init-mgmt ] ; then
-    printf "  init-mgmt <srv>     set up mgmt server for Carrier ONLY environment (to be executed only once)\n"
   fi
 
   printf "\nFor further usage information and options see the ngcpcfg(8) man page.\n"
@@ -146,7 +140,6 @@ case ${1:-} in
     printf "Running 'ngcpcfg decrypt' outside ngcpcfg framework...\n"
     "${SCRIPTS}/decrypt"
     ;;
-  init-mgmt|\
   init-shared|\
   initialise|\
   get|\

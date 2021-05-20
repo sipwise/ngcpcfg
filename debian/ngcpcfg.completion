@@ -138,7 +138,7 @@ _ngcpcfg()
             local -a scripts=( help version )  # those options don't have separate ngcpcfg scripts
             for f in /usr/share/ngcp-ngcpcfg/scripts/* ; do
                 case "$(basename "$f")" in
-                    decrypt|encrypt|etckeeper|initialise|init-mgmt|init-shared)  # not relevant for common operations
+                    decrypt|encrypt|etckeeper|initialise|init-shared)  # not relevant for common operations
                         ;;
                     values)   # deprecated options
                         ;;
