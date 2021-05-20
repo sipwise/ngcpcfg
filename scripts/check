@@ -67,30 +67,14 @@ check_origin() {
   log_debug "cd ${NGCPCTL_MAIN}"
   cd "${NGCPCTL_MAIN}"
 
-  if [ -r /etc/default/ngcp-roles ]; then
-    # shellcheck disable=SC1091
-    . /etc/default/ngcp-roles
-  else
-    NGCP_IS_MGMT="yes"
-  fi
-
-  local expected_origin
-  if [ -n "${NGCPCTL_SHARE:-}" ] ; then
-    expected_origin="${NGCPCTL_SHARE}"
-    log_debug "Using NGCPCTL_SHARE ['${NGCPCTL_SHARE}'] setting for expected_origin"
-  else
-    expected_origin="/mnt/glusterfs/ngcpcfg-share"
-    log_debug "NGCPCTL_SHARE is unset, using default ['${expected_origin}'] setting for expected_origin"
-  fi
-
   local mgmtnode
   mgmtnode="$(cat /etc/ngcp_mgmt_node)"
-
-  if [ "${NGCP_IS_MGMT}" == "yes" ]; then
-    log_debug "This looks like the mgmt node, not modifying expected_origin."
+  local expected_origin="${mgmtnode}:/mnt/glusterfs/ngcpcfg-share"
+  if [ -n "${NGCPCTL_SHARE:-}" ] ; then
+    expected_origin="${mgmtnode}:${NGCPCTL_SHARE}"
+    log_debug "NGCPCTL_SHARE is set, using it for expected_origin ['${expected_origin}']"
   else
-    expected_origin="${mgmtnode}:${expected_origin}"
-    log_debug "This looks like a non-mgmt node on CARRIER, setting expected_origin to $expected_origin"
+    log_debug "NGCPCTL_SHARE is unset, using default ['${expected_origin}'] setting for expected_origin"
   fi
 
   local actual_origin
