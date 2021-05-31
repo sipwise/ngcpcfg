@@ -17,6 +17,17 @@ sub new
     return bless $self, $class;
 }
 
+sub get_online_cpus
+{
+    my $self = shift;
+
+    my $nproc = qx(nproc);
+    $nproc = qx(getconf _NPROCESSORS_ONLN 2>/dev/null) if $?;
+    chomp $nproc;
+
+    return $nproc // 1;
+}
+
 sub has_role
 {
     my ($self, $hostname, $role) = @_;
@@ -295,6 +306,13 @@ Create a new object that can be used from within the Tamplate Toolkit, via
 the B<ngcp> internal variable, such as C<ngcp.some_method(argument)>.
 
 The $config argument contains the deserialized ngcp-config YAML configuration.
+
+=item $cpus = $t->get_online_cpus()
+
+Returns the number of online CPUs on the system.
+
+This can be used to compute values in templates that depend on the amount
+of cores.
 
 =item $bool = $t->has_role($hostname, $role)
 

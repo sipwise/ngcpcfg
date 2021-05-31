@@ -3,9 +3,10 @@
 use strict;
 use warnings;
 
+use Cwd;
 use Test::More;
 
-plan tests => 32;
+plan tests => 33;
 
 use_ok('NGCP::Template::Object');
 
@@ -42,6 +43,14 @@ my $config = {
 };
 
 my $obj = NGCP::Template::Object->new($config);
+
+# Check get_online_cpus().
+{
+    my $cwd = getcwd();
+    local $ENV{PATH} = "$cwd/mock-bin:$ENV{PATH}";
+
+    is($obj->get_online_cpus(), 8, 'number of online processors');
+}
 
 # Check has_role().
 ok(!$obj->has_role('non-existent', 'storage'),
