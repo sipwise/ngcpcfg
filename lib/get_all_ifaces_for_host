@@ -30,7 +30,7 @@ END;
 out = [];
 IF status.item(hosts.${argv.host}.status);
   FOREACH iface IN hosts.${argv.host}.interfaces;
-    NEXT UNLESS hosts.${argv.host}.exists(iface);
+    NEXT UNLESS (hosts.${argv.host}.exists(iface) OR (iface.match('^neth[0-9]+$') AND hosts.${argv.host}.exists(iface.substr(1))));
     NEXT UNLESS hosts.${argv.host}.$iface.type.grep('^' _ argv.type _ '$').size();
 
     out.push(iface);
