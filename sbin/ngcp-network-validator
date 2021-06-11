@@ -162,7 +162,7 @@ foreach my $hostname (sort keys %{$yaml->{hosts}}) {
         if (defined $host->{$iface}->{ip} and
             $host->{$iface}->{ip} ne '' and
             $host->{$iface}->{ip} ne '127.0.0.1' and
-            $iface !~ m/^dummy/) {
+            $iface !~ m/^dummy/ and $iface !~ m/^tun/) {
             push @{$dupe_ip{$host->{$iface}->{ip}}}, "$hostname/$iface";
         }
         if ($hwaddr_dupe_check and
