@@ -1,3 +1,31 @@
+ngcp-ngcpcfg (9.5.1.0+0~mr9.5.1.0) unstable; urgency=medium
+
+  [ Alexander Lutay ]
+  * [b821e00] TT#120752 Add 'ngcpcfg edit' to speedup YML editing
+  * [a3017f9] TT#106202 Fix 'ngcp-config decrypt': NGCPCTL_MAIN: unbound variable
+  * [6a73386] TT#120752 Fix b821e00: move main function load close to validation
+  * [45de0f4] TT#120752 Fix b821e00: allow 'ngcpcfg edit /path/real_file.yml'
+  * [567318c] TT#106202 Add tty check for ngcpcfg 'read' calls
+
+  [ Michael Prokop ]
+  * [6575b8e] TT#120901 Support ShellCheck v7.0.2
+  * [0ce3b7b] TT#120901 Support ShellCheck v7.0.2 with new SC2260 check
+
+  [ Manuel Montecelo ]
+  * [c04bb33] TT#118659 Switch Dockerfile from Debian buster to bullseye
+
+  [ Guillem Jover ]
+  * [59fa417] TT#122034 lib: Sort the list of hashes correctly
+
+  [ Victor Seva ]
+  * [24098da] TT#83358 status: add test
+
+  [ Mykola Malkov ]
+  * [bbb6bf6] TT#123200 Remove support of init-mgmt
+  * [eb4eca2] TT#123200 Simplify check of remote origin of ngcp-config
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 14 Jun 2021 16:38:07 +0200
+
 ngcp-ngcpcfg (9.5.0.0+0~mr9.5.0.0) unstable; urgency=medium
 
   [ Michael Prokop ]
