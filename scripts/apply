@@ -37,7 +37,7 @@ if check_for_outstanding_commits && [ -z "${1:-}" ] ; then
   exit 1
 fi
 
-"${SCRIPTS}"/build
+"${SCRIPTS}"/build "$@"
 "${SCRIPTS}"/services "$@"
 "${SCRIPTS}"/commit "$@"
 
