@@ -1,3 +1,13 @@
+ngcp-ngcpcfg (9.4.1.2+0~mr9.4.1.2) unstable; urgency=medium
+
+  [ Guillem Jover ]
+  * [745fbd2] TT#122034 lib: Sort the list of hashes correctly
+
+  [ Alexander Lutay ]
+  * [b8c3ff3] TT#125900 Do not validate IP on OpenVPN interface 'tun'
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 15 Jun 2021 15:37:33 +0200
+
 ngcp-ngcpcfg (9.4.1.1+0~mr9.4.1.1) unstable; urgency=medium
 
   [ Alexander Lutay ]
