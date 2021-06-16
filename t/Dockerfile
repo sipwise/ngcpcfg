@@ -21,7 +21,7 @@ RUN apt-get install --assume-yes fakeroot git lsof make strace
 COPY t/sources.list.d/builddeps.list /etc/apt/sources.list.d/
 COPY t/sources.list.d/preferences /etc/apt/preferences.d/
 RUN apt-get update
-RUN apt-get install --assume-yes python3-pytest python3-junitxml
+RUN apt-get install --assume-yes python3-pytest python3-junitxml file
 
 RUN echo './t/testrunner' >>/root/.bash_history
 
