@@ -76,6 +76,7 @@ fi
 if is_git_clean ; then
    log_info "OK:   nothing to commit."
 else
+  log_debug "msg:\"$msg\""
   log_debug "git add . ; git commit -a -m \"\$msg [\$(date --rfc-3339=ns)]\""
   git add .
   git commit -a -m "$msg [$(date --rfc-3339=ns)]" >/dev/null

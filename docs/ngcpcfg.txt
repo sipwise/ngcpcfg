@@ -310,16 +310,15 @@ Display ngcpcfg version and exit.
 Actions and action specific options
 -----------------------------------
 
-  **apply** [--force-all-services] [<commit_message>]::
+  **apply** [--dry-run] [--force-all-services] [--ignore-branch-check] [--ignore-shared-storage-check] [--ignore-branch-check] [--ignore-shared-storage-check] [--modified-only] [<commit_message>]::
 
-Executes the _build_, _services_ and _commit_ commands in a batch
+Executes the _check_, _build_, _services_ and _commit_ commands in a batch
 (assuming each command worked as expected). This option serves as a shortcut for
 the most commonly executed commands. If there are any outstanding changes that
 need to be committed, then the commit message needs to be provided. This is
 meant so the configuration change history (accessible e.g. via 'ngcpcfg log')
 provides useful information.
-The *--force-all-services* option causes all services to be restarted, including
-services without changes in config files.
+Options for _services_, _build_ and _check_ can be used here too.
 
   **check** [--ignore-branch-check] [--ignore-shared-storage-check] [<config_files_or_directories>|<pattern>]::
 
@@ -520,12 +519,14 @@ All 'ngcpcfg' output is muted on STDOUT but available in the log file
 
 Note: This option is available in High Availability setups only.
 
-  **services** [--dry-run]::
+  **services** [--dry-run] [--force-all-services]::
 
 Execute any defined service actions for modified configuration files. If the
 _--dry-run_ option is present the services won't be executed but you'll be
 noticed which service files would be executed if being invoked without the
 _--dry-run__ option.
+_--force-all-services_ option causes all services to be restarted, including
+services without changes in config files.
 
   **set** [<options>] <file> <option>=<value>::
 
