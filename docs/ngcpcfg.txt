@@ -310,7 +310,7 @@ Display ngcpcfg version and exit.
 Actions and action specific options
 -----------------------------------
 
-  **apply** [--dry-run] [--force-all-services] [--ignore-branch-check] [--ignore-shared-storage-check] [--ignore-branch-check] [--ignore-shared-storage-check] [--modified-only] [<commit_message>]::
+  **apply** [--dry-run] [--force-all-services] [--ignore-branch-check] [--ignore-shared-storage-check] [--modified-only] [<commit_message>]::
 
 Executes the _check_, _build_, _services_ and _commit_ commands in a batch
 (assuming each command worked as expected). This option serves as a shortcut for
