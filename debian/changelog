@@ -1,3 +1,18 @@
+ngcp-ngcpcfg (9.5.1.1+0~mr9.5.1.1) unstable; urgency=medium
+
+  [ Alexander Lutay ]
+  * [77940a8] TT#125900 Do not validate IP on OpenVPN interface 'tun'
+  * [fc6e6e5] TT#126250 Bypass 'apply' options into 'build' script
+  * [85995b5] Revert "TT#126250 Bypass 'apply' options into 'build' script"
+
+  [ Rene Krenn ]
+  * [81f4537] TT#126550 Utils.to_perl() enforce concise output
+
+  [ Manuel Montecelo ]
+  * [e54b201] TT#105151 When gathering ifaces for hosts, allow eth*->neth* renaming
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 06 Jul 2021 14:37:35 +0200
+
 ngcp-ngcpcfg (9.5.1.0+0~mr9.5.1.0) unstable; urgency=medium
 
   [ Alexander Lutay ]
