@@ -71,7 +71,7 @@ sort_service_list() {
 
   CLEANUP_FILES+=("${SORTED_LIST}")
 
-  for dir in sysctl.d monit ha.d; do
+  for dir in sysctl.d monit corosync pacemaker ha.d; do
     grep "${SERVICES_POOL_BASE}"/etc/${dir}/'.*services' \
       "${NORMALIZED_FILES}" >> "${SORTED_LIST}" || true
   done
