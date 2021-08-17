@@ -53,7 +53,7 @@ fi
 
 "${SCRIPTS}"/build "${build_args[@]}" "${check_args[@]}"
 "${SCRIPTS}"/services "${services_args[@]}"
-"${SCRIPTS}"/commit "$1"
+"${SCRIPTS}"/commit "${1:-}"
 
 # We "commit" AFTER we "build", therefore the state information is out of date
 # and would be marked as "dirty". As we have full control over this during the
