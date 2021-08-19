@@ -1,3 +1,13 @@
+ngcp-ngcpcfg (9.5.1.2+0~mr9.5.1.2) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [eebcd07] TT#126250 tests for apply
+  * [8d973a1] TT#126250 Bypass 'apply' options into 'build' script
+  * [116fa85] TT#126250 docs: remove duplicated options on **apply**
+  * [3d05d62] TT#126250 apply: fix error when called with no arguments
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 19 Aug 2021 09:38:56 +0200
+
 ngcp-ngcpcfg (9.5.1.1+0~mr9.5.1.1) unstable; urgency=medium
 
   [ Alexander Lutay ]
