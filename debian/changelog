@@ -1,3 +1,27 @@
+ngcp-ngcpcfg (10.1.0.0+0~mr10.1.0.0) unstable; urgency=medium
+
+  [ Alexander Lutay ]
+  * [677fae7] TT#125900 Do not validate IP on OpenVPN interface 'tun'
+  * [41c722a] TT#126250 Bypass 'apply' options into 'build' script
+  * [1b339d2] Revert "TT#126250 Bypass 'apply' options into 'build' script"
+
+  [ Rene Krenn ]
+  * [cb461c2] TT#126550 Utils.to_perl() enforce concise output
+
+  [ Manuel Montecelo ]
+  * [f94f6bd] TT#105151 When gathering ifaces for hosts, allow eth*->neth* renaming
+
+  [ Victor Seva ]
+  * [e9f0d52] TT#126250 tests for apply
+  * [eff9d4a] TT#126250 Bypass 'apply' options into 'build' script
+  * [f637618] TT#126250 docs: remove duplicated options on **apply**
+  * [cb2fe74] TT#126250 apply: fix error when called with no arguments
+
+  [ Guillem Jover ]
+  * [2e8c283] TT#79100 services: Special case corosync/pacemaker handling
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 24 Aug 2021 16:52:57 +0200
+
 ngcp-ngcpcfg (10.0.0.0+0~mr10.0.0.0) unstable; urgency=medium
 
   [ Alexander Lutay ]
