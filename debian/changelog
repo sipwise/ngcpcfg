@@ -1,3 +1,10 @@
+ngcp-ngcpcfg (9.5.1.3+0~mr9.5.1.3) unstable; urgency=medium
+
+  [ Guillem Jover ]
+  * [0e142ae] TT#79100 services: Special case corosync/pacemaker handling
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 27 Aug 2021 20:18:46 +0200
+
 ngcp-ngcpcfg (9.5.1.2+0~mr9.5.1.2) unstable; urgency=medium
 
   [ Victor Seva ]
