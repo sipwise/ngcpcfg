@@ -50,6 +50,11 @@ sub file_readable {
     return -r $params[0];
 }
 
+sub quote_meta {
+    my ($self, $str) = @_;
+    return quotemeta($str);
+}
+
 1;
 
 __END__
@@ -90,6 +95,10 @@ Serializes the given input object to string (Config::General syntax).
 =item [% Utils.get_ref(object) %]
 
 Get the variable type.
+
+=item [% Utils.quote_meta(string) %]
+
+Escape all non-ASCII characters in the string with a backslash.
 
 =back
 
