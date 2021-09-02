@@ -11,6 +11,7 @@ FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
 HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
 HOOKS="${HOOKS:-/usr/share/ngcp-ngcpcfg/hooks/}"
 SCRIPTS="${SCRIPTS:-/usr/share/ngcp-ngcpcfg/scripts/}"
+NGCP_HOSTNAME="$(ngcp-hostname)"
 
 if ! [ -r "${FUNCTIONS}"/main ] ; then
   printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}">&2
@@ -53,17 +54,17 @@ if ! git config user.name >/dev/null ; then
   git config user.name "ngcp-config"
 fi
 if ! git config user.email >/dev/null ; then
-  log_debug "git config user.email \"root@\$(hostname)\""
-  git config user.email "root@$(hostname)"
+  log_debug "git config user.email \"root@\${NGCP_HOSTNAME}\""
+  git config user.email "root@${NGCP_HOSTNAME}"
 fi
 
 if ! git config --global user.name >/dev/null ; then
-  log_debug "git config --global user.name \"git user on \$(hostname)\""
-  git config --global user.name "git user on $(hostname)"
+  log_debug "git config --global user.name \"git user on \${NGCP_HOSTNAME}\""
+  git config --global user.name "git user on ${NGCP_HOSTNAME}"
 fi
 if ! git config --global user.email >/dev/null ; then
-  log_debug "git config --global user.email \"root@\$(hostname)\""
-  git config --global user.email "root@$(hostname)"
+  log_debug "git config --global user.email \"root@\${NGCP_HOSTNAME}\""
+  git config --global user.email "root@${NGCP_HOSTNAME}"
 fi
 
 # commit message

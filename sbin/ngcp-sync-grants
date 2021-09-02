@@ -99,11 +99,8 @@ sub log_warn  { logger(shift, 2); }
 
 sub get_hostname {
 
-    open(my $fh, "<", "/etc/hostname")
-        or die "Cannot open /etc/hostname: $ERRNO";
-    my $hostname = <$fh>;
+    my $hostname = qx(ngcp-hostname);
     chomp $hostname;
-    close $fh;
 
     return $hostname;
 }

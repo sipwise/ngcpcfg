@@ -47,11 +47,7 @@ sub get_hostname
 {
     my $self = shift;
 
-    # Do not trust hostname(1) as this might differ from the hostname of
-    # the system which runs the installer, instead rely on /etc/hostname
-    open my $hh, '<', '/etc/hostname' or die "Error opening /etc/hostname";
-    my $hostname = <$hh>;
-    close $hh;
+    my $hostname = qx(ngcp-hostname);
     chomp $hostname;
     die "Fatal error retrieving hostname [$hostname]" unless length $hostname;
 

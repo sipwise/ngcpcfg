@@ -55,8 +55,8 @@ Main configuration files
 * _/etc/ngcp-config/config.yml_: central configuration file, to be configured with
 $EDITOR, webfrontend,...
 
-* _/etc/ngcp-config/config.$HOSTNAME.yml_: host specific configuration file,
-depending on the hostname (:= $HOSTNAME) of the system.
+* _/etc/ngcp-config/config.$NGCP_HOSTNAME.yml_: host specific configuration file,
+depending on the ngcp_hostname (:= $NGCP_HOSTNAME) of the system.
 
 * _/etc/ngcp-config/config.$PAIRNAME.yml_: pair specific configuration file,
 depending on the pairname (:= $PAIRNAME) of the system (for example _sp_ on
@@ -94,7 +94,7 @@ Files with suffix '.cfg' inside this directory are sourced after
 [IMPORTANT]
 Configuration file priority: constants.yml takes precedence over
 all files in _/etc/ngcp-config/config.d/_, over config.local.yml,
-over config.$HOSTNAME.yml, over config.$PAIRNAME.yml,
+over config.$NGCP_HOSTNAME.yml, over config.$PAIRNAME.yml,
 over config.$HA_NODE.yml, over config.yml.
 
 High Availability specific configuration files
@@ -132,10 +132,10 @@ useful if there are multiple pairs available but only a specific pair of them
 should include some specific configuration.
 Note: This feature is available in High Availability setups only.
 
-* _/etc/ngcp-config/templates/etc/foobar/baz.tt2.$HOSTNAME_: hostname specific
+* _/etc/ngcp-config/templates/etc/foobar/baz.tt2.$NGCP_HOSTNAME_: ngcp_hostname specific
 template file. While $HA_NODE is usually bound to _sp1_ for the first node and
 _sp2_ via /etc/ngcp_ha_node it's possible to use host specific template file by
-referring to its hostname ($HOSTNAME is determined via (hostname(1)).
+referring to its ngcp_hostname ($NGCP_HOSTNAME is determined via ngcp-hostname).
 Note: This feature is available in High Availability setups only.
 
 * _/etc/ngcp-config/templates/etc/foobar/baz.customtt.tt2_: system specific
@@ -155,19 +155,19 @@ _/etc/ngcp-config/templates/etc/foobar/baz.tt2.$PAIRNAME_ but it's guaranteed
 that the file won't be part of any Debian package mechanism.  Note: This feature is
 available in High Availability setups only.
 
-* _/etc/ngcp-config/templates/etc/foobar/baz.customtt.tt2.$HOSTNAME_:
+* _/etc/ngcp-config/templates/etc/foobar/baz.customtt.tt2.$NGCP_HOSTNAME_:
 configuration file similar to
-_/etc/ngcp-config/templates/etc/foobar/baz.tt2.$HOSTNAME_ but it's guaranteed
+_/etc/ngcp-config/templates/etc/foobar/baz.tt2.$NGCP_HOSTNAME_ but it's guaranteed
 that the file won't be part of any Debian package mechanism.  Note: This feature is
 available in High Availability setups only.
 
 [IMPORTANT]
 Configuration file precedence (highest to lowest):
-*.customtt.tt2.$HOSTNAME
+*.customtt.tt2.$NGCP_HOSTNAME
 *.customtt.tt2.$PAIRNAME
 *.customtt.tt2.$HA_NODE
 *.customtt.tt2,
-*.tt2.$HOSTNAME
+*.tt2.$NGCP_HOSTNAME
 *.tt2.$PAIRNAME
 *.tt2.$HA_NODE
 *.tt2.
@@ -193,7 +193,7 @@ availability of the necessary local changes on every configuration apply.
 [IMPORTANT]
 The patch to be applied to the corresponding tt2 template file is selected in
 the following order (highest to lowest):
-*.patchtt.tt2.$HOSTNAME
+*.patchtt.tt2.$NGCP_HOSTNAME
 *.patchtt.tt2.$PAIRNAME
 *.patchtt.tt2.$HA_NODE
 *.patchtt.tt2
@@ -231,7 +231,7 @@ Syntax and layout of configuration files
 
 * _/etc/ngcp-config/ngcpcfg.cfg_: plain shell syntax style "key=value" entries
 
-* _/etc/ngcp-config/systems.cfg_: one hostname or IP address per line
+* _/etc/ngcp-config/systems.cfg_: one ngcp_hostname or IP address per line
 
 * _central yml files_ (*.yml): YAML configuration syntax (see http://yaml.org/)
 
@@ -475,7 +475,7 @@ specified, then only the _build_ operation will be executed). To skip building
 any configuration files at all the '--nobuild' option can be specified (implying
 to also skip the _apply_ operation).  If the '--shared-only' option is set then
 the any pending commits will be pushed only to the shared repository only, any
-foreign hosts will be skipped then.  If hostname(s) or IP address(es) is given
+foreign hosts will be skipped then.  If ngcp_hostname(s) or IP address(es) is given
 as argument then the changes will be pushed to the shared repository and to the
 given hosts only. If no host has been specified then the hosts specified in
 _/etc/ngcp-config/systems.cfg_ are used. The magic word 'all' can be used as a 'host'
@@ -501,7 +501,7 @@ service restart. In this case you should NOT push to the peer nodes simultaneous
 as this can cause heartbeat service restart on both sp1 and sp2 nodes simultaneously).
 
 The 'host' can be defined as 'sp1' or 'sp2' which is a ngcpcfg filter where to push/apply.
-The actions will be performed if the HA node hostname is 'sp1' or 'sp2' ignoring the HA active state.
+The actions will be performed if the HA node ngcp_hostname is 'sp1' or 'sp2' ignoring the HA active state.
 It is safe to push to all sp1 nodes at once, as the peer (sp2 node) will be activated
 in case the current node does a heartbeat restart.
 
@@ -510,7 +510,7 @@ If the special host 'all' is used the push will be performed in parallel in two 
  - the second step pushes and applies changes to all sp2 nodes (ignoring the HA state).
 Note: the second step will NOT be executed if any issue is detected on the first step.
 
-If one or multiple hostnames or IP addresses are given as arguments then the
+If one or multiple ngcp_hostnames or IP addresses are given as arguments then the
 changes will be only pushed to the shared repository and the actions performed
 only on the given hosts.
 
@@ -657,9 +657,9 @@ Error handling - what does this error message mean?
 
 Error message:
 
-  Error: Failed hosts:  hostname (down)
+  Error: Failed hosts:  ngcp_hostname (down)
 
-Background: The system "hostname" is not reachable via ICMP, which means it's
+Background: The system "ngcp_hostname" is not reachable via ICMP, which means it's
 not reachable for the ngcpcfg system.
 
 How to fix: Make sure the system is up and running and reachable via ssh from

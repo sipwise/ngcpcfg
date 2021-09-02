@@ -7,6 +7,8 @@ else
   CMD="perl -CSD ../sbin/ngcp-network"
 fi
 
+PATH=$PATH:../t/fixtures/bin/
+
 count=0
 RC=0
 

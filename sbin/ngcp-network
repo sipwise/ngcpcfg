@@ -16,18 +16,14 @@ use Pod::Usage;
 use Regexp::IPv6 qw($IPv6_re);
 use Socket;
 use Storable qw(dclone);
-use Sys::Hostname;
 use YAML::XS;
 
 our $VERSION = 'UNRELEASED';
 
 # defaults / option handling {{{
-open my $hh, '<', '/etc/hostname'
-  or croak "Error opening /etc/hostname: $ERRNO";
-my $host = <$hh>;
-close $hh or croak 'Error closing file handling for /etc/hostname';
+my $host = qx(ngcp-hostname);
 chomp $host;
-length $host or croak "Fatal error retrieving hostname [$host]";
+length $host or croak "Fatal error retrieving ngcp_hostname [$host]";
 
 my $advertised_ip;
 my $bond_miimon;
@@ -968,14 +964,9 @@ The specified command line option is not support.
 
 The specified input file doesn't exist or can't be read.
 
-=head2 Error opening /etc/hostname: ...
+=head2 Fatal error retrieving ngcp_hostname [...]
 
-The file /etc/hostname couldn't be read, either because the file doesn't exist
-or having wrong file permissions.
-
-=head2 Fatal error retrieving hostname [...]
-
-No valid hostname could not be retrieved from /etc/hostname.
+No valid ngcp_hostname could be retrieved from ngcp-hostname.
 
 =head2 Specified IP ... is not a valid IPv4 address
 

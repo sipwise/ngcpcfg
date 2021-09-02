@@ -65,7 +65,7 @@ fi
 ## environment variables {{{
 export PN="ngcpcfg"
 export HNAME
-HNAME="$(hostname)"
+HNAME="$(ngcp-hostname)"
 export NNAME
 NNAME="$(ngcp-nodename)"
 

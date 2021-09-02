@@ -1,9 +1,9 @@
 [%
 # vi: ft=tt2
 
-# Returns the (alphabetically) first hostname of a node pair for a given host.
+# Returns the (alphabetically) first ngcp_hostname of a node pair for a given host.
 #
-# @param argv.host      The hostname to get the first name for.
+# @param argv.host      The ngcp_hostname to get the first name for.
 # @return out           The alphabetically first name.
 
 out = ngcp.get_firstname(argv.host);
