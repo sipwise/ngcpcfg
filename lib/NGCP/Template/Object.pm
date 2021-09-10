@@ -193,6 +193,32 @@ sub net_ip_expand
     return $ip;
 }
 
+sub replace_metavars
+{
+    my ($self, $string) = @_;
+
+    my $version = $self->get_version();
+    my %metavars = (
+        '%' => '%',
+        'v' => $version,
+    );
+
+    my $subst_metavar = sub {
+        my $var = shift;
+
+        if (exists $metavars{$var}) {
+            return $metavars{$var};
+        } else {
+            warn "unknown metavar in hook: %%$var\n";
+            return "\%$var";
+        }
+    };
+
+    $string =~ s/\%(.)/$subst_metavar->($1)/eg;
+
+    return $string;
+}
+
 1;
 
 __END__
@@ -266,6 +292,20 @@ the ngcpcfg shared-files storage.
 =item $ip = $t->net_ip_expand($ipaddr)
 
 Returns the expanded form of the IP address. Supports IPv4 and IPv6.
+
+=item $str = $t->replace_metavars($str)
+
+Returns the string $str with the %-style meta-variables expanded.
+
+Current known meta-variables are:
+
+=over 4
+
+=item %v
+
+The NGCP version.
+
+=back
 
 =back
 
