@@ -5,7 +5,7 @@ use warnings;
 
 use Test::More;
 
-plan tests => 28;
+plan tests => 30;
 
 use_ok('NGCP::Template::Object');
 
@@ -33,6 +33,7 @@ my $config = {
         prx01a => {
             role => [ qw(li proxy) ],
             peer => 'prx01b',
+            dbnode => 'db01',
         },
         web01a => {
             role => [ qw(mgmt) ],
@@ -95,6 +96,10 @@ is($obj->get_mgmt_node(), 'sp', 'spce has sp as mgmt node');
     local $obj->{config}{general}{ngcp_type} = 'carrier';
     is($obj->get_mgmt_node(), 'web01', 'carrier has web01 as mgmt node');
 }
+
+# Check get_dbnode().
+is($obj->get_dbnode('non-existent'), 'self', 'host unknown has self as dbnode');
+is($obj->get_dbnode('prx01a'), 'db01', 'host prx01a has db01 as dbnode');
 
 # Check net_ip_expand().
 is($obj->net_ip_expand('1:2::5:20'),

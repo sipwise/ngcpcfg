@@ -143,6 +143,16 @@ sub get_firstname
     }
 }
 
+sub get_dbnode
+{
+    my ($self, $hostname) = @_;
+
+    if (not exists $self->{config}{hosts}{$hostname}) {
+        return 'self';
+    }
+    return $self->{config}{hosts}{$hostname}{dbnode};
+}
+
 sub get_mgmt_node
 {
     my ($self) = shift;
@@ -279,6 +289,10 @@ Returns the peer name for a given $hostname.
 
 Returns the (alphabetically) first hostname of a node pair for a given
 $hostname.
+
+=item $dbname = $t->get_dbname($hostname)
+
+Returns the database name for this node.
 
 =item $mgmtnode = $t->get_mgmt_node()
 

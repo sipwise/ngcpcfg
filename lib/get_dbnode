@@ -6,9 +6,6 @@
 # @param argv.host      The hostname to get the dbnode for.
 # @return out           The dbnode.
 
-IF !hosts.${argv.host}.defined;
-  argv.host = 'self';
-END;
-out = hosts.${argv.host}.dbnode;
+out = ngcp.get_dbnode(argv.host);
 
 -%]
