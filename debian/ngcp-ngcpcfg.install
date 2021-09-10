@@ -11,7 +11,6 @@ helper/tt2-process          usr/share/ngcp-ngcpcfg/helper/
 helper/validate-yml         usr/share/ngcp-ngcpcfg/helper/
 hooks/                      usr/share/ngcp-ngcpcfg/
 lib/get_*                   usr/lib/ngcp-ngcpcfg/
-lib/has_*                   usr/lib/ngcp-ngcpcfg/
 lib/set_*                   usr/lib/ngcp-ngcpcfg/
 sbin/ngcp-network           usr/sbin/
 sbin/ngcp-network-validator usr/sbin/

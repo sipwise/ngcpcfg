@@ -1,8 +1,0 @@
-[%
-# vi: ft=tt2
-
-# This is a deprecated alias for get_mgmt_node.
-
-out = ngcp.get_mgmt_name();
-
--%]

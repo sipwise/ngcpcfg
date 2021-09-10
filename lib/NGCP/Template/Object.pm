@@ -146,14 +146,6 @@ sub get_mgmt_node
     return;
 }
 
-sub get_mgmt_name
-{
-    my ($self) = shift;
-
-    warnings::warnif('deprecated', 'deprecated alias for get_mgmt_node()');
-    return $self->get_mgmt_node();
-}
-
 sub get_ssh_pub_key
 {
     my ($self, $key_type) = @_;
@@ -243,11 +235,6 @@ $hostname.
 =item $mgmtnode = $t->get_mgmt_node()
 
 Returns the NGCP management node shared name.
-
-=item $mgmtname = $t->get_mgmt_name()
-
-This function is a deprecated alias for $t->get_mgmt_node(). It will be
-removed in the future.
 
 =item $ssh_pub_keye = $t->get_ssh_pub_key($key_type)
 
