@@ -43,6 +43,24 @@ sub has_role
     return 0;
 }
 
+sub get_version
+{
+    my $self = shift;
+
+    my $filename = '/etc/ngcp_upgrade_version';
+    unless (-e $filename) {
+        $filename = '/etc/ngcp_version';
+    }
+
+    open my $hh, '<', $filename or die "Error opening $filename";
+    my $version = <$hh>;
+    close $hh;
+    chomp $version;
+    die "Fatal error retrieving ngcp_version [$version]" unless length $version;
+
+    return $version;
+}
+
 sub get_hostname
 {
     my $self = shift;
@@ -209,6 +227,10 @@ The $config argument contains the deserialized ngcp-config YAML configuration.
 =item $bool = $t->has_role($hostname, $role)
 
 Checks whether the $hostname node has the $role.
+
+=item $version = $t->get_version()
+
+Returns the NGCP version.
 
 =item $hostname = $t->get_hostname()
 
