@@ -153,9 +153,9 @@ sub get_dbnode
     return $self->{config}{hosts}{$hostname}{dbnode};
 }
 
-sub get_mgmt_node
+sub get_mgmt_pairname
 {
-    my ($self) = shift;
+    my $self = shift;
 
     my $ngcp_type = $self->{config}{general}{ngcp_type};
 
@@ -172,6 +172,14 @@ sub get_mgmt_node
     }
 
     return;
+}
+
+sub get_mgmt_node
+{
+    my $self = shift;
+
+    warnings::warnif('deprecated', 'deprecated alias for get_mgmt_pairname()');
+    return $self->get_mgmt_pairname();
 }
 
 sub get_ssh_pub_key
@@ -294,9 +302,14 @@ $hostname.
 
 Returns the database name for this node.
 
+=item $mgmtnode = $t->get_mgmt_pairname()
+
+Returns the NGCP management node pairname.
+
 =item $mgmtnode = $t->get_mgmt_node()
 
-Returns the NGCP management node shared name.
+This function is a deprecated alias for $t->get_mgmt_pairname(). It will be
+removed in the future.
 
 =item $ssh_pub_keye = $t->get_ssh_pub_key($key_type)
 

@@ -84,17 +84,17 @@ is($obj->get_firstname('self'), 'self', 'host self has self as first name');
 is($obj->get_firstname('sp1'), 'sp1', 'host sp1 has sp1 as first name');
 is($obj->get_firstname('sp2'), 'sp1', 'host sp2 has sp1 as first name');
 
-# Check get_mgmt_node().
-is($obj->get_mgmt_node(), 'sp', 'spce has sp as mgmt node');
+# Check get_mgmt_pairname().
+is($obj->get_mgmt_pairname(), 'sp', 'spce has sp as mgmt pairname');
 {
     delete local $obj->{config}{hosts}{self};
     local $obj->{config}{general}{ngcp_type} = 'sppro';
-    is($obj->get_mgmt_node(), 'sp', 'sppro has sp as mgmt node');
+    is($obj->get_mgmt_pairname(), 'sp', 'sppro has sp as mgmt pairname');
 
     delete local $obj->{config}{hosts}{sp1};
     delete local $obj->{config}{hosts}{sp2};
     local $obj->{config}{general}{ngcp_type} = 'carrier';
-    is($obj->get_mgmt_node(), 'web01', 'carrier has web01 as mgmt node');
+    is($obj->get_mgmt_pairname(), 'web01', 'carrier has web01 as mgmt pairname');
 }
 
 # Check get_dbnode().
