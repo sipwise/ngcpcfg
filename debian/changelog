@@ -1,3 +1,16 @@
+ngcp-ngcpcfg (9.5.2.1+0~mr9.5.2.1) unstable; urgency=medium
+
+  [ Guillem Jover ]
+  * [f53b25e] TT#79100 services: Special case corosync/pacemaker handling
+
+  [ Victor Seva ]
+  * [2ea9560] TT#126250 tests for apply
+  * [a62c2ba] TT#126250 Bypass 'apply' options into 'build' script
+  * [f9393ea] TT#126250 docs: remove duplicated options on **apply**
+  * [f4f937d] TT#126250 apply: fix error when called with no arguments
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 21 Sep 2021 16:28:05 +0200
+
 ngcp-ngcpcfg (9.5.2.0+0~mr9.5.2.0) unstable; urgency=medium
 
   [ Alexander Lutay ]
