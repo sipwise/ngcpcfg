@@ -5,6 +5,9 @@
 # console output including timestamps {{{
 timestamp_replacementchars='' # unset by default
 
+# do not explain merge commits
+export GIT_MERGE_AUTOEDIT=no
+
 console_output() {
   if [ -z "${TIME_FORMAT:-}" ] ; then
     printf -- "$*"
