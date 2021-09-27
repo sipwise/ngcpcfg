@@ -1,0 +1,791 @@
+---
+hosts:
+  db01a:
+    bond0:
+      bond_miimon: "100"
+      bond_mode: active-backup
+      bond_slaves: eth0 eth1
+    dbnode: "1"
+    eth0:
+      hwaddr: 00:00:00:00:00:00
+    eth1:
+      hwaddr: 00:00:00:00:00:00
+    interfaces:
+      - vlan300
+      - vlan1721
+      - lo
+      - eth0
+      - eth1
+      - bond0
+    lo:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 127.0.0.1
+      netmask: 255.0.0.0
+      shared_ip: []
+      shared_v6ip: []
+      type:
+        - ssh_ext
+        - api_int
+      v6ip: ::1
+    peer: db01b
+    role:
+      - db
+    status: online
+    vlan1721:
+      hwaddr: AA:7C:C0:DA:85:45
+      ip: 172.30.52.180
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.30.52.179
+      type:
+        - ha_int
+        - ssh_ext
+      vlan_raw_device: bond0
+    vlan300:
+      dns_nameservers:
+        - 92.42.136.30
+        - 92.42.136.31
+      gateway: 192.168.25.1
+      hwaddr: 00:00:00:00:00:00
+      ip: 192.168.25.183
+      netmask: 255.255.255.0
+      shared_ip:
+        - 192.168.25.185
+      shared_v6ip: []
+      type:
+        - mon_ext
+        - ssh_ext
+      vlan_raw_device: bond0
+  db01b:
+    bond0:
+      bond_miimon: "100"
+      bond_mode: active-backup
+      bond_slaves: eth0 eth1
+    dbnode: "2"
+    eth0:
+      hwaddr: 00:00:00:00:00:00
+    eth1:
+      hwaddr: 00:00:00:00:00:00
+    interfaces:
+      - vlan300
+      - vlan1721
+      - lo
+      - eth0
+      - eth1
+      - bond0
+    lo:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 127.0.0.1
+      netmask: 255.0.0.0
+      shared_ip: []
+      shared_v6ip: []
+      type:
+        - ssh_ext
+        - api_int
+      v6ip: ::1
+    peer: db01a
+    role:
+      - db
+    status: online
+    vlan1721:
+      hwaddr: BE:3A:47:A7:11:0D
+      ip: 172.30.52.181
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.30.52.179
+      type:
+        - ssh_ext
+        - ha_int
+      vlan_raw_device: bond0
+    vlan300:
+      dns_nameservers:
+        - 92.42.136.30
+        - 92.42.136.31
+      gateway: 192.168.25.1
+      hwaddr: 00:00:00:00:00:00
+      ip: 192.168.25.184
+      netmask: 255.255.255.0
+      shared_ip:
+        - 192.168.25.185
+      shared_v6ip: []
+      type:
+        - ssh_ext
+        - mon_ext
+      vlan_raw_device: bond0
+  lb01a:
+    bond0:
+      bond_miimon: "100"
+      bond_mode: active-backup
+      bond_slaves: eth0 eth1
+    dbnode: "3"
+    eth0:
+      hwaddr: 00:00:00:00:00:00
+    eth1:
+      hwaddr: 00:00:00:00:00:00
+    interfaces:
+      - vlan300
+      - vlan1719
+      - vlan1720
+      - vlan1721
+      - lo
+      - eth0
+      - eth1
+      - bond0
+    lo:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 127.0.0.1
+      netmask: 255.0.0.0
+      shared_ip: []
+      shared_v6ip: []
+      type:
+        - ssh_ext
+        - api_int
+      v6ip: ::1
+    peer: lb01b
+    role:
+      - lb
+    status: online
+    vlan1719:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.30.52.104
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.30.52.103
+      type:
+        - sip_ext
+      vlan_raw_device: bond0
+    vlan1720:
+      cluster_sets:
+        - default
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.30.52.136
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.30.52.135
+      type:
+        - sip_int
+      vlan_raw_device: bond0
+    vlan1721:
+      hwaddr: 46:78:04:52:C2:6C
+      ip: 172.30.52.174
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.30.52.173
+      type:
+        - ha_int
+        - ssh_ext
+      vlan_raw_device: bond0
+    vlan300:
+      dns_nameservers:
+        - 92.42.136.30
+        - 92.42.136.31
+      gateway: 192.168.25.1
+      hwaddr: 00:00:00:00:00:00
+      ip: 192.168.25.186
+      netmask: 255.255.255.0
+      shared_ip:
+        - 192.168.25.188
+      shared_v6ip: []
+      type:
+        - mon_ext
+        - ssh_ext
+      vlan_raw_device: bond0
+  lb01b:
+    bond0:
+      bond_miimon: "100"
+      bond_mode: active-backup
+      bond_slaves: eth0 eth1
+    dbnode: "4"
+    eth0:
+      hwaddr: 00:00:00:00:00:00
+    eth1:
+      hwaddr: 00:00:00:00:00:00
+    interfaces:
+      - vlan300
+      - vlan1719
+      - vlan1720
+      - vlan1721
+      - lo
+      - eth0
+      - eth1
+      - bond0
+    lo:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 127.0.0.1
+      netmask: 255.0.0.0
+      shared_ip: []
+      shared_v6ip: []
+      type:
+        - ssh_ext
+        - api_int
+      v6ip: ::1
+    peer: lb01a
+    role:
+      - lb
+    status: online
+    vlan1719:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.30.52.105
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.30.52.103
+      type:
+        - sip_ext
+      vlan_raw_device: bond0
+    vlan1720:
+      cluster_sets:
+        - default
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.30.52.137
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.30.52.135
+      type:
+        - sip_int
+      vlan_raw_device: bond0
+    vlan1721:
+      hwaddr: F2:5A:F1:41:B7:57
+      ip: 172.30.52.175
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.30.52.173
+      type:
+        - ha_int
+        - ssh_ext
+      vlan_raw_device: bond0
+    vlan300:
+      dns_nameservers:
+        - 92.42.136.30
+        - 92.42.136.31
+      gateway: 192.168.25.1
+      hwaddr: 00:00:00:00:00:00
+      ip: 192.168.25.187
+      netmask: 255.255.255.0
+      shared_ip:
+        - 192.168.25.188
+      shared_v6ip: []
+      type:
+        - mon_ext
+        - ssh_ext
+      vlan_raw_device: bond0
+  prx01a:
+    bond0:
+      bond_miimon: "100"
+      bond_mode: active-backup
+      bond_slaves: eth0 eth1
+    dbnode: "5"
+    eth0:
+      hwaddr: 00:00:00:00:00:00
+    eth1:
+      hwaddr: 00:00:00:00:00:00
+    interfaces:
+      - vlan300
+      - vlan1720
+      - vlan1721
+      - vlan1722
+      - lo
+      - eth0
+      - eth1
+      - bond0
+    lo:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 127.0.0.1
+      netmask: 255.0.0.0
+      shared_ip: []
+      shared_v6ip: []
+      type:
+        - ssh_ext
+        - api_int
+        - rtp_int
+      v6ip: ::1
+    peer: prx01b
+    role:
+      - proxy
+      - rtp
+    status: online
+    vlan1720:
+      cluster_sets:
+        - default
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.30.52.133
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.30.52.132
+      type:
+        - sip_int
+      vlan_raw_device: bond0
+    vlan1721:
+      hwaddr: 1E:B7:5A:23:BD:FE
+      ip: 172.30.52.171
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.30.52.170
+      type:
+        - ha_int
+        - ssh_ext
+      vlan_raw_device: bond0
+    vlan1722:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.30.52.197
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.30.52.196
+      type:
+        - rtp_ext
+      vlan_raw_device: bond0
+    vlan300:
+      dns_nameservers:
+        - 92.42.136.30
+        - 92.42.136.31
+      gateway: 192.168.25.1
+      hwaddr: 00:00:00:00:00:00
+      ip: 192.168.25.189
+      netmask: 255.255.255.0
+      shared_ip:
+        - 192.168.25.191
+      shared_v6ip: []
+      type:
+        - mon_ext
+        - ssh_ext
+      vlan_raw_device: bond0
+  prx01b:
+    bond0:
+      bond_miimon: "100"
+      bond_mode: active-backup
+      bond_slaves: eth0 eth1
+    dbnode: "6"
+    eth0:
+      hwaddr: 00:00:00:00:00:00
+    eth1:
+      hwaddr: 00:00:00:00:00:00
+    interfaces:
+      - vlan300
+      - vlan1720
+      - vlan1721
+      - vlan1722
+      - lo
+      - eth0
+      - eth1
+      - bond0
+    lo:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 127.0.0.1
+      netmask: 255.0.0.0
+      shared_ip: []
+      shared_v6ip: []
+      type:
+        - ssh_ext
+        - api_int
+        - rtp_int
+      v6ip: ::1
+    peer: prx01a
+    role:
+      - proxy
+      - rtp
+    status: online
+    vlan1720:
+      cluster_sets:
+        - default
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.30.52.139
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.30.52.138
+      type:
+        - sip_int
+      vlan_raw_device: bond0
+    vlan1721:
+      hwaddr: 1A:E6:67:D3:B3:34
+      ip: 172.30.52.145
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.30.52.144
+      type:
+        - ha_int
+        - ssh_ext
+      vlan_raw_device: bond0
+    vlan1722:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.30.52.148
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.30.52.147
+      type:
+        - rtp_ext
+      vlan_raw_device: bond0
+    vlan300:
+      dns_nameservers:
+        - 92.42.136.30
+        - 92.42.136.31
+      gateway: 192.168.25.1
+      hwaddr: 00:00:00:00:00:00
+      ip: 192.168.25.190
+      netmask: 255.255.255.0
+      shared_ip:
+        - 192.168.25.191
+      shared_v6ip: []
+      type:
+        - mon_ext
+        - ssh_ext
+      vlan_raw_device: bond0
+  prx02a:
+    bond0:
+      bond_miimon: "100"
+      bond_mode: active-backup
+      bond_slaves: eth0 eth1
+    dbnode: "7"
+    eth0:
+      hwaddr: 00:00:00:00:00:00
+    eth1:
+      hwaddr: 00:00:00:00:00:00
+    interfaces:
+      - vlan300
+      - vlan1720
+      - vlan1721
+      - vlan1722
+      - lo
+      - eth0
+      - eth1
+      - bond0
+    lo:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 127.0.0.1
+      netmask: 255.0.0.0
+      shared_ip: []
+      shared_v6ip: []
+      type:
+        - ssh_ext
+        - api_int
+        - rtp_int
+      v6ip: ::1
+    peer: prx02b
+    role:
+      - proxy
+      - rtp
+    status: inactive
+    vlan1720:
+      cluster_sets:
+        - default
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.30.52.140
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.30.52.138
+      type:
+        - sip_int
+      vlan_raw_device: bond0
+    vlan1721:
+      hwaddr: 1E:B7:5A:23:BD:FA
+      ip: 172.30.52.146
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.30.52.144
+      type:
+        - ha_int
+        - ssh_ext
+      vlan_raw_device: bond0
+    vlan1722:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.30.52.149
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.30.52.147
+      type:
+        - rtp_ext
+      vlan_raw_device: bond0
+    vlan300:
+      dns_nameservers:
+        - 92.42.136.30
+        - 92.42.136.31
+      gateway: 192.168.25.1
+      hwaddr: 00:00:00:00:00:00
+      ip: 192.168.25.192
+      netmask: 255.255.255.0
+      shared_ip:
+        - 192.168.25.194
+      shared_v6ip: []
+      type:
+        - mon_ext
+        - ssh_ext
+      vlan_raw_device: bond0
+  prx02b:
+    bond0:
+      bond_miimon: "100"
+      bond_mode: active-backup
+      bond_slaves: eth0 eth1
+    dbnode: "8"
+    eth0:
+      hwaddr: 00:00:00:00:00:00
+    eth1:
+      hwaddr: 00:00:00:00:00:00
+    interfaces:
+      - vlan300
+      - vlan1720
+      - vlan1721
+      - vlan1722
+      - lo
+      - eth0
+      - eth1
+      - bond0
+    lo:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 127.0.0.1
+      netmask: 255.0.0.0
+      shared_ip: []
+      shared_v6ip: []
+      type:
+        - ssh_ext
+        - api_int
+        - rtp_int
+      v6ip: ::1
+    peer: prx01a
+    role:
+      - proxy
+      - rtp
+    status: inactive
+    vlan1720:
+      cluster_sets:
+        - default
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.30.52.134
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.30.52.132
+      type:
+        - sip_int
+      vlan_raw_device: bond0
+    vlan1721:
+      hwaddr: 1A:E6:67:D3:B3:35
+      ip: 172.30.52.172
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.30.52.170
+      type:
+        - ha_int
+        - ssh_ext
+      vlan_raw_device: bond0
+    vlan1722:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.30.52.198
+      netmask: 255.255.255.240
+      shared_ip:
+        - 172.30.52.196
+      type:
+        - rtp_ext
+      vlan_raw_device: bond0
+    vlan300:
+      dns_nameservers:
+        - 92.42.136.30
+        - 92.42.136.31
+      gateway: 192.168.25.1
+      hwaddr: 00:00:00:00:00:00
+      ip: 192.168.25.193
+      netmask: 255.255.255.0
+      shared_ip:
+        - 192.168.25.194
+      shared_v6ip: []
+      type:
+        - mon_ext
+        - ssh_ext
+      vlan_raw_device: bond0
+  web01a:
+    bond0:
+      bond_miimon: "100"
+      bond_mode: active-backup
+      bond_slaves: eth0 eth1
+      hwaddr: 00:00:00:00:00:00
+      ip: 192.168.1.2
+      netmask: 255.255.255.0
+      shared_ip:
+        - 192.168.1.1
+      type:
+        - boot_int
+    dbnode: "9"
+    eth0:
+      hwaddr: 00:00:00:00:00:00
+      type:
+        - web_ext
+        - web_int
+    eth1:
+      hwaddr: 00:00:00:00:00:00
+    interfaces:
+      - vlan300
+      - vlan1718
+      - vlan1720
+      - vlan1721
+      - lo
+      - eth0
+      - eth1
+      - bond0
+    lo:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 127.0.0.1
+      netmask: 255.0.0.0
+      shared_ip: []
+      shared_v6ip: []
+      type:
+        - ssh_ext
+        - api_int
+      v6ip: ::1
+    peer: web01b
+    role:
+      - mgmt
+    status: online
+    vlan1718:
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.30.52.69
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.30.52.68
+      type:
+        - web_ext
+      vlan_raw_device: bond0
+    vlan1720:
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.30.52.142
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.30.52.141
+      type:
+        - sip_int
+      vlan_raw_device: bond0
+    vlan1721:
+      hwaddr: E2:67:FE:AB:0B:DE
+      ip: 172.30.52.168
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.30.52.167
+      type:
+        - ha_int
+        - web_int
+        - ssh_ext
+      vlan_raw_device: bond0
+    vlan300:
+      dns_nameservers:
+        - 92.42.136.30
+        - 92.42.136.31
+      gateway: 192.168.25.1
+      hwaddr: 00:00:00:00:00:00
+      ip: 192.168.25.180
+      netmask: 255.255.255.0
+      shared_ip:
+        - 192.168.25.182
+      shared_v6ip: []
+      type:
+        - mon_ext
+        - ssh_ext
+      vlan_raw_device: bond0
+  web01b:
+    bond0:
+      bond_miimon: "100"
+      bond_mode: active-backup
+      bond_slaves: eth0 eth1
+      hwaddr: 00:00:00:00:00:00
+      ip: 192.168.1.3
+      netmask: 255.255.255.0
+      shared_ip:
+        - 192.168.1.1
+      type:
+        - boot_int
+    dbnode: "10"
+    eth0:
+      hwaddr: 00:00:00:00:00:00
+    eth1:
+      hwaddr: 00:00:00:00:00:00
+    interfaces:
+      - vlan300
+      - vlan1718
+      - vlan1720
+      - vlan1721
+      - lo
+      - eth0
+      - eth1
+      - bond0
+    lo:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 127.0.0.1
+      netmask: 255.0.0.0
+      shared_ip: []
+      shared_v6ip: []
+      type:
+        - ssh_ext
+        - api_int
+      v6ip: ::1
+    peer: web01a
+    role:
+      - mgmt
+    status: online
+    vlan1718:
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.30.52.70
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.30.52.68
+      type:
+        - web_ext
+      vlan_raw_device: bond0
+    vlan1720:
+      hwaddr: 00:00:00:00:00:00
+      ip: 172.30.52.143
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.30.52.141
+      type:
+        - sip_int
+      vlan_raw_device: bond0
+    vlan1721:
+      hwaddr: 3A:79:8B:6A:A7:01
+      ip: 172.30.52.169
+      netmask: 255.255.255.224
+      shared_ip:
+        - 172.30.52.167
+      type:
+        - ssh_ext
+        - ha_int
+        - web_int
+      vlan_raw_device: bond0
+    vlan300:
+      dns_nameservers:
+        - 92.42.136.30
+        - 92.42.136.31
+      gateway: 192.168.25.1
+      hwaddr: 00:00:00:00:00:00
+      ip: 192.168.25.181
+      netmask: 255.255.255.0
+      shared_ip:
+        - 192.168.25.182
+      shared_v6ip: []
+      type:
+        - ssh_ext
+        - mon_ext
+      vlan_raw_device: bond0
+instances:
+  - name: A
+    service:
+      name: kamailio-lb-A
+      unit: kamailio-lb@A.service
+    host: lb01b
+    status: online
+    interfaces:
+      - name: vlan1719
+        ip: 172.30.52.204
+        type: sip_ext
+      - name: vlan1720
+        ip: 172.30.52.146
+        type: sip_int

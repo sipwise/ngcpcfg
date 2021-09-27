@@ -182,6 +182,26 @@ sub get_mgmt_node
     return $self->get_mgmt_pairname();
 }
 
+sub get_instances
+{
+    my ($self, $hostname) = @_;
+    my $res = [];
+
+    if (not exists $self->{config}{hosts}{$hostname}) {
+        return $res;
+    }
+    if (not exists $self->{config}{instances}) {
+        return $res;
+    }
+    my $peername = $self->{config}{hosts}{$hostname}{peer};
+    foreach my $instance (@{$self->{config}{instances}}) {
+        if ($instance->{host} eq $hostname or $instance->{host} eq $peername) {
+            push @{$res}, $instance;
+        }
+    }
+    return $res;
+}
+
 sub get_ssh_pub_key
 {
     my ($self, $key_type) = @_;

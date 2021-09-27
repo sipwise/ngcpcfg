@@ -5,7 +5,7 @@ use warnings;
 
 use Test::More;
 
-plan tests => 30;
+plan tests => 32;
 
 use_ok('NGCP::Template::Object');
 
@@ -111,3 +111,17 @@ is($obj->net_ip_expand('001:2::0005:020'),
 is($obj->net_ip_expand('1::0'),
     '1:0:0:0:0:0:0:0',
     'normalize IPv6 1::0');
+
+## instances
+$config->{instances} = [
+    {name => 'A', host => 'sp2'},
+    {name => 'B', host => 'sp3'},
+];
+my $obj = NGCP::Template::Object->new($config);
+
+# Check get_instances(hostname).
+my $instances = [{name=>'A',host=>'sp2'}];
+is_deeply($obj->get_instances('sp1'), $instances,
+    'host sp1 has one instances defined');
+is_deeply($obj->get_instances('sp2'), $instances,
+    'host sp2 has one instances defined');

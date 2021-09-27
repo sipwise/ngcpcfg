@@ -1,0 +1,39 @@
+[%
+# vi: ft=tt2
+
+# Return an array of IPs from the interface of a given type for all nodes
+# which act as a given role.
+# @param argv.instance  instance name
+#
+# @param argv.type      The interface type of a node to extract the IP
+#                       from, one of:
+#                         web_int, web_ext, sip_int, sip_ext, ...
+# @param argv.status    node status [ online, offline, inactive ]
+#                         default value: ['online', 'inactive']
+# @return out           The array of IPs.
+
+IF !argv.status.size;
+  argv.status = ['online', 'inactive'];
+END;
+
+status = {
+  online = 0
+  offline = 0
+  inactive = 0
+};
+FOREACH val IN argv.status;
+  status.$val = 1;
+END;
+
+out = [];
+RETURN UNLESS status.item(instance.status);
+
+FOREACH iface IN instance.interfaces;
+  NEXT UNLESS iface.type.grep('^' _ argv.type _ '$').size();
+  NEXT UNLESS iface.ip;
+  out.push(iface.ip);
+END;
+
+out = out.sort.unique;
+
+-%]
