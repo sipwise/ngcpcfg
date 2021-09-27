@@ -52,6 +52,21 @@ fi
 [ -f "${file}" ] || (log_error "missing ${file}. Exiting." ; exit 1)
 [ -z "${data}" ] && (log_error "missing data to set. Exiting." ; exit 1)
 
+# Check whether we should use different permissions when creating the file.
+CREATEFILE=no
+if [ ! -f "${file}" ]; then
+  CREATEFILE=yes
+  if [ "${file}" = "${NETWORK_CONFIG:-}" ]; then
+    MODE="${NETWORK_CONFIG_CHMOD}"
+    USER="${NETWORK_CONFIG_USER}"
+    GROUP="${NETWORK_CONFIG_GROUP}"
+  else
+    MODE="${CONFIG_CHMOD}"
+    USER="${CONFIG_USER}"
+    GROUP="${CONFIG_GROUP}"
+  fi
+fi
+
 log_debug "Received data: ${data}"
 option="${data%%=*}"
 value="${data#*=}"
@@ -124,6 +139,12 @@ EOF
 
 log_debug "perl -wCSD \"${tmp}\" || RC=$?"
 perl -wCSD "${tmp}" || RC=$?
+
+if [ "${CREATEFILE}" = "yes" ]; then
+  chmod "${MODE}" "${file}"
+  chown "${USER}" "${file}"
+  chgrp "${GROUP}" "${file}"
+fi
 
 if [ "${RC}" = "0" ] && "${b_show_diff:-false}"; then
   log_debug "${SCRIPTS}/diff || true"
