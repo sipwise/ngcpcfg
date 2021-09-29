@@ -142,37 +142,16 @@ for f in ${NGCPCTL_CONFIG:-} ${HA_CONFIG:-} ${PAIR_CONFIG:-} ${HOST_CONFIG:-} ${
   if [ ! -f "${f}" ]; then
     continue
   fi
-  if [ -n "${CONFIG_USER}" ]; then
-    chown "${CONFIG_USER}" "${f}"
-  fi
-  if [ -n "${CONFIG_GROUP}" ]; then
-    chgrp "${CONFIG_GROUP}" "${f}"
-  fi
-  if [ -n "${CONFIG_CHMOD}" ]; then
-    chmod "${CONFIG_CHMOD}" "${f}"
-  fi
+  chown "${CONFIG_USER}":"${CONFIG_GROUP}" "${f}"
+  chmod "${CONFIG_CHMOD}" "${f}"
 done
 if [ -f "${NETWORK_CONFIG:-}" ]; then
-  if [ -n "${NETWORK_CONFIG_USER}" ]; then
-    chown "${NETWORK_CONFIG_USER}" "${NETWORK_CONFIG}"
-  fi
-  if [ -n "${NETWORK_CONFIG_GROUP}" ]; then
-    chgrp "${NETWORK_CONFIG_GROUP}" "${NETWORK_CONFIG}"
-  fi
-  if [ -n "${NETWORK_CONFIG_CHMOD}" ]; then
-    chmod "${NETWORK_CONFIG_CHMOD}" "${NETWORK_CONFIG}"
-  fi
+  chown "${NETWORK_CONFIG_USER}":"${NETWORK_CONFIG_GROUP}" "${NETWORK_CONFIG}"
+  chmod "${NETWORK_CONFIG_CHMOD}" "${NETWORK_CONFIG}"
 fi
 if [ -f "${CONSTANTS_CONFIG:-}" ]; then
-  if [ -n "${CONSTANTS_CONFIG_USER}" ]; then
-    chown "${CONSTANTS_CONFIG_USER}" "${CONSTANTS_CONFIG}"
-  fi
-  if [ -n "${CONSTANTS_CONFIG_GROUP}" ]; then
-    chgrp "${CONSTANTS_CONFIG_GROUP}" "${CONSTANTS_CONFIG}"
-  fi
-  if [ -n "${CONSTANTS_CONFIG_CHMOD}" ]; then
-    chmod "${CONSTANTS_CONFIG_CHMOD}" "${CONSTANTS_CONFIG}"
-  fi
+  chown "${CONSTANTS_CONFIG_USER}":"${CONSTANTS_CONFIG_GROUP}" "${CONSTANTS_CONFIG}"
+  chmod "${CONSTANTS_CONFIG_CHMOD}" "${CONSTANTS_CONFIG}"
 fi
 
 exit 0
