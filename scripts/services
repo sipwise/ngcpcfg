@@ -229,11 +229,22 @@ RUNNING_FILE="${RUN_DIR}/ngcpcfg-services.running"
 DRYRUN='false'
 FORCE_ALL_SERVICES='false'
 
-if [[ "${1:-}" == "test" ]] || [[ "${1:-}" == "--dry-run" ]]; then
-  DRYRUN='true'
-elif [[ "${1:-}" == "--force-all-services" ]]; then
-  FORCE_ALL_SERVICES='true'
-fi
+while [ -n "${1:-}" ]; do
+  case "$1" in
+    test|--dry-run)
+      DRYRUN='true'
+      shift
+      ;;
+    --force-all-services)
+      FORCE_ALL_SERVICES='true'
+      shift
+      ;;
+    *)
+      break
+      ;;
+  esac
+done
+
 log_debug "DRYRUN = ${DRYRUN}"
 log_debug "FORCE_ALL_SERVICES = ${FORCE_ALL_SERVICES}"
 

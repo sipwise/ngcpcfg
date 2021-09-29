@@ -31,23 +31,30 @@ help() {
 RC=0
 b_show_diff=false
 
-if [ "${#:-}" == "2" ]; then
-  file="$1"
-  option="$2"
-elif [ "${#:-}" == "3" ]; then
-  if [ "$1" == "--diff" ]; then
-    b_show_diff=true
-  else
-    log_error "unsupported option '$1'. Exiting."
-    help >&2
-    exit 1
-  fi
-  file="$2"
-  option="$3"
-else
+while [ -n "${1:-}" ]; do
+  case "$1" in
+    --diff)
+      b_show_diff=true
+      shift
+      ;;
+    --*)
+      log_error "unsupported option '$1'. Exiting."
+      help >&2
+      exit 1
+      ;;
+    *)
+      break
+      ;;
+  esac
+done
+
+if [ "${#:-}" != "2" ]; then
   help >&2
   exit 1
 fi
+
+file="$1"
+option="$2"
 
 [ -f "${file}" ] || (log_error "missing ${file}. Exiting." ; exit 1)
 [ -z "${option}" ] && ( log_error "missing option to set. Exiting." ; exit 1)

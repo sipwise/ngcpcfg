@@ -21,13 +21,14 @@ fi
 
 MODIFIED_ONLY=false
 check_args=()
-if [ -n "${1:-}" ] ; then
+while [ -n "${1:-}" ] ; do
   case "$1" in
     *--modified-only*) MODIFIED_ONLY=true ; shift ;;
     *--ignore-branch-check*) check_args+=( --ignore-branch-check ) ; shift ;;
     *--ignore-shared-storage-check*) check_args+=( --ignore-shared-storage-check ) ; shift ;;
+    *) break ;;
   esac
-fi
+done
 
 # Sanity check the YAML and schema files.
 # NOTE: we can't blindly pass "$@" to the check script,

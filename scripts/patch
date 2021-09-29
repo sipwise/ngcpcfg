@@ -286,20 +286,30 @@ patch_footer() {
 declare -a bad_files=()
 declare -a good_files=()
 
-case "${1:-}" in
-  "--help")
-    patch_help
-    ;;
-  "--from-customtt")
-    shift # removing '--from-customtt'
-    patch_import "$@"
-    patch_footer "customtt"
-    ;;
-  *)
-    patch_patch "$@"
-    patch_footer "patchtt"
-    ;;
-esac
+patch_type=patchtt
+
+while [ -n "${1:-}" ] ; do
+  case "${1:-}" in
+    --help)
+      patch_help
+      exit 0
+      ;;
+    --from-customtt)
+      patch_type=customtt
+      shift
+      ;;
+    *)
+      break
+      ;;
+  esac
+done
+
+if [ "${patch_type}" = 'patchtt' ]; then
+  patch_patch "$@"
+else
+  patch_import "$@"
+fi
+patch_footer "${patch_type}"
 
 exit "${RC:-0}"
 
