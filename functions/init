@@ -77,6 +77,16 @@ export LC_ALL=C
 [ -n "${DEBUG:-}" ] && export DEBUG
 [ -n "${NO_DB_SYNC:-}" ] && export NO_DB_SYNC
 
+: "${CONSTANTS_CONFIG_USER:=root}"
+: "${CONSTANTS_CONFIG_GROUP:=root}"
+: "${CONSTANTS_CONFIG_CHMOD:=0600}"
+: "${CONFIG_USER:=root}"
+: "${CONFIG_GROUP:=_ngcp-admin}"
+: "${CONFIG_CHMOD:=0660}"
+: "${NETWORK_CONFIG_USER:=root}"
+: "${NETWORK_CONFIG_GROUP:=_ngcp-admin}"
+: "${NETWORK_CONFIG_CHMOD:=0660}"
+
 # export for access via build_config etc
 export CONFIG_POOL
 export HOST_CONFIG
