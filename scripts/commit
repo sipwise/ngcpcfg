@@ -30,6 +30,26 @@ if [ -x "${NGCPCTL_MAIN}/.git/hooks/pre-commit" ] ; then
   "${NGCPCTL_MAIN}/.git/hooks/pre-commit"
 fi
 
+# Apply configured file ownership and permissions
+# shellcheck disable=SC2140
+for f in ${NGCPCTL_CONFIG:-} ${HA_CONFIG:-} ${PAIR_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} "${EXTRA_CONFIG_FILES[@]}" ; do
+  if [ ! -f "${f}" ]; then
+    continue
+  fi
+  chown "${CONFIG_USER}":"${CONFIG_GROUP}" "${f}"
+  chmod "${CONFIG_CHMOD}" "${f}"
+done
+# shellcheck disable=SC2140
+if [ -f "${NETWORK_CONFIG:-}" ]; then
+  chown "${NETWORK_CONFIG_USER}":"${NETWORK_CONFIG_GROUP}" "${NETWORK_CONFIG}"
+  chmod "${NETWORK_CONFIG_CHMOD}" "${NETWORK_CONFIG}"
+fi
+# shellcheck disable=SC2140
+if [ -f "${CONSTANTS_CONFIG:-}" ]; then
+  chown "${CONSTANTS_CONFIG_USER}":"${CONSTANTS_CONFIG_GROUP}" "${CONSTANTS_CONFIG}"
+  chmod "${CONSTANTS_CONFIG_CHMOD}" "${CONSTANTS_CONFIG}"
+fi
+
 cd "$NGCPCTL_MAIN"
 
 if [ -z "${NO_DB_SYNC:-}" ] ; then
