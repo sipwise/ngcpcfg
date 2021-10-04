@@ -5,7 +5,7 @@ FROM docker.mgm.sipwise.com/sipwise-bullseye:latest
 # is updated with the current date. It will force refresh of all
 # of the base images and things like `apt-get update` won't be using
 # old cached versions when the Dockerfile is built.
-ENV REFRESHED_AT 2021-05-03
+ENV REFRESHED_AT 2021-10-04
 
 RUN apt-get update
 
@@ -14,7 +14,7 @@ RUN apt-get install --assume-yes libhash-merge-perl libtemplate-perl \
   libyaml-libyaml-perl libyaml-tiny-perl libyaml-perl \
   libdata-validate-ip-perl libio-interface-perl libregexp-ipv6-perl
 # misc stuff for execution/debugging/devel
-RUN apt-get install --assume-yes fakeroot git lsof make strace
+RUN apt-get install --assume-yes fakeroot git file lsof make strace
 # test execution; we need the backport of python3-junitxml from our own
 # repository since it's not part of Debian/buster
 # files that get-code generates
