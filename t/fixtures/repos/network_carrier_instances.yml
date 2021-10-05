@@ -777,15 +777,26 @@ hosts:
       vlan_raw_device: bond0
 instances:
   - name: A
-    service:
-      name: kamailio-lb-A
-      unit: kamailio-lb@A.service
+    service: kamailio-lb
     host: lb01b
     status: online
+    label: lb
     interfaces:
       - name: vlan1719
         ip: 172.30.52.204
         type: sip_ext
       - name: vlan1720
         ip: 172.30.52.146
+        type: sip_int
+  - name: B
+    service: kamailio-lb
+    host: lb01a
+    label: lb
+    status: online
+    interfaces:
+      - name: vlan1719
+        ip: 172.30.52.203
+        type: sip_ext
+      - name: vlan1720
+        ip: 172.30.52.145
         type: sip_int

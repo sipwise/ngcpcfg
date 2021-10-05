@@ -113,14 +113,67 @@ is($obj->net_ip_expand('1::0'),
     'normalize IPv6 1::0');
 
 ## instances
-$config->{instances} = [
-    {name => 'A', host => 'sp2'},
-    {name => 'B', host => 'sp3'},
+$config->{hosts}->{sp1}->{interfaces} = [ qw(eth0 eth1) ];
+$config->{hosts}->{sp1}{eth0} = {
+    ip => '172.16.7.1',
+    netmask => '255.255.255.0',
+    type => [ qw(ha_int sip_int) ],
+};
+$config->{hosts}->{sp1}{eth1} = {
+    cluster_set => [ 'default' ],
+    ip => '172.16.8.1',
+    netmask => '255.255.255.224',
+    type => [ 'sip_ext' ],
+};
+$config->{hosts}->{sp2}->{interfaces} = [ qw(eth0 eth1) ];
+$config->{hosts}->{sp2}{eth0} = {
+    ip => '172.16.7.2',
+    netmask => '255.255.255.0',
+    type => [ qw(ha_int sip_int) ],
+};
+$config->{hosts}->{sp2}{eth1} = {
+    cluster_set => [ 'default' ],
+    ip => '172.16.8.2',
+    netmask => '255.255.255.224',
+    type => [ 'sip_ext' ],
+};
+
+my $iface_A = [
+    {name => 'eth0', ip => '172.16.7.4', type => 'sip_int'},
+    {name => 'eth1', ip => '172.16.8.4', type => 'sip_ext'},
 ];
-my $obj = NGCP::Template::Object->new($config);
+my $iface_B = [
+    {name => 'eth0', ip => '172.16.7.6', type => 'sip_int'},
+    {name => 'eth1', ip => '172.16.8.6', type => 'sip_ext'},
+];
+$config->{instances} = [
+    {name => 'A', host => 'sp2', interfaces => $iface_A},
+    {name => 'B', host => 'sp3', interfaces => $iface_B},
+];
+$obj = NGCP::Template::Object->new($config);
 
 # Check get_instances(hostname).
-my $instances = [{name=>'A',host=>'sp2'}];
+my $instances = [
+    {
+        name      => 'A',
+        host      => 'sp2',
+        interfaces => [
+            {
+                name    => 'eth0',
+                ip      => '172.16.7.4',
+                type    => 'sip_int',
+                netmask => '255.255.255.0'
+            },
+            {
+                name        => 'eth1',
+                ip          => '172.16.8.4',
+                type        => 'sip_ext',
+                netmask     => '255.255.255.224',
+                cluster_set => ['default']
+            },
+        ]
+    },
+];
 is_deeply($obj->get_instances('sp1'), $instances,
     'host sp1 has one instances defined');
 is_deeply($obj->get_instances('sp2'), $instances,
