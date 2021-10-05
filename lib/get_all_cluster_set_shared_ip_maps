@@ -46,6 +46,18 @@ FOREACH set IN cluster_sets.sets;
     END;
   END;
 
+  FOREACH instance IN instances;
+    NEXT UNLESS status.item(instance.status);
+    NEXT UNLESS argv.role == instance.label;
+    host = instance.host;
+    FOREACH iface IN instance.interfaces;
+      ifname = iface.name;
+      NEXT UNLESS hosts.$host.$ifname.cluster_sets.grep('^' _ set.name _ '$').size();
+      NEXT UNLESS iface.type.grep('^' _ argv.type _ '$').size();
+      theset.ips.push(iface.ip) UNLESS theset.ips.defined(iface.ip);
+    END;
+  END;
+
   IF theset.ips.size();
     out.push(theset);
   END;

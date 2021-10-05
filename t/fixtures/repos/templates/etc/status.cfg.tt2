@@ -16,6 +16,14 @@
   PROCESS '../lib/get_all_shared_ips';
   sip_lb_ips = out;
 
+  FOR instance IN instances;
+    NEXT UNLESS instance.service == 'kamailio-lb';
+    argv.type = 'sip_int';
+    argv.instance = instance;
+    PROCESS '../lib/get_all_ips_for_instance';
+    sip_lb_ips = out.merge(sip_lb_ips);
+  END;
+
   argv.role='lb'; argv.type='sip_int';
   PROCESS '../lib/get_all_cluster_set_shared_ip_maps';
   UNLESS out.size;
@@ -36,13 +44,13 @@
     mgmt_sip_ips = out;
   END;
 -%]
-CARRIER_LB_IP='[% sip_lb_ips.unique.join(' ') %]'
+CARRIER_LB_IP='[% sip_lb_ips.unique.sort.join(' ') %]'
 CARRIER_PRXS='[% prx_shared_names.unique.join(' ') %]'
 SIPADDRESS='[% sip_prx_ips.unique.join(' ') %]'
 MGMT_SIP_IPS='[% mgmt_sip_ips.unique.join(' ') %]'
 
 [% IF lb_dispatcher_set.size -%]
-DISPATCHER_IPS="[% FOREACH set IN lb_ip_set -%][% set.dispatcher_id %];[% FOREACH ip IN set.ips %][% ip %][% UNLESS loop.last %];[% END %][% END %] [% END %]"
+DISPATCHER_IPS="[% FOREACH set IN lb_ip_set -%][% set.dispatcher_id %];[% FOREACH ip IN set.ips.sort %][% ip %][% UNLESS loop.last %];[% END %][% END %] [% END %]"
 declare -A DISPATCHER_IDS=(
 [% FOREACH set IN lb_dispatcher_set.keys -%]
   [[% set %]]=[% lb_dispatcher_set.$set %]
