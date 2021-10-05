@@ -1,3 +1,33 @@
+ngcp-ngcpcfg (10.2.0.0+0~mr10.2.0.0) unstable; urgency=medium
+
+  [ Mykola Malkov ]
+  * [589dedb] TT#139151 Switch to use ngcp_hostname
+
+  [ Guillem Jover ]
+  * [a9afbc4] TT#141100 lib: Remove deprecated functions and methods
+  * [8587969] TT#141100 NGCP::Template::Object: Add new get_version method
+  * [df8be33] TT#141100 lib: Use ngcp.get_hostname instead of removed file
+  * [32695c4] TT#141100 NGCP::Template::Object: Add new replace_metavars method
+  * [55164ec] TT#141100 NGCP::Template::Object: Add new get_dbnode method
+  * [c4c299f] TT#141100 NGCP::Template::Object: Rename get_mgmt_node to get_mgmt_pairname
+  * [79ed4aa] TT#142950 ngcpcfg: Use proper file metadata when creating config with set
+  * [d94d32f] TT#142950 test: Add missing file to the Dockerfile dependencies
+  * [b334e70] TT#142950 test: Set junit_family for py.test-3 to quiesce a warning
+  * [93e84e0] TT#142950 Centralize YAML file metadata initialization
+  * [ff5b523] TT#142950 ngcpcfg: Make commit action update config file permissions
+
+  [ Richard Fuchs ]
+  * [88dfe81] TT#110703 add helper function quote_meta
+
+  [ Michael Prokop ]
+  * [39c5c91] TT#142950 Avoid interactive autoedit merge commits
+
+  [ Victor Seva ]
+  * [8d50c9e] TT#139455 support instances
+  * [8092df8] TT#118659 Dockerfile: python3-junitxml is included in bullseye
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 05 Oct 2021 13:20:37 +0200
+
 ngcp-ngcpcfg (10.1.0.0+0~mr10.1.0.0) unstable; urgency=medium
 
   [ Alexander Lutay ]
