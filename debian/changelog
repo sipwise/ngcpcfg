@@ -1,3 +1,10 @@
+ngcp-ngcpcfg (10.1.2.0+0~mr10.1.2.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [79f59d9] TT#139455 lib: get_instances() add interface data from host
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 11 Oct 2021 17:29:50 +0200
+
 ngcp-ngcpcfg (10.1.1.0+0~mr10.1.1.0) unstable; urgency=medium
 
   [ Mykola Malkov ]
