@@ -247,11 +247,6 @@ sub apply_copy_grants {
 sub apply_drop_users {
     my $forced_user = shift; # to drop a specific user
 
-    my $ch_sel = $dbh->prepare(<<SQL)
-SELECT Host FROM mysql.user WHERE User = ? AND Host LIKE ?
-SQL
-        or die "Cannot prepare: $DBI::errstr\n";
-
     my $rc = 0;
 
     my $drops = $grants->{drop};
@@ -263,10 +258,27 @@ SQL
         my $ref = $drops->{$user};
         $ref = ref $ref ? $ref : [ $ref ];
         foreach my $host_rx (@$ref) {
-            $host_rx =~ s/\*/%/g;
-            $ch_sel->execute($user, $host_rx)
+            my $usel_sql = 'SELECT Host FROM mysql.user WHERE User = ?';
+            my $is_not = 0;
+            my $is_rx  = 0;
+            if ($host_rx =~ s/^\!//) {
+                $is_not = 1;
+            }
+            if ($host_rx =~ /\*/) {
+                $host_rx =~ s/\*/%/g;
+                $is_rx = 1;
+            }
+            $usel_sql .= $is_not
+                            ? $is_rx
+                                ? ' AND Host NOT LIKE ?'
+                                : ' AND Host != ?'
+                            : $is_rx
+                                ? ' AND Host LIKE ?'
+                                : ' AND Host = ?';
+            my $users = $dbh->selectall_arrayref($usel_sql, undef, $user, $host_rx)
                 or die "Cannot select user $user -- $host_rx: $DBI::errstr\n";
-            while (my ($host) = $ch_sel->fetchrow_array) {
+            foreach my $host_ref (@{$users}) {
+                my $host = $host_ref->[0];
                 $dbh->do("DROP USER '$user'\@'$host'")
                     or die "Cannot drop user $user -- $host: $DBI::errstr\n";
                 log_info(sprintf "drop: %s\@%s", $user, $host);
@@ -274,8 +286,6 @@ SQL
             }
         }
     }
-
-    $ch_sel->finish;
 
     return $rc;
 }
