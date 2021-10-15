@@ -1,3 +1,14 @@
+ngcp-ngcpcfg (10.0.1.2+0~mr10.0.1.2) unstable; urgency=medium
+
+  [ Michael Prokop ]
+  * [2bf4023] TT#142950 Avoid interactive autoedit merge commits
+
+  [ Guillem Jover ]
+  * [5be7491] TT#142950 Centralize YAML file metadata initialization
+  * [11adc69] TT#142950 ngcpcfg: Make commit action update config file permissions
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 15 Oct 2021 22:34:11 +0200
+
 ngcp-ngcpcfg (10.0.1.1+0~mr10.0.1.1) unstable; urgency=medium
 
   * New release.
