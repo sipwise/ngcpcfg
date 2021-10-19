@@ -12,8 +12,6 @@ def test_status(ngcpcfgcli, tmpdir, gitrepo):
         out = ngcpcfgcli(
             "status",
             env={
-                # don't mess with perms
-                "SKIP_RESTORE_PERMS": "true",
                 "NGCPCTL_MAIN": cfg_dir,
                 # we just need a clean git repo
                 "NGCPCTL_BASE": cfg_dir,

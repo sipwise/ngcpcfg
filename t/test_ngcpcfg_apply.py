@@ -3,7 +3,12 @@
 import os
 import pytest
 import re
-from pathlib import Path
+
+
+def create_change(file):
+    with open(file, "a") as file_object:
+        # Append 'hello' at the end of file
+        file_object.write("hello")
 
 
 @pytest.mark.apply
@@ -18,15 +23,13 @@ def test_apply_no_commit_msg(ngcpcfgcli, tmpdir, gitrepo):
             "RUN_DIR": tmpdir.mkdir("ngcp-pytest-rundir"),
             "OUTPUT_DIRECTORY": outdir,
             "TEMPLATE_POOL_BASE": tt2_dir,
-            # don't mess with perms
-            "SKIP_RESTORE_PERMS": "true",
             "NGCPCTL_MAIN": cfg_dir,
             # we just need a clean git repo
             "NGCPCTL_BASE": cfg_dir,
             "STATE_FILES_DIR": outdir + "/var/lib/ngcpcfg/state/",
         }
         # create a change in repo
-        Path(os.path.join(cfg_dir, "config.yml")).touch()
+        create_change(os.path.join(cfg_dir, "config.yml"))
         print("env:{}".format(env))
         out = ngcpcfgcli(
             "apply",
@@ -58,15 +61,13 @@ def test_apply_no_commit_msg_options(ngcpcfgcli, tmpdir, gitrepo):
             "RUN_DIR": tmpdir.mkdir("ngcp-pytest-rundir"),
             "OUTPUT_DIRECTORY": outdir,
             "TEMPLATE_POOL_BASE": tt2_dir,
-            # don't mess with perms
-            "SKIP_RESTORE_PERMS": "true",
             "NGCPCTL_MAIN": cfg_dir,
             # we just need a clean git repo
             "NGCPCTL_BASE": cfg_dir,
             "STATE_FILES_DIR": outdir + "/var/lib/ngcpcfg/state/",
         }
         # create a change in repo
-        Path(os.path.join(cfg_dir, "config.yml")).touch()
+        create_change(os.path.join(cfg_dir, "config.yml"))
         print("env:{}".format(env))
         out = ngcpcfgcli(
             "apply",
@@ -101,8 +102,6 @@ def test_apply_with_commit_msg(ngcpcfgcli, tmpdir, gitrepo):
             "RUN_DIR": tmpdir.mkdir("ngcp-pytest-rundir"),
             "OUTPUT_DIRECTORY": outdir,
             "TEMPLATE_POOL_BASE": tt2_dir,
-            # don't mess with perms
-            "SKIP_RESTORE_PERMS": "true",
             "NGCPCTL_MAIN": cfg_dir,
             # we just need a clean git repo
             "NGCPCTL_BASE": cfg_dir,
@@ -145,8 +144,6 @@ def test_apply_with_commit_msg_options(ngcpcfgcli, tmpdir, gitrepo):
             "RUN_DIR": tmpdir.mkdir("ngcp-pytest-rundir"),
             "OUTPUT_DIRECTORY": outdir,
             "TEMPLATE_POOL_BASE": tt2_dir,
-            # don't mess with perms
-            "SKIP_RESTORE_PERMS": "true",
             "NGCPCTL_MAIN": cfg_dir,
             # we just need a clean git repo
             "NGCPCTL_BASE": cfg_dir,

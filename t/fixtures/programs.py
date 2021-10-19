@@ -33,6 +33,8 @@ def ngcpcfgcli(tmpdir, *args):
             'NETWORK_CONFIG_CHMOD': '0644',
             'NO_DB_SYNC': 'true',
             'HOME': os.path.abspath(fakehome),
+            'SKIP_UPDATE_PERMS': 'true',
+            'SKIP_RESTORE_PERMS': 'true',
         }
         testenv.update(env)
 
