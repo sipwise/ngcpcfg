@@ -1,2 +1,3 @@
 #!/bin/sh
-echo spce
+[ -z "${NGCP_NODENAME}" ] && NGCP_NODENAME=spce
+echo "${NGCP_NODENAME}"

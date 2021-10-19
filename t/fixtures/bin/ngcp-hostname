@@ -1,3 +1,3 @@
 #!/bin/sh
-
-echo sp1
+[ -z "${NGCP_HOSTNAME}" ] && NGCP_HOSTNAME=sp1
+echo "${NGCP_HOSTNAME}"
