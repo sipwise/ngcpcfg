@@ -94,7 +94,8 @@ patch_validate_patch() {
   if [ -f "${template}" ] ; then
     log_debug "Found template for the patch: '${template}'"
   else
-    log_error "Missing template for patch '${patch}'"
+    log_error "Missing template '${template}'"
+    log_error "       for patch '${patch}'"
     bad_files+=("${patch}")
     return 1
   fi

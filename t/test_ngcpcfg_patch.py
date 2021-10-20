@@ -165,8 +165,8 @@ def test_patch_action_template_missing_for_patchtt(ngcpcfgcli, tmpdir):
 
     assert "Validating patch '" + str(template_path) + \
         "/apt/apt.conf.d/71_no_recommended.patchtt.tt2'" in out.stdout
-    assert "Error: Missing template for patch '" + str(template_path) + \
-        "/apt/apt.conf.d/71_no_recommended.patchtt.tt2'" in out.stderr
+    assert "Error: Missing template '" + str(template_path) + \
+        "/apt/apt.conf.d/71_no_recommended.tt2'" in out.stderr
     assert "Error: Some operations above finished with an error for the file(s)" in out.stderr
     assert 'Requested patchtt operation has finished successfully.' not in out.stdout
 
