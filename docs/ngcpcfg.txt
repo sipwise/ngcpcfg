@@ -245,6 +245,17 @@ be executed under "bash $FILE", so you can use commands e.g. like
 "ngcp-service foobar restart" and any further shell scripting syntax inside
 the services files
 
+NGCP instances
+~~~~~~~~~~~~~~
+
+ngcp-templates package provides the *TEMPLATE_INSTANCES* file defining what are
+the supported templates for instances. Meaning that ngcpcfg will generate
+one additional output per instance following the specifications provide by the
+file.
+
+ngcpcfg will generate that output with the template variable **instance_name** defined
+and the environment variable **INSTANCE_NAME** set for ngcpcfg.service scripts
+
 Global Options
 --------------
 

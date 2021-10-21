@@ -10,8 +10,10 @@ set -u
 # support testsuite
 
 FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
+OUTPUT_DIRECTORY="${OUTPUT_DIRECTORY:-}"
 
 CLEANUP_FILES=()
+INSTANCES=()
 
 # load modules
 
@@ -25,25 +27,55 @@ fi
 
 # functions
 
+instances_info() {
+  local target
+  local instance
+  local RUNNER="nice -n 19 ionice -c 3"
+
+  log_debug "${RUNNER} ${HELPER}/instances-info"
+  while IFS=":" read -r -a info; do
+    target=${info[0]}
+    instance=${info[2]}
+    log_debug "target:${target} instance:${instance}"
+    INSTANCES+=("${target}:${instance}")
+  done< <(${RUNNER} "${HELPER}/instances-info")
+}
+
+instance_env() {
+  local service_file=$1
+  local info
+
+  for instance in "${INSTANCES[@]}"; do
+    IFS=":" read -ra info <<< "${instance}"
+    if [[ "${service_file}" =~ ^${TEMPLATE_POOL_BASE}${info[0]} ]] ; then
+        log_debug "${service_file} matches ${info[1]}, scheduling instance restart"
+	exec_wrapper "${service_file}" "${info[1]}"
+    fi
+  done
+}
+
 exec_wrapper() {
+  local service_file=$1
+  local instance_name="${2:-}"
+
   if ${DRYRUN} ; then
-    log_info "TEST MODE: Would execute action for ${line}"
+    log_info "TEST MODE: Would execute action for ${service_file}"
     return 0
   fi
 
-  log_info "Executing action for ${line}"
-  if [[ -x "${line}" ]]; then
-    log_debug "${line}"
-    if ! "${line}" ; then
-      log_warn "${line} returned with error code, continuing anyway."
+  log_info "Executing action for ${service_file}"
+  if [[ -x "${service_file}" ]]; then
+    log_debug "${service_file}"
+    if ! INSTANCE_NAME="${instance_name}" "${service_file}" ; then
+      log_warn "INSTANCE_NAME=${instance_name} ${service_file} returned with error code, continuing anyway."
     fi
-  elif [[ -r "${line}" ]]; then
-    log_debug "bash ${line}"
-    if ! bash "${line}" ; then
-      log_warn "${line} returned with error code, continuing anyway."
+  elif [[ -r "${service_file}" ]]; then
+    log_debug "INSTANCE_NAME=${instance_name} bash ${service_file}"
+    if ! INSTANCE_NAME="${instance_name}" bash "${service_file}" ; then
+      log_warn "INSTANCE_NAME=${instance_name} ${service_file} returned with error code, continuing anyway."
     fi
   else
-    log_error "Error: ${line} could not be read."
+    log_error "Error: ${service_file} could not be read."
     exit 1
   fi
 }
@@ -94,6 +126,7 @@ services_start_queue()
 execute() {
   while read -r line ; do
     exec_wrapper "${line}"
+    instance_env "${line}"
   done < "${SORTED_LIST}"
 }
 
@@ -215,14 +248,20 @@ systemd_daemon_reload_preset
 
 TMPFILE="$(mktemp)"
 log_debug "TMPFILE = ${TMPFILE}"
+log_debug "OUTPUT_DIRECTORY=${OUTPUT_DIRECTORY}"
 
 CLEANUP_FILES+=("${TMPFILE}")
 
-for dir in ${CONFIG_POOL} ; do
-  is_absolute_path "${dir}" || continue
-  is_non_git_folder "${dir}" || continue
 
-  generate_list_to_process "${dir}"
+if [ -n "${TEMPLATE_INSTANCES:-}" ] && [ -f "${TEMPLATE_INSTANCES}" ] ; then
+  instances_info
+fi
+
+for dir in ${CONFIG_POOL} ; do
+  is_absolute_path "${OUTPUT_DIRECTORY}${dir}" || continue
+  is_non_git_folder "${OUTPUT_DIRECTORY}${dir}" || continue
+
+  generate_list_to_process "${OUTPUT_DIRECTORY}${dir}"
 done
 
 if [[ -s "${TMPFILE}" ]]; then

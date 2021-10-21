@@ -48,11 +48,41 @@ for f in ${NGCPCTL_CONFIG:-} ${HA_CONFIG:-} ${PAIR_CONFIG:-} ${HOST_CONFIG:-} ${
   fi
 done
 
+build_config_files_instances() {
+  local info
+  local source
+  local target
+  local instance
+  local inst_cfg
+
+  if [ -z "${TEMPLATE_INSTANCES:-}" ] || [ ! -f "${TEMPLATE_INSTANCES}" ] ; then
+    log_debug "no template info for instances, skip step"
+    return
+  fi
+
+  log_debug "${RUNNER} ${HELPER}/instances-info $*"
+  inst_cfg=$(mktemp)
+  while IFS=":" read -r -a info; do
+    source=${info[0]}
+    target=${info[1]}
+    instance=${info[2]}
+    log_debug "source:${source} target:${target} instance:${instance}"
+    cat <<EOF > "${inst_cfg}"
+---
+instance_name: ${instance}
+EOF
+    log_debug "INSTANCE_NAME=${instance} ${RUNNER} ${HELPER}/tt2-process ${ARGS[*]} -c ${inst_cfg} -r ${source}:${target} ${source}"
+    INSTANCE_NAME="${instance}" ${RUNNER} "${HELPER}/tt2-process" "${ARGS[@]}" -c "${inst_cfg}" -r "${source}:${target}" "${source}"
+  done< <(${RUNNER} "${HELPER}/instances-info" "$@")
+}
+
 build_config_files() {
   RUNNER="nice -n 19 ionice -c 3"
 
   log_debug "${RUNNER} ${HELPER}/tt2-process ${ARGS[*]} $*"
   ${RUNNER} "${HELPER}/tt2-process" "${ARGS[@]}" "$@"
+
+  build_config_files_instances "$@"
 
   record_commit_id
 }

@@ -1,0 +1,194 @@
+#!/usr/bin/perl -CSD
+# Purpose: format yaml instances file for bash script
+################################################################################
+
+use strict;
+use warnings;
+
+use YAML::XS;
+use Getopt::Long qw(:config posix_default bundling_values no_ignorecase);
+use Time::Piece;
+use Data::Dumper;
+use File::Spec;
+use Storable qw(dclone);
+
+my $DEBUG       = $ENV{DEBUG} || 0;
+my $HNAME       = $ENV{HNAME} // '';
+my $TIME_FORMAT = $ENV{TIME_FORMAT} // '%F %T';
+$TIME_FORMAT =~ s/^\+//;
+
+my $NETWORK_CONFIG     = $ENV{NETWORK_CONFIG};
+my $TEMPLATE_INSTANCES = $ENV{TEMPLATE_INSTANCES};
+
+sub usage {
+  print <<HELP;
+Usage: $0 [<option>...] <input>...
+
+Options:
+  -h, --help                This help message.
+HELP
+}
+
+my %options = ( help => sub { usage(); exit 0; }, );
+
+error("NETWORK_CONFIG is not defined")     unless $NETWORK_CONFIG;
+
+GetOptions( \%options, 'help|?', );
+
+my $yaml  = YAML::XS::LoadFile($NETWORK_CONFIG);
+my $templ = YAML::XS::LoadFile($TEMPLATE_INSTANCES);
+
+
+sub output_prefix {
+  my $t         = Time::Piece->new;
+  my $timestamp = $t->strftime($TIME_FORMAT);
+
+  return "$timestamp $HNAME";
+}
+
+
+sub error {
+  my $prefix = output_prefix();
+  die "$prefix: Error: @_\n";
+}
+
+
+sub debug {
+  return unless $DEBUG;
+  my $prefix = output_prefix();
+  warn "$prefix: DEBUG @_\n";
+}
+
+my $instances = {};
+my $dirs = {};
+
+
+sub prefix_root {
+  my $path = shift;
+  return $path =~ s/^([^\/].*)/\/$1/r;
+}
+
+
+sub split_path {
+  my $input = shift;
+  my $val = ();
+  foreach(split /\//, $input){
+    error("relative paths are not supported, ${input}") if ($_ =~ '^\.\.?$');
+    if( defined $_ && !($_ =~ /^$/ )) {
+      push @{$val}, $_;
+    }
+  }
+  return $val;
+}
+
+
+sub show_match {
+  my $path;
+  my ($bpath, $spath, $suffix) = @_;
+
+  if(defined $spath) {
+    $path = $spath;
+  } else {
+    $path = $bpath;
+  }
+
+  foreach my $info (sort @{$dirs->{$path}}) {
+    my $dest;
+    if(defined $spath && defined $suffix) {
+      $dest = $info->{dest}."/${suffix}";
+    } else {
+      $dest = $info->{dest};
+    }
+    print "$bpath:$dest:".$info->{name}."\n";
+  }
+}
+
+
+sub prepare_info {
+  return 0 unless defined $yaml->{instances};
+  foreach my $instance ( sort @{ $yaml->{instances} } ) {
+    $instances->{ $instance->{label} } //= ();
+    push @{ $instances->{ $instance->{label} } }, $instance->{name};
+  }
+  foreach my $def ( sort @{ $templ->{sources} } ) {
+    my $inst = $instances->{ $def->{label} };
+    my $orig = prefix_root $def->{orig};
+    $dirs->{$orig} = ();
+    foreach ( sort @{$inst} ) {
+      my $dest = $def->{dest} =~ s/^(.*)\$\{INSTANCE_NAME\}(.*)$/$1$_$2/rg;
+      push @{ $dirs->{$orig} }, { name => $_, dest => prefix_root $dest};
+    }
+  }
+  debug("info:".Dumper({instances => $instances, dirs => $dirs}));
+  return 1;
+}
+
+
+sub match_source {
+  my ($build_path, $matched) = @_;
+  my $abs_path = File::Spec->rel2abs($build_path);
+  my $sbuild = split_path $abs_path;
+  my $size_build = $#{$sbuild};
+  my $search = keys %{$dirs};
+
+  debug("search ${build_path}");
+  foreach my $index (0 .. $size_build) {
+    my $b_part = @{$sbuild}[$index];
+    debug("index:${index} b_part:${b_part} b:".join '/', @{$sbuild}[0..$index]);
+    foreach my $source_path (sort keys %{$dirs}) {
+      next if defined $matched->{$source_path};
+      my $sorig = split_path $source_path;
+      my $size_orig = $#{$sorig};
+      my $i_part = defined(@{$sorig}[$index]) ? @{$sorig}[$index] : '';
+      my $equal = defined($i_part) ? $b_part eq $i_part : 0;
+
+      if (not $equal) {
+        $search--;
+        $matched->{$source_path} = 0;
+        debug("!! fail to match ${search} ${source_path}");
+      } elsif ($index eq $size_build) {
+        $search--;
+        $matched->{$source_path} = {build => $source_path, suffix=> undef};
+        debug("  match ${search} ${source_path}");
+      } elsif ($index eq $size_orig) {
+        $search--;
+        my $temp = join '/', @{$sbuild}[$index+1..$size_build];
+        $matched->{$source_path} = {
+          build => "${source_path}/$temp",
+          suffix => $temp,
+        };
+        debug("  match ${search} ${source_path}");
+      } else  {
+        debug("  index:$index size_build:${size_build} size_orig:${size_orig} ${source_path}");
+      }
+    }
+    debug("***");
+
+    # nothing else to match
+    last unless $search;
+  }
+
+  # clean the non-matches for next round
+  foreach (sort keys %{$matched}) {
+    if ($matched->{$_}) {
+      show_match $matched->{$_}->{build}, $_, $matched->{$_}->{suffix};
+    } else {
+      delete($matched->{$_});
+    }
+  }
+}
+
+exit unless prepare_info;
+
+if (@ARGV == 0) {
+  foreach (sort keys %{$dirs}) {
+    show_match $_;
+  }
+} else {
+  my $matched;
+  foreach my $build (sort @ARGV) {
+    match_source $build, $matched;
+  }
+}
+exit;
+
