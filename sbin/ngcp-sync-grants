@@ -488,7 +488,7 @@ sub main {
                 /^hosts$/ && do {
                     $rc += apply_host_grants();
                 };
-                /^hosts$/ && do {
+                /^copy$/ && do {
                     $rc += apply_copy_grants();
                 };
             } # SWITCH
