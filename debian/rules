@@ -17,16 +17,14 @@ override_dh_auto_build:
 	# catch any syntax errors *before* building the .deb
 	$(MAKE) syntaxcheck
 
-override_dh_install:
-	dh_install
+execute_after_dh_install:
 	for s in $(SCRIPTS); do \
 	  test -r "$$s" \
 	    && sed -i -e "s/VERSION = 'UNRELEASED'/VERSION = '$(VERSION)'/" "$$s" \
 	    || true; \
 	done
 
-override_dh_auto_test:
-	dh_auto_test
+execute_after_dh_auto_test:
 	## this is a hack to automatically copy the pytest result via pbuilder to
 	## the workspace so we can automatically use it as Jenkins test result
 	# starting with pbuilder v0.216 it defaults to /build
