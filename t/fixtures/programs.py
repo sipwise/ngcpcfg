@@ -9,32 +9,32 @@ from collections import namedtuple
 def ngcpcfgcli(tmpdir, *args):
     """Execute ``ngcpcfg``."""
     code = os.path.abspath("..")
-    testbin = os.path.abspath('fixtures/bin')
+    testbin = os.path.abspath("fixtures/bin")
     fakehome = tmpdir.mkdir("fakehome")
 
     def run(*args, env={}):
         testenv = {
-            'PATH': '{}:/usr/bin:/bin:/usr/sbin:/sbin'.format(testbin),
-            'FUNCTIONS': '{}/functions/'.format(code),
-            'NGCPCFG': os.path.abspath('fixtures/ngcpcfg.cfg'),
-            'SCRIPTS': '{}/scripts/'.format(code),
-            'HELPER': '{}/helper/'.format(code),
-            'HOOKS': '{}/hooks/'.format(code),
-            'PERL5LIB': '{}/lib/'.format(code),
-            'NGCP_TESTSUITE': 'true',
-            'CONFIG_USER': 'nobody',
-            'CONFIG_GROUP': 'root',
-            'CONFIG_CHMOD': '0644',
-            'CONSTANTS_CONFIG_USER': 'nobody',
-            'CONSTANTS_CONFIG_GROUP': 'root',
-            'CONSTANTS_CONFIG_CHMOD': '0644',
-            'NETWORK_CONFIG_USER': 'nobody',
-            'NETWORK_CONFIG_GROUP': 'root',
-            'NETWORK_CONFIG_CHMOD': '0644',
-            'NO_DB_SYNC': 'true',
-            'HOME': os.path.abspath(fakehome),
-            'SKIP_UPDATE_PERMS': 'true',
-            'SKIP_RESTORE_PERMS': 'true',
+            "PATH": "{}:/usr/bin:/bin:/usr/sbin:/sbin".format(testbin),
+            "FUNCTIONS": "{}/functions/".format(code),
+            "NGCPCFG": os.path.abspath("fixtures/ngcpcfg.cfg"),
+            "SCRIPTS": "{}/scripts/".format(code),
+            "HELPER": "{}/helper/".format(code),
+            "HOOKS": "{}/hooks/".format(code),
+            "PERL5LIB": "{}/lib/".format(code),
+            "NGCP_TESTSUITE": "true",
+            "CONFIG_USER": "nobody",
+            "CONFIG_GROUP": "root",
+            "CONFIG_CHMOD": "0644",
+            "CONSTANTS_CONFIG_USER": "nobody",
+            "CONSTANTS_CONFIG_GROUP": "root",
+            "CONSTANTS_CONFIG_CHMOD": "0644",
+            "NETWORK_CONFIG_USER": "nobody",
+            "NETWORK_CONFIG_GROUP": "root",
+            "NETWORK_CONFIG_CHMOD": "0644",
+            "NO_DB_SYNC": "true",
+            "HOME": os.path.abspath(fakehome),
+            "SKIP_UPDATE_PERMS": "true",
+            "SKIP_RESTORE_PERMS": "true",
         }
         testenv.update(env)
 
@@ -43,17 +43,21 @@ def ngcpcfgcli(tmpdir, *args):
         if os.getuid() == 0:
             fakeroot = []
         else:
-            fakeroot = ['fakeroot']
-        config = '{}/sbin/ngcpcfg'.format(code)
+            fakeroot = ["fakeroot"]
+        config = "{}/sbin/ngcpcfg".format(code)
 
-        p = subprocess.Popen(fakeroot + [config] + list(args),
-                             stdout=subprocess.PIPE,
-                             stderr=subprocess.PIPE, env=testenv)
+        p = subprocess.Popen(
+            fakeroot + [config] + list(args),
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            universal_newlines=True,
+            env=testenv,
+        )
         stdout, stderr = p.communicate(timeout=30)
         stdout, stderr = str(stdout), str(stderr)
-        result = namedtuple('ProcessResult',
-                            ['returncode', 'stdout', 'stderr'])(
-                                p.returncode, stdout, stderr)
+        result = namedtuple("ProcessResult", ["returncode", "stdout", "stderr"])(
+            p.returncode, stdout, stderr
+        )
         return result
 
     return run

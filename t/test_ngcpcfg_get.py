@@ -61,7 +61,7 @@ def test_get_action_config_child_item(ngcpcfgcli, tmpdir):
 @pytest.mark.get
 def test_get_action_missing_item(ngcpcfgcli, tmpdir):
     out = ngcpcfgcli("get", "key.missing")
-    assert "\\n" in out.stdout
+    assert "\n" in out.stdout
     assert "" in out.stderr
     assert out.returncode == 0
 

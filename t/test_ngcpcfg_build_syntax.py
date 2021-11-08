@@ -21,13 +21,15 @@ def test_bad_syntax(ngcpcfgcli, tmpdir):
 
     # debug, only printed in logs in case of error
     print("stdout:")
-    print(out.stdout.replace("\\n", "\n"))
+    print(out.stdout)
     print("stderr:")
-    print(out.stderr.replace("\\n", "\n"))
+    print(out.stderr)
 
     regex1 = re.compile(r"Error: Cannot process template "
-                        "'.*etc/bad-syntax.txt.tt2':.*"
-                        "file error - parse error - input file handle line 1: "
+                        "'.*etc/bad-syntax.txt.tt2':.*")
+    assert re.search(regex1, out.stderr)
+
+    regex1 = re.compile(r"file error - parse error - input file handle line 1: "
                         "unexpected end of directive")
     assert re.search(regex1, out.stderr)
 

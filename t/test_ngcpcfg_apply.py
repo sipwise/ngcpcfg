@@ -41,9 +41,9 @@ def test_apply_no_commit_msg(ngcpcfgcli, tmpdir, gitrepo):
 
     # debug, only printed in logs in case of error
     print("stdout:")
-    print(out.stdout.replace("\\n", "\n"))
+    print(out.stdout)
     print("stderr:")
-    print(out.stderr.replace("\\n", "\n"))
+    print(out.stderr)
 
     assert re.search(regex, out.stdout)
     assert out.returncode != 0
@@ -78,9 +78,9 @@ def test_apply_no_commit_msg_options(ngcpcfgcli, tmpdir, gitrepo):
 
     # debug, only printed in logs in case of error
     print("stdout:")
-    print(out.stdout.replace("\\n", "\n"))
+    print(out.stdout)
     print("stderr:")
-    print(out.stderr.replace("\\n", "\n"))
+    print(out.stderr)
 
     msg = r"Please provide commit message"
     regex = re.compile(msg)
@@ -119,9 +119,9 @@ def test_apply_with_commit_msg(ngcpcfgcli, tmpdir, gitrepo):
 
     # debug, only printed in logs in case of error
     print("stdout:")
-    print(out.stdout.replace("\\n", "\n"))
+    print(out.stdout)
     print("stderr:")
-    print(out.stderr.replace("\\n", "\n"))
+    print(out.stderr)
 
     assert out.returncode == 0
     assert re.search(regex, out.stdout)
@@ -163,9 +163,9 @@ def test_apply_with_commit_msg_options(ngcpcfgcli, tmpdir, gitrepo):
 
     # debug, only printed in logs in case of error
     print("stdout:")
-    print(out.stdout.replace("\\n", "\n"))
+    print(out.stdout)
     print("stderr:")
-    print(out.stderr.replace("\\n", "\n"))
+    print(out.stderr)
 
     assert out.returncode == 0
     assert re.search(regex, out.stdout)

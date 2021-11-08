@@ -22,9 +22,9 @@ def test_network_interfaces(ngcpcfgcli, tmpdir):
 
     # debug, only printed in logs in case of error
     print("stdout:")
-    print(out.stdout.replace("\\n", "\n"))
+    print(out.stdout)
     print("stderr:")
-    print(out.stderr.replace("\\n", "\n"))
+    print(out.stderr)
 
     regex1 = re.compile(r"Generating .*/etc/network/interfaces: OK")
     assert re.search(regex1, out.stdout)

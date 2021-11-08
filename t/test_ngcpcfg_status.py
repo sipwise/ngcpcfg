@@ -20,7 +20,7 @@ def test_status(ngcpcfgcli, tmpdir, gitrepo):
 
     # debug, only printed in logs in case of error
     print("stdout:")
-    print(out.stdout.replace("\\n", "\n"))
+    print(out.stdout)
     print("stderr:")
-    print(out.stderr.replace("\\n", "\n"))
+    print(out.stderr)
     assert out.returncode == 0
