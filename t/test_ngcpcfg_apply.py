@@ -13,20 +13,16 @@ def create_change(file):
 
 @pytest.mark.apply
 def test_apply_no_commit_msg(ngcpcfgcli, tmpdir, gitrepo):
-    outdir = tmpdir.mkdir("ngcp-pytest-output")
     src = "basic-ngcp-config.tar.gz"
     with gitrepo.from_archive(src):
         cfg_dir = os.path.join(gitrepo.localpath, "ngcp-config")
         tt2_dir = os.path.join(os.getcwd(), "fixtures", "apply_templates")
         env = {
             "DEBUG": "true",
-            "RUN_DIR": tmpdir.mkdir("ngcp-pytest-rundir"),
-            "OUTPUT_DIRECTORY": outdir,
             "TEMPLATE_POOL_BASE": tt2_dir,
             "NGCPCTL_MAIN": cfg_dir,
             # we just need a clean git repo
             "NGCPCTL_BASE": cfg_dir,
-            "STATE_FILES_DIR": outdir + "/var/lib/ngcpcfg/state/",
         }
         # create a change in repo
         create_change(os.path.join(cfg_dir, "config.yml"))
@@ -39,32 +35,22 @@ def test_apply_no_commit_msg(ngcpcfgcli, tmpdir, gitrepo):
     msg = r"Please provide commit message"
     regex = re.compile(msg)
 
-    # debug, only printed in logs in case of error
-    print("stdout:")
-    print(out.stdout)
-    print("stderr:")
-    print(out.stderr)
-
     assert re.search(regex, out.stdout)
     assert out.returncode != 0
 
 
 @pytest.mark.apply
 def test_apply_no_commit_msg_options(ngcpcfgcli, tmpdir, gitrepo):
-    outdir = tmpdir.mkdir("ngcp-pytest-output")
     src = "basic-ngcp-config.tar.gz"
     with gitrepo.from_archive(src):
         cfg_dir = os.path.join(gitrepo.localpath, "ngcp-config")
         tt2_dir = os.path.join(os.getcwd(), "fixtures", "apply_templates")
         env = {
             "DEBUG": "true",
-            "RUN_DIR": tmpdir.mkdir("ngcp-pytest-rundir"),
-            "OUTPUT_DIRECTORY": outdir,
             "TEMPLATE_POOL_BASE": tt2_dir,
             "NGCPCTL_MAIN": cfg_dir,
             # we just need a clean git repo
             "NGCPCTL_BASE": cfg_dir,
-            "STATE_FILES_DIR": outdir + "/var/lib/ngcpcfg/state/",
         }
         # create a change in repo
         create_change(os.path.join(cfg_dir, "config.yml"))
@@ -76,12 +62,6 @@ def test_apply_no_commit_msg_options(ngcpcfgcli, tmpdir, gitrepo):
             env=env,
         )
 
-    # debug, only printed in logs in case of error
-    print("stdout:")
-    print(out.stdout)
-    print("stderr:")
-    print(out.stderr)
-
     msg = r"Please provide commit message"
     regex = re.compile(msg)
     assert re.search(regex, out.stdout)
@@ -91,7 +71,6 @@ def test_apply_no_commit_msg_options(ngcpcfgcli, tmpdir, gitrepo):
 
 @pytest.mark.apply
 def test_apply_with_commit_msg(ngcpcfgcli, tmpdir, gitrepo):
-    outdir = tmpdir.mkdir("ngcp-pytest-output")
     src = "basic-ngcp-config.tar.gz"
     commit_msg = "whatever commit message"
     with gitrepo.from_archive(src):
@@ -99,13 +78,10 @@ def test_apply_with_commit_msg(ngcpcfgcli, tmpdir, gitrepo):
         tt2_dir = os.path.join(os.getcwd(), "fixtures", "apply_templates")
         env = {
             "DEBUG": "true",
-            "RUN_DIR": tmpdir.mkdir("ngcp-pytest-rundir"),
-            "OUTPUT_DIRECTORY": outdir,
             "TEMPLATE_POOL_BASE": tt2_dir,
             "NGCPCTL_MAIN": cfg_dir,
             # we just need a clean git repo
             "NGCPCTL_BASE": cfg_dir,
-            "STATE_FILES_DIR": outdir + "/var/lib/ngcpcfg/state/",
         }
         print("env:{}".format(env))
         out = ngcpcfgcli(
@@ -116,12 +92,6 @@ def test_apply_with_commit_msg(ngcpcfgcli, tmpdir, gitrepo):
 
     msg = r"Generating .+/etc/fake.txt: OK"
     regex = re.compile(msg)
-
-    # debug, only printed in logs in case of error
-    print("stdout:")
-    print(out.stdout)
-    print("stderr:")
-    print(out.stderr)
 
     assert out.returncode == 0
     assert re.search(regex, out.stdout)
@@ -133,7 +103,6 @@ def test_apply_with_commit_msg(ngcpcfgcli, tmpdir, gitrepo):
 
 @pytest.mark.apply
 def test_apply_with_commit_msg_options(ngcpcfgcli, tmpdir, gitrepo):
-    outdir = tmpdir.mkdir("ngcp-pytest-output")
     src = "basic-ngcp-config.tar.gz"
     commit_msg = "whatever commit message"
     with gitrepo.from_archive(src):
@@ -141,13 +110,10 @@ def test_apply_with_commit_msg_options(ngcpcfgcli, tmpdir, gitrepo):
         tt2_dir = os.path.join(os.getcwd(), "fixtures", "apply_templates")
         env = {
             "DEBUG": "true",
-            "RUN_DIR": tmpdir.mkdir("ngcp-pytest-rundir"),
-            "OUTPUT_DIRECTORY": outdir,
             "TEMPLATE_POOL_BASE": tt2_dir,
             "NGCPCTL_MAIN": cfg_dir,
             # we just need a clean git repo
             "NGCPCTL_BASE": cfg_dir,
-            "STATE_FILES_DIR": outdir + "/var/lib/ngcpcfg/state/",
         }
         print("env:{}".format(env))
         out = ngcpcfgcli(
@@ -160,12 +126,6 @@ def test_apply_with_commit_msg_options(ngcpcfgcli, tmpdir, gitrepo):
 
     msg = r"Generating .+/etc/fake.txt: OK"
     regex = re.compile(msg)
-
-    # debug, only printed in logs in case of error
-    print("stdout:")
-    print(out.stdout)
-    print("stderr:")
-    print(out.stderr)
 
     assert out.returncode == 0
     assert re.search(regex, out.stdout)

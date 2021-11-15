@@ -17,10 +17,4 @@ def test_status(ngcpcfgcli, tmpdir, gitrepo):
                 "NGCPCTL_BASE": cfg_dir,
             },
         )
-
-    # debug, only printed in logs in case of error
-    print("stdout:")
-    print(out.stdout)
-    print("stderr:")
-    print(out.stderr)
     assert out.returncode == 0
