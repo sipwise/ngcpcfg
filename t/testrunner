@@ -5,15 +5,4 @@
 set -e
 set -u
 
-if [ -d /results ] ; then
-  # Running from Jenkins (RW)
-  RESULTS="/results"
-
-  cd "/code"
-else
-  # Running locally in Docker
-  RESULTS="./results"
-  mkdir -p "${RESULTS}"
-fi
-
-RESULTS=${RESULTS} make test
+RESULTS=/results make test

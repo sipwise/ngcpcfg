@@ -24,11 +24,11 @@ WORKDIR /code/
 # (jump to the next section if you don't want to build yourself!):
 #
 # % docker build --tag="ngcpcfg-bullseye" -f ./t/Dockerfile .
-# % docker run --rm -i -t -v $(pwd):/code:rw ngcpcfg-bullseye:latest bash
+# % docker run --rm -i -t -v /tmp/results:/results:rw -v $(pwd):/code:rw ngcpcfg-bullseye:latest bash
 #
 # Use the existing docker image:
 # % docker pull docker.mgm.sipwise.com/ngcpcfg-bullseye
-# % docker run --rm -i -t -v $(pwd):/code:rw docker.mgm.sipwise.com/ngcpcfg-bullseye:latest bash
+# % docker run --rm -i -t -v /tmp/results:/results:rw -v $(pwd):/code:ro docker.mgm.sipwise.com/ngcpcfg-bullseye:latest bash
 #
 # Inside docker (the command is in history, just press UP button):
 #   cd /code && ./t/testrunner
