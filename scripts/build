@@ -138,21 +138,7 @@ else
 fi
 
 # Apply configured file ownership and permissions
-for f in ${NGCPCTL_CONFIG:-} ${HA_CONFIG:-} ${PAIR_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} "${EXTRA_CONFIG_FILES[@]}" ; do
-  if [ ! -f "${f}" ]; then
-    continue
-  fi
-  chown "${CONFIG_USER}":"${CONFIG_GROUP}" "${f}"
-  chmod "${CONFIG_CHMOD}" "${f}"
-done
-if [ -f "${NETWORK_CONFIG:-}" ]; then
-  chown "${NETWORK_CONFIG_USER}":"${NETWORK_CONFIG_GROUP}" "${NETWORK_CONFIG}"
-  chmod "${NETWORK_CONFIG_CHMOD}" "${NETWORK_CONFIG}"
-fi
-if [ -f "${CONSTANTS_CONFIG:-}" ]; then
-  chown "${CONSTANTS_CONFIG_USER}":"${CONSTANTS_CONFIG_GROUP}" "${CONSTANTS_CONFIG}"
-  chmod "${CONSTANTS_CONFIG_CHMOD}" "${CONSTANTS_CONFIG}"
-fi
+chown_configs
 
 exit 0
 

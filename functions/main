@@ -149,6 +149,29 @@ get_branch_status() {
   fi
 }
 
+chown_configs() {
+  if [ "${NGCP_TESTSUITE:-false}" = "true" ]; then
+    log_debug "chown_configs: NGCP_TESTSUITE is set, skip step"
+    return
+  fi
+
+  for f in ${NGCPCTL_CONFIG:-} ${HA_CONFIG:-} ${PAIR_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} "${EXTRA_CONFIG_FILES[@]}" ; do
+    if [ ! -f "${f}" ]; then
+      continue
+    fi
+    chown "${CONFIG_USER}":"${CONFIG_GROUP}" "${f}"
+    chmod "${CONFIG_CHMOD}" "${f}"
+  done
+  if [ -f "${NETWORK_CONFIG:-}" ]; then
+    chown "${NETWORK_CONFIG_USER}":"${NETWORK_CONFIG_GROUP}" "${NETWORK_CONFIG}"
+    chmod "${NETWORK_CONFIG_CHMOD}" "${NETWORK_CONFIG}"
+  fi
+  if [ -f "${CONSTANTS_CONFIG:-}" ]; then
+    chown "${CONSTANTS_CONFIG_USER}":"${CONSTANTS_CONFIG_GROUP}" "${CONSTANTS_CONFIG}"
+    chmod "${CONSTANTS_CONFIG_CHMOD}" "${CONSTANTS_CONFIG}"
+  fi
+}
+
 record_commit_id() {
   log_debug "cd ${NGCPCTL_MAIN}"
   cd "${NGCPCTL_MAIN}" || return
