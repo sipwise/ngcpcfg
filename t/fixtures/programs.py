@@ -16,7 +16,9 @@ def ngcpcfgcli(gitrepo, tmpdir, *args):
     testbin = os.path.abspath("fixtures/bin")
     fakehome = tmpdir.mkdir("fakehome")
     outdir = tmpdir.mkdir("ngcp-pytest-output")
-    outdir_repo = gitrepo.from_archive(gitrepo.default)
+    # testing is the git_root inside the gitrepo.default
+    outdir = os.path.join(gitrepo.extract_archive(gitrepo.default, outdir), "testing")
+    outdir_repo = gitrepo.in_folder(outdir)
     rundir = tmpdir.mkdir("ngcp-pytest-rundir")
 
     def run(*args, env={}):
@@ -42,11 +44,14 @@ def ngcpcfgcli(gitrepo, tmpdir, *args):
             "HOME": os.path.abspath(fakehome),
             "SKIP_UPDATE_PERMS": "true",
             "SKIP_RESTORE_PERMS": "true",
-            "OUTPUT_DIRECTORY": str(outdir),
-            "STATE_FILES_DIR": str(outdir) + "/var/lib/ngcpcfg/state/",
+            "OUTPUT_DIRECTORY": outdir,
+            "STATE_FILES_DIR": outdir + "/var/lib/ngcpcfg/state/",
             "RUN_DIR": str(rundir),
         }
         testenv.update(env)
+
+        assert os.path.isdir(testenv["OUTPUT_DIRECTORY"])
+        assert os.path.join(testenv["OUTPUT_DIRECTORY"], ".git")
 
         # if we're already running under root don't execute under fakeroot,
         # causing strange problems when debugging execution e.g. via strace
