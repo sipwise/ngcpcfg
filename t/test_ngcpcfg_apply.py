@@ -83,13 +83,13 @@ def test_apply_with_commit_msg(ngcpcfgcli, tmpdir, gitrepo):
             # we just need a clean git repo
             "NGCPCTL_BASE": cfg_dir,
         }
-        print("env:{}".format(env))
+        # create a change in repo
+        create_change(os.path.join(cfg_dir, "hello.yml"))
         out = ngcpcfgcli(
             "apply",
             commit_msg,
             env=env,
         )
-
     msg = r"Generating .+/etc/fake.txt: OK"
     regex = re.compile(msg)
 
@@ -115,7 +115,8 @@ def test_apply_with_commit_msg_options(ngcpcfgcli, tmpdir, gitrepo):
             # we just need a clean git repo
             "NGCPCTL_BASE": cfg_dir,
         }
-        print("env:{}".format(env))
+        # create a change in repo
+        create_change(os.path.join(cfg_dir, "hello.yml"))
         out = ngcpcfgcli(
             "apply",
             "--dry-run",
