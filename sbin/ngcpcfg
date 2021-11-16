@@ -9,13 +9,13 @@ set -u
 # helper functions
 
 ngcpcfg_update_perms() {
-  # Ensure that existing hooks are up2date.
-  hook_setup "${NGCPCTL_MAIN}/.git/hooks"
-
   if ${SKIP_UPDATE_PERMS:-false} ; then
     log_debug "skip generation of .ngcpcfg_perms"
     return 0
   fi
+
+  # Ensure that existing hooks are up2date.
+  hook_setup "${NGCPCTL_MAIN}/.git/hooks"
 
   # Must be the first command in every 'ngcpcfg' call as git resets POSIX permissions!
   log_debug 'Generate new .ngcpcfg_perms'
