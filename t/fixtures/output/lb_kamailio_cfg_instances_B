@@ -1,0 +1,15 @@
+#!KAMAILIO
+# lb01a
+# B
+#!ifndef INSTANCE
+# external interfaces
+listen=udp:172.30.52.103:5060
+listen=tcp:172.30.52.103:5060
+#!else
+# external interfaces
+listen=udp:172.30.52.203:5060
+listen=tcp:172.30.52.203:5060
+# internal interfaces
+listen=udp:172.30.52.145:5060
+listen=tcp:172.30.52.145:5060
+#!endif

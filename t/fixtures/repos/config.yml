@@ -21,3 +21,6 @@ www_admin:
       - offpeak_follow_rate
       - offpeak_follow_interval
       - use_free_time
+kamailio:
+  lb:
+    port: 5060

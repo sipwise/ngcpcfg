@@ -32,3 +32,10 @@ def check_output(output_file, test_file):
             for line in diff:
                 print(line, end="")
         assert filecmp.cmp(output_file, test_file)
+
+
+def check_stdoutput(stdout, test_file, tmpdir):
+    output_file = os.path.join(tmpdir, "check.txt")
+    with open(output_file, "w") as out_file:
+        out_file.writelines(stdout)
+    check_output(output_file, test_file)

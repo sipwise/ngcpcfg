@@ -1,0 +1,11 @@
+---
+sources:
+  - orig: etc/kamailio/lb
+    dest: etc/kamailio/lb_${INSTANCE_NAME}
+    label: lb
+  - orig: etc/other/lb
+    dest: etc/other/lb_${INSTANCE_NAME}
+    label: lb
+  - orig: etc/momo
+    dest: etc/momo_${INSTANCE_NAME}
+    label: lb

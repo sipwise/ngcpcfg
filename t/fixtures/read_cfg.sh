@@ -25,6 +25,9 @@ echo "TEMPLATE_POOL_BASE=${TEMPLATE_POOL_BASE:-}"
 # location of service definitions
 echo "SERVICES_POOL_BASE=${SERVICES_POOL_BASE:-}"
 
+# location of instances info for templates
+echo "TEMPLATE_INSTANCES=${TEMPLATE_INSTANCES:-}"
+
 # timestamp format for console output
 echo "TIME_FORMAT=${TIME_FORMAT:-}"
 

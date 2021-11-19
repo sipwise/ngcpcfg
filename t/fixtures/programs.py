@@ -27,6 +27,7 @@ CFG_KEYS = [
     "LOCAL_CONFIG",
     "CONSTANTS_CONFIG",
     "NETWORK_CONFIG",
+    "TEMPLATE_INSTANCES",
     "EXTRA_CONFIG_DIR",
 ]
 POOL_KEYS = [
@@ -246,6 +247,53 @@ def ngcpcfgcli(ngcpcfg, *args):
         print(stderr)
 
         result = ProcessResult(p.returncode, stdout, stderr, testenv, cfg)
+        return result
+
+    return run
+
+
+@pytest.fixture()
+def helpercli(tmpdir, *args):
+    """Execute a helper directly"""
+    helper_base = "{}/helper/{}"
+    fakehome = Path(tmpdir.mkdir("fakehome")).resolve()
+
+    def run(helper, *args, env={}):
+        testenv = {
+            "PATH": "{}:/usr/bin:/bin:/usr/sbin:/sbin".format(FAKE_BIN),
+            "PERL5LIB": "{}/lib/".format(CODE),
+            "NGCP_TESTSUITE": "true",
+            "HOME": fakehome,
+        }
+        testenv.update(env)
+
+        # if we're already running under root don't execute under fakeroot,
+        # causing strange problems when debugging execution e.g. via strace
+        if getuid() == 0:
+            fakeroot = []
+        else:
+            fakeroot = ["fakeroot"]
+
+        p = subprocess.Popen(
+            fakeroot + [helper_base.format(CODE, helper)] + list(args),
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            universal_newlines=True,
+            env=testenv,
+        )
+        stdout, stderr = p.communicate(timeout=30)
+
+        # debug, only printed in logs in case of error
+        print("env:")
+        pprint.pprint(testenv)
+        print("stdout:")
+        print(stdout)
+        print("stderr:")
+        print(stderr)
+
+        result = namedtuple("ProcessResult", ["returncode", "stdout", "stderr"])(
+            p.returncode, stdout, stderr
+        )
         return result
 
     return run
