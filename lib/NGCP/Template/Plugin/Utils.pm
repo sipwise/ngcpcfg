@@ -31,7 +31,9 @@ sub to_perl {
 
 sub to_config_general {
     my ($self, @params) = @_;
-    my $conf = Config::General->new();
+    my $conf = Config::General->new(
+        SaveSorted  => 1,
+    );
     return $conf->save_string($params[0]);
 }
 
