@@ -1,3 +1,41 @@
+ngcp-ngcpcfg (10.2.1.0+0~mr10.2.1.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [4a94941] TT#139455 lib: get_instances() add interface data from host
+  * [01bbe14] TT#139455 fixtures: control hostname and nodename via environment
+  * [360c277] TT#83358 don't mess with perms by default in tests
+  * [744458a] TT#139455 test: use universal_newlines=True so no replace is needed
+  * [63d80c5] TT#139455 test: define cache_dir inside results
+  * [8300364] TT#139455 support instances build
+
+  [ Guillem Jover ]
+  * [6997e5a] TT#146104 services: Always flush queues even when not running .services
+  * [b975498] TT#115501 ngcp-sync-grants: Fix typo for copy operation
+  * [f607c7d] TT#124273 Update packaging for bullseye
+  * [459484a] TT#124273 Use execute_after_ instead of override_ for dh command
+
+  [ Alexander Lutay ]
+  * [d550799] TT#139455 Improve patchtt error for missing tt2 template
+
+  [ Kirill Solomko ]
+  * [06fff6f] TT#146351 ngcp-sync-grants add support for negative "drop" expressions
+
+  [ Michael Prokop ]
+  * [3e88142] TT#82051 Shellcheck v0.8 fixes
+  * [cad3178] TT#124273 github actions: replace buster with bullseye
+
+  [ ngcp-config ]
+  * [682ddd0] TT#139455 tests: OUTPUT_DIRECTORY by default
+  * [b3fdc28] TT#83358 don't create hooks if SKIP_UPDATE_PERMS is enabled
+  * [30128b2] TT#139455 tests: fix OUTPUT_DIRECTORY is a git repo
+  * [4eb88af] TT#139455 hook_setup: skip if SKIP_UPDATE_PERMS is enabled
+  * [f7d9d81] TT#139455 don't chown configs if NGCP_TESTSUITE is set
+
+  [ Rene Krenn ]
+  * [7eaf874] TT#151050 predictive rendering of apache-style conf fragments
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 23 Nov 2021 14:19:35 +0100
+
 ngcp-ngcpcfg (10.2.0.0+0~mr10.2.0.0) unstable; urgency=medium
 
   [ Mykola Malkov ]
