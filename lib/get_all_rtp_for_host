@@ -56,27 +56,49 @@ IF status.item(hosts.$X_host.status);
 
       X_ips = X_ifc.shared_ip.list;
       IF !X_ips.size() || !X_ips.0.defined;
-        X_ips = X_ifc.ip;
+        X_ips = X_ifc.ip.list;
       END;
       X_adv_ips = X_ifc.advertised_ip.list;
+
+      X_suffix = 0;
+      IF X_ips.size() > 1;
+        X_suffix = 1;
+      END;
+
       FOREACH X_ip IN X_ips;
         X_adv_ip = X_adv_ips.shift();
         IF X_format == 'address';
           out.push(X_ip);
         ELSE;
-          out.push(X_type _ '/' _ X_ip _ (X_adv_ip ? ('!' _ X_adv_ip) : ''));
+          X_name = X_type;
+          IF X_suffix;
+            X_name = X_name _ ':' _ X_suffix;
+            X_suffix = X_suffix + 1;
+          END;
+          out.push(X_name _ '/' _ X_ip _ (X_adv_ip ? ('!' _ X_adv_ip) : ''));
         END;
       END;
 
       X_ips = X_ifc.shared_v6ip.list;
       IF !X_ips.size() || !X_ips.0.defined;
-        X_ips = X_ifc.v6ip;
+        X_ips = X_ifc.v6ip.list;
       END;
+
+      X_suffix = 0;
+      IF X_ips.size() > 1;
+        X_suffix = 1;
+      END;
+
       FOREACH X_ip IN X_ips;
         IF X_format == 'address';
           out.push(X_ip);
         ELSE;
-          out.push(X_type _ '/' _ X_ip);
+          X_name = X_type;
+          IF X_suffix;
+            X_name = X_name _ ':' _ X_suffix;
+            X_suffix = X_suffix + 1;
+          END;
+          out.push(X_name _ '/' _ X_ip);
         END;
       END;
     END;
