@@ -112,6 +112,7 @@ sub prepare_info {
   }
   foreach my $def ( sort @{ $templ->{sources} } ) {
     my $inst = $instances->{ $def->{label} };
+    next unless $inst;
     my $orig = prefix_root $def->{orig};
     $dirs->{$orig} = ();
     foreach ( sort @{$inst} ) {
