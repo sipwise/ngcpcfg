@@ -1,9 +1,9 @@
 #!/usr/bin/env py.test-3
 
-import filecmp
 import os
 import pytest
 import re
+from fixtures.fs import check_output
 
 
 @pytest.mark.cmdline
@@ -13,6 +13,7 @@ def test_ngcpcfgcfg_ok(ngcpcfgcli):
         "For further usage information and options "
         "see the ngcpcfg(8) man page" in out.stderr
     )
+    assert out.returncode == 1
 
 
 @pytest.mark.cmdline
@@ -22,72 +23,66 @@ def test_ngcpcfgcfg_ko(ngcpcfgcli):
         "Error: Could not read configuration file "
         "/etc/ngcp-config/ngcpcfg.cfg. Exiting." in out.stderr
     )
+    assert out.returncode == 1
 
 
-# NOTE - this one fails if the *main* ngcpcfg.git is not
-# standing on master branch, therefore use --ignore-branch-check
-# until we've a mock/fixture for it
 @pytest.mark.mt_16391
 def test_simple_build_template_ok(ngcpcfgcli):
-    out = ngcpcfgcli(
-        "build", "--ignore-branch-check", "/etc/apt/apt.conf.d/71_no_recommended"
-    )
+    out = ngcpcfgcli("build", "/etc/apt/apt.conf.d/71_no_recommended")
+    assert out.returncode == 0
     regex = re.compile(
-        r"Generating " + str(out.outdir) + r"/etc/apt/apt.conf.d/71_no_recommended: OK"
+        r"Generating "
+        + str(out.env["OUTPUT_DIRECTORY"])
+        + r"/etc/apt/apt.conf.d/71_no_recommended: OK"
     )
     assert re.search(regex, out.stdout)
 
 
 @pytest.mark.build
 def test_simple_build_template_no_ha_no_carrier(ngcpcfgcli):
-    out = ngcpcfgcli(
-        "build",
-        "--ignore-branch-check",
-        "/etc/config_variants",
+    out = ngcpcfgcli("build", "/etc/config_variants")
+    assert out.returncode == 0
+    regex = re.compile(
+        r"Generating " + str(out.env["OUTPUT_DIRECTORY"]) + r"/etc/config_variants: OK"
     )
-    regex = re.compile(r"Generating " + str(out.outdir) + r"/etc/config_variants: OK")
     assert re.search(regex, out.stdout)
-    output_file = os.path.join(out.outdir, "etc/config_variants")
+    output_file = os.path.join(out.env["OUTPUT_DIRECTORY"], "etc/config_variants")
     test_file = "fixtures/output/config_variants"
-    assert os.path.exists(output_file)
-    assert os.path.exists(test_file)
-    assert filecmp.cmp(output_file, test_file)
+    check_output(output_file, test_file)
 
 
 @pytest.mark.build
 def test_simple_build_template_pro(ngcpcfgcli):
     out = ngcpcfgcli(
         "build",
-        "--ignore-branch-check",
         "/etc/config_variants",
         env={
             "NGCPCFG": "fixtures/ngcpcfg_pro.cfg",
         },
     )
-    regex = re.compile(r"Generating " + str(out.outdir) + r"/etc/config_variants: OK")
+    assert out.returncode == 0
+    regex = re.compile(
+        r"Generating " + str(out.env["OUTPUT_DIRECTORY"]) + r"/etc/config_variants: OK"
+    )
     assert re.search(regex, out.stdout)
-    output_file = os.path.join(out.outdir, "etc/config_variants")
+    output_file = os.path.join(out.env["OUTPUT_DIRECTORY"], "etc/config_variants")
     test_file = "fixtures/output/config_variants_pro"
-    assert os.path.exists(output_file)
-    assert os.path.exists(test_file)
-    assert filecmp.cmp(output_file, test_file)
+    check_output(output_file, test_file)
 
 
 @pytest.mark.tt_17401
-def test_fail_on_existing_dir_matching_output_filename(ngcpcfgcli, tmpdir):
+def test_fail_on_existing_dir_matching_output_filename(ngcpcfg, ngcpcfgcli):
     output = "/etc/apt/apt.conf.d/71_no_recommended"
-    os.makedirs(tmpdir + output)
+    env, cfg = ngcpcfg()
+    output_dir = env["OUTPUT_DIRECTORY"] / output[1:]
+    output_dir.mkdir(parents=True)
     out = ngcpcfgcli(
         "build",
-        "--ignore-branch-check",
         output,
-        env={
-            "OUTPUT_DIRECTORY": tmpdir,
-        },
+        env=env,
     )
     regex = re.compile(
-        "Error: Generating file "
-        + str(tmpdir)
+        "Error: Generating file .*"
         + output
         + r" not possible, it\'s an existing directory."
     )

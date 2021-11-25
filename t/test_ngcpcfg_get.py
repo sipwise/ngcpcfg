@@ -8,7 +8,7 @@ import pytest
 
 
 @pytest.mark.get
-def test_get_action_missing_key_parameter(ngcpcfgcli, tmpdir):
+def test_get_action_missing_key_parameter(ngcpcfgcli):
     out = ngcpcfgcli("get")
     assert "" in out.stdout
     assert "Usage: ngcpcfg get <key>" in out.stderr
@@ -16,7 +16,7 @@ def test_get_action_missing_key_parameter(ngcpcfgcli, tmpdir):
 
 
 @pytest.mark.get
-def test_get_action_missing_file(ngcpcfgcli, tmpdir):
+def test_get_action_missing_file(ngcpcfgcli):
     out = ngcpcfgcli("get", "test", env={"NGCPCTL_CONFIG": "/run/nonexistent-file"})
     assert "" in out.stdout
     assert (
@@ -28,7 +28,7 @@ def test_get_action_missing_file(ngcpcfgcli, tmpdir):
 
 
 @pytest.mark.get
-def test_get_wrong_get_option(ngcpcfgcli, tmpdir):
+def test_get_wrong_get_option(ngcpcfgcli):
     out = ngcpcfgcli("get", "--something", "key.missing")
     assert "" in out.stdout
     assert "Usage: ngcpcfg get <key>" in out.stderr
@@ -36,7 +36,7 @@ def test_get_wrong_get_option(ngcpcfgcli, tmpdir):
 
 
 @pytest.mark.get
-def test_get_action_constants_child_item(ngcpcfgcli, tmpdir):
+def test_get_action_constants_child_item(ngcpcfgcli):
     out = ngcpcfgcli("get", "database.dbhost")
     assert "localhost" in out.stdout
     assert "" in out.stderr
@@ -44,7 +44,7 @@ def test_get_action_constants_child_item(ngcpcfgcli, tmpdir):
 
 
 @pytest.mark.get
-def test_get_action_config_child_item(ngcpcfgcli, tmpdir):
+def test_get_action_config_child_item(ngcpcfgcli):
     out = ngcpcfgcli("get", "www_admin.fees_csv.element_order")
     assert (
         "destination zone zone_detail "
@@ -60,7 +60,7 @@ def test_get_action_config_child_item(ngcpcfgcli, tmpdir):
 
 
 @pytest.mark.get
-def test_get_action_missing_item(ngcpcfgcli, tmpdir):
+def test_get_action_missing_item(ngcpcfgcli):
     out = ngcpcfgcli("get", "key.missing")
     assert "\n" in out.stdout
     assert "" in out.stderr
@@ -68,7 +68,7 @@ def test_get_action_missing_item(ngcpcfgcli, tmpdir):
 
 
 @pytest.mark.get
-def test_get_action_config_ha(ngcpcfgcli, tmpdir):
+def test_get_action_config_ha(ngcpcfgcli):
     out = ngcpcfgcli(
         "get",
         "ha.enabled",
@@ -82,7 +82,7 @@ def test_get_action_config_ha(ngcpcfgcli, tmpdir):
 
 
 @pytest.mark.get
-def test_get_action_config_pair(ngcpcfgcli, tmpdir):
+def test_get_action_config_pair(ngcpcfgcli):
     out = ngcpcfgcli(
         "get",
         "pair.enabled",

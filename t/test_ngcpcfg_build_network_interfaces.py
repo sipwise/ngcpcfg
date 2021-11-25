@@ -1,13 +1,12 @@
 #!/usr/bin/env py.test-3
 
-import filecmp
-import os
 import pytest
 import re
+from fixtures.fs import check_output
 
 
 @pytest.mark.tt_47255
-def test_network_interfaces(ngcpcfgcli, tmpdir):
+def test_network_interfaces(ngcpcfgcli):
     out = ngcpcfgcli(
         "build",
         "--ignore-branch-check",
@@ -17,23 +16,10 @@ def test_network_interfaces(ngcpcfgcli, tmpdir):
         },
     )
 
-    regex1 = re.compile(r"Generating .*/etc/network/interfaces: OK")
-    assert re.search(regex1, out.stdout)
+    assert re.search(r"Generating .*/etc/network/interfaces: OK", out.stdout)
+    assert not re.search(r"Error", out.stdout)
 
-    regex2 = re.compile(r"Error")
-    assert not re.search(regex2, out.stdout)
-    assert not re.search(regex2, out.stderr)
-
-    output_file = os.path.join(out.outdir, "etc/network/interfaces")
+    output_file = out.env["OUTPUT_DIRECTORY"].joinpath("etc/network/interfaces")
     test_file = "fixtures/output/network_interfaces"
 
-    assert os.path.exists(output_file)
-    assert os.path.exists(test_file)
-
-    # debug
-    if not filecmp.cmp(output_file, test_file):
-        print("output_file:")
-        print(open(output_file).read())
-        print("test_file:")
-        print(open(test_file).read())
-    assert filecmp.cmp(output_file, test_file)
+    check_output(str(output_file), test_file)

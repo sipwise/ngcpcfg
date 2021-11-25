@@ -1,12 +1,11 @@
 #!/usr/bin/env py.test-3
 
-import os
 import pytest
 import re
 
 
 @pytest.mark.tt_46601
-def test_bad_syntax(ngcpcfgcli, tmpdir):
+def test_bad_syntax(ngcpcfgcli):
     out = ngcpcfgcli(
         "build",
         "--ignore-branch-check",
@@ -15,24 +14,22 @@ def test_bad_syntax(ngcpcfgcli, tmpdir):
             "NGCPCFG": "fixtures/ngcpcfg_carrier.cfg",
         },
     )
-
-    regex1 = re.compile(
-        r"Error: Cannot process template " "'.*etc/bad-syntax.txt.tt2':.*"
+    assert re.search(
+        r"Error: Cannot process template " "'.*etc/bad-syntax.txt.tt2':.*", out.stderr
     )
-    assert re.search(regex1, out.stderr)
-
-    regex1 = re.compile(
+    assert re.search(
         r"file error - parse error - input file handle line 1: "
-        "unexpected end of directive"
+        "unexpected end of directive",
+        out.stderr,
     )
-    assert re.search(regex1, out.stderr)
 
-    regex2 = re.compile(
-        r"Error: Generating {}".format(out.outdir) + "/etc/bad-syntax.txt based on .*"
-        "/etc/bad-syntax.txt.tt2: FAILED"
+    assert re.search(
+        r"Error: Generating {}".format(out.env["OUTPUT_DIRECTORY"])
+        + "/etc/bad-syntax.txt based on .*"
+        "/etc/bad-syntax.txt.tt2: FAILED",
+        out.stderr,
     )
-    assert re.search(regex2, out.stderr)
+    assert out.returncode != 0
 
-    output_file = os.path.join(tmpdir, "etc/bad-syntax.txt")
-
-    assert not os.path.exists(output_file)
+    output_file = out.env["OUTPUT_DIRECTORY"].joinpath("etc/bad-syntax.txt")
+    assert not output_file.exists()

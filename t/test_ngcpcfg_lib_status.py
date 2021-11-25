@@ -1,15 +1,14 @@
 #!/usr/bin/env py.test-3
 
-import filecmp
-import os
 import pytest
 import re
+from fixtures.fs import check_output
 
 msg = r"Generating {}/etc/status.cfg: OK"
 
 
 @pytest.mark.tt_16316
-def test_status_carrier(ngcpcfgcli, tmpdir):
+def test_status_carrier(ngcpcfgcli):
     out = ngcpcfgcli(
         "build",
         "--ignore-branch-check",
@@ -18,16 +17,13 @@ def test_status_carrier(ngcpcfgcli, tmpdir):
             "NGCPCFG": "fixtures/ngcpcfg_carrier.cfg",
         },
     )
-    regex = re.compile(msg.format(out.outdir))
-    assert re.search(regex, out.stdout)
-    output_file = os.path.join(out.outdir, "etc/status.cfg")
+    assert re.search(msg.format(out.env["OUTPUT_DIRECTORY"]), out.stdout)
+    output_file = out.env["OUTPUT_DIRECTORY"].joinpath("etc/status.cfg")
     test_file = "fixtures/output/status.cfg_carrier"
-    assert os.path.exists(output_file)
-    assert os.path.exists(test_file)
-    assert filecmp.cmp(output_file, test_file)
+    check_output(str(output_file), test_file)
 
 
-def test_status_carrier_instances(ngcpcfgcli, tmpdir):
+def test_status_carrier_instances(ngcpcfgcli):
     out = ngcpcfgcli(
         "build",
         "--ignore-branch-check",
@@ -36,16 +32,13 @@ def test_status_carrier_instances(ngcpcfgcli, tmpdir):
             "NGCPCFG": "fixtures/ngcpcfg_carrier_instances.cfg",
         },
     )
-    regex = re.compile(msg.format(out.outdir))
-    assert re.search(regex, out.stdout)
-    output_file = os.path.join(out.outdir, "etc/status.cfg")
+    assert re.search(msg.format(out.env["OUTPUT_DIRECTORY"]), out.stdout)
+    output_file = out.env["OUTPUT_DIRECTORY"].joinpath("etc/status.cfg")
     test_file = "fixtures/output/status.cfg_carrier_instances"
-    assert os.path.exists(output_file)
-    assert os.path.exists(test_file)
-    assert filecmp.cmp(output_file, test_file)
+    check_output(str(output_file), test_file)
 
 
-def test_status_pro_instances(ngcpcfgcli, tmpdir):
+def test_status_pro_instances(ngcpcfgcli):
     out = ngcpcfgcli(
         "build",
         "--ignore-branch-check",
@@ -54,10 +47,7 @@ def test_status_pro_instances(ngcpcfgcli, tmpdir):
             "NGCPCFG": "fixtures/ngcpcfg_pro_instances.cfg",
         },
     )
-    regex = re.compile(msg.format(out.outdir))
-    assert re.search(regex, out.stdout)
-    output_file = os.path.join(out.outdir, "etc/status.cfg")
+    assert re.search(msg.format(out.env["OUTPUT_DIRECTORY"]), out.stdout)
+    output_file = out.env["OUTPUT_DIRECTORY"].joinpath("etc/status.cfg")
     test_file = "fixtures/output/status.cfg_pro_instances"
-    assert os.path.exists(output_file)
-    assert os.path.exists(test_file)
-    assert filecmp.cmp(output_file, test_file)
+    check_output(str(output_file), test_file)

@@ -1,20 +1,25 @@
 #!/usr/bin/env py.test-3
 
-import os
 import pytest
+import re
+from pathlib import Path
 
 
 @pytest.mark.status
-def test_status(ngcpcfgcli, tmpdir, gitrepo):
-    src = "basic-ngcp-config.tar.gz"
-    with gitrepo.from_archive(src):
-        cfg_dir = os.path.join(gitrepo.localpath, "ngcp-config")
-        out = ngcpcfgcli(
-            "status",
-            env={
-                "NGCPCTL_MAIN": cfg_dir,
-                # we just need a clean git repo
-                "NGCPCTL_BASE": cfg_dir,
-            },
-        )
+def test_status(ngcpcfgcli):
+    out = ngcpcfgcli(
+        "status",
+    )
     assert out.returncode == 0
+
+
+@pytest.mark.status
+def test_status_build(ngcpcfg, ngcpcfgcli):
+    env, cfg = ngcpcfg()
+    new_file = Path(env["STATE_FILES_DIR"]).joinpath("build")
+    new_file.write_text("hola")
+    out = ngcpcfgcli("status", env=env)
+    assert out.returncode == 0
+    assert re.search(
+        r"ACTION_NEEDED: commits without according build identified", out.stdout
+    )
