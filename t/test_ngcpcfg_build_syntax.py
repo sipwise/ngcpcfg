@@ -12,7 +12,6 @@ def test_bad_syntax(ngcpcfgcli, tmpdir):
         "--ignore-branch-check",
         "/etc/bad-syntax.txt",
         env={
-            "NGCP_BASE_TT2": os.getcwd(),
             "NGCPCFG": "fixtures/ngcpcfg_carrier.cfg",
         },
     )

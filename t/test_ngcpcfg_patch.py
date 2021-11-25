@@ -46,7 +46,6 @@ APT::Install-Recommends "0";
         "patch",
         "--help",
         env={
-            "NGCP_BASE_TT2": os.getcwd(),
             "TEMPLATE_POOL_BASE": str(tmpdir),
             "CONFIG_POOL": "/etc",
         },
@@ -87,7 +86,6 @@ APT::Install-Recommends "0";
         "patch",
         "/etc/apt/apt.conf.d/",
         env={
-            "NGCP_BASE_TT2": os.getcwd(),
             "TEMPLATE_POOL_BASE": str(tmpdir),
             "CONFIG_POOL": "/etc",
         },
@@ -141,7 +139,6 @@ APT::Install-Recommends "0";
         "patch",
         "/etc/apt/apt.conf.d/",
         env={
-            "NGCP_BASE_TT2": os.getcwd(),
             "TEMPLATE_POOL_BASE": str(tmpdir),
             "CONFIG_POOL": "/etc",
         },
@@ -191,7 +188,6 @@ def test_patch_action_template_missing_for_patchtt(ngcpcfgcli, tmpdir):
         "patch",
         "/etc/apt/apt.conf.d/",
         env={
-            "NGCP_BASE_TT2": os.getcwd(),
             "TEMPLATE_POOL_BASE": str(tmpdir),
             "CONFIG_POOL": "/etc",
         },
@@ -262,7 +258,6 @@ APT::Install-Recommends "0";
         "patch",
         "/etc/apt/apt.conf.d/71_no_recommended.patchtt.tt2",
         env={
-            "NGCP_BASE_TT2": os.getcwd(),
             "OUTPUT_DIRECTORY": str(tmpdir),
             "TEMPLATE_POOL_BASE": str(tmpdir),
             "CONFIG_POOL": "/etc",
@@ -349,7 +344,6 @@ APT::Install-Recommends "0";
         "patch",
         "71_no_recommended.patchtt.tt2",
         env={
-            "NGCP_BASE_TT2": os.getcwd(),
             "TEMPLATE_POOL_BASE": str(tmpdir),
             "CONFIG_POOL": "/etc",
         },
@@ -406,7 +400,6 @@ APT::Install-Recommends "0";
         "patch",
         "/etc/missing_patchtt_file.patchtt.tt2",
         env={
-            "NGCP_BASE_TT2": os.getcwd(),
             "TEMPLATE_POOL_BASE": str(tmpdir),
             "CONFIG_POOL": "/etc",
         },
@@ -513,7 +506,6 @@ dome dummy customtt message
                 "NGCPCTL_MAIN": cfg_dir,
                 # we just need a clean git repo
                 "NGCPCTL_BASE": cfg_dir,
-                "NGCP_BASE_TT2": os.getcwd(),
                 "TEMPLATE_POOL_BASE": str(tmpdir),
                 "CONFIG_POOL": "/etc",
             },
@@ -683,7 +675,6 @@ dome dummy customtt message
                 "NGCPCTL_MAIN": cfg_dir,
                 # we just need a clean git repo
                 "NGCPCTL_BASE": cfg_dir,
-                "NGCP_BASE_TT2": os.getcwd(),
                 "TEMPLATE_POOL_BASE": str(tmpdir),
                 "CONFIG_POOL": "/etc",
             },
@@ -810,7 +801,6 @@ APT::Install-Recommends "1";
                 "NGCPCTL_MAIN": cfg_dir,
                 # we just need a clean git repo
                 "NGCPCTL_BASE": cfg_dir,
-                "NGCP_BASE_TT2": os.getcwd(),
                 "TEMPLATE_POOL_BASE": str(tmpdir),
                 "CONFIG_POOL": "/etc",
             },
@@ -864,7 +854,6 @@ APT::Install-Recommends "0";
         "--ignore-branch-check",
         "/etc/apt/apt.conf.d/",
         env={
-            "NGCP_BASE_TT2": os.getcwd(),
             "TEMPLATE_POOL_BASE": str(tmpdir),
             "CONFIG_POOL": "/etc",
         },
@@ -933,7 +922,6 @@ APT::Install-Recommends "2";
         "patch",
         "--from-customtt",
         env={
-            "NGCP_BASE_TT2": os.getcwd(),
             "TEMPLATE_POOL_BASE": str(tmpdir),
             "CONFIG_POOL": "/etc",
         },
@@ -979,7 +967,6 @@ def test_patch_action_from_customtt_missing_file_argument(ngcpcfgcli, tmpdir):
         "--from-customtt",
         "missing.customtt.tt2",
         env={
-            "NGCP_BASE_TT2": os.getcwd(),
             "TEMPLATE_POOL_BASE": str(tmpdir),
             "CONFIG_POOL": "/etc",
         },
@@ -1028,7 +1015,6 @@ APT::Install-Recommends "2";
         "--from-customtt",
         "71_no_recommended.customtt.tt2",
         env={
-            "NGCP_BASE_TT2": os.getcwd(),
             "TEMPLATE_POOL_BASE": str(tmpdir),
             "CONFIG_POOL": "/etc",
         },
@@ -1082,7 +1068,6 @@ the content here doesn't matter as no tt2 file available
         "patch",
         "--from-customtt",
         env={
-            "NGCP_BASE_TT2": os.getcwd(),
             "TEMPLATE_POOL_BASE": str(tmpdir),
             "CONFIG_POOL": "/etc",
         },

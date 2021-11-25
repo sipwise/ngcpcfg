@@ -31,6 +31,7 @@ def ngcpcfgcli(gitrepo, tmpdir, *args):
             "HOOKS": "{}/hooks/".format(code),
             "PERL5LIB": "{}/lib/".format(code),
             "NGCP_TESTSUITE": "true",
+            "NGCP_BASE_TT2": os.getcwd(),
             "CONFIG_USER": "nobody",
             "CONFIG_GROUP": "root",
             "CONFIG_CHMOD": "0644",

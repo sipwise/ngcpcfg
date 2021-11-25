@@ -15,7 +15,6 @@ def test_status_carrier(ngcpcfgcli, tmpdir):
         "--ignore-branch-check",
         "/etc/status.cfg",
         env={
-            "NGCP_BASE_TT2": os.getcwd(),
             "NGCPCFG": "fixtures/ngcpcfg_carrier.cfg",
         },
     )
@@ -34,7 +33,6 @@ def test_status_carrier_instances(ngcpcfgcli, tmpdir):
         "--ignore-branch-check",
         "/etc/status.cfg",
         env={
-            "NGCP_BASE_TT2": os.getcwd(),
             "NGCPCFG": "fixtures/ngcpcfg_carrier_instances.cfg",
         },
     )
@@ -53,7 +51,6 @@ def test_status_pro_instances(ngcpcfgcli, tmpdir):
         "--ignore-branch-check",
         "/etc/status.cfg",
         env={
-            "NGCP_BASE_TT2": os.getcwd(),
             "NGCPCFG": "fixtures/ngcpcfg_pro_instances.cfg",
         },
     )

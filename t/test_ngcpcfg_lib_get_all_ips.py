@@ -15,7 +15,6 @@ def test_all_ips(ngcpcfgcli, tmpdir):
         "--ignore-branch-check",
         "/etc/kamailio/lb/db/dispatcher",
         env={
-            "NGCP_BASE_TT2": os.getcwd(),
             "NGCPCFG": "fixtures/ngcpcfg.cfg",
         },
     )
@@ -35,7 +34,6 @@ def test_all_ips_pro(ngcpcfgcli, tmpdir):
         "--ignore-branch-check",
         "/etc/kamailio/lb/db/dispatcher",
         env={
-            "NGCP_BASE_TT2": os.getcwd(),
             "NGCPCFG": "fixtures/ngcpcfg_pro.cfg",
         },
     )
@@ -55,7 +53,6 @@ def test_all_ips_carrier(ngcpcfgcli, tmpdir):
         "--ignore-branch-check",
         "/etc/kamailio/lb/db/dispatcher",
         env={
-            "NGCP_BASE_TT2": os.getcwd(),
             "NGCPCFG": "fixtures/ngcpcfg_carrier.cfg",
         },
     )

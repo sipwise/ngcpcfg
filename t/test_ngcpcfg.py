@@ -44,9 +44,6 @@ def test_simple_build_template_no_ha_no_carrier(ngcpcfgcli):
         "build",
         "--ignore-branch-check",
         "/etc/config_variants",
-        env={
-            "NGCP_BASE_TT2": os.getcwd(),
-        },
     )
     regex = re.compile(r"Generating " + str(out.outdir) + r"/etc/config_variants: OK")
     assert re.search(regex, out.stdout)
@@ -64,7 +61,6 @@ def test_simple_build_template_pro(ngcpcfgcli):
         "--ignore-branch-check",
         "/etc/config_variants",
         env={
-            "NGCP_BASE_TT2": os.getcwd(),
             "NGCPCFG": "fixtures/ngcpcfg_pro.cfg",
         },
     )

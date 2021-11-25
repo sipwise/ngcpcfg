@@ -13,7 +13,6 @@ def test_network_interfaces(ngcpcfgcli, tmpdir):
         "--ignore-branch-check",
         "/etc/network/interfaces",
         env={
-            "NGCP_BASE_TT2": os.getcwd(),
             "NGCPCFG": "fixtures/ngcpcfg_network_interfaces.cfg",
         },
     )
