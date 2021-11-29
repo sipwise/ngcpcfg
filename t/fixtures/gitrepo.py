@@ -5,7 +5,6 @@ import shutil
 import pytest
 import tarfile
 import zipfile
-import tempfile
 
 from .commandline import run
 from .fs import keep_directory
@@ -55,11 +54,6 @@ BUILTIN_GIT_COMMANDS = {"add", "am", "annotate", "apply", "archive",
 
 
 # helpers
-
-def create_tmp_folder():
-    """Create and return a unique temporary folder"""
-    return tempfile.mkdtemp(prefix='ngcp-', suffix='-pytest')
-
 
 def delete_tmp_folder(folder):
     """Recursively delete a folder"""
@@ -135,8 +129,8 @@ class GitLoader:
     """Provides methods to download a git repository"""
     default = 'default-git-repository.tar.gz'
 
-    def __init__(self):
-        self.localpath = create_tmp_folder()
+    def __init__(self, tmpdir):
+        self.localpath = tmpdir.mkdir("git-pytest")
 
     @staticmethod
     def extract_archive(src, dest):
@@ -164,7 +158,7 @@ class GitLoader:
 
     def from_url(self, url):
         """Clone git repository from URL"""
-        ex, out, err = cli.run('git', 'clone', url, self.localpath)
+        ex, out, err = run('git', 'clone', url, self.localpath)
         assert ex == 0
         return GitRepository(find_git_root(self.localpath),
                              delete_fn=self.cleanup)
@@ -189,5 +183,5 @@ class GitLoader:
 
 
 @pytest.fixture()
-def gitrepo():
-    return GitLoader()
+def gitrepo(tmpdir):
+    return GitLoader(tmpdir)
