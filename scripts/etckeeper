@@ -20,8 +20,8 @@ timestamp_replacementchars=''
 
 # main script
 
-log_debug "cd /etc"
-cd /etc
+log_debug "cd ${NGCPCTL_BASE}"
+cd "${NGCPCTL_BASE}"
 
 log_debug "type -p etckeeper"
 if ! type -p etckeeper &>/dev/null ; then
@@ -35,7 +35,7 @@ if ! [ -d .git ] ; then
   exit 0
 fi
 
-log_info "Checking state of /etc files"
+log_info "Checking state of ${NGCPCTL_BASE} files"
 if is_git_clean ; then
   log_info "OK:   nothing to commit."
 else
