@@ -1,3 +1,10 @@
+ngcp-ngcpcfg (7.5.10.3+0~mr7.5.10.3) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [ebf5a56] TT#151050 predictive rendering of apache-style conf fragments
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 30 Nov 2021 14:25:04 +0100
+
 ngcp-ngcpcfg (7.5.10.2+0~mr7.5.10.2) unstable; urgency=medium
 
   [ Michael Prokop ]
