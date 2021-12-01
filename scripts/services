@@ -207,8 +207,8 @@ find_all_services() {
 find_all_changed_services() {
   local dir="$1"
 
-  log_debug "${FUNCNAME[0]}(): Working in ${dir}"
-  pushd "${dir}" >/dev/null
+  log_debug "${FUNCNAME[0]}(): Working in ${OUTPUT_DIRECTORY}${dir}"
+  pushd "${OUTPUT_DIRECTORY}${dir}" >/dev/null
 
   for file in $(git status -uall --porcelain | sed 's/^...//') ; do
     if [[ -r "${file}" ]] && [[ -r "${SERVICES_POOL_BASE}/${dir}/${file}".services ]]; then
@@ -272,7 +272,7 @@ for dir in ${CONFIG_POOL} ; do
   is_absolute_path "${OUTPUT_DIRECTORY}${dir}" || continue
   is_non_git_folder "${OUTPUT_DIRECTORY}${dir}" || continue
 
-  generate_list_to_process "${OUTPUT_DIRECTORY}${dir}"
+  generate_list_to_process "${dir}"
 done
 
 if [[ -s "${TMPFILE}" ]]; then
