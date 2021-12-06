@@ -6,19 +6,24 @@ set -e
 set -u
 
 get_value() {
+  local value="$1"
+  local rc=0
   # assume safe defaults
   umask 0077
 
   input_file="$(mktemp)"
-  echo "[% $1 %]" > "${input_file}"
+  echo "[% $value %]" > "${input_file}"
   output_file="$(mktemp)"
 
-  if "${HELPER}/tt2-process" -p -q "${ARGS[@]}" "${input_file}" "${output_file}"; then
+  if "${HELPER}/tt2-process" -p -q "${ARGS[@]}" "${input_file}" "${output_file}" >/dev/null 2>&1 ; then
     cat "${output_file}"
   else
-    RC=1
+    log_error "cannot process request for '${value}'!"
+    rc=1
   fi
   rm -f "${input_file}" "${output_file}"
+
+  return "${rc}"
 }
 
 if [ "${#:-}" -ne 1 ] ; then
@@ -48,16 +53,15 @@ for f in ${NGCPCTL_CONFIG:-} ${HA_CONFIG:-} ${PAIR_CONFIG:-} ${HOST_CONFIG:-} ${
 done
 
 # main script
-RC=0
 
 # TODO: detect HASH and try to create template to get those values?
 res="$(get_value "$1")"
-if [[ $res =~ ^ARRAY\(0x.+\)$ ]] ; then
+if [[ $res =~ ^ARRAY\(0x.+\)$ ]]; then
   get_value "$1.join(' ')"
 else
   echo "$res"
 fi
 
-exit "$RC"
+exit 0
 
 ## END OF FILE #################################################################

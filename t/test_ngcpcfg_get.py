@@ -93,3 +93,11 @@ def test_get_action_config_pair(ngcpcfgcli):
     assert "yes" in out.stdout
     assert "" in out.stderr
     assert out.returncode == 0
+
+
+@pytest.mark.get
+def test_get_action_failure_TT154105(ngcpcfgcli):
+    out = ngcpcfgcli("get", "/some/path")
+    assert "" in out.stdout
+    assert "Error: cannot process request for '/some/path'!" in out.stderr
+    assert out.returncode == 1
