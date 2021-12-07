@@ -1,3 +1,10 @@
+ngcp-ngcpcfg (10.2.1.1+0~mr10.2.1.1) unstable; urgency=medium
+
+  [ Alexander Lutay ]
+  * [d8a38ed] TT#139455 instances-info: partial instances case support
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 07 Dec 2021 18:24:08 +0100
+
 ngcp-ngcpcfg (10.2.1.0+0~mr10.2.1.0) unstable; urgency=medium
 
   [ Victor Seva ]
