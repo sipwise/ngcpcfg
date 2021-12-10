@@ -1,0 +1,44 @@
+[%
+# vi: ft=tt2
+
+# Returns an array of IPs from the connection list passed as argument
+# The ips are retrieved from the definition of other instances or hosts
+#
+# @param argv.connection  the connection list of the instance
+#
+# @return out             the array of IPs.
+
+out = [];
+
+FOR conn IN argv.connection;
+  # If type equal instance, then look into the instances definition
+  IF conn.type == "instance";
+    FOR conn_instance IN instances;
+      NEXT UNLESS conn_instance.name == conn.name;
+      FOREACH iface IN conn_instance.interfaces;
+        NEXT UNLESS iface.name == conn.int_name;
+        NEXT UNLESS iface.type.grep('^' _ conn.int_type _ '$').size();
+        NEXT UNLESS iface.ip;
+        out.push(iface.ip);
+      END;
+    END;
+  # If type equal node, then look into the node interfaces definition
+  ELSE;
+    IF hosts.${conn.name}.exists(conn.int_name);
+      IF hosts.${conn.name}.${conn.int_name}.type.grep('^' _ conn.int_type _ '$').size();
+        FOREACH ip IN hosts.${conn.name}.${conn.int_name}.shared_ip;
+          NEXT UNLESS ip;
+          out.push(ip);
+        END;
+        # If no shared IP found, then use the node IP
+        IF !out.size;
+          out.push(hosts.${conn.name}.${conn.int_name}.ip);
+        END;
+      END;
+    END;
+  END;
+END;
+
+out = out.unique;
+
+-%]

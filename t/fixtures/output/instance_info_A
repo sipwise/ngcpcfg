@@ -1,5 +1,22 @@
 ---
 instance_info:
+  connections:
+    proxy:
+    - int_name: vlan1720
+      int_type: sip_int
+      name: C
+      type: instance
+    proxy_algorithm: serial
+    proxy_fallback:
+    - int_name: vlan1720
+      int_type: sip_int
+      name: prx01a
+      type: host
+    - int_name: vlan1720
+      int_type: sip_int
+      name: E
+      type: instance
+    proxy_fallback_algorithm: random
   host: lb01b
   interfaces:
   - ip: 172.30.52.204

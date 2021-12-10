@@ -788,6 +788,23 @@ instances:
       - name: vlan1720
         ip: 172.30.52.146
         type: sip_int
+    connections:
+      proxy_algorithm: serial
+      proxy:
+        - type: instance
+          name: C
+          int_name: vlan1720
+          int_type: sip_int
+      proxy_fallback_algorithm: random
+      proxy_fallback:
+        - type: host
+          name: prx01a
+          int_name: vlan1720
+          int_type: sip_int
+        - type: instance
+          name: E
+          int_name: vlan1720
+          int_type: sip_int
   - name: B
     service: kamailio-lb
     host: lb01a
@@ -800,3 +817,20 @@ instances:
       - name: vlan1720
         ip: 172.30.52.145
         type: sip_int
+    connections:
+      proxy_algorithm: serial
+      proxy:
+        - type: instance
+          name: D
+          int_name: vlan1720
+          int_type: sip_int
+      proxy_fallback_algorithm: random
+      proxy_fallback:
+        - type: host
+          name: prx01b
+          int_name: vlan1720
+          int_type: sip_int
+        - type: instance
+          name: E
+          int_name: vlan1720
+          int_type: sip_int

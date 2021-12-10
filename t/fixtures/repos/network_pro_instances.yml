@@ -170,6 +170,23 @@ instances:
       - name: neth1
         ip: 192.168.255.253
         type: sip_int
+    connections:
+      proxy_algorithm: serial
+      proxy:
+        - type: instance
+          name: C
+          int_name: neth1
+          int_type: sip_int
+      proxy_fallback_algorithm: random
+      proxy_fallback:
+        - type: host
+          name: sp1
+          int_name: neth1
+          int_type: sip_int
+        - type: instance
+          name: E
+          int_name: neth1
+          int_type: sip_int
   - name: B
     service: kamailio-lb
     host: sp1
@@ -182,3 +199,20 @@ instances:
       - name: neth1
         ip: 192.168.255.254
         type: sip_int
+    connections:
+      proxy_algorithm: serial
+      proxy:
+        - type: instance
+          name: D
+          int_name: neth1
+          int_type: sip_int
+      proxy_fallback_algorithm: random
+      proxy_fallback:
+        - type: host
+          name: sp2
+          int_name: neth1
+          int_type: sip_int
+        - type: instance
+          name: E
+          int_name: neth1
+          int_type: sip_int
