@@ -1,0 +1,14 @@
+---
+instance_info:
+  host: lb01b
+  interfaces:
+  - ip: 172.30.52.204
+    name: vlan1719
+    type: sip_ext
+  - ip: 172.30.52.146
+    name: vlan1720
+    type: sip_int
+  label: lb
+  name: A
+  service: kamailio-lb
+  status: online

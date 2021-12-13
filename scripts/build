@@ -68,13 +68,12 @@ build_config_files_instances() {
     target=${info[1]}
     instance=${info[2]}
     log_debug "source:${source} target:${target} instance:${instance}"
-    cat <<EOF > "${inst_cfg}"
----
-instance_name: ${instance}
-EOF
+    log_debug "${RUNNER} ${HELPER}/instance-info ${instance}"
+    ${RUNNER} "${HELPER}/instance-info" "${instance}" > "${inst_cfg}"
     log_debug "INSTANCE_NAME=${instance} ${RUNNER} ${HELPER}/tt2-process ${ARGS[*]} -c ${inst_cfg} -r ${source}:${target} ${source}"
     INSTANCE_NAME="${instance}" ${RUNNER} "${HELPER}/tt2-process" "${ARGS[@]}" -c "${inst_cfg}" -r "${source}:${target}" "${source}"
   done< <(${RUNNER} "${HELPER}/instances-info" "$@")
+  rm -f "${inst_cfg}"
 }
 
 build_config_files() {

@@ -1,6 +1,5 @@
 #!KAMAILIO
 # lb01a
-# 
 #!ifndef INSTANCE
 # external interfaces
 listen=udp:172.30.52.103:5060

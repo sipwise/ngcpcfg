@@ -10,11 +10,11 @@
   ELSE;
     pairname = ngcp.get_pairname(hostname);
   END;
-  # instances
-  host_instances = ngcp.get_instances(hostname);
 - %]
 # [% hostname %]
-# [% instance_name %]
+[% IF instance_info -%]
+#!define INSTANCE [% instance_info.name %]
+[% END -%]
 #!ifndef INSTANCE
 # external interfaces
 [% FOREACH iface IN hosts.$hostname.interfaces.sort -%]
@@ -37,18 +37,14 @@ listen=tls:[% ip_address %]:[% kamailio.lb.tls.port %][% IF hosts.$hostname.$ifa
 [% END -%]
 #!else
 [%
-FOREACH instance IN host_instances;
-    NEXT UNLESS instance.name == instance_name;
+  argv.instance = instance_info;
+  argv.type = 'sip_ext';
+  PROCESS '../lib/get_all_ips_for_instance';
+  sip_ext_ips = out;
 
-    argv.instance = instance;
-    argv.type = 'sip_ext';
-    PROCESS '../lib/get_all_ips_for_instance';
-    sip_ext_ips = out;
-
-    argv.type = 'sip_int';
-    PROCESS '../lib/get_all_ips_for_instance';
-    sip_int_ips = out;
-END;
+  argv.type = 'sip_int';
+  PROCESS '../lib/get_all_ips_for_instance';
+  sip_int_ips = out;
 -%]
 # external interfaces
 [% FOREACH ip IN sip_ext_ips -%]

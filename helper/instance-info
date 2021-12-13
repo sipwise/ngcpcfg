@@ -1,0 +1,65 @@
+#!/usr/bin/perl -CSD
+# Purpose: generate yaml output with instance_info for bash script
+################################################################################
+
+use strict;
+use warnings;
+
+use YAML::XS;
+use Time::Piece;
+use Getopt::Long qw(:config posix_default bundling_values no_ignorecase);
+
+my $DEBUG       = $ENV{DEBUG} || 0;
+my $HNAME       = $ENV{HNAME} // '';
+my $TIME_FORMAT = $ENV{TIME_FORMAT} // '%F %T';
+$TIME_FORMAT =~ s/^\+//;
+
+my $NETWORK_CONFIG     = $ENV{NETWORK_CONFIG};
+
+sub usage {
+  print <<HELP;
+Usage: $0 [<option>...] instance_name
+
+Options:
+  -h, --help                This help message.
+HELP
+}
+
+if (@ARGV != 1) {
+  error("wrong number of arguments");
+  usage();
+  exit 1;
+}
+my %options = ( help => sub { usage(); exit 0; }, );
+
+error("NETWORK_CONFIG is not defined") unless $NETWORK_CONFIG;
+
+GetOptions( \%options, 'help|?', );
+
+my $yaml  = YAML::XS::LoadFile($NETWORK_CONFIG);
+
+sub output_prefix {
+  my $t         = Time::Piece->new;
+  my $timestamp = $t->strftime($TIME_FORMAT);
+
+  return "$timestamp $HNAME";
+}
+
+sub error {
+  my $prefix = output_prefix();
+  die "$prefix: Error: @_\n";
+}
+
+exit 1 unless defined $yaml->{instances};
+my $instance_name = $ARGV[0];
+
+foreach my $instance ( sort @{ $yaml->{instances} } ) {
+  if ($instance->{name} eq $instance_name) {
+    my $out = {
+      instance_info => $instance,
+    };
+    print Dump($out);
+    exit 0;
+  }
+}
+exit 1;
