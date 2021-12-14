@@ -1,3 +1,10 @@
+ngcp-ngcpcfg (10.2.1.2+0~mr10.2.1.2) unstable; urgency=medium
+
+  [ ngcp-config ]
+  * [20a176b] TT#154852 get_all_ips_for_instance: fix instance argument
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 14 Dec 2021 08:57:46 +0100
+
 ngcp-ngcpcfg (10.2.1.1+0~mr10.2.1.1) unstable; urgency=medium
 
   [ Alexander Lutay ]
