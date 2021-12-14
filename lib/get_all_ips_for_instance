@@ -26,9 +26,9 @@ FOREACH val IN argv.status;
 END;
 
 out = [];
-RETURN UNLESS status.item(instance.status);
+RETURN UNLESS status.item(argv.instance.status);
 
-FOREACH iface IN instance.interfaces;
+FOREACH iface IN argv.instance.interfaces;
   NEXT UNLESS iface.type.grep('^' _ argv.type _ '$').size();
   NEXT UNLESS iface.ip;
   out.push(iface.ip);
