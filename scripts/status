@@ -52,13 +52,7 @@ check_local_state() {
   log_debug "cd $NGCPCTL_MAIN"
   cd "$NGCPCTL_MAIN"
 
-  # report either "ngcpcfg" or "ngcp-config", depending on how it was invoked
-  local invoker
-  if [ -r "/proc/${PPID:-doesnotexist}/comm" ] ; then
-    invoker="$( < /proc/$PPID/comm)"
-  fi
-
-  log_info "Checking state of ${invoker:-ngcpcfg}:"
+  log_info "Checking state of ${NGCPCFG_NAME:-ngcpcfg}:"
 
   if ! [ -r "${NGCPCTL_MAIN}/.git/HEAD" ] ; then
     log_warn "ngcpcfg has not been initialised yet. Execute 'ngcpcfg initialise'."

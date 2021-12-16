@@ -111,6 +111,10 @@ fi
 # Notify subprocesses we are running.
 export NGCPCFG_RUNNING=1
 
+# Provide invocation name (ngcpcfg vs. ngcp-config) to subprocesses/scripts
+NGCPCFG_NAME="$(basename "$0")"
+export NGCPCFG_NAME
+
 export NGCPCFG_PID=$$
 logger -t ngcpcfg --id="${NGCPCFG_PID}" -- "******************************************************"
 logger -t ngcpcfg --id="${NGCPCFG_PID}" -- "Running: $0 $*"
