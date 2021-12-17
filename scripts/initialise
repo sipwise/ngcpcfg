@@ -21,7 +21,13 @@ fi
 
 while (( "$#" )); do
   case "${1}" in
+    --without-shared)
+      WITHOUT_SHARED='true'
+      shift
+      ;;
     --without_shared)
+      # XXX: Remove after mr10.5.
+      log_warn "the ${1} option is deprecated; use --without-shared instead"
       WITHOUT_SHARED='true'
       shift
       ;;

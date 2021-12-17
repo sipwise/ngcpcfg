@@ -443,18 +443,18 @@ Prints the value of <key> using ngcp config files as source.
 
 Display usage information and exit.
 
-  **initialise [--without_shared]**::
+  **initialise [--without-shared]**::
 
 If ngcpcfg was installed but isn't configured yet the 'initialise' option sets
 up ngcpcfg accordingly. Follow the instructions from the <<setup_instructions,
-Setup instructions>> section. Option '--without_shared' allows to skip shared
+Setup instructions>> section. Option '--without-shared' allows to skip shared
 repository setup (which is necessary in High Availability setups only).
 
   **init-shared [--join]**::
 
 The ngcpcfg configures shared repository to synchronise configurations between
 all nodes in installation. It is necessary if ngcpcfg was initialised using
-option '--without_shared'. If the option '--join' is specified the ngcpcfg
+option '--without-shared'. If the option '--join' is specified the ngcpcfg
 configuration is taken from already configured shared repository. This option
 should be used only for configuration of the node which is joining the existing
 cluster. Note: This feature is available in High Availability setups only.
