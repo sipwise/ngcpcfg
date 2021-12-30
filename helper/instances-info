@@ -120,7 +120,7 @@ sub prepare_info {
       push @{ $dirs->{$orig} }, { name => $_, dest => prefix_root $dest};
     }
   }
-  debug("info:".Dumper({instances => $instances, dirs => $dirs}));
+  #debug("info:".Dumper({instances => $instances, dirs => $dirs}));
   return 1;
 }
 

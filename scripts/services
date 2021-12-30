@@ -29,43 +29,34 @@ fi
 
 instances_info() {
   local target
+  local dest
   local instance
   local RUNNER="nice -n 19 ionice -c 3"
 
   log_debug "${RUNNER} ${HELPER}/instances-info"
   while IFS=":" read -r -a info; do
     target=${info[0]}
+    dest=${info[1]}
     instance=${info[2]}
-    log_debug "target:${target} instance:${instance}"
-    INSTANCES+=("${target}:${instance}")
+    INSTANCES+=("${target}:${instance}:${dest}")
   done< <(${RUNNER} "${HELPER}/instances-info")
-}
-
-instance_env() {
-  local service_file=$1
-  local info
-
-  for instance in "${INSTANCES[@]}"; do
-    IFS=":" read -ra info <<< "${instance}"
-    if [[ "${service_file}" =~ ^${TEMPLATE_POOL_BASE}${info[0]} ]] ; then
-        log_debug "${service_file} matches ${info[1]}, scheduling instance restart"
-	exec_wrapper "${service_file}" "${info[1]}"
-    fi
-  done
 }
 
 exec_wrapper() {
   local service_file=$1
   local instance_name="${2:-}"
-
-  if ${DRYRUN} ; then
-    log_info "TEST MODE: Would execute action for ${service_file}"
-    return 0
+  local msg=""
+  if [ -n "${instance_name}" ]; then
+    msg="[${instance_name}]"
   fi
 
-  log_info "Executing action for ${service_file}"
+  if ${DRYRUN} ; then
+    log_info "TEST MODE: Would execute action for ${service_file}${msg}"
+    return 0
+  fi
+  log_info "Executing action for ${service_file}${msg}"
   if [[ -x "${service_file}" ]]; then
-    log_debug "${service_file}"
+    log_debug "${service_file}${msg}"
     if ! INSTANCE_NAME="${instance_name}" "${service_file}" ; then
       log_warn "INSTANCE_NAME=${instance_name} ${service_file} returned with error code, continuing anyway."
     fi
@@ -124,9 +115,13 @@ services_start_queue()
 }
 
 execute() {
+  local line
+  local info
+
   while read -r line ; do
-    exec_wrapper "${line}"
-    instance_env "${line}"
+    while IFS=':' read -ra info; do
+      exec_wrapper "${info[0]}" "${info[1]:-}"
+    done <<< "${line}"
   done < "${SORTED_LIST}"
 }
 
@@ -192,6 +187,25 @@ generate_list_to_process() {
   fi
 }
 
+find_instance() {
+  local service_file
+  local info
+  local target
+
+  # get rid of "./" and "//"
+  service_file=$(echo "$1" | sed -e 's_\./_/_g ; s_//_/_g')
+
+  for instance in "${INSTANCES[@]}"; do
+    IFS=":" read -ra info <<< "${instance}"
+    # get rid of "./" and "//"
+    target=$(echo "${TEMPLATE_POOL_BASE}${info[0]}" | sed -e 's_\./_/_g ; s_//_/_g')
+    if [[ "${service_file}" =~ ^${target} ]] ; then
+      log_debug "[${info[1]}] Storing ${file} in '${TMPFILE}'"
+      echo "${file}:${info[1]}" >> "${TMPFILE}"
+    fi
+  done
+}
+
 find_all_services() {
   local dir="$1"
 
@@ -201,7 +215,37 @@ find_all_services() {
     fi
     log_debug "Storing ${file} in '${TMPFILE}'"
     echo "${file}" >> "${TMPFILE}"
+    find_instance "${file}"
   done < <(find "${SERVICES_POOL_BASE}/${dir}" -name '*.services' | sort -u)
+}
+
+find_changed_instance_services() {
+  local file
+  local dir
+  local info
+  local dest
+  local target
+  local target_file
+
+  # get rid of "./" and "//"
+  file=$(echo "$1"| sed -e 's_\./_/_g ; s_//_/_g')
+  dir=$(echo "$2"| sed -e 's_\./_/_g ; s_//_/_g')
+
+  for instance in "${INSTANCES[@]}"; do
+    IFS=":" read -ra info <<< "${instance}"
+    target=${info[0]#${dir}/}
+    dest=${info[2]#${dir}/}
+    if [[ "${file}" =~ ^${dest} ]] ; then
+      target_file=${file/${dest}/${target}}
+      if [[ -r "${SERVICES_POOL_BASE}/${dir}/${target_file}".services ]]; then
+        log_debug "[${info[1]}] Storing ${SERVICES_POOL_BASE}/${dir}/${target_file}.services in '${TMPFILE}'"
+        echo "${SERVICES_POOL_BASE}/${dir}/${target_file}.services:${info[1]}"
+      elif [[ -r "${SERVICES_POOL_BASE}/${dir}/$(dirname "${target_file}")"/ngcpcfg.services ]]; then
+        log_debug "[${info[1]}] Storing ${SERVICES_POOL_BASE}/${dir}/$(dirname "${target_file}")/ngcpcfg.services in '${TMPFILE}'"
+        echo "${SERVICES_POOL_BASE}/${dir}/$(dirname "${target_file}")/ngcpcfg.services:${info[1]}"
+      fi
+    fi
+  done
 }
 
 find_all_changed_services() {
@@ -211,12 +255,16 @@ find_all_changed_services() {
   pushd "${OUTPUT_DIRECTORY}${dir}" >/dev/null
 
   for file in $(git status -uall --porcelain | sed 's/^...//') ; do
-    if [[ -r "${file}" ]] && [[ -r "${SERVICES_POOL_BASE}/${dir}/${file}".services ]]; then
+    if ! [[ -r "${file}" ]]; then
+      continue
+    elif [[ -r "${SERVICES_POOL_BASE}/${dir}/${file}".services ]]; then
       log_debug "Storing ${SERVICES_POOL_BASE}/${dir}/${file}.services in '${TMPFILE}'"
       echo "${SERVICES_POOL_BASE}/${dir}/${file}".services
-    elif [[ -r "${file}" ]] && [[ -r "${SERVICES_POOL_BASE}/${dir}/$(dirname "${file}")"/ngcpcfg.services ]]; then
+    elif [[ -r "${SERVICES_POOL_BASE}/${dir}/$(dirname "${file}")"/ngcpcfg.services ]]; then
       log_debug "Storing ${SERVICES_POOL_BASE}/${dir}/$(dirname "$file")/ngcpcfg.services in '${TMPFILE}'"
       echo "${SERVICES_POOL_BASE}/${dir}/$(dirname "$file")/ngcpcfg.services"
+    else
+      find_changed_instance_services "${file}" "${dir}"
     fi
   done | sort -u >> "${TMPFILE}"
 

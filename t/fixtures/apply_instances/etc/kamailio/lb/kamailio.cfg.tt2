@@ -1,0 +1,65 @@
+#!KAMAILIO
+[%
+  ###################################################
+  # Get the hostname of the node
+  ###################################################
+  # hostname
+  hostname = ngcp.get_hostname();
+  IF ! hosts.$hostname.size;
+    hostname = "self";
+  ELSE;
+    pairname = ngcp.get_pairname(hostname);
+  END;
+- %]
+# [% hostname %]
+[% IF instance_info -%]
+#!define INSTANCE [% instance_info.name %]
+[% END -%]
+#!ifndef INSTANCE
+# external interfaces
+[% FOREACH iface IN hosts.$hostname.interfaces.sort -%]
+[%   FOREACH type IN hosts.$hostname.$iface.type.sort -%]
+[%     IF type == "sip_ext" -%]
+[%
+         IF hosts.$hostname.$iface.shared_ip.0.size;
+	       ip_address=hosts.$hostname.$iface.shared_ip.0;
+         ELSE;
+           ip_address=hosts.$hostname.$iface.ip;
+         END;
+-%]
+listen=udp:[% ip_address %]:[% kamailio.lb.port %][% IF hosts.$hostname.$iface.advertised_ip.0.size %] advertise [% hosts.$hostname.$iface.advertised_ip.0 %]:[% kamailio.lb.port %][% END %]
+listen=tcp:[% ip_address %]:[% kamailio.lb.port %][% IF hosts.$hostname.$iface.advertised_ip.0.size %] advertise [% hosts.$hostname.$iface.advertised_ip.0 %]:[% kamailio.lb.port %][% END %]
+[%       IF ENABLE_TLS -%]
+listen=tls:[% ip_address %]:[% kamailio.lb.tls.port %][% IF hosts.$hostname.$iface.advertised_ip.0.size %] advertise [% hosts.$hostname.$iface.advertised_ip.0 %]:[% kamailio.lb.tls.port %][% END %]
+[%       END -%]
+[%     END -%]
+[%   END -%]
+[% END -%]
+#!else
+[%
+  argv.instance = instance_info;
+  argv.type = 'sip_ext';
+  PROCESS '../lib/get_all_ips_for_instance';
+  sip_ext_ips = out;
+
+  argv.type = 'sip_int';
+  PROCESS '../lib/get_all_ips_for_instance';
+  sip_int_ips = out;
+-%]
+# external interfaces
+[% FOREACH ip IN sip_ext_ips -%]
+listen=udp:[% ip %]:[% kamailio.lb.port %]
+listen=tcp:[% ip %]:[% kamailio.lb.port %]
+[%   IF ENABLE_TLS -%]
+listen=tls:[% ip %]:[% kamailio.lb.tls.port %]
+[%   END -%]
+[% END -%]
+# internal interfaces
+[% FOREACH ip IN sip_int_ips -%]
+listen=udp:[% ip %]:[% kamailio.lb.port %]
+listen=tcp:[% ip %]:[% kamailio.lb.port %]
+[% END -%]
+[%  IF instance_info.name == 'B' -%]
+## This is a change only for B instance
+[%  END -%]
+#!endif

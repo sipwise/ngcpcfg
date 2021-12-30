@@ -1,0 +1,3 @@
+#!/bin/sh
+echo "INSTANCE_NAME:${INSTANCE_NAME:-}" > \
+  ${OUTPUT_DIRECTORY:-/tmp}/ngcpcfg.service${INSTANCE_NAME:-}
