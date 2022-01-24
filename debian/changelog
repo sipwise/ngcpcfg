@@ -1,3 +1,40 @@
+ngcp-ngcpcfg (10.4.0.0+0~mr10.4.0.0) unstable; urgency=medium
+
+  [ ngcp-config ]
+  * [01ec15a] TT#139455 test: set NGCP_BASE_TT2 by default
+  * [2b8dd4c] TT#139455 test: improvements at gitrepo
+  * [39cf245] TT#139455 remove unused configs
+  * [6ad4376] TT#139455 etckeeper: obey NGCPCTL_BASE
+  * [36c2cd5] TT#139455 script/services: fix generate_list_to_process
+  * [bee2a1b] TT#139455 test: some dirs must be a git repository
+  * [2114fa7] TT#139455 tests: add instances tests
+  * [e736773] TT#154852 get_all_ips_for_instance: fix instance argument
+  * [664ad7d] TT#154852 build: inject instance_info to templates
+  * [686a3d7] TT#154852 services: fix detection of changes on instance builds
+
+  [ Alexander Lutay ]
+  * [8734983] TT#139455 instances-info: partial instances case support
+  * [6dabc7a] TT#154105 Improve error output for 'ngcpcfg get'
+  * [59f691b] TT#158650 Improve error reporting for failing action 'build'
+
+  [ Guillem Jover ]
+  * [e875197] TT#142950 scripts: Fix options parsing
+  * [a4f3d9d] TT#156156 Switch to «-» as the word separator in CLI options
+  * [bfaf3b5] TT#153051 Create the test results directory if it's missing
+  * [18ca8ec] TT#153051 NGCP::Template::Object: Add method to get the number of online CPUs
+
+  [ Richard Fuchs ]
+  * [3a477fa] TT#152050 support multiple shared IP addresses as round-robin
+
+  [ Michael Prokop ]
+  * [3abb63e] TT#102912 status: report the name of the invoked binary
+  * [241040e] TT#102912 Provide invocation name of ngcpcfg to subprocesses
+
+  [ Marco Capetta ]
+  * [c519d8d] TT#139459 Add script 'get_all_ips_of_connection_for_instance'
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 24 Jan 2022 16:57:29 +0100
+
 ngcp-ngcpcfg (10.3.0.0+0~mr10.3.0.0) unstable; urgency=medium
 
   [ Victor Seva ]
