@@ -25,6 +25,7 @@
       proxy_algorithm = algorithm.${instance_info.connections.proxy_algorithm};
     END;
     argv.connection = instance_info.connections.proxy;
+    argv.type = 'sip_int';
     PROCESS '../lib/get_all_ips_of_connection_for_instance';
     sip_proxy_primary_ips = out;
 
@@ -32,6 +33,7 @@
       proxy_fallback_algorithm = algorithm.${instance_info.connections.proxy_fallback_algorithm};
     END;
     argv.connection = instance_info.connections.proxy_fallback;
+    argv.type = 'sip_int';
     PROCESS '../lib/get_all_ips_of_connection_for_instance';
     sip_proxy_fallback_ips = out;
 

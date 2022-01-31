@@ -6,36 +6,47 @@
 #
 # @param argv.connection  the connection list of the instance
 #
+# @param argv.type        get IPs for only specific iface type,
+#                         not all of the types present in conn config
+#
 # @return out             the array of IPs.
 
 out = [];
 
 FOR conn IN argv.connection;
-  # If type equal instance, then look into the instances definition
-  IF conn.type == "instance";
-    FOR conn_instance IN instances;
-      NEXT UNLESS conn_instance.name == conn.name;
-      FOREACH iface IN conn_instance.interfaces;
-        NEXT UNLESS iface.name == conn.int_name;
-        NEXT UNLESS iface.type.grep('^' _ conn.int_type _ '$').size();
-        NEXT UNLESS iface.ip;
-        out.push(iface.ip);
-      END;
-    END;
-  # If type equal node, then look into the node interfaces definition
-  ELSE;
-    IF hosts.${conn.name}.exists(conn.int_name);
-      IF hosts.${conn.name}.${conn.int_name}.type.grep('^' _ conn.int_type _ '$').size();
-        FOREACH ip IN hosts.${conn.name}.${conn.int_name}.shared_ip;
-          NEXT UNLESS ip;
-          out.push(ip);
-        END;
-        # If no shared IP found, then use the node IP
-        IF !out.size;
-          out.push(hosts.${conn.name}.${conn.int_name}.ip);
+  # Filtering to get the interface with the correct type
+  FOR conn_interface IN conn.interfaces;
+    NEXT UNLESS conn_interface.type.grep('^' _ argv.type _ '$').size();
+
+    # If type equal instance, then look into the instances definition
+    IF conn.type == "instance";
+      FOR conn_instance IN instances;
+        NEXT UNLESS conn_instance.name == conn.name;
+        FOREACH iface IN conn_instance.interfaces;
+          NEXT UNLESS iface.name == conn_interface.name;
+          NEXT UNLESS iface.type.grep('^' _ conn_interface.type _ '$').size();
+          NEXT UNLESS iface.ip;
+          out.push(iface.ip);
         END;
       END;
+    # If type equal node, then look into the node interfaces definition
+    ELSE;
+      IF hosts.${conn.name}.exists(conn_interface.name);
+        IF hosts.${conn.name}.${conn_interface.name}.type.grep('^' _ conn_interface.type _ '$').size();
+          FOREACH ip IN hosts.${conn.name}.${conn_interface.name}.shared_ip;
+            NEXT UNLESS ip;
+            out.push(ip);
+          END;
+          # If no shared IP found, then use the node IP
+          IF !out.size;
+            out.push(hosts.${conn.name}.${conn_interface.name}.ip);
+          END;
+        END;
+      END;
     END;
+
+    # It is assumed to have in the connections only one interface defined with a particular type ?
+    LAST;
   END;
 END;
 

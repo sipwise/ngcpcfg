@@ -3,10 +3,10 @@ hosts:
   sp1:
     dbnode: '1'
     interfaces:
-    - lo
-    - neth0
-    - neth1
-    - neth2
+      - lo
+      - neth0
+      - neth1
+      - neth2
     lo:
       advertised_ip: []
       hwaddr: 00:00:00:00:00:00
@@ -15,65 +15,65 @@ hosts:
       shared_ip: []
       shared_v6ip: []
       type:
-      - web_ext
-      - web_int
-      - aux_ext
-      - ssh_ext
-      - api_int
-      - stor_int
+        - web_ext
+        - web_int
+        - aux_ext
+        - ssh_ext
+        - api_int
+        - stor_int
       v6ip: ::1
       v6netmask: 128
     neth0:
       dhcp: yes
       dns_nameservers:
-      - 10.15.20.30
+        - 10.15.20.30
       gateway: 192.168.211.1
       hwaddr: 08:00:27:9c:a3:22
       ip: 10.0.2.15
       netmask: 255.255.255.0
-      shared_ip: ~
-      shared_v6ip: ~
+      shared_ip:
+      shared_v6ip:
       type:
-      - ssh_ext
-      - web_ext
-      - web_int
+        - ssh_ext
+        - web_ext
+        - web_int
     neth1:
       cluster_sets:
-      - default
+        - default
       hwaddr: da:52:ca:90:8f:63
       ip: 192.168.255.251
       netmask: 255.255.255.248
       shared_ip:
-      - 192.168.255.250
-      shared_v6ip: ~
+        - 192.168.255.250
+      shared_v6ip:
       type:
-      - ssh_ext
-      - ha_int
-      - boot_int
-      - sip_int
-      - rtp_int
+        - ssh_ext
+        - ha_int
+        - boot_int
+        - sip_int
+        - rtp_int
     neth2:
       hwaddr: 0a:00:27:45:bb:ce
       ip: 192.168.2.173
       netmask: 255.255.255.0
       shared_ip:
-      - 192.168.2.151
-      shared_v6ip: ~
+        - 192.168.2.151
+      shared_v6ip:
       type:
-      - ssh_ext
-      - web_ext
-      - web_int
-      - sip_ext
-      - rtp_ext
-      - mon_ext
+        - ssh_ext
+        - web_ext
+        - web_int
+        - sip_ext
+        - rtp_ext
+        - mon_ext
     peer: sp2
     role:
-    - proxy
-    - lb
-    - mgmt
-    - rtp
-    - db
-    - storage
+      - proxy
+      - lb
+      - mgmt
+      - rtp
+      - db
+      - storage
     status: online
     swraiddevices: []
     sysdescr: ''
@@ -82,76 +82,76 @@ hosts:
   sp2:
     dbnode: '2'
     interfaces:
-    - lo
-    - neth0
-    - neth1
-    - neth2
+      - lo
+      - neth0
+      - neth1
+      - neth2
     lo:
       cluster_sets:
-      - default
+        - default
       hwaddr: 00:00:00:00:00:00
       ip: 127.0.0.1
       netmask: 255.0.0.0
       shared_ip: []
       shared_v6ip: []
       type:
-      - api_int
-      - stor_int
-      - web_int
-      - web_ext
-      - aux_ext
+        - api_int
+        - stor_int
+        - web_int
+        - web_ext
+        - aux_ext
       v6ip: ::1
     neth0:
       dhcp: yes
       dns_nameservers:
-      - 10.15.20.30
+        - 10.15.20.30
       gateway: 192.168.211.1
       hwaddr: 08:00:27:75:e6:93
       ip: 10.0.3.15
       netmask: 255.255.255.0
-      shared_ip: ~
-      shared_v6ip: ~
+      shared_ip:
+      shared_v6ip:
       type:
-      - ssh_ext
-      - web_int
-      - web_ext
+        - ssh_ext
+        - web_int
+        - web_ext
     neth1:
       cluster_sets:
-      - default
+        - default
       hwaddr: 00:00:00:00:00:00
       ip: 192.168.255.252
       netmask: 255.255.255.248
       shared_ip:
-      - 192.168.255.250
-      shared_v6ip: ~
+        - 192.168.255.250
+      shared_v6ip:
       type:
-      - ssh_ext
-      - ha_int
-      - boot_int
-      - sip_int
-      - rtp_int
+        - ssh_ext
+        - ha_int
+        - boot_int
+        - sip_int
+        - rtp_int
     neth2:
       hwaddr: 0a:00:27:45:bb:66
       ip: 192.168.2.177
       netmask: 255.255.255.0
       shared_ip:
-      - 192.168.2.151
-      shared_v6ip: ~
+        - 192.168.2.151
+      shared_v6ip:
       type:
-      - ssh_ext
-      - web_ext
-      - web_int
-      - sip_ext
-      - rtp_ext
-      - mon_ext
+        - ssh_ext
+        - web_ext
+        - web_int
+        - sip_ext
+        - rtp_ext
+        - mon_ext
     peer: sp1
     role:
-    - storage
-    - proxy
-    - lb
-    - mgmt
-    - rtp
-    - db
+      - storage
+      - proxy
+      - lb
+      - mgmt
+      - rtp
+      - db
     status: online
     swraiddevices: []
     sysdescr: ''
@@ -175,18 +175,21 @@ instances:
       proxy:
         - type: instance
           name: C
-          int_name: neth1
-          int_type: sip_int
+          interfaces:
+            - name: neth1
+            - type: sip_int
       proxy_fallback_algorithm: random
       proxy_fallback:
         - type: host
           name: sp1
-          int_name: neth1
-          int_type: sip_int
+          interfaces:
+            - name: neth1
+              type: sip_int
         - type: instance
           name: E
-          int_name: neth1
-          int_type: sip_int
+          interfaces:
+            - name: neth1
+              type: sip_int
   - name: B
     service: kamailio-lb
     host: sp1
@@ -204,15 +207,18 @@ instances:
       proxy:
         - type: instance
           name: D
-          int_name: neth1
-          int_type: sip_int
+          interfaces:
+            - name: neth1
+              type: sip_int
       proxy_fallback_algorithm: random
       proxy_fallback:
         - type: host
           name: sp2
-          int_name: neth1
-          int_type: sip_int
+          interfaces:
+            - name: neth1
+              type: sip_int
         - type: instance
           name: E
-          int_name: neth1
-          int_type: sip_int
+          interfaces:
+            - name: neth1
+              type: sip_int
