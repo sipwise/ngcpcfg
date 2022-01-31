@@ -52,6 +52,7 @@ usage() {
 Actions:
   apply [<msg>]       a short-cut for build-services-commit
   build [<opts>]      generate/update configuration files
+  cat [<types>]       print YAML configuration files
   check [<path>]      validate YAML configuration files
   clean [<opts>]      clean /etc/ngcp-config folder configs/templates (see available options)
   commit [<msg>]      commit and record changes (without pushing)
@@ -151,6 +152,7 @@ case ${1:-} in
     ;;
   init-shared|\
   initialise|\
+  cat|\
   get|\
   edit|\
   show)

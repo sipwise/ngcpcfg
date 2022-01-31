@@ -17,6 +17,10 @@ _ngcpcfg()
             _filedir
             return
             ;;
+        cat)
+            COMPREPLY=( $( compgen -W 'config network constants' -- "$cur" ) )
+            return
+            ;;
         check)
             if [[ "$cur" == -* ]]; then
                 COMPREPLY=( $( compgen -W '--ignore-branch-check --ignore-shared-storage-check' -- "$cur" ) )

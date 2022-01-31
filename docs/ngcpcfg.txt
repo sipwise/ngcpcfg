@@ -331,6 +331,16 @@ meant so the configuration change history (accessible e.g. via 'ngcpcfg log')
 provides useful information.
 Options for _services_, _build_ and _check_ can be used here too.
 
+  **cat** [<config-type>...]::
+
+Concatenates the YAML configuration files, including any local override files
+and prints them to standard output.
+If no _config-type_ has been specified, then all configuration files found
+are used.
+Otherwise one or more of *config*, *network* and *constants* can be specified
+in any order (they will get ordered properly internally) to specify what
+subset of the YAML configuration files to load and output.
+
   **check** [--ignore-branch-check] [--ignore-shared-storage-check] [<config_files_or_directories>|<pattern>]::
 
 Check syntax of YAML files and validate schema before performing any further actions.

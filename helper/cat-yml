@@ -1,0 +1,32 @@
+#!/usr/bin/perl -CSD
+# Purpose: dump yaml configuration files
+################################################################################
+
+use strict;
+use warnings;
+
+use YAML::XS;
+use Hash::Merge qw(merge);
+
+if (@ARGV < 1) {
+    die 'Error: you did not specify an input file name\n';
+}
+
+my $config = {};
+my %loaded = ();
+
+foreach my $file (@ARGV) {
+    next if exists $loaded{$file};
+    $loaded{$file} = 1;
+
+    my $yaml = YAML::XS::LoadFile($file);
+
+    my $hm = Hash::Merge->new('RIGHT_PRECEDENT');
+    $config = $hm->merge($config, $yaml);
+}
+
+# YAML::XS::Dump returns raw UTF-8 strings.
+binmode \*STDOUT, ':raw';
+print YAML::XS::Dump($config);
+
+## END OF FILE #################################################################

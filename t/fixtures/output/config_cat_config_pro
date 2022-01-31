@@ -1,0 +1,32 @@
+---
+cluster_sets:
+  default_set: default
+  sets:
+  - dispatcher_id: '50'
+    name: default
+  type: central
+general:
+  ngcp_type: sppro
+ha:
+  enabled: yes
+kamailio:
+  lb:
+    port: 5060
+pair:
+  enabled: yes
+tests: ~
+www_admin:
+  fees_csv:
+    element_order:
+    - destination
+    - zone
+    - zone_detail
+    - onpeak_init_rate
+    - onpeak_init_interval
+    - onpeak_follow_rate
+    - onpeak_follow_interval
+    - offpeak_init_rate
+    - offpeak_init_interval
+    - offpeak_follow_rate
+    - offpeak_follow_interval
+    - use_free_time

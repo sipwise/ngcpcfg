@@ -2,6 +2,7 @@ etc/ngcp-config/ngcpcfg.cfg etc/ngcp-config/
 functions/init              usr/share/ngcp-ngcpcfg/functions/
 functions/logs              usr/share/ngcp-ngcpcfg/functions/
 functions/main              usr/share/ngcp-ngcpcfg/functions/
+helper/cat-yml              usr/share/ngcp-ngcpcfg/helper/
 helper/check-for-mysql      usr/share/ngcp-ngcpcfg/helper/
 helper/fileformat_version   usr/share/ngcp-ngcpcfg/helper/
 helper/instance-info        usr/share/ngcp-ngcpcfg/helper/
@@ -21,6 +22,7 @@ sbin/ngcp-sync-grants       usr/sbin/
 sbin/ngcpcfg                usr/sbin/
 scripts/apply               usr/share/ngcp-ngcpcfg/scripts/
 scripts/build               usr/share/ngcp-ngcpcfg/scripts/
+scripts/cat                 usr/share/ngcp-ngcpcfg/scripts/
 scripts/check               usr/share/ngcp-ngcpcfg/scripts/
 scripts/clean               usr/share/ngcp-ngcpcfg/scripts/
 scripts/commit              usr/share/ngcp-ngcpcfg/scripts/

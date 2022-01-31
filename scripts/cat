@@ -1,0 +1,98 @@
+#!/bin/bash
+# Purpose: cat the configuration files in YAML format
+################################################################################
+
+set -e
+set -u
+
+usage() {
+  cat >&2 <<HELP
+Usage: ngcpcfg cat [<option>...] [<config-type>...]
+
+Options:
+  -?, --help      Print this help message.
+
+<config-type> is one of "constants", "config" or "network", will expand to
+include any extended auxiliary files.
+
+Example:
+  ngcpcfg cat
+  ngcpcfg cat config
+  ngcpcfg cat constants config network
+HELP
+}
+
+# support testsuite
+FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
+HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
+
+if ! [ -r "${FUNCTIONS}"/main ] ; then
+  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}">&2
+  exit 1
+fi
+
+# shellcheck disable=SC1090
+. "${FUNCTIONS}"/main
+
+CONFIG_TYPES=(config network constants)
+
+# Get the list of config types to load.
+if [ "${#:-}" -eq 0 ]; then
+  config_def=true
+else
+  config_def=false
+fi
+declare -A config_types
+for t in "${CONFIG_TYPES[@]}"; do
+  config_types[$t]=${config_def}
+done
+while [ -n "${1:-}" ]; do
+  case "$1" in
+    constants|config|network)
+      config_types[$1]=true
+      shift
+      ;;
+    --help|-?)
+      usage
+      exit 0
+      ;;
+    *)
+      echo "Error: unknown config type '$1'" >&2
+      exit 1
+      ;;
+  esac
+done
+
+declare -a configs_try
+if "${config_types[config]}"; then
+  configs_try+=("${NGCPCTL_CONFIG}")
+  configs_try+=("${HA_CONFIG}")
+  configs_try+=("${PAIR_CONFIG}")
+  configs_try+=("${HOST_CONFIG}")
+  configs_try+=("${LOCAL_CONFIG}")
+fi
+if "${config_types[network]}"; then
+  configs_try+=("${NETWORK_CONFIG}")
+fi
+if "${config_types[config]}"; then
+  configs_try+=("${EXTRA_CONFIG_FILES[@]}")
+fi
+if "${config_types[constants]}"; then
+  configs_try+=("${CONSTANTS_CONFIG}")
+fi
+
+declare -a configs
+for f in "${configs_try[@]}"; do
+  if [ -z "$f" ]; then
+    continue
+  fi
+  if [ -r "$f" ]; then
+    configs+=("$f")
+  fi
+done
+
+# main script
+
+exec "${HELPER}/cat-yml" "${configs[@]}"
+
+## END OF FILE #################################################################
