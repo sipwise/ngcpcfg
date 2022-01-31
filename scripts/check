@@ -8,6 +8,7 @@ set -u
 # support testsuite
 FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
 HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
+SCRIPTS="${SCRIPTS:-/usr/share/ngcp-ngcpcfg/scripts/}"
 
 if ! [ -r "${FUNCTIONS}"/main ] ; then
   printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}" >&2
@@ -141,16 +142,35 @@ validate_config() {
       fi
     else
       local schema
-      schema="/usr/share/ngcp-cfg-schema/validate/$(basename "${f}")"
+      schema="/usr/share/ngcp-cfg-schema/validate/${name}"
 
       if ! [ -f "${schema}" ] ; then
         continue
       fi
 
-      if ! pkwalify -s -m 'YAML::XS' -f "${schema}" "${f}" >/dev/null 2>&1 ; then
-        log_error "Invalid schema detected for ${f}"
-        pkwalify -m 'YAML::XS' -f "${schema}" "${f}" >&2 || true
+      local config_type
+      config_type=$(basename "${name}" .yml)
+
+      local c
+      local c_cleanup=false
+      case "${config_type}" in
+        config|constants)
+          c_cleanup=true
+          c="$(mktemp --tmpdir "ngcpcfg-${config_type}-XXXXXXXXXX.yml")"
+          "${SCRIPTS}/cat" "${config_type}" >"$c"
+          ;;
+        *)
+          c="$f"
+          ;;
+      esac
+
+      if ! pkwalify -s -m 'YAML::XS' -f "${schema}" "$c" >/dev/null 2>&1 ; then
+        log_error "Invalid schema detected for $c"
+        pkwalify -m 'YAML::XS' -f "${schema}" "$c" >&2 || true
         rc=1
+      fi
+      if ${c_cleanup}; then
+        rm -f "$c"
       fi
     fi
   done
