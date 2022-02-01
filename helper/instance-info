@@ -53,6 +53,8 @@ sub error {
 exit 1 unless defined $yaml->{instances};
 my $instance_name = $ARGV[0];
 
+# YAML::XS::Dump returns raw UTF-8 strings.
+binmode \*STDOUT, ':raw';
 foreach my $instance ( sort @{ $yaml->{instances} } ) {
   if ($instance->{name} eq $instance_name) {
     my $out = {

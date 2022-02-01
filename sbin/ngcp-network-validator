@@ -2,6 +2,7 @@
 
 use strict;
 use warnings;
+use open qw(:std :encoding(UTF-8));
 
 use Storable qw(dclone);
 use List::Util qw(any);
@@ -243,7 +244,12 @@ foreach my $hostname (sort keys %{$yaml->{hosts}}) {
 
 # Make it possible to dump the generated schema.
 if (defined $ENV{NGCP_KWALIFY_DUMP}) {
+    # YAML::XS::Dump returns raw UTF-8 strings.
+    binmode \*STDOUT, ':raw';
     print YAML::XS::Dump($schema);
+    # Flush any lingering buffers, before switching the encoding back.
+    STDOUT->flush();
+    binmode \*STDOUT, ':encoding(UTF-8)';
 }
 
 #

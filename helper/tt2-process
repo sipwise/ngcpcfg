@@ -138,7 +138,8 @@ sub process_template {
         sysopen $outfh, $newfile, O_CREAT | O_EXCL | O_WRONLY, $mode
             or error("Cannot open template new file $newfile: $!");
     }
-    open my $infh, '<', $input
+    binmode $outfh, ':encoding(UTF-8)';
+    open my $infh, '<:encoding(UTF-8)', $input
         or error("Cannot open file '$input' for reading: $!");
     $tt->process($infh, $config, $outfh)
         or error("Cannot process template '$input':\n  " . $tt->error());

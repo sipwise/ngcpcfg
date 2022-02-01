@@ -22,6 +22,7 @@ sub new
     }
 
     my $self = Template->new({
+        ENCODING => 'utf8',
         ABSOLUTE => 1,
         RELATIVE => 1,
         EVAL_PERL => 1,
