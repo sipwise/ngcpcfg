@@ -1,0 +1,49 @@
+[%
+  ###################################################
+  # Get the hostname of the node
+  ###################################################
+  # hostname
+  hostname = ngcp.get_hostname();
+  IF ! hosts.$hostname.size;
+    hostname = "self";
+  ELSE;
+    pairname = ngcp.get_pairname(hostname);
+  END;
+- %]
+# [% hostname %]
+[% IF instance_info -%]
+# [% instance_info.name %]
+[%
+    # Get connection information for LB
+    # sip_*_primary_ips: list of primary * instances to select
+    # sip_*_fallback_ips: list of fallback * instances to select
+    # sip_*_direct_ips: list of * instances that can connect
+    # If not specified:
+    # - set sip_proxy_primary_ips equals to sip_proxy_ips
+    # - and leave sip_proxy_fallback_ips empty
+    IF instance_info.connections.proxy_algorithm && algorithm.exists(instance_info.connections.proxy_algorithm);
+      proxy_algorithm = algorithm.${instance_info.connections.proxy_algorithm};
+    END;
+    argv.connection = instance_info.connections.proxy;
+    PROCESS '../lib/get_all_ips_of_connection_for_instance';
+    sip_proxy_primary_ips = out;
+
+    IF instance_info.connections.proxy_fallback_algorithm && algorithm.exists(instance_info.connections.proxy_fallback_algorithm);
+      proxy_fallback_algorithm = algorithm.${instance_info.connections.proxy_fallback_algorithm};
+    END;
+    argv.connection = instance_info.connections.proxy_fallback;
+    PROCESS '../lib/get_all_ips_of_connection_for_instance';
+    sip_proxy_fallback_ips = out;
+
+    IF !sip_proxy_primary_ips.size;
+      sip_proxy_primary_ips = sip_proxy_ips;
+      sip_proxy_fallback_ips = [];
+    END;
+
+    sip_proxy_direct_ips = sip_proxy_primary_ips.merge(sip_proxy_fallback_ips);
+
+-%]
+[%  FOR ip in sip_proxy_direct_ips.sort -%]
+ip=[% ip %]
+[%  END -%]
+[% END -%]
