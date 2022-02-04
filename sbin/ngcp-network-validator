@@ -89,7 +89,7 @@ foreach my $hostname (sort keys %{$yaml->{hosts}}) {
         type => 'map',
         mapping => dclone($schema_host->{hostmap}),
     };
-    if ($hostname =~ m/^(?:self|sp[12]|(db|prx)01[ab])$/) {
+    if ($hostname =~ m/^(?:self|sp[1-9]|(db|prx)01[a-i])$/) {
         $hostmap->{required} = 'yes';
     } else {
         $hostmap->{required} = 'no';
@@ -99,7 +99,7 @@ foreach my $hostname (sort keys %{$yaml->{hosts}}) {
     my $peermap = {
         type => 'text',
     };
-    if ($hostname =~ m/^(?:sp([12])|((?:db|web|lb|slb|prx)\d\d)([ab]))$/) {
+    if ($hostname =~ m/^(?:sp([1-9])|((?:db|web|lb|slb|prx)\d\d)([a-i]))$/) {
         my $peer;
 
         $peermap->{required} = 'yes';
