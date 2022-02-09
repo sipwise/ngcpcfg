@@ -166,10 +166,12 @@ instances:
     interfaces:
       - name: neth2
         ip: 192.168.2.250
-        type: sip_ext
+        type:
+          - sip_ext
       - name: neth1
         ip: 192.168.255.253
-        type: sip_int
+        type:
+          - sip_int
     connections:
       proxy_algorithm: serial
       proxy:
@@ -198,10 +200,12 @@ instances:
     interfaces:
       - name: neth2
         ip: 192.168.2.251
-        type: sip_ext
+        type:
+          - sip_ext
       - name: neth1
         ip: 192.168.255.254
-        type: sip_int
+        type:
+          - sip_int
     connections:
       proxy_algorithm: serial
       proxy:

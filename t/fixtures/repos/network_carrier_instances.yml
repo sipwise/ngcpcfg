@@ -784,10 +784,12 @@ instances:
     interfaces:
       - name: vlan1719
         ip: 172.30.52.204
-        type: sip_ext
+        type:
+          - sip_ext
       - name: vlan1720
         ip: 172.30.52.146
-        type: sip_int
+        type:
+          - sip_int
     connections:
       proxy_algorithm: serial
       proxy:
@@ -816,10 +818,12 @@ instances:
     interfaces:
       - name: vlan1719
         ip: 172.30.52.203
-        type: sip_ext
+        type:
+          - sip_ext
       - name: vlan1720
         ip: 172.30.52.145
-        type: sip_int
+        type:
+          - sip_int
     connections:
       proxy_algorithm: serial
       proxy:
