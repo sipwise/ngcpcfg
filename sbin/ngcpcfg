@@ -150,13 +150,16 @@ case ${1:-} in
     printf "Running 'ngcpcfg decrypt' outside ngcpcfg framework...\n"
     "${SCRIPTS}/decrypt"
     ;;
-  init-shared|\
-  initialise|\
   cat|\
   check|\
-  get|\
+  diff|\
   edit|\
-  show)
+  get|\
+  initialise|\
+  init-shared|\
+  log|\
+  show|\
+  status)
     main_action "$@"
     ;;
   values)
@@ -167,14 +170,11 @@ case ${1:-} in
   build|\
   clean|\
   commit|\
-  diff|\
   encrypt|\
-  log|\
   pull|\
   push|\
   push-parallel|\
   services|\
-  status|\
   set|\
   del|\
   patch)
