@@ -153,6 +153,7 @@ case ${1:-} in
   init-shared|\
   initialise|\
   cat|\
+  check|\
   get|\
   edit|\
   show)
@@ -164,7 +165,6 @@ case ${1:-} in
     ;;
   apply|\
   build|\
-  check|\
   clean|\
   commit|\
   diff|\
