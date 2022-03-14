@@ -116,6 +116,9 @@ precedence to higher precedence):
 file, used by template-handler for generating /etc/foobar/baz. Configuration
 file is usually provided by a Debian package.
 
+* _/etc/ngcp-config/templates/etc/foobar/baz.tt2.inst-$INSTANCE_NAME_: ngcp_instance specific
+template file. $INSTANCE_NAME in lowercase specified at instances part on network.yml.
+
 * _/etc/ngcp-config/templates/etc/foobar/baz.tt2.$HA_NODE_: node specific
 template file. $HA_NODE is determined using the content of /etc/ngcp_ha_node
 (usually being _sp1_ for the first node and _sp2_ for the second node on the
@@ -142,6 +145,12 @@ Note: This feature is available in High Availability setups only.
 template file, but configuration usually isn't provided by a Debian package and
 can be modified independently from any Debian package mechanism.
 
+* _/etc/ngcp-config/templates/etc/foobar/baz.customtt.tt2.inst-$INSTANCE_NAME_:
+configuration file similar to
+_/etc/ngcp-config/templates/etc/foobar/baz.tt2.inst-$INSTANCE_NAME_ but it's guaranteed
+that the file won't be part of any Debian package mechanism. $INSTANCE_NAME in
+lowercase specified at instances part on network.yml.
+
 * _/etc/ngcp-config/templates/etc/foobar/baz.customtt.tt2.$HA_NODE_: node
 specific template file. Regarding $HA_NODE the same as for _baz.tt2.$HA_NODE_
 applies (see the previous bullet), but the configuration file usually isn't
@@ -163,14 +172,16 @@ available in High Availability setups only.
 
 [IMPORTANT]
 Configuration file precedence (highest to lowest):
+*.customtt.tt2.inst-$INSTANCE_NAME
 *.customtt.tt2.$NGCP_HOSTNAME
 *.customtt.tt2.$PAIRNAME
 *.customtt.tt2.$HA_NODE
-*.customtt.tt2,
+*.customtt.tt2
+*.tt2.inst-$INSTANCE_NAME
 *.tt2.$NGCP_HOSTNAME
 *.tt2.$PAIRNAME
 *.tt2.$HA_NODE
-*.tt2.
+*.tt2
 
 Customisation for default template files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

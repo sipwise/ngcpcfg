@@ -251,6 +251,10 @@ sub generate_iofiles {
 
     # Support for PRO/CARRIER systems.
     my @tt2_hosts;
+    # Support for instances, name in lowercase!!
+    if (length $ENV{INSTANCE_NAME}) {
+        push @tt2_hosts, ".inst-".lc $ENV{INSTANCE_NAME};
+    }
     foreach my $name (qw(HOST_FILE PAIR_FILE HA_FILE)) {
         push @tt2_hosts, $ENV{$name} if defined $ENV{$name};
     }
@@ -307,11 +311,11 @@ sub generate_iofiles {
 
     # Prepare the list of variant extension in order:
     my @match_ext;
-    # foo.customtt.tt2.{hostname,pairname,spX} >
+    # foo.customtt.tt2.{instname,hostname,pairname,spX} >
     push @match_ext, ".customtt.tt2$_" foreach (@tt2_hosts);
     # foo.customtt.tt2 >
     push @match_ext, ".customtt.tt2";
-    # foo.tt2.{hostname,pairname,spX} >
+    # foo.tt2.{instname,hostname,pairname,spX} >
     push @match_ext, ".tt2$_" foreach (@tt2_hosts);
     # foo.tt2
     push @match_ext, ".tt2";

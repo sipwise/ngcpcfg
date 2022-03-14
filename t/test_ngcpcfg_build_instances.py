@@ -1,9 +1,8 @@
 #!/usr/bin/env py.test-3
-
-from pathlib import Path
-import pytest
 import re
-from fixtures.fs import check_output, check_stdoutput
+
+from fixtures.fs import check_output
+from fixtures.fs import check_stdoutput
 
 
 def test_build_instances(ngcpcfgcli):
@@ -18,7 +17,9 @@ def test_build_instances(ngcpcfgcli):
             "NGCPCFG": "fixtures/ngcpcfg_carrier_instances.cfg",
         },
     )
-    assert re.search(r"Generating .*/etc/kamailio/lb/kamailio.cfg: OK", out.stdout)
+    assert re.search(
+        r"Generating .*/etc/kamailio/lb/kamailio.cfg: OK", out.stdout
+    )
 
     assert not re.search(r"Error", out.stdout)
     assert not re.search(r"Error", out.stderr)
@@ -29,17 +30,48 @@ def test_build_instances(ngcpcfgcli):
 
     check_output(str(output_file), test_file)
 
-    assert re.search(r"Generating .*/etc/kamailio/lb_A/kamailio.cfg: OK", out.stdout)
+    assert re.search(
+        r"Generating .*/etc/kamailio/lb_A/kamailio.cfg: OK", out.stdout
+    )
 
     output_file = base_dir.joinpath("etc/kamailio/lb_A/kamailio.cfg")
     test_file = "fixtures/output/lb_kamailio_cfg_instances_A"
 
     check_output(str(output_file), test_file)
 
-    assert re.search(r"Generating .*/etc/kamailio/lb_B/kamailio.cfg: OK", out.stdout)
+    assert re.search(
+        r"Generating .*/etc/kamailio/lb_B/kamailio.cfg: OK", out.stdout
+    )
 
     output_file = base_dir.joinpath("etc/kamailio/lb_B/kamailio.cfg")
     test_file = "fixtures/output/lb_kamailio_cfg_instances_B"
+
+    check_output(str(output_file), test_file)
+    assert out.returncode == 0
+
+
+def test_build_instance_customtt(ngcpcfgcli):
+    out = ngcpcfgcli(
+        "build",
+        "--ignore-branch-check",
+        "/etc/kamailio/lb/",
+        env={
+            "NGCP_HOSTNAME": "lb01a",
+            "TEMPLATE_POOL_BASE": "fixtures/build_instances",
+            "TEMPLATE_INSTANCES": "fixtures/repos/ngcp.instances",
+            "NGCPCFG": "fixtures/ngcpcfg_carrier_instances.cfg",
+        },
+    )
+    assert re.search(
+        r"Generating .*/etc/kamailio/lb_B/simple.cfg: OK", out.stdout
+    )
+
+    assert not re.search(r"Error", out.stdout)
+    assert not re.search(r"Error", out.stderr)
+
+    base_dir = out.env["OUTPUT_DIRECTORY"]
+    output_file = base_dir.joinpath("etc/kamailio/lb_B/simple.cfg")
+    test_file = "fixtures/output/lb_custom_cfg_instances_B"
 
     check_output(str(output_file), test_file)
     assert out.returncode == 0
