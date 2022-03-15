@@ -120,10 +120,16 @@ sub process_template {
     $input_for_perms =~ s/\.customtt\.tt2/.tt2/ig;
     $input_for_perms =~ s/\.tt2.*/.tt2/ig;
 
+    if (! -e $input_for_perms) {
+        warn("base filename:${input_for_perms} for:${input} not found\n");
+    }
+
     # Set permissions for generated config based on the ones of the
     # template, plus dropping all write permissions.
     my $old_umask = umask 0222;
-    my $mode = (stat $input_for_perms)[2];
+    # base file does not exist, default perms
+    ## no critic (ValuesAndExpressions::ProhibitLeadingZeros)
+    my $mode = (stat $input_for_perms)[2] // 0644;
 
     my $newfile = "$output.ngcpcfg-new";
 
