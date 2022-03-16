@@ -37,15 +37,28 @@ patch_search() {
   local name="$1"
   shift # remove the first 'patchtt/customtt'
   local files=("$@")
-
-  log_debug "Searching for ${name} files (requested '${files[*]}')"
-
   local fileslist
   fileslist=$(mktemp)
 
-  local a="\.sp[12]?"
-  local b="\.(web|db|prx|lb|slb)[0-9]+[ab]?"
-  local awk_regexp=".*${name}\.tt2(${a}|${b})?$"
+  local regexp=""
+  local hosts=()
+  if [ -n "${HOST_FILE:-}" ]; then
+    hosts+=("${HOST_FILE}")
+  fi
+  if [ -n "${PAIR_FILE:-}" ]; then
+    hosts+=("${PAIR_FILE}")
+  fi
+  if [ -n "${HA_FILE:-}" ]; then
+    hosts+=("${HA_FILE}")
+  fi
+  for val in "${hosts[@]}"; do
+    regexp="${regexp}|\\${val}"
+  done
+  local awk_regexp=".*${name}\.tt2$"
+  if [ -n "${regexp}" ]; then
+    awk_regexp=".*${name}\.tt2(${regexp#|})?$"
+  fi
+  log_debug "Searching for ${name} files (requested '${files[*]}') awk_regexp:${awk_regexp}"
 
   for dir in ${CONFIG_POOL} ; do
     [ -n "${dir}" ] || log_error "${dir} doesn't exist"

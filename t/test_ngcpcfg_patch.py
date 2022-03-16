@@ -1,7 +1,7 @@
 #!/usr/bin/env py.test-3
-
 import shutil
 from pathlib import Path
+
 import pytest
 from fixtures.fs import check_output
 
@@ -376,7 +376,11 @@ def test_patch_action_build_generate_and_overwrite_customtt_file(ngcpcfg, ngcpcf
     #   * overwrite old/available customtt files
     #   * build proper config using new customtt files
 
-    env, cfg = ngcpcfg()
+    env, cfg = ngcpcfg(
+        env={
+            "NGCPCFG": "fixtures/ngcpcfg_pro.cfg",
+        },
+    )
     template_pool = Path(cfg["TEMPLATE_POOL_BASE"]).joinpath("etc")
     shutil.rmtree(template_pool)
     apt_path = template_pool.joinpath("apt/apt.conf.d")
@@ -512,7 +516,11 @@ def test_patch_action_build_generate_all_file(ngcpcfg, ngcpcfgcli):
     # the same as test 'test_patch_action_build_generate_and_overwrite_customtt_file'
     # while build all available files
 
-    env, cfg = ngcpcfg()
+    env, cfg = ngcpcfg(
+        env={
+            "NGCPCFG": "fixtures/ngcpcfg_pro.cfg",
+        },
+    )
     template_pool = Path(cfg["TEMPLATE_POOL_BASE"]).joinpath("etc")
     shutil.rmtree(template_pool)
     apt_path = template_pool.joinpath("apt/apt.conf.d")
