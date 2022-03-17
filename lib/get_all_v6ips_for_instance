@@ -1,12 +1,13 @@
 [%
 # vi: ft=tt2
 
-# Return an array of IPs from the interface of a given type
+# Return an array of IPv6s from the interface of a given type
 # for an instance.
 # @param argv.instance  instance
 # @param argv.type      The interface type of a node to extract the IP
 #                       from, one of:
 #                         web_int, web_ext, sip_int, sip_ext, ...
+# @param argv.format    Optional reformatting of IPv6 addresses.
 # @param argv.status    node status [ online, offline, inactive ]
 #                         default value: ['online', 'inactive']
 # @return out           The array of IPs.
@@ -29,8 +30,13 @@ RETURN UNLESS status.item(argv.instance.status);
 
 FOREACH iface IN argv.instance.interfaces;
   NEXT UNLESS iface.type.grep('^' _ argv.type _ '$').size();
-  NEXT UNLESS iface.ip;
-  out.push(iface.ip);
+  NEXT UNLESS iface.v6ip;
+  IF argv.format == 'expand';
+    ip = ngcp.net_ip_expand(iface.v6ip);
+  ELSE;
+    ip = iface.v6ip;
+  END;
+  out.push(ip);
 END;
 
 out = out.sort.unique;
