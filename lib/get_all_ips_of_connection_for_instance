@@ -1,51 +1,62 @@
 [%
 # vi: ft=tt2
 
-# Returns an array of IPs from the connection list passed as argument
+# Returns an array of IPs getting from the connection list passed as argument
+# after getting the one with name argv.name
 # The ips are retrieved from the definition of other instances or hosts
 #
 # @param argv.connection  the connection list of the instance
 #
+# @param argv.name        the name of the connection list to use
+#
 # @param argv.type        get IPs for only specific iface type,
 #                         not all of the types present in conn config
 #
+# @param argv.ngcpcfgdir
+#
 # @return out             the array of IPs.
+# @return out_algorithm   the algorithm to use.
 
 out = [];
+out_algorithm = '';
+
+IF !argv.ngcpcfgdir.length;
+  argv.ngcpcfgdir = '/usr/lib/ngcp-ngcpcfg';
+END;
 
 FOR conn IN argv.connection;
-  # Filtering to get the interface with the correct type
-  FOR conn_interface IN conn.interfaces;
-    NEXT UNLESS conn_interface.type.grep('^' _ argv.type _ '$').size();
+  NEXT UNLESS conn.name == argv.name;
+  out_algorithm = conn.algorithm;
+  FOR link IN conn.links;
+    # Filtering to get the interface with the correct type
+    FOR link_interface IN link.interfaces;
+      NEXT UNLESS link_interface.type.grep('^' _ argv.type _ '$').size();
 
-    # If type equal instance, then look into the instances definition
-    IF conn.type == "instance";
-      FOR conn_instance IN instances;
-        NEXT UNLESS conn_instance.name == conn.name;
-        FOREACH iface IN conn_instance.interfaces;
-          NEXT UNLESS iface.name == conn_interface.name;
-          NEXT UNLESS iface.type.grep('^' _ conn_interface.type _ '$').size();
-          NEXT UNLESS iface.ip;
-          out.push(iface.ip);
-        END;
-      END;
-    # If type equal node, then look into the node interfaces definition
-    ELSE;
-      IF hosts.${conn.name}.exists(conn_interface.name);
-        IF hosts.${conn.name}.${conn_interface.name}.type.grep('^' _ conn_interface.type _ '$').size();
-          FOREACH ip IN hosts.${conn.name}.${conn_interface.name}.shared_ip;
-            NEXT UNLESS ip;
-            out.push(ip);
+      # If type equal instance, then look into the instances definition
+      IF link.type == "instance";
+        FOR conn_instance IN instances;
+          NEXT UNLESS conn_instance.name == link.name;
+          FOR iface IN conn_instance.interfaces;
+            NEXT UNLESS iface.name == link_interface.name;
+            NEXT UNLESS iface.type.grep('^' _ link_interface.type _ '$').size();
+            NEXT UNLESS iface.ip;
+            out.push(iface.ip);
           END;
-          # If no shared IP found, then use the node IP
+        END;
+      # If type equal host, then look into the node interfaces definition
+      ELSE;
+        IF hosts.exists(link.name);
+          argv.host = link.name;
+          argv.type = link_interface.type;
+          PROCESS "${argv.ngcpcfgdir}/get_all_shared_ips_for_host";
           IF !out.size;
-            out.push(hosts.${conn.name}.${conn_interface.name}.ip);
+            PROCESS "${argv.ngcpcfgdir}/get_all_ips_for_host";
           END;
         END;
       END;
     END;
 
-    # It is assumed to have in the connections only one interface defined with a particular type ?
+    # It is assumed to have in the connections only one interface defined with a particular type
     LAST;
   END;
 END;

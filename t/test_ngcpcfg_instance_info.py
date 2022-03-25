@@ -20,7 +20,7 @@ def test_instance_info_noargs(helpercli):
 def test_instances_info_no_instance(helpercli):
     out = helpercli(
         "instance-info",
-        "C",
+        "D",
         env={
             "NETWORK_CONFIG": "fixtures/repos/network_carrier_instances.yml",
         },

@@ -173,25 +173,14 @@ instances:
         type:
           - sip_int
     connections:
-      proxy_algorithm: serial
-      proxy:
-        - type: instance
-          name: C
-          interfaces:
-            - name: neth1
-            - type: sip_int
-      proxy_fallback_algorithm: random
-      proxy_fallback:
-        - type: host
-          name: sp1
-          interfaces:
-            - name: neth1
-              type: sip_int
-        - type: instance
-          name: E
-          interfaces:
-            - name: neth1
-              type: sip_int
+      - name: proxy
+        algorithm: serial
+        links:
+          - type: instance
+            name: C
+            interfaces:
+              - name: neth1
+                type: sip_int
   - name: B
     service: kamailio-lb
     host: sp1
@@ -207,22 +196,21 @@ instances:
         type:
           - sip_int
     connections:
-      proxy_algorithm: serial
-      proxy:
-        - type: instance
-          name: D
-          interfaces:
-            - name: neth1
-              type: sip_int
-      proxy_fallback_algorithm: random
-      proxy_fallback:
-        - type: host
-          name: sp2
-          interfaces:
-            - name: neth1
-              type: sip_int
-        - type: instance
-          name: E
-          interfaces:
-            - name: neth1
-              type: sip_int
+      - name: proxy
+        algorithm: serial
+        links:
+          - type: host
+            name: sp2
+            interfaces:
+              - name: neth1
+                type: sip_int
+  - name: C
+    service: kamailio-proxy
+    host: sp1
+    status: online
+    label: proxy
+    interfaces:
+      - name: neth1
+        ip: 192.168.255.249
+        type:
+          - sip_int

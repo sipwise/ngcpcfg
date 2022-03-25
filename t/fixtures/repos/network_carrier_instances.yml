@@ -791,25 +791,14 @@ instances:
         type:
           - sip_int
     connections:
-      proxy_algorithm: serial
-      proxy:
-        - type: instance
-          name: C
-          interfaces:
-            - name: vlan1720
-              type: sip_int
-      proxy_fallback_algorithm: random
-      proxy_fallback:
-        - type: host
-          name: prx01a
-          interfaces:
-            - name: vlan1720
-              type: sip_int
-        - type: instance
-          name: E
-          interfaces:
-            - name: vlan1720
-              type: sip_int
+      - name: proxy
+        algorithm: serial
+        links:
+          - type: instance
+            name: C
+            interfaces:
+              - name: vlan1720
+                type: sip_int
   - name: B
     service: kamailio-lb
     host: lb01a
@@ -825,22 +814,21 @@ instances:
         type:
           - sip_int
     connections:
-      proxy_algorithm: serial
-      proxy:
-        - type: instance
-          name: D
-          interfaces:
-            - name: vlan1720
-              type: sip_int
-      proxy_fallback_algorithm: random
-      proxy_fallback:
-        - type: host
-          name: prx01b
-          interfaces:
-            - name: vlan1720
-              type: sip_int
-        - type: instance
-          name: E
-          interfaces:
-            - name: vlan1720
-              type: sip_int
+      - name: proxy
+        algorithm: serial
+        links:
+          - type: host
+            name: prx01b
+            interfaces:
+              - name: vlan1720
+                type: sip_int
+  - name: C
+    service: kamailio-proxy
+    host: prx01a
+    status: online
+    label: proxy
+    interfaces:
+      - name: vlan1720
+        ip: 172.30.52.150
+        type:
+          - sip_int
