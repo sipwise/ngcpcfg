@@ -1,3 +1,32 @@
+ngcp-ngcpcfg (10.5.0.0+0~mr10.5.0.0) unstable; urgency=medium
+
+  [ ngcp-config ]
+  * [04a66a2] TT#160856 add pre-commit
+  * [417db48] TT#160856 test for lib/get_all_ips_of_connection_for_instance
+  * [e486439] TT#139455 instances: type of interface is now a sequence
+  * [3c63137] TT#160855 tt2-process: warn if there's no base file for customtt
+  * [063b139] TT#160855 patch: don't use static match for PRO/CARRIER
+  * [f937c4f] TT#160855 support tt2 templates for instances
+
+  [ Marco Capetta ]
+  * [99e563b] TT#160856 Improve instance's connections to support more interfaces
+  * [aec2f54] TT#167950 Add new helper script get_all_v6ips_for_instance
+
+  [ Donat Zenichev ]
+  * [1030182] TT#157251 Add 'get_all_adv_ips_for_instance' script
+  * [376b666] TT#164851 Instances, add a script to fill /etc/hosts
+
+  [ Guillem Jover ]
+  * [7575f51] TT#149202 Fix UTF-8 handling
+  * [6c45358] TT#149202 cat: Add new action to concatenate configuration files
+  * [07f9aef] TT#149202 check: Concatenate all configuration files when schema validating
+
+  [ Michael Prokop ]
+  * [fa64547] TT#114353 check action: do not execute restore-permissions
+  * [234f34e] TT#114353 Skip restore-permissions execution with diff, log + status actions
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 31 Mar 2022 00:01:35 +0200
+
 ngcp-ngcpcfg (10.4.0.0+0~mr10.4.0.0) unstable; urgency=medium
 
   [ ngcp-config ]
