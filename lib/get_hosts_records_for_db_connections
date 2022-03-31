@@ -1,166 +1,71 @@
 [%
 # vi: ft=tt2
 
+# Only for usage with instances setup, and only to be used on Proxy / LB hosts.
+#
 # Returns a list of prepared records for /etc/hosts file.
 # It differentiates PRO and Carrier setups automatically and fills
 # the records accordingly to the setup type.
 # If the NGCP setup has no instances, script will return an empty list.
 
-hostname = ngcp.get_hostname();
-
 out = [];
-
-hostnames_records_sql = [];
-hostnames_records_nosql = [];
-
-sql_role = 'db';
-nosql_role = 'db';
 
 proxy_role = 'proxy';
 lb_role = 'lb';
 
+sql_role = 'db';
+nosql_role = 'db';
+
 iface_marker = 'ha_int';
 
-IF instances.defined && instances.size > 0;
+hostname = ngcp.get_hostname();
+is_lb = ngcp.has_role(hostname, lb_role);
+is_proxy = ngcp.has_role(hostname, proxy_role);
 
-  i_am_proxy = 0;
-  i_am_lb = 0;
+# if this host where the script is running, is not a Proxy/LB node, skip further execution
+IF instances.defined && instances.size > 0 && (is_proxy || is_lb);
 
-  # find out if the node is LB or Proxy, on all other roles mustn't be used
-  i_am_lb = ngcp.has_role(hostname, lb_role);
-  i_am_proxy = ngcp.has_role(hostname, proxy_role);
+  hostnames_records_sql = [];
+  hostnames_records_nosql = [];
 
-  # if this host where the script is running, is not a PRX/LB node, skip further execution
-  NEXT UNLESS i_am_proxy || i_am_lb;
+  # get my ha ip (not a shared ip)
+  argv.host = hostname;
+  argv.type = iface_marker;
+  PROCESS '/usr/lib/ngcp-ngcpcfg/get_all_ips_for_host';
+  my_ha_ip = out.0;
 
-  IF general.ngcp_type == 'carrier';
+  FOREACH host IN hosts.keys.sort;
+    this_host_has_sql_role = ngcp.has_role(host, sql_role);
+    this_host_has_nosql_role = ngcp.has_role(host, nosql_role);
+    this_host_has_proxy_role = ngcp.has_role(host, proxy_role);
+    this_host_has_lb_role = ngcp.has_role(host, lb_role);
 
-    my_ha_ip = '';
-    central_sql_ip = [];
-    central_nosql_ip = [];
-
-    argv.host = hostname;
-    argv.type = iface_marker;
-    PROCESS '/usr/lib/ngcp-ngcpcfg/get_all_ips_for_host';
-    my_ha_ip = out.0;
-
-    FOREACH host IN hosts.keys.sort;
-      NEXT UNLESS ngcp.has_role(host, sql_role);
+    IF is_proxy && (this_host_has_sql_role || this_host_has_nosql_role);
       argv.host = host;
       argv.type = iface_marker;
       PROCESS '/usr/lib/ngcp-ngcpcfg/get_all_shared_ips_for_host';
-      IF out.0;
-        central_sql_ip.push(out.0 _ ' db.central.' _ host);
+
+      IF this_host_has_sql_role && out.0;
+        hostnames_records_sql.push(out.0 _ ' db.central.' _ host);
+      END;
+      IF this_host_has_nosql_role && out.0;
+        hostnames_records_nosql.push(out.0 _ ' nosql.central.' _ host);
       END;
     END;
 
-    FOREACH host IN hosts.keys.sort;
-      NEXT UNLESS ngcp.has_role(host, nosql_role);
-      argv.host = host;
-      argv.type = iface_marker;
-      PROCESS '/usr/lib/ngcp-ngcpcfg/get_all_shared_ips_for_host';
-      IF out.0;
-        central_nosql_ip.push(out.0 _ ' nosql.central.' _ host);
-      END;
+    IF is_proxy && this_host_has_proxy_role;
+      hostnames_records_sql.push(my_ha_ip _ ' db.replicatedpair.' _ host);
+      hostnames_records_sql.push(my_ha_ip _ ' db.replicatedcentral.' _ host);
     END;
 
-    IF i_am_proxy;
-      FOREACH record IN central_sql_ip.unique.sort;
-        hostnames_records_sql.push(record);
-      END;
-      FOREACH record IN central_nosql_ip.unique.sort;
-        hostnames_records_nosql.push(record);
-      END;
-
-      FOREACH host IN hosts.keys.sort;
-        NEXT UNLESS ngcp.has_role(host, proxy_role);
-        hostnames_records_sql.push(my_ha_ip _ ' db.replicatedpair.' _ host);
-        hostnames_records_sql.push(my_ha_ip _ ' db.replicatedcentral.' _ host);
-        hostnames_records_nosql.push(my_ha_ip _ ' nosql.replicatedpair.' _ host);
-      END;
+    IF (is_proxy && this_host_has_proxy_role) || (is_lb && this_host_has_lb_role);
+      hostnames_records_nosql.push(my_ha_ip _ ' nosql.replicatedpair.' _ host);
     END;
-
-    IF i_am_lb;
-      FOREACH host IN hosts.keys.sort;
-        NEXT UNLESS ngcp.has_role(host, lb_role);
-        hostnames_records_nosql.push(my_ha_ip _ ' nosql.replicatedpair.' _ host);
-      END;
-    END;
-
-  ELSE;
-
-    central_sql_ip = [];
-    central_nosql_ip = [];
-
-    my_ha_ip_sql = '';
-    my_ha_ip_nosql = '';
-
-    FOREACH host IN hosts.keys.sort;
-      NEXT UNLESS ngcp.has_role(host, sql_role);
-      argv.host = host;
-      argv.type = iface_marker;
-      PROCESS '/usr/lib/ngcp-ngcpcfg/get_all_shared_ips_for_host';
-      IF out.0;
-        central_sql_ip.push(out.0 _ ' db.central.' _ host);
-      END;
-    END;
-
-    FOREACH host IN hosts.keys.sort;
-      NEXT UNLESS ngcp.has_role(host, nosql_role);
-      argv.host = host;
-      argv.type = iface_marker;
-      PROCESS '/usr/lib/ngcp-ngcpcfg/get_all_shared_ips_for_host';
-      IF out.0;
-        central_nosql_ip.push(out.0 _ ' nosql.central.' _ host);
-      END;
-    END;
-
-    IF ngcp.has_role(hostname, sql_role);
-      argv.host = hostname;
-      argv.type = iface_marker;
-      PROCESS '/usr/lib/ngcp-ngcpcfg/get_all_ips_for_host';
-      IF out.0;
-        my_ha_ip_sql = out.0;
-      END;
-    END;
-
-    IF ngcp.has_role(hostname, nosql_role);
-      argv.host = hostname;
-      argv.type = iface_marker;
-      PROCESS '/usr/lib/ngcp-ngcpcfg/get_all_ips_for_host';
-      IF out.0;
-        my_ha_ip_nosql = out.0;
-      END;
-    END;
-
-    FOREACH record IN central_sql_ip.unique.sort;
-      hostnames_records_sql.push(record);
-    END;
-    FOREACH record IN central_nosql_ip.unique.sort;
-      hostnames_records_nosql.push(record);
-    END;
-
-    IF my_ha_ip_sql != '';
-      FOREACH host IN hosts.keys.sort;
-        NEXT UNLESS ngcp.has_role(host, sql_role);
-        hostnames_records_sql.push(my_ha_ip_sql _ ' db.replicatedpair.' _ host);
-        hostnames_records_sql.push(my_ha_ip_sql _ ' db.replicatedcentral.' _ host);
-      END;
-    END;
-
-    IF my_ha_ip_nosql != '';
-      FOREACH host IN hosts.keys.sort;
-        NEXT UNLESS ngcp.has_role(host, nosql_role);
-        hostnames_records_nosql.push(my_ha_ip_nosql _ ' nosql.replicatedpair.' _ host);
-      END;
-    END;
-
   END;
 
   out = hostnames_records_nosql.merge(hostnames_records_sql);
-
 END;
 
-out = out.unique;
+out = out.unique.sort;
 
 -%]
