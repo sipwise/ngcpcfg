@@ -85,8 +85,32 @@ sub get_hostname
 
 sub get_nodename
 {
-    my $self = shift;
+    my ($self, $hostname) = @_;
 
+    # If we are asked about the nodename for a matching hostname, try to fetch
+    # that.
+    if (defined $hostname) {
+        if (exists $self->{config}{hosts}{$hostname} &&
+            exists $self->{config}{hosts}{$hostname}{nodename}) {
+            return $self->{config}{hosts}{$hostname}{nodename};
+        } else {
+            # Fallback to inferring the nodename from the hostname.
+            if ($hostname eq 'self' or $hostname eq 'spce') {
+                return 'spce';
+            } elsif ($hostname =~ m/^sp[1-9]$/) {
+                return $hostname;
+            } elsif ($hostname =~ m/^\w+\d+([a-i])$/) {
+                my $char = $1;
+                my $nodeindex = ord($char) - ord('a') + 1;
+
+                return "sp$nodeindex";
+            } else {
+                die "Fatal error generating nodename for $hostname\n";
+            }
+        }
+    }
+
+    # Otherwise, get the nodename for this host.
     return $self->{nodename} if exists $self->{nodename};
 
     my $filename = '/etc/ngcp_ha_node';
@@ -326,9 +350,10 @@ Returns the NGCP version.
 
 Returns the hostname of the node calling this function.
 
-=item $nodename = $t->get_nodename()
+=item $nodename = $t->get_nodename([$hostname])
 
-Returns the nodename of the node calling this function.
+Returns the nodename of the node calling this function, or of $hostname
+if specified.
 
 =item $pairname = $t->get_pairname($hostname)
 
