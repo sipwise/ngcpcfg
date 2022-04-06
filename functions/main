@@ -20,15 +20,10 @@ fi
 if [ -r "${FUNCTIONS}"/ha_features ] ; then
   # shellcheck disable=SC1090,SC1091
   . "${FUNCTIONS}"/ha_features
-  # Set ${HA_FILE}, used by ngcpcfg.cfg, tt2-process and encrypt.
-  set_ha_file
-fi
 
-if [ -r "${FUNCTIONS}"/carrier_features ] ; then
-  # shellcheck disable=SC1090,SC1091
-  . "${FUNCTIONS}"/carrier_features
-  # Set ${HOST_FILE} + ${PAIR_FILE}, used by ngcpcfg.cfg and tt2-process.
-  set_host_and_pair_files
+  # Set HOST_FILE, NODE_FILE and PAIR_FILE variables, used by ngcpcfg.cfg,
+  # tt2-process and encrypt.
+  set_ha_vars
 fi
 ## }}}
 
@@ -155,7 +150,7 @@ chown_configs() {
     return
   fi
 
-  for f in ${NGCPCTL_CONFIG:-} ${HA_CONFIG:-} ${PAIR_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} "${EXTRA_CONFIG_FILES[@]}" ; do
+  for f in ${NGCPCTL_CONFIG:-} ${NODE_CONFIG:-} ${PAIR_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} "${EXTRA_CONFIG_FILES[@]}" ; do
     if [ ! -f "${f}" ]; then
       continue
     fi

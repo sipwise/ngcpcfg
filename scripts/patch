@@ -48,8 +48,8 @@ patch_search() {
   if [ -n "${PAIR_FILE:-}" ]; then
     hosts+=("${PAIR_FILE}")
   fi
-  if [ -n "${HA_FILE:-}" ]; then
-    hosts+=("${HA_FILE}")
+  if [ -n "${NODE_FILE:-}" ]; then
+    hosts+=("${NODE_FILE}")
   fi
   for val in "${hosts[@]}"; do
     regexp="${regexp}|\\${val}"

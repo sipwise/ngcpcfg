@@ -43,7 +43,7 @@ if [ -n "${NGCP_JOBS:-}" ] ; then
   ARGS+=("--jobs=${NGCP_JOBS}")
 fi
 
-for f in ${NGCPCTL_CONFIG:-} ${HA_CONFIG:-} ${PAIR_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG:-} "${EXTRA_CONFIG_FILES[@]}" ${CONSTANTS_CONFIG:-} ; do
+for f in ${NGCPCTL_CONFIG:-} ${NODE_CONFIG:-} ${PAIR_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG:-} "${EXTRA_CONFIG_FILES[@]}" ${CONSTANTS_CONFIG:-} ; do
   if [ -r "$f" ] ; then
     ARGS+=("-c" "$f")
   fi
@@ -127,7 +127,7 @@ else
   done
 
   declare -a configs
-  for config in "${HA_CONFIG}" "${PAIR_CONFIG}"; do
+  for config in "${NODE_CONFIG}" "${PAIR_CONFIG}"; do
     if [ -n "${config}" ]; then
       configs+=("-e" "$(basename "${config}")")
     fi

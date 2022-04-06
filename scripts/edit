@@ -55,7 +55,7 @@ else
   # and process the main YML configs first: config.yml network.yml constants.yml
   # NOTE: the file are loaded/merged into ngcpcfg in different order!
   declare -a CONFIGS
-  for f in ${NGCPCTL_CONFIG:?} ${NETWORK_CONFIG:?} ${CONSTANTS_CONFIG:?} ${HA_CONFIG:-} ${PAIR_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} "${EXTRA_CONFIG_FILES[@]}" ; do
+  for f in ${NGCPCTL_CONFIG:?} ${NETWORK_CONFIG:?} ${CONSTANTS_CONFIG:?} ${NODE_CONFIG:-} ${PAIR_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} "${EXTRA_CONFIG_FILES[@]}" ; do
     if [ -r "$f" ] ; then
       CONFIGS+=("${f}")
     fi

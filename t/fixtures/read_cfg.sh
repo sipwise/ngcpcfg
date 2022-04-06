@@ -7,7 +7,9 @@ echo "[ngcpcfg]"
 echo "NGCPCTL_BASE=${NGCPCTL_BASE:-}"
 echo "NGCPCTL_MAIN=${NGCPCTL_MAIN:-}"
 echo "NGCPCTL_CONFIG=${NGCPCTL_CONFIG:-}"
-echo "HA_CONFIG=${HA_CONFIG:-}"
+# HA_CONFIG is deprecated, only for backwards compatibility.
+echo "HA_CONFIG=${NODE_CONFIG:-}"
+echo "NODE_CONFIG=${NODE_CONFIG:-}"
 echo "PAIR_CONFIG=${PAIR_CONFIG:-}"
 echo "HOST_CONFIG=${HOST_CONFIG:-}"
 echo "LOCAL_CONFIG=${LOCAL_CONFIG:-}"
@@ -52,6 +54,8 @@ echo "NETWORK_CONFIG_GROUP=${NETWORK_CONFIG_GROUP:-}"
 echo "NETWORK_CONFIG_CHMOD=${NETWORK_CONFIG_CHMOD:-}"
 
 # fake values from ngcpcfg-ha
+# HA_FILE is deprecated, only for backwards compatibility.
 echo "HA_FILE=${HA_FILE:-}"
+echo "NODE_FILE=${NODE_FILE:-}"
 echo "HOST_FILE=${HOST_FILE:-}"
 echo "PAIR_FILE=${PAIR_FILE:-}"

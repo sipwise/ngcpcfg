@@ -20,7 +20,7 @@ fi
 get_config_file_list() {
   for dir in ${CONFIG_POOL} ; do
     # shellcheck disable=SC2044
-    for file in $(find "${TEMPLATE_POOL_BASE}/${dir}" -name \*.tt2 -o -name \*.tt2"${HA_FILE:-}") ; do
+    for file in $(find "${TEMPLATE_POOL_BASE}/${dir}" -name \*.tt2 -o -name \*.tt2"${NODE_FILE:-}") ; do
       x=${file##"${NGCPCTL_MAIN}"/templates/} # drop leading /etc/ngcp-config
       y=${x%%.tt2}                            # drop trailing suffix '.tt2'
       y=${y%%.tt2.sp1}                        # drop trailing suffix '.tt2.sp1'

@@ -255,7 +255,7 @@ sub generate_iofiles {
     if (length $ENV{INSTANCE_NAME}) {
         push @tt2_hosts, ".inst-".lc $ENV{INSTANCE_NAME};
     }
-    foreach my $name (qw(HOST_FILE PAIR_FILE HA_FILE)) {
+    foreach my $name (qw(HOST_FILE PAIR_FILE NODE_FILE)) {
         push @tt2_hosts, $ENV{$name} if defined $ENV{$name};
     }
     @tt2_hosts = uniq(@tt2_hosts);

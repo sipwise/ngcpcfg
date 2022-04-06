@@ -66,7 +66,7 @@ done
 declare -a configs_try
 if "${config_types[config]}"; then
   configs_try+=("${NGCPCTL_CONFIG}")
-  configs_try+=("${HA_CONFIG}")
+  configs_try+=("${NODE_CONFIG}")
   configs_try+=("${PAIR_CONFIG}")
   configs_try+=("${HOST_CONFIG}")
   configs_try+=("${LOCAL_CONFIG}")

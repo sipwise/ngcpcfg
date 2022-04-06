@@ -58,14 +58,14 @@ $EDITOR, webfrontend,...
 * _/etc/ngcp-config/config.$NGCP_HOSTNAME.yml_: host specific configuration file,
 depending on the ngcp_hostname (:= $NGCP_HOSTNAME) of the system.
 
-* _/etc/ngcp-config/config.$PAIRNAME.yml_: pair specific configuration file,
-depending on the pairname (:= $PAIRNAME) of the system (for example _sp_ on
+* _/etc/ngcp-config/config.$NGCP_PAIRNAME.yml_: pair specific configuration file,
+depending on the pairname (:= $NGCP_PAIRNAME) of the system (for example _sp_ on
 CE/PRO or _web01_ on CARRIER).
 
-* _/etc/ngcp-config/config.$HA_NODE.yml_: HA node specific configuration file,
-depending on the HA node name of the system. $HA_NODE is determined using the
-content of /etc/ngcp_ha_node (usually being _sp1_ for the first node and _sp2_
-for the second node).
+* _/etc/ngcp-config/config.$NGCP_NODENAME.yml_: HA node specific configuration
+file, depending on the HA node name of the system. $NGCP_NODENAME is determined
+using the __ngcp-nodename__ program (being _spce_ for CE systems, and _spN_
+where N is the index of the node in the pair).
 
 * _/etc/ngcp-config/config.local.yml_: local configuration, not being host
 specific.
@@ -94,14 +94,15 @@ Files with suffix '.cfg' inside this directory are sourced after
 [IMPORTANT]
 Configuration file priority: constants.yml takes precedence over
 all files in _/etc/ngcp-config/config.d/_, over config.local.yml,
-over config.$NGCP_HOSTNAME.yml, over config.$PAIRNAME.yml,
-over config.$HA_NODE.yml, over config.yml.
+over config.$NGCP_HOSTNAME.yml, over config.$NGCP_PAIRNAME.yml,
+over config.$NGCP_NODENAME.yml, over config.yml.
 
 High Availability specific configuration files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* _/etc/ngcp_ha_node_: defines the node name in High Availability setups, usually
-being _sp1_ for the first node and _sp2_ for the second node.
+* _/etc/ngcp_nodename_: defines the node name in High Availability setups,
+being _spce_ for CE systems, and _spN_ where N is the index of the node in
+the pair.
 
 * _/etc/ngcp-config/systems.cfg_: configuration file that specifies to which
 hosts changes should be pushed to.
@@ -119,25 +120,27 @@ file is usually provided by a Debian package.
 * _/etc/ngcp-config/templates/etc/foobar/baz.tt2.inst-$INSTANCE_NAME_: ngcp_instance specific
 template file. $INSTANCE_NAME in lowercase specified at instances part on network.yml.
 
-* _/etc/ngcp-config/templates/etc/foobar/baz.tt2.$HA_NODE_: node specific
-template file. $HA_NODE is determined using the content of /etc/ngcp_ha_node
-(usually being _sp1_ for the first node and _sp2_ for the second node on the
-Sipwise Next Generation Platform). Whereas _*customtt.tt2_ files are used on all
-nodes in a High Availability setup the _*.tt2.$HA_NODE*_ file is specific for
-the single node only. A common use case is master vs. slave configuration of a
-service. The configuration file is usually provided by a Debian package.
+* _/etc/ngcp-config/templates/etc/foobar/baz.tt2.$NGCP_NODENAME_: node specific
+template file. $NGCP_NODENAME is determined using the __ngcp-nodename__ program
+(being _spce_ for CE systems, and _spN_ where N is the index of the node in the
+pair).
+Whereas _*customtt.tt2_ files are used on all nodes in a High Availability
+setup the, _*.tt2.$NGCP_NODENAME*_ file is specific for the single node only
+of each pair.
+A common use case is master vs. slave configuration of a service.
+The configuration file is usually provided by a Debian package.
 Note: This feature is available in High Availability setups only.
 
-* _/etc/ngcp-config/templates/etc/foobar/baz.tt2.$PAIRNAME_: pair specific
+* _/etc/ngcp-config/templates/etc/foobar/baz.tt2.$NGCP_PAIRNAME_: pair specific
 template file. Given a PRO pair in a CARRIER environment where two nodes are
-named _web01a_ and _web01b_ then $PAIRNAME corresponds to _web01_. This is
+named _web01a_ and _web01b_ then $NGCP_PAIRNAME corresponds to _web01_. This is
 useful if there are multiple pairs available but only a specific pair of them
 should include some specific configuration.
 Note: This feature is available in High Availability setups only.
 
 * _/etc/ngcp-config/templates/etc/foobar/baz.tt2.$NGCP_HOSTNAME_: ngcp_hostname specific
-template file. While $HA_NODE is usually bound to _sp1_ for the first node and
-_sp2_ via /etc/ngcp_ha_node it's possible to use host specific template file by
+template file. While $NGCP_NODENAME is usually bound to _sp1_ for the first node and
+_sp2_ via __ngcp-nodename__, it's possible to use host specific template file by
 referring to its ngcp_hostname ($NGCP_HOSTNAME is determined via ngcp-hostname).
 Note: This feature is available in High Availability setups only.
 
@@ -151,16 +154,17 @@ _/etc/ngcp-config/templates/etc/foobar/baz.tt2.inst-$INSTANCE_NAME_ but it's gua
 that the file won't be part of any Debian package mechanism. $INSTANCE_NAME in
 lowercase specified at instances part on network.yml.
 
-* _/etc/ngcp-config/templates/etc/foobar/baz.customtt.tt2.$HA_NODE_: node
-specific template file. Regarding $HA_NODE the same as for _baz.tt2.$HA_NODE_
+* _/etc/ngcp-config/templates/etc/foobar/baz.customtt.tt2.$NGCP_NODENAME_: node
+specific template file.
+Regarding $NGCP_NODENAME the same as for _baz.tt2.$NGCP_NODE_NAME_
 applies (see the previous bullet), but the configuration file usually isn't
 provided by a Debian package but can be modified independently from any
 Debian package mechanism.
 Note: This feature is available in High Availability setups only.
 
-* _/etc/ngcp-config/templates/etc/foobar/baz.customtt.tt2.$PAIRNAME_:
+* _/etc/ngcp-config/templates/etc/foobar/baz.customtt.tt2.$NGCP_PAIRNAME_:
 configuration file similar to
-_/etc/ngcp-config/templates/etc/foobar/baz.tt2.$PAIRNAME_ but it's guaranteed
+_/etc/ngcp-config/templates/etc/foobar/baz.tt2.$NGCP_PAIRNAME_ but it's guaranteed
 that the file won't be part of any Debian package mechanism.  Note: This feature is
 available in High Availability setups only.
 
@@ -174,13 +178,13 @@ available in High Availability setups only.
 Configuration file precedence (highest to lowest):
 *.customtt.tt2.inst-$INSTANCE_NAME
 *.customtt.tt2.$NGCP_HOSTNAME
-*.customtt.tt2.$PAIRNAME
-*.customtt.tt2.$HA_NODE
+*.customtt.tt2.$NGCP_PAIRNAME
+*.customtt.tt2.$NGCP_NODENAME
 *.customtt.tt2
 *.tt2.inst-$INSTANCE_NAME
 *.tt2.$NGCP_HOSTNAME
-*.tt2.$PAIRNAME
-*.tt2.$HA_NODE
+*.tt2.$NGCP_PAIRNAME
+*.tt2.$NGCP_NODENAME
 *.tt2
 
 Customisation for default template files
@@ -205,8 +209,8 @@ availability of the necessary local changes on every configuration apply.
 The patch to be applied to the corresponding tt2 template file is selected in
 the following order (highest to lowest):
 *.patchtt.tt2.$NGCP_HOSTNAME
-*.patchtt.tt2.$PAIRNAME
-*.patchtt.tt2.$HA_NODE
+*.patchtt.tt2.$NGCP_PAIRNAME
+*.patchtt.tt2.$NGCP_NODENAME
 *.patchtt.tt2
 
 [IMPORTANT]
