@@ -113,19 +113,9 @@ sub get_nodename
     # Otherwise, get the nodename for this host.
     return $self->{nodename} if exists $self->{nodename};
 
-    my $filename = '/etc/ngcp_ha_node';
-    $filename = '/etc/ngcp_nodename' unless -f $filename;
-    open my $hh, '<', $filename or die "Error opening $filename";
-    my $nodename = <$hh>;
-    close $hh;
+    my $nodename = qx(ngcp-nodename);
     chomp $nodename;
-
     die "Fatal error retrieving nodename [$nodename]" unless length $nodename;
-
-    if (exists $self->{config}{hosts}{self} and
-        not exists $self->{config}{hosts}{$nodename}) {
-        $nodename = 'self';
-    }
 
     $self->{nodename} = $nodename;
 
