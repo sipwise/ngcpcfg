@@ -1,5 +1,5 @@
 import pytest
-from os import getuid
+from os import chown, getuid, getgid
 from pathlib import Path
 import subprocess
 import sys
@@ -147,6 +147,10 @@ def ngcpcfg(gitrepo, tmpdir, *args):
         src = cfg.get("ngcpcfg", key_base)
         copy_tree(src, src, dst_pool)
         cfg.set("ngcpcfg", key_base, str(dst_pool))
+
+        # required for git versions >=2.35.2
+        chown(ngcpctl_dir, getuid(), getgid())
+
         ex, out, err = git.add("templates")
         assert ex == 0
         # print("{}\nstdout:\n{}stderr:{}\n".format("git add", out, err))
@@ -159,6 +163,8 @@ def ngcpcfg(gitrepo, tmpdir, *args):
             dir_path = Path(outdir).joinpath(dir[1:])
             print("create empty git repository at {}".format(dir_path))
             gitrepo.extract_archive(str(EMPTY_GIT), dir_path)
+            # required for git versions >=2.35.2
+            chown(dir_path, getuid(), getgid())
 
     def process_conf(env, cfg, git):
         base = Path(cfg.get("ngcpcfg", "NGCPCTL_MAIN"))
@@ -199,8 +205,13 @@ def ngcpcfg(gitrepo, tmpdir, *args):
             config.set("ngcpcfg", key, str(testenv[key]))
 
         with gitrepo.in_folder(ngcpctl_dir) as git:
-            git.config("user.email", "fake@pytest.fake")
-            git.config("user.name", "pytest")
+            # required for git versions >=2.35.2
+            chown(git.root, getuid(), getgid())
+
+            # ensure we have valid user information
+            git.config("--local", "user.email", "pytest@example.com")
+            git.config("--local", "user.name", "pytest")
+
             process_conf(testenv, config, git)
             # generate NGCPCFG with config values
             testenv["NGCPCFG"] = gen_cfg(config, ngcpctl_dir)
@@ -208,6 +219,9 @@ def ngcpcfg(gitrepo, tmpdir, *args):
             # ex, out, err = git.diff("HEAD")
             # print("{}\nstdout:\n{}stderr:{}\n".format("git diff", out, err))
             ex, out, err = git.commit("-a", "-m", "prepare_conf done")
+
+            # for debugging underlying problems like safe.directory situation
+            #print("debug: git show: {}\n".format(subprocess.getoutput("git show")))
             print("{}\nstdout:\n{}stderr:{}\n".format("git commit", out, err))
             assert ex == 0
         return testenv, config["ngcpcfg"]

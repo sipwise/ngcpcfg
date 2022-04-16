@@ -66,8 +66,9 @@ def test_apply_instances_changes(ngcpcfg, ngcpcfgcli, tmpdir, gitrepo):
     ]
     # put expected output of build_instances
     with gitrepo.in_folder(base_git) as git:
-        git.config("user.email", "fake@pytest.fake")
-        git.config("user.name", "pytest")
+        # ensure we have valid user information
+        git.config("--local", "user.email", "pytest@example.com")
+        git.config("--local", "user.name", "pytest")
         for file, dir in orig:
             dst_path = base_path.joinpath(dir)
             dst_path.mkdir(parents=True, exist_ok=True)

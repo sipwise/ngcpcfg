@@ -9,9 +9,14 @@ def test_add_file_to_default_repo(cli, gitrepo):
     src = "default-git-repository.tar.gz"
 
     with gitrepo.from_archive(src) as git:
-        # configure git user
-        git.config("--local", "user.email", "me@example.com")
-        git.config("--local", "user.name", "pytest robot")
+        # required for git versions >=2.35.2
+        os.chown(git.root, os.getuid(), os.getgid())
+
+        # ensure we have valid user information
+        git.config("--local", "user.email", "pytest@example.com")
+        git.config("--local", "user.name", "pytest")
+
+        # debug information, visible only in case of errors
         print("Using git {}".format(git.version))
 
         # git status
@@ -39,6 +44,9 @@ def test_add_file_to_default_repo(cli, gitrepo):
 def test_status_output(cli, gitrepo):
     # we mock an existing repository by loading it from the default archive
     with gitrepo.from_archive(gitrepo.default) as git:
+        # required for git versions >=2.35.2
+        os.chown(git.root, os.getuid(), os.getgid())
+
         # now we work with "existing" repository with path given in git.root
         with gitrepo.in_folder(git.root) as git:
             ex, out, err = git.status()
