@@ -29,6 +29,7 @@ Build-Depends:
  libterm-readpassword-perl,
  libyaml-libyaml-perl,
  pkwalify,
+ python3-minimal (>= 3.9~),
  python3-pytest,
 
 Package: libngcp-template-perl
