@@ -63,7 +63,7 @@ build_config_files_instances() {
   fi
 
   log_debug "${RUNNER} ${HELPER}/instances-info $*"
-  inst_cfg=$(mktemp)
+  inst_cfg=$(mktemp -t ngcpcfg-build.XXXXXXXXXX )
   while IFS=":" read -r -a info; do
     source=${info[0]}
     target=${info[1]}

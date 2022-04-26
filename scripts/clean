@@ -111,7 +111,7 @@ clean_untracked() {
   log_info "Removing all untracked files (if any):"
 
   local tmp
-  tmp=$(mktemp)
+  tmp=$(mktemp -t ngcpcfg-clean-untracked.XXXXXXXXXX)
 
   log_debug "git clean -n -f -d -x"
   if ! git clean -n -f -d -x > "${tmp}" ; then
@@ -152,7 +152,7 @@ clean_stash() {
   log_info "Removing all stashes (if any):"
 
   local tmp
-  tmp=$(mktemp)
+  tmp=$(mktemp -t ngcpcfg-clean-stash.XXXXXXXXXX)
 
   log_debug "git stash list"
   if ! git stash list > "${tmp}" ; then
@@ -193,7 +193,7 @@ clean_old_local_branches() {
   log_info "Removing all old branches (if any):"
 
   local tmp
-  tmp=$(mktemp)
+  tmp=$(mktemp -t ngcpcfg-clean-oldbranch.XXXXXXXXXX)
 
   log_debug "git branch"
   if ! git branch > "${tmp}" ; then
@@ -244,7 +244,7 @@ clean_reset_master() {
   fi
 
   local tmp
-  tmp=$(mktemp)
+  tmp=$(mktemp -t ngcpcfg-clean-reset.XXXXXXXXXX)
 
   log_debug "git diff origin/master..master"
   if ! git diff origin/master..master > "${tmp}" ; then

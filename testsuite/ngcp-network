@@ -12,7 +12,7 @@ PATH=$PATH:../t/fixtures/bin/
 count=0
 RC=0
 
-OUTPUT=$(mktemp) || exit 1
+OUTPUT=$(mktemp -t ngcpcfg-testsuite.XXXXXXXXXX) || exit 1
 
 # generated files
 rm -rf testfiles

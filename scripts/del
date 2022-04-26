@@ -63,7 +63,7 @@ log_debug "Deleting option '${option}' from '${file}'"
 perl_line="delete \$yaml->{${option//./\}->\{}};"
 log_debug "perl line: ${perl_line}"
 
-tmp=$(mktemp)
+tmp=$(mktemp -t ngcpcfg-del.XXXXXXXXXX)
 log_debug "Temporary perl file: ${tmp}"
 
 cat > "${tmp}" << EOF

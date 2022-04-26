@@ -11,9 +11,9 @@ get_value() {
   # assume safe defaults
   umask 0077
 
-  input_file="$(mktemp)"
+  input_file="$(mktemp -t ngcpcfg-get-in.XXXXXXXXXX)"
   echo "[% $value %]" > "${input_file}"
-  output_file="$(mktemp)"
+  output_file="$(mktemp -t ngcpcfg-get-out.XXXXXXXXXX)"
 
   if "${HELPER}/tt2-process" -p -q "${ARGS[@]}" "${input_file}" "${output_file}" >/dev/null 2>&1 ; then
     cat "${output_file}"

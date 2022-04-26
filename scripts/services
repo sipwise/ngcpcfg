@@ -73,7 +73,7 @@ exec_wrapper() {
 
 # get rid of "./" and "//" in file names
 normalize_files() {
-  NORMALIZED_FILES="$(mktemp)"
+  NORMALIZED_FILES="$(mktemp -t ngcpcfg-services-norm.XXXXXXXXXX)"
   log_debug "NORMALIZED_FILES = ${NORMALIZED_FILES}"
 
   CLEANUP_FILES+=("${NORMALIZED_FILES}")
@@ -89,7 +89,7 @@ normalize_files() {
 # restart HA just after monit (see MT#17163)
 # restart other services in alphabetical order
 sort_service_list() {
-  SORTED_LIST="$(mktemp)"
+  SORTED_LIST="$(mktemp -t ngcpcfg-services-sorted.XXXXXXXXXX)"
   log_debug "SORTED_LIST = ${SORTED_LIST}"
 
   CLEANUP_FILES+=("${SORTED_LIST}")
@@ -305,7 +305,7 @@ fi
 log_debug "systemd_daemon_reload_preset function"
 systemd_daemon_reload_preset
 
-TMPFILE="$(mktemp)"
+TMPFILE="$(mktemp -t ngcpcfg-services-tmp.XXXXXXXXXX)"
 log_debug "TMPFILE = ${TMPFILE}"
 log_debug "OUTPUT_DIRECTORY=${OUTPUT_DIRECTORY}"
 

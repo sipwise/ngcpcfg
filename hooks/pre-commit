@@ -16,7 +16,7 @@ fi
 
 filter_ignore() {
   if [ -e ".gitignore" ]; then
-    listfile="$( mktemp -t ngcpcfg-git.XXXXXXXXXX )"
+    listfile="$(mktemp -t ngcpcfg-git.XXXXXXXXXX)"
     (git ls-files -oi --exclude-standard; git ls-files -oi --exclude-standard --directory) | sort | uniq > "$listfile" || true
     sed 's/^\.\///' | grep -xFvf "$listfile"
     rm -f "$listfile"
@@ -94,7 +94,7 @@ generate_metadata() {
   '
 }
 
-ngcpcfg_perms=$(mktemp)
+ngcpcfg_perms=$(mktemp -t ngcpcfg-perms.XXXXXXXXXX)
 chown root:root "${ngcpcfg_perms}"
 # Make sure the file is not readable by others, since it can leak
 # information about contents of non-readable directories

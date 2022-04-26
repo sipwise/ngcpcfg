@@ -156,7 +156,7 @@ validate_config() {
       case "${config_type}" in
         config|constants)
           c_cleanup=true
-          c="$(mktemp --tmpdir "ngcpcfg-${config_type}-XXXXXXXXXX.yml")"
+          c="$(mktemp -t "ngcpcfg-check-${config_type}.XXXXXXXXXX.yml")"
           "${SCRIPTS}/cat" "${config_type}" >"$c"
           ;;
         *)
