@@ -41,7 +41,7 @@ patch_search() {
   log_debug "Searching for ${name} files (requested '${files[*]}')"
 
   local fileslist
-  fileslist=$(mktemp)
+  fileslist=$(mktemp -t ngcpcfg-patch-search.XXXXXXXXXX)
 
   local a="\.sp[12]?"
   local b="\.(web|db|prx|lb|slb)[0-9]+[ab]?"
@@ -113,7 +113,7 @@ patch_apply() {
   local template="${patch%%.patchtt*}.tt2"
   local customtt="${patch//.patchtt/.customtt}"
   local patch_output
-  patch_output=$(mktemp)
+  patch_output=$(mktemp -t ngcpcfg-patch-out.XXXXXXXXXX)
 
   local patch_opts=()
   patch_opts+=("--input=${patch}")
@@ -185,9 +185,9 @@ patch_import_customtt() {
   local patchtt="${customtt_file//.customtt/.patchtt}"
 
   local tmp_patchtt
-  tmp_patchtt=$(mktemp)
+  tmp_patchtt=$(mktemp -t ngcpcfg-patch-import.XXXXXXXXXX)
   local diff_output
-  diff_output=$(mktemp)
+  diff_output=$(mktemp -t ngcpcfg-patch-diff.XXXXXXXXXX)
 
 
   # diff exit status is 0 if inputs are the same, 1 if different, 2 if trouble.

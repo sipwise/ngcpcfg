@@ -75,7 +75,7 @@ else
   value="\"${value}\""
 fi
 
-tmp=$(mktemp)
+tmp=$(mktemp -t ngcpcfg-set.XXXXXXXXXX)
 log_debug "Temporary perl file: ${tmp}"
 
 cat > "${tmp}" << EOF
