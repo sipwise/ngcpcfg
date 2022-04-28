@@ -531,15 +531,16 @@ skipped on local side using option '--skip-shared-storage-push'.
 
 If no hosts have been specified then the 'push' will happen only on all HA inactive nodes
 (unless the option '--apply-on-all-nodes' is specified).
-Note: an HA switchover might happen if you are pushing changes which trigger heartbeat
-service restart. In this case you should NOT push to the peer nodes simultaneously (the option
-'--apply-on-all-nodes' is dangerous in this case,
-as this can cause heartbeat service restart on both sp1 and sp2 nodes simultaneously).
+Note: an HA switchover might happen if you are pushing changes which trigger
+a HA service restart. In this case you should NOT push to the peer nodes
+simultaneously (the option '--apply-on-all-nodes' is dangerous in this case,
+as this can cause a HA service restart on both sp1 and sp2 nodes
+simultaneously).
 
 The 'host' can be defined as 'sp1' or 'sp2' which is a ngcpcfg filter where to push/apply.
 The actions will be performed if the HA node ngcp_hostname is 'sp1' or 'sp2' ignoring the HA active state.
 It is safe to push to all sp1 nodes at once, as the peer (sp2 node) will be activated
-in case the current node does a heartbeat restart.
+in case the current node does a HA service restart.
 
 If the special host 'all' is used the push will be performed in parallel in two steps:
  - the first step pushes and applies changes to all sp1 nodes (ignoring the HA state),
