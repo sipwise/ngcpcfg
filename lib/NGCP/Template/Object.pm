@@ -128,11 +128,11 @@ sub get_pairname
 
     my $ngcp_type = $self->{config}{general}{ngcp_type};
     if ($ngcp_type eq 'carrier') {
-        if ($hostname =~ m/^(\w+[0-9])[ab]?$/) {
+        if ($hostname =~ m/^(\w+\d+)[a-i]?$/) {
             return $1;
         }
     } elsif ($ngcp_type eq 'sppro') {
-        if ($hostname =~ m/^(sp)[12]$/) {
+        if ($hostname =~ m/^(sp)[1-9]$/) {
             return $1;
         }
     } elsif ($ngcp_type eq 'spce') {
@@ -187,7 +187,7 @@ sub get_mgmt_pairname
     if ($ngcp_type eq 'carrier') {
         foreach my $hostname (keys %{$self->{config}{hosts}}) {
             if ($self->has_role($hostname, 'mgmt') and
-                $hostname =~ m/^(\w+[0-9])[ab]?$/)
+                $hostname =~ m/^(\w+\d+)[a-i]?$/)
             {
               return $1;
             }

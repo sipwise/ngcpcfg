@@ -6,7 +6,7 @@ use warnings;
 use Cwd;
 use Test::More;
 
-plan tests => 33;
+plan tests => 40;
 
 use_ok('NGCP::Template::Object');
 
@@ -117,6 +117,18 @@ is($obj_ce->get_firstname('non-existent'), 'self',
 is($obj_ce->get_firstname('self'), 'self', 'host self has self as first name');
 is($obj_pro->get_firstname('sp1'), 'sp1', 'host sp1 has sp1 as first name');
 is($obj_pro->get_firstname('sp2'), 'sp1', 'host sp2 has sp1 as first name');
+
+# Check get_pairname().
+is($obj_ce->get_pairname('self'), 'spce', 'host self has sp as pairname');
+is($obj_pro->get_pairname('sp1'), 'sp', 'host sp1 has sp as pairname');
+is($obj_pro->get_pairname('sp2'), 'sp', 'host sp2 has sp as pairname');
+is($obj_pro->get_pairname('sp9'), 'sp', 'host sp9 has sp as pairname');
+is($obj_carrier->get_pairname('web01a'), 'web01',
+    'host web01a has web01 as pairname');
+is($obj_carrier->get_pairname('web01b'), 'web01',
+    'host web01b has web01 as pairname');
+is($obj_carrier->get_pairname('web01i'), 'web01',
+    'host web01i has web01 as pairname');
 
 # Check get_mgmt_pairname().
 is($obj_ce->get_mgmt_pairname(), 'sp', 'spce has sp as mgmt pairname');
