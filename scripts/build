@@ -157,14 +157,6 @@ else
         build_file="${file##templates/}"
         build_file="${build_file%%.services}"
         build_file="${build_file%%.customtt}"
-
-        # drop HA file suffix of all registered nodes
-        if [ -r /etc/ngcp-config/systems.cfg ] ; then
-          while IFS= read -r host ; do
-            build_file="${build_file%%."${host}"}"
-          done < /etc/ngcp-config/systems.cfg
-        fi
-
         build_file="${build_file%%.tt2}"
         build_file="/${build_file}"
 

@@ -35,7 +35,7 @@ sip:providerPRO or sip:carrier), depends on Debian package ngcp-ngcpcfg-ha.
 *local repository*:: the directory _/etc/ngcp-config/_, being a Git repository
 
 *remote systems*:: the other nodes inside High Availability setups, as defined
-in _/etc/ngcp-config/systems.cfg_
+in _/etc/ngcp-config/network.yml_
 
 *shared repository*:: Git repository shared amongst nodes inside a High
 Availability setup, as defined by the GLUSTERFS setting in
@@ -103,9 +103,6 @@ High Availability specific configuration files
 * _/etc/ngcp_nodename_: defines the node name in High Availability setups,
 being _spce_ for CE systems, and _spN_ where N is the index of the node in
 the pair.
-
-* _/etc/ngcp-config/systems.cfg_: configuration file that specifies to which
-hosts changes should be pushed to.
 
 Supported template files
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -245,8 +242,6 @@ Syntax and layout of configuration files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * _/etc/ngcp-config/ngcpcfg.cfg_: plain shell syntax style "key=value" entries
-
-* _/etc/ngcp-config/systems.cfg_: one ngcp_hostname or IP address per line
 
 * _central yml files_ (*.yml): YAML configuration syntax (see http://yaml.org/)
 
@@ -513,9 +508,10 @@ to also skip the _apply_ operation).  If the '--shared-only' option is set then
 the any pending commits will be pushed only to the shared repository only, any
 foreign hosts will be skipped then.  If ngcp_hostname(s) or IP address(es) is given
 as argument then the changes will be pushed to the shared repository and to the
-given hosts only. If no host has been specified then the hosts specified in
-_/etc/ngcp-config/systems.cfg_ are used. The magic word 'all' can be used as a 'host'
-to push the changes on all the nodes from the network.yml except the local one.
+given hosts only. If no host has been specified then the hosts for this pair
+specified in _/etc/ngcp-config/network.yml_ are used.
+The magic word 'all' can be used as a 'host' to push the changes on all the
+nodes from the network.yml except the local one.
 Note: This option is available in High Availability setups only.
 
   **push-parallel** [<options>] [all|sp1|sp2|<host(s)>]::
@@ -746,17 +742,11 @@ Requirements for High Availability setups:
 
 * hosts are expected to be set up for automatic ssh login (ssh-keygen && ssh-copy-id)
 
-* node names are expected to be sp1 and sp2 so the .tt2.sp1 and .tt2.sp2
-template files are supported
+* node names are expected to be sp1 and sp2
 
-Configuration on sp1 (expected to be master node in initial setup):
-
- ngcpcfg initialise
- ngcpcfg build
- printf "sp1\nsp2\n" > /etc/ngcp-config/systems.cfg
- ngcpcfg commit "provide systems.cfg"
-
-Configuration on sp2 (and any further existing system):
+Configuration on sp1 first (expected to be master node in initial setup),
+sequentially followed by configuration on sp2 (and any further existing
+system):
 
  ngcpcfg initialise
  ngcpcfg build
