@@ -569,7 +569,7 @@ Add option '--diff' to display applied changes.
 Here you can find the most popular cases for YML configs modification:
 
   # change rtpengine max port number:
-  ngcpcfg set /etc/ngcp-config/config.yml "rtpproxy.maxport=44123"
+  ngcpcfg set /etc/ngcp-config/config.yml "rtpengine.maxport=44123"
   # disable asterisk service:
   ngcpcfg set /etc/ngcp-config/config.yml "asterisk.enable='no'"
   # add value with spaces
