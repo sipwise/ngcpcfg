@@ -13,7 +13,7 @@ def test_build_instances(ngcpcfgcli):
         env={
             "NGCP_HOSTNAME": "lb01a",
             "TEMPLATE_POOL_BASE": "fixtures/build_instances",
-            "TEMPLATE_INSTANCES": "fixtures/repos/ngcp.instances",
+            "TEMPLATE_INSTANCES": "fixtures/repos/instances.yml",
             "NGCPCFG": "fixtures/ngcpcfg_carrier_instances.cfg",
         },
     )
@@ -58,7 +58,7 @@ def test_build_instance_customtt(ngcpcfgcli):
         env={
             "NGCP_HOSTNAME": "lb01a",
             "TEMPLATE_POOL_BASE": "fixtures/build_instances",
-            "TEMPLATE_INSTANCES": "fixtures/repos/ngcp.instances",
+            "TEMPLATE_INSTANCES": "fixtures/repos/instances.yml",
             "NGCPCFG": "fixtures/ngcpcfg_carrier_instances.cfg",
         },
     )
@@ -81,7 +81,7 @@ def test_instances_info_noargs(helpercli, tmpdir):
     out = helpercli(
         "instances-info",
         env={
-            "TEMPLATE_INSTANCES": "fixtures/repos/ngcp.instances",
+            "TEMPLATE_INSTANCES": "fixtures/repos/instances.yml",
             "NETWORK_CONFIG": "fixtures/repos/network_carrier_instances.yml",
         },
     )
@@ -96,7 +96,7 @@ def test_instances_info_args(helpercli, tmpdir):
         "instances-info",
         "/etc",
         env={
-            "TEMPLATE_INSTANCES": "fixtures/repos/ngcp.instances",
+            "TEMPLATE_INSTANCES": "fixtures/repos/instances.yml",
             "NETWORK_CONFIG": "fixtures/repos/network_carrier_instances.yml",
         },
     )
@@ -111,7 +111,7 @@ def test_instances_info_args_same(helpercli, tmpdir):
         "instances-info",
         "/etc/kamailio/lb",
         env={
-            "TEMPLATE_INSTANCES": "fixtures/repos/ngcp.instances",
+            "TEMPLATE_INSTANCES": "fixtures/repos/instances.yml",
             "NETWORK_CONFIG": "fixtures/repos/network_carrier_instances.yml",
         },
     )
@@ -126,7 +126,7 @@ def test_instances_info_args_longer(helpercli, tmpdir):
         "instances-info",
         "/etc/kamailio/lb/db",
         env={
-            "TEMPLATE_INSTANCES": "fixtures/repos/ngcp.instances",
+            "TEMPLATE_INSTANCES": "fixtures/repos/instances.yml",
             "NETWORK_CONFIG": "fixtures/repos/network_carrier_instances.yml",
         },
     )
@@ -141,7 +141,7 @@ def test_instances_info_relative_path(helpercli):
         "instances-info",
         "../lb/db",
         env={
-            "TEMPLATE_INSTANCES": "fixtures/repos/ngcp.instances",
+            "TEMPLATE_INSTANCES": "fixtures/repos/instances.yml",
             "NETWORK_CONFIG": "fixtures/repos/network_carrier_instances.yml",
         },
     )

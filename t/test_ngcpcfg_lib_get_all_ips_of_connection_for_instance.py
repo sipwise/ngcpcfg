@@ -14,7 +14,7 @@ def test_carrier_instances(ngcpcfgcli):
         env={
             "NGCP_HOSTNAME": "lb01a",
             "TEMPLATE_POOL_BASE": "fixtures/build_instances",
-            "TEMPLATE_INSTANCES": "fixtures/repos/ngcp.instances",
+            "TEMPLATE_INSTANCES": "fixtures/repos/instances.yml",
             "NGCPCFG": "fixtures/ngcpcfg_carrier_instances.cfg",
         },
     )
@@ -48,7 +48,7 @@ def test_pro_instances(ngcpcfgcli):
         env={
             "NGCP_HOSTNAME": "sp1",
             "TEMPLATE_POOL_BASE": "fixtures/build_instances",
-            "TEMPLATE_INSTANCES": "fixtures/repos/ngcp.instances",
+            "TEMPLATE_INSTANCES": "fixtures/repos/instances.yml",
             "NGCPCFG": "fixtures/ngcpcfg_pro_instances.cfg",
         },
     )

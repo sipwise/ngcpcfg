@@ -16,7 +16,7 @@ def test_apply_instances(ngcpcfgcli, tmpdir):
         env={
             "NGCP_HOSTNAME": "lb01a",
             "TEMPLATE_POOL_BASE": "fixtures/build_instances",
-            "TEMPLATE_INSTANCES": "fixtures/repos/ngcp.instances",
+            "TEMPLATE_INSTANCES": "fixtures/repos/instances.yml",
             "NGCPCFG": "fixtures/ngcpcfg_carrier_instances.cfg",
         },
     )
@@ -51,7 +51,7 @@ def test_apply_instances_changes(ngcpcfg, ngcpcfgcli, tmpdir, gitrepo):
         env={
             "NGCP_HOSTNAME": "lb01a",
             "TEMPLATE_POOL_BASE": "fixtures/apply_instances",
-            "TEMPLATE_INSTANCES": "fixtures/repos/ngcp.instances",
+            "TEMPLATE_INSTANCES": "fixtures/repos/instances.yml",
             "NGCPCFG": "fixtures/ngcpcfg_carrier_instances.cfg",
         }
     )
