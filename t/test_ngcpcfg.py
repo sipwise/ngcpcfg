@@ -21,7 +21,7 @@ def test_ngcpcfgcfg_ko(ngcpcfgcli):
     out = ngcpcfgcli(env={"NGCPCFG": "/doesnotexist"})
     assert (
         "Error: Could not read configuration file "
-        "/etc/ngcp-config/ngcpcfg.cfg. Exiting." in out.stderr
+        "/etc/ngcp-ngcpcfg/ngcpcfg.cfg. Exiting." in out.stderr
     )
     assert out.returncode == 1
 

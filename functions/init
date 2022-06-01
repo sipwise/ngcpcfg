@@ -10,13 +10,13 @@ if [ -r "${NGCPCFG:-}" ] ; then
   # shellcheck disable=SC1090
   . "${NGCPCFG:-}"
 else
-  if [ -r /etc/ngcp-config/ngcpcfg.cfg ] ; then
+  if [ -r /etc/ngcp-ngcpcfg/ngcpcfg.cfg ] ; then
     # shellcheck disable=SC1091
-    . /etc/ngcp-config/ngcpcfg.cfg
-    log_debug "sourced configuration file /etc/ngcp-config/ngcpcfg.cfg"
+    . /etc/ngcp-ngcpcfg/ngcpcfg.cfg
+    log_debug "sourced configuration file /etc/ngcp-ngcpcfg/ngcpcfg.cfg"
 
-    if [ -d /etc/ngcp-config/ngcpcfg.d ] ; then
-      for file in /etc/ngcp-config/ngcpcfg.d/*.cfg ; do
+    if [ -d /etc/ngcp-ngcpcfg/ngcpcfg.d ] ; then
+      for file in /etc/ngcp-ngcpcfg/ngcpcfg.d/*.cfg ; do
         if [ -r "${file}" ]; then
           # shellcheck disable=SC1090
           . "${file}"
@@ -28,7 +28,7 @@ else
     log_error "Configuration pool locked. Please contact your distributor. Exiting."
     exit 1
   else
-    log_error "Could not read configuration file /etc/ngcp-config/ngcpcfg.cfg. Exiting."
+    log_error "Could not read configuration file /etc/ngcp-ngcpcfg/ngcpcfg.cfg. Exiting."
     exit 1
   fi
 fi

@@ -2,7 +2,7 @@
 BASH_SCRIPTS = \
 	scripts/* \
 	functions/* \
-	etc/ngcp-config/ngcpcfg.cfg \
+	etc/ngcp-ngcpcfg/ngcpcfg.cfg \
 	sbin/ngcpcfg
 PERL_SCRIPTS = \
 	lib/NGCP/Template.pm \
