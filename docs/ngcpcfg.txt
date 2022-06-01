@@ -39,7 +39,7 @@ in _/etc/ngcp-config/network.yml_
 
 *shared repository*:: Git repository shared amongst nodes inside a High
 Availability setup, as defined by the GLUSTERFS setting in
-/etc/ngcp-config/ngcpcfg.d/shared_storage.cfg (requires ngcp-ngcpcfg-ha) and
+/etc/ngcp-ngcpcfg/ngcpcfg.d/shared_storage.cfg (requires ngcp-ngcpcfg-ha) and
 being _/mnt/glusterfs_ by default
 
 *templates*:: template toolkit files with .tt2 suffix, found in
@@ -75,20 +75,20 @@ any other .yml file _/etc/ngcp-config/_, defining important constant settings.
 This file is *not* supposed to be modified by the user (without having a very
 good reason).
 
-* _/etc/ngcp-config/ngcpcfg.cfg_: main configuration file for ngcpcfg itself,
-provides global variables used inside ngcpcfg and its helper scripts. This file
-is *not* supposed to be modified by the user (without having a very good
-reason).
-
 * _/etc/ngcp-config/config.d/_: optional configuration directory with additional
 yml configuration files. Files inside this directory aren't supposed to be
 added or modified by the user. The purpose of this configuration directory is
 that software packages can enable/disable certain features through configuration
 options on demand.
 
-* _/etc/ngcp-config/ngcpcfg.d/_: configuration directory for ngcpcfg itself.
+* _/etc/ngcp-ngcpcfg/ngcpcfg.cfg_: main configuration file for ngcpcfg itself,
+provides global variables used inside ngcpcfg and its helper scripts. This file
+is *not* supposed to be modified by the user (without having a very good
+reason).
+
+* _/etc/ngcp-ngcpcfg/ngcpcfg.d/_: configuration directory for ngcpcfg itself.
 Files with suffix '.cfg' inside this directory are sourced after
-/etc/ngcp-config/ngcpcfg.cfg has been read. Files inside this directory are
+/etc/ngcp-ngcpcfg/ngcpcfg.cfg has been read. Files inside this directory are
 *not* supposed to be modified by the user (without having a very good reason).
 
 [IMPORTANT]
@@ -241,7 +241,7 @@ configuration file (/etc/foobar/baz) is available within the postbuild script.
 Syntax and layout of configuration files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* _/etc/ngcp-config/ngcpcfg.cfg_: plain shell syntax style "key=value" entries
+* _/etc/ngcp-ngcpcfg/ngcpcfg.cfg_: plain shell syntax style "key=value" entries
 
 * _central yml files_ (*.yml): YAML configuration syntax (see http://yaml.org/)
 
@@ -738,7 +738,7 @@ Setup instructions
 Requirements for High Availability setups:
 
 * glusterfs is supposed to be set up working and deployed at /mnt/glusterfs
-  (as defined via /etc/ngcp-config/ngcpcfg.cfg)
+  (as defined via /etc/ngcp-ngcpcfg/ngcpcfg.cfg)
 
 * hosts are expected to be set up for automatic ssh login (ssh-keygen && ssh-copy-id)
 

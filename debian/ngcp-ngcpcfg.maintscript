@@ -1,0 +1,1 @@
+mv_conffile /etc/ngcp-config/ngcpcfg.cfg /etc/ngcp-ngcpcfg/ngcpcfg.cfg 11.0.0.0+0~mr11.0.0.0

@@ -27,4 +27,4 @@ jobs:
       run: shellcheck --version
 
     - name: Shellcheck execution
-      run: shellcheck -P functions scripts/* functions/* etc/ngcp-config/ngcpcfg.cfg  sbin/ngcpcfg
+      run: shellcheck -P functions scripts/* functions/* etc/ngcp-ngcpcfg/ngcpcfg.cfg  sbin/ngcpcfg

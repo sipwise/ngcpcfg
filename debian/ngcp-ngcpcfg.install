@@ -1,4 +1,4 @@
-etc/ngcp-config/ngcpcfg.cfg etc/ngcp-config/
+etc/ngcp-ngcpcfg/ngcpcfg.cfg etc/ngcp-ngcpcfg/
 functions/init              usr/share/ngcp-ngcpcfg/functions/
 functions/logs              usr/share/ngcp-ngcpcfg/functions/
 functions/main              usr/share/ngcp-ngcpcfg/functions/
