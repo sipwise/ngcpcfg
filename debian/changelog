@@ -1,3 +1,31 @@
+ngcp-ngcpcfg (11.0.0.0+0~mr11.0.0.0) unstable; urgency=medium
+
+  [ Mykola Malkov ]
+  * [a7f0d41] TT#161150 Add support of sp3+ nodes
+
+  [ Michael Prokop ]
+  * [82abf22] TT#171400 Adjust git repos for new safe.directory behavior
+  * [91673cd] TT#171400 Build-Depend on recent python3 version
+  * [e51151e] TT#173500 Create tmpfiles with template name
+
+  [ Guillem Jover ]
+  * [c692abd] TT#161150 NGCP::Template::Object: Add support for spN nodes to get_nodename()
+  * [cecd2b0] TT#161150 NGCP::Template::Object: Switch get_nodename() to use ngcp-nodename
+  * [732bc17] TT#161150 Unify and switch to NGCP_NODENAME and NGCP_PAIRNAME
+  * [0d6d1ce] TT#174750 Use «HA service» instead of «heartbeat»
+  * [5e2037c] TT#177600 Remove redundant <template>.tt2.<nodename> suffix handling
+  * [73d188a] TT#177600 Remove unused files from /etc/ngcp-config/
+  * [57ca2ef] TT#177600 Rename ngcpcfg.instances to instances.yml
+  * [98d1370] TT#174407 Rename rtpproxy section to rtpengine
+
+  [ Donat Zenichev ]
+  * [e688e0f] TT#168901 Refactoring of the 'get_hosts_records_for_db_connections'
+
+  [ Marco Capetta ]
+  * [42c02ce] TT#139459 Rework script get_all_ips_of_connection_for_instance after connections changes
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 07 Jun 2022 11:45:00 +0200
+
 ngcp-ngcpcfg (10.5.0.0+0~mr10.5.0.0) unstable; urgency=medium
 
   [ ngcp-config ]
