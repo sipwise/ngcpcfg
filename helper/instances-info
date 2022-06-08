@@ -92,7 +92,7 @@ sub show_match {
     $path = $bpath;
   }
 
-  foreach my $info (sort @{$dirs->{$path}}) {
+  foreach my $info (sort { $a->{name} cmp $b->{name} } @{$dirs->{$path}}) {
     my $dest;
     if(defined $spath && defined $suffix) {
       $dest = $info->{dest}."/${suffix}";
@@ -106,11 +106,11 @@ sub show_match {
 
 sub prepare_info {
   return 0 unless defined $yaml->{instances};
-  foreach my $instance ( sort @{ $yaml->{instances} } ) {
+  foreach my $instance (sort { $a->{name} cmp $b->{name} } @{$yaml->{instances}}) {
     $instances->{ $instance->{label} } //= ();
     push @{ $instances->{ $instance->{label} } }, $instance->{name};
   }
-  foreach my $def ( sort @{ $templ->{sources} } ) {
+  foreach my $def (sort { $a->{orig} cmp $b->{orig} } @{$templ->{sources}}) {
     my $inst = $instances->{ $def->{label} };
     next unless $inst;
     my $orig = prefix_root $def->{orig};
