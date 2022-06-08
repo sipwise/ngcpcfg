@@ -1,6 +1,6 @@
-/etc/kamailio/lb:/etc/kamailio/lb_B:B
 /etc/kamailio/lb:/etc/kamailio/lb_A:A
-/etc/momo:/etc/momo_B:B
+/etc/kamailio/lb:/etc/kamailio/lb_B:B
 /etc/momo:/etc/momo_A:A
-/etc/other/lb:/etc/other/lb_B:B
+/etc/momo:/etc/momo_B:B
 /etc/other/lb:/etc/other/lb_A:A
+/etc/other/lb:/etc/other/lb_B:B
