@@ -316,7 +316,7 @@ of code executed via the C<PROCESS> directive.
 
 =item $t = NGCP::Template::Object->new($config)
 
-Create a new object that can be used from within the Tamplate Toolkit, via
+Create a new object that can be used from within the Template Toolkit, via
 the B<ngcp> internal variable, such as C<ngcp.some_method(argument)>.
 
 The $config argument contains the deserialized ngcp-config YAML configuration.
