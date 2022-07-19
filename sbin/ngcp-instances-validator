@@ -1,0 +1,220 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use open qw(:std :encoding(UTF-8));
+
+use Storable qw(dclone);
+use List::Util qw(any);
+use Getopt::Long qw(:config posix_default no_ignorecase auto_help auto_version);
+use Pod::Usage;
+use YAML::XS qw();
+use Kwalify;
+
+my $network_file = '/etc/ngcp-config/network.yml';
+
+GetOptions(
+    'n|network-file=s' => \$network_file,
+) or pod2usage(1);
+
+my $yaml = YAML::XS::LoadFile($network_file)
+    or die "cannot parse file $network_file";
+
+sub get_instance
+{
+	my ($instances, $name) = @_;
+	my $instance_found;
+
+	foreach my $instance ( @{ $instances } ) {
+		if ($instance->{name} eq $name) {
+			$instance_found = $instance;
+			last;
+		}
+	}
+
+	return $instance_found;
+}
+
+sub dup_check
+{
+    my ($dup, $text) = @_;
+    my $errors = 0;
+
+    foreach my $id (sort keys %{$dup}) {
+        next if scalar @{$dup->{$id}} <= 1;
+
+        warn "  - $text $id (@{$dup->{$id}})\n";
+        $errors++;
+    }
+
+    return $errors;
+}
+
+# only run these checks, if we have any of instances defined
+if (exists $yaml->{instances}) {
+
+	my $errors = 0;
+
+	my %duplicate_name_with_another_instance;
+	my %duplicated_connections;
+
+	my @instances_names = ();
+	my @hosts_names = ();
+
+	my $i = 0;
+
+	# get existing instances names
+	foreach my $instance ( @{ $yaml->{instances} } )
+	{
+		push(@instances_names, $instance->{name});
+	}
+
+	# get existing hosts names
+	foreach my $hostname (sort keys %{$yaml->{hosts}})
+	{
+		push(@hosts_names, $hostname);
+	}
+
+	# cycle through all existing instances definitions to find mistakes in connections
+	foreach my $instance ( @{ $yaml->{instances} } )
+	{
+		my $instance_host = $instance->{host};
+		my $j = 0;
+
+		# just in case, catch name duplicates used for general instances names
+		push @{$duplicate_name_with_another_instance{"$instance->{name}"}}, "instance number: $i";
+
+		# iterate through the list of connections
+		foreach my $instance_connection ( @{ $instance->{connections} } )
+		{
+			# catch connections names duplicates of each given instance
+			my $instance_connection_id = $instance->{name} . ': ' . $instance_connection->{name};
+			push @{$duplicated_connections{"$instance_connection_id"}}, "con #$j: $instance_connection->{name} ;";
+
+			# iterate through the list of connection links
+			foreach my $instance_connection_link ( @{ $instance_connection->{links} } )
+			{
+				my $instance_connection_link_name = $instance_connection_link->{name};
+
+				# check that each connection of type instance/host indeed exists
+				if ($instance_connection_link->{type} eq 'instance') {
+					unless ( grep { /^$instance_connection_link_name$/ } @instances_names ) {
+						warn "  - required instance: $instance_connection_link->{name} for instance connection from: $instance->{name} does not exist\n";
+						$errors ++;
+					}
+				} elsif ($instance_connection_link->{type} eq 'host') {
+					unless ( grep { /^$instance_connection_link_name$/ } @hosts_names ) {
+						warn "  - required host: $instance_connection_link->{name} for instance connection from: $instance->{name} does not exist\n";
+						$errors ++;
+					}
+				}
+
+				# iterate through the list of link interfaces
+				foreach my $link_iface ( @{ $instance_connection_link->{interfaces} } )
+				{
+					my $link_iface_name = $link_iface->{name};
+					my $found = 0;
+					my $remote_instance = get_instance($yaml->{instances}, $instance_connection_link_name);
+
+					# requested instance must indeed have requested interface, otherwise not possible to interconnect
+					foreach my $remote_iface ( @{ $remote_instance->{interfaces} } )
+					{
+						if ($remote_iface->{name} eq $link_iface_name) { $found = 1; }
+					}
+
+					if ($found != 1) {
+						warn "  - required link iface: $link_iface_name for instance connection from: $instance->{name} does not exist\n";
+						$errors ++;
+					}
+				}
+			}
+
+			$j++;
+		}
+
+		# just in case, check also that a host, on which we must run this instance, exists
+		unless ( grep { /^$instance_host$/ } @hosts_names ) {
+			warn "  - required host: $instance->{host} for instance: $instance->{name} does not exist\n";
+			$errors ++;
+		}
+
+		$i++;
+	}
+
+	# check duplicates and raise an error if found
+	$errors += dup_check(\%duplicate_name_with_another_instance, '[/instances/<name>] Duplicate instance name with an existing instance');
+	$errors += dup_check(\%duplicated_connections, '[/instances/<name>] Duplicate connetion name');
+
+	exit 1 if $errors;
+}
+
+1;
+
+# vim: ts=4 sw=4 et
+
+__END__
+
+=encoding utf-8
+
+=head1 NAME
+
+ngcp-instances-validator - dynamically validates the instances connections, if instances are defined.
+
+=head1 SYNOPSIS
+
+B<ngcp-instances-validator>
+
+=head1 DESCRIPTION
+
+B<This program> iterates through currently existing instances
+defined in the network.yml with an intention of checking their
+connections to other instances/hosts.
+
+=head1 OPTIONS
+
+=over 8
+
+=item B<-n>, B<--network-file> I<yaml-file>
+
+The B<network.yml> file to validate.
+
+=item B<--help>
+
+Print a help message.
+
+=back
+
+=head1 EXIT STATUS
+
+=over 8
+
+=item B<0>
+
+The connections are getting validated correctly.
+
+=item B<1>
+
+The connections are getting validated incorrectly.
+
+=back
+
+=head1 AUTHOR
+
+Donat Zenichev <dzenichev@sipwise.com>
+
+=head1 LICENSE
+
+Copyright © 2022 Sipwise GmbH, Austria
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
