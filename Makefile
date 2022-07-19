@@ -10,6 +10,7 @@ PERL_SCRIPTS = \
 	helper/sync-db \
 	helper/tt2-process \
 	helper/validate-yml helper/fileformat_version \
+	sbin/ngcp-instances-validator \
 	sbin/ngcp-network \
 	sbin/ngcp-network-validator \
 	sbin/ngcp-sync-constants \

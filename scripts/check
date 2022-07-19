@@ -168,6 +168,10 @@ validate_config() {
         log_error "Invalid schema detected for ${f}"
         rc=1
       fi
+      if ! ngcp-instances-validator "$f"; then
+        log_error "Invalid schema detected for instances connections"
+        rc=1
+      fi
     else
       local schema
 
