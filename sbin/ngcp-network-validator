@@ -99,7 +99,7 @@ foreach my $hostname (sort keys %{$yaml->{hosts}}) {
     my $peermap = {
         type => 'text',
     };
-    if ($hostname =~ m/^(?:sp([1-9])|((?:db|web|lb|slb|prx)\d\d)([a-i]))$/) {
+    if ($hostname =~ m/^(?:sp([1-9])|((?:db|web|lb|slb|prx|rtp)\d\d)([a-i]))$/) {
         my $peer;
 
         $peermap->{required} = 'yes';
