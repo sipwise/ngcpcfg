@@ -9,6 +9,7 @@ set -u
 FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
 HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
 SCRIPTS="${SCRIPTS:-/usr/share/ngcp-ngcpcfg/scripts/}"
+SCHEMAS="${SCHEMAS:-/usr/share/ngcp-ngcpcfg/schemas/}"
 
 if ! [ -r "${FUNCTIONS}"/main ] ; then
   printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}" >&2
@@ -169,7 +170,19 @@ validate_config() {
       fi
     else
       local schema
-      schema="/usr/share/ngcp-cfg-schema/validate/${name}"
+
+      case "${name}" in
+        sites.yml)
+          if ! [ -e "${f}" ]; then
+            continue
+          fi
+
+          schema="${SCHEMAS}/${name}"
+          ;;
+        *)
+          schema="/usr/share/ngcp-cfg-schema/validate/${name}"
+          ;;
+      esac
 
       if ! [ -f "${schema}" ] ; then
         continue
@@ -261,7 +274,8 @@ check_shared_storage() {
 }
 
 if [ "$*" = "" ] ; then
-  config_files="${NGCPCTL_CONFIG:-} ${NODE_CONFIG:-} ${PAIR_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG:-} ${EXTRA_CONFIG_FILES[*]} ${CONSTANTS_CONFIG:-}"
+  SITES_FILE="${SITES_FILE:-${NGCPCTL_MAIN}/sites.yml}"
+  config_files="${NGCPCTL_CONFIG:-} ${NODE_CONFIG:-} ${PAIR_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG:-} ${EXTRA_CONFIG_FILES[*]} ${CONSTANTS_CONFIG:-} ${SITES_FILE:-}"
 else
   config_files="$*"
 fi

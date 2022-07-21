@@ -20,6 +20,7 @@ sbin/ngcp-network-validator usr/sbin/
 sbin/ngcp-sync-constants    usr/sbin/
 sbin/ngcp-sync-grants       usr/sbin/
 sbin/ngcpcfg                usr/sbin/
+schemas/sites.yml           usr/share/ngcp-ngcpcfg/schemas/
 scripts/apply               usr/share/ngcp-ngcpcfg/scripts/
 scripts/build               usr/share/ngcp-ngcpcfg/scripts/
 scripts/cat                 usr/share/ngcp-ngcpcfg/scripts/

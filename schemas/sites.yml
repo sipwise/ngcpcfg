@@ -1,0 +1,16 @@
+name: sites.yml
+desc: Kwalify schema for NGCP sites.yml
+type: map
+mapping:
+  "sites":
+    type: map
+    required: yes
+    mapping:
+      =:
+        type: map
+        required: yes
+        mapping:
+          "id":     { type: int, required: yes, range: { min: 1 },
+                      desc: "Specify the site ID. Must be unique." }
+          "role":   { type: str, required: yes,
+                      desc: "Specify the site role." }
