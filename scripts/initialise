@@ -64,6 +64,9 @@ if ! grep -qs '^# begin section managed by ngcpcfg' .gitignore ; then
 \#*\#
 DEADJOE
 
+# multi-site support
+sites/current
+
 # end section managed by ngcpcfg' >> .gitignore
 fi
 
