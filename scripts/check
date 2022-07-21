@@ -90,6 +90,20 @@ check_origin() {
   fi
 }
 
+check_multi_site() {
+  log_debug "Checking multi-site support"
+  if ! command -v ngcp-site >/dev/null; then
+    log_debug "Skipping check due to missing ngcp-site"
+    return 0
+  fi
+
+  if ! error=$(ngcp-site 2>&1 >/dev/null); then
+    log_error "Configuration problem with multi-site setup."
+    log_error "${error}"
+    exit 1
+  fi
+}
+
 check_config_encoding() {
   log_debug "Checking encoding for $config_files"
   for f in $config_files ; do
@@ -244,6 +258,8 @@ fi
 check_branch
 
 check_origin
+
+check_multi_site
 
 check_configs
 if "${VALIDATE_SCHEMA:-false}" || [ "${VALIDATE:-0}" = "1" ] ; then
