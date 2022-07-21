@@ -15,6 +15,9 @@ PERL_SCRIPTS = \
 	sbin/ngcp-sync-constants \
 	sbin/ngcp-sync-grants \
 	# EOL
+YAML_SCHEMAS = \
+	schemas/sites.yml \
+	# EOL
 RESULTS ?= results
 
 all: docs
@@ -40,7 +43,7 @@ dist-clean: clean
 	rm -rf results
 
 # check for syntax errors
-syntaxcheck: shellcheck perlcheck
+syntaxcheck: shellcheck perlcheck yamlcheck
 
 shellcheck:
 	@echo -n "Checking for shell syntax errors"; \
@@ -58,6 +61,15 @@ perlcheck:
 		perl -CSD -Ilib -w -c $${SCRIPT} || exit ; \
 	done; \
 	echo "-> perl check done."; \
+
+yamlcheck:
+	@echo "Checking for yaml syntax errors:"; \
+	for YAML in $(YAML_SCHEMAS); do \
+		test -r $${YAML} || continue ; \
+		perl -MYAML::XS -E "YAML::XS::LoadFile('$${YAML}')" || exit ; \
+	done; \
+	echo "-> yaml check done."; \
+	:
 
 test:
 	mkdir -p $(RESULTS)
