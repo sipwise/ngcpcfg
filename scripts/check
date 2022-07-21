@@ -90,6 +90,19 @@ check_origin() {
   fi
 }
 
+check_yaml() {
+  local schema="$1"
+  local config="$2"
+
+  if ! pkwalify -s -m 'YAML::XS' -f "${schema}" "${config}" >/dev/null 2>&1 ; then
+    log_error "Invalid schema detected for ${config}"
+    pkwalify -m 'YAML::XS' -f "${schema}" "${config}" >&2 || true
+    return 1
+  fi
+
+  return 0
+}
+
 check_multi_site() {
   log_debug "Checking multi-site support"
   if ! command -v ngcp-site >/dev/null; then
@@ -178,9 +191,7 @@ validate_config() {
           ;;
       esac
 
-      if ! pkwalify -s -m 'YAML::XS' -f "${schema}" "$c" >/dev/null 2>&1 ; then
-        log_error "Invalid schema detected for $c"
-        pkwalify -m 'YAML::XS' -f "${schema}" "$c" >&2 || true
+      if ! check_yaml "${schema}" "$c"; then
         rc=1
       fi
       if ${c_cleanup}; then
