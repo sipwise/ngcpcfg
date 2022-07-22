@@ -16,6 +16,7 @@ PERL_SCRIPTS = \
 	sbin/ngcp-sync-grants \
 	# EOL
 YAML_SCHEMAS = \
+	schemas/instances.yml \
 	schemas/sites.yml \
 	# EOL
 RESULTS ?= results

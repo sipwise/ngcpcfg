@@ -172,7 +172,7 @@ validate_config() {
       local schema
 
       case "${name}" in
-        sites.yml)
+        sites.yml|instances.yml)
           if ! [ -e "${f}" ]; then
             continue
           fi
@@ -275,7 +275,8 @@ check_shared_storage() {
 
 if [ "$*" = "" ] ; then
   SITES_FILE="${SITES_FILE:-${NGCPCTL_MAIN}/sites.yml}"
-  config_files="${NGCPCTL_CONFIG:-} ${NODE_CONFIG:-} ${PAIR_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG:-} ${EXTRA_CONFIG_FILES[*]} ${CONSTANTS_CONFIG:-} ${SITES_FILE:-}"
+  INSTANCES_FILE="${INSTANCES_FILE:-${NGCPCTL_MAIN}/instances.yml}"
+  config_files="${NGCPCTL_CONFIG:-} ${NODE_CONFIG:-} ${PAIR_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${NETWORK_CONFIG:-} ${EXTRA_CONFIG_FILES[*]} ${CONSTANTS_CONFIG:-} ${SITES_FILE:-} ${INSTANCES_FILE:-}"
 else
   config_files="$*"
 fi
