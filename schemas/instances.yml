@@ -1,0 +1,17 @@
+name: instances.yml
+desc: Kwalify schema for NGCP instances.yml
+type: map
+mapping:
+  "sources":
+    type: seq
+    required: yes
+    sequence:
+      - type: map
+        required: yes
+        mapping:
+          "orig":   { type: str, required: yes,
+                      desc: "Specify the original service pathname." }
+          "dest":   { type: str, required: yes,
+                      desc: "Specify the destination service pathname." }
+          "label":  { type: str, required: yes,
+                      desc: "Specify service label." }
