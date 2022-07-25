@@ -69,7 +69,7 @@ check_origin() {
   cd "${NGCPCTL_MAIN}"
 
   local mgmtnode
-  mgmtnode="$(cat /etc/ngcp_mgmt_node)"
+  mgmtnode="${MGMTNODE:-$(cat /etc/ngcp_mgmt_node)}"
   local expected_origin="${mgmtnode}:/mnt/glusterfs/ngcpcfg-share"
   if [ -n "${NGCPCTL_SHARE:-}" ] ; then
     expected_origin="${mgmtnode}:${NGCPCTL_SHARE}"
