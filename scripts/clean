@@ -113,8 +113,8 @@ clean_untracked() {
   local tmp
   tmp=$(mktemp -t ngcpcfg-clean-untracked.XXXXXXXXXX)
 
-  log_debug "git clean -n -f -d -x"
-  if ! git clean -n -f -d -x > "${tmp}" ; then
+  log_debug "git clean -n -f -d -x -e sites/current"
+  if ! git clean -n -f -d -x -e sites/current > "${tmp}" ; then
     log_error "Failed to collect list of untracked files"
     return 1
   fi
@@ -133,8 +133,8 @@ clean_untracked() {
     return 0
   fi
 
-  log_debug "git clean -f -d -x"
-  if ! git clean -f -d -x ; then
+  log_debug "git clean -f -d -x -e sites/current"
+  if ! git clean -f -d -x -e sites/current ; then
     log_error "Failed to clean list of untracked files"
     return 1
   fi
