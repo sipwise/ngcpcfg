@@ -1,0 +1,6 @@
+[rtpengine]
+host_ha_iface=vlan1721
+peer_ha_iface=vlan1721
+
+sip_int_ips=172.30.52.135
+interface=ext/172.30.52.196

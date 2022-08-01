@@ -1,0 +1,97 @@
+[%
+# vi: ft=tt2
+
+# Returns a list of RTP-enabled interfaces for rtpengine.
+#
+# @param argv.instance  instance
+# @param argv.format    The format of the returned list, one of:
+#                         "list" for plain list of interfaces,
+#                         "address" for plain list of addresses,
+#                         blank or "rtpengine" for full CLI options.
+# @param argv.status    node status [ online, offline, inactive ]
+#                         default value: ['online', 'inactive']
+# @return out           The array of interfaces.
+
+X_format = argv.format;
+
+IF ! X_format.defined || X_format == '';
+  X_format = 'rtpengine';
+END;
+
+IF !argv.status.size;
+  argv.status = ['online', 'inactive'];
+END;
+
+status = {
+  online = 0
+  offline = 0
+  inactive = 0
+};
+FOREACH val IN argv.status;
+  status.$val = 1;
+END;
+
+out = [];
+RETURN UNLESS status.item(argv.instance.status);
+
+FOREACH X_ifc IN argv.instance.interfaces;
+  X_types = X_ifc.type.grep('^rtp_.');
+  FOREACH X_type IN X_types;
+    X_type = X_type.remove('^rtp_');
+
+    IF X_format == 'list';
+      out.push(X_type);
+      NEXT;
+    END;
+
+    X_ips = X_ifc.shared_ip.list;
+    IF !X_ips.size() || !X_ips.0.defined;
+      X_ips = X_ifc.ip.list;
+    END;
+    X_adv_ips = X_ifc.advertised_ip.list;
+
+    X_suffix = 0;
+    IF X_ips.size() > 1;
+      X_suffix = 1;
+    END;
+
+    FOREACH X_ip IN X_ips;
+      X_adv_ip = X_adv_ips.shift();
+      IF X_format == 'address';
+        out.push(X_ip);
+      ELSE;
+        X_name = X_type;
+        IF X_suffix;
+          X_name = X_name _ ':' _ X_suffix;
+          X_suffix = X_suffix + 1;
+        END;
+        out.push(X_name _ '/' _ X_ip _ (X_adv_ip ? ('!' _ X_adv_ip) : ''));
+      END;
+    END;
+
+    X_ips = X_ifc.shared_v6ip.list;
+    IF !X_ips.size() || !X_ips.0.defined;
+      X_ips = X_ifc.v6ip.list;
+    END;
+
+    X_suffix = 0;
+    IF X_ips.size() > 1;
+      X_suffix = 1;
+    END;
+
+    FOREACH X_ip IN X_ips;
+      IF X_format == 'address';
+        out.push(X_ip);
+      ELSE;
+        X_name = X_type;
+        IF X_suffix;
+          X_name = X_name _ ':' _ X_suffix;
+          X_suffix = X_suffix + 1;
+        END;
+        out.push(X_name _ '/' _ X_ip);
+      END;
+    END;
+  END;
+END;
+
+-%]

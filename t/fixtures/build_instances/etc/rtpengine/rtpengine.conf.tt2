@@ -1,0 +1,57 @@
+[%
+  hostname = ngcp.get_hostname();
+  peername = ngcp.get_peername(hostname);
+
+  argv.host = hostname;
+  argv.type = 'ha_int';
+  PROCESS '../lib/get_iface';
+  host_ha_iface = out;
+
+  argv.host = peername;
+  argv.type = 'ha_int';
+  PROCESS '../lib/get_iface';
+  peer_ha_iface = out;
+
+IF !instance_info.defined;
+  argv.host = hostname;
+  argv.type = 'sip_int';
+  PROCESS '../lib/get_all_shared_ips_for_host';
+  sip_int_ips = out;
+  IF !sip_int_ips.size;
+    argv.host = hostname;
+    argv.type = 'sip_int';
+    PROCESS '../lib/get_all_ips_for_host';
+    sip_int_ips = out;
+  END;
+
+  argv.host = hostname;
+  PROCESS '../lib/get_all_rtp_for_host';
+ELSE;
+  # instance
+  argv.instance = instance_info;
+  argv.type = 'sip_int';
+  PROCESS '../lib/get_all_ips_for_instance';
+  sip_int_ips = out;
+
+  argv.instance = instance_info;
+  PROCESS '../lib/get_all_rtp_for_instance';
+END;
+  interfaces = [];
+  int_interfaces = [];
+  FOREACH interface IN out;
+    IF interface.match('^int\/');
+      int_interfaces.push(interface);
+    ELSE;
+      interfaces.push(interface);
+    END;
+  END;
+
+-%]
+[rtpengine[% instance_info.name %]]
+host_ha_iface=[% host_ha_iface %]
+peer_ha_iface=[% peer_ha_iface %]
+
+[% FOR ip IN sip_int_ips.sort -%]
+sip_int_ips=[% ip %]
+[% END -%]
+interface=[% interfaces.sort.join(';') %]

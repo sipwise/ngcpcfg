@@ -9,3 +9,6 @@ sources:
   - orig: etc/momo
     dest: etc/momo_${INSTANCE_NAME}
     label: lb
+  - orig: etc/rtpengine
+    dest: etc/rtpengine_${INSTANCE_NAME}
+    label: rtp
