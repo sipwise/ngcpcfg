@@ -56,14 +56,14 @@ if (exists $yaml->{instances}) {
         my $j = 0;
 
         # just in case, catch name duplicates used for general instances names
-        push @{$duplicate_name_with_another_instance{"$instance->{name}"}}, "instance number: $i";
+        push @{$duplicate_name_with_another_instance{$instance->{name}}}, "instance number: $i";
 
         # iterate through the list of connections
         foreach my $instance_connection ( @{ $instance->{connections} } )
         {
             # catch connections names duplicates of each given instance
             my $instance_connection_id = $instance->{name} . ': ' . $instance_connection->{name};
-            push @{$duplicated_connections{"$instance_connection_id"}}, "con #$j: $instance_connection->{name} ;";
+            push @{$duplicated_connections{$instance_connection_id}}, "con #$j: $instance_connection->{name} ;";
 
             # iterate through the list of connection links
             foreach my $instance_connection_link ( @{ $instance_connection->{links} } )
