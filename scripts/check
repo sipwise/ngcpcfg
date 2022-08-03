@@ -164,11 +164,11 @@ validate_config() {
     name="$(basename "${f}")"
 
     if [ "$name" = 'network.yml' ]; then
-      if ! ngcp-network-validator "$f"; then
+      if ! ngcp-network-validator --network-file="$f"; then
         log_error "Invalid schema detected for ${f}"
         rc=1
       fi
-      if ! ngcp-instances-validator "$f"; then
+      if ! ngcp-instances-validator --network-file="$f"; then
         log_error "Invalid schema detected for instances connections"
         rc=1
       fi
