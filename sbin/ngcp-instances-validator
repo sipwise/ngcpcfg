@@ -164,7 +164,7 @@ ngcp-instances-validator - dynamically validates the instances connections, if i
 
 =head1 SYNOPSIS
 
-B<ngcp-instances-validator>
+B<ngcp-instances-validator> [I<option>...]
 
 =head1 DESCRIPTION
 
