@@ -11,6 +11,8 @@ use Pod::Usage;
 use YAML::XS qw();
 use Kwalify;
 
+our $VERSION = 'UNRELEASED';
+
 my $network_file = '/etc/ngcp-config/network.yml';
 
 GetOptions(
