@@ -22,15 +22,15 @@ GetOptions(
 my $yaml = YAML::XS::LoadFile($network_file)
     or die "cannot parse file $network_file";
 
-sub dup_check
+sub dupe_check
 {
-    my ($dup, $text) = @_;
+    my ($dupe, $text) = @_;
     my $errors = 0;
 
-    foreach my $id (sort keys %{$dup}) {
-        next if scalar @{$dup->{$id}} <= 1;
+    foreach my $id (sort keys %{$dupe}) {
+        next if scalar @{$dupe->{$id}} <= 1;
 
-        warn "  - $text $id (@{$dup->{$id}})\n";
+        warn "  - $text $id (@{$dupe->{$id}})\n";
         $errors++;
     }
 
@@ -41,11 +41,11 @@ sub dup_check
 if (exists $yaml->{instances}) {
     my $errors = 0;
 
-    my %duplicate_name_with_another_instance;
-    my %duplicated_connections;
+    my %dupe_instance_name;
+    my %dupe_conn;
 
-    my @instances_names = map { $_->{name} } @{$yaml->{instances}};
-    my @hosts_names = sort keys %{$yaml->{hosts}};
+    my @instance_names = map { $_->{name} } @{$yaml->{instances}};
+    my @host_names = sort keys %{$yaml->{hosts}};
 
     my $i = 0;
 
@@ -57,40 +57,40 @@ if (exists $yaml->{instances}) {
         my $j = 0;
 
         # Just in case, catch name duplicates used for general instances names.
-        push @{$duplicate_name_with_another_instance{$instance->{name}}}, "instance number: $i";
+        push @{$dupe_instance_name{$instance->{name}}}, "instance number: $i";
 
         # Iterate through the list of connections.
-        foreach my $instance_connection ( @{ $instance->{connections} } )
+        foreach my $conn ( @{ $instance->{connections} } )
         {
             # Catch connections names duplicates of each given instance.
-            my $instance_connection_id = $instance->{name} . ': ' . $instance_connection->{name};
-            push @{$duplicated_connections{$instance_connection_id}}, "con #$j: $instance_connection->{name} ;";
+            my $conn_id = $instance->{name} . ': ' . $conn->{name};
+            push @{$dupe_conn{$conn_id}}, "con #$j: $conn->{name} ;";
 
             # Iterate through the list of connection links.
-            foreach my $instance_connection_link ( @{ $instance_connection->{links} } )
+            foreach my $conn_link ( @{ $conn->{links} } )
             {
-                my $instance_connection_link_name = $instance_connection_link->{name};
+                my $conn_link_name = $conn_link->{name};
 
                 # Check that each connection of type instance/host indeed
                 # exists.
-                if ($instance_connection_link->{type} eq 'instance') {
-                    if (none { $_ eq $instance_connection_link_name } @instances_names) {
-                        warn "  - required instance: $instance_connection_link->{name} for instance connection from: $instance->{name} does not exist\n";
+                if ($conn_link->{type} eq 'instance') {
+                    if (none { $_ eq $conn_link_name } @instance_names) {
+                        warn "  - required instance: $conn_link->{name} for instance connection from: $instance->{name} does not exist\n";
                         $errors ++;
                     }
-                } elsif ($instance_connection_link->{type} eq 'host') {
-                    if (none { $_ eq $instance_connection_link_name } @hosts_names) {
-                        warn "  - required host: $instance_connection_link->{name} for instance connection from: $instance->{name} does not exist\n";
+                } elsif ($conn_link->{type} eq 'host') {
+                    if (none { $_ eq $conn_link_name } @host_names) {
+                        warn "  - required host: $conn_link->{name} for instance connection from: $instance->{name} does not exist\n";
                         $errors ++;
                     }
                 }
 
                 # Iterate through the list of link interfaces.
-                foreach my $link_iface ( @{ $instance_connection_link->{interfaces} } )
+                foreach my $link_iface ( @{ $conn_link->{interfaces} } )
                 {
                     my $link_iface_name = $link_iface->{name};
                     my $found = 0;
-                    my $remote_instance = first { $_->{name} eq $instance_connection_link_name } @{$yaml->{instances}};
+                    my $remote_instance = first { $_->{name} eq $conn_link_name } @{$yaml->{instances}};
 
                     # Requested instance must indeed have requested interface,
                     # otherwise not possible to interconnect.
@@ -106,7 +106,7 @@ if (exists $yaml->{instances}) {
 
         # Just in case, check also that a host, on which we must run this
         # instance, exists.
-        if (none { $_ eq $instance_host } @hosts_names) {
+        if (none { $_ eq $instance_host } @host_names) {
             warn "  - required host: $instance->{host} for instance: $instance->{name} does not exist\n";
             $errors ++;
         }
@@ -115,8 +115,8 @@ if (exists $yaml->{instances}) {
     }
 
     # Check duplicates and raise an error if found.
-    $errors += dup_check(\%duplicate_name_with_another_instance, '[/instances/<name>] Duplicate instance name with an existing instance');
-    $errors += dup_check(\%duplicated_connections, '[/instances/<name>] Duplicate connetion name');
+    $errors += dup_check(\%dupe_instance_name, '[/instances/<name>] Duplicate instance name with an existing instance');
+    $errors += dup_check(\%dupe_conn, '[/instances/<name>] Duplicate connetion name');
 
     exit 1 if $errors;
 }
