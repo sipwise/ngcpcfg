@@ -5,7 +5,7 @@ use warnings;
 use open qw(:std :encoding(UTF-8));
 
 use Storable qw(dclone);
-use List::Util qw(any);
+use List::Util qw(any none first);
 use Getopt::Long qw(:config posix_default no_ignorecase auto_help auto_version);
 use Pod::Usage;
 use YAML::XS qw();
@@ -21,21 +21,6 @@ GetOptions(
 
 my $yaml = YAML::XS::LoadFile($network_file)
     or die "cannot parse file $network_file";
-
-sub get_instance
-{
-    my ($instances, $name) = @_;
-    my $instance_found;
-
-    foreach my $instance ( @{ $instances } ) {
-        if ($instance->{name} eq $name) {
-            $instance_found = $instance;
-            last;
-        }
-    }
-
-    return $instance_found;
-}
 
 sub dup_check
 {
@@ -59,22 +44,10 @@ if (exists $yaml->{instances}) {
     my %duplicate_name_with_another_instance;
     my %duplicated_connections;
 
-    my @instances_names = ();
-    my @hosts_names = ();
+    my @instances_names = map { $_->{name} } @{$yaml->{instances}};
+    my @hosts_names = sort keys %{$yaml->{hosts}};
 
     my $i = 0;
-
-    # get existing instances names
-    foreach my $instance ( @{ $yaml->{instances} } )
-    {
-        push(@instances_names, $instance->{name});
-    }
-
-    # get existing hosts names
-    foreach my $hostname (sort keys %{$yaml->{hosts}})
-    {
-        push(@hosts_names, $hostname);
-    }
 
     # cycle through all existing instances definitions to find mistakes in connections
     foreach my $instance ( @{ $yaml->{instances} } )
@@ -99,12 +72,12 @@ if (exists $yaml->{instances}) {
 
                 # check that each connection of type instance/host indeed exists
                 if ($instance_connection_link->{type} eq 'instance') {
-                    unless ( grep { /^$instance_connection_link_name$/ } @instances_names ) {
+                    if (none { $_ eq $instance_connection_link_name } @instances_names) {
                         warn "  - required instance: $instance_connection_link->{name} for instance connection from: $instance->{name} does not exist\n";
                         $errors ++;
                     }
                 } elsif ($instance_connection_link->{type} eq 'host') {
-                    unless ( grep { /^$instance_connection_link_name$/ } @hosts_names ) {
+                    if (none { $_ eq $instance_connection_link_name } @hosts_names) {
                         warn "  - required host: $instance_connection_link->{name} for instance connection from: $instance->{name} does not exist\n";
                         $errors ++;
                     }
@@ -115,15 +88,10 @@ if (exists $yaml->{instances}) {
                 {
                     my $link_iface_name = $link_iface->{name};
                     my $found = 0;
-                    my $remote_instance = get_instance($yaml->{instances}, $instance_connection_link_name);
+                    my $remote_instance = first { $_->{name} eq $instance_connection_link_name } @{$yaml->{instances}};
 
                     # requested instance must indeed have requested interface, otherwise not possible to interconnect
-                    foreach my $remote_iface ( @{ $remote_instance->{interfaces} } )
-                    {
-                        if ($remote_iface->{name} eq $link_iface_name) { $found = 1; }
-                    }
-
-                    if ($found != 1) {
+                    if (none { $_->{name} eq $link_iface_name } @{$remote_instance->{interfaces}}) {
                         warn "  - required link iface: $link_iface_name for instance connection from: $instance->{name} does not exist\n";
                         $errors ++;
                     }
@@ -134,7 +102,7 @@ if (exists $yaml->{instances}) {
         }
 
         # just in case, check also that a host, on which we must run this instance, exists
-        unless ( grep { /^$instance_host$/ } @hosts_names ) {
+        if (none { $_ eq $instance_host } @hosts_names) {
             warn "  - required host: $instance->{host} for instance: $instance->{name} does not exist\n";
             $errors ++;
         }
