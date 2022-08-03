@@ -37,7 +37,7 @@ sub dup_check
     return $errors;
 }
 
-# only run these checks, if we have any of instances defined
+# Only run these checks, if we have any of instances defined.
 if (exists $yaml->{instances}) {
     my $errors = 0;
 
@@ -49,28 +49,30 @@ if (exists $yaml->{instances}) {
 
     my $i = 0;
 
-    # cycle through all existing instances definitions to find mistakes in connections
+    # Cycle through all existing instances definitions to find mistakes in
+    # connections.
     foreach my $instance ( @{ $yaml->{instances} } )
     {
         my $instance_host = $instance->{host};
         my $j = 0;
 
-        # just in case, catch name duplicates used for general instances names
+        # Just in case, catch name duplicates used for general instances names.
         push @{$duplicate_name_with_another_instance{$instance->{name}}}, "instance number: $i";
 
-        # iterate through the list of connections
+        # Iterate through the list of connections.
         foreach my $instance_connection ( @{ $instance->{connections} } )
         {
-            # catch connections names duplicates of each given instance
+            # Catch connections names duplicates of each given instance.
             my $instance_connection_id = $instance->{name} . ': ' . $instance_connection->{name};
             push @{$duplicated_connections{$instance_connection_id}}, "con #$j: $instance_connection->{name} ;";
 
-            # iterate through the list of connection links
+            # Iterate through the list of connection links.
             foreach my $instance_connection_link ( @{ $instance_connection->{links} } )
             {
                 my $instance_connection_link_name = $instance_connection_link->{name};
 
-                # check that each connection of type instance/host indeed exists
+                # Check that each connection of type instance/host indeed
+                # exists.
                 if ($instance_connection_link->{type} eq 'instance') {
                     if (none { $_ eq $instance_connection_link_name } @instances_names) {
                         warn "  - required instance: $instance_connection_link->{name} for instance connection from: $instance->{name} does not exist\n";
@@ -83,14 +85,15 @@ if (exists $yaml->{instances}) {
                     }
                 }
 
-                # iterate through the list of link interfaces
+                # Iterate through the list of link interfaces.
                 foreach my $link_iface ( @{ $instance_connection_link->{interfaces} } )
                 {
                     my $link_iface_name = $link_iface->{name};
                     my $found = 0;
                     my $remote_instance = first { $_->{name} eq $instance_connection_link_name } @{$yaml->{instances}};
 
-                    # requested instance must indeed have requested interface, otherwise not possible to interconnect
+                    # Requested instance must indeed have requested interface,
+                    # otherwise not possible to interconnect.
                     if (none { $_->{name} eq $link_iface_name } @{$remote_instance->{interfaces}}) {
                         warn "  - required link iface: $link_iface_name for instance connection from: $instance->{name} does not exist\n";
                         $errors ++;
@@ -101,7 +104,8 @@ if (exists $yaml->{instances}) {
             $j++;
         }
 
-        # just in case, check also that a host, on which we must run this instance, exists
+        # Just in case, check also that a host, on which we must run this
+        # instance, exists.
         if (none { $_ eq $instance_host } @hosts_names) {
             warn "  - required host: $instance->{host} for instance: $instance->{name} does not exist\n";
             $errors ++;
@@ -110,7 +114,7 @@ if (exists $yaml->{instances}) {
         $i++;
     }
 
-    # check duplicates and raise an error if found
+    # Check duplicates and raise an error if found.
     $errors += dup_check(\%duplicate_name_with_another_instance, '[/instances/<name>] Duplicate instance name with an existing instance');
     $errors += dup_check(\%duplicated_connections, '[/instances/<name>] Duplicate connetion name');
 
