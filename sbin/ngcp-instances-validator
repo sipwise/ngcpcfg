@@ -75,12 +75,12 @@ if (exists $yaml->{instances}) {
                 # exists.
                 if ($conn_link->{type} eq 'instance') {
                     if (none { $_ eq $conn_link_name } @instance_names) {
-                        warn "  - required instance: $conn_link->{name} for instance connection from: $instance->{name} does not exist\n";
+                        warn "  - [instances/$instance->{name}/$conn->{name}/$conn_link_name] Missing required instance for connection link\n";
                         $errors ++;
                     }
                 } elsif ($conn_link->{type} eq 'host') {
                     if (none { $_ eq $conn_link_name } @host_names) {
-                        warn "  - required host: $conn_link->{name} for instance connection from: $instance->{name} does not exist\n";
+                        warn "  - [instances/$instance->{name}/$conn->{name}/$conn_link_name] Missing required host for connection link\n";
                         $errors ++;
                     }
                 }
@@ -95,7 +95,7 @@ if (exists $yaml->{instances}) {
                     # Requested instance must indeed have requested interface,
                     # otherwise not possible to interconnect.
                     if (none { $_->{name} eq $link_iface_name } @{$remote_instance->{interfaces}}) {
-                        warn "  - required link iface: $link_iface_name for instance connection from: $instance->{name} does not exist\n";
+                        warn "  - [instances/$instance->{name}/$conn->{name}/$conn_link_name/$link_iface_name] Missing required link interface\n";
                         $errors ++;
                     }
                 }
@@ -107,7 +107,7 @@ if (exists $yaml->{instances}) {
         # Just in case, check also that a host, on which we must run this
         # instance, exists.
         if (none { $_ eq $instance_host } @host_names) {
-            warn "  - required host: $instance->{host} for instance: $instance->{name} does not exist\n";
+            warn "  - [instances/$instance->{name}] Missing required host $instance_host\n";
             $errors ++;
         }
 
