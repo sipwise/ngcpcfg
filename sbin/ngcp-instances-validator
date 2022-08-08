@@ -67,6 +67,7 @@ if (exists $yaml->{instances}) {
             # Iterate through the list of connection links.
             foreach my $conn_link (@{$conn->{links}}) {
                 my $conn_link_name = $conn_link->{name};
+                my $remote;
 
                 # Check that each connection of type instance/host indeed
                 # exists.
@@ -75,23 +76,39 @@ if (exists $yaml->{instances}) {
                         warn "  - [instances/$instance->{name}/$conn->{name}/$conn_link_name] Missing required instance for connection link\n";
                         $errors ++;
                     }
+                    $remote = first { $_->{name} eq $conn_link_name } @{$yaml->{instances}};
                 } elsif ($conn_link->{type} eq 'host') {
                     if (none { $_ eq $conn_link_name } @host_names) {
                         warn "  - [instances/$instance->{name}/$conn->{name}/$conn_link_name] Missing required host for connection link\n";
                         $errors ++;
                     }
+                    $remote = $yaml->{hosts}->{$conn_link_name};
                 }
 
                 # Iterate through the list of link interfaces.
                 foreach my $link_iface (@{$conn_link->{interfaces}}) {
                     my $link_iface_name = $link_iface->{name};
-                    my $found = 0;
-                    my $remote_instance = first { $_->{name} eq $conn_link_name } @{$yaml->{instances}};
+                    my $link_iface_type = $link_iface->{type};
 
-                    # Requested instance must indeed have requested interface,
+                    # Requested link must indeed have requested interface,
                     # otherwise not possible to interconnect.
-                    if (none { $_->{name} eq $link_iface_name } @{$remote_instance->{interfaces}}) {
+                    if ($conn_link->{type} eq 'instance' ?
+                       none { $_->{name} eq $link_iface_name } @{$remote->{interfaces}} :
+                       none { $_ eq $link_iface_name } @{$remote->{interfaces}})
+                    {
                         warn "  - [instances/$instance->{name}/$conn->{name}/$conn_link_name/$link_iface_name] Missing required link interface\n";
+                        $errors ++;
+                    }
+
+                    # Check type interface
+                    my $iface;
+                    if ($conn_link->{type} eq 'instance') {
+                        $iface = first { $_->{name} eq $link_iface_name } @{$remote->{interfaces}};
+                    } else {
+                        $iface = $remote->{$link_iface_name};
+                    }
+                    if (none { $_ eq $link_iface_type } @{$iface->{type}}) {
+                        warn "  - [instances/$instance->{name}/$conn->{name}/$conn_link_name/$link_iface_name] Missing type $link_iface_type on link interface\n";
                         $errors ++;
                     }
                 }
