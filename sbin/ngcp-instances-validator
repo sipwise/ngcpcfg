@@ -22,7 +22,7 @@ GetOptions(
 my $yaml = YAML::XS::LoadFile($network_file)
     or die "cannot parse file $network_file";
 
-sub dupe_check
+sub dup_check
 {
     my ($dupe, $text) = @_;
     my $errors = 0;
