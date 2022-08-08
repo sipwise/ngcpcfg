@@ -5,12 +5,12 @@ FROM docker.mgm.sipwise.com/sipwise-bullseye:latest
 # is updated with the current date. It will force refresh of all
 # of the base images and things like `apt-get update` won't be using
 # old cached versions when the Dockerfile is built.
-ENV REFRESHED_AT 2021-10-04
+ENV REFRESHED_AT 2022-08-08
 
 RUN apt-get update && apt-get install --assume-yes libhash-merge-perl libtemplate-perl \
   libyaml-libyaml-perl libyaml-tiny-perl libyaml-perl \
   libdata-validate-ip-perl libio-interface-perl libregexp-ipv6-perl \
-  fakeroot git lsof make strace \
+  fakeroot git lsof make strace pkwalify \
   python3-pytest python3-junitxml file
 
 RUN echo './t/testrunner' >>/root/.bash_history
