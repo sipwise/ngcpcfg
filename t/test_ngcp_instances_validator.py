@@ -67,3 +67,45 @@ def test_wrong_link_interfaces(cli):
         rf"\[instances/B/proxy/sp2/neth1\] {msg}",
         out.stderr,
     )
+
+def test_repeated_instance_name(cli):
+    file = "repeated_instance_name"
+    cmd = [
+        CMD,
+        f"--network-file=./fixtures/instances-validator/{file}.yml",
+    ]
+    out = cli(*cmd)
+    assert out.exitcode != 0
+    msg = "Duplicate instance name with an existing instance A"
+    assert re.search(
+        rf"\[/instances/<name>\] {msg}",
+        out.stderr,
+    )
+
+def test_repeated_instance_name_in_connections(cli):
+    file = "repeated_instance_name_in_connections"
+    cmd = [
+        CMD,
+        f"--network-file=./fixtures/instances-validator/{file}.yml",
+    ]
+    out = cli(*cmd)
+    assert out.exitcode != 0
+    msg = "Duplicate connetion name #3 : D: proxy"
+    assert re.search(
+        rf"\[/instances/<name>\] {msg}",
+        out.stderr,
+    )
+
+def test_host_to_run_on_is_absent(cli):
+    file = "host_to_run_on_is_absent"
+    cmd = [
+        CMD,
+        f"--network-file=./fixtures/instances-validator/{file}.yml",
+    ]
+    out = cli(*cmd)
+    assert out.exitcode != 0
+    msg = "Missing required host sp3"
+    assert re.search(
+        rf"\[instances/A\] {msg}",
+        out.stderr,
+    )

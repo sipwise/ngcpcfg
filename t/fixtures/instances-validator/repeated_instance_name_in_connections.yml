@@ -1,0 +1,243 @@
+---
+hosts:
+  sp1:
+    dbnode: '1'
+    interfaces:
+      - lo
+      - neth0
+      - neth1
+      - neth2
+    lo:
+      advertised_ip: []
+      hwaddr: 00:00:00:00:00:00
+      ip: 127.0.0.1
+      netmask: 255.0.0.0
+      shared_ip: []
+      shared_v6ip: []
+      type:
+        - web_ext
+        - web_int
+        - aux_ext
+        - ssh_ext
+        - api_int
+        - stor_int
+      v6ip: ::1
+      v6netmask: 128
+    neth0:
+      dhcp: yes
+      dns_nameservers:
+        - 10.15.20.30
+      gateway: 192.168.211.1
+      hwaddr: 08:00:27:9c:a3:22
+      ip: 10.0.2.15
+      netmask: 255.255.255.0
+      shared_ip:
+      shared_v6ip:
+      type:
+        - ssh_ext
+        - web_ext
+        - web_int
+    neth1:
+      cluster_sets:
+        - default
+      hwaddr: da:52:ca:90:8f:63
+      ip: 192.168.255.251
+      netmask: 255.255.255.248
+      shared_ip:
+        - 192.168.255.250
+      shared_v6ip:
+      type:
+        - ssh_ext
+        - ha_int
+        - boot_int
+        - sip_int
+        - rtp_int
+    neth2:
+      hwaddr: 0a:00:27:45:bb:ce
+      ip: 192.168.2.173
+      netmask: 255.255.255.0
+      shared_ip:
+        - 192.168.2.151
+      shared_v6ip:
+      type:
+        - ssh_ext
+        - web_ext
+        - web_int
+        - sip_ext
+        - rtp_ext
+        - mon_ext
+    peer: sp2
+    role:
+      - proxy
+      - lb
+      - mgmt
+      - rtp
+      - db
+      - storage
+    status: online
+    swraiddevices: []
+    sysdescr: ''
+    syslocation: ''
+    sysname: ''
+  sp2:
+    dbnode: '2'
+    interfaces:
+      - lo
+      - neth0
+      - neth1
+      - neth2
+    lo:
+      cluster_sets:
+        - default
+      hwaddr: 00:00:00:00:00:00
+      ip: 127.0.0.1
+      netmask: 255.0.0.0
+      shared_ip: []
+      shared_v6ip: []
+      type:
+        - api_int
+        - stor_int
+        - web_int
+        - web_ext
+        - aux_ext
+      v6ip: ::1
+    neth0:
+      dhcp: yes
+      dns_nameservers:
+        - 10.15.20.30
+      gateway: 192.168.211.1
+      hwaddr: 08:00:27:75:e6:93
+      ip: 10.0.3.15
+      netmask: 255.255.255.0
+      shared_ip:
+      shared_v6ip:
+      type:
+        - ssh_ext
+        - web_int
+        - web_ext
+    neth1:
+      cluster_sets:
+        - default
+      hwaddr: 00:00:00:00:00:00
+      ip: 192.168.255.252
+      netmask: 255.255.255.248
+      shared_ip:
+        - 192.168.255.250
+      shared_v6ip:
+      type:
+        - ssh_ext
+        - ha_int
+        - boot_int
+        - sip_int
+        - rtp_int
+    neth2:
+      hwaddr: 0a:00:27:45:bb:66
+      ip: 192.168.2.177
+      netmask: 255.255.255.0
+      shared_ip:
+        - 192.168.2.151
+      shared_v6ip:
+      type:
+        - ssh_ext
+        - web_ext
+        - web_int
+        - sip_ext
+        - rtp_ext
+        - mon_ext
+    peer: sp1
+    role:
+      - storage
+      - proxy
+      - lb
+      - mgmt
+      - rtp
+      - db
+    status: online
+    swraiddevices: []
+    sysdescr: ''
+    syslocation: ''
+    sysname: ''
+instances:
+  - name: A
+    service: kamailio-lb
+    host: sp2
+    status: online
+    label: lb
+    interfaces:
+      - name: neth2
+        ip: 192.168.2.250
+        type:
+          - sip_ext
+      - name: neth1
+        ip: 192.168.255.253
+        type:
+          - sip_int
+    connections:
+      - name: proxy
+        algorithm: serial
+        links:
+          - type: instance
+            name: C
+            interfaces:
+              - name: neth1
+                type: sip_int
+  - name: B
+    service: kamailio-lb
+    host: sp1
+    label: lb
+    status: online
+    interfaces:
+      - name: neth2
+        ip: 192.168.2.251
+        type:
+          - sip_ext
+      - name: neth1
+        ip: 192.168.255.254
+        type:
+          - sip_int
+    connections:
+      - name: proxy
+        algorithm: serial
+        links:
+          - type: host
+            name: sp2
+            interfaces:
+              - name: neth1
+                type: sip_int
+  - name: C
+    service: kamailio-proxy
+    host: sp1
+    status: online
+    label: proxy
+    interfaces:
+      - name: neth1
+        ip: 192.168.255.249
+        type:
+          - sip_int
+  - name: D
+    service: sems-b2b
+    host: sp1
+    label: b2b
+    status: online
+    interfaces:
+      - name: neth1
+        ip: 192.168.255.205
+        type:
+        - sip_int
+    connections:
+      - name: proxy
+        links:
+          - type: instance
+            name: C
+            interfaces:
+              - name: neth1
+                type: sip_int
+      - name: proxy
+        links:
+          - type: instance
+            name: A
+            interfaces:
+              - name: neth1
+                type: sip_int
+              - name: neth2
+                type: sip_ext

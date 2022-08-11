@@ -61,7 +61,7 @@ if (exists $yaml->{instances}) {
         # Iterate through the list of connections.
         foreach my $conn (@{$instance->{connections}}) {
             # Catch connections names duplicates of each given instance.
-            my $conn_id = $instance->{name} . ': ' . $conn->{name};
+            my $conn_id = '#' . $i . ' : ' . $instance->{name} . ': ' . $conn->{name};
             push @{$dupe_conn{$conn_id}}, "con #$j: $conn->{name} ;";
 
             # Iterate through the list of connection links.
