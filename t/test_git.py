@@ -11,6 +11,8 @@ def test_add_file_to_default_repo(cli, gitrepo):
     with gitrepo.from_archive(src) as git:
         # required for git versions >=2.35.2
         os.chown(git.root, os.getuid(), os.getgid())
+        # required for git versions >=2.37.2
+        os.chown(str(git.root) + "/.git", os.getuid(), os.getgid())
 
         # ensure we have valid user information
         git.config("--local", "user.email", "pytest@example.com")
@@ -46,6 +48,8 @@ def test_status_output(cli, gitrepo):
     with gitrepo.from_archive(gitrepo.default) as git:
         # required for git versions >=2.35.2
         os.chown(git.root, os.getuid(), os.getgid())
+        # required for git versions >=2.37.2
+        os.chown(str(git.root) + "/.git", os.getuid(), os.getgid())
 
         # now we work with "existing" repository with path given in git.root
         with gitrepo.in_folder(git.root) as git:

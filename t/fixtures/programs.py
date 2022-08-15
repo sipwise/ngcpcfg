@@ -151,6 +151,8 @@ def ngcpcfg(gitrepo, tmpdir, *args):
 
         # required for git versions >=2.35.2
         chown(ngcpctl_dir, getuid(), getgid())
+        # required for git versions >=2.37.2
+        chown(str(ngcpctl_dir) + "/.git", getuid(), getgid())
 
         ex, out, err = git.add("templates")
         assert ex == 0
@@ -166,6 +168,8 @@ def ngcpcfg(gitrepo, tmpdir, *args):
             gitrepo.extract_archive(str(EMPTY_GIT), dir_path)
             # required for git versions >=2.35.2
             chown(dir_path, getuid(), getgid())
+            # required for git versions >=2.37.2
+            chown(str(dir_path) + "/.git", getuid(), getgid())
 
     def process_conf(env, cfg, git):
         base = Path(cfg.get("ngcpcfg", "NGCPCTL_MAIN"))
@@ -208,6 +212,8 @@ def ngcpcfg(gitrepo, tmpdir, *args):
         with gitrepo.in_folder(ngcpctl_dir) as git:
             # required for git versions >=2.35.2
             chown(git.root, getuid(), getgid())
+            # required for git versions >=2.37.2
+            chown(str(git.root) + "/.git", getuid(), getgid())
 
             # ensure we have valid user information
             git.config("--local", "user.email", "pytest@example.com")
