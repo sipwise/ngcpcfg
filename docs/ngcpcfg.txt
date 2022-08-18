@@ -561,7 +561,7 @@ _--dry-run__ option.
 _--force-all-services_ option causes all services to be restarted, including
 services without changes in config files.
 
-  **set** [<options>] <file> <option>=<value>::
+  **set** [<options>] <file> <option>=<value> [<option>=<value>]::
 
 Set given <option> to <value> in <file>. Using this command you can add/change
 the value(s) for every YML file used by ngcpcfg. Use _del_ option to delete the value/option.
@@ -585,6 +585,8 @@ Here you can find the most popular cases for YML configs modification:
   # +  rt_tables:
   # +  - id: 205
   # +    name: my_route
+  # change number of b2b threads:
+  ngcpcfg set /etc/ngcp-config/config.yml "b2b.media_processor_threads='10'" "b2b.session_processor_threads='10'"
 
   **show** [<change_id>]::
 

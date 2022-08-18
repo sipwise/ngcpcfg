@@ -48,16 +48,17 @@ while [ -n "${1:-}" ]; do
   esac
 done
 
-if [ "${#:-}" != "2" ]; then
+if [[ ${#:-} -lt 2 ]]; then
   help >&2
   exit 1
 fi
 
 file="$1"
-data="$2"
+shift
+declare -a data=("$@")
 
 [ -f "${file}" ] || (log_error "missing ${file}. Exiting." ; exit 1)
-[ -z "${data}" ] && (log_error "missing data to set. Exiting." ; exit 1)
+[ -z "${data[*]}" ] && (log_error "missing data to set. Exiting." ; exit 1)
 
 # Check whether we should use different permissions when creating the file.
 CREATEFILE=no
@@ -74,18 +75,9 @@ if [ ! -f "${file}" ]; then
   fi
 fi
 
-log_debug "Received data: ${data}"
-option="${data%%=*}"
-value="${data#*=}"
-log_debug "Parsed option: ${option}"
-log_debug "Parsed value: ${value}"
-
-[ -z "${option}" ] && ( log_error "missing option to set. Exiting." ; exit 1)
-[ -z "${value}" ] && ( log_error "missing value to set. Exiting." ; exit 1)
-log_debug "Saving option '${option}' value '${value}' into '${file}'"
-
-log_debug "${HELPER}/set-value '${file}' '${option}' '${value}' || RC=\$?"
-"${HELPER}/set-value" "${file}" "${option}" "${value}" || RC=$?
+log_debug "Received data: ${data[*]}"
+log_debug "${HELPER}/set-value '${file}' ${data[*]} || RC=\$?"
+"${HELPER}/set-value" "${file}" "${data[@]}" || RC=$?
 
 if [ "${CREATEFILE}" = "yes" ]; then
   chmod "${MODE}" "${file}"

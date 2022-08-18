@@ -47,7 +47,7 @@ def test_set_action_missing_option_value(ngcpcfgcli, tmpdir):
     out = ngcpcfgcli("set", str(tmpfile), "aaa.bbb=")
     assert tmpfile.read() == """---\n"""
     assert "" in out.stdout
-    assert "Error: missing value to set. Exiting." in out.stderr
+    assert "Error: can't parse 'aaa.bbb='" in out.stderr
     assert out.returncode == 1
 
 
@@ -58,7 +58,7 @@ def test_set_action_missing_option_name(ngcpcfgcli, tmpdir):
     out = ngcpcfgcli("set", str(tmpfile), "=123")
     assert tmpfile.read() == """---\n"""
     assert "" in out.stdout
-    assert "Error: missing option to set. Exiting." in out.stderr
+    assert "Error: can't parse '=123'" in out.stderr
     assert out.returncode == 1
 
 
@@ -616,6 +616,30 @@ foo:
         == """---
 foo:
   bar: yes
+"""
+    )
+    assert "" in out.stdout
+    assert "" in out.stderr
+    assert out.returncode == 0
+
+
+@pytest.mark.tt_16903
+def test_change_multiple_values(ngcpcfgcli, tmpdir):
+    tmpfile = tmpdir.join("tmpfile.txt")
+    tmpfile.write(
+        """---
+aaa:
+  bbb: 123
+  ccc: 456
+"""
+    )
+    out = ngcpcfgcli("set", str(tmpfile), "aaa.bbb=234", "aaa.ccc=555")
+    assert (
+        tmpfile.read()
+        == """---
+aaa:
+  bbb: 234
+  ccc: 555
 """
     )
     assert "" in out.stdout
