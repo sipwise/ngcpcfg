@@ -601,6 +601,28 @@ foo:
     assert out.returncode == 1
 
 
+@pytest.mark.tt_33030
+def test_set_action_check_keyword(ngcpcfgcli, tmpdir):
+    tmpfile = tmpdir.join("tmpfile.txt")
+    tmpfile.write(
+        """---
+foo:
+  bar: no
+"""
+    )
+    out = ngcpcfgcli("set", str(tmpfile), "foo.bar=yes")
+    assert (
+        tmpfile.read()
+        == """---
+foo:
+  bar: yes
+"""
+    )
+    assert "" in out.stdout
+    assert "" in out.stderr
+    assert out.returncode == 0
+
+
 ###############################################################
 #  ngcpcfg del
 ###############################################################

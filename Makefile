@@ -6,6 +6,7 @@ BASH_SCRIPTS = \
 	sbin/ngcpcfg
 PERL_SCRIPTS = \
 	lib/NGCP/Template.pm \
+	helper/set-value \
 	helper/sort-yml \
 	helper/sync-db \
 	helper/tt2-process \

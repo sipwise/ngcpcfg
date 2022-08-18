@@ -8,6 +8,7 @@ helper/fileformat_version   usr/share/ngcp-ngcpcfg/helper/
 helper/instance-info        usr/share/ngcp-ngcpcfg/helper/
 helper/instances-info       usr/share/ngcp-ngcpcfg/helper/
 helper/restore-permissions  usr/share/ngcp-ngcpcfg/helper/
+helper/set-value            usr/share/ngcp-ngcpcfg/helper/
 helper/sort-yml             usr/share/ngcp-ngcpcfg/helper/
 helper/sync-db              usr/share/ngcp-ngcpcfg/helper/
 helper/tt2-process          usr/share/ngcp-ngcpcfg/helper/
