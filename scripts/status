@@ -61,6 +61,11 @@ check_local_state() {
 
   log_info "OK:   has been initialised already"
 
+  if check_maintenance_mode ; then
+    log_info "Maintenance mode is enabled, skipping local state check for pending build/commit"
+    return 0
+  fi
+
   log_info "Checking state of configuration files:"
   if is_git_clean ; then
     log_info "OK:   nothing to commit"
@@ -147,6 +152,11 @@ check_pending_build() {
 
   log_debug "cd $NGCPCTL_MAIN"
   cd "$NGCPCTL_MAIN"
+
+  if check_maintenance_mode ; then
+    log_info "Maintenance mode is enabled, skipping check for pending build/apply"
+    return 0
+  fi
 
   log_info "Checking state of pending builds:"
 

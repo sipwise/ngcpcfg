@@ -193,6 +193,16 @@ is_git_clean() {
     return 1
   fi
 }
+
+check_maintenance_mode() {
+  if [[ $(ngcpcfg get general.maintenance) == "yes" ]] ; then
+    log_debug "ngcpcfg get general.maintenance == yes"
+    return 0
+  fi
+
+  return 1
+}
+
 ## }}}
 
 ## END OF FILE #################################################################
