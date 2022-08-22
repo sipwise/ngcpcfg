@@ -1,3 +1,43 @@
+ngcp-ngcpcfg (11.1.0.0+0~mr11.1.0.0) unstable; urgency=medium
+
+  [ Guillem Jover ]
+  * [e48864f] TT#139455 instances-info: Make output reproducible
+  * [55d8353] TT#177600 Move ngcpcfg specific configuration under /etc/ngcp-ngcpcfg
+  * [b89b447] TT#177550 initialise: Add sites/current to the default .gitignore
+  * [ac1744b] TT#177550 check: Add code to check the multi-site setup
+  * [09e83fc] TT#177550 check: Refactor config YAML file validation into a function
+  * [0f20e0f] TT#177550 check: Add a YAML schema and validation for sites.yml
+  * [c27e56c] TT#168102 check: Add a YAML schema and validation for instances.yml
+  * [7554d5e] TT#168102 check: Pass --network-file to network.yml validators
+  * [50949da] TT#168102 ngcp-instances-validator: Add a VERSION variable
+  * [b54ff7a] TT#168102 ngcp-instances-validator: Fix command synopsis
+  * [9d1093e] TT#168102 ngcp-instances-validator: Reformat tabs to 4 spaces
+  * [4643574] TT#168102 ngcp-instances-validator: Switch ad-hoc code to use none and first
+  * [b987a62] TT#168102 ngcp-instances-validator: Remove unnecessary stringification
+  * [1655ee6] TT#168102 ngcp-instances-validator: Improve comment formatting
+  * [feaa980] TT#168102 ngcp-instances-validator: Shorten and unify symbol names
+  * [d05e89d] TT#168102 ngcp-instances-validator: Unify warning output format
+  * [8c49eb7] TT#168102 ngcp-instances-validator: Unify coding style
+  * [806953f] TT#168102 Update git mailmap
+
+  [ Michael Prokop ]
+  * [be5ce72] TT#71950 Fix typos
+  * [6adf52a] TT#188250 tests: use same permissions for git repos as for working directory
+
+  [ ngcp-config ]
+  * [5c72344] TT#185050 ngcp-network-validator: support rtp??? nodes
+  * [240b32e] TT#177550 check: support MGMTNODE config
+  * [6100f20] TT#177550 clean: don't remove sites/current
+  * [a35013f] TT#186700 support for rtp instances
+
+  [ dzenichev ]
+  * [6cb4416] TT#168102 Create script for instances connections validation
+  * [d9eacfd] TT#168102 ngcp-instances-validator: Fix typo
+  * [dc1213a] TT#168102 ngcp-instances-validator: Fix link interface check
+  * [adda56e] TT#168102 instances-validator: add additional checks
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 22 Aug 2022 20:02:46 +0200
+
 ngcp-ngcpcfg (11.0.0.0+0~mr11.0.0.0) unstable; urgency=medium
 
   [ Mykola Malkov ]
