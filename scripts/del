@@ -60,37 +60,12 @@ option="$2"
 [ -z "${option}" ] && ( log_error "missing option to set. Exiting." ; exit 1)
 log_debug "Deleting option '${option}' from '${file}'"
 
-perl_line="delete \$yaml->{${option//./\}->\{}};"
-log_debug "perl line: ${perl_line}"
-
-tmp=$(mktemp -t ngcpcfg-del.XXXXXXXXXX)
-log_debug "Temporary perl file: ${tmp}"
-
-cat > "${tmp}" << EOF
-use strict;
-use warnings;
-use YAML::XS;
-my \$file="${file}";
-my \$yaml = YAML::XS::LoadFile("\$file");
-
-${perl_line}
-
-YAML::XS::DumpFile(\$file, \$yaml);
-EOF
-
-log_debug "perl -wCSD \"${tmp}\" || RC=$?"
-perl -wCSD "${tmp}" || RC=$?
-
+log_debug "${HELPER}/del-value '${file}' '${option}' || RC=\$?"
+"${HELPER}/del-value" "${file}" "${option}" || RC=$?
 
 if [ "${RC}" = "0" ] && "${b_show_diff:-false}"; then
   log_debug "${SCRIPTS}/diff || true"
   "${SCRIPTS}"/diff || true
-fi
-
-if [ -n "${DEBUG:-}" ] ; then
-  log_debug "Not removing temporary file ${tmp}"
-else
-  rm -f "${tmp}"
 fi
 
 exit ${RC:-0}

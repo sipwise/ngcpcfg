@@ -1,0 +1,48 @@
+#!/usr/bin/perl -wCSD
+
+use strict;
+use warnings;
+
+use YAML::XS;
+use Scalar::Util qw(looks_like_number);
+
+my ($file, $option) = @ARGV;
+
+unless (defined($file)) {
+    print {*STDERR} ("1st parameter 'file' is not defined\n");
+    exit (1);
+}
+unless (defined($option)) {
+    print {*STDERR} ("2nd parameter 'option' is not defined\n");
+    exit (1);
+}
+
+my $yaml = YAML::XS::LoadFile($file);
+my $valref = \$yaml;
+
+my @path = split(/\./, $option);
+my $delete_element = pop(@path);
+
+for my $component (@path) {
+    if (ref($valref) eq 'SCALAR' && defined(${$valref})) {
+        print {*STDERR} ("Key resolved to a SCALAR at '$component'; cannot continue.\n");
+        exit (1);
+    }
+    elsif (looks_like_number($component) && (! defined(${$valref}) || ref(${$valref}) eq 'ARRAY')) {
+        $valref = \${$valref}->[$component];
+    }
+    elsif ($component eq 'APPEND' && ref($$valref) eq 'ARRAY') {
+        $valref = \${$valref}->[$#{$$valref}+1];
+    }
+    elsif (! defined(${$valref}) || ref(${$valref}) eq 'HASH') {
+        $valref = \${$valref}->{$component};
+    }
+    else {
+        print {*STDERR} ("Key resolved to a " . ref(${$valref}) . " reference; refusing to overwrite.\n");
+        exit (1);
+    }
+}
+
+delete ${$valref}->{$delete_element};
+
+YAML::XS::DumpFile($file, $yaml);
