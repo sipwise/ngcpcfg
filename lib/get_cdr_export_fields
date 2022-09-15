@@ -127,6 +127,8 @@ X_cdr_id_map.DESTINATION_CONCURRENT_CALLS_COUNT = "COALESCE(" _ cdr_direction_pr
 X_cdr_id_map.DESTINATION_CONCURRENT_CALLS_COUNT_CUSTOMER = "COALESCE(" _ cdr_direction_provider_type_select("cdr_tag", "cdr_tag_data", "base_table", "tag_id", "val", "destination", "customer", "concurrent_calls_count_customer") _ ',"") as destination_concurrent_calls_count_customer';
 X_cdr_id_map.DESTINATION_CONCURRENT_CALLS_QUOTA = "COALESCE(" _ cdr_direction_provider_type_select("cdr_tag", "cdr_tag_data", "base_table", "tag_id", "val", "destination", "customer", "concurrent_calls_quota") _ ',"") as destination_concurrent_calls_quota';
 
+X_cdr_id_map.HG_EXT_RESPONSE = "COALESCE(" _ cdr_direction_provider_type_select("cdr_tag", "cdr_tag_data", "base_table", "tag_id", "val", "destination", "customer", "hg_ext_response") _ ',"") as hg_ext_response';
+
 # edr fields:
 #X_cdr_id_map.PRIMARY_NUMBER = "(select username from provisioning.voip_dbaliases tmp where tmp.subscriber_id = provisioning.voip_subscribers.id order by is_primary, id limit 1)";
 X_cdr_id_map.PILOT_SUBSCRIBER_ID = edr_type_select(X_base_type _ "_relation","events_relation_data","base_table","relation_id","val","pilot_subscriber_id");
