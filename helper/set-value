@@ -48,16 +48,16 @@ sub set_value {
 
     my $valref = \$yaml;
 
-    if ($value =~ /^['"]+.+['"]+$/) {
+    if ($value =~ /^['"]+.*['"]+$/) {
         log_debug ('$value is already quoted.');
     }
     elsif (looks_like_number($value)) {
         log_debug ('Not quoting $value for integers.');
     }
-    elsif ($value =~ /^\[.+\]$/) {
+    elsif ($value =~ /^\[.*\]$/) {
         log_debug ('Not quoting $value for arrays.');
     }
-    elsif ($value =~ /^\{.+\}$/) {
+    elsif ($value =~ /^\{.*\}$/) {
         log_debug ('Not quoting $value for hashes.');
     }
     else {

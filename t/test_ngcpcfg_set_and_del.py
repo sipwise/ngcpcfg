@@ -647,6 +647,73 @@ aaa:
     assert out.returncode == 0
 
 
+@pytest.mark.tt_16903
+def test_set_empty_value(ngcpcfgcli, tmpdir):
+    tmpfile = tmpdir.join("tmpfile.txt")
+    tmpfile.write(
+        """---
+aaa:
+  bbb: 123
+"""
+    )
+    out = ngcpcfgcli("set", str(tmpfile), "aaa.bbb=''")
+    assert (
+        tmpfile.read()
+        == """---
+aaa:
+  bbb: ''
+"""
+    )
+    assert "" in out.stdout
+    assert "" in out.stderr
+    assert out.returncode == 0
+
+
+@pytest.mark.tt_16903
+def test_set_empty_array(ngcpcfgcli, tmpdir):
+    tmpfile = tmpdir.join("tmpfile.txt")
+    tmpfile.write(
+        """---
+aaa:
+  bbb:
+    - 'aaa'
+    - 'bbb'
+"""
+    )
+    out = ngcpcfgcli("set", str(tmpfile), "aaa.bbb=[]")
+    assert (
+        tmpfile.read()
+        == """---
+aaa:
+  bbb: []
+"""
+    )
+    assert "" in out.stdout
+    assert "" in out.stderr
+    assert out.returncode == 0
+
+
+@pytest.mark.tt_16903
+def test_set_empty_dict(ngcpcfgcli, tmpdir):
+    tmpfile = tmpdir.join("tmpfile.txt")
+    tmpfile.write(
+        """---
+aaa:
+  bbb: 123
+"""
+    )
+    out = ngcpcfgcli("set", str(tmpfile), "aaa.bbb={}")
+    assert (
+        tmpfile.read()
+        == """---
+aaa:
+  bbb: {}
+"""
+    )
+    assert "" in out.stdout
+    assert "" in out.stderr
+    assert out.returncode == 0
+
 ###############################################################
 #  ngcpcfg del
 ###############################################################
