@@ -153,6 +153,24 @@ sub get_peername
     return $self->{config}{hosts}{$hostname}{peer};
 }
 
+sub get_sibnames
+{
+    my ($self, $hostname) = @_;
+    my $pairname = $self->get_pairname($hostname);
+    my @sibnames;
+
+    foreach my $thishost (keys %{$self->{config}{hosts}}) {
+        next if $thishost eq $hostname;
+
+        my $thispair = $self->get_pairname($thishost);
+        next if $thispair ne $pairname;
+
+        push @sibnames, $thishost;
+    }
+
+    return sort @sibnames;
+}
+
 sub get_firstname
 {
     my ($self, $hostname) = @_;
@@ -353,6 +371,12 @@ a pair of nodes (for example 'db01' for 'db01a').
 =item $peername = $t->get_peername($hostname)
 
 Returns the peer name for a given $hostname.
+
+=item @sibnames = $t->get_sibnames($hostname)
+
+Returns a sorted list of sibling names for the pair of a given $hostname.
+This is all other hostnames that are part of the same pair, except for
+$hostname.
 
 =item $firstname = $t->get_firstname($hostname)
 

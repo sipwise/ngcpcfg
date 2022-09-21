@@ -6,7 +6,7 @@ use warnings;
 use Cwd;
 use Test::More;
 
-plan tests => 40;
+plan tests => 47;
 
 use_ok('NGCP::Template::Object');
 
@@ -37,6 +37,9 @@ my $cfg_pro = {
             peer => 'sp2',
         },
         sp2 => {
+            peer => 'sp3',
+        },
+        sp3 => {
             peer => 'sp1',
         },
     },
@@ -61,6 +64,13 @@ my $cfg_carrier = {
         web01a => {
             role => [ qw(mgmt) ],
         },
+        web01b => {
+            role => [ qw(mgmt) ],
+        },
+        web01c => {
+            role => [ qw(mgmt) ],
+        },
+
     },
 };
 
@@ -111,12 +121,26 @@ is($obj_ce->get_peername('self'), undef, 'host self has no peer');
 is($obj_pro->get_peername('sp1'), 'sp2', 'host sp1 has sp2 as peer');
 is($obj_carrier->get_peername('prx01a'), 'prx01b', 'host prx01a has prx01b as peer');
 
+# Check get_sibnames().
+is_deeply([ $obj_ce->get_sibnames('self') ], [ ], 'no siblings for self');
+
+is_deeply([ $obj_pro->get_sibnames('sp1')] , [ qw(sp2 sp3) ], 'siblings for sp1');
+is_deeply([ $obj_pro->get_sibnames('sp2') ], [ qw(sp1 sp3) ], 'siblings for sp2');
+is_deeply([ $obj_pro->get_sibnames('sp3') ], [ qw(sp1 sp2) ], 'siblings for sp3');
+
+is_deeply([ $obj_carrier->get_sibnames('web01a') ], [ qw(web01b web01c) ], 'siblings for web01a');
+is_deeply([ $obj_carrier->get_sibnames('web01b') ], [ qw(web01a web01c) ], 'siblings for web01b');
+is_deeply([ $obj_carrier->get_sibnames('web01c') ], [ qw(web01a web01b) ], 'siblings for web01c');
+
 # Check get_firstname().
 is($obj_ce->get_firstname('non-existent'), 'self',
     'host unknown has self as first name');
 is($obj_ce->get_firstname('self'), 'self', 'host self has self as first name');
+# XXX: firstname is not spN ready for now.
+$obj_pro->{config}{hosts}{sp2}{peer} = 'sp1';
 is($obj_pro->get_firstname('sp1'), 'sp1', 'host sp1 has sp1 as first name');
 is($obj_pro->get_firstname('sp2'), 'sp1', 'host sp2 has sp1 as first name');
+$obj_pro->{config}{hosts}{sp2}{peer} = 'sp3';
 
 # Check get_pairname().
 is($obj_ce->get_pairname('self'), 'spce', 'host self has sp as pairname');
@@ -151,6 +175,8 @@ is($obj_ce->net_ip_expand('1::0'),
     'normalize IPv6 1::0');
 
 ## instances
+delete $cfg_pro->{hosts}{sp3};
+$cfg_pro->{hosts}{sp2}{peer} = 'sp1';
 $cfg_pro->{hosts}{sp1}{interfaces} = [ qw(eth0 eth1) ];
 $cfg_pro->{hosts}{sp1}{eth0} = {
     ip => '172.16.7.1',
