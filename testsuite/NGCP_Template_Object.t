@@ -6,7 +6,7 @@ use warnings;
 use Cwd;
 use Test::More;
 
-plan tests => 47;
+plan tests => 48;
 
 use_ok('NGCP::Template::Object');
 
@@ -136,11 +136,9 @@ is_deeply([ $obj_carrier->get_sibnames('web01c') ], [ qw(web01a web01b) ], 'sibl
 is($obj_ce->get_firstname('non-existent'), 'self',
     'host unknown has self as first name');
 is($obj_ce->get_firstname('self'), 'self', 'host self has self as first name');
-# XXX: firstname is not spN ready for now.
-$obj_pro->{config}{hosts}{sp2}{peer} = 'sp1';
 is($obj_pro->get_firstname('sp1'), 'sp1', 'host sp1 has sp1 as first name');
 is($obj_pro->get_firstname('sp2'), 'sp1', 'host sp2 has sp1 as first name');
-$obj_pro->{config}{hosts}{sp2}{peer} = 'sp3';
+is($obj_pro->get_firstname('sp3'), 'sp1', 'host sp3 has sp1 as first name');
 
 # Check get_pairname().
 is($obj_ce->get_pairname('self'), 'spce', 'host self has sp as pairname');
