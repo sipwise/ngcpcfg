@@ -68,13 +68,13 @@ ok(!$obj->has_role('prx01a', 'li'), 'host prx01a does not have li role');
 ok(!$obj->has_role('prx01a', 'li_dist'),
     'host prx01a does not have li_dist virtual role');
 {
-    local $obj->{config}->{intercept}{enable} = 'yes';
+    local $obj->{config}{intercept}{enable} = 'yes';
     ok($obj->has_role('prx01a', 'li'),
         'host prx01a has li role (with intercept enabled)');
     ok(!$obj->has_role('prx01a', 'li_dist'),
         'host prx01a does not have li_dist virtual roles (with intercept enabled)');
 
-    local $obj->{config}->{cluster_sets}{type} = 'distributed';
+    local $obj->{config}{cluster_sets}{type} = 'distributed';
     ok($obj->has_role('prx01a', 'li'),
         'host prx01a has li role (with cluster_sets as distributed)');
     ok($obj->has_role('prx01a', 'li_dist'),
@@ -122,25 +122,25 @@ is($obj->net_ip_expand('1::0'),
     'normalize IPv6 1::0');
 
 ## instances
-$config->{hosts}->{sp1}->{interfaces} = [ qw(eth0 eth1) ];
-$config->{hosts}->{sp1}{eth0} = {
+$config->{hosts}{sp1}{interfaces} = [ qw(eth0 eth1) ];
+$config->{hosts}{sp1}{eth0} = {
     ip => '172.16.7.1',
     netmask => '255.255.255.0',
     type => [ qw(ha_int sip_int) ],
 };
-$config->{hosts}->{sp1}{eth1} = {
+$config->{hosts}{sp1}{eth1} = {
     cluster_set => [ 'default' ],
     ip => '172.16.8.1',
     netmask => '255.255.255.224',
     type => [ 'sip_ext' ],
 };
-$config->{hosts}->{sp2}->{interfaces} = [ qw(eth0 eth1) ];
-$config->{hosts}->{sp2}{eth0} = {
+$config->{hosts}{sp2}{interfaces} = [ qw(eth0 eth1) ];
+$config->{hosts}{sp2}{eth0} = {
     ip => '172.16.7.2',
     netmask => '255.255.255.0',
     type => [ qw(ha_int sip_int) ],
 };
-$config->{hosts}->{sp2}{eth1} = {
+$config->{hosts}{sp2}{eth1} = {
     cluster_set => [ 'default' ],
     ip => '172.16.8.2',
     netmask => '255.255.255.224',
