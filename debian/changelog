@@ -1,3 +1,26 @@
+ngcp-ngcpcfg (11.2.0.0+0~mr11.2.0.0) unstable; urgency=medium
+
+  [ Michael Prokop ]
+  * [14a6de3] TT#69514 Do not check/prompt for build/apply action when maintenance mode is enabled
+
+  [ Mykola Malkov ]
+  * [a2a91ee] MT#55289 Add set-value helper
+  * [a0dc08a] MT#55289 Add support for multiple options
+  * [5c16ae0] MT#55289 Add del-value helper
+  * [4d66236] MT#55370 Allow setting of empty values
+
+  [ Rene Krenn ]
+  * [b51f5d8] MT#55305 add hg_ext_response cdr field
+
+  [ Guillem Jover ]
+  * [dbfd352] MT#54408 test: Remove unneeded arrow operators
+  * [d294323] MT#54408 test: Refactor NGCP::Template::Object config per ngcp-type
+  * [783862c] MT#54408 NGCP::Template::Object: Add spN support to get_*pairname()
+  * [bca9daa] MT#54408 NGCP::Template::Object: Add a new ngcp.get_sibnames() method
+  * [082feb5] MT#54408 NGCP::Template::Object: Fix ngcp.get_firstname() to support spN
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 04 Oct 2022 13:52:01 +0200
+
 ngcp-ngcpcfg (11.1.0.0+0~mr11.1.0.0) unstable; urgency=medium
 
   [ Guillem Jover ]
