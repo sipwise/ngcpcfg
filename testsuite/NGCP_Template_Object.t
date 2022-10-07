@@ -96,6 +96,7 @@ is_deeply($obj_ce->get_supported_roles(),
         li_dist
         mgmt
         proxy
+        rainbow-wrg
         rtp
         storage
     ) ],
