@@ -28,6 +28,20 @@ sub get_online_cpus
     return $nproc // 1;
 }
 
+sub get_supported_roles
+{
+    return [ qw(
+        db
+        lb
+        li
+        li_dist
+        mgmt
+        proxy
+        rtp
+        storage
+    ) ];
+}
+
 sub has_role
 {
     my ($self, $hostname, $role) = @_;
@@ -343,6 +357,10 @@ Returns the number of online CPUs on the system.
 
 This can be used to compute values in templates that depend on the amount
 of cores.
+
+=item $bool = $t->get_supported_roles()
+
+Returns the list of roles supported by NGCP.
 
 =item $bool = $t->has_role($hostname, $role)
 

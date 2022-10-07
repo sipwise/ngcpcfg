@@ -6,7 +6,7 @@ use warnings;
 use Cwd;
 use Test::More;
 
-plan tests => 48;
+plan tests => 49;
 
 use_ok('NGCP::Template::Object');
 
@@ -86,6 +86,20 @@ my $obj_carrier = NGCP::Template::Object->new($cfg_carrier);
 
     is($obj_ce->get_online_cpus(), 8, 'number of online processors');
 }
+
+# Check get_supported_roles()
+is_deeply($obj_ce->get_supported_roles(),
+    [ qw(
+        db
+        lb
+        li
+        li_dist
+        mgmt
+        proxy
+        rtp
+        storage
+    ) ],
+    'list of supported roles');
 
 # Check has_role().
 ok(!$obj_ce->has_role('non-existent', 'storage'),
