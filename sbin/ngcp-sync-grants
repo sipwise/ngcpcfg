@@ -27,6 +27,11 @@ my $password_length = 20;
 my $check_only = 0;
 my $recreate_user = 0;
 
+my $custom_db_host;
+my $custom_db_port;
+
+my $no_warnings = 0;
+
 sub Usage {
     print <<USAGE;
 ==
@@ -40,6 +45,10 @@ Options:
     --quiet|-q       -- quiet mode
     --recreate-user  -- recreate user
                         (useful when all user hosts need to be cleared)
+    --db-host        -- use custom db host
+    --db-port        -- use custom db port
+    --no-warnings    -- suppress warning messages such as
+                        "Cannot apply grant: Table 'x' doesn't exist
 
 USAGE
     exit 0;
@@ -50,6 +59,9 @@ GetOptions("h|?|help"       => \&Usage,
            "c|check"        => \$check_only,
            "q|quiet"        => sub { $debug = -1 },
            "recreate-user"  => \$recreate_user,
+           "db-host=s"      => \$custom_db_host,
+           "db-port=s"      => \$custom_db_port,
+           "no-warnings"    => \$no_warnings,
           ) or die Usage();
 
 sub pwgen {
@@ -95,7 +107,7 @@ sub logger {
 
 sub log_info  { logger(shift, 0); }
 sub log_debug { logger(shift, 1); }
-sub log_warn  { logger(shift, 2); }
+sub log_warn  { $no_warnings || logger(shift, 2); }
 
 sub get_hostname {
 
@@ -458,9 +470,14 @@ sub main {
         ($dbhost, $dbport) = @{$db_cfg->{_}}{qw(PAIR_DBHOST PAIR_DBPORT)};
     } else {
         log_warn(sprintf "Cannot open %s: %s, using host=%s port=%s",
-            $DB_CFG, $ERRNO, $DEFAULT_DBHOST, $DEFAULT_DBPORT);
-        ($dbhost, $dbport) = ($DEFAULT_DBHOST, $DEFAULT_DBPORT);
+            $DB_CFG, $ERRNO,
+            $custom_db_host // $DEFAULT_DBHOST,
+            $custom_db_port // $DEFAULT_DBPORT);
+        $dbhost = $custom_db_host // $DEFAULT_DBHOST;
+        $dbport = $custom_db_port //  $DEFAULT_DBPORT;
     }
+    $dbhost = $custom_db_host // $dbhost;
+    $dbport = $custom_db_port // $dbport;
 
     connect_db($dbhost, $dbport);
 
