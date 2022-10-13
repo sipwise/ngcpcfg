@@ -29,6 +29,11 @@ my $test_mode       = 0;
 my $error           = 0;
 my $mysql_root      = 0;
 
+my $custom_db_host;
+my $custom_db_port;
+
+my $no_warnings = 0;
+
 sub Usage {
     print <<USAGE;
 ==
@@ -41,6 +46,9 @@ Options:
     -init-passwords|-i  -- generate new passwords (constants.yml is updated)
     -test|-t            -- test mode (no updates)
     -verbose|-v         -- verbose mode
+    --db-host           -- use custom db host
+    --db-port           -- use custom db port
+    --no-warnings       -- suppress warning messages
 USAGE
     exit 0;
 }
@@ -49,7 +57,10 @@ GetOptions("h|?|help"         => \&Usage,
            "i|init-passwords" => \$init_passwords,
            "r|root"           => \$mysql_root,
            "t|test"           => \$test_mode,
-           "v|verbose"        => \$debug);
+           "v|verbose"        => \$debug,
+           "db-host=s"        => \$custom_db_host,
+           "db-port=s"        => \$custom_db_port,
+           "no-warnings"      => \$no_warnings);
 #----------------------------------------------------------------------
 sub logger {
     my $str = shift || '';
@@ -64,7 +75,7 @@ sub logger {
 
 sub log_info  { logger(shift, 0); }
 sub log_debug { logger(shift, 1); }
-sub log_warn  { logger(shift, 2); }
+sub log_warn  { $no_warnings || logger(shift, 2); }
 
 sub pwgen {
     my @list = ("a".."z",0..9,"A".."Z");
@@ -276,9 +287,14 @@ sub main {
         ($dbhost, $dbport) = @{$db_cfg->{_}}{qw(PAIR_DBHOST PAIR_DBPORT)};
     } else {
         log_warn(sprintf "Cannot open %s: %s, using host=%s port=%s",
-            $DB_CFG, $ERRNO, $DEFAULT_DBHOST, $DEFAULT_DBPORT);
-        ($dbhost, $dbport) = ($DEFAULT_DBHOST, $DEFAULT_DBPORT);
+            $DB_CFG, $ERRNO,
+            $custom_db_host // $DEFAULT_DBHOST,
+            $custom_db_port // $DEFAULT_DBPORT);
+        $dbhost = $custom_db_host // $DEFAULT_DBHOST;
+        $dbport = $custom_db_port //  $DEFAULT_DBPORT;
     }
+    $dbhost = $custom_db_host // $dbhost;
+    $dbport = $custom_db_port // $dbport;
 
     if ($init_passwords and not $test_mode and not -w $CONSTANTS_YML) {
         die "$CONSTANTS_YML is not writable";
