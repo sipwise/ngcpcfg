@@ -20,8 +20,8 @@ lib/set_*                   usr/lib/ngcp-ngcpcfg/
 sbin/ngcp-instances-validator usr/sbin/
 sbin/ngcp-network           usr/sbin/
 sbin/ngcp-network-validator usr/sbin/
-sbin/ngcp-sync-constants    usr/sbin/
-sbin/ngcp-sync-grants       usr/sbin/
+sbin/ngcp-sync-db-creds     usr/sbin/
+sbin/ngcp-sync-db-grants    usr/sbin/
 sbin/ngcpcfg                usr/sbin/
 schemas/instances.yml       usr/share/ngcp-ngcpcfg/schemas/
 schemas/sites.yml           usr/share/ngcp-ngcpcfg/schemas/

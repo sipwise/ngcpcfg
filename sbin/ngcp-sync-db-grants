@@ -530,7 +530,7 @@ sub main {
     if ($recreate_user) {
         log_info(<<MSG);
 Warning: Recreated users are without passwords,
-         please consider running 'ngcp-sync-constants' to update passwords for them.
+         please consider running 'ngcp-sync-db-creds' to update passwords for them.
 MSG
     }
 
@@ -549,11 +549,11 @@ __END__
 
 =head1 NAME
 
-ngcp-sync-grants - synchronizes mysql grants from a schema template
+ngcp-sync-db-grants - synchronizes mysql grants from a schema template
 
 =head1 SYNOPSIS
 
-B<ngcp-sync-grants> [I<options>...]
+B<ngcp-sync-db-grants> [I<options>...]
 
 =head1 DESCRIPTION
 

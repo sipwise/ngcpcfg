@@ -241,7 +241,7 @@ SQL
         }
     }
     unless ($count) {
-        log_debug(sprintf "%s => does not exist in mysql, skipped (check grants.yml and run ngcp-sync-grants)", $user);
+        log_debug(sprintf "%s => does not exist in mysql, skipped (check grants.yml and run ngcp-sync-db-grants)", $user);
     }
 
     $sth_sel->finish;
@@ -354,11 +354,11 @@ __END__
 
 =head1 NAME
 
-ngcp-sync-constants - synchronizes passwords from constants.yml with MySQL
+ngcp-sync-db-creds - synchronizes passwords from constants.yml with MySQL
 
 =head1 SYNOPSIS
 
-B<ngcp-sync-constants> [I<options>...]
+B<ngcp-sync-db-creds> [I<options>...]
 
 =head1 DESCRIPTION
 

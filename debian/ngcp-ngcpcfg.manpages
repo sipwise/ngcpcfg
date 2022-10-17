@@ -1,5 +1,5 @@
 docs/ngcp-network-validator.8
 docs/ngcp-network.8
-docs/ngcp-sync-constants.8
-docs/ngcp-sync-grants.8
+docs/ngcp-sync-db-creds.8
+docs/ngcp-sync-db-grants.8
 docs/ngcpcfg.8

@@ -15,8 +15,8 @@ PERL_SCRIPTS = \
 	sbin/ngcp-instances-validator \
 	sbin/ngcp-network \
 	sbin/ngcp-network-validator \
-	sbin/ngcp-sync-constants \
-	sbin/ngcp-sync-grants \
+	sbin/ngcp-sync-db-creds \
+	sbin/ngcp-sync-db-grants \
 	# EOL
 YAML_SCHEMAS = \
 	schemas/instances.yml \
@@ -32,8 +32,8 @@ man:
 	asciidoctor -d manpage -b manpage docs/ngcpcfg.txt
 	pod2man --section=8 sbin/ngcp-network > docs/ngcp-network.8
 	pod2man --section=8 sbin/ngcp-network-validator > docs/ngcp-network-validator.8
-	pod2man --section=8 sbin/ngcp-sync-constants > docs/ngcp-sync-constants.8
-	pod2man --section=8 sbin/ngcp-sync-grants > docs/ngcp-sync-grants.8
+	pod2man --section=8 sbin/ngcp-sync-db-creds > docs/ngcp-sync-db-creds.8
+	pod2man --section=8 sbin/ngcp-sync-db-grants > docs/ngcp-sync-db-grants.8
 	pod2man --section=3pm lib/NGCP/Template.pm > docs/NGCP::Template.3pm
 	pod2man --section=3pm lib/NGCP/Template/Object.pm > docs/NGCP::Template::Object.3pm
 	pod2man --section=3pm lib/NGCP/Template/Plugin/Utils.pm > docs/NGCP::Template::Plugin::Utils.3pm
