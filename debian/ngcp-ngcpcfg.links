@@ -1,5 +1,5 @@
-usr/sbin/ngcp-sync-constants usr/sbin/ngcp-sync-db-creds
-usr/sbin/ngcp-sync-grants usr/sbin/ngcp-sync-db-grants
+usr/sbin/ngcp-sync-db-creds usr/sbin/ngcp-sync-constants
+usr/sbin/ngcp-sync-db-grants usr/sbin/ngcp-sync-grants
 usr/sbin/ngcpcfg usr/sbin/ngcp-config
 usr/share/bash-completion/completions/ngcpcfg usr/share/bash-completion/completions/ngcp-config
 usr/share/man/man8/ngcp-sync-constants.8.gz usr/share/man/man8/ngcp-sync-db-creds.8.gz
