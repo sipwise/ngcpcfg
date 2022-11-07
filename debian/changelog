@@ -1,3 +1,10 @@
+ngcp-ngcpcfg (9.5.7.0+0~mr9.5.7.0) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [054ee03] MT#55642 sync-grants, sync-constans custom dbhost dbport
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 07 Nov 2022 15:00:54 +0100
+
 ngcp-ngcpcfg (9.5.6.0+0~mr9.5.6.0) unstable; urgency=medium
 
   * New release.
