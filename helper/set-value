@@ -56,6 +56,13 @@ sub set_value {
     }
     elsif ($value =~ /^\[.*\]$/) {
         log_debug ('Not quoting $value for arrays.');
+        if ($value =~ /^\[\]$/) {
+          log_debug ('Empty array, do not check quoting');
+        }
+        elsif ($value !~ /^\[['"].+['"]\]$/) {
+            print {*STDERR} ("Error: Elements in array '$value' should be quoted\n");
+            exit (1);
+        }
     }
     elsif ($value =~ /^\{.*\}$/) {
         log_debug ('Not quoting $value for hashes.');
