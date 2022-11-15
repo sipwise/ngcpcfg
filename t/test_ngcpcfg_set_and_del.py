@@ -396,6 +396,31 @@ foo:
 
 
 @pytest.mark.tt_33030
+def test_set_action_set_array_element_unquoted(ngcpcfgcli, tmpdir):
+    tmpfile = tmpdir.join("tmpfile.txt")
+    tmpfile.write(
+        """---
+foo:
+  bar:
+  - 'blah'
+  - 'baz'
+"""
+    )
+    out = ngcpcfgcli("set", str(tmpfile), "foo.bar=[bla]")
+    assert (
+        tmpfile.read()
+        == """---
+foo:
+  bar:
+  - 'blah'
+  - 'baz'
+"""
+    )
+    assert "" in out.stdout
+    assert "Error: Elements in array '[bla]' should be quoted" in out.stderr
+    assert out.returncode == 1
+
+@pytest.mark.tt_33030
 def test_set_action_append_array_element(ngcpcfgcli, tmpdir):
     tmpfile = tmpdir.join("tmpfile.txt")
     tmpfile.write(
