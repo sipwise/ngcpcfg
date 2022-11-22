@@ -415,8 +415,8 @@ sub remove_interface {
 
     my $ifaces = $yaml->{hosts}->{$host}->{interfaces};
     if ( defined $ifaces ) {
-        logger("removing interface @$ifaces as requested");
-        undef @{$ifaces};
+        logger("removing interface $rem_iface from @$ifaces as requested");
+        @{$yaml->{hosts}->{$host}->{interfaces}} = grep {$_ ne $rem_iface} @$ifaces;
     }
     return;
 }

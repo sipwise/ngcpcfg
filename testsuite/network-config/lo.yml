@@ -1,0 +1,20 @@
+---
+hosts:
+  sp1:
+    interfaces:
+    - lo
+    lo:
+      ip: 127.0.0.1
+      netmask: 255.255.255.0
+      type:
+      - sip_int
+      - ha_int
+      - web_ext
+      - sip_ext
+      - rtp_ext
+      - ssh_ext
+      - mon_ext
+    role:
+    - proxy
+    - lb
+    - mgmt

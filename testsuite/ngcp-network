@@ -148,6 +148,11 @@ ${CMD} --host=$PEER --set-interface=lo --type=sip_int --type=web_ext --type=sip_
 assertEqualFiles testfiles/deployment.yml network-config/deployment.yml
 
 
+# make sure host/interfaces doesn't get cleaned on remove one interface
+${CMD} --input-file=network-config/eth42.yml --output-file=testfiles/lo.yml \
+       --host=sp1 --remove-interface=eth42
+assertEqualFiles testfiles/lo.yml network-config/lo.yml
+
 # TAP output
 printf "1..%s\n" "${count}"
 cat "$OUTPUT"

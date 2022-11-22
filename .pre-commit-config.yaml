@@ -18,12 +18,13 @@ repos:
       - id: yamlfmt
         args: [--mapping, '2', --sequence, '4', --offset, '2', --width, '150']
         exclude: |
-          (?x)^(.yamllint)$
+          (?x)^(.yamllint|testsuite/.*)$
   - repo: https://github.com/adrienverge/yamllint.git
     rev: v1.26.3
     hooks:
       - id: yamllint
         args: [--format, parsable, --strict]
+        exclude: ^testsuite/.*
   - repo: https://github.com/asottile/reorder_python_imports
     rev: v2.6.0
     hooks:
