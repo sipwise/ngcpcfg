@@ -114,7 +114,7 @@ else
         # drop HA file suffix of all registered nodes
         if [ -r /etc/ngcp-config/systems.cfg ] ; then
           while IFS= read -r host ; do
-            build_file="${build_file%%.${host}}"
+            build_file="${build_file%%."${host}"}"
           done < /etc/ngcp-config/systems.cfg
         fi
 
