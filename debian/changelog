@@ -1,3 +1,10 @@
+ngcp-ngcpcfg (9.5.6.2+0~mr9.5.6.2) unstable; urgency=medium
+
+  [ Mykola Malkov ]
+  * [5e9184b] MT#55857 Fix shellcheck warnings
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 29 Nov 2022 10:20:13 +0100
+
 ngcp-ngcpcfg (9.5.6.1+0~mr9.5.6.1) unstable; urgency=medium
 
   [ Kirill Solomko ]
