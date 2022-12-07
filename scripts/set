@@ -21,7 +21,7 @@ fi
 ## functions {{{
 help() {
   echo "Usage: ngcpcfg set [<options>] <file> <key>"
-  echo "Example: ngcpcfg set /etc/ngcp-config/config.yml general.maintenance=yes"
+  echo "Example: ngcpcfg set /etc/ngcp-config/maintenance.yml general.maintenance=yes"
   echo "Options:"
   echo "  --diff: show difference(s) for the applied changes"
 }

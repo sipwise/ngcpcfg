@@ -43,6 +43,11 @@ if ! [ -r "${CONSTANTS_CONFIG}" ] ; then
   exit 1
 fi
 
+if ! [ -r "${MAINTENANCE_CONFIG}" ] ; then
+  log_error "Maintenance file ${MAINTENANCE_CONFIG} does not exist (unconfigured?) - exiting."
+  exit 1
+fi
+
 if [ -z "${NETWORK_CONFIG:-}" ] ; then
   log_warn "NETWORK_CONFIG is not configured in ${NGCPCTL_CONFIG} - continuing anyway."
 elif ! [ -r "${NETWORK_CONFIG}" ] ; then
@@ -83,6 +88,9 @@ export LC_ALL=C
 : "${CONFIG_USER:=root}"
 : "${CONFIG_GROUP:=_ngcp-admin}"
 : "${CONFIG_CHMOD:=0660}"
+: "${MAINTENANCE_CONFIG_USER:=root}"
+: "${MAINTENANCE_CONFIG_GROUP:=_ngcp-admin}"
+: "${MAINTENANCE_CONFIG_CHMOD:=0660}"
 : "${NETWORK_CONFIG_USER:=root}"
 : "${NETWORK_CONFIG_GROUP:=_ngcp-admin}"
 : "${NETWORK_CONFIG_CHMOD:=0660}"
@@ -93,6 +101,7 @@ export HOST_CONFIG
 export LOCAL_CONFIG
 export NGCPCTL_CONFIG
 export CONSTANTS_CONFIG
+export MAINTENANCE_CONFIG
 export NETWORK_CONFIG
 export EXTRA_CONFIG_DIR
 export EXTRA_CONFIG_FILES

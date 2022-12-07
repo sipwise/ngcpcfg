@@ -157,6 +157,10 @@ chown_configs() {
     chown "${CONFIG_USER}":"${CONFIG_GROUP}" "${f}"
     chmod "${CONFIG_CHMOD}" "${f}"
   done
+  if [ -f "${MAINTENANCE_CONFIG:-}" ]; then
+    chown "${MAINTENANCE_CONFIG_USER}":"${MAINTENANCE_CONFIG_GROUP}" "${MAINTENANCE_CONFIG}"
+    chmod "${MAINTENANCE_CONFIG_CHMOD}" "${MAINTENANCE_CONFIG}"
+  fi
   if [ -f "${NETWORK_CONFIG:-}" ]; then
     chown "${NETWORK_CONFIG_USER}":"${NETWORK_CONFIG_GROUP}" "${NETWORK_CONFIG}"
     chmod "${NETWORK_CONFIG_CHMOD}" "${NETWORK_CONFIG}"

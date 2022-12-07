@@ -52,10 +52,11 @@ if [ "${#:-}" -ge 1 ] ; then
   fi
 else
   # Get the list of configs in static order to be constant over the time
-  # and process the main YML configs first: config.yml network.yml constants.yml
+  # and process the main YML configs first: config.yml maintenance.yml
+  # network.yml constants.yml
   # NOTE: the file are loaded/merged into ngcpcfg in different order!
   declare -a CONFIGS
-  for f in ${NGCPCTL_CONFIG:?} ${NETWORK_CONFIG:?} ${CONSTANTS_CONFIG:?} ${NODE_CONFIG:-} ${PAIR_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} "${EXTRA_CONFIG_FILES[@]}" ; do
+  for f in ${NGCPCTL_CONFIG:?} ${MAINTENANCE_CONFIG:?} ${NETWORK_CONFIG:?} ${CONSTANTS_CONFIG:?} ${NODE_CONFIG:-} ${PAIR_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} "${EXTRA_CONFIG_FILES[@]}" ; do
     if [ -r "$f" ] ; then
       CONFIGS+=("${f}")
     fi

@@ -12,8 +12,9 @@ Usage: ngcpcfg cat [<option>...] [<config-type>...]
 Options:
   -?, --help      Print this help message.
 
-<config-type> is one of "constants", "config" or "network", will expand to
-include any extended auxiliary files.
+<config-type> is one of "constants", "config", "network" and "maintenance".
+It shows the content of specified file(s) and their additional auxiliary
+file(s) in YAML format.
 
 Example:
   ngcpcfg cat
@@ -34,7 +35,7 @@ fi
 # shellcheck disable=SC1090
 . "${FUNCTIONS}"/main
 
-CONFIG_TYPES=(config network constants)
+CONFIG_TYPES=(config maintenance network constants)
 
 # Get the list of config types to load.
 if [ "${#:-}" -eq 0 ]; then
@@ -70,6 +71,9 @@ if "${config_types[config]}"; then
   configs_try+=("${PAIR_CONFIG}")
   configs_try+=("${HOST_CONFIG}")
   configs_try+=("${LOCAL_CONFIG}")
+fi
+if "${config_types[maintenance]}"; then
+  configs_try+=("${MAINTENANCE_CONFIG}")
 fi
 if "${config_types[network]}"; then
   configs_try+=("${NETWORK_CONFIG}")
