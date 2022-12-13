@@ -273,7 +273,7 @@ check_shared_storage() {
   else
     log_info "Outstanding pull actions have been identified (see ACTION_NEEDED), exiting."
     log_info "TIP: '--no-action-failure' forces execution within 'apply' anyway (use with care!)."
-    return $RC
+    return "$RC"
   fi
 }
 

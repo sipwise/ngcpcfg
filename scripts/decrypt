@@ -38,6 +38,7 @@ log_info() {
 }
 
 # info without ending newline
+# shellcheck disable=SC2317
 log_info_n() {
   logger -t ngcpcfg --id="${NGCPCFG_PID}" -- "$*"
   console_output "$*"
@@ -53,6 +54,7 @@ log_error() {
   console_output "Error: $*\n" >&2
 }
 
+# shellcheck disable=SC2317
 log_debug() {
   if [ -n "${DEBUG:-}" ] ; then
     logger -t ngcpcfg --id="${NGCPCFG_PID}" -- "Debug: $*"
