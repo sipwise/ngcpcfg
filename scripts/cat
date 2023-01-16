@@ -35,7 +35,7 @@ fi
 # shellcheck disable=SC1090
 . "${FUNCTIONS}"/main
 
-CONFIG_TYPES=(config maintenance network constants)
+CONFIG_TYPES=(config maintenance sites network constants)
 
 # Get the list of config types to load.
 if [ "${#:-}" -eq 0 ]; then
@@ -49,7 +49,7 @@ for t in "${CONFIG_TYPES[@]}"; do
 done
 while [ -n "${1:-}" ]; do
   case "$1" in
-    constants|config|network|maintenance)
+    constants|config|network|maintenance|sites)
       config_types[$1]=true
       shift
       ;;
@@ -71,6 +71,9 @@ if "${config_types[config]}"; then
   configs_try+=("${PAIR_CONFIG}")
   configs_try+=("${HOST_CONFIG}")
   configs_try+=("${LOCAL_CONFIG}")
+fi
+if "${config_types[sites]}"; then
+  configs_try+=("${SITES_CONFIG}")
 fi
 if "${config_types[maintenance]}"; then
   configs_try+=("${MAINTENANCE_CONFIG}")

@@ -36,13 +36,25 @@ if [ "${#:-}" -ge 1 ] ; then
   if [ ! -r "${file}" ]; then
     case ${file,,} in
       1|config|config.yml)
-        file="${NGCPCTL_MAIN}/config.yml"
+        if [ -e "${SITES_DIR}/current/config.yml" ]; then
+          file="${SITES_DIR}/current/config.yml"
+        else
+          file="${NGCPCTL_MAIN}/config.yml"
+        fi
         ;;
       2|network|network.yml)
-        file="${NGCPCTL_MAIN}/network.yml"
+        if [ -e "${SITES_DIR}/current/network.yml" ]; then
+          file="${SITES_DIR}/current/network.yml"
+        else
+          file="${NGCPCTL_MAIN}/network.yml"
+        fi
         ;;
       3|constants|constants.yml)
-        file="${NGCPCTL_MAIN}/constants.yml"
+        if [ -e "${SITES_DIR}/current/constants.yml" ]; then
+          file="${SITES_DIR}/current/constants.yml"
+        else
+          file="${NGCPCTL_MAIN}/constants.yml"
+        fi
         ;;
       *)
         echo "Error: Unknown choice '${file}'. Aborting." >&2

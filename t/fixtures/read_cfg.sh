@@ -26,6 +26,10 @@ echo "TEMPLATE_POOL_BASE=${TEMPLATE_POOL_BASE:-}"
 # location of service definitions
 echo "SERVICES_POOL_BASE=${SERVICES_POOL_BASE:-}"
 
+# location of sites info for templates
+echo "SITES_DIR=${SITES_DIR:-}"
+echo "SITES_CONFIG=${SITES_CONFIG:-}"
+
 # location of instances info for templates
 echo "TEMPLATE_INSTANCES=${TEMPLATE_INSTANCES:-}"
 

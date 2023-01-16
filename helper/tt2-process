@@ -26,6 +26,8 @@ $TIME_FORMAT =~ s/^\+//;
 
 my $NGCPCTL_MAIN = $ENV{NGCPCTL_MAIN};
 my $TEMPLATE_POOL_BASE = $ENV{TEMPLATE_POOL_BASE};
+my $SITES_DIR = $ENV{SITES_DIR} // "$NGCPCTL_MAIN/sites";
+my $SITES_CONFIG = $ENV{SITES_CONFIG} // "$NGCPCTL_MAIN/sites.yml";
 my $CONFIG_POOL = $ENV{CONFIG_POOL} // '';
 
 my %options = (
@@ -35,6 +37,8 @@ my %options = (
 chomp $options{jobs};
 
 error("NGCPCTL_MAIN is not defined") unless $NGCPCTL_MAIN;
+error("SITES_DIR is not defined") unless $SITES_DIR;
+error("SITES_CONFIG is not defined") unless $SITES_CONFIG;
 error("TEMPLATE_POOL_BASE is not defined") unless $TEMPLATE_POOL_BASE;
 
 GetOptions(\%options,
@@ -436,13 +440,63 @@ sub merge_yml {
 sub process {
     my %options = @_;
     my $config = {};
+    my $sites = {};
 
     my $visible_jobs = $options{jobs} || 'unlimited';
     info("Building configurations with $visible_jobs concurrent jobs");
 
-    foreach my $file (@{$options{config}}) {
-        $config = merge_yml($config, $file);
+    if (-f $SITES_CONFIG && -d $SITES_DIR && -l "$SITES_DIR/current") {
+        $sites = LoadFile($SITES_CONFIG);
     }
+
+    $sites->{sites_enable} //= 'no';
+
+    if ($sites->{sites_enable} eq 'yes') {
+        info("Loading in multi-site mode");
+
+        my $current_site = readlink "$SITES_DIR/current";
+        if (not defined $current_site) {
+            error("Cannot read symlink target for $SITES_DIR/current: $!");
+        }
+        info("Current site is '$current_site'");
+
+        if (not exists $sites->{sites}{$current_site}) {
+            error("Cannot find current site $current_site in sites definitions.");
+        }
+
+        foreach my $site (sort keys %{$sites->{sites}}) {
+            foreach my $file (@{$options{config}}) {
+                my $site_file = "$SITES_DIR/$site/" . basename($file);
+
+                $sites->{sites}{$site} = merge_yml($sites->{sites}{$site}, $site_file);
+            }
+        }
+
+        # First fill the root config with the current site.
+        $config = $sites->{sites}{$current_site};
+
+        # Then fill the sites sub-trees.
+        foreach my $site (sort keys %{$sites->{sites}}) {
+            $config->{sites}{$site} = $sites->{sites}{$site};
+        }
+
+        # Create the 'current' reference.
+        $config->{sites}{current} = $config->{sites}{$current_site};
+    } else {
+        info("Loading in single-site mode");
+
+        foreach my $file (@{$options{config}}) {
+            $sites = merge_yml($sites, $file);
+        }
+
+        # First fill the root config with the current site.
+        $config = $sites;
+
+        # Create the 'current' site reference for compatibility.
+        $config->{sites}{current} = $sites;
+    }
+
+    $config->{sites_enable} = $sites->{sites_enable};
 
     my $tt = NGCP::Template->new();
     my $rc;
