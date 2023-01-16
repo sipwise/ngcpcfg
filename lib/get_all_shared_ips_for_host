@@ -3,6 +3,7 @@
 
 # Return an array of shared IPs for a given host.
 #
+# @param argv.site      The site to use, default value: current.
 # @param argv.host      The host to get all shared IPs for.
 # @param argv.type      The interface type or empty string for all types.
 # @param argv.status    node status [ online, offline, inactive ]
@@ -10,7 +11,11 @@
 # @param argv.format    Return a flat list (default) or a list of hashes ('hash')
 # @return out           The array of shared IPs.
 
-IF !hosts.${argv.host}.defined;
+IF !argv.site.length;
+  argv.site = 'current';
+END;
+
+IF !sites.${argv.site}.hosts.${argv.host}.defined;
   argv.host = 'self';
 END;
 
@@ -32,23 +37,23 @@ FOREACH val IN argv.status;
 END;
 
 out = [];
-IF status.item(hosts.${argv.host}.status);
-  FOREACH iface IN hosts.${argv.host}.interfaces;
-    NEXT UNLESS hosts.${argv.host}.exists(iface);
-    NEXT UNLESS hosts.${argv.host}.$iface.type.grep('^' _ argv.type _ '$').size();
+IF status.item(sites.${argv.site}.hosts.${argv.host}.status);
+  FOREACH iface IN sites.${argv.site}.hosts.${argv.host}.interfaces;
+    NEXT UNLESS sites.${argv.site}.hosts.${argv.host}.exists(iface);
+    NEXT UNLESS sites.${argv.site}.hosts.${argv.host}.$iface.type.grep('^' _ argv.type _ '$').size();
 
-    FOREACH ip IN hosts.${argv.host}.$iface.shared_ip;
+    FOREACH ip IN sites.${argv.site}.hosts.${argv.host}.$iface.shared_ip;
       NEXT UNLESS ip;
       IF argv.format == 'hash';
         PERL; -%]
           use Net::Netmask;
-          my $network = Net::Netmask->new("[% ip %]/[% hosts.${argv.host}.$iface.netmask %]");
+          my $network = Net::Netmask->new("[% ip %]/[% sites.${argv.site}.hosts.${argv.host}.$iface.netmask %]");
           $stash->set(netmask_bits => $network->bits);
 [%      END;
         out.push({
           ip = ip,
           interface = iface,
-          netmask = hosts.${argv.host}.$iface.netmask,
+          netmask = sites.${argv.site}.hosts.${argv.host}.$iface.netmask,
           bits = netmask_bits
         });
       ELSE;

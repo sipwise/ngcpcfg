@@ -1,0 +1,26 @@
+[%
+# vi: ft=tt2
+
+# Return an array of shared IPs from the interface of a given type for all
+# remote site nodes which act as a given role.
+#
+# @param argv.role      The role of the node to process, one of:
+#                         proxy, lb, mgmt
+# @param argv.type      The interface type of a node to extract the shared
+#                       IP from, one of:
+#                         web_int, web_ext, sip_int, sip_ext, ...
+# @param argv.status    node status [ online, offline, inactive ]
+#                         default value: ['online', 'inactive']
+# @return out           The array of shared IPs.
+
+out = [];
+shared_ips = [];
+FOREACH site IN sites.keys.sort;
+  NEXT IF sites.$site.id == sites.current.id;
+  argv.site = site;
+  PROCESS '/usr/lib/ngcp-ngcpcfg/get_all_shared_ips';
+  shared_ips = shared_ips.merge(out);
+END;
+out = shared_ips.sort;
+
+-%]
