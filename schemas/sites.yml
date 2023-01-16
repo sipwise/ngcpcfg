@@ -2,6 +2,8 @@ name: sites.yml
 desc: Kwalify schema for NGCP sites.yml
 type: map
 mapping:
+  "sites_enable":   { type: str, required: yes, enum: [ yes, no ],
+                      desc: "Enable or disable multi-sites support." }
   "sites":
     type: map
     required: yes
