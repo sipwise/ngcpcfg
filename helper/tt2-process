@@ -2,6 +2,7 @@
 
 use strict;
 use warnings;
+use feature qw(state);
 
 use List::Util qw(any uniq pairmap);
 use Getopt::Long qw(:config posix_default bundling_values no_ignorecase);
@@ -414,23 +415,31 @@ sub proc_pool_runner {
     return $rc;
 }
 
+sub merge_yml {
+    my ($config, $file) = @_;
+    state %loaded_ymls = ();
+
+    return $config if exists $loaded_ymls{$file};
+    $loaded_ymls{$file} = undef;
+
+    my $prefix = output_prefix();
+    print "$prefix: Loading $file in memory:" unless $options{quiet};
+    my $hm = Hash::Merge->new('RIGHT_PRECEDENT');
+    $config = $hm->merge($config, LoadFile($file));
+    print " OK \n" unless $options{quiet};
+
+    return $config;
+}
+
 sub process {
     my %options = @_;
     my $config = {};
-    my %loaded_ymls = ();
 
     my $visible_jobs = $options{jobs} || 'unlimited';
     info("Building configurations with $visible_jobs concurrent jobs");
 
     foreach my $file (@{$options{config}}) {
-        next if exists $loaded_ymls{$file};
-        $loaded_ymls{$file} = undef;
-
-        my $prefix = output_prefix();
-        print "$prefix: Loading $file in memory:" unless $options{quiet};
-        my $hm = Hash::Merge->new('RIGHT_PRECEDENT');
-        $config = $hm->merge($config, LoadFile($file));
-        print " OK \n" unless $options{quiet};
+        $config = merge_yml($config, $file);
     }
 
     my $tt = NGCP::Template->new();
