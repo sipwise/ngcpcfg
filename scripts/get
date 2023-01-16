@@ -47,9 +47,7 @@ fi
 # Get the list of configs in proper order to load.
 declare -a ARGS
 for f in ${NGCPCTL_CONFIG:-} ${NODE_CONFIG:-} ${PAIR_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${MAINTENANCE_CONFIG:-} ${NETWORK_CONFIG:-} "${EXTRA_CONFIG_FILES[@]}" ${CONSTANTS_CONFIG:-} ; do
-  if [ -r "$f" ] ; then
-    ARGS+=("-c" "${f}")
-  fi
+  ARGS+=("-c" "${f}")
 done
 
 # main script

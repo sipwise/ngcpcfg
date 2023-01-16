@@ -422,6 +422,8 @@ sub merge_yml {
     return $config if exists $loaded_ymls{$file};
     $loaded_ymls{$file} = undef;
 
+    return $config if not -f $file;
+
     my $prefix = output_prefix();
     print "$prefix: Loading $file in memory:" unless $options{quiet};
     my $hm = Hash::Merge->new('RIGHT_PRECEDENT');

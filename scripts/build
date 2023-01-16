@@ -44,9 +44,7 @@ if [ -n "${NGCP_JOBS:-}" ] ; then
 fi
 
 for f in ${NGCPCTL_CONFIG:-} ${NODE_CONFIG:-} ${PAIR_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${MAINTENANCE_CONFIG:-} ${NETWORK_CONFIG:-} "${EXTRA_CONFIG_FILES[@]}" ${CONSTANTS_CONFIG:-} ; do
-  if [ -r "$f" ] ; then
-    ARGS+=("-c" "$f")
-  fi
+  ARGS+=("-c" "$f")
 done
 
 build_config_files_instances() {
