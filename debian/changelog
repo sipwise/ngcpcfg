@@ -1,3 +1,29 @@
+ngcp-ngcpcfg (11.3.0.0+0~mr11.3.0.0) unstable; urgency=medium
+
+  [ ngcp-config ]
+  * [54b75c6] MT#55472 NGCP::Template::Object: Add get_supported_roles() method
+  * [8c14d90] MT#55472 add support for role rainbow-wrg
+  * [c08db9a] MT#55475 add support for role rainbow-gru
+  * [6d91f42] MT#56017 ngcp-network: don't remove all the list of interfaces on --remove-interface
+
+  [ Kirill Solomko ]
+  * [7bfc0e3] MT#55642 sync-grants, sync-constans custom dbhost dbport
+
+  [ Guillem Jover ]
+  * [3b3baae] TT#190250 Rename ngcp-sync-* commands to clarify their purpose
+
+  [ Michael Prokop ]
+  * [b51348d] TT#190250 Fix ngcp-sync-* symlinks
+  * [ca9565a] MT#55890 lib/set_debian_info: add support for Debian/bookworm
+  * [7a2e769] MT#55890 lib/set_debian_info: drop bookworm/sid assignment
+  * [a456ee2] MT#56190 Adjust scripts for shellcheck v0.9.0
+
+  [ Mykola Malkov ]
+  * [ee634d9] MT#55948 set action: error if the element in array is unquoted
+  * [948f940] MT#56090 Add maintenance.yml
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 17 Jan 2023 17:44:28 +0100
+
 ngcp-ngcpcfg (11.2.0.0+0~mr11.2.0.0) unstable; urgency=medium
 
   [ Michael Prokop ]
