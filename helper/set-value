@@ -71,7 +71,14 @@ sub set_value {
         $value = "\"$value\"";
     }
 
-    $value = $compartment->reval($value);
+    # If the value is a float number like N.0 - reval turns it into int N
+    # even if it's quoted.
+    if ($value =~ /^['"]?\d+\.\d+['"]?$/ ) {
+      log_debug ('$value is a float number so no need to reval() it');
+    }
+    else {
+      $value = $compartment->reval($value);
+    }
 
     for my $component (split(/\./, $option)) {
         if (ref($valref) eq 'SCALAR' && defined(${$valref})) {
