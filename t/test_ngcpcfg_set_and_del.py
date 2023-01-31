@@ -739,6 +739,29 @@ aaa:
     assert "" in out.stderr
     assert out.returncode == 0
 
+
+@pytest.mark.tt_16903
+def test_set_float_number(ngcpcfgcli, tmpdir):
+    tmpfile = tmpdir.join("tmpfile.txt")
+    tmpfile.write(
+        """---
+aaa:
+  bbb: ''
+"""
+    )
+    out = ngcpcfgcli("set", str(tmpfile), "aaa.bbb=1.0")
+    assert (
+        tmpfile.read()
+        == """---
+aaa:
+  bbb: '1.0'
+"""
+    )
+    assert "" in out.stdout
+    assert "" in out.stderr
+    assert out.returncode == 0
+
+
 ###############################################################
 #  ngcpcfg del
 ###############################################################
