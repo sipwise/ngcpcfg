@@ -98,6 +98,7 @@ is_deeply($obj_ce->get_supported_roles(),
         proxy
         rainbow-gru
         rainbow-wrg
+        rainbow-pcg
         rtp
         storage
     ) ],

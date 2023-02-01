@@ -39,6 +39,7 @@ sub get_supported_roles
         proxy
         rainbow-gru
         rainbow-wrg
+        rainbow-pcg
         rtp
         storage
     ) ];
