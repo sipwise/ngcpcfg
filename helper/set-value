@@ -73,7 +73,8 @@ sub set_value {
 
     # If the value is a float number like N.0 - reval turns it into int N
     # even if it's quoted.
-    if ($value =~ /^['"]?\d+\.\d+['"]?$/ ) {
+    if ($value =~ /^['"]*(\d+\.\d+)['"]*$/ ) {
+      $value = $1;
       log_debug ('$value is a float number so no need to reval() it');
     }
     else {
