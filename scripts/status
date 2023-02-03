@@ -124,7 +124,7 @@ check_shared_storage() {
 check_remote() {
   if type -p execute_check_remote &>/dev/null ; then
     log_debug "execute_check_remote function"
-    execute_check_remote
+    execute_check_remote "$@"
   fi
 }
 
@@ -182,7 +182,7 @@ if [ -z "${1:-}" ] ; then
   check_push
   check_etc_state
   check_pending_build
-  check_shared_storage "$@"
+  check_shared_storage
   check_reboot_requests
 fi
 
