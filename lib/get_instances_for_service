@@ -1,0 +1,31 @@
+[%
+# vi: ft=tt2
+
+# Returns a list of instances for a service.
+#
+# @param argv.service   instance service name.
+# @param argv.status    instance status [ online, offline ],
+#                         default value: [ 'online' ].
+# @return out           Hash of instance lists per service.
+
+IF !argv.status.size;
+  argv.status = [ 'online' ];
+END;
+
+status = {
+  online = 0
+  offline = 0
+};
+FOREACH val IN argv.status;
+  status.$val = 1;
+END;
+
+out = [];
+FOREACH instance IN instances;
+  NEXT UNLESS status.item(instance.status);
+  NEXT UNLESS instance.service.replace('-', '_') == argv.service;
+
+  out.push(instance);
+END;
+
+-%]
