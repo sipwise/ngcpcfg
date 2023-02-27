@@ -40,6 +40,7 @@ sub get_supported_roles
         rainbow-gru
         rainbow-wrg
         rainbow-pcg
+        rainbow-pcg-orc
         rtp
         storage
     ) ];
