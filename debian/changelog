@@ -1,3 +1,10 @@
+ngcp-ngcpcfg (10.5.4.1+0~mr10.5.4.1) unstable; urgency=medium
+
+  [ Guillem Jover ]
+  * [c8a0469] MT#56568 status: Fix argument passing
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 15 Mar 2023 16:09:47 +0100
+
 ngcp-ngcpcfg (10.5.4.0+0~mr10.5.4.0) unstable; urgency=medium
 
   [ Kirill Solomko ]
