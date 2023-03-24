@@ -111,7 +111,7 @@ check_multi_site() {
     return 0
   fi
 
-  if ! error=$(ngcp-site 2>&1 >/dev/null); then
+  if ! error=$( { ngcp-site >/dev/null; } 2>&1 ); then
     log_error "Configuration problem with multi-site setup."
     log_error "${error}"
     exit 1
