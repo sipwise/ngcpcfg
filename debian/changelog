@@ -1,3 +1,19 @@
+ngcp-ngcpcfg (11.3.1.0+0~mr11.3.1.0) unstable; urgency=medium
+
+  [ Mykola Malkov ]
+  * [a38c0e6] MT#56535 Add support of float numbers
+  * [74e0688] MT#56535 Fix quotation for float numbers
+
+  [ Guillem Jover ]
+  * [4a33099] MT#56568 status: Fix argument passing
+  * [9dda002] MT#56655 lib: Add new instances helper
+
+  [ Marco Capetta ]
+  * [9ee7449] MT#55473 add support for role rainbow-pcg
+  * [bce5b72] MT#55474 add support for role rainbow-pcg-orc
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 24 Mar 2023 13:04:57 +0100
+
 ngcp-ngcpcfg (11.3.0.0+0~mr11.3.0.0) unstable; urgency=medium
 
   [ ngcp-config ]
