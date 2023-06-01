@@ -58,8 +58,6 @@ echo "NETWORK_CONFIG_GROUP=${NETWORK_CONFIG_GROUP:-}"
 echo "NETWORK_CONFIG_CHMOD=${NETWORK_CONFIG_CHMOD:-}"
 
 # fake values from ngcpcfg-ha
-# HA_FILE is deprecated, only for backwards compatibility.
-echo "HA_FILE=${HA_FILE:-}"
 echo "NODE_FILE=${NODE_FILE:-}"
 echo "HOST_FILE=${HOST_FILE:-}"
 echo "PAIR_FILE=${PAIR_FILE:-}"
