@@ -21,7 +21,6 @@ READ_CFG = Path("fixtures/read_cfg.sh").resolve()
 DEFAULT_CFG = Path("fixtures/ngcpcfg.cfg").resolve()
 CFG_KEYS = [
     "NGCPCTL_CONFIG",
-    "HA_CONFIG",
     "NODE_CONFIG",
     "PAIR_CONFIG",
     "HOST_CONFIG",

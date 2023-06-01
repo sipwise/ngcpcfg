@@ -7,8 +7,6 @@ echo "[ngcpcfg]"
 echo "NGCPCTL_BASE=${NGCPCTL_BASE:-}"
 echo "NGCPCTL_MAIN=${NGCPCTL_MAIN:-}"
 echo "NGCPCTL_CONFIG=${NGCPCTL_CONFIG:-}"
-# HA_CONFIG is deprecated, only for backwards compatibility.
-echo "HA_CONFIG=${NODE_CONFIG:-}"
 echo "NODE_CONFIG=${NODE_CONFIG:-}"
 echo "PAIR_CONFIG=${PAIR_CONFIG:-}"
 echo "HOST_CONFIG=${HOST_CONFIG:-}"
