@@ -9,6 +9,8 @@ use YAML::XS qw(LoadFile);
 use Hash::Merge qw(merge);
 use DBI;
 use Capture::Tiny qw(capture);
+use DateTime::TimeZone;
+use DateTime::TimeZone::Catalog;
 
 sub sync_extra_sockets;
 sub db_connect;
@@ -55,6 +57,8 @@ exit 1 unless(sync_general_timezone($dbh,
   $config->{general}->{timezone}));
 
 exit 1 unless(sync_db_timezones($dbh));
+
+exit 1 unless(sync_timezone_version($dbh));
 
 $dbh->disconnect;
 
@@ -243,6 +247,63 @@ SQL
             or die "Cannot insert into ngcp.tzinfo_version: $DBI::errstr\n";
     };
     $err = $EVAL_ERROR;
+    if ($err) {
+        print $err;
+        $dbh->rollback();
+        return;
+    }
+    $dbh->commit();
+
+    return 1;
+}
+
+## check ngcp.timezone version and upgrade the database if the version is changed ##############################
+sub sync_timezone_version {
+    my $dbh = shift;
+
+    my $olson_tz_version = DateTime::TimeZone::Catalog::OlsonVersion();
+
+    unless ($olson_tz_version) {
+        print "Error: Could not fetch timezone catalog version\n";
+        return;
+    }
+
+    my $sql = '';
+    eval {
+        $dbh->begin_work() or die "Cannot start tx: $DBI::errstr\n";
+        my ($cur_tz_version) = $dbh->selectrow_array(<<SQL)
+SELECT COALESCE(version,'')
+  FROM ngcp.timezone
+SQL
+            or die "Cannot select from ngcp.timezone: $DBI::errstr\n";
+
+        if ($cur_tz_version eq $olson_tz_version) {
+            return;
+        }
+
+        my %links = DateTime::TimeZone->links;
+
+        my $ch_upd_timezone = $dbh->prepare(<<SQL)
+UPDATE billing.contacts
+   SET timezone = ?
+ WHERE timezone = ?
+SQL
+            or die "Cannot prepare sql: $DBI::errstr\n";
+
+        foreach my $old (keys %links) {
+            my $new = $links{$old};
+            $ch_upd_timezone->execute($new, $old)
+                or die "Cannot execute: $DBI::errstr\n";
+        }
+
+        $ch_upd_timezone->finish;
+
+        $dbh->do(<<SQL, undef, $olson_tz_version)
+UPDATE ngcp.timezone SET version = ?
+SQL
+            or die "Cannot update ngcp.timezone: $DBI::errstr\n";
+    };
+    my $err = $EVAL_ERROR;
     if ($err) {
         print $err;
         $dbh->rollback();
