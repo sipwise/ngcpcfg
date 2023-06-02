@@ -1,0 +1,28 @@
+[%
+# vi: ft=tt2
+
+# Returns a list of IPs to ping. Includes all configured pingnodes.
+#
+# @return out           List of pingnodes.
+
+pingnodes = [];
+
+pingnodes = pingnodes.merge(ha.pingnodes).unique.sort;
+
+IF ha.pingnodes_add_gw == "yes";
+  argv.gw = 'yes';
+  argv.dns = 'no';
+  PROCESS '/usr/lib/ngcp-ngcpcfg/get_default_pingnodes';
+  pingnodes = pingnodes.merge(out).unique.sort;
+END;
+
+IF ha.pingnodes_add_dns == "yes";
+  argv.gw = 'no';
+  argv.dns = 'yes';
+  PROCESS '/usr/lib/ngcp-ngcpcfg/get_default_pingnodes';
+  pingnodes = pingnodes.merge(out).unique.sort;
+END;
+
+out = pingnodes;
+
+-%]
