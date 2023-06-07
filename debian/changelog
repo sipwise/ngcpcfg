@@ -1,3 +1,10 @@
+ngcp-ngcpcfg (11.3.1.2+0~mr11.3.1.2) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [6dbe8b5] MT#57563 add sync-db sync_timezone_version() helper
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 07 Jun 2023 09:12:28 +0200
+
 ngcp-ngcpcfg (11.3.1.1+0~mr11.3.1.1) unstable; urgency=medium
 
   [ Mykola Malkov ]
