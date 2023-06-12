@@ -1,3 +1,10 @@
+ngcp-ngcpcfg (11.2.1.4+0~mr11.2.1.4) unstable; urgency=medium
+
+  [ Richard Fuchs ]
+  * [74ae7e2] MT#57527 lib: add get_ha_pingnodes
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 12 Jun 2023 14:32:46 +0200
+
 ngcp-ngcpcfg (11.2.1.3+0~mr11.2.1.3) unstable; urgency=medium
 
   [ Kirill Solomko ]
