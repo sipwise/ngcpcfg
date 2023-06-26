@@ -1,3 +1,22 @@
+ngcp-ngcpcfg (11.5.0.0+0~mr11.5.0.0) unstable; urgency=medium
+
+  [ Mykola Malkov ]
+  * [3445e7f] MT#56936 Fix shellcheck warning SC2069
+
+  [ Guillem Jover ]
+  * [98591ed] MT#56898 Fix owner and permissions for all config.*.yml files
+
+  [ Rene Krenn ]
+  * [445b34f] MT#57236 R_UA and R_USER named cdr export_fields
+
+  [ Kirill Solomko ]
+  * [7f60870] MT#57563 add sync-db sync_timezone_version() helper
+
+  [ Richard Fuchs ]
+  * [aba582b] MT#57527 lib: add get_ha_pingnodes
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 26 Jun 2023 14:11:37 +0200
+
 ngcp-ngcpcfg (11.4.0.0+0~mr11.4.0.0) unstable; urgency=medium
 
   [ Mykola Malkov ]
