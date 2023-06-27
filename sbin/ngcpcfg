@@ -159,6 +159,8 @@ case ${1:-} in
   init-shared|\
   log|\
   show|\
+  set|\
+  del|\
   status)
     main_action "$@"
     ;;
@@ -175,8 +177,6 @@ case ${1:-} in
   push|\
   push-parallel|\
   services|\
-  set|\
-  del|\
   patch)
     ngcpcfg_update_perms
     trap 'ngcpcfg_restore_perms' ERR EXIT
