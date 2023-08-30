@@ -1,3 +1,23 @@
+ngcp-ngcpcfg (12.0.1.0+0~mr12.0.1.0) unstable; urgency=medium
+
+  [ Mykola Malkov ]
+  * [c809811] MT#57453 Switch docker image to bookworm
+
+  [ Volodymyr Fedorov ]
+  * [5823998] MT#57761 Do not call restore permissions for set/del commands
+
+  [ Guillem Jover ]
+  * [65424ff] MT#55942 Remove HA_FILE usage
+  * [6e24d68] MT#55942 cat: Fix maintenance file handling
+  * [d28ff98] MT#55942 tt2-process: Refactor YAML file load and merge into a function
+  * [cf71caa] MT#55942 tt2-process: Move YAML config existence check from callers
+  * [0c7865d] MT#55942 Remove HA_CONFIG usage
+  * [264e36b] MT#55941 Add sites_enable to sites.yml
+  * [ea15166] MT#55942 Add multi-site config loading support via sites.yml
+  * [7e3b07b] MT#55942 lib: Add multi-site support to get some network information
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 30 Aug 2023 18:05:23 +0200
+
 ngcp-ngcpcfg (11.5.0.0+0~mr11.5.0.0) unstable; urgency=medium
 
   [ Mykola Malkov ]
