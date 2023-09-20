@@ -5,31 +5,53 @@
 
 # OpenPGP subsystem initialization functions {{{
 openpgp_setup() {
-  if ! type -p gpg &>/dev/null ; then
-    log_error "gpg binary not found, exiting."
-    exit 1
-  fi
+  declare -a sop_cmds=(sqop gosop pgpainless-cli)
+
+  for SOP in "${sop_cmds[@]}"; do
+    if type -p "${SOP}" &>/dev/null ; then
+      declare -g SOP
+      return
+    fi
+  done
+
+  unset SOP
+
+  log_error "Cannot find any SOP implementation (from ${sop_cmds[*]}), exiting."
+  exit 1
 }
 
 openpgp_prompt_password() {
+  local pass_a pass_b
+
   if ! tty -s; then
     log_error "Cannot request OpenPGP password (no tty). Aborting."
     exit 1
   fi
 
-  GPG_TTY=$(tty)
-  export GPG_TTY
+  read -r -p "Type password: " -s pass_a
+  echo
+  read -r -p "Re-type password: " -s pass_b
+  echo
+
+  if [ "${pass_a}" != "${pass_b}" ]; then
+    log_error "Passwords do not match. Aborting."
+    exit 1
+  fi
+
+  SOP_PASS="${pass_a}"
+  declare -g SOP_PASS
 }
 
 openpgp_reset_password() {
-  :
+  SOP_PASS=0000000000000000000000000000000000000000
+  unset SOP_PASS
 }
 
 openpgp_encrypt() {
-  gpg --symmetric
+  $SOP encrypt --with-password @FD:10 10<<<"${SOP_PASS}" --no-armor
 }
 
 openpgp_decrypt() {
-  gpg --decrypt
+  $SOP decrypt --with-password @FD:10 10<<<"${SOP_PASS}"
 }
 ## }}}

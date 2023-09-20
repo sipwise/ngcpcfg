@@ -88,8 +88,8 @@ Description: central and templated based Configuration Management System for NGC
 Package: ngcp-ngcpcfg-locker
 Architecture: all
 Depends:
- gnupg,
  ngcp-ngcpcfg,
+ sqop,
  ${misc:Depends},
 Description: Encrypt and decrypt feature for ngcp-ngcpcfg
  This package provides the encrypt and decrypt options for
