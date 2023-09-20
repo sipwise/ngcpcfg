@@ -30,8 +30,8 @@ get_config_file_list() {
       # if the file does not exist (e.g. because "ngcpcfg apply"
       # hasn't been executed yet for whatever reason, then don't
       # report missing files, otherwise tar will complain
-      if [ -r "/${y}" ] ; then
-        echo "/${y}"
+      if [ -r "${y}" ] ; then
+        echo "${y}"
       fi
     done
   done
@@ -61,7 +61,7 @@ fi
 
 TARGZ=/etc/ngcp-config-crypted.tgz
 
-tar zcf "${TARGZ}" /etc/ngcp-config/ "${FILES[@]}" /etc/.git
+tar zcPf "${TARGZ}" /etc/ngcp-config/ "${FILES[@]}" /etc/.git
 if gpg --symmetric "${TARGZ}" ; then
   log_info "Successfully created encrypted ngcpcfg configuration archive ${TARGZ}.gpg"
   # ensure we don't leave the unencrypted version behind

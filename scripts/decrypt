@@ -102,8 +102,10 @@ if ! gpg -d "${TARGZ}".gpg > "${TARGZ}" ; then
   log_error "Error while decrypting ${TARGZ}.gpg"
   RC=1
 else
-  cd / # important to extract files at according place
-  if tar zxf "${TARGZ}" ; then
+  # For backwards compatibility we switch to the root directory, for old
+  # encrypted tarballs that stripped the leading /.
+  cd /
+  if tar zxPf "${TARGZ}" ; then
     log_info "Successfully restored configuration archive ${TARGZ}.gpg"
     log_info "Now you should be able to run 'ngcpcfg apply' again."
   else
