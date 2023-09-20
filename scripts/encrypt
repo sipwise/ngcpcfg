@@ -48,6 +48,9 @@ if ! tty -s; then
   exit 1
 fi
 
+GPG_TTY=$(tty)
+export GPG_TTY
+
 # ensure created files can be read by root only
 umask 066
 
@@ -62,22 +65,18 @@ fi
 TARGZ=/etc/ngcp-config.tgz
 TARGZPGP="${TARGZ}.pgp"
 
-tar zcPf "${TARGZ}" /etc/ngcp-config/ "${FILES[@]}" /etc/.git
-if gpg -o "${TARGZPGP}" --symmetric "${TARGZ}" ; then
+if tar zcPf - /etc/ngcp-config/ "${FILES[@]}" /etc/.git \
+     | gpg -o "${TARGZPGP}" --symmetric ; then
   log_info "Successfully created encrypted ngcpcfg configuration archive ${TARGZPGP}"
-  # ensure we don't leave the unencrypted version behind
-  rm -f "${TARGZ}"
 else
   log_error "Error while setting up ${TARGZPGP}"
-  # ensure we don't leave the unencrypted version behind
-  rm -f "${TARGZ}"
   exit 1
 fi
 
 log_info_n "Now really erase all configuration files managed by ngcpcfg? [y/N] "
 a='' ; read -r a
 if [[ "$a" == "y" ]] || [[ "$a" == "Y" ]] ; then
-  rm -rf "${NGCPCTL_MAIN}" ; rm -f "${TARGZ}"
+  rm -rf "${NGCPCTL_MAIN}"
   rm -f "${FILES[@]}" ; rm -rf /etc/.git
   # make sure we don't leavy any stuff on shared storage
   rm -rf /ngcp-data/glusterfs/export/ngcpcfg-share

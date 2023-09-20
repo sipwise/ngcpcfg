@@ -53,12 +53,10 @@ if ! type -p gpg &>/dev/null ; then
 fi
 
 RC=0
-TARGZ=
 TARGZPGP=
 # XXX: Try the "-crypted.gpg" terminator for backwards compatibility.
 for file in /etc/ngcp-config.tgz.pgp /etc/ngcp-config-crypted.tgz.gpg; do
   if [ -r "${file}" ]; then
-    TARGZ="${file%.*}"
     TARGZPGP="${file}"
     break
   fi
@@ -67,20 +65,15 @@ done
 # ensure created files can be read by root only
 umask 066
 
-if ! gpg -d "${TARGZPGP}" > "${TARGZ}" ; then
-  log_error "Error while decrypting ${TARGZPGP}"
+# For backwards compatibility we switch to the root directory, for old
+# encrypted tarballs that stripped the leading /.
+cd /
+if ! gpg -d "${TARGZPGP}" | tar zxPf - ; then
+  log_error "Error while decrypting or restoring ${TARGZPGP}"
   RC=1
 else
-  # For backwards compatibility we switch to the root directory, for old
-  # encrypted tarballs that stripped the leading /.
-  cd /
-  if tar zxPf "${TARGZ}" ; then
-    log_info "Successfully restored configuration archive ${TARGZPGP}"
-    log_info "Now you should be able to run 'ngcpcfg apply' again."
-  else
-    log_error "Error while restoring ${TARGZPGP}"
-    RC=1
-  fi
+  log_info "Successfully restored configuration archive ${TARGZPGP}"
+  log_info "Now you should be able to run 'ngcpcfg apply' again."
 fi
 
 # only for PRO/CARRIER
@@ -89,9 +82,6 @@ if [ -r "${FUNCTIONS}"/ha_features ] ; then
 else
   log_info "Ignoring shared configuration (PRO/CARRIER only)."
 fi
-
-# don't leave the unencrypted archive behind
-rm -f "${TARGZ}"
 
 exit "${RC}"
 
