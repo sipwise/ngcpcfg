@@ -24,7 +24,8 @@ else
         fi
       done
     fi
-  elif [ -r /etc/ngcp-config-crypted.tgz.gpg ] ; then
+  elif [ -r /etc/ngcp-config.tgz.pgp ] ||
+       [ -r /etc/ngcp-config-crypted.tgz.gpg ] ; then
     log_error "Configuration pool locked. Please contact your distributor. Exiting."
     exit 1
   else

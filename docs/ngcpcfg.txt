@@ -424,7 +424,9 @@ pending changes to be committed execute 'ngcpcfg status'.
 
   **decrypt**::
 
-Decrypt /etc/ngcp-config-crypted.tgz.gpg and restore configuration files,
+Decrypt /etc/ngcp-config.tgz.pgp
+(or /etc/ngcp-config-crypted.tgz.gpg for backwards compatibility)
+and restore configuration files,
 doing the reverse operation of the _encrypt_ option.
 Note: This feature is only available if the ngcp-ngcpcfg-locker package is
 installed.
@@ -451,7 +453,7 @@ Helper to edit the ngcpcfg's YML configuration files in a faster way
   **encrypt**::
 
 Encrypt /etc/ngcp-config and all resulting configuration files with a user
-defined password and save the result as /etc/ngcp-config-crypted.tgz.gpg.
+defined password and save the result as /etc/ngcp-config.tgz.pgp.
 Note: This feature is only available if the ngcp-ngcpcfg-locker package is
 installed.
 

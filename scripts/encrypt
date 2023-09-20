@@ -44,7 +44,7 @@ if ! type -p gpg &>/dev/null ; then
 fi
 
 if ! tty -s; then
-  log_error "Cannot request gpg password (no tty). Aborting."
+  log_error "Cannot request OpenPGP password (no tty). Aborting."
   exit 1
 fi
 
@@ -59,15 +59,16 @@ else
   log_debug "Packing configs: ${FILES[*]}"
 fi
 
-TARGZ=/etc/ngcp-config-crypted.tgz
+TARGZ=/etc/ngcp-config.tgz
+TARGZPGP="${TARGZ}.pgp"
 
 tar zcPf "${TARGZ}" /etc/ngcp-config/ "${FILES[@]}" /etc/.git
-if gpg --symmetric "${TARGZ}" ; then
-  log_info "Successfully created encrypted ngcpcfg configuration archive ${TARGZ}.gpg"
+if gpg -o "${TARGZPGP}" --symmetric "${TARGZ}" ; then
+  log_info "Successfully created encrypted ngcpcfg configuration archive ${TARGZPGP}"
   # ensure we don't leave the unencrypted version behind
   rm -f "${TARGZ}"
 else
-  log_error "Error while setting up ${TARGZ}.gpg"
+  log_error "Error while setting up ${TARGZPGP}"
   # ensure we don't leave the unencrypted version behind
   rm -f "${TARGZ}"
   exit 1

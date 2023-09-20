@@ -89,7 +89,7 @@ Actions:
 
   # display only if ngcp-ngcpcfg-locker is available
   if [ -r "${SCRIPTS}"/encrypt ] ; then
-    printf "  decrypt             decrypt /etc/ngcp-config-crypted.tgz.gpg and restore config files\n"
+    printf "  decrypt             decrypt /etc/ngcp-config.tgz.pgp and restore config files\n"
     printf "  encrypt             encrypt /etc/ngcp-config and all resulting configuration files\n"
   fi
 
