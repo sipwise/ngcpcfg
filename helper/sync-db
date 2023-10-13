@@ -11,6 +11,7 @@ use DBI;
 use Capture::Tiny qw(capture);
 use DateTime::TimeZone;
 use DateTime::TimeZone::Catalog;
+use List::Util qw(any);
 
 sub sync_extra_sockets;
 sub db_connect;
@@ -41,7 +42,7 @@ unless(defined $dbname) {
 
 $dbh = db_connect();
 
-exit 1 unless(sync_extra_sockets($dbh,
+exit 1 unless(sync_lb_and_extra_sockets($dbh,
   $config->{kamailio}->{lb}->{extra_sockets},
   1, 1, 1));
 
@@ -75,6 +76,63 @@ sub db_connect
     return $dbh;
 }
 
+sub lb_and_extra_sockets_sync {
+    my $dbh = shift;
+    my $extra_sockets_config = shift;
+    my $usr_pref = shift;
+    my $dom_pref = shift;
+    my $peer_pref = shift;
+    my $pref_name = shift;
+
+    my $hosts = $config->{hosts}
+        // die 'Error: cannot fetch hosts from $config->{hosts}';
+
+    my $lb_config = $config->{kamailio}{lb}
+        // die 'Error: cannot fetch kamailio lb config from $config->{kamailio}{lb}';
+
+    my %lb_pairs = ();
+    my %ports = (
+        udp => $lb_config->{port},
+        tcp => $lb_config->{port},
+        tls => $lb_config->{tls}{port},
+    );
+
+    for my $host (keys %{$hosts}) {
+        my $host_ref = $hosts->{$host};
+        my $ifaces = $host_ref->{interfaces};
+
+        next unless $host_ref->{status} eq 'online';
+        next unless any { $_ eq 'lb' } @{$host_ref->{role}};
+
+        foreach my $iface (@{$ifaces}) {
+            my $iface_ref = $host_ref->{$iface};
+            next unless any { $_ =~ /^sip_/ } @{$iface_ref->{type}};
+
+            my $shared_ips = $iface_ref->{shared_ip} // next;
+            my $shared_ips_cnt = scalar @{$shared_ips};
+            my $pair = substr $host, 0, -1;
+
+            foreach my $ip (@{$shared_ips}) {
+                for my $proto (qw(udp tcp tls)) {
+                    my $port = $ports{$proto};
+                    $shared_ips_cnt > 1
+                        ? $lb_pairs{"$pair:$iface:$ip:$proto"} = "$proto:$ip:$port"
+                        : $lb_pairs{"$pair:$iface:$proto"} = "$proto:$ip:$port";
+                }
+            }
+        }
+    }
+
+    generic_enum_sync(
+        $dbh,
+        { %lb_pairs, %{$extra_sockets_config} },
+        $usr_pref, $dom_pref, $peer_pref,
+        $pref_name
+    );
+
+    return 1;
+}
+
 sub generic_enum_sync {
     my $dbh = shift;
     my $config_hash = shift;
@@ -102,7 +160,7 @@ sub generic_enum_sync {
     my $db_hash = $sth->fetchall_hashref('label');
     $sth->finish;
 
-    foreach my $row (keys %{$db_hash}) {
+    foreach my $row (sort keys %{$db_hash}) {
         $row = $db_hash->{$row};
         next if $row->{label} eq 'default';
         if (!exists $config_hash->{$row->{label}}) {
@@ -117,7 +175,7 @@ sub generic_enum_sync {
             delete $config_hash->{$row->{label}};
         }
     }
-    foreach my $label (keys %{$config_hash}) {
+    foreach my $label (sort keys %{$config_hash}) {
         print "insert new $pref_name $label=$config_hash->{$label} from config into db\n";
         $enum_insert_sth->execute($pref_id, $label, $config_hash->{$label},
                                   $usr_pref ? 1 : 0, $dom_pref ? 1 : 0,
@@ -131,9 +189,9 @@ sub generic_enum_sync {
     return 1;
 }
 
-## kamailio.lb.extra_sockets handling: ##############################
-sub sync_extra_sockets {
-    return generic_enum_sync(@_, 'outbound_socket');
+## lb nodes and kamailio.lb.extra_sockets handling: ##############################
+sub sync_lb_and_extra_sockets {
+    return lb_and_extra_sockets_sync(@_, 'outbound_socket');
 }
 
 ## rtp_* interfaces handling: ##############################
