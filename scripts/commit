@@ -39,12 +39,12 @@ cd "$NGCPCTL_MAIN"
 if [ -z "${NO_DB_SYNC:-}" ] ; then
   if [ -f "${RTP_INTERFACES_CONFIG}" ] ; then
     log_info "Executing sync-db: "
-    "${HELPER}/sync-db" "$NGCPCTL_CONFIG" "$CONSTANTS_CONFIG" "$RTP_INTERFACES_CONFIG" 2>&1 | \
+    "${HELPER}/sync-db" "$NGCPCTL_CONFIG" "$CONSTANTS_CONFIG" "$RTP_INTERFACES_CONFIG" "$NETWORK_CONFIG" 2>&1 | \
       sed "s/^/$timestamp_replacementchars/" 2>&1 | \
       tee >(logger -t ngcpcfg --id="${NGCPCFG_PID}") || true
   else
     log_info "Executing sync-db: "
-    "${HELPER}/sync-db" "$NGCPCTL_CONFIG" "$CONSTANTS_CONFIG" 2>&1 | \
+    "${HELPER}/sync-db" "$NGCPCTL_CONFIG" "$CONSTANTS_CONFIG" "$NETWORK_CONFIG" 2>&1 | \
       sed "s/^/$timestamp_replacementchars/" 2>&1 | \
       tee >(logger -t ngcpcfg --id="${NGCPCFG_PID}") || true
   fi
