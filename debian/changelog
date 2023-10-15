@@ -1,3 +1,13 @@
+ngcp-ngcpcfg (12.0.2.0+0~mr12.0.2.0) unstable; urgency=medium
+
+  [ Michael Prokop ]
+  * [def4d75] TT#124273 github actions: replace bullseye with bookworm
+
+  [ Guillem Jover ]
+  * [670334b] MT#58356 Update packaging for bookworm
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Sun, 15 Oct 2023 08:24:57 +0200
+
 ngcp-ngcpcfg (12.0.1.0+0~mr12.0.1.0) unstable; urgency=medium
 
   [ Mykola Malkov ]
