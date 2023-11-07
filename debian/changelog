@@ -1,22 +1,4 @@
-ngcp-ngcpcfg (12.0.3.0+0~mr12.0.3.0) unstable; urgency=medium
-
-  [ Kirill Solomko ]
-  * [c041397] MT#58352 helper/sync-db add lb nodes outbound_socket support
-  * [82d9126] MT#58352 lb_and_extra_sockets_sync() fix undef extra_socket
-
- -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 30 Oct 2023 17:06:00 +0100
-
-ngcp-ngcpcfg (12.0.2.0+0~mr12.0.2.0) unstable; urgency=medium
-
-  [ Michael Prokop ]
-  * [def4d75] TT#124273 github actions: replace bullseye with bookworm
-
-  [ Guillem Jover ]
-  * [670334b] MT#58356 Update packaging for bookworm
-
- -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Sun, 15 Oct 2023 08:24:57 +0200
-
-ngcp-ngcpcfg (12.0.1.0+0~mr12.0.1.0) unstable; urgency=medium
+ngcp-ngcpcfg (12.0.0.0+0~mr12.0.0.0) unstable; urgency=medium
 
   [ Mykola Malkov ]
   * [c809811] MT#57453 Switch docker image to bookworm
@@ -33,8 +15,16 @@ ngcp-ngcpcfg (12.0.1.0+0~mr12.0.1.0) unstable; urgency=medium
   * [264e36b] MT#55941 Add sites_enable to sites.yml
   * [ea15166] MT#55942 Add multi-site config loading support via sites.yml
   * [7e3b07b] MT#55942 lib: Add multi-site support to get some network information
+  * [670334b] MT#58356 Update packaging for bookworm
 
- -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 30 Aug 2023 18:05:23 +0200
+  [ Michael Prokop ]
+  * [def4d75] TT#124273 github actions: replace bullseye with bookworm
+
+  [ Kirill Solomko ]
+  * [c041397] MT#58352 helper/sync-db add lb nodes outbound_socket support
+  * [82d9126] MT#58352 lb_and_extra_sockets_sync() fix undef extra_socket
+
+ -- Mykola Malkov <mmalkov@sipwise.com>  Tue, 07 Nov 2023 16:22:41 +0200
 
 ngcp-ngcpcfg (11.5.0.0+0~mr11.5.0.0) unstable; urgency=medium
 
