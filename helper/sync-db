@@ -11,7 +11,7 @@ use DBI;
 use Capture::Tiny qw(capture);
 use DateTime::TimeZone;
 use DateTime::TimeZone::Catalog;
-use List::Util qw(any);
+use List::Util qw(any none);
 
 sub sync_extra_sockets;
 sub db_connect;
@@ -106,7 +106,7 @@ sub lb_and_extra_sockets_sync {
 
         foreach my $iface (@{$ifaces}) {
             my $iface_ref = $host_ref->{$iface};
-            next unless any { $_ =~ /^sip_/ } @{$iface_ref->{type}};
+            next if none { $_ eq 'sip_ext' } @{$iface_ref->{type}};
 
             my $shared_ips = $iface_ref->{shared_ip} // next;
             my $shared_ips_cnt = scalar @{$shared_ips};
