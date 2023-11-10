@@ -1,3 +1,12 @@
+ngcp-ngcpcfg (11.5.1.2+0~mr11.5.1.2) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [3fae6b9] MT#58352 helper/sync-db add lb nodes outbound_socket support
+  * [ef4fd14] MT#58352 lb_and_extra_sockets_sync() fix undef extra_socket
+  * [e698783] MT#58696 sync-db auto lb outbound sockets only sip_ext
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 10 Nov 2023 16:11:15 +0100
+
 ngcp-ngcpcfg (11.5.1.1+0~mr11.5.1.1) unstable; urgency=medium
 
   * New release.
