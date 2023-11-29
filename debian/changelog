@@ -1,3 +1,15 @@
+ngcp-ngcpcfg (12.1.1.0+0~mr12.1.1.0) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [0f8ad35] MT#58352 helper/sync-db add lb nodes outbound_socket support
+  * [9d7fdb3] MT#58352 lb_and_extra_sockets_sync() fix undef extra_socket
+  * [dbd7bb3] MT#58696 sync-db auto lb outbound sockets only sip_ext
+
+  [ Guillem Jover ]
+  * [02055b8] MT#58014 encrypt: Avoid remove leading / messages from tar
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 29 Nov 2023 13:37:56 +0100
+
 ngcp-ngcpcfg (12.1.0.0+0~mr12.1.0.0) unstable; urgency=medium
 
   [ Michael Prokop ]
