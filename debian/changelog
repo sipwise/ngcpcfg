@@ -1,3 +1,10 @@
+ngcp-ngcpcfg (8.5.13.0+0~mr8.5.13.0) unstable; urgency=medium
+
+  [ ngcp-config ]
+  * [ccf96a8] MT#58402 TT#160855 tt2-process: warn if there's no base file for customtt
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 04 Dec 2023 08:10:29 +0100
+
 ngcp-ngcpcfg (8.5.12.0+0~mr8.5.12.0) unstable; urgency=medium
 
   * New release.
