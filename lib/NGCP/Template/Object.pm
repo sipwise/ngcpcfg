@@ -241,6 +241,31 @@ sub get_mgmt_node
     return $self->get_mgmt_pairname();
 }
 
+sub get_hosts
+{
+    my ($self, $filter) = @_;
+
+    my $site = $filter->{site} // 'current';
+    $filter->{status} //= [ qw(online inactive) ];
+    my %status = (
+        online => 0,
+        offline => 0,
+        inactive => 0,
+    );
+    $status{$_} = 1 foreach @{$filter->{status}};
+
+    my $hosts = $self->{config}{sites}{$site}{hosts};
+
+    my @hosts;
+    foreach my $host (sort keys %{$hosts}) {
+        next unless $status{$hosts->{$host}{status}};
+
+        push @hosts, $host;
+    }
+
+    return sort @hosts;
+}
+
 sub get_instances
 {
     my ($self, $hostname) = @_;
@@ -415,6 +440,27 @@ Returns the NGCP management node pairname.
 
 This function is a deprecated alias for $t->get_mgmt_pairname(). It will be
 removed in the future.
+
+=item @hosts = $t->get_hosts($filter)
+
+Returns an array of hosts that match the %filter criteria.
+If no %filter has been specified, it returns all hosts.
+The current filter options are:
+
+=over
+
+=item B<site>
+
+This is a scalar that specifies the site name to use.
+It defaults to B<current>.
+
+=item B<status>
+
+This is an arrayref that contains a list of the status names to filter on,
+from one of B<online>, B<offline> and B<inactive>.
+The default status list is B<online> and B<inactive>.
+
+=back
 
 =item $ssh_pub_keye = $t->get_ssh_pub_key($key_type)
 

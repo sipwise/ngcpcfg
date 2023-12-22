@@ -6,7 +6,7 @@ use warnings;
 use Cwd;
 use Test::More;
 
-plan tests => 49;
+plan tests => 56;
 
 use_ok('NGCP::Template::Object');
 
@@ -20,9 +20,11 @@ my $cfg_ce = {
     hosts => {
         self => {
             role => [ qw(db lb proxy rtp) ],
+            status => 'online',
         },
     },
 };
+$cfg_ce->{sites}{current} = $cfg_ce;
 
 my $cfg_pro = {
     general => {
@@ -35,15 +37,19 @@ my $cfg_pro = {
         sp1 => {
             role => [ qw(mgmt db lb proxy rtp storage) ],
             peer => 'sp2',
+            status => 'online',
         },
         sp2 => {
             peer => 'sp3',
+            status => 'inactive',
         },
         sp3 => {
             peer => 'sp1',
+            status => 'offline',
         },
     },
 };
+$cfg_pro->{sites}{current} = $cfg_pro;
 
 my $cfg_carrier = {
     general => {
@@ -60,19 +66,24 @@ my $cfg_carrier = {
             role => [ qw(li proxy) ],
             peer => 'prx01b',
             dbnode => 'db01',
+            status => 'online',
         },
         web01a => {
             role => [ qw(mgmt) ],
+            status => 'online',
         },
         web01b => {
             role => [ qw(mgmt) ],
+            status => 'inactive',
         },
         web01c => {
             role => [ qw(mgmt) ],
+            status => 'offline',
         },
 
     },
 };
+$cfg_carrier->{sites}{current} = $cfg_carrier;
 
 
 my $obj_ce = NGCP::Template::Object->new($cfg_ce);
@@ -178,6 +189,22 @@ is($obj_carrier->get_mgmt_pairname(), 'web01', 'carrier has web01 as mgmt pairna
 # Check get_dbnode().
 is($obj_ce->get_dbnode('non-existent'), 'self', 'host unknown has self as dbnode');
 is($obj_carrier->get_dbnode('prx01a'), 'db01', 'host prx01a has db01 as dbnode');
+
+# Check get_hosts().
+is_deeply([ $obj_ce->get_hosts() ],
+    [ qw(self) ], 'host list for CE (default)');
+is_deeply([ $obj_pro->get_hosts() ],
+    [ qw(sp1 sp2) ], 'host list for PRO (default)');
+is_deeply([ $obj_pro->get_hosts({ status => [ qw(online offline) ] }) ],
+    [ qw(sp1 sp3) ], 'host list for PRO (online offline)');
+is_deeply([ $obj_pro->get_hosts({ status => [ qw(inactive) ] }) ],
+    [ qw(sp2) ], 'host list for PRO (inactive)');
+is_deeply([ $obj_carrier->get_hosts() ],
+    [ qw(prx01a web01a web01b) ], 'host list for Carrier (default)');
+is_deeply([ $obj_carrier->get_hosts({ status => [ qw(online offline) ] }) ],
+    [ qw(prx01a web01a web01c) ], 'host list for Carrier (online offline)');
+is_deeply([ $obj_carrier->get_hosts({ status => [ qw(inactive) ] }) ],
+    [ qw(web01b) ], 'host list for Carrier (inactive)');
 
 # Check net_ip_expand().
 is($obj_ce->net_ip_expand('1:2::5:20'),
