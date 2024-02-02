@@ -88,7 +88,7 @@ else
 fi
 
 log_debug "${SCRIPTS}/etckeeper"
-"${SCRIPTS}"/etckeeper >/dev/null
+"${SCRIPTS}"/etckeeper "$msg" >/dev/null
 
 if [ -z "${NO_DB_SYNC:-}" ] ; then
     log_info "Synchronizing MySQL grants/credentials"

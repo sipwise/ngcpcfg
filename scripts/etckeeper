@@ -35,12 +35,19 @@ if ! [ -d .git ] ; then
   exit 0
 fi
 
+# commit message
+if [ -z "${1:-}" ] ; then
+  msg="committing uncommented changes"
+else
+  msg="$*"
+fi
+
 log_info "Checking state of ${NGCPCTL_BASE} files"
 if is_git_clean ; then
   log_info "OK:   nothing to commit."
 else
-  log_debug "etckeeper commit \"ngcpcfg apply\""
-  etckeeper commit "ngcpcfg apply" | sed "s/^/$timestamp_replacementchars/"
+  log_debug "etckeeper commit '$msg via \"ngcpcfg apply\"'"
+  etckeeper commit "$msg via \"ngcpcfg apply\"" | sed "s/^/$timestamp_replacementchars/"
 fi
 
 ## END OF FILE #################################################################
