@@ -26,11 +26,11 @@ if [ -f "${FUNCTIONS}/ha_features" ] ; then
     exit 1
   fi
 
-  git log "$@" --oneline --date-order --graph --date=rfc --format=format:"%h (%ar) %s %d" master origin/master
+  git log "$@" --oneline --date-order --graph --date=rfc --format=format:"%h (%ar) %s [%ai] %d" master origin/master
 
 else
 
-  git log "$@" --oneline --date-order --graph --date=rfc --format=format:"%h (%ar) %s %d" master
+  git log "$@" --oneline --date-order --graph --date=rfc --format=format:"%h (%ar) %s [%ai] %d" master
 
 fi
 

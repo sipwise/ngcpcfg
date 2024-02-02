@@ -39,8 +39,8 @@ log_info "Checking state of ${NGCPCTL_BASE} files"
 if is_git_clean ; then
   log_info "OK:   nothing to commit."
 else
-  log_debug "etckeeper commit \"ngcpcfg apply on \$(date)\""
-  etckeeper commit "ngcpcfg apply on $(date)" | sed "s/^/$timestamp_replacementchars/"
+  log_debug "etckeeper commit \"ngcpcfg apply\""
+  etckeeper commit "ngcpcfg apply" | sed "s/^/$timestamp_replacementchars/"
 fi
 
 ## END OF FILE #################################################################
