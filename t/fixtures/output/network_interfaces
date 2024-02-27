@@ -38,7 +38,7 @@ iface eth46 inet static
   gateway 127.11.22.254
   # skipped hwaddress since it is not supported by NGCP version 
   #hwaddress c0:ff:ee:15:90:0d
-  dns-nameservers 127.0.0.1 1.1.1.1
+  dns-nameservers 127.0.0.1 203.0.113.42
 iface eth46 inet6 static
   address 2001:aaaa:1111:bbbb:2222:cccc:3333:dddd
   netmask 64

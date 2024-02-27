@@ -950,7 +950,7 @@ Move specified type setting XXX from INTERFACE1 section to INTERFACE2.
 
 Move specified role setting XXX from HOST1 to HOST2.
 
-  --set-interface=INTERFACE --ip=[1.2.3.4|auto|none|delete] --netmask=[255.25.255.0|auto|none|delete] ...
+  --set-interface=INTERFACE --ip=[203.0.113.42|auto|none|delete] --netmask=[255.25.255.0|auto|none|delete] ...
 
 Configure IP, netmask,... on specified INTERFACE.
 

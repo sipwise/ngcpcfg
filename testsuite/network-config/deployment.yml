@@ -3,11 +3,11 @@ hosts:
   sp1:
     eth0:
       dns_nameservers:
-      - 2.3.4.5
-      - 3.4.5.6
-      gateway: 1.2.3.1
+      - 203.0.113.43
+      - 203.0.113.44
+      gateway: 203.0.113.1
       hwaddr: de:ad:be:ef:23:42
-      ip: 1.2.3.4
+      ip: 203.0.113.42
       netmask: 255.255.255.0
     eth1:
       hwaddr: de:ad:be:ef:42:23

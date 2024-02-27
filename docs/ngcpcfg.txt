@@ -575,9 +575,9 @@ Here you can find the most popular cases for YML configs modification:
   # add value with spaces
   ngcpcfg set /etc/ngcp-config/config.yml "sshd.authorized_keys_file='%h/.ssh/authorized_keys %h/.ssh/sipwise_vagrant_key'"
   # add the element to the array/hash:
-  ngcpcfg set /etc/ngcp-config/config.yml "sshd.listen_addresses.APPEND='1.2.3.4'"
+  ngcpcfg set /etc/ngcp-config/config.yml "sshd.listen_addresses.APPEND='203.0.113.42'"
   # replace the first element in the array/hash:
-  ngcpcfg set /etc/ngcp-config/config.yml "sshd.listen_addresses.0='1.2.3.4'"
+  ngcpcfg set /etc/ngcp-config/config.yml "sshd.listen_addresses.0='203.0.113.42'"
   # add the list of hashes to iproute2 section (also display the applied changes):
   ngcpcfg set --diff  /etc/ngcp-config/config.yml iproute2.rt_tables.APPEND='{"name","my_route","id",205}'
   #  iproute2:

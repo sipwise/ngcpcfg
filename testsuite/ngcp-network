@@ -51,7 +51,7 @@ assertEqualFiles() {
 
 # make sure ip/netmask/interface can be set on existing host
 ${CMD} --input-file=network-config/network_pro.yml --output-file=testfiles/eth42.yml \
-       --host=sp1 --set-interface=eth42 --ip=1.2.3.4 --netmask=255.255.255.248
+       --host=sp1 --set-interface=eth42 --ip=203.0.113.42 --netmask=255.255.255.248
 assertEqualFiles testfiles/eth42.yml network-config/eth42.yml
 
 # test IPv4/IPv6 with many options
@@ -61,7 +61,7 @@ ${CMD} --input-file=testfiles/eth46.yml --output-file=testfiles/eth46.yml \
        --hwaddr c0:ff:ee:15:90:0d \
        --ip=127.11.22.33 --netmask=255.0.0.0 --gateway 127.11.22.254 \
        --ipv6 2001:aaaa:1111:bbbb:2222:cccc:3333:dddd --netmask-ipv6 64 --gateway-ipv6 2001:aaaa:1111:bbbb:2222:cccc:3333:0001 \
-       --dns 127.0.0.1 --dns 1.1.1.1 --dns ::1 --dns 2606:4700:4700::1111
+       --dns 127.0.0.1 --dns 203.0.113.42 --dns ::1 --dns 2606:4700:4700::1111
 ${CMD} --input-file=testfiles/eth46.yml --output-file=testfiles/eth46.yml \
        --host=sp1 --set-interface=bond0 \
        --bond-mode active-backup --bond-miimon '100' --bond-slaves 'eth11 eth22' \
@@ -102,9 +102,9 @@ ${CMD} --host=$ROLE --set-interface=lo --shared-ip=none --shared-ipv6=none \
        --input-file=testfiles/deploy_${in_counter}.yml --output-file=testfiles/deploy_${out_counter}.yml
 ((out_counter++)) ; ((in_counter++))
 
-${CMD} --host=$ROLE --set-interface=$DEFAULT_INSTALL_DEV --ip=1.2.3.4 \
-       --netmask=255.255.255.0 --hwaddr=de:ad:be:ef:23:42 --dns=2.3.4.5 --dns=3.4.5.6 \
-       --gateway=1.2.3.1 \
+${CMD} --host=$ROLE --set-interface=$DEFAULT_INSTALL_DEV --ip=203.0.113.42 \
+       --netmask=255.255.255.0 --hwaddr=de:ad:be:ef:23:42 --dns=203.0.113.43 --dns=203.0.113.44 \
+       --gateway=203.0.113.1 \
        --input-file=testfiles/deploy_${in_counter}.yml --output-file=testfiles/deploy_${out_counter}.yml
 ((out_counter++)) ; ((in_counter++))
 
