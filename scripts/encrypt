@@ -13,9 +13,14 @@ if ! [ -r "${FUNCTIONS}"/main ] ; then
   printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}" >&2
   exit 1
 fi
+if ! [ -r "${FUNCTIONS}"/openpgp ] ; then
+  printf "Error: %s/openpgp could not be read. Exiting.\n" "${FUNCTIONS}" >&2
+  exit 1
+fi
 
 # shellcheck disable=SC1090
 . "${FUNCTIONS}"/main
+. "${FUNCTIONS}"/openpgp
 
 get_config_file_list() {
   for dir in ${CONFIG_POOL} ; do
@@ -38,18 +43,7 @@ get_config_file_list() {
 }
 
 # main script
-if ! type -p gpg &>/dev/null ; then
-  log_error "gpg binary not found, exiting."
-  exit 1
-fi
-
-if ! tty -s; then
-  log_error "Cannot request OpenPGP password (no tty). Aborting."
-  exit 1
-fi
-
-GPG_TTY=$(tty)
-export GPG_TTY
+openpgp_setup
 
 # ensure created files can be read by root only
 umask 066
@@ -65,13 +59,17 @@ fi
 TARGZ=/etc/ngcp-config.tgz
 TARGZPGP="${TARGZ}.pgp"
 
+openpgp_prompt_password
+
 if tar zcPf - /etc/ngcp-config/ "${FILES[@]}" /etc/.git \
-     | gpg -o "${TARGZPGP}" --symmetric ; then
+     | openpgp_encrypt >"${TARGZPGP}" ; then
   log_info "Successfully created encrypted ngcpcfg configuration archive ${TARGZPGP}"
 else
   log_error "Error while setting up ${TARGZPGP}"
   exit 1
 fi
+
+openpgp_reset_password
 
 log_info_n "Now really erase all configuration files managed by ngcpcfg? [y/N] "
 a='' ; read -r a

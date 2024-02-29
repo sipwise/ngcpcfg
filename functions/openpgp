@@ -1,0 +1,35 @@
+#!/bin/bash
+# Filename:      /usr/share/ngcp-ngcpcfg/functions/openpgp
+# Purpose:       helper OpenPGP functions for ngcpcfg
+################################################################################
+
+# OpenPGP subsystem initialization functions {{{
+openpgp_setup() {
+  if ! type -p gpg &>/dev/null ; then
+    log_error "gpg binary not found, exiting."
+    exit 1
+  fi
+}
+
+openpgp_prompt_password() {
+  if ! tty -s; then
+    log_error "Cannot request OpenPGP password (no tty). Aborting."
+    exit 1
+  fi
+
+  GPG_TTY=$(tty)
+  export GPG_TTY
+}
+
+openpgp_reset_password() {
+  :
+}
+
+openpgp_encrypt() {
+  gpg --symmetric
+}
+
+openpgp_decrypt() {
+  gpg --decrypt
+}
+## }}}
