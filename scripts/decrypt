@@ -6,62 +6,22 @@ set -e
 set -u
 set -o pipefail
 
-# helper functions {{{
-# sadly we can't source ${FUNCTIONS}/main as we are missing a bunch of
-# configuration files that are supposed to be available, therefore
-# provide the main functions we need for successful execution of the
-# decrypt function
-
 # support for testsuite, assume defaults if unset
 FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
 HELPER="${HELPER:-/usr/share/ngcp-ngcpcfg/helper/}"
 
+if ! [ -r "${FUNCTIONS}"/logs ] ; then
+  printf "Error: %s/logs could not be read. Exiting.\n" "${FUNCTIONS}">&2
+  exit 1
+fi
+
+# We cannot source ${FUNCTIONS}/main as we are missing a bunch of
+# configuration files that are supposed to be available, therefore we
+# source the ${FUNCTIONS}/logs file instead.
+
 timestamp_replacementchars='' # unset by default
-
-console_output() {
-  if [ -z "${TIME_FORMAT:-}" ] ; then
-    printf -- "%b" "$*"
-    return 0
-  fi
-
-  local timestamp
-  timestamp="$(date "${TIME_FORMAT}")"
-
-  # indent depending on number of characters in date output
-  timestamp_replacementchars="$(printf -- "%s: " "${timestamp}" | sed 's/./ /g')"
-  printf -- "%b" "${timestamp}: $*"
-}
-
-log_info() {
-  logger -t ngcpcfg --id="${NGCPCFG_PID}" -- "$*"
-  console_output "$*\n"
-}
-
-# info without ending newline
-# shellcheck disable=SC2317
-log_info_n() {
-  logger -t ngcpcfg --id="${NGCPCFG_PID}" -- "$*"
-  console_output "$*"
-}
-
-log_warn() {
-  logger -t ngcpcfg --id="${NGCPCFG_PID}" -- "Warning: $*"
-  console_output "Warning: $*\n"
-}
-
-log_error() {
-  logger -t ngcpcfg --id="${NGCPCFG_PID}" -- "Error: $*"
-  console_output "Error: $*\n" >&2
-}
-
-# shellcheck disable=SC2317
-log_debug() {
-  if [ -n "${DEBUG:-}" ] ; then
-    logger -t ngcpcfg --id="${NGCPCFG_PID}" -- "Debug: $*"
-    console_output "DEBUG: $*\n"
-  fi
-}
-# }}}
+# shellcheck disable=SC1090
+. "${FUNCTIONS}"/logs
 
 setup_shared_config() {
   if ! [ -d /mnt/glusterfs/mgmt-share ] ; then
