@@ -91,9 +91,15 @@ log_debug "${SCRIPTS}/etckeeper"
 "${SCRIPTS}"/etckeeper >/dev/null
 
 if [ -z "${NO_DB_SYNC:-}" ] ; then
-    log_info "Synchronizing MySQL grants/credentials"
+    log_info "Synchronizing MariaDB grants/credentials"
     ngcp-sync-db-grants | sed "s/^/$timestamp_replacementchars/"
     ngcp-sync-db-creds | sed "s/^/$timestamp_replacementchars/"
+    if [ "${NGCP_TYPE}" == "carrier" ] && [ "${NGCP_IS_PROXY}" == "yes" ] ; then
+        . /etc/default/ngcp-db
+        log_info "Synchronizing MariaDB grants/credentials for ${LOCAL_DBHOST}:${LOCAL_DBPORT}"
+        ngcp-sync-db-grants --db-host "${LOCAL_DBHOST}" --db-port "${LOCAL_DBPORT}" --no-warnings | sed "s/^/$timestamp_replacementchars/"
+        ngcp-sync-db-creds --db-host "${LOCAL_DBHOST}" --db-port "${LOCAL_DBPORT}" --no-warnings | sed "s/^/$timestamp_replacementchars/"
+    fi
 else
     log_debug "no-db-sync: skipping 'ngcp-sync-db-grants' + 'ngcp-sync-db-creds'"
 fi
