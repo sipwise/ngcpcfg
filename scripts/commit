@@ -94,6 +94,9 @@ if [ -z "${NO_DB_SYNC:-}" ] ; then
     log_info "Synchronizing MariaDB grants/credentials"
     ngcp-sync-db-grants | sed "s/^/$timestamp_replacementchars/"
     ngcp-sync-db-creds | sed "s/^/$timestamp_replacementchars/"
+    if [ -z "${NGCP_TYPE:-}" ] ; then # SPCE
+        . /etc/default/ngcp-roles
+    fi
     if [ "${NGCP_TYPE}" == "carrier" ] && [ "${NGCP_IS_PROXY}" == "yes" ] ; then
         . /etc/default/ngcp-db
         log_info "Synchronizing MariaDB grants/credentials for ${LOCAL_DBHOST}:${LOCAL_DBPORT}"
