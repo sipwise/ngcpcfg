@@ -37,10 +37,6 @@ sub get_supported_roles
         li_dist
         mgmt
         proxy
-        rainbow-gru
-        rainbow-wrg
-        rainbow-pcg
-        rainbow-pcg-orc
         rtp
         storage
     ) ];
