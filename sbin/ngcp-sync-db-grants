@@ -195,7 +195,8 @@ sub apply_grants {
                 next if $check_only;
                 $dbh->do("GRANT $s_grant TO '$user'\@'$host' $s_suffix");
                 if ($DBI::errstr &&
-                    $DBI::errstr !~ /Table\s+'\S+\.\S+'\s+doesn't\s+exist/) {
+                    $DBI::errstr !~ /Table\s+'\S+\.\S+'\s+doesn't\s+exist/ &&
+                    $DBI::errstr !~ /FUNCTION or PROCEDURE\s+\S+\s+does not exist/) {
                     die "Cannot grant privileges: $DBI::errstr\n";
                 } elsif ($DBI::errstr) {
                     $log_offset = 0;
@@ -357,7 +358,8 @@ sub grants_helper {
         my ($s_grant, $s_suffix) = split_grant_suffix($grant);
         $dbh->do("GRANT $s_grant TO '$user'\@'$host' $s_suffix");
         if ($DBI::errstr &&
-            $DBI::errstr !~ /Table\s+'\S+\.\S+'\s+doesn't\s+exist/) {
+            $DBI::errstr !~ /Table\s+'\S+\.\S+'\s+doesn't\s+exist/ &&
+            $DBI::errstr !~ /FUNCTION or PROCEDURE\s+\S+\s+does not exist/) {
             die "Cannot grant privileges: $DBI::errstr\n";
         } elsif ($DBI::errstr) {
             $log_offset = 0;
