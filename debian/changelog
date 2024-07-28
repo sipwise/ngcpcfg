@@ -1,3 +1,10 @@
+ngcp-ngcpcfg (13.0.0.0+0~mr13.0.0.0) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [ec89a60] MT#60508 sync-grants warn on non-existing function/procedure
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Sun, 28 Jul 2024 12:03:56 +0200
+
 ngcp-ngcpcfg (12.5.0.0+0~mr12.5.0.0) unstable; urgency=medium
 
   [ Kirill Solomko ]
