@@ -31,9 +31,6 @@ for my $component (@path) {
     elsif (looks_like_number($component) && (! defined(${$valref}) || ref(${$valref}) eq 'ARRAY')) {
         $valref = \${$valref}->[$component];
     }
-    elsif ($component eq 'APPEND' && ref($$valref) eq 'ARRAY') {
-        $valref = \${$valref}->[$#{$$valref}+1];
-    }
     elsif (! defined(${$valref}) || ref(${$valref}) eq 'HASH') {
         $valref = \${$valref}->{$component};
     }
