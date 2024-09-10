@@ -8,7 +8,7 @@ else
   CONF="/etc/mysql/my.cnf"
 fi
 
-if [ $COUNT -le 0 ] ; then
+if [ "$COUNT" -le 0 ] ; then
   echo "Usage: $0 <number_of_seconds> [<mysqlid>]" >&2
   exit 1
 fi
@@ -45,8 +45,8 @@ mysqld_status () {
     ps_alive=1
   fi
 
-  if [ "$1" = "check_alive" -a $ping_alive = 1 ] ||
-     [ "$1" = "check_dead"  -a $ping_alive = 0 -a $ps_alive = 0 ]; then
+  if { [ "$1" = "check_alive" ] && [ "$ping_alive" = 1 ]; } ||
+      { [ "$1" = "check_dead" ] && [ "$ping_alive" = 0 ] && [ "$ps_alive" = 0 ]; }; then
     return 0
   fi
 
@@ -54,7 +54,7 @@ mysqld_status () {
 }
 
 printf "Checking MySQL service status (for a maximum of %s seconds): " "$COUNT"
-for _ in $(seq 1 $COUNT) ; do
+for _ in $(seq 1 "$COUNT") ; do
   if mysqld_status check_alive warn; then
     printf "available.\n"
     exit 0

@@ -193,6 +193,7 @@ find_instance() {
   local target
 
   # get rid of "./" and "//"
+  # shellcheck disable=SC2001
   service_file=$(echo "$1" | sed -e 's_\./_/_g ; s_//_/_g')
 
   for instance in "${INSTANCES[@]}"; do
@@ -228,7 +229,9 @@ find_changed_instance_services() {
   local target_file
 
   # get rid of "./" and "//"
+  # shellcheck disable=SC2001
   file=$(echo "$1"| sed -e 's_\./_/_g ; s_//_/_g')
+  # shellcheck disable=SC2001
   dir=$(echo "$2"| sed -e 's_\./_/_g ; s_//_/_g')
 
   for instance in "${INSTANCES[@]}"; do
