@@ -8,6 +8,7 @@ use parent qw(Template::Plugin);
 use MIME::Base64 ();
 use Data::Dumper ();
 use Config::General ();
+use YAML::XS ();
 
 sub new {
     my ($class, $context, @params) = @_;
@@ -35,6 +36,11 @@ sub to_config_general {
         SaveSorted  => 1,
     );
     return $conf->save_string($params[0]);
+}
+
+sub to_yaml {
+    my ($self, @params) = @_;
+    return YAML::XS::Dump($params[0]);
 }
 
 sub get_ref {
@@ -93,6 +99,10 @@ Serializes the given input object to string (perl syntax).
 =item [% serialized = Utils.to_config_general(object) %]
 
 Serializes the given input object to string (Config::General syntax).
+
+=item [% serialized = Utils.to_yaml(object) %]
+
+Serializes the given input object to string (YAML syntax).
 
 =item [% Utils.get_ref(object) %]
 
