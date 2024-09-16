@@ -182,7 +182,8 @@ sub get_sibnames
         push @sibnames, $thishost;
     }
 
-    return sort @sibnames;
+    my @res = sort @sibnames;
+    return @res;
 }
 
 sub get_firstname
@@ -259,7 +260,8 @@ sub get_hosts
         push @hosts, $host;
     }
 
-    return sort @hosts;
+    my @res = sort @hosts;
+    return @res;
 }
 
 sub get_instances
