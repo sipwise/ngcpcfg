@@ -26,6 +26,7 @@
     10 => 'buster',
     11 => 'bullseye',
     12 => 'bookworm',
+    13 => 'trixie',
   );
   my %codenames = map { $versions{$_} => $_ } keys %versions;
 
