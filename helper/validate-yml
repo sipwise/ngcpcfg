@@ -9,7 +9,7 @@ use YAML::XS;
 use File::Temp qw/tempfile/;
 
 my $inputfile  = shift or die 'You did not specify an input file name';
-my $outputfile = new File::Temp( UNLINK => 1 );
+my $outputfile = File::Temp->new(UNLINK => 1);
 
 my $yaml = YAML::XS::LoadFile($inputfile);
 
