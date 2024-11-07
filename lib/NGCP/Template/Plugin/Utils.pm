@@ -40,6 +40,7 @@ sub to_config_general {
 
 sub to_yaml {
     my ($self, @params) = @_;
+    return q{} unless $params[0];
     return YAML::XS::Dump($params[0]);
 }
 
