@@ -4,11 +4,12 @@ Priority: optional
 Maintainer: Sipwise Development Team <support@sipwise.com>
 Homepage: https://www.sipwise.com/
 Standards-Version: 4.6.2
-Rules-Requires-Root: binary-targets
+Rules-Requires-Root: no
 Build-Depends:
  asciidoctor,
  bash-completion (>= 1:2.1-4.2~),
  debhelper-compat (= 13),
+ fakeroot,
  git,
  libcapture-tiny-perl,
  libclone-perl,
