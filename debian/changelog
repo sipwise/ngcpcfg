@@ -1,3 +1,13 @@
+ngcp-ngcpcfg (13.2.0.0+0~mr13.2.0.0) unstable; urgency=medium
+
+  [ Guillem Jover ]
+  * [ae2d6e6] MT#61052 NGCP::Template::Plugin::Utils: Do not generate bogus YAML on empty string
+  * [4371e41] MT#61459 Do not use Perl indirect object syntax
+  * [03f4cda] MT#61568 Update gitignore entries
+  * [3b5491a] MT#61568 debian: Switch to Rules-Requires-Root no
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 09 Dec 2024 11:28:07 +0100
+
 ngcp-ngcpcfg (13.1.0.0+0~mr13.1.0.0) unstable; urgency=medium
 
   [ Guillem Jover ]
