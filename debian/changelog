@@ -1,3 +1,10 @@
+ngcp-ngcpcfg (12.5.1.2+0~mr12.5.1.2) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [c7b04b9] MT#61052 support rendering yaml
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 16 Jan 2025 23:14:44 +0100
+
 ngcp-ngcpcfg (12.5.1.1+0~mr12.5.1.1) unstable; urgency=medium
 
   * New release.
