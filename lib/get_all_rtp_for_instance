@@ -65,7 +65,16 @@ FOREACH X_ifc IN argv.instance.interfaces;
           X_name = X_name _ ':' _ X_suffix;
           X_suffix = X_suffix + 1;
         END;
-        out.push(X_name _ '/' _ X_ip _ (X_adv_ip ? ('!' _ X_adv_ip) : ''));
+        IF X_format == 'objects';
+          X_obj = {
+            name = X_name
+            address = X_ip
+            adv_addr = X_adv_ip
+          };
+          out.push(X_obj);
+        ELSE;
+          out.push(X_name _ '/' _ X_ip _ (X_adv_ip ? ('!' _ X_adv_ip) : ''));
+        END;
       END;
     END;
 
@@ -88,7 +97,15 @@ FOREACH X_ifc IN argv.instance.interfaces;
           X_name = X_name _ ':' _ X_suffix;
           X_suffix = X_suffix + 1;
         END;
-        out.push(X_name _ '/' _ X_ip);
+        IF X_format == 'objects';
+          X_obj = {
+            name = X_name
+            address = X_ip
+          };
+          out.push(X_obj);
+        ELSE;
+          out.push(X_name _ '/' _ X_ip);
+        END;
       END;
     END;
   END;
