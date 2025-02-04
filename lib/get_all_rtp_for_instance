@@ -70,6 +70,8 @@ FOREACH X_ifc IN argv.instance.interfaces;
             name = X_name
             address = X_ip
             adv_addr = X_adv_ip
+	    port_min = X_ifc.rtp_port_min || 0
+	    port_max = X_ifc.rtp_port_max || 0
           };
           out.push(X_obj);
         ELSE;
@@ -101,6 +103,8 @@ FOREACH X_ifc IN argv.instance.interfaces;
           X_obj = {
             name = X_name
             address = X_ip
+	    port_min = X_ifc.rtp_port_min || 0
+	    port_max = X_ifc.rtp_port_max || 0
           };
           out.push(X_obj);
         ELSE;

@@ -68,6 +68,7 @@ my $peer;
 my @remove_host;
 my @remove_interface;
 my @roles;
+my $rtp_ports,
 my @set_interface;
 my $shared_ip;
 my $shared_ip_only;
@@ -125,6 +126,7 @@ GetOptions(
     'peer=s'             => \$peer,
     'remove-host=s'      => \@remove_host,
     'remove-interface=s' => \@remove_interface,
+    'rtp-ports=s'        => \$rtp_ports,
     'role=s'             => \@roles,
     'set-interface=s'    => \@set_interface,
     'shared-ip=s'        => \$shared_ip,
@@ -189,6 +191,27 @@ foreach my $opt (
     if ( defined $opt && $opt =~ /\s/msx ) {
         logger("invalid option argument $opt");
         croak "Command line option does not accept whitespace in '$opt'.";
+    }
+}
+
+my ($rtp_port_min, $rtp_port_max);
+if (defined $rtp_ports) {
+    if ($rtp_ports =~ /^none$|^delete$/msx) {
+        $rtp_port_min = "none";
+        $rtp_port_max = "none";
+    }
+    elsif ($rtp_ports =~ /^(\d+),(\d+)$/msx) {
+        ($rtp_port_min, $rtp_port_max) = ($1, $2);
+        if ($rtp_port_min <= 0 || $rtp_port_max <= 0
+                || $rtp_port_min > 65535 || $rtp_port_max > 65535
+                || $rtp_port_min >= $rtp_port_max) {
+            logger("invalid RTP port range $rtp_ports");
+            croak "Invalid RTP port range '$rtp_ports'";
+        }
+    }
+    else {
+        logger("invalid RTP port range $rtp_ports");
+        croak "Invalid RTP port range '$rtp_ports'";
     }
 }
 
@@ -335,6 +358,8 @@ sub set_interface {
         'openvpn_key_template' => $openvpn_key_template,
         'openvpn_key_inline' => $openvpn_key_inline,
         'v6netmask'       => $netmask_ip_v6,
+        'rtp_port_max'    => $rtp_port_max,
+        'rtp_port_min'    => $rtp_port_min,
         'shared_ip'       => $shared_ip,
         'shared_ip_only'  => $shared_ip_only,
         'shared_v6ip'     => $shared_ip_v6,
@@ -864,6 +889,12 @@ Can be specified multiple times (B<--remove-interface=eth5 --remove-interface=et
 
 Set role configuration for host to specified argument.
 Can be specified multiple times (B<--role=lb --role=proxy ...>).
+
+=item B<--rtp-ports>=I<min>,I<max>B<|none|delete>
+
+Set a port range to be used for RTP media if different from the globally set
+port range. Set to B<none> or B<delete> to remove the setting and revert to the
+global port range.
 
 =item B<--set-interface>=I<name>
 
