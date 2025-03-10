@@ -21,10 +21,6 @@
     unless length $debian_version;
 
   my %versions = (
-    8 => 'jessie',
-    9 => 'stretch',
-    10 => 'buster',
-    11 => 'bullseye',
     12 => 'bookworm',
     13 => 'trixie',
   );
