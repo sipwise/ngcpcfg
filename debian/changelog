@@ -1,3 +1,16 @@
+ngcp-ngcpcfg (13.3.1.0+0~mr13.3.1.0) unstable; urgency=medium
+
+  [ Richard Fuchs ]
+  * [b5b92ca] MT#62053 add "objects" output format for RTP intfs
+  * [2b40e7b] MT#62053 add support for RTP port ranges
+  * [ee99a44] MT#62053 fix spacing
+
+  [ Guillem Jover ]
+  * [67564ac] MT#62325 Remove support for Debian bullseye release and older
+  * [a09d8f4] MT#62508 services: Remove any systemd broken service symlinks
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 10 Apr 2025 08:29:10 +0200
+
 ngcp-ngcpcfg (13.3.0.0+0~mr13.3.0.0) unstable; urgency=medium
 
   [ Michael Prokop ]
