@@ -26,6 +26,7 @@ else
     printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}" >&2
     exit 1
   fi
+  # shellcheck source=./functions/main
   . "${FUNCTIONS}/main"
 fi
 
@@ -51,6 +52,7 @@ cd "$target_directory"
 if ! [ -e "$target_directory"/.ngcpcfg_perms ]; then
   log_warn "Permission file ${target_directory}/.ngcpcfg_perms doesn't exist."
 else
+  # shellcheck disable=SC1091
   . "${target_directory}"/.ngcpcfg_perms
 fi
 

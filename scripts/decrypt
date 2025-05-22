@@ -24,8 +24,9 @@ fi
 # source the ${FUNCTIONS}/logs file instead.
 
 timestamp_replacementchars='' # unset by default
-# shellcheck disable=SC1090
+# shellcheck source=./functions/logs
 . "${FUNCTIONS}"/logs
+# shellcheck source=./functions/openpgp
 . "${FUNCTIONS}"/openpgp
 
 setup_shared_config() {

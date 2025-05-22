@@ -18,8 +18,9 @@ if ! [ -r "${FUNCTIONS}"/openpgp ] ; then
   exit 1
 fi
 
-# shellcheck disable=SC1090
+# shellcheck source=./functions/main
 . "${FUNCTIONS}"/main
+# shellcheck source=./functions/openpgp
 . "${FUNCTIONS}"/openpgp
 
 get_config_file_list() {

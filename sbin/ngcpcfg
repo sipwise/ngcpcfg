@@ -141,7 +141,7 @@ if [[ "${1:-}" == "decrypt" ]] ; then
     fi
   }
 else
-  # shellcheck disable=SC1090
+  # shellcheck source=./functions/main
   . "${FUNCTIONS}"/main
 fi
 

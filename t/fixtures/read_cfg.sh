@@ -1,6 +1,6 @@
 #!/bin/bash
 [[ $# -ne 1 ]] && exit 1
-# shellcheck source=ngcpcfg.cfg
+# shellcheck source=./t/fixtures/ngcpcfg.cfg
 source "${1}"
 echo "[ngcpcfg]"
 # directory name where ngcpcfg is managed through git

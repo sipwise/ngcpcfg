@@ -15,7 +15,7 @@ if ! [ -r "${FUNCTIONS}"/main ] ; then
 fi
 
 timestamp_replacementchars=''
-# shellcheck disable=SC1090
+# shellcheck source=./functions/main
 . "${FUNCTIONS}"/main
 
 # main script

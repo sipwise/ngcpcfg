@@ -22,7 +22,7 @@ if [[ ! -r "${FUNCTIONS}"/main ]]; then
   exit 1
 fi
 
-# shellcheck disable=SC1090
+# shellcheck source=./functions/main
 . "${FUNCTIONS}"/main
 
 # functions
@@ -146,8 +146,8 @@ systemd_daemon_reload_preset() {
     systemctl daemon-reload 2>&1 || true
 
     log_debug "Removing any broken systemd service symlink"
-    find -L /etc/systemd/system -type l \
-      | xargs -r rm
+    find -L /etc/systemd/system -type l -print0 \
+      | xargs -0 -r rm
 
     log_debug "systemd needs preset-all to enable/disable services (to start them on boot)"
     log_debug "Running: rm -rf /etc/systemd/system/*.wants/ || true"

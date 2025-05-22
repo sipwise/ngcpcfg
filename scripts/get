@@ -41,7 +41,7 @@ if ! [ -r "${FUNCTIONS}"/main ] ; then
   exit 1
 fi
 
-# shellcheck disable=SC1090
+# shellcheck source=./functions/main
 . "${FUNCTIONS}"/main
 
 # Get the list of configs in proper order to load.
