@@ -10,7 +10,7 @@ SCRIPTS = \
 	$(CURDIR)/usr/sbin/ngcp-network-validator
 
 %:
-	dh $@ --with=bash-completion
+	dh $@
 
 override_dh_auto_build:
 	dh_testdir

@@ -3,12 +3,11 @@ Section: admin
 Priority: optional
 Maintainer: Sipwise Development Team <support@sipwise.com>
 Homepage: https://www.sipwise.com/
-Standards-Version: 4.6.2
-Rules-Requires-Root: no
+Standards-Version: 4.7.2
 Build-Depends:
  asciidoctor,
- bash-completion (>= 1:2.1-4.2~),
  debhelper-compat (= 13),
+ dh-sequence-bash-completion,
  fakeroot,
  git,
  libcapture-tiny-perl,
@@ -38,12 +37,12 @@ Build-Depends:
 Package: libngcp-template-perl
 Section: perl
 Architecture: all
-Replaces:
- ngcp-ngcpcfg,
 Depends:
  libtemplate-perl,
  ${misc:Depends},
  ${perl:Depends},
+Replaces:
+ ngcp-ngcpcfg,
 Description: NGCP subclass for Template Toolkit
  This package contains a Template subclass to be used for any NGCP template
  files, which will setup all necessary configuration options for the class,
