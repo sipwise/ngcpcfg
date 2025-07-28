@@ -23,10 +23,12 @@ timestamp_replacementchars=''
 log_debug "cd ${NGCPCTL_BASE}"
 cd "${NGCPCTL_BASE}"
 
-log_debug "type -p etckeeper"
-if ! type -p etckeeper &>/dev/null ; then
-  log_warn "etckeeper is not available, skipping etckeeper execution"
-  exit 0
+if ! [ "${NGCP_TESTSUITE:-false}" = "true" ]; then
+  log_debug "type -p etckeeper"
+  if ! type -p etckeeper &>/dev/null ; then
+    log_warn "etckeeper is not available, skipping etckeeper execution"
+    exit 0
+  fi
 fi
 
 log_debug "test -d .git"
@@ -46,8 +48,15 @@ log_info "Checking state of ${NGCPCTL_BASE} files"
 if is_git_clean ; then
   log_info "OK:   nothing to commit."
 else
-  log_debug "etckeeper commit '$msg via \"ngcpcfg apply\"'"
-  etckeeper commit "$msg via \"ngcpcfg apply\"" | sed "s/^/$timestamp_replacementchars/"
+  if ! [ "${NGCP_TESTSUITE:-false}" = "true" ]; then
+    log_debug "etckeeper commit '$msg via \"ngcpcfg apply\"'"
+    etckeeper commit "$msg via \"ngcpcfg apply\"" | sed "s/^/$timestamp_replacementchars/"
+  else
+    # Do a manual git commit to simulate etckeeper
+    log_debug "git add . ; git commit -m '$msg via \"ngcpcfg apply\"'"
+    git add .
+    git commit -m "$msg via \"ngcpcfg apply\""
+  fi
 fi
 
 ## END OF FILE #################################################################
