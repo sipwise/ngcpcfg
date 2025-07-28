@@ -13,7 +13,7 @@ ProcessResult = namedtuple(
     "ProcessResult", ["returncode", "stdout", "stderr", "env", "cfg"]
 )
 
-EMPTY_GIT=Path("empty-git-repository.tar.gz").resolve()
+EMPTY_GIT = Path("empty-git-repository.tar.gz").resolve()
 CWD = Path().resolve()
 CODE = Path("..").resolve()
 FAKE_BIN = Path("fixtures/bin").resolve()
@@ -95,7 +95,8 @@ def copy_tree(base, src, dst_dir):
 def ngcpcfg(gitrepo, tmpdir, *args):
     fakehome = Path(tmpdir.mkdir("fakehome")).resolve()
     outdir = Path(
-        gitrepo.extract_archive(str(EMPTY_GIT), tmpdir.mkdir("ngcp-pytest-output"))
+        gitrepo.extract_archive(str(EMPTY_GIT),
+                                tmpdir.mkdir("ngcp-pytest-output"))
     )
     rundir = Path(tmpdir.mkdir("ngcp-pytest-rundir"))
     ngcpctl_dir = Path(
@@ -129,11 +130,13 @@ def ngcpcfg(gitrepo, tmpdir, *args):
         if "TEMPLATE_POOL_BASE" in testenv:
             if (
                 "SERVICES_POOL_BASE" not in testenv
-                or testenv["TEMPLATE_POOL_BASE"] != testenv["SERVICES_POOL_BASE"]
+                or testenv["TEMPLATE_POOL_BASE"]
+                != testenv["SERVICES_POOL_BASE"]
             ):
                 testenv["SERVICES_POOL_BASE"] = testenv["TEMPLATE_POOL_BASE"]
                 print(
-                    "forced SERVICES_POOL_BASE={}".format(testenv["SERVICES_POOL_BASE"])
+                    "forced SERVICES_POOL_BASE={}"
+                    .format(testenv["SERVICES_POOL_BASE"])
                 )
         # this has to be absolute
         testenv["NGCPCFG"] = Path(testenv["NGCPCFG"]).resolve()
@@ -230,7 +233,8 @@ def ngcpcfg(gitrepo, tmpdir, *args):
             ex, out, err = git.commit("-a", "-m", "prepare_conf done")
 
             # for debugging underlying problems like safe.directory situation
-            #print("debug: git show: {}\n".format(subprocess.getoutput("git show")))
+            # print("debug: git show: {}\n"
+            # .format(subprocess.getoutput("git show")))
             print("{}\nstdout:\n{}stderr:{}\n".format("git commit", out, err))
             assert ex == 0
         return testenv, config["ngcpcfg"]
@@ -314,7 +318,8 @@ def helpercli(tmpdir, *args):
         print("stderr:")
         print(stderr)
 
-        result = namedtuple("ProcessResult", ["returncode", "stdout", "stderr"])(
+        result = namedtuple("ProcessResult",
+                            ["returncode", "stdout", "stderr"])(
             p.returncode, stdout, stderr
         )
         return result
