@@ -99,6 +99,7 @@ def ngcpcfg(gitrepo, tmpdir, *args):
                                 tmpdir.mkdir("ngcp-pytest-output"))
     )
     rundir = Path(tmpdir.mkdir("ngcp-pytest-rundir"))
+    statedir = Path(tmpdir.mkdir("var-lib-ngcpcfg-state"))
     ngcpctl_dir = Path(
         gitrepo.extract_archive(
             "basic-ngcp-config.tar.gz", tmpdir.mkdir("ngcpctl-pytest-base")
@@ -122,7 +123,7 @@ def ngcpcfg(gitrepo, tmpdir, *args):
             "SKIP_UPDATE_PERMS": "true",
             "SKIP_RESTORE_PERMS": "true",
             "OUTPUT_DIRECTORY": outdir,
-            "STATE_FILES_DIR": outdir.joinpath("var/lib/ngcpcfg/state/"),
+            "STATE_FILES_DIR": statedir,
             "RUN_DIR": rundir,
         }
         testenv.update(env)
