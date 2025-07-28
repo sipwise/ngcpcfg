@@ -94,10 +94,9 @@ def copy_tree(base, src, dst_dir):
 @pytest.fixture()
 def ngcpcfg(gitrepo, tmpdir, *args):
     fakehome = Path(tmpdir.mkdir("fakehome")).resolve()
-    outdir = Path(
-        gitrepo.extract_archive(str(EMPTY_GIT),
-                                tmpdir.mkdir("ngcp-pytest-output"))
-    )
+    outdir = Path(tmpdir.mkdir("ngcp-pytest-output"))
+    basedir = outdir.joinpath("etc")
+    basedir.mkdir()
     rundir = Path(tmpdir.mkdir("ngcp-pytest-rundir"))
     statedir = Path(tmpdir.mkdir("var-lib-ngcpcfg-state"))
     ngcpctl_dir = Path(
@@ -207,7 +206,7 @@ def ngcpcfg(gitrepo, tmpdir, *args):
             return testenv, config["ngcpcfg"]
         config = read_cfg(testenv["NGCPCFG"], env)
 
-        testenv["NGCPCTL_BASE"] = outdir
+        testenv["NGCPCTL_BASE"] = basedir
         testenv["NGCPCTL_MAIN"] = ngcpctl_dir
         for key in CFG_EXTRA:
             if not isinstance(testenv[key], Path):
