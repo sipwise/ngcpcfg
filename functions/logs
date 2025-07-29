@@ -24,7 +24,10 @@ console_output() {
 
 ## logging functions {{{
 log_only() {
-  logger -t ngcpcfg --id="${NGCPCFG_PID}" -- "$*"
+  # XXX: The NGCPCFG_PID variable should be set by ngcpcfg, but we currently
+  # have code that executes helpers directly, where we should have exposed
+  # those helpers as new commands. For now we fallback to the current PID.
+  logger -t ngcpcfg --id="${NGCPCFG_PID:-$$}" -- "$*"
 }
 
 log_info() {
