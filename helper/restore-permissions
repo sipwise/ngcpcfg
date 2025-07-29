@@ -19,7 +19,7 @@ SKIP_NGCP_FUNCTIONS="${SKIP_NGCP_FUNCTIONS:-false}"
 
 if "${SKIP_NGCP_FUNCTIONS}" ; then
   echo "Function 'main' is NOT loaded due to env variable SKIP_NGCP_FUNCTIONS=true"
-  log_errror () { echo "$@" >&2 ; }
+  log_error () { echo "$@" >&2 ; }
   log_warn () { echo "$@" ; }
 else
   if ! [ -r "${FUNCTIONS}"/main ] ; then
@@ -42,7 +42,7 @@ maybe() {
 
 target_directory="$1"
 if ! [ -d "${target_directory}" ] ; then
-  log_errror "Directory ${target_directory} doesn't exist. Exiting."
+  log_error "Directory ${target_directory} doesn't exist. Exiting."
   exit 1
 fi
 
