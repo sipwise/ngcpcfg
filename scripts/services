@@ -138,6 +138,11 @@ services_sync_state() {
 }
 
 systemd_daemon_reload_preset() {
+  if [ "${NGCP_TESTSUITE:-false}" = "true" ]; then
+    log_debug "NGCP_TESTSUITE is set, not touching systemd"
+    return
+  fi
+
   if [[ -d "/run/systemd/system" ]]; then
     log_info "Reloading systemd daemon and preset all services"
 
