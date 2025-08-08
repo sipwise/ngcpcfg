@@ -269,6 +269,12 @@ find_all_changed_services() {
   local dir="$1"
 
   log_debug "${FUNCNAME[0]}(): Working in ${OUTPUT_DIRECTORY}${dir}"
+
+  if ! [ -d "${OUTPUT_DIRECTORY}${dir}" ]; then
+    log_debug "${OUTPUT_DIRECTORY}${dir} doesn't exist, skip"
+    return
+  fi
+
   pushd "${OUTPUT_DIRECTORY}${dir}" >/dev/null
 
   local changed_files=()
