@@ -271,7 +271,10 @@ find_all_changed_services() {
   log_debug "${FUNCNAME[0]}(): Working in ${OUTPUT_DIRECTORY}${dir}"
   pushd "${OUTPUT_DIRECTORY}${dir}" >/dev/null
 
-  for file in $(git status -uall --porcelain | sed 's/^...//') ; do
+  local changed_files=()
+  mapfile -t changed_files <<< "$(git status -uall --porcelain | sed 's/^...//')"
+
+  for file in "${changed_files[@]}"; do
     if ! [[ -r "${file}" ]]; then
       continue
     elif [[ -r "${SERVICES_POOL_BASE}/${dir}/${file}".services ]]; then
