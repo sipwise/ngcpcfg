@@ -34,12 +34,17 @@ check_for_outstanding_commits()  {
 build_args=()
 check_args=()
 services_args=()
+export NO_DB_SYNC=${NO_DB_SYNC:-}
 while [ -n "${1:-}" ]; do
   case "$1" in
     *--modified-only*) build_args+=( --modified-only ) ; shift ;;
     *--ignore-branch-check*) check_args+=( --ignore-branch-check ) ; shift ;;
     *--ignore-shared-storage-check*) check_args+=( --ignore-shared-storage-check ) ; shift ;;
-    *--dry-run*) services_args+=( --dry-run ) ; shift ;;
+    *--dry-run*)
+      services_args+=( --dry-run )
+      NO_DB_SYNC=1
+      shift
+      ;;
     *--force-all-services*) services_args+=( --force-all-services ) ; shift ;;
     *) break  ;;
   esac
