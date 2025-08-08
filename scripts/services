@@ -138,6 +138,11 @@ services_sync_state() {
 }
 
 systemd_daemon_reload_preset() {
+  if ${DRYRUN}; then
+    log_debug "TEST MODE: not touching systemd"
+    return
+  fi
+
   if [ "${NGCP_TESTSUITE:-false}" = "true" ]; then
     log_debug "NGCP_TESTSUITE is set, not touching systemd"
     return
@@ -342,7 +347,9 @@ if [[ -s "${TMPFILE}" ]]; then
   log_debug "sort_service_list function"
   sort_service_list
 
-  services_start_queue
+  if ! ${DRYRUN}; then
+    services_start_queue
+  fi
 
   log_debug "execute function"
   execute
@@ -350,11 +357,13 @@ else
   log_debug "No services file(s) reported - no explicit service state changed."
 fi
 
-# Always flush the queues, to handle actions from package upgrades.
-services_flush_enqueued
+if ! ${DRYRUN}; then
+  # Always flush the queues, to handle actions from package upgrades.
+  services_flush_enqueued
 
-log_debug "services_sync_state function"
-services_sync_state
+  log_debug "services_sync_state function"
+  services_sync_state
+fi
 
 if [[ -n "${DEBUG:-}" ]]; then
   log_debug "Not removing temporary files"
