@@ -36,6 +36,9 @@ check_args=()
 services_args=()
 export DRYRUN='false'
 export NO_DB_SYNC=${NO_DB_SYNC:-}
+export DRYRUN_DIRECTORY=''
+export OUTPUT_DIRECTORY=${OUTPUT_DIRECTORY:-}
+TEMP_DIRECTORY=''
 while [ -n "${1:-}" ]; do
   case "$1" in
     *--modified-only*) build_args+=( --modified-only ) ; shift ;;
@@ -45,6 +48,9 @@ while [ -n "${1:-}" ]; do
       services_args+=( --dry-run )
       DRYRUN='true'
       NO_DB_SYNC=1
+      DRYRUN_DIRECTORY=$OUTPUT_DIRECTORY
+      TEMP_DIRECTORY=$(mktemp -d -t ngcpcfg-apply-dry-run.XXXXXXXXXX)
+      OUTPUT_DIRECTORY=$TEMP_DIRECTORY
       shift
       ;;
     *--force-all-services*) services_args+=( --force-all-services ) ; shift ;;
@@ -68,6 +74,11 @@ if ! ${DRYRUN} ; then
   # and would be marked as "dirty". As we have full control over this during the
   # "apply" run let's ensure it's not marked as dirty.
   record_commit_id
+fi
+
+if [ -n "${TEMP_DIRECTORY}" ]; then
+  # Clean up
+  rm -rf "${TEMP_DIRECTORY}"
 fi
 
 ## END OF FILE #################################################################

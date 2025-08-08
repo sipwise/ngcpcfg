@@ -278,7 +278,18 @@ find_all_changed_services() {
   pushd "${OUTPUT_DIRECTORY}${dir}" >/dev/null
 
   local changed_files=()
-  mapfile -t changed_files <<< "$(git status -uall --porcelain | sed 's/^...//')"
+  if ! ${DRYRUN}; then
+    mapfile -t changed_files <<< "$(git status -uall --porcelain | sed 's/^...//')"
+  else
+    local all_files=()
+    mapfile -t all_files <<< "$(find . -type f)"
+
+    for file in "${all_files[@]}"; do
+      if ! [ -f "${DRYRUN_DIRECTORY}${dir}/${file}" ] || ! diff -q "${file}" "${DRYRUN_DIRECTORY}${dir}/${file}"  >/dev/null; then
+        changed_files+=("${file}")
+      fi
+    done
+  fi
 
   for file in "${changed_files[@]}"; do
     if ! [[ -r "${file}" ]]; then
@@ -344,7 +355,11 @@ fi
 
 for dir in ${CONFIG_POOL} ; do
   is_absolute_path "${OUTPUT_DIRECTORY}${dir}" || continue
-  is_non_git_folder "${OUTPUT_DIRECTORY}${dir}" || continue
+  if ! ${DRYRUN}; then
+    is_non_git_folder "${OUTPUT_DIRECTORY}${dir}" || continue
+  else
+    is_non_git_folder "${DRYRUN_DIRECTORY}${dir}" || continue
+  fi
 
   generate_list_to_process "${dir}"
 done
