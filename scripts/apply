@@ -34,6 +34,7 @@ check_for_outstanding_commits()  {
 build_args=()
 check_args=()
 services_args=()
+export DRYRUN='false'
 export NO_DB_SYNC=${NO_DB_SYNC:-}
 while [ -n "${1:-}" ]; do
   case "$1" in
@@ -42,6 +43,7 @@ while [ -n "${1:-}" ]; do
     *--ignore-shared-storage-check*) check_args+=( --ignore-shared-storage-check ) ; shift ;;
     *--dry-run*)
       services_args+=( --dry-run )
+      DRYRUN='true'
       NO_DB_SYNC=1
       shift
       ;;
@@ -50,7 +52,7 @@ while [ -n "${1:-}" ]; do
   esac
 done
 
-if check_for_outstanding_commits && [ -z "${1:-}" ] ; then
+if ! ${DRYRUN} && check_for_outstanding_commits && [ -z "${1:-}" ] ; then
   log_error "Uncommitted configuration files found."
   log_info  "Please provide commit message, like: $PN apply 'summary of your changes'"
   exit 1
@@ -58,11 +60,14 @@ fi
 
 "${SCRIPTS}"/build "${build_args[@]}" "${check_args[@]}"
 "${SCRIPTS}"/services "${services_args[@]}"
-"${SCRIPTS}"/commit "${1:-}"
 
-# We "commit" AFTER we "build", therefore the state information is out of date
-# and would be marked as "dirty". As we have full control over this during the
-# "apply" run let's ensure it's not marked as dirty.
-record_commit_id
+if ! ${DRYRUN} ; then
+  "${SCRIPTS}"/commit "${1:-}"
+
+  # We "commit" AFTER we "build", therefore the state information is out of date
+  # and would be marked as "dirty". As we have full control over this during the
+  # "apply" run let's ensure it's not marked as dirty.
+  record_commit_id
+fi
 
 ## END OF FILE #################################################################

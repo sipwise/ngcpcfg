@@ -47,9 +47,10 @@ def test_apply_no_commit_msg_options(ngcpcfg, ngcpcfgcli):
         env=env,
     )
 
-    assert re.search(r"Please provide commit message", out.stdout)
+    assert re.search(r"no explicit service state changed", out.stderr)
+    assert re.search(r"skip restore-permissions", out.stderr)
     assert re.search(r"apply --dry-run", out.stderr)
-    assert out.returncode != 0
+    assert out.returncode == 0
 
 
 @pytest.mark.apply
@@ -85,7 +86,6 @@ def test_apply_with_commit_msg_options(ngcpcfg, ngcpcfgcli):
     out = ngcpcfgcli(
         "apply",
         "--ignore-branch-check",
-        "--dry-run",
         commit_msg,
         env=env,
     )
@@ -93,8 +93,6 @@ def test_apply_with_commit_msg_options(ngcpcfg, ngcpcfgcli):
 
     assert re.search(r"Generating .+/etc/fake.txt: OK", out.stdout)
     assert re.search(r"DEBUG: msg:\"{}\"".format(commit_msg), out.stderr)
-
-    assert re.search(r"DEBUG: DRYRUN = true", out.stderr)
 
     assert re.search(
         r"--ignore-branch-check is enabled, not checking for branch 'master'",
