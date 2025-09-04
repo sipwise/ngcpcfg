@@ -40,6 +40,13 @@ patch_search() {
   local fileslist
   fileslist=$(mktemp -t ngcpcfg-patch-search.XXXXXXXXXX)
 
+  if [ -z "${NGCP_IS_MULTI_SITE:-}" ] && [ -e /etc/default/ngcp-roles ]; then
+    # shellcheck disable=SC1091
+    . /etc/default/ngcp-roles
+  fi
+  # Only defined on PRO/Carrier
+  : "${NGCP_IS_MULTI_SITE:=no}"
+
   local regexp=""
   local hosts=()
   if [ -n "${HOST_FILE:-}" ]; then
@@ -60,9 +67,24 @@ patch_search() {
   fi
   log_debug "Searching for ${name} files (requested '${files[*]}') awk_regexp:${awk_regexp}"
 
-  for dir in ${CONFIG_POOL} ; do
+  declare -a template_base_dirs
+  # For single-site mode
+  for dir in ${CONFIG_POOL}; do
+    template_base_dirs+=("${TEMPLATE_POOL_BASE%/}/${dir#/}")
+  done
+
+  if [ "${NGCP_IS_MULTI_SITE}" = "yes" ]; then
+    log_debug "Operating in multi-site mode"
+    for site_dir in "${SITES_DIR}"/*; do
+      for dir in ${CONFIG_POOL}; do
+        template_base_dirs+=("${site_dir}/templates/${dir#/}")
+      done
+    done
+  fi
+
+  for dir in "${template_base_dirs[@]}"; do
     [ -n "${dir}" ] || log_error "${dir} doesn't exist"
-    log_debug "Iterate over all files in ${TEMPLATE_POOL_BASE%/}/${dir#/}"
+    log_debug "Iterate over all files in ${dir}"
     while read -r file ; do
       if [ "${#files[@]}" = "0" ] ; then
         log_debug "NO arguments provided via cmdline"
@@ -77,7 +99,7 @@ patch_search() {
           fi
         done
       fi
-    done < <(find "${TEMPLATE_POOL_BASE%/}/${dir#/}" -regextype awk -iregex "${awk_regexp}")
+    done < <(find "${dir}" -regextype awk -iregex "${awk_regexp}")
   done
 
   # output patch list, make sure we provide the file names just once
