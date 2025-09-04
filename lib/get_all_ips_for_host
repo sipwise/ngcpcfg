@@ -3,13 +3,18 @@
 
 # Return an array of IPs for a given host.
 #
+# @param argv.site      The site to use, default value: current.
 # @param argv.host      The host to get all IPs for.
 # @param argv.type      The interface type or empty string for all types.
 # @param argv.status    node status [ online, offline, inactive ]
 #                         default value: ['online', 'inactive']
 # @return out           The array of IPs.
 
-IF !hosts.${argv.host}.defined;
+IF !argv.site.length;
+  argv.site = 'current';
+END;
+
+IF !sites.${argv.site}.hosts.${argv.host}.defined;
   argv.host = 'self';
 END;
 
@@ -31,13 +36,13 @@ FOREACH val IN argv.status;
 END;
 
 out = [];
-IF status.item(hosts.${argv.host}.status);
-  FOREACH iface IN hosts.${argv.host}.interfaces;
-    NEXT UNLESS hosts.${argv.host}.exists(iface);
-    NEXT UNLESS hosts.${argv.host}.$iface.type.grep('^' _ argv.type _ '$').size();
-    NEXT UNLESS hosts.${argv.host}.$iface.ip;
+IF status.item(sites.${argv.site}.hosts.${argv.host}.status);
+  FOREACH iface IN sites.${argv.site}.hosts.${argv.host}.interfaces;
+    NEXT UNLESS sites.${argv.site}.hosts.${argv.host}.exists(iface);
+    NEXT UNLESS sites.${argv.site}.hosts.${argv.host}.$iface.type.grep('^' _ argv.type _ '$').size();
+    NEXT UNLESS sites.${argv.site}.hosts.${argv.host}.$iface.ip;
 
-    out.push(hosts.${argv.host}.$iface.ip);
+    out.push(sites.${argv.site}.hosts.${argv.host}.$iface.ip);
   END;
 END;
 out = out.sort;
