@@ -16,13 +16,13 @@
   USE Utils;
 -%]
 [% MACRO cdr_direction_provider_type_select(dict_table, data_table, base_table, dict_col, val_col, direction, provider, type) BLOCK -%]
-(SELECT data.[%- val_col -%] FROM accounting.[%- data_table -%] AS data INNER JOIN accounting.cdr_direction AS dir ON data.direction_id = dir.id INNER JOIN accounting.cdr_provider AS prov ON data.provider_id = prov.id INNER JOIN accounting.[%- dict_table -%] AS dict ON data.[%- dict_col -%] = dict.id WHERE data.cdr_id = [%- base_table -%].id AND dir.type = "[%- direction -%]" AND prov.type="[%- provider -%]" AND dict.type="[%- type -%]")
+(SELECT data.[%- val_col -%] FROM accounting.[%- data_table -%] AS data INNER JOIN accounting.cdr_direction AS dir ON data.direction_id = dir.id INNER JOIN accounting.cdr_provider AS prov ON data.provider_id = prov.id INNER JOIN accounting.[%- dict_table -%] AS dict ON data.[%- dict_col -%] = dict.id WHERE data.cdr_id = [%- base_table -%].id AND dir.type = "[%- direction -%]" AND prov.type="[%- provider -%]" AND dict.type="[%- type -%]" LIMIT 1)
 [%- END %]
 [% MACRO cdr_direction_provider_type_select_casesensitive(dict_table, data_table, base_table, dict_col, val_col, direction, provider, type) BLOCK -%]
-(SELECT data.[%- val_col -%] FROM accounting.[%- data_table -%] AS data INNER JOIN accounting.cdr_direction AS dir ON data.direction_id = dir.id INNER JOIN accounting.cdr_provider AS prov ON data.provider_id = prov.id INNER JOIN accounting.[%- dict_table -%] AS dict ON data.[%- dict_col -%] = dict.id WHERE data.cdr_id = [%- base_table -%].id AND dir.type = "[%- direction -%]" AND prov.type="[%- provider -%]" AND BINARY dict.type="[%- type -%]")
+(SELECT data.[%- val_col -%] FROM accounting.[%- data_table -%] AS data INNER JOIN accounting.cdr_direction AS dir ON data.direction_id = dir.id INNER JOIN accounting.cdr_provider AS prov ON data.provider_id = prov.id INNER JOIN accounting.[%- dict_table -%] AS dict ON data.[%- dict_col -%] = dict.id WHERE data.cdr_id = [%- base_table -%].id AND dir.type = "[%- direction -%]" AND prov.type="[%- provider -%]" AND BINARY dict.type="[%- type -%]" LIMIT 1)
 [%- END %]
 [% MACRO edr_type_select(dict_table, data_table, base_table, dict_col, val_col, type) BLOCK -%]
-(SELECT data.[%- val_col -%] FROM accounting.[%- data_table -%] AS data INNER JOIN accounting.[%- dict_table -%] AS dict ON data.[%- dict_col -%] = dict.id WHERE data.event_id = [%- base_table -%].id AND dict.type="[%- type -%]")
+(SELECT data.[%- val_col -%] FROM accounting.[%- data_table -%] AS data INNER JOIN accounting.[%- dict_table -%] AS dict ON data.[%- dict_col -%] = dict.id WHERE data.event_id = [%- base_table -%].id AND dict.type="[%- type -%]" LIMIT 1)
 [%- END %]
 [% MACRO cdr_timezone(base_table) BLOCK -%]
 [%
