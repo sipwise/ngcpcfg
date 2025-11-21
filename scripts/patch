@@ -254,6 +254,7 @@ patch_import_customtt() {
     tail -n +3 "${tmp_patchtt}" > "${patchtt}"
   fi
 
+  rm -f "${tmp_patchtt}"
   rm -f "${diff_output}"
 }
 
