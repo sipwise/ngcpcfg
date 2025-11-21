@@ -65,6 +65,9 @@ if ! ${DRYRUN} && check_for_outstanding_commits && [ -z "${1:-}" ] ; then
 fi
 
 "${SCRIPTS}"/build "${build_args[@]}" "${check_args[@]}"
+if ! ${DRYRUN} ; then
+  "${SCRIPTS}"/post-build
+fi
 "${SCRIPTS}"/services "${services_args[@]}"
 
 if ! ${DRYRUN} ; then

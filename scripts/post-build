@@ -1,0 +1,26 @@
+#!/bin/bash
+# Purpose: perform post-build actions
+################################################################################
+
+set -e
+set -u
+set -o pipefail
+
+# support testsuite
+FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
+
+if ! [ -r "${FUNCTIONS}"/main ]; then
+  printf "Error: %s/main could not be read. Exiting.\n" "${FUNCTIONS}" >&2
+  exit 1
+fi
+
+# shellcheck source=./functions/main
+. "${FUNCTIONS}"/main
+
+# main script
+
+cd "$NGCPCTL_MAIN"
+
+# XXX: Skeleton for incremental deployment.
+
+## END OF FILE #################################################################

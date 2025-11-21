@@ -311,13 +311,14 @@ Actions and action specific options
 
   **apply** [--dry-run] [--force-all-services] [--ignore-branch-check] [--ignore-shared-storage-check] [--modified-only] [<commit_message>]::
 
-Executes the _check_, _build_, _services_ and _commit_ commands in a batch
-(assuming each command worked as expected). This option serves as a shortcut for
-the most commonly executed commands. If there are any outstanding changes that
-need to be committed, then the commit message needs to be provided. This is
-meant so the configuration change history (accessible e.g. via 'ngcpcfg log')
-provides useful information.
-Options for _services_, _build_ and _check_ can be used here too.
+Executes the _check_, _build_, _post-build_, _services_ and _commit_ commands
+in a batch (assuming each command worked as expected).
+This option serves as a shortcut for the most commonly executed commands.
+If there are any outstanding changes that need to be committed,
+then the commit message needs to be provided.
+This is meant so the configuration change history
+(accessible e.g. via 'ngcpcfg log') provides useful information.
+Options for _check_, _build_ and _services_ can be used here too.
 
   **cat** [<config-type>...]::
 
@@ -365,6 +366,12 @@ shell globbing patterns - so argument 'mo..t' will match the files
 /etc/ha.d/resource.d/monit-services and /etc/default/monit iff they are present.
 You can combine _<files_or_directories>_ and _<pattern>_ and use multiple
 arguments.
+
+  **post-build**::
+
+Performs needed actions after building the files, and before starting the
+services, such as synchronizing the database credentials or updating its
+timestamps.
 
   **clean** [--all] [--branches] [--force] [--help] [--reset-master] [--stashes] [--tracked-files] [--untracked-files]::
 
@@ -609,6 +616,7 @@ The main workflow *with* High Availability setup is:
   ngcpcfg pull                        # retrieve possibly pending updates
   $EDITOR /etc/ngcp-config/config.yml # adjust/extend configuration
   ngcpcfg build                       # generate/update configuration files
+  ngcpcfg post-build                  # perform post build actions
   ngcpcfg services                    # restart services for modified configs
   ngcpcfg commit "summary of changes" # register changes
   ngcpcfg push                        # upload changes to shared storage + remote systems
