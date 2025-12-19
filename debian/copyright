@@ -5,7 +5,7 @@ Upstream-Contact: Sipwise Development Team <support@sipwise.com>
 Files:
  *
 Copyright:
- Copyright © 2007-2025 Sipwise GmbH, Austria
+ 2007-2025 Sipwise GmbH, Austria
 License: GPL-3+
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -26,10 +26,10 @@ Comment:
 Files:
  hooks/pre-commit
 Copyright:
- Copyright © 2007-2016 Joey Hess <id@joeyh.name>
- Copyright © 2014 Pim van den Berg <pim@nethuis.nl>
- Copyright © 2013 Zdenek Crha <zdenek.crha@gmail.com>
- Copyright © 2008 Scott Bronson <b.git@u32.net>
+ 2007-2016 Joey Hess <id@joeyh.name>
+ 2014 Pim van den Berg <pim@nethuis.nl>
+ 2013 Zdenek Crha <zdenek.crha@gmail.com>
+ 2008 Scott Bronson <b.git@u32.net>
 License: GPL-2+
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by

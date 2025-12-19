@@ -2,12 +2,13 @@
 # -*- makefile -*-
 
 # Uncomment this to turn on verbose mode.
-# export DH_VERBOSE=1
+#export DH_VERBOSE = 1
 
 SCRIPTS = \
 	$(CURDIR)/usr/sbin/ngcp-instances-validator \
 	$(CURDIR)/usr/sbin/ngcp-network \
-	$(CURDIR)/usr/sbin/ngcp-network-validator
+	$(CURDIR)/usr/sbin/ngcp-network-validator \
+	# EOL
 
 %:
 	dh $@
@@ -15,7 +16,7 @@ SCRIPTS = \
 override_dh_auto_build:
 	dh_testdir
 	$(MAKE) man
-	# catch any syntax errors *before* building the .deb
+	# Catch any syntax errors *before* building the ".deb".
 	$(MAKE) syntaxcheck
 
 execute_after_dh_install:
@@ -26,9 +27,9 @@ execute_after_dh_install:
 	done
 
 execute_after_dh_auto_test:
-	## this is a hack to automatically copy the pytest result via pbuilder to
-	## the workspace so we can automatically use it as Jenkins test result
-	# starting with pbuilder v0.216 it defaults to /build
+	## This is a hack to automatically copy the pytest result via pbuilder to
+	## the workspace so we can automatically use it as Jenkins test result.
+	# Starting with pbuilder v0.216 it defaults to "/build".
 	if [ -d /build/ ] ; then find $(CURDIR)/results/ -name pytest.xml -exec cp {} /build/ \; || true ; fi
-	# previous pbuilder versions default to /tmp/buildd
+	# Previous pbuilder versions default to "/tmp/buildd".
 	if [ -d /tmp/buildd/ ] ; then find $(CURDIR)/results/ -name pytest.xml -exec cp {} /tmp/buildd/ \; || true ; fi

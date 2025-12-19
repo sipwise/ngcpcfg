@@ -1,13 +1,12 @@
 Source: ngcp-ngcpcfg
 Section: admin
-Priority: optional
 Maintainer: Sipwise Development Team <support@sipwise.com>
 Homepage: https://www.sipwise.com/
 Standards-Version: 4.7.2
 Build-Depends:
- asciidoctor,
  debhelper-compat (= 13),
  dh-sequence-bash-completion,
+ asciidoctor,
  fakeroot,
  git,
  libcapture-tiny-perl,

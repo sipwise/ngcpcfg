@@ -157,4 +157,4 @@ _ngcpcfg()
 } &&
 complete -F _ngcpcfg ngcpcfg ngcp-config
 
-# ex: filetype=sh
+# ex: filetype=bash
