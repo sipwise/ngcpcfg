@@ -445,8 +445,13 @@ sub process {
     my $visible_jobs = $options{jobs} || 'unlimited';
     info("Building configurations with $visible_jobs concurrent jobs");
 
-    if (-f $SITES_CONFIG && -d $SITES_DIR && -l "$SITES_DIR/current") {
-        $sites = LoadFile($SITES_CONFIG);
+    if (-f $SITES_CONFIG) {
+        if (-d $SITES_DIR && -l "$SITES_DIR/current") {
+            $sites = LoadFile($SITES_CONFIG);
+        } else {
+            warning("found $SITES_CONFIG config file but no $SITES_DIR/current symlink; " .
+                    "will not load the config");
+        }
     }
 
     $sites->{sites_enable} //= 'no';
