@@ -347,6 +347,37 @@ sub replace_metavars
     return $string;
 }
 
+sub get_redis_info
+{
+    my $self = shift;
+
+    my $cfg = $self->{config};
+
+    my $sites_enable = $cfg->{sites_enable} // '';
+    my $redis_flavor = $cfg->{database}{key_value}{flavor} // '';
+
+    my $host = $self->get_hostname;
+    my $is_db_role = $self->has_role($host, 'db');
+
+    my $info = {
+        ports => {
+            local => $cfg->{redis}{port} // 0,
+            central => $cfg->{redis}{port} // 0,
+            norep => $cfg->{redis}{port} ? $cfg->{redis}{port} + 1 : 0,
+        },
+    };
+    my $ports= $info->{ports};
+
+    if ($cfg->{sites_enable} eq 'yes' && $redis_flavor eq 'valkey') {
+        $ports->{central} = $cfg->{database}{central}{redis_ha_port};
+        if ($is_db_role) {
+            $ports->{local} = $ports->{central};
+        }
+    }
+
+    return $info;
+}
+
 1;
 
 __END__
@@ -473,6 +504,37 @@ Returns the expanded form of the IP address. Supports IPv4 and IPv6.
 
 Returns the string $str with the %-style meta-variables expanded.
 
+=item %redis = $t->get_redis_info()
+
+Returns a hash ref containing Redis (Valkey) info, such as ports.
+
+=over
+
+=item B<%ports>
+
+A hash ref containing ports info.
+
+=over
+
+=item B<local>
+
+Local database port by default or HA port if mutli site is enabled and the node has 'db' role
+
+=item B<central>
+
+Central database port by default or HA port if multi site is enabled
+
+=item B<norep>
+
+No replication port, used when certain services configured to write concurrently on the pair of nodes.
+Defaults to redis.port + 1
+
+=back
+
+=back
+
+=back
+
 Current known meta-variables are:
 
 =over 4
@@ -480,8 +542,6 @@ Current known meta-variables are:
 =item %v
 
 The NGCP version.
-
-=back
 
 =back
 
