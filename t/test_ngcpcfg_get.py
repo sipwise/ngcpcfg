@@ -17,7 +17,9 @@ def test_get_action_missing_key_parameter(ngcpcfgcli):
 
 @pytest.mark.get
 def test_get_action_missing_file(ngcpcfgcli):
-    out = ngcpcfgcli("get", "test", env={"NGCPCTL_CONFIG": "/run/nonexistent-file"})
+    out = ngcpcfgcli(
+        "get", "test", env={"NGCPCTL_CONFIG": "/run/nonexistent-file"}
+    )
     assert "" in out.stdout
     assert (
         "Error: Configuration file /run/nonexistent-file does not "

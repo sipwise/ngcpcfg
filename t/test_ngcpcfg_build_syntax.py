@@ -15,7 +15,8 @@ def test_bad_syntax(ngcpcfgcli):
         },
     )
     assert re.search(
-        r"Error: Cannot process template " "'.*etc/bad-syntax.txt.tt2':.*", out.stderr
+        r"Error: Cannot process template " "'.*etc/bad-syntax.txt.tt2':.*",
+        out.stderr,
     )
     assert re.search(
         r"file error - parse error - input file handle line 1: "

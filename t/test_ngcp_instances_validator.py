@@ -68,6 +68,7 @@ def test_wrong_link_interfaces(cli):
         out.stderr,
     )
 
+
 def test_repeated_instance_name(cli):
     file = "repeated_instance_name"
     cmd = [
@@ -82,6 +83,7 @@ def test_repeated_instance_name(cli):
         out.stderr,
     )
 
+
 def test_repeated_instance_name_in_connections(cli):
     file = "repeated_instance_name_in_connections"
     cmd = [
@@ -95,6 +97,7 @@ def test_repeated_instance_name_in_connections(cli):
         rf"\[/instances/<name>\] {msg}",
         out.stderr,
     )
+
 
 def test_host_to_run_on_is_absent(cli):
     file = "host_to_run_on_is_absent"

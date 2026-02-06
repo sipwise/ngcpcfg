@@ -5,13 +5,21 @@ import functools
 import subprocess
 import collections
 
+ProcessResult = collections.namedtuple(
+    "ProcessResult", ["exitcode", "stdout", "stderr"]
+)
 
-ProcessResult = collections.namedtuple('ProcessResult',
-                                       ['exitcode', 'stdout', 'stderr'])
 
-
-def run(*args, env=None, timeout=None, stdin=None, expect_stdout=True,
-        expect_stderr=True, outencoding='utf-8', errencoding='utf-8'):
+def run(
+    *args,
+    env=None,
+    timeout=None,
+    stdin=None,
+    expect_stdout=True,
+    expect_stderr=True,
+    outencoding="utf-8",
+    errencoding="utf-8",
+):
     """Execute command in `args` in a subprocess"""
 
     # drop stdout & stderr and spare some memory, if not needed
@@ -24,11 +32,13 @@ def run(*args, env=None, timeout=None, stdin=None, expect_stdout=True,
         stderr = None
 
     # run command
-    p = subprocess.Popen(args,
-                         stdin=subprocess.PIPE,
-                         stdout=subprocess.PIPE,
-                         stderr=subprocess.PIPE,
-                         env=env)
+    p = subprocess.Popen(
+        args,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        env=env,
+    )
     if stdin:
         p.stdin.write(stdin)
     stdout, stderr = p.communicate(timeout=timeout)
@@ -37,11 +47,11 @@ def run(*args, env=None, timeout=None, stdin=None, expect_stdout=True,
     if expect_stdout and stdout:
         stdoutput = stdout.decode(outencoding)
     else:
-        stdoutput = ''
+        stdoutput = ""
     if expect_stderr and stderr:
         stderror = stderr.decode(errencoding)
     else:
-        stderror = ''
+        stderror = ""
 
     return ProcessResult(p.returncode, stdoutput, stderror)
 

@@ -52,7 +52,10 @@ APT::Install-Recommends "0";
 
     assert "'ngcpcfg patch' walks through all templates" in out.stdout
     assert "Validating patch" not in out.stdout
-    assert "Requested patchtt operation has finished successfully." not in out.stdout
+    assert (
+        "Requested patchtt operation has finished successfully."
+        not in out.stdout
+    )
     assert out.returncode == 0
 
 
@@ -90,14 +93,20 @@ APT::Install-Recommends "0";
     )
 
     assert (
-        "Validating patch '" + str(apt_path) + "/71_no_recommended.patchtt.tt2'"
+        "Validating patch '"
+        + str(apt_path)
+        + "/71_no_recommended.patchtt.tt2'"
         in out.stdout
     )
-    assert "Requested patchtt operation has finished successfully." in out.stdout
+    assert (
+        "Requested patchtt operation has finished successfully." in out.stdout
+    )
     assert out.returncode == 0
 
     generated_customtt = apt_path.joinpath("71_no_recommended.customtt.tt2")
-    assert generated_customtt.read_text() == """APT::Install-Recommends "1";\n"""
+    assert (
+        generated_customtt.read_text() == """APT::Install-Recommends "1";\n"""
+    )
 
 
 @pytest.mark.tt_24920
@@ -134,7 +143,9 @@ APT::Install-Recommends "0";
     )
 
     assert (
-        "Validating patch '" + str(apt_path) + "/71_no_recommended.patchtt.tt2'"
+        "Validating patch '"
+        + str(apt_path)
+        + "/71_no_recommended.patchtt.tt2'"
         in out.stdout
     )
     assert (
@@ -147,7 +158,10 @@ APT::Install-Recommends "0";
         "Error: Some operations above finished with an error for the file(s)"
         in out.stderr
     )
-    assert "Requested patchtt operation has finished successfully." not in out.stdout
+    assert (
+        "Requested patchtt operation has finished successfully."
+        not in out.stdout
+    )
 
     generated_customtt = apt_path.joinpath("71_no_recommended.customtt.tt2")
     assert not generated_customtt.exists()
@@ -156,7 +170,8 @@ APT::Install-Recommends "0";
 
 @pytest.mark.tt_24920
 def test_patch_action_template_missing_for_patchtt(ngcpcfg, ngcpcfgcli):
-    # ensure "ngcpcfg build" will be aborted if patchtt for missing template found
+    # Ensure "ngcpcfg build" will be aborted if patchtt for missing template
+    # found.
 
     env, cfg = ngcpcfg()
     template_pool = Path(cfg["TEMPLATE_POOL_BASE"]).joinpath("etc")
@@ -182,7 +197,9 @@ def test_patch_action_template_missing_for_patchtt(ngcpcfg, ngcpcfgcli):
     )
 
     assert (
-        "Validating patch '" + str(apt_path) + "/71_no_recommended.patchtt.tt2'"
+        "Validating patch '"
+        + str(apt_path)
+        + "/71_no_recommended.patchtt.tt2'"
         in out.stdout
     )
     assert (
@@ -193,13 +210,17 @@ def test_patch_action_template_missing_for_patchtt(ngcpcfg, ngcpcfgcli):
         "Error: Some operations above finished with an error for the file(s)"
         in out.stderr
     )
-    assert "Requested patchtt operation has finished successfully." not in out.stdout
+    assert (
+        "Requested patchtt operation has finished successfully."
+        not in out.stdout
+    )
     assert out.returncode != 0
 
 
 @pytest.mark.tt_24920
 def test_patch_action_generate_requested_customtt_only(ngcpcfg, ngcpcfgcli):
-    # ensure 'ngcpcfg patch .../some.patchtt.tt2' will build one requested patchtt only
+    # Ensure 'ngcpcfg patch .../some.patchtt.tt2' will build one requested
+    # patchtt only.
 
     env, cfg = ngcpcfg()
     template_pool = Path(cfg["TEMPLATE_POOL_BASE"]).joinpath("etc")
@@ -247,7 +268,9 @@ APT::Install-Recommends "0";
     )
 
     assert (
-        "Validating patch '" + str(apt_path) + "/71_no_recommended.patchtt.tt2'"
+        "Validating patch '"
+        + str(apt_path)
+        + "/71_no_recommended.patchtt.tt2'"
         in out.stdout
     )
     assert (
@@ -255,11 +278,15 @@ APT::Install-Recommends "0";
         in out.stdout
     )
     assert (
-        "Successfully created '" + str(apt_path) + "/71_no_recommended.customtt.tt2'"
+        "Successfully created '"
+        + str(apt_path)
+        + "/71_no_recommended.customtt.tt2'"
         in out.stdout
     )
     assert "72_another_file.customtt.tt2" not in out.stdout
-    assert "Requested patchtt operation has finished successfully." in out.stdout
+    assert (
+        "Requested patchtt operation has finished successfully." in out.stdout
+    )
     assert out.returncode == 0
 
     generated_customtt = apt_path.joinpath("71_no_recommended.customtt.tt2")
@@ -268,7 +295,9 @@ APT::Install-Recommends "0";
 
 
 @pytest.mark.tt_24920
-def test_patch_action_generate_requested_customtt_only_shortname(ngcpcfg, ngcpcfgcli):
+def test_patch_action_generate_requested_customtt_only_shortname(
+    ngcpcfg, ngcpcfgcli
+):
     # ensure 'ngcpcfg patch .../some.patchtt.tt2' will build one
     # requested patchtt only using the short filename
 
@@ -319,7 +348,9 @@ APT::Install-Recommends "0";
     )
 
     assert (
-        "Validating patch '" + str(apt_path) + "/71_no_recommended.patchtt.tt2'"
+        "Validating patch '"
+        + str(apt_path)
+        + "/71_no_recommended.patchtt.tt2'"
         in out.stdout
     )
     assert (
@@ -327,11 +358,15 @@ APT::Install-Recommends "0";
         in out.stdout
     )
     assert (
-        "Successfully created '" + str(apt_path) + "/71_no_recommended.customtt.tt2'"
+        "Successfully created '"
+        + str(apt_path)
+        + "/71_no_recommended.customtt.tt2'"
         in out.stdout
     )
     assert "72_another_file.customtt.tt2" not in out.stdout
-    assert "Requested patchtt operation has finished successfully." in out.stdout
+    assert (
+        "Requested patchtt operation has finished successfully." in out.stdout
+    )
     assert out.returncode == 0
 
     generated_customtt = apt_path.joinpath("71_no_recommended.customtt.tt2")
@@ -366,7 +401,9 @@ APT::Install-Recommends "0";
 
 
 @pytest.mark.tt_24920
-def test_patch_action_build_generate_and_overwrite_customtt_file(ngcpcfg, ngcpcfgcli):
+def test_patch_action_build_generate_and_overwrite_customtt_file(
+    ngcpcfg, ngcpcfgcli
+):
     # Ensure here "ngcpcfg build" will:
     #   * find available patchtt file
     #   * validate available patchtt file (necessary only)
@@ -465,11 +502,15 @@ dome dummy customtt message
     assert "No patchtt files found, nothing to patch." not in out.stdout
     assert "dummy" not in out.stdout
     assert (
-        "Validating patch '" + str(apt_path) + "/71_no_recommended.patchtt.tt2'"
+        "Validating patch '"
+        + str(apt_path)
+        + "/71_no_recommended.patchtt.tt2'"
         in out.stdout
     )
     assert (
-        "Validating patch '" + str(apt_path) + "/71_no_recommended.patchtt.tt2.sp1'"
+        "Validating patch '"
+        + str(apt_path)
+        + "/71_no_recommended.patchtt.tt2.sp1'"
         in out.stdout
     )
     assert (
@@ -477,11 +518,15 @@ dome dummy customtt message
         in out.stdout
     )
     assert (
-        "Successfully created '" + str(apt_path) + "/71_no_recommended.customtt.tt2'"
+        "Successfully created '"
+        + str(apt_path)
+        + "/71_no_recommended.customtt.tt2'"
         in out.stdout
     )
     assert (
-        "Applying patch '" + str(apt_path) + "/71_no_recommended.patchtt.tt2.sp1'"
+        "Applying patch '"
+        + str(apt_path)
+        + "/71_no_recommended.patchtt.tt2.sp1'"
         in out.stdout
     )
     assert (
@@ -490,7 +535,9 @@ dome dummy customtt message
         + "/71_no_recommended.customtt.tt2.sp1'"
         in out.stdout
     )
-    assert "Requested patchtt operation has finished successfully." in out.stdout
+    assert (
+        "Requested patchtt operation has finished successfully." in out.stdout
+    )
     assert (
         "Generating "
         + str(out.env["OUTPUT_DIRECTORY"])
@@ -502,7 +549,9 @@ dome dummy customtt message
     generated_customtt = apt_path.joinpath("71_no_recommended.customtt.tt2")
     generated_customtt.read_text() == expected_output
 
-    generated_customtt = apt_path.joinpath("71_no_recommended.customtt.tt2.sp1")
+    generated_customtt = apt_path.joinpath(
+        "71_no_recommended.customtt.tt2.sp1"
+    )
     generated_customtt.read_text() == expected_output_sp1
 
     generated_config = out.env["OUTPUT_DIRECTORY"].joinpath(
@@ -513,8 +562,9 @@ dome dummy customtt message
 
 @pytest.mark.tt_24920
 def test_patch_action_build_generate_all_file(ngcpcfg, ngcpcfgcli):
-    # the same as test 'test_patch_action_build_generate_and_overwrite_customtt_file'
-    # while build all available files
+    # The same as test
+    # 'test_patch_action_build_generate_and_overwrite_customtt_file'
+    # while build all available files.
 
     env, cfg = ngcpcfg(
         env={
@@ -603,24 +653,35 @@ dome dummy customtt message
 
     assert "No patchtt files found, nothing to patch." not in out.stdout
     assert (
-        "Validating patch '" + str(apt_path) + "/71_no_recommended.patchtt.tt2'"
+        "Validating patch '"
+        + str(apt_path)
+        + "/71_no_recommended.patchtt.tt2'"
         in out.stdout
     )
     assert (
-        "Validating patch '" + str(apt_path) + "/71_no_recommended.patchtt.tt2.sp1'"
+        "Validating patch '"
+        + str(apt_path)
+        + "/71_no_recommended.patchtt.tt2.sp1'"
         in out.stdout
     )
-    assert "Validating patch '" + str(dummy_path) + "/dummy.patchtt.tt2'" in out.stdout
+    assert (
+        "Validating patch '" + str(dummy_path) + "/dummy.patchtt.tt2'"
+        in out.stdout
+    )
     assert (
         "Applying patch '" + str(apt_path) + "/71_no_recommended.patchtt.tt2'"
         in out.stdout
     )
     assert (
-        "Successfully created '" + str(apt_path) + "/71_no_recommended.customtt.tt2'"
+        "Successfully created '"
+        + str(apt_path)
+        + "/71_no_recommended.customtt.tt2'"
         in out.stdout
     )
     assert (
-        "Applying patch '" + str(apt_path) + "/71_no_recommended.patchtt.tt2.sp1'"
+        "Applying patch '"
+        + str(apt_path)
+        + "/71_no_recommended.patchtt.tt2.sp1'"
         in out.stdout
     )
     assert (
@@ -629,12 +690,17 @@ dome dummy customtt message
         + "/71_no_recommended.customtt.tt2.sp1'"
         in out.stdout
     )
-    assert "Applying patch '" + str(dummy_path) + "/dummy.patchtt.tt2'" in out.stdout
+    assert (
+        "Applying patch '" + str(dummy_path) + "/dummy.patchtt.tt2'"
+        in out.stdout
+    )
     assert (
         "Successfully created '" + str(dummy_path) + "/dummy.customtt.tt2'"
         in out.stdout
     )
-    assert "Requested patchtt operation has finished successfully." in out.stdout
+    assert (
+        "Requested patchtt operation has finished successfully." in out.stdout
+    )
     assert (
         "Generating "
         + str(out.env["OUTPUT_DIRECTORY"])
@@ -646,7 +712,9 @@ dome dummy customtt message
     generated_customtt = apt_path.joinpath("71_no_recommended.customtt.tt2")
     generated_customtt.read_text() == expected_output
 
-    generated_customtt = apt_path.joinpath("71_no_recommended.customtt.tt2.sp1")
+    generated_customtt = apt_path.joinpath(
+        "71_no_recommended.customtt.tt2.sp1"
+    )
     generated_customtt.read_text() == expected_output_sp1
 
     generated_config = out.env["OUTPUT_DIRECTORY"].joinpath(
@@ -656,7 +724,9 @@ dome dummy customtt message
 
 
 @pytest.mark.tt_24920
-def test_patch_action_customtt_does_not_trigger_patch_file(ngcpcfg, ngcpcfgcli):
+def test_patch_action_customtt_does_not_trigger_patch_file(
+    ngcpcfg, ngcpcfgcli
+):
     # ensure here new patch functionality on "ngcpcfg build"
     # will NOT affect current customtt logic if no patchtt file available
 
@@ -689,7 +759,10 @@ APT::Install-Recommends "1";
     )
 
     assert "No patchtt files found, nothing to patch." in out.stdout
-    assert "Requested patchtt operation has finished successfully." not in out.stdout
+    assert (
+        "Requested patchtt operation has finished successfully."
+        not in out.stdout
+    )
     assert "Generating " in out.stdout
     assert "/etc/apt/apt.conf.d/71_no_recommended: OK" in out.stdout
     assert "Validating patch" not in out.stdout
@@ -737,7 +810,9 @@ APT::Install-Recommends "0";
     )
 
     assert (
-        "Validating patch '" + str(apt_path) + "/71_no_recommended.patchtt.tt2'"
+        "Validating patch '"
+        + str(apt_path)
+        + "/71_no_recommended.patchtt.tt2'"
         in out.stdout
     )
     assert (
@@ -750,7 +825,10 @@ APT::Install-Recommends "0";
         "Error: Some operations above finished with an error for the file(s)"
         in out.stderr
     )
-    assert "Requested patchtt operation has finished successfully." not in out.stdout
+    assert (
+        "Requested patchtt operation has finished successfully."
+        not in out.stdout
+    )
     assert "Generating " not in out.stdout
     assert "/etc/apt/apt.conf.d/71_no_recommended: OK" not in out.stdout
     assert out.returncode != 0
@@ -794,7 +872,7 @@ APT::Install-Recommends "2";
 -APT::Install-Recommends "0";
 +APT::Install-Recommends "2";
 """
-    )
+    )  # noqa: W293
 
     out = ngcpcfgcli(
         "patch",
@@ -804,14 +882,20 @@ APT::Install-Recommends "2";
 
     assert "No patchtt files found, nothing to patch." not in out.stdout
     assert (
-        "Validating customtt '" + str(apt_path) + "/71_no_recommended.customtt.tt2'"
+        "Validating customtt '"
+        + str(apt_path)
+        + "/71_no_recommended.customtt.tt2'"
         in out.stdout
     )
     assert (
-        "Creating patchtt file '" + str(apt_path) + "/71_no_recommended.patchtt.tt2'"
+        "Creating patchtt file '"
+        + str(apt_path)
+        + "/71_no_recommended.patchtt.tt2'"
         in out.stdout
     )
-    assert "Requested customtt operation has finished successfully." in out.stdout
+    assert (
+        "Requested customtt operation has finished successfully." in out.stdout
+    )
     assert out.returncode == 0
 
     generated_patchtt = apt_path.joinpath("71_no_recommended.patchtt.tt2")
@@ -821,8 +905,8 @@ APT::Install-Recommends "2";
 
 @pytest.mark.tt_24920
 def test_patch_action_from_customtt_missing_file_argument(ngcpcfg, ngcpcfgcli):
-    # ensure "ngcpcfg patch --from-customtt missing.customtt.tt2" will be handled properly if
-    # no some.customtt.tt2 file are available
+    # Ensure "ngcpcfg patch --from-customtt missing.customtt.tt2" will be
+    # handled properly if no some.customtt.tt2 file are available.
 
     env, cfg = ngcpcfg()
     template_path = Path(cfg["TEMPLATE_POOL_BASE"]).joinpath("etc")
@@ -842,8 +926,9 @@ def test_patch_action_from_customtt_missing_file_argument(ngcpcfg, ngcpcfgcli):
 
 @pytest.mark.tt_24920
 def test_patch_action_from_customtt_filename_only(ngcpcfg, ngcpcfgcli):
-    # ensure "ngcpcfg patch --from-customtt valid.customtt.tt2" will be handled properly if
-    # no filename only valid.customtt.tt2 has been passed instead of full path
+    # Ensure "ngcpcfg patch --from-customtt valid.customtt.tt2" will be
+    # handled properly if no filename only valid.customtt.tt2 has been
+    # passed instead of full path.
 
     env, cfg = ngcpcfg()
     template_path = Path(cfg["TEMPLATE_POOL_BASE"]).joinpath("etc")
@@ -872,7 +957,7 @@ APT::Install-Recommends "2";
 -APT::Install-Recommends "0";
 +APT::Install-Recommends "2";
 """
-    )
+    )  # noqa: W293
 
     out = ngcpcfgcli(
         "patch",
@@ -883,14 +968,20 @@ APT::Install-Recommends "2";
 
     assert "No patchtt files found, nothing to patch." not in out.stdout
     assert (
-        "Validating customtt '" + str(apt_path) + "/71_no_recommended.customtt.tt2'"
+        "Validating customtt '"
+        + str(apt_path)
+        + "/71_no_recommended.customtt.tt2'"
         in out.stdout
     )
     assert (
-        "Creating patchtt file '" + str(apt_path) + "/71_no_recommended.patchtt.tt2'"
+        "Creating patchtt file '"
+        + str(apt_path)
+        + "/71_no_recommended.patchtt.tt2'"
         in out.stdout
     )
-    assert "Requested customtt operation has finished successfully." in out.stdout
+    assert (
+        "Requested customtt operation has finished successfully." in out.stdout
+    )
     assert out.returncode == 0
 
     generated_patchtt = apt_path.joinpath("71_no_recommended.patchtt.tt2")
@@ -900,7 +991,8 @@ APT::Install-Recommends "2";
 
 @pytest.mark.tt_24920
 def test_patch_action_from_customtt_missing_templates(ngcpcfg, ngcpcfgcli):
-    # ensure "ngcpcfg patch --from-customtt" will be aborted if template is missing for customtt
+    # Ensure "ngcpcfg patch --from-customtt" will be aborted if template is
+    # missing for customtt.
 
     env, cfg = ngcpcfg()
     template_path = Path(cfg["TEMPLATE_POOL_BASE"]).joinpath("etc")
@@ -921,7 +1013,9 @@ the content here doesn't matter as no tt2 file available
     )
 
     assert (
-        "Validating customtt '" + str(apt_path) + "/71_no_recommended.customtt.tt2'"
+        "Validating customtt '"
+        + str(apt_path)
+        + "/71_no_recommended.customtt.tt2'"
         in out.stdout
     )
     assert (
@@ -934,5 +1028,8 @@ the content here doesn't matter as no tt2 file available
         "Error: Some operations above finished with an error for the file(s)"
         in out.stderr
     )
-    assert "Requested patchtt operation has finished successfully." not in out.stdout
+    assert (
+        "Requested patchtt operation has finished successfully."
+        not in out.stdout
+    )
     assert out.returncode != 0

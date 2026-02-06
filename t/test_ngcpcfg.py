@@ -43,10 +43,14 @@ def test_simple_build_template_no_ha_no_carrier(ngcpcfgcli):
     out = ngcpcfgcli("build", "/etc/config_variants")
     assert out.returncode == 0
     regex = re.compile(
-        r"Generating " + str(out.env["OUTPUT_DIRECTORY"]) + r"/etc/config_variants: OK"
+        r"Generating "
+        + str(out.env["OUTPUT_DIRECTORY"])
+        + r"/etc/config_variants: OK"
     )
     assert re.search(regex, out.stdout)
-    output_file = os.path.join(out.env["OUTPUT_DIRECTORY"], "etc/config_variants")
+    output_file = os.path.join(
+        out.env["OUTPUT_DIRECTORY"], "etc/config_variants"
+    )
     test_file = "fixtures/output/config_variants"
     check_output(output_file, test_file)
 
@@ -62,10 +66,14 @@ def test_simple_build_template_pro(ngcpcfgcli):
     )
     assert out.returncode == 0
     regex = re.compile(
-        r"Generating " + str(out.env["OUTPUT_DIRECTORY"]) + r"/etc/config_variants: OK"
+        r"Generating "
+        + str(out.env["OUTPUT_DIRECTORY"])
+        + r"/etc/config_variants: OK"
     )
     assert re.search(regex, out.stdout)
-    output_file = os.path.join(out.env["OUTPUT_DIRECTORY"], "etc/config_variants")
+    output_file = os.path.join(
+        out.env["OUTPUT_DIRECTORY"], "etc/config_variants"
+    )
     test_file = "fixtures/output/config_variants_pro"
     check_output(output_file, test_file)
 

@@ -135,8 +135,9 @@ def ngcpcfg(gitrepo, tmpdir, *args):
             ):
                 testenv["SERVICES_POOL_BASE"] = testenv["TEMPLATE_POOL_BASE"]
                 print(
-                    "forced SERVICES_POOL_BASE={}"
-                    .format(testenv["SERVICES_POOL_BASE"])
+                    "forced SERVICES_POOL_BASE={}".format(
+                        testenv["SERVICES_POOL_BASE"]
+                    )
                 )
         # this has to be absolute
         testenv["NGCPCFG"] = Path(testenv["NGCPCFG"]).resolve()
@@ -167,7 +168,7 @@ def ngcpcfg(gitrepo, tmpdir, *args):
         env["SERVICES_POOL_BASE"] = env[key_base]
         cfg.set("ngcpcfg", "SERVICES_POOL_BASE", str(dst_pool))
         # each CONFIG_TOOL dir has to be a git repository
-        for dir in cfg.get("ngcpcfg", "CONFIG_POOL").split(' '):
+        for dir in cfg.get("ngcpcfg", "CONFIG_POOL").split(" "):
             dir_path = Path(outdir).joinpath(dir[1:])
             print("create empty git repository at {}".format(dir_path))
             gitrepo.extract_archive(str(EMPTY_GIT), dir_path)
@@ -318,10 +319,9 @@ def helpercli(tmpdir, *args):
         print("stderr:")
         print(stderr)
 
-        result = namedtuple("ProcessResult",
-                            ["returncode", "stdout", "stderr"])(
-            p.returncode, stdout, stderr
-        )
+        result = namedtuple(
+            "ProcessResult", ["returncode", "stdout", "stderr"]
+        )(p.returncode, stdout, stderr)
         return result
 
     return run

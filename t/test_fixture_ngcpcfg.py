@@ -19,11 +19,11 @@ def test_file_out(tmpdir):
     filename = "config.yml"
     src = Path("fixtures/repos").joinpath(filename)
     dst_dir = Path(tmpdir.mkdir("copy_tree"))
-    assert copy_tree(dst_dir, src, dst_dir) == None
+    assert copy_tree(dst_dir, src, dst_dir) is None
 
 
 def test_file_in(tmpdir):
-    """src is a file from NGCPCTL_MAIN """
+    """src is a file from NGCPCTL_MAIN"""
     filename = "config.yml"
     base = Path("fixtures/repos")
     src = base.joinpath(filename)
@@ -37,7 +37,7 @@ def test_file_in(tmpdir):
 def test_dir_out(tmpdir):
     dirname = tmpdir.mkdir("config")
     dst_dir = Path(tmpdir.mkdir("copy_tree"))
-    assert copy_tree(dst_dir, dirname, dst_dir) == None
+    assert copy_tree(dst_dir, dirname, dst_dir) is None
 
 
 def test_dir_in(tmpdir):
@@ -54,17 +54,22 @@ def test_empty(ngcpcfg):
     ngcpctl_config = Path(env["NGCPCTL_MAIN"]).joinpath("config.yml")
     assert ngcpctl_config.exists()
     assert str(ngcpctl_config) != str(cfg["NGCPCTL_CONFIG"])
-    assert Path(cfg["TEMPLATE_POOL_BASE"]) == Path(env["NGCPCTL_MAIN"]).joinpath(
-        "templates"
-    )
+    assert Path(cfg["TEMPLATE_POOL_BASE"]) == Path(
+        env["NGCPCTL_MAIN"]
+    ).joinpath("templates")
 
 
 def test_config(ngcpcfg):
     """test that templates are properly copied and configs defined in env"""
     env, cfg = ngcpcfg({"NGCPCFG": "fixtures/ngcpcfg.cfg"})
-    tt2_path = Path(cfg["TEMPLATE_POOL_BASE"]).joinpath("etc/bad-syntax.txt.tt2")
+    tt2_path = Path(cfg["TEMPLATE_POOL_BASE"]).joinpath(
+        "etc/bad-syntax.txt.tt2"
+    )
     assert tt2_path.exists()
-    assert Path(env["NETWORK_CONFIG"]) == Path("fixtures/repos/network.yml").resolve()
+    assert (
+        Path(env["NETWORK_CONFIG"])
+        == Path("fixtures/repos/network.yml").resolve()
+    )
 
 
 def test_template_pool(ngcpcfg):
@@ -78,7 +83,9 @@ def test_template_pool(ngcpcfg):
     tt2_path = Path(cfg["TEMPLATE_POOL_BASE"]).joinpath("etc/fake.txt.tt2")
     assert tt2_path.exists()
     # no files from fixtures/repos/templates is left
-    tt2_path = Path(cfg["TEMPLATE_POOL_BASE"]).joinpath("etc/bad-syntax.txt.tt2")
+    tt2_path = Path(cfg["TEMPLATE_POOL_BASE"]).joinpath(
+        "etc/bad-syntax.txt.tt2"
+    )
     assert not tt2_path.exists()
 
 
@@ -109,12 +116,15 @@ def test_config_cli(ngcpcfgcli):
     out = ngcpcfgcli(
         "status", env={"NGCPCFG": "fixtures/ngcpcfg_carrier_instances.cfg"}
     )
-    # NGCPCFG is always generated with env values and add as ${NGCPCTL_MAIN}/ngcpcfg.cfg
+    # NGCPCFG is always generated with env values and add as
+    # "${NGCPCTL_MAIN}/ngcpcfg.cfg".
     assert (
         out.env["NGCPCFG"]
         == Path(out.env["NGCPCTL_MAIN"]).joinpath("ngcpcfg.cfg").resolve()
     )
-    tt2_path = Path(out.cfg["TEMPLATE_POOL_BASE"]).joinpath("etc/bad-syntax.txt.tt2")
+    tt2_path = Path(out.cfg["TEMPLATE_POOL_BASE"]).joinpath(
+        "etc/bad-syntax.txt.tt2"
+    )
     assert tt2_path.exists()
     assert (
         Path(out.env["NETWORK_CONFIG"])

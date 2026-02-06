@@ -21,5 +21,6 @@ def test_status_build(ngcpcfg, ngcpcfgcli):
     out = ngcpcfgcli("status", env=env)
     assert out.returncode == 0
     assert re.search(
-        r"ACTION_NEEDED: commits without according build identified", out.stdout
+        r"ACTION_NEEDED: commits without according build identified",
+        out.stdout,
     )

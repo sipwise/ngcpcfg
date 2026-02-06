@@ -28,7 +28,9 @@ def test_apply_no_commit_msg(ngcpcfg, ngcpcfgcli):
     )
 
     assert re.search(r"Please provide commit message", out.stdout)
-    assert re.search(r"Error: Uncommitted configuration files found", out.stderr)
+    assert re.search(
+        r"Error: Uncommitted configuration files found", out.stderr
+    )
     assert out.returncode != 0
 
 

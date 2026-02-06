@@ -35,13 +35,15 @@ def test_apply_instances(ngcpcfgcli, tmpdir):
     output_file = base_dir.joinpath("ngcpcfg.serviceA")
     check_stdoutput("INSTANCE_NAME:A\n", str(output_file), tmpdir)
     assert re.search(
-        r"Executing action for .*/etc/kamailio/lb/ngcpcfg.services\[A\]", out.stdout
+        r"Executing action for .*/etc/kamailio/lb/ngcpcfg.services\[A\]",
+        out.stdout,
     )
 
     output_file = base_dir.joinpath("ngcpcfg.serviceB")
     check_stdoutput("INSTANCE_NAME:B\n", str(output_file), tmpdir)
     assert re.search(
-        r"Executing action for .*/etc/kamailio/lb/ngcpcfg.services\[B\]", out.stdout
+        r"Executing action for .*/etc/kamailio/lb/ngcpcfg.services\[B\]",
+        out.stdout,
     )
 
 
@@ -96,17 +98,20 @@ def test_apply_instances_changes(ngcpcfg, ngcpcfgcli, tmpdir, gitrepo):
     output_file = base_dir.joinpath("ngcpcfg.service")
     assert not output_file.exists()
     assert not re.search(
-        r"Executing action for .*/etc/kamailio/lb/ngcpcfg.services$", out.stdout
+        r"Executing action for .*/etc/kamailio/lb/ngcpcfg.services$",
+        out.stdout,
     )
 
     output_file = base_dir.joinpath("ngcpcfg.serviceA")
     assert not output_file.exists()
     assert not re.search(
-        r"Executing action for .*/etc/kamailio/lb/ngcpcfg.services\[A\]$", out.stdout
+        r"Executing action for .*/etc/kamailio/lb/ngcpcfg.services\[A\]$",
+        out.stdout,
     )
 
     output_file = base_dir.joinpath("ngcpcfg.serviceB")
     check_stdoutput("INSTANCE_NAME:B\n", str(output_file), tmpdir)
     assert re.search(
-        r"Executing action for .*/etc/kamailio/lb/ngcpcfg.services\[B\]", out.stdout
+        r"Executing action for .*/etc/kamailio/lb/ngcpcfg.services\[B\]",
+        out.stdout,
     )

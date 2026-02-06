@@ -420,6 +420,7 @@ foo:
     assert "Error: Elements in array '[bla]' should be quoted" in out.stderr
     assert out.returncode == 1
 
+
 @pytest.mark.tt_33030
 def test_set_action_append_array_element(ngcpcfgcli, tmpdir):
     tmpfile = tmpdir.join("tmpfile.txt")
@@ -558,7 +559,10 @@ foo:
 """
     )
     assert "" in out.stdout
-    assert "Key resolved to a ARRAY reference; refusing to overwrite." in out.stderr
+    assert (
+        "Key resolved to a ARRAY reference; refusing to overwrite."
+        in out.stderr
+    )
     assert out.returncode == 1
 
 
@@ -590,7 +594,10 @@ foo:
 """
     )
     assert "" in out.stdout
-    assert "Key resolved to a ARRAY reference; refusing to overwrite." in out.stderr
+    assert (
+        "Key resolved to a ARRAY reference; refusing to overwrite."
+        in out.stderr
+    )
     assert out.returncode == 1
 
 
@@ -622,7 +629,10 @@ foo:
 """
     )
     assert "" in out.stdout
-    assert "Key resolved to a HASH reference; refusing to overwrite." in out.stderr
+    assert (
+        "Key resolved to a HASH reference; refusing to overwrite."
+        in out.stderr
+    )
     assert out.returncode == 1
 
 
