@@ -9,75 +9,112 @@ use YAML::XS qw(LoadFile);
 use Hash::Merge qw(merge);
 use DBI;
 use Capture::Tiny qw(capture);
+use Config::Tiny;
 use DateTime::TimeZone;
 use DateTime::TimeZone::Catalog;
 use List::Util qw(any none);
 
 sub sync_extra_sockets;
 sub db_connect;
-my $dbh;
+sub read_ngcp_roles;
 
 my $config = {};
 foreach my $file (@ARGV) {
   $config = merge($config, LoadFile($file));
 }
-# rw connection to central node
-my $dbhost = $config->{database}->{central}->{dbhost};
-my $dbport = $config->{database}->{central}->{dbport};
-my $dbname = $config->{ossbss}->{provisioning}->{database}->{name};
-my $dbcredentials = "/etc/mysql/sipwise_extra.cnf";
 
-unless(defined $dbhost) {
-  print "Error: Could not determine provisioning db hostname\n";
-  exit 1;
-}
-unless(defined $dbport) {
-  print "Error: Could not determine provisioning db port\n";
-  exit 1;
-}
+my $dbcredentials = "/etc/mysql/sipwise_extra.cnf";
+my $ngcp_roles_file = "/etc/default/ngcp-roles";
+
+my $ngcp_roles = read_ngcp_roles();
+my $ngcp_type = $ngcp_roles->{NGCP_TYPE};
+my $ngcp_is_proxy = $ngcp_roles->{NGCP_IS_PROXY};
+
+my @db_conn_types = qw(central pair local);
+my $db_conn = {};
+my $db_info = {};
+
+my $dbname = $config->{ossbss}->{provisioning}->{database}->{name};
+
 unless(defined $dbname) {
   print "Error: Could not determine provisioning db name\n";
   exit 1;
 }
 
-$dbh = db_connect();
+foreach my $db_conn_type (@db_conn_types) {
+    next if $db_conn_type eq 'local' &&
+            ($ngcp_type ne 'carrier' || $ngcp_is_proxy ne "yes");
 
-exit 1 unless(sync_lb_and_extra_sockets($dbh,
+    my $dbhost = $config->{database}->{$db_conn_type}->{dbhost};
+    my $dbport = $config->{database}->{$db_conn_type}->{dbport};
+
+    unless ($dbhost) {
+      print "Error: Could not determine '$db_conn_type' db hostname\n";
+      exit 1;
+    }
+    unless ($dbport) {
+      print "Error: Could not determine '$db_conn_type' db port\n";
+      exit 1;
+    }
+
+    $db_conn->{$db_conn_type} = db_connect($dbhost, $dbport);
+    $db_info->{$db_conn_type} = { host => $dbhost, port => $dbport };
+}
+
+exit 1 unless(sync_lb_and_extra_sockets(
   $config->{kamailio}->{lb}->{extra_sockets},
   1, 1, 1));
 
-exit 1 unless(sync_rtp_interfaces($dbh,
+exit 1 unless(sync_rtp_interfaces(
   { map {my $tmp = $_; $tmp =~ s/:.*//; ($_ => $_, $tmp => $tmp)} @{$config->{rtp_interfaces}} },
   1, 1, 1));
 
-exit 1 unless(sync_smsc_peers($dbh,
+exit 1 unless(sync_smsc_peers(
   { map { ($_->{id} => $_->{id}) } @{$config->{sms}->{smsc}} },
   0, 1, 0));
 
-exit 1 unless(sync_general_timezone($dbh,
-  $config->{general}->{timezone}));
+exit 1 unless(sync_general_timezone($config->{general}->{timezone}));
 
-exit 1 unless(sync_db_timezones($dbh));
+exit 1 unless(sync_db_timezones());
 
-exit 1 unless(sync_timezone_version($dbh));
+exit 1 unless(sync_timezone_version());
 
-$dbh->disconnect;
+map { $_->disconnect; } values %${db_conn};
 
 exit 0;
 
-sub db_connect
-{
+sub read_ngcp_roles {
+    my $root = Config::Tiny->read($ngcp_roles_file, 'utf8');
+
+    if (my $err = $Config::Tiny::errstr) {
+        print "Error when reading $ngcp_roles_file: $err\n";
+        exit 1;
+    }
+
+    unless ($root->{_}) {
+        print "Unexpected result from reading $ngcp_roles_file\n";
+        exit 1;
+    }
+
+    map { $root->{_}{$_} =~ s/(^['"]|['"]$)//g } keys %{$root->{_}};
+
+    return $root->{_};
+}
+
+sub db_connect {
+    my ($dbhost, $dbport) = @_;
+
     my $dbh = DBI->connect("DBI:mysql:database=${dbname};host=${dbhost};port=${dbport};"
                            . "mysql_read_default_file=${dbcredentials}",
                            "", "", { PrintError => 0 });
-    unless (defined $dbh) {
+    unless ($dbh) {
         die "Error: Could not connect to database '$dbname' at '$dbhost:$dbport' using '${dbcredentials}': $DBI::errstr\n";
     }
+
     return $dbh;
 }
 
 sub lb_and_extra_sockets_sync {
-    my $dbh = shift;
     my $extra_sockets_config = shift;
     my $usr_pref = shift;
     my $dom_pref = shift;
@@ -124,7 +161,6 @@ sub lb_and_extra_sockets_sync {
     }
 
     generic_enum_sync(
-        $dbh,
         { %lb_pairs,  ## no critic (ProhibitCommaSeparatedStatements)
           $extra_sockets_config && ref $extra_sockets_config eq 'HASH'
             ? %{$extra_sockets_config}
@@ -138,12 +174,13 @@ sub lb_and_extra_sockets_sync {
 }
 
 sub generic_enum_sync {
-    my $dbh = shift;
     my $config_hash = shift;
     my $usr_pref = shift;
     my $dom_pref = shift;
     my $peer_pref = shift;
     my $pref_name = shift;
+
+    my $dbh = $db_conn->{central};
 
     my $sth = $dbh->prepare("select id from voip_preferences where attribute=?");
     $sth->execute($pref_name);
@@ -210,8 +247,35 @@ sub sync_smsc_peers {
 
 ## general.timezone handling: ##############################
 sub sync_general_timezone {
-    my $dbh = shift;
+    if ($ngcp_type eq 'carrier' && $ngcp_is_proxy eq 'yes') {
+        return do_sync_general_timezone(@_, 'pair') &&
+               do_sync_general_timezone(@_, 'local');
+    }
+    return do_sync_general_timezone(@_, 'pair');
+}
+
+## /usr/share/zoneinfo into MariaDB ##############################
+sub sync_db_timezones {
+    if ($ngcp_type eq 'carrier' && $ngcp_is_proxy eq 'yes') {
+        return do_sync_db_timezones(@_, 'pair') &&
+               do_sync_db_timezones(@_, 'local');
+    }
+    return do_sync_db_timezones(@_, 'pair');
+}
+
+## check ngcp.timezone version and upgrade the database if the version is changed ##############################
+sub sync_timezone_version {
+    if ($ngcp_type eq 'carrier' && $ngcp_is_proxy eq 'yes') {
+        return do_sync_timezone_version(@_, 'pair') &&
+               do_sync_timezone_version(@_, 'local');
+    }
+    return do_sync_timezone_version(@_, 'pair');
+}
+
+sub do_sync_general_timezone {
     my $tz = shift;
+    my $db_conn_type = shift;
+    my $dbh = $db_conn->{$db_conn_type};
     my $ok = 1;
     my ($sql_log_bin) = $dbh->selectrow_array('SELECT @@sql_log_bin');
 
@@ -246,9 +310,10 @@ SQL
     return $ok;
 }
 
-## /usr/share/zoneinfo into MariaDB ##############################
-sub sync_db_timezones {
-    my $dbh = shift;
+sub do_sync_db_timezones {
+    my $db_conn_type = shift;
+    my $dbh = $db_conn->{$db_conn_type};
+    my ($dbhost, $dbport) = @{$db_info->{$db_conn_type}}{qw(host port)};
 
     my ($out, $err, $rc) = capture {
         system('/usr/bin/mysql_tzinfo_to_sql /usr/share/zoneinfo');
@@ -276,9 +341,13 @@ SELECT version
   FROM ngcp.tzinfo_version
 SQL
             or die "Cannot select from ngcp.tzinfo_version: $DBI::errstr\n";
+
         if ($cur_tzinfo_version eq $tzinfo_version) {
             return;
         }
+
+        print "sync db timezones on host=$dbhost port=$dbport old=$cur_tzinfo_version new=$tzinfo_version\n";
+
         open(my $sql_stream, "<", \$out)
             or die "Cannot open sql stream: $ERRNO\n";
         binmode($sql_stream);
@@ -319,9 +388,9 @@ SQL
     return 1;
 }
 
-## check ngcp.timezone version and upgrade the database if the version is changed ##############################
-sub sync_timezone_version {
-    my $dbh = shift;
+sub do_sync_timezone_version {
+    my $db_conn_type = shift;
+    my $dbh = $db_conn->{$db_conn_type};
 
     my $olson_tz_version = DateTime::TimeZone::Catalog::OlsonVersion();
 
