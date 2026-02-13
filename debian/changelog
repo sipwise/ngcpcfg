@@ -1,3 +1,12 @@
+ngcp-ngcpcfg (13.5.1.4+0~mr13.5.1.4) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [5f2b3aa] MT#64441 sync-db add pair and local db support
+  * [066cf85] MT#58352 %lb_pairs ## no critic (ProhibitCommaSeparatedStatements)
+  * [484e1c7] MT#64441 return 1 from do_sync_db_timezones() on when ok
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 13 Feb 2026 17:24:13 +0100
+
 ngcp-ngcpcfg (13.5.1.3+0~mr13.5.1.3) unstable; urgency=medium
 
   * New release.
