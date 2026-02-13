@@ -315,15 +315,6 @@ sub do_sync_db_timezones {
     my $dbh = $db_conn->{$db_conn_type};
     my ($dbhost, $dbport) = @{$db_info->{$db_conn_type}}{qw(host port)};
 
-    my ($out, $err, $rc) = capture {
-        system('/usr/bin/mysql_tzinfo_to_sql /usr/share/zoneinfo');
-    };
-
-    if ($rc) {
-        print "Error: $err\n";
-        return;
-    }
-
     my ($tzinfo_version, undef, undef) = capture {
         system('dpkg-query -f "\${Version}" -W tzdata');
     };
@@ -343,10 +334,19 @@ SQL
             or die "Cannot select from ngcp.tzinfo_version: $DBI::errstr\n";
 
         if ($cur_tzinfo_version eq $tzinfo_version) {
-            return;
+            return 1;
         }
 
         print "sync db timezones on host=$dbhost port=$dbport old=$cur_tzinfo_version new=$tzinfo_version\n";
+
+        my ($out, $err, $rc) = capture {
+            system("/usr/bin/mysql_tzinfo_to_sql /usr/share/zoneinfo");
+        };
+
+        if ($rc) {
+            print "Error: $err\n";
+            return;
+        }
 
         open(my $sql_stream, "<", \$out)
             or die "Cannot open sql stream: $ERRNO\n";
@@ -377,7 +377,7 @@ INSERT INTO ngcp.tzinfo_version SET version = ?
 SQL
             or die "Cannot insert into ngcp.tzinfo_version: $DBI::errstr\n";
     };
-    $err = $EVAL_ERROR;
+    my $err = $EVAL_ERROR;
     if ($err) {
         print $err;
         $dbh->rollback();
@@ -409,7 +409,7 @@ SQL
             or die "Cannot select from ngcp.timezone: $DBI::errstr\n";
 
         if ($cur_tz_version eq $olson_tz_version) {
-            return;
+            return 1;
         }
 
         my %links = DateTime::TimeZone->links;
