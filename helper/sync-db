@@ -30,7 +30,7 @@ my $ngcp_roles = read_ngcp_roles();
 my $ngcp_type = $ngcp_roles->{NGCP_TYPE};
 my $ngcp_is_proxy = $ngcp_roles->{NGCP_IS_PROXY};
 
-my @db_conn_types = qw(central pair local);
+my @db_conn_types = qw(pair local);
 my $db_conn = {};
 my $db_info = {};
 
@@ -180,7 +180,7 @@ sub generic_enum_sync {
     my $peer_pref = shift;
     my $pref_name = shift;
 
-    my $dbh = $db_conn->{central};
+    my $dbh = $db_conn->{pair};
 
     my $sth = $dbh->prepare("select id from voip_preferences where attribute=?");
     $sth->execute($pref_name);
