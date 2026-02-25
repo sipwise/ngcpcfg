@@ -1,2 +1,0 @@
-/etc/kamailio/lb/db:/etc/kamailio/lb_A/db:A
-/etc/kamailio/lb/db:/etc/kamailio/lb_B/db:B

@@ -114,9 +114,6 @@ precedence to higher precedence):
 file, used by template-handler for generating /etc/foobar/baz. Configuration
 file is usually provided by a Debian package.
 
-* _/etc/ngcp-config/templates/etc/foobar/baz.tt2.inst-$INSTANCE_NAME_: ngcp_instance specific
-template file. $INSTANCE_NAME in lowercase specified at instances part on network.yml.
-
 * _/etc/ngcp-config/templates/etc/foobar/baz.tt2.$NGCP_NODENAME_: node specific
 template file. $NGCP_NODENAME is determined using the __ngcp-nodename__ program
 (being _spce_ for CE systems, and _spN_ where N is the index of the node in the
@@ -145,12 +142,6 @@ Note: This feature is available in High Availability setups only.
 template file, but configuration usually isn't provided by a Debian package and
 can be modified independently from any Debian package mechanism.
 
-* _/etc/ngcp-config/templates/etc/foobar/baz.customtt.tt2.inst-$INSTANCE_NAME_:
-configuration file similar to
-_/etc/ngcp-config/templates/etc/foobar/baz.tt2.inst-$INSTANCE_NAME_ but it's guaranteed
-that the file won't be part of any Debian package mechanism. $INSTANCE_NAME in
-lowercase specified at instances part on network.yml.
-
 * _/etc/ngcp-config/templates/etc/foobar/baz.customtt.tt2.$NGCP_NODENAME_: node
 specific template file.
 Regarding $NGCP_NODENAME the same as for _baz.tt2.$NGCP_NODE_NAME_
@@ -173,12 +164,10 @@ available in High Availability setups only.
 
 [IMPORTANT]
 Configuration file precedence (highest to lowest):
-*.customtt.tt2.inst-$INSTANCE_NAME
 *.customtt.tt2.$NGCP_HOSTNAME
 *.customtt.tt2.$NGCP_PAIRNAME
 *.customtt.tt2.$NGCP_NODENAME
 *.customtt.tt2
-*.tt2.inst-$INSTANCE_NAME
 *.tt2.$NGCP_HOSTNAME
 *.tt2.$NGCP_PAIRNAME
 *.tt2.$NGCP_NODENAME
@@ -254,17 +243,6 @@ management system (based on the main configuration files *.yml inside
 be executed under "bash $FILE", so you can use commands e.g. like
 "ngcp-service foobar restart" and any further shell scripting syntax inside
 the services files
-
-NGCP instances
-~~~~~~~~~~~~~~
-
-ngcp-templates package provides the *TEMPLATE_INSTANCES* file defining what are
-the supported templates for instances. Meaning that ngcpcfg will generate
-one additional output per instance following the specifications provide by the
-file.
-
-ngcpcfg will generate that output with the template variable **instance_name** defined
-and the environment variable **INSTANCE_NAME** set for ngcpcfg.service scripts
 
 Global Options
 --------------

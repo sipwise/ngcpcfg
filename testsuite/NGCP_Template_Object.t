@@ -6,7 +6,7 @@ use warnings;
 use Cwd;
 use Test::More;
 
-plan tests => 56;
+plan tests => 54;
 
 use_ok('NGCP::Template::Object');
 
@@ -212,72 +212,3 @@ is($obj_ce->net_ip_expand('001:2::0005:020'),
 is($obj_ce->net_ip_expand('1::0'),
     '1:0:0:0:0:0:0:0',
     'normalize IPv6 1::0');
-
-## instances
-delete $cfg_pro->{hosts}{sp3};
-$cfg_pro->{hosts}{sp2}{peer} = 'sp1';
-$cfg_pro->{hosts}{sp1}{interfaces} = [ qw(eth0 eth1) ];
-$cfg_pro->{hosts}{sp1}{eth0} = {
-    ip => '172.16.7.1',
-    netmask => '255.255.255.0',
-    type => [ qw(ha_int sip_int) ],
-};
-$cfg_pro->{hosts}{sp1}{eth1} = {
-    cluster_set => [ 'default' ],
-    ip => '172.16.8.1',
-    netmask => '255.255.255.224',
-    type => [ 'sip_ext' ],
-};
-$cfg_pro->{hosts}{sp2}{interfaces} = [ qw(eth0 eth1) ];
-$cfg_pro->{hosts}{sp2}{eth0} = {
-    ip => '172.16.7.2',
-    netmask => '255.255.255.0',
-    type => [ qw(ha_int sip_int) ],
-};
-$cfg_pro->{hosts}{sp2}{eth1} = {
-    cluster_set => [ 'default' ],
-    ip => '172.16.8.2',
-    netmask => '255.255.255.224',
-    type => [ 'sip_ext' ],
-};
-
-my $iface_A = [
-    {name => 'eth0', ip => '172.16.7.4', type => 'sip_int'},
-    {name => 'eth1', ip => '172.16.8.4', type => 'sip_ext'},
-];
-my $iface_B = [
-    {name => 'eth0', ip => '172.16.7.6', type => 'sip_int'},
-    {name => 'eth1', ip => '172.16.8.6', type => 'sip_ext'},
-];
-$cfg_pro->{instances} = [
-    {name => 'A', host => 'sp2', interfaces => $iface_A},
-    {name => 'B', host => 'sp3', interfaces => $iface_B},
-];
-$obj_pro = NGCP::Template::Object->new($cfg_pro);
-
-# Check get_instances(hostname).
-my $instances = [
-    {
-        name      => 'A',
-        host      => 'sp2',
-        interfaces => [
-            {
-                name    => 'eth0',
-                ip      => '172.16.7.4',
-                type    => 'sip_int',
-                netmask => '255.255.255.0'
-            },
-            {
-                name        => 'eth1',
-                ip          => '172.16.8.4',
-                type        => 'sip_ext',
-                netmask     => '255.255.255.224',
-                cluster_set => ['default']
-            },
-        ]
-    },
-];
-is_deeply($obj_pro->get_instances('sp1'), $instances,
-    'host sp1 has one instances defined');
-is_deeply($obj_pro->get_instances('sp2'), $instances,
-    'host sp2 has one instances defined');

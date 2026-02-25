@@ -47,44 +47,6 @@ for f in ${NGCPCTL_CONFIG:-} ${NODE_CONFIG:-} ${PAIR_CONFIG:-} ${HOST_CONFIG:-} 
   ARGS+=("-c" "$f")
 done
 
-build_config_files_instances() {
-  local info
-  local source
-  local target
-  local instance
-  local inst_cfg
-  local rc=0
-
-  if [ -z "${TEMPLATE_INSTANCES:-}" ] || [ ! -f "${TEMPLATE_INSTANCES}" ] ; then
-    log_debug "no template info for instances, skip step"
-    return
-  fi
-
-  log_debug "${RUNNER} ${HELPER}/instances-info $*"
-  inst_cfg=$(mktemp -t ngcpcfg-build.XXXXXXXXXX )
-  while IFS=":" read -r -a info; do
-    source=${info[0]}
-    target=${info[1]}
-    instance=${info[2]}
-    log_debug "source:${source} target:${target} instance:${instance}"
-
-    log_debug "${RUNNER} ${HELPER}/instance-info ${instance} > ${inst_cfg}"
-    ${RUNNER} "${HELPER}/instance-info" "${instance}" > "${inst_cfg}" || rc=$?
-    if [ "${rc}" != "0" ]; then
-      log_error "Failed to build instance info! Aborting."
-      exit $rc
-    fi
-
-    log_debug "INSTANCE_NAME=${instance} ${RUNNER} ${HELPER}/tt2-process ${ARGS[*]} -c ${inst_cfg} -r ${source}:${target} ${source}"
-    INSTANCE_NAME="${instance}" ${RUNNER} "${HELPER}/tt2-process" "${ARGS[@]}" -c "${inst_cfg}" -r "${source}:${target}" "${source}" || rc=$?
-    if [ "${rc}" != "0" ]; then
-      log_error "Instances build errors detected (see the output above)! Aborting."
-      exit $rc
-    fi
-  done< <(${RUNNER} "${HELPER}/instances-info" "$@")
-  rm -f "${inst_cfg}"
-}
-
 build_config_files() {
   RUNNER="nice -n 19 ionice -c 3"
   local rc=0
@@ -96,8 +58,6 @@ build_config_files() {
     log_error "Build errors detected (see the output above)! Aborting."
     exit $rc
   fi
-
-  build_config_files_instances "$@"
 
   record_commit_id
 }

@@ -13,7 +13,6 @@ FUNCTIONS="${FUNCTIONS:-/usr/share/ngcp-ngcpcfg/functions/}"
 OUTPUT_DIRECTORY="${OUTPUT_DIRECTORY:-}"
 
 CLEANUP_FILES=()
-INSTANCES=()
 
 # load modules
 
@@ -27,28 +26,9 @@ fi
 
 # functions
 
-instances_info() {
-  local target
-  local dest
-  local instance
-  local RUNNER="nice -n 19 ionice -c 3"
-
-  log_debug "${RUNNER} ${HELPER}/instances-info"
-  while IFS=":" read -r -a info; do
-    target=${info[0]}
-    dest=${info[1]}
-    instance=${info[2]}
-    INSTANCES+=("${target}:${instance}:${dest}")
-  done< <(${RUNNER} "${HELPER}/instances-info")
-}
-
 exec_wrapper() {
   local service_file=$1
-  local instance_name="${2:-}"
   local msg=""
-  if [ -n "${instance_name}" ]; then
-    msg="[${instance_name}]"
-  fi
 
   if ${DRYRUN} ; then
     log_info "TEST MODE: Would execute action for ${service_file}${msg}"
@@ -57,13 +37,13 @@ exec_wrapper() {
   log_info "Executing action for ${service_file}${msg}"
   if [[ -x "${service_file}" ]]; then
     log_debug "${service_file}${msg}"
-    if ! INSTANCE_NAME="${instance_name}" "${service_file}" ; then
-      log_warn "INSTANCE_NAME=${instance_name} ${service_file} returned with error code, continuing anyway."
+    if ! "${service_file}" ; then
+      log_warn "${service_file} returned with error code, continuing anyway."
     fi
   elif [[ -r "${service_file}" ]]; then
-    log_debug "INSTANCE_NAME=${instance_name} bash ${service_file}"
-    if ! INSTANCE_NAME="${instance_name}" bash "${service_file}" ; then
-      log_warn "INSTANCE_NAME=${instance_name} ${service_file} returned with error code, continuing anyway."
+    log_debug "bash ${service_file}"
+    if ! bash "${service_file}" ; then
+      log_warn "${service_file} returned with error code, continuing anyway."
     fi
   else
     log_error "Error: ${service_file} could not be read."
@@ -201,26 +181,6 @@ generate_list_to_process() {
   fi
 }
 
-find_instance() {
-  local service_file
-  local info
-  local target
-
-  # get rid of "./" and "//"
-  # shellcheck disable=SC2001
-  service_file=$(echo "$1" | sed -e 's_\./_/_g ; s_//_/_g')
-
-  for instance in "${INSTANCES[@]}"; do
-    IFS=":" read -ra info <<< "${instance}"
-    # get rid of "./" and "//"
-    target=$(echo "${TEMPLATE_POOL_BASE}${info[0]}" | sed -e 's_\./_/_g ; s_//_/_g')
-    if [[ "${service_file}" =~ ^${target} ]] ; then
-      log_debug "[${info[1]}] Storing ${file} in '${TMPFILE}'"
-      echo "${file}:${info[1]}" >> "${TMPFILE}"
-    fi
-  done
-}
-
 find_all_services() {
   local dir="$1"
 
@@ -230,39 +190,7 @@ find_all_services() {
     fi
     log_debug "Storing ${file} in '${TMPFILE}'"
     echo "${file}" >> "${TMPFILE}"
-    find_instance "${file}"
   done < <(find "${SERVICES_POOL_BASE}/${dir}" -name '*.services' | sort -u)
-}
-
-find_changed_instance_services() {
-  local file
-  local dir
-  local info
-  local dest
-  local target
-  local target_file
-
-  # get rid of "./" and "//"
-  # shellcheck disable=SC2001
-  file=$(echo "$1"| sed -e 's_\./_/_g ; s_//_/_g')
-  # shellcheck disable=SC2001
-  dir=$(echo "$2"| sed -e 's_\./_/_g ; s_//_/_g')
-
-  for instance in "${INSTANCES[@]}"; do
-    IFS=":" read -ra info <<< "${instance}"
-    target=${info[0]#${dir}/}
-    dest=${info[2]#${dir}/}
-    if [[ "${file}" =~ ^${dest} ]] ; then
-      target_file=${file/${dest}/${target}}
-      if [[ -r "${SERVICES_POOL_BASE}/${dir}/${target_file}".services ]]; then
-        log_debug "[${info[1]}] Storing ${SERVICES_POOL_BASE}/${dir}/${target_file}.services in '${TMPFILE}'"
-        echo "${SERVICES_POOL_BASE}/${dir}/${target_file}.services:${info[1]}"
-      elif [[ -r "${SERVICES_POOL_BASE}/${dir}/$(dirname "${target_file}")"/ngcpcfg.services ]]; then
-        log_debug "[${info[1]}] Storing ${SERVICES_POOL_BASE}/${dir}/$(dirname "${target_file}")/ngcpcfg.services in '${TMPFILE}'"
-        echo "${SERVICES_POOL_BASE}/${dir}/$(dirname "${target_file}")/ngcpcfg.services:${info[1]}"
-      fi
-    fi
-  done
 }
 
 find_all_changed_services() {
@@ -300,8 +228,6 @@ find_all_changed_services() {
     elif [[ -r "${SERVICES_POOL_BASE}/${dir}/$(dirname "${file}")"/ngcpcfg.services ]]; then
       log_debug "Storing ${SERVICES_POOL_BASE}/${dir}/$(dirname "$file")/ngcpcfg.services in '${TMPFILE}'"
       echo "${SERVICES_POOL_BASE}/${dir}/$(dirname "$file")/ngcpcfg.services"
-    else
-      find_changed_instance_services "${file}" "${dir}"
     fi
   done | sort -u >> "${TMPFILE}"
 
@@ -348,10 +274,6 @@ log_debug "OUTPUT_DIRECTORY=${OUTPUT_DIRECTORY}"
 
 CLEANUP_FILES+=("${TMPFILE}")
 
-
-if [ -n "${TEMPLATE_INSTANCES:-}" ] && [ -f "${TEMPLATE_INSTANCES}" ] ; then
-  instances_info
-fi
 
 for dir in ${CONFIG_POOL} ; do
   is_absolute_path "${OUTPUT_DIRECTORY}${dir}" || continue

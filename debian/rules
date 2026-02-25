@@ -5,7 +5,6 @@
 #export DH_VERBOSE = 1
 
 SCRIPTS = \
-	$(CURDIR)/usr/sbin/ngcp-instances-validator \
 	$(CURDIR)/usr/sbin/ngcp-network \
 	$(CURDIR)/usr/sbin/ngcp-network-validator \
 	# EOL

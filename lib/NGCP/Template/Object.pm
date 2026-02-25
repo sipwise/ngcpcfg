@@ -264,34 +264,6 @@ sub get_hosts
     return @res;
 }
 
-sub get_instances
-{
-    my ($self, $hostname) = @_;
-    my $res = [];
-
-    if (not exists $self->{config}{hosts}{$hostname}) {
-        return $res;
-    }
-    if (not exists $self->{config}{instances}) {
-        return $res;
-    }
-    my $peername = $self->{config}{hosts}{$hostname}{peer};
-    foreach my $instance (@{$self->{config}{instances}}) {
-        if ($instance->{host} eq $hostname or $instance->{host} eq $peername) {
-            # data coming from $hostname
-            foreach my $iface (@{$instance->{interfaces}}) {
-                my $ifname = $iface->{name};
-                $iface->{netmask} = $self->{config}{hosts}{$hostname}{$ifname}{netmask};
-                if( exists $self->{config}{hosts}{$hostname}{$ifname}{cluster_set}) {
-                    $iface->{cluster_set} = $self->{config}{hosts}{$hostname}{$ifname}{cluster_set};
-                }
-            }
-            push @{$res}, $instance;
-        }
-    }
-    return $res;
-}
-
 sub get_ssh_pub_key
 {
     my ($self, $key_type) = @_;

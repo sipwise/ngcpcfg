@@ -16,14 +16,6 @@
   PROCESS '../lib/get_all_shared_ips';
   sip_lb_ips = out;
 
-  FOR instance IN instances;
-    NEXT UNLESS instance.service == 'kamailio-lb';
-    argv.type = 'sip_int';
-    argv.instance = instance;
-    PROCESS '../lib/get_all_ips_for_instance';
-    sip_lb_ips = out.merge(sip_lb_ips);
-  END;
-
   argv.role='lb'; argv.type='sip_int';
   PROCESS '../lib/get_all_cluster_set_shared_ip_maps';
   UNLESS out.size;

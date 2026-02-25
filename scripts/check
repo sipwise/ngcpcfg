@@ -168,15 +168,11 @@ validate_config() {
         log_error "Invalid schema detected for ${f}"
         rc=1
       fi
-      if ! ngcp-instances-validator --network-file="$f"; then
-        log_error "Invalid schema detected for instances connections"
-        rc=1
-      fi
     else
       local schema
 
       case "${name}" in
-        sites.yml|instances.yml)
+        sites.yml)
           if ! [ -e "${f}" ]; then
             continue
           fi
@@ -279,8 +275,7 @@ check_shared_storage() {
 
 if [ "$*" = "" ] ; then
   SITES_FILE="${SITES_FILE:-${NGCPCTL_MAIN}/sites.yml}"
-  INSTANCES_FILE="${INSTANCES_FILE:-${NGCPCTL_MAIN}/instances.yml}"
-  config_files="${NGCPCTL_CONFIG:-} ${NODE_CONFIG:-} ${PAIR_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${MAINTENANCE_CONFIG:-} ${NETWORK_CONFIG:-} ${EXTRA_CONFIG_FILES[*]} ${CONSTANTS_CONFIG:-} ${SITES_FILE:-} ${INSTANCES_FILE:-}"
+  config_files="${NGCPCTL_CONFIG:-} ${NODE_CONFIG:-} ${PAIR_CONFIG:-} ${HOST_CONFIG:-} ${LOCAL_CONFIG:-} ${MAINTENANCE_CONFIG:-} ${NETWORK_CONFIG:-} ${EXTRA_CONFIG_FILES[*]} ${CONSTANTS_CONFIG:-} ${SITES_FILE:-}"
 else
   config_files="$*"
 fi

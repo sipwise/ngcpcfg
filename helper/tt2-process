@@ -256,10 +256,6 @@ sub generate_iofiles {
 
     # Support for PRO/CARRIER systems.
     my @tt2_hosts;
-    # Support for instances, name in lowercase!!
-    if (length $ENV{INSTANCE_NAME}) {
-        push @tt2_hosts, ".inst-".lc $ENV{INSTANCE_NAME};
-    }
     foreach my $name (qw(HOST_FILE PAIR_FILE NODE_FILE)) {
         push @tt2_hosts, $ENV{$name} if defined $ENV{$name};
     }

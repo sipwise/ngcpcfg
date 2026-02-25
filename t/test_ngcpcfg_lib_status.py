@@ -23,31 +23,16 @@ def test_status_carrier(ngcpcfgcli):
     check_output(str(output_file), test_file)
 
 
-def test_status_carrier_instances(ngcpcfgcli):
+def test_status_pro(ngcpcfgcli):
     out = ngcpcfgcli(
         "build",
         "--ignore-branch-check",
         "/etc/status.cfg",
         env={
-            "NGCPCFG": "fixtures/ngcpcfg_carrier_instances.cfg",
+            "NGCPCFG": "fixtures/ngcpcfg_pro.cfg",
         },
     )
     assert re.search(msg.format(out.env["OUTPUT_DIRECTORY"]), out.stdout)
     output_file = out.env["OUTPUT_DIRECTORY"].joinpath("etc/status.cfg")
-    test_file = "fixtures/output/status.cfg_carrier_instances"
-    check_output(str(output_file), test_file)
-
-
-def test_status_pro_instances(ngcpcfgcli):
-    out = ngcpcfgcli(
-        "build",
-        "--ignore-branch-check",
-        "/etc/status.cfg",
-        env={
-            "NGCPCFG": "fixtures/ngcpcfg_pro_instances.cfg",
-        },
-    )
-    assert re.search(msg.format(out.env["OUTPUT_DIRECTORY"]), out.stdout)
-    output_file = out.env["OUTPUT_DIRECTORY"].joinpath("etc/status.cfg")
-    test_file = "fixtures/output/status.cfg_pro_instances"
+    test_file = "fixtures/output/status.cfg_pro"
     check_output(str(output_file), test_file)

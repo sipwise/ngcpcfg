@@ -7,8 +7,6 @@ helper/cat-yml              usr/share/ngcp-ngcpcfg/helper/
 helper/check-for-mysql      usr/share/ngcp-ngcpcfg/helper/
 helper/del-value            usr/share/ngcp-ngcpcfg/helper/
 helper/fileformat_version   usr/share/ngcp-ngcpcfg/helper/
-helper/instance-info        usr/share/ngcp-ngcpcfg/helper/
-helper/instances-info       usr/share/ngcp-ngcpcfg/helper/
 helper/restore-permissions  usr/share/ngcp-ngcpcfg/helper/
 helper/set-value            usr/share/ngcp-ngcpcfg/helper/
 helper/sort-yml             usr/share/ngcp-ngcpcfg/helper/
@@ -18,13 +16,11 @@ helper/validate-yml         usr/share/ngcp-ngcpcfg/helper/
 hooks/                      usr/share/ngcp-ngcpcfg/
 lib/get_*                   usr/lib/ngcp-ngcpcfg/
 lib/set_*                   usr/lib/ngcp-ngcpcfg/
-sbin/ngcp-instances-validator usr/sbin/
 sbin/ngcp-network           usr/sbin/
 sbin/ngcp-network-validator usr/sbin/
 sbin/ngcp-sync-db-creds     usr/sbin/
 sbin/ngcp-sync-db-grants    usr/sbin/
 sbin/ngcpcfg                usr/sbin/
-schemas/instances.yml       usr/share/ngcp-ngcpcfg/schemas/
 schemas/sites.yml           usr/share/ngcp-ngcpcfg/schemas/
 scripts/apply               usr/share/ngcp-ngcpcfg/scripts/
 scripts/build               usr/share/ngcp-ngcpcfg/scripts/

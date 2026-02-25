@@ -114,7 +114,7 @@ def test_template_pool_cli(ngcpcfgcli):
 def test_config_cli(ngcpcfgcli):
     """test that templates are properly copied and configs defined in env"""
     out = ngcpcfgcli(
-        "status", env={"NGCPCFG": "fixtures/ngcpcfg_carrier_instances.cfg"}
+        "status", env={"NGCPCFG": "fixtures/ngcpcfg_carrier.cfg"}
     )
     # NGCPCFG is always generated with env values and add as
     # "${NGCPCTL_MAIN}/ngcpcfg.cfg".
@@ -128,5 +128,5 @@ def test_config_cli(ngcpcfgcli):
     assert tt2_path.exists()
     assert (
         Path(out.env["NETWORK_CONFIG"])
-        == Path("fixtures/repos/network_carrier_instances.yml").resolve()
+        == Path("fixtures/repos/network_carrier.yml").resolve()
     )
