@@ -20,11 +20,13 @@ sub read_ngcp_roles;
 
 my $config = {};
 foreach my $file (@ARGV) {
+  next unless -f $file;
   $config = merge($config, LoadFile($file));
 }
 
 my $dbcredentials = "/etc/mysql/sipwise_extra.cnf";
 my $ngcp_roles_file = "/etc/default/ngcp-roles";
+my $ngcp_current_site = "/etc/ngcp-config/sites/current";
 
 my $ngcp_roles = read_ngcp_roles();
 my $ngcp_type = $ngcp_roles->{NGCP_TYPE};
@@ -101,6 +103,28 @@ sub read_ngcp_roles {
     return $root->{_};
 }
 
+sub get_current_site {
+    my $link = readlink $ngcp_current_site;
+
+    if (!$link && $!) {
+        print "Cannot read link $link: $!\n";
+        return;
+    }
+
+    my $sites = $config->{sites} // return;
+    my $current_site = $sites->{$link} // return;
+
+    if (ref $current_site ne 'HASH') {
+        print "Invalid sites configuration\n";
+        return;
+    }
+
+    return {
+        name => $link,
+        %{$current_site},
+    };
+}
+
 sub db_connect {
     my ($dbhost, $dbport) = @_;
 
@@ -134,6 +158,18 @@ sub lb_and_extra_sockets_sync {
         tls => $lb_config->{tls}{port},
     );
 
+    my $multi_site = $config->{sites_enable} // 'no' eq 'yes';
+    my $sites = $config->{sites} // {};
+    my $current_site = get_current_site();
+    my $skip_site_prefixes = [];
+
+    if ($multi_site && $current_site) {
+        foreach my $site_name (keys %{$sites}) {
+            next if $site_name eq $current_site->{name};
+            push @{$skip_site_prefixes}, "$site_name:";
+        }
+    }
+
     for my $host (keys %{$hosts}) {
         my $host_ref = $hosts->{$host};
         my $ifaces = $host_ref->{interfaces};
@@ -146,15 +182,17 @@ sub lb_and_extra_sockets_sync {
             next if none { $_ eq 'sip_ext' } @{$iface_ref->{type}};
 
             my $shared_ips = $iface_ref->{shared_ip} // next;
-            my $shared_ips_cnt = scalar @{$shared_ips};
             my $pair = substr $host, 0, -1;
 
             foreach my $ip (@{$shared_ips}) {
                 for my $proto (qw(udp tcp tls)) {
                     my $port = $ports{$proto};
-                    $shared_ips_cnt > 1
-                        ? $lb_pairs{"$pair:$iface:$ip:$proto"} = "$proto:$ip:$port"
-                        : $lb_pairs{"$pair:$iface:$proto"} = "$proto:$ip:$port";
+                    my $label = "$pair:$iface:$ip:$proto";
+                    if ($multi_site) {
+                        my $site_name = $current_site->{name} // 'unknown';
+                        $label = "$site_name:$pair:$iface:$ip:$proto";
+                    }
+                    $lb_pairs{$label} = "$proto:$ip:$port";
                 }
             }
         }
@@ -167,7 +205,8 @@ sub lb_and_extra_sockets_sync {
             : (),
         },
         $usr_pref, $dom_pref, $peer_pref,
-        $pref_name
+        $pref_name,
+        $skip_site_prefixes,
     );
 
     return 1;
@@ -179,6 +218,7 @@ sub generic_enum_sync {
     my $dom_pref = shift;
     my $peer_pref = shift;
     my $pref_name = shift;
+    my $skip_site_prefixes = shift // [];
 
     my $dbh = $db_conn->{pair};
 
@@ -204,6 +244,7 @@ sub generic_enum_sync {
     foreach my $row (sort keys %{$db_hash}) {
         $row = $db_hash->{$row};
         next if $row->{label} eq 'default';
+        next if any { $row->{label} =~ /^$_/ } @{$skip_site_prefixes};
         if (!exists $config_hash->{$row->{label}}) {
             print "$pref_name $row->{label} does not exist anymore in config, delete from db\n";
             $enum_delete_sth->execute($row->{id});
