@@ -211,12 +211,17 @@ sub lb_and_extra_sockets_sync {
         }
     }
 
+    foreach my $extra_socket (keys %{$extra_sockets_config}) {
+        my $label = $extra_socket;
+        if ($multi_site) {
+            my $site_name = $current_site->{name} // 'unknown';
+            $label = "$site_name:$label";
+        }
+        $lb_pairs{$label} = $extra_sockets_config->{$extra_socket};
+    }
+
     generic_enum_sync(
-        { %lb_pairs,  ## no critic (ProhibitCommaSeparatedStatements)
-          $extra_sockets_config && ref $extra_sockets_config eq 'HASH'
-            ? %{$extra_sockets_config}
-            : (),
-        },
+        \%lb_pairs,
         $usr_pref, $dom_pref, $peer_pref,
         $pref_name,
         $skip_site_prefixes,
