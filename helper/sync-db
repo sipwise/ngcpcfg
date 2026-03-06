@@ -1,7 +1,6 @@
 #!/usr/bin/perl -CSD
 # Purpose: template toolkit helper script
 ################################################################################
-
 use strict;
 use warnings;
 use English;
@@ -14,14 +13,13 @@ use DateTime::TimeZone;
 use DateTime::TimeZone::Catalog;
 use List::Util qw(any none);
 
-sub sync_extra_sockets;
-sub db_connect;
-sub read_ngcp_roles;
+# vars
 
 my $config = {};
+
 foreach my $file (@ARGV) {
-  next unless -f $file;
-  $config = merge($config, LoadFile($file));
+    next unless -f $file;
+    $config = merge($config, LoadFile($file));
 }
 
 my $dbcredentials = "/etc/mysql/sipwise_extra.cnf";
@@ -38,52 +36,7 @@ my $db_info = {};
 
 my $dbname = $config->{ossbss}->{provisioning}->{database}->{name};
 
-unless(defined $dbname) {
-  print "Error: Could not determine provisioning db name\n";
-  exit 1;
-}
-
-foreach my $db_conn_type (@db_conn_types) {
-    next if $db_conn_type eq 'local' &&
-            ($ngcp_type ne 'carrier' || $ngcp_is_proxy ne "yes");
-
-    my $dbhost = $config->{database}->{$db_conn_type}->{dbhost};
-    my $dbport = $config->{database}->{$db_conn_type}->{dbport};
-
-    unless ($dbhost) {
-      print "Error: Could not determine '$db_conn_type' db hostname\n";
-      exit 1;
-    }
-    unless ($dbport) {
-      print "Error: Could not determine '$db_conn_type' db port\n";
-      exit 1;
-    }
-
-    $db_conn->{$db_conn_type} = db_connect($dbhost, $dbport);
-    $db_info->{$db_conn_type} = { host => $dbhost, port => $dbport };
-}
-
-exit 1 unless(sync_lb_and_extra_sockets(
-  $config->{kamailio}->{lb}->{extra_sockets},
-  1, 1, 1));
-
-exit 1 unless(sync_rtp_interfaces(
-  { map {my $tmp = $_; $tmp =~ s/:.*//; ($_ => $_, $tmp => $tmp)} @{$config->{rtp_interfaces}} },
-  1, 1, 1));
-
-exit 1 unless(sync_smsc_peers(
-  { map { ($_->{id} => $_->{id}) } @{$config->{sms}->{smsc}} },
-  0, 1, 0));
-
-exit 1 unless(sync_general_timezone($config->{general}->{timezone}));
-
-exit 1 unless(sync_db_timezones());
-
-exit 1 unless(sync_timezone_version());
-
-map { $_->disconnect; } values %${db_conn};
-
-exit 0;
+# funcs
 
 sub read_ngcp_roles {
     my $root = Config::Tiny->read($ngcp_roles_file, 'utf8');
@@ -149,17 +102,19 @@ sub get_multi_site_data {
 sub db_connect {
     my ($dbhost, $dbport) = @_;
 
-    my $dbh = DBI->connect("DBI:mysql:database=${dbname};host=${dbhost};port=${dbport};"
-                           . "mysql_read_default_file=${dbcredentials}",
-                           "", "", { PrintError => 0 });
-    unless ($dbh) {
-        die "Error: Could not connect to database '$dbname' at '$dbhost:$dbport' using '${dbcredentials}': $DBI::errstr\n";
+    my $dsn = "DBI:mysql:database=${dbname};host=${dbhost};port=${dbport};" .
+              "mysql_read_default_file=${dbcredentials}";
+
+    my $dbh = DBI->connect($dsn, "", "", { PrintError => 0 });
+    if ($DBI::err) {
+        die "Error: Could not connect to database '$dbname'" .
+            " at '$dbhost:$dbport' using '${dbcredentials}': $DBI::errstr\n";
     }
 
     return $dbh;
 }
 
-sub lb_and_extra_sockets_sync {
+sub sync_lb_and_extra_sockets {
     my $extra_sockets_config = shift;
     my $usr_pref = shift;
     my $dom_pref = shift;
@@ -167,10 +122,10 @@ sub lb_and_extra_sockets_sync {
     my $pref_name = shift;
 
     my $hosts = $config->{hosts}
-        // die 'Error: cannot fetch hosts from $config->{hosts}';
+        // die "Error: cannot fetch hosts\n";
 
     my $lb_config = $config->{kamailio}{lb}
-        // die 'Error: cannot fetch kamailio lb config from $config->{kamailio}{lb}';
+        // die "Error: cannot fetch kamailio lb config\n";
 
     my %lb_pairs = ();
     my %ports = (
@@ -230,7 +185,7 @@ sub lb_and_extra_sockets_sync {
     return 1;
 }
 
-sub rtp_interfaces_sync {
+sub sync_rtp_interfaces {
     my $rtp_interfaces_config = shift;
     my $usr_pref = shift;
     my $dom_pref = shift;
@@ -262,6 +217,34 @@ sub rtp_interfaces_sync {
     return 1;
 }
 
+sub sync_smsc_peers {
+    return generic_enum_sync(@_);
+}
+
+sub sync_general_timezone {
+    if ($ngcp_type eq 'carrier' && $ngcp_is_proxy eq 'yes') {
+        return do_sync_general_timezone(@_, 'pair') &&
+               do_sync_general_timezone(@_, 'local');
+    }
+    return do_sync_general_timezone(@_, 'pair');
+}
+
+sub sync_db_timezones {
+    if ($ngcp_type eq 'carrier' && $ngcp_is_proxy eq 'yes') {
+        return do_sync_db_timezones(@_, 'pair') &&
+               do_sync_db_timezones(@_, 'local');
+    }
+    return do_sync_db_timezones(@_, 'pair');
+}
+
+sub sync_timezone_version {
+    if ($ngcp_type eq 'carrier' && $ngcp_is_proxy eq 'yes') {
+        return do_sync_timezone_version(@_, 'pair') &&
+               do_sync_timezone_version(@_, 'local');
+    }
+    return do_sync_timezone_version(@_, 'pair');
+}
+
 sub generic_enum_sync {
     my $config_hash = shift;
     my $usr_pref = shift;
@@ -272,29 +255,47 @@ sub generic_enum_sync {
 
     my $dbh = $db_conn->{pair};
 
-    my $sth = $dbh->prepare("select id from voip_preferences where attribute=?");
-    $sth->execute($pref_name);
-    my $res = $sth->fetchrow_hashref();
-    unless (defined $res) {
-        print "Error: Could not find preference '$pref_name' in db\n";
-        return;
+    my ($pref_id) = $dbh->selectrow_array(<<SQL, undef, $pref_name);
+SELECT id FROM voip_preferences WHERE attribute=?
+SQL
+    if ($DBI::err) {
+        die "Cannot not fetch preference: $DBI::errstr\n";
     }
-    my $pref_id = $res->{id};
-    $sth->finish;
 
-    my $enum_insert_sth = $dbh->prepare("insert into voip_preferences_enum (preference_id, label, value, usr_pref, dom_pref, peer_pref) values(?, ?, ?, ?, ?, ?)");
-    my $enum_update_sth = $dbh->prepare("update voip_preferences_enum set value=? where id=?");
-    my $enum_delete_sth = $dbh->prepare("delete from voip_preferences_enum where id=?");
-    $sth = $dbh->prepare("select id, label, value from voip_preferences_enum where preference_id=?");
+    my $enum_insert_sth = $dbh->prepare(<<SQL);
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, peer_pref)
+VALUES
+(?, ?, ?, ?, ?, ?)
+SQL
+
+    my $enum_update_sth = $dbh->prepare(<<SQL);
+UPDATE voip_preferences_enum SET value=? WHERE id=?
+SQL
+
+    my $enum_delete_sth = $dbh->prepare(<<SQL);
+DELETE FROM voip_preferences_enum WHERE id=?
+SQL
+
+    my $sth = $dbh->prepare(<<SQL);
+SELECT id, label, value FROM voip_preferences_enum WHERE preference_id=?
+SQL
+
     $sth->execute($pref_id);
+    if ($DBI::err) {
+        die "Cannot not fetch preferences data: $DBI::errstr\n";
+    }
 
     my $db_hash = $sth->fetchall_hashref('label');
+
     $sth->finish;
 
     foreach my $row (sort keys %{$db_hash}) {
         $row = $db_hash->{$row};
+
         next if $row->{label} eq 'default';
         next if any { $row->{label} =~ /^$_/ } @{$skip_site_prefixes};
+
         if (!exists $config_hash->{$row->{label}}) {
             print "$pref_name $row->{label} does not exist anymore in config, delete from db\n";
             $enum_delete_sth->execute($row->{id});
@@ -307,6 +308,7 @@ sub generic_enum_sync {
             delete $config_hash->{$row->{label}};
         }
     }
+
     foreach my $label (sort keys %{$config_hash}) {
         print "insert new $pref_name $label=$config_hash->{$label} from config into db\n";
         $enum_insert_sth->execute($pref_id, $label, $config_hash->{$label},
@@ -319,48 +321,6 @@ sub generic_enum_sync {
     $enum_delete_sth->finish;
 
     return 1;
-}
-
-## lb nodes and kamailio.lb.extra_sockets handling: ##############################
-sub sync_lb_and_extra_sockets {
-    return lb_and_extra_sockets_sync(@_, 'outbound_socket');
-}
-
-## rtp_* interfaces handling: ##############################
-sub sync_rtp_interfaces {
-    return rtp_interfaces_sync(@_, 'rtp_interface');
-}
-#
-## smsc_* interfaces handling: ##############################
-sub sync_smsc_peers {
-    return generic_enum_sync(@_, 'smsc_peer');
-}
-
-## general.timezone handling: ##############################
-sub sync_general_timezone {
-    if ($ngcp_type eq 'carrier' && $ngcp_is_proxy eq 'yes') {
-        return do_sync_general_timezone(@_, 'pair') &&
-               do_sync_general_timezone(@_, 'local');
-    }
-    return do_sync_general_timezone(@_, 'pair');
-}
-
-## /usr/share/zoneinfo into MariaDB ##############################
-sub sync_db_timezones {
-    if ($ngcp_type eq 'carrier' && $ngcp_is_proxy eq 'yes') {
-        return do_sync_db_timezones(@_, 'pair') &&
-               do_sync_db_timezones(@_, 'local');
-    }
-    return do_sync_db_timezones(@_, 'pair');
-}
-
-## check ngcp.timezone version and upgrade the database if the version is changed ##############################
-sub sync_timezone_version {
-    if ($ngcp_type eq 'carrier' && $ngcp_is_proxy eq 'yes') {
-        return do_sync_timezone_version(@_, 'pair') &&
-               do_sync_timezone_version(@_, 'local');
-    }
-    return do_sync_timezone_version(@_, 'pair');
 }
 
 sub do_sync_general_timezone {
@@ -536,4 +496,82 @@ SQL
     return 1;
 }
 
-## END OF FILE #################################################################
+sub main {
+    unless ($dbname) {
+        print "Error: Could not determine provisioning db name\n";
+        return 1;
+    }
+
+    # connect to the dbs
+    foreach my $db_conn_type (@db_conn_types) {
+        next if $db_conn_type eq 'local' &&
+                ($ngcp_type ne 'carrier' || $ngcp_is_proxy ne "yes");
+
+        my $dbhost = $config->{database}->{$db_conn_type}->{dbhost};
+        my $dbport = $config->{database}->{$db_conn_type}->{dbport};
+
+        unless ($dbhost) {
+          print "Error: Could not determine '$db_conn_type' db hostname\n";
+          return 1;
+        }
+
+        unless ($dbport) {
+          print "Error: Could not determine '$db_conn_type' db port\n";
+          return 1;
+        }
+
+        $db_conn->{$db_conn_type} = db_connect($dbhost, $dbport);
+        $db_info->{$db_conn_type} = { host => $dbhost, port => $dbport };
+    }
+
+    # lb nodes and kamailio.lb.extra_sockets
+    sync_lb_and_extra_sockets(
+      $config->{kamailio}->{lb}->{extra_sockets},
+      1, 1, 1,
+      'outbound_socket',
+    ) or return 1;
+
+    # rtp_* interfaces
+    sync_rtp_interfaces(
+        {
+            map {
+                my $tmp = $_;
+                $tmp =~ s/:.*//; ($_ => $_, $tmp => $tmp);
+            } @{$config->{rtp_interfaces}}
+        },
+        1, 1, 1,
+        'rtp_interface',
+    ) or return 1;
+
+    # smsc_* interfaces
+    sync_smsc_peers(
+        {
+            map { ($_->{id} => $_->{id}) } @{$config->{sms}->{smsc}}
+        },
+        0, 1, 0,
+        'smsc_peer',
+    ) or return 1;
+
+    # general.timezone
+    sync_general_timezone($config->{general}->{timezone}) or return 1;
+
+    # /usr/share/zoneinfo into MariaDB
+    sync_db_timezones() or return 1;
+
+    # check ngcp.timezone version and upgrade the database
+    # if the version is changed
+    sync_timezone_version() or return 1;
+
+    # disconnect from dbs
+    map { $_->disconnect; } values %${db_conn};
+
+    return 0;
+}
+
+# code
+
+my $rc = main();
+exit $rc;
+
+# eof
+
