@@ -125,6 +125,27 @@ sub get_current_site {
     };
 }
 
+sub get_multi_site_data {
+    my $multi_site = $config->{sites_enable} // 'no' eq 'yes';
+    my $sites = $config->{sites} // {};
+    my $current_site = get_current_site();
+    my $skip_site_prefixes = [];
+
+    if ($multi_site && $current_site) {
+        foreach my $site_name (keys %{$sites}) {
+            next if $site_name eq $current_site->{name};
+            push @{$skip_site_prefixes}, "$site_name:";
+        }
+    }
+
+    return {
+        sites_enable => $multi_site,
+        sites => $sites,
+        current_site => $current_site,
+        skip_site_prefixes => $skip_site_prefixes,
+    }
+}
+
 sub db_connect {
     my ($dbhost, $dbport) = @_;
 
@@ -158,17 +179,9 @@ sub lb_and_extra_sockets_sync {
         tls => $lb_config->{tls}{port},
     );
 
-    my $multi_site = $config->{sites_enable} // 'no' eq 'yes';
-    my $sites = $config->{sites} // {};
-    my $current_site = get_current_site();
-    my $skip_site_prefixes = [];
-
-    if ($multi_site && $current_site) {
-        foreach my $site_name (keys %{$sites}) {
-            next if $site_name eq $current_site->{name};
-            push @{$skip_site_prefixes}, "$site_name:";
-        }
-    }
+    my $multi_site_data = get_multi_site_data();
+    my ($multi_site, $current_site, $skip_site_prefixes) =
+        @{$multi_site_data}{qw/sites_enable current_site skip_site_prefixes/};
 
     for my $host (keys %{$hosts}) {
         my $host_ref = $hosts->{$host};
