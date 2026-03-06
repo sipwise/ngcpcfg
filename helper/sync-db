@@ -230,6 +230,38 @@ sub lb_and_extra_sockets_sync {
     return 1;
 }
 
+sub rtp_interfaces_sync {
+    my $rtp_interfaces_config = shift;
+    my $usr_pref = shift;
+    my $dom_pref = shift;
+    my $peer_pref = shift;
+    my $pref_name = shift;
+
+    my %rtp_interfaces = ();
+
+    my $multi_site_data = get_multi_site_data();
+    my ($multi_site, $current_site, $skip_site_prefixes) =
+        @{$multi_site_data}{qw/sites_enable current_site skip_site_prefixes/};
+
+    for my $rtp_interface (keys %{$rtp_interfaces_config}) {
+        my $label = "$rtp_interface";
+        if ($multi_site) {
+            my $site_name = $current_site->{name} // 'unknown';
+            $label = "$site_name:$rtp_interface";
+        }
+        $rtp_interfaces{$label} = $rtp_interface;
+    }
+
+    generic_enum_sync(
+        \%rtp_interfaces,
+        $usr_pref, $dom_pref, $peer_pref,
+        $pref_name,
+        $skip_site_prefixes,
+    );
+
+    return 1;
+}
+
 sub generic_enum_sync {
     my $config_hash = shift;
     my $usr_pref = shift;
@@ -296,7 +328,7 @@ sub sync_lb_and_extra_sockets {
 
 ## rtp_* interfaces handling: ##############################
 sub sync_rtp_interfaces {
-    return generic_enum_sync(@_, 'rtp_interface');
+    return rtp_interfaces_sync(@_, 'rtp_interface');
 }
 #
 ## smsc_* interfaces handling: ##############################
