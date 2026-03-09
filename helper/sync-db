@@ -80,15 +80,16 @@ sub get_current_site {
 
 sub get_multi_site_data {
     my $multi_site = $config->{sites_enable} // 'no' eq 'yes';
+
+    return unless $multi_site;
+
     my $sites = $config->{sites} // {};
     my $current_site = get_current_site();
     my $skip_site_prefixes = [];
 
-    if ($multi_site && $current_site) {
-        foreach my $site_name (keys %{$sites}) {
-            next if $site_name eq $current_site->{name};
-            push @{$skip_site_prefixes}, "$site_name:";
-        }
+    foreach my $site_name (keys %{$sites}) {
+        next if $site_name eq $current_site->{name};
+        push @{$skip_site_prefixes}, "$site_name:";
     }
 
     return {
