@@ -12,7 +12,9 @@ mapping:
         type: map
         required: yes
         mapping:
-          "id":     { type: int, required: yes, range: { min: 1 },
-                      desc: "Specify the site ID. Must be unique." }
-          "role":   { type: str, required: yes,
-                      desc: "Specify the site role." }
+          "id":        { type: int, required: yes, range: { min: 1 },
+                         desc: "Specify the site ID. Must be unique." }
+          "role":      { type: str, required: yes,
+                         desc: "Specify the site role." }
+          "location":  { type: str, required: yes,
+                         desc: "Specify the site location." }
