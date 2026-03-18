@@ -871,8 +871,8 @@ APT::Install-Recommends "2";
  # some comment
 -APT::Install-Recommends "0";
 +APT::Install-Recommends "2";
-"""
-    )  # noqa: W293
+"""  # noqa: W293
+    )
 
     out = ngcpcfgcli(
         "patch",
@@ -956,8 +956,8 @@ APT::Install-Recommends "2";
  # some comment
 -APT::Install-Recommends "0";
 +APT::Install-Recommends "2";
-"""
-    )  # noqa: W293
+"""  # noqa: W293
+    )
 
     out = ngcpcfgcli(
         "patch",
