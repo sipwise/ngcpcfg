@@ -331,20 +331,30 @@ sub get_redis_info
     my $host = $self->get_hostname;
     my $is_db_role = $self->has_role($host, 'db');
 
+    # In case of standard single-site system, both the connections to
+    # 'pair' and 'ha' redis/valkey services have to point to the default port
     my $info = {
-        ports => {
-            local => $cfg->{redis}{port} // 0,
-            central => $cfg->{redis}{port} // 0,
-            norep => $cfg->{redis}{port} ? $cfg->{redis}{port} + 1 : 0,
+        pair => {
+            host => $cfg->{database}{pair}{dbhost} // 'localhost',
+            port => $cfg->{database}{pair}{redis_port} // 0,
+        },
+        central => {
+            host => $cfg->{database}{central}{dbhost} // 'localhost',
+            port => $cfg->{database}{central}{redis_port} // 0,
+        },
+        ha => {
+            host => $cfg->{database}{central}{dbhost} // 'localhost',
+            port => $cfg->{database}{pair}{redis_port} // 0,
+        },
+        norep => {
+            host => $cfg->{database}{pair}{dbhost} // 'localhost',
+            port => $cfg->{database}{norep}{redis_port} // 0,
         },
     };
-    my $ports= $info->{ports};
 
+    # In case of multi-site system, then ha has to point to the haproxy service port
     if ($cfg->{sites_enable} eq 'yes' && $redis_flavor eq 'valkey') {
-        $ports->{central} = $cfg->{database}{central}{redis_ha_port};
-        if ($is_db_role) {
-            $ports->{local} = $ports->{central};
-        }
+        $info->{ha}->{port} = $cfg->{database}{central}{redis_ha_port};
     }
 
     return $info;
