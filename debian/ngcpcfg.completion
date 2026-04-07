@@ -101,6 +101,9 @@ _ngcpcfg()
             fi
             return
             ;;
+        post-build)
+            return
+            ;;
         pull)
             return
             ;;
