@@ -50,7 +50,7 @@ usage() {
   printf "Usage: %s <action> [<opts>]
 
 Actions:
-  apply [<msg>]       a short-cut for build-services-commit
+  apply [<msg>]       a short-cut for build/post-build/services/commit
   build [<opts>]      generate/update configuration files
   cat [<types>]       print YAML configuration files
   check [<path>]      validate YAML configuration files
@@ -64,6 +64,7 @@ Actions:
   initialise          initialise setup (to be executed only once on setup)
   log [<opts>]        show log of config changes
   patch [<opts>]      create customtt files using patchtt and templates
+  post-build          perform needed actions after building files
   services [<opts>]   execute service handlers for modified configuration files
   set [<opts>]        set YAML option in defined file
   show [<id>]         show latest config change (or <id> if specified)
@@ -173,6 +174,7 @@ case ${1:-} in
   clean|\
   commit|\
   encrypt|\
+  post-build|\
   pull|\
   push|\
   push-parallel|\
