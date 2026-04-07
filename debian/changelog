@@ -1,3 +1,33 @@
+ngcp-ngcpcfg (14.2.1.0+0~mr14.2.1.0) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [d2dea4b] MT#64301 add ngcp.get_redis_info() helper
+  * [d53e40b] MT#64441 sync-db add pair and local db support
+  * [d84106f] MT#58352 %lb_pairs ## no critic (ProhibitCommaSeparatedStatements)
+  * [695da48] MT#64441 return 1 from do_sync_db_timezones() on when ok
+  * [7c608b6] MT#64445 sync-db helper change central db connection to pair
+  * [dda972e] MT#64114 helpers/sync-db add outbound_socket multi site support
+  * [a7a6cfd] MT#64615 add get_multi_site_data common function
+  * [9113816] MT#64114 sync-db extra_sockets add multi site support
+  * [b582f7e] MT#64589 add rtp_interface sync multi site support
+  * [cf3270b] MT#64615 refactor helper/sync-db for less complexity
+  * [8b6a8ae] MT#64615 sync-db skip get_current_site() for non multi site
+
+  [ Guillem Jover ]
+  * [afb8da8] MT#62763 Fix pycodestyle issues
+  * [db226db] MT#64514 Remove instances support
+  * [48ba665] MT#62763 Fix pycodestyle issues
+  * [ad0cf94] MT#63742 Add new post-build script to handle database actions
+  * [1302daa] MT#63742 Move database actions from commit to post-build
+
+  [ Jose Su ]
+  * [7435452] MT#64732 Add location parameter for sites.yml
+
+  [ Marco Capetta ]
+  * [3688740] MT#64750 Rework the 'get_redis_info' function
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 07 Apr 2026 12:58:13 +0200
+
 ngcp-ngcpcfg (14.2.0.0+0~mr14.2.0.0) unstable; urgency=medium
 
   [ Guillem Jover ]
