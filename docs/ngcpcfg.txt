@@ -370,8 +370,8 @@ arguments.
   **post-build**::
 
 Performs needed actions after building the files, and before starting the
-services, such as synchronizing the database credentials or updating its
-timestamps.
+services, such as synchronizing the database credentials, grants and
+timezones.
 
   **clean** [--all] [--branches] [--force] [--help] [--reset-master] [--stashes] [--tracked-files] [--untracked-files]::
 
