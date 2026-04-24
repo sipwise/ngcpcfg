@@ -1,7 +1,6 @@
 package NGCP::Template::Plugin::Utils 1.000;
 
-use strict;
-use warnings;
+use v5.40;
 
 use parent qw(Template::Plugin);
 

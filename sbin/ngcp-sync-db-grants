@@ -2,8 +2,9 @@
 #----------------------------------------------------------------------
 # Synchronizes mysql grants from a schema template
 #----------------------------------------------------------------------
-use strict;
-use warnings;
+
+use v5.40;
+
 use English;
 use DBI;
 use Getopt::Long;

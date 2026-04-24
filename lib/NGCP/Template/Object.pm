@@ -1,7 +1,6 @@
 package NGCP::Template::Object 1.000;
 
-use strict;
-use warnings;
+use v5.40;
 
 use List::Util qw(any);
 

@@ -2,8 +2,7 @@
 # Purpose: validate yml file format
 ################################################################################
 
-use strict;
-use warnings;
+use v5.40;
 
 use YAML::XS;
 use File::Temp qw/tempfile/;

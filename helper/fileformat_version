@@ -2,8 +2,7 @@
 # Purpose: report internal->fileformat setting of /etc/ngcp-config/config.yml
 ################################################################################
 
-use strict;
-use warnings;
+use v5.40;
 
 use YAML::XS;
 

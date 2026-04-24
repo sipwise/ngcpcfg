@@ -1,7 +1,6 @@
 package NGCP::Template 1.000;
 
-use strict;
-use warnings;
+use v5.40;
 
 use Carp;
 use NGCP::Template::Object;

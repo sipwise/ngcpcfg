@@ -1,7 +1,6 @@
 #!/usr/bin/perl -CSD
 
-use warnings;
-use strict;
+use v5.40;
 
 use Carp;
 use Data::Validate::IP;

@@ -2,8 +2,9 @@
 #----------------------------------------------------------------------
 # Synchronizes passwords from constants.yml with MySQL
 #----------------------------------------------------------------------
-use strict;
-use warnings;
+
+use v5.40;
+
 use English qw( -no_match_vars );
 use DBI qw(:sql_types);
 use Config::Tiny;
