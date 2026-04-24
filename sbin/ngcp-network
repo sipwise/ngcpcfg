@@ -258,15 +258,15 @@ sub get_ip6_addrs {
     logger("get_ip6_addr for device $interface");
     logger("$cmd @args");
 
-    my $childpid = open3 'HIS_WRITE', 'HIS_OUT', 'HIS_ERR', $cmd, @args;
-    my @stderr   = <HIS_ERR>;
-    my @stdout   = <HIS_OUT>;
+    my $childpid = open3 my $fh_in, my $fh_out, my $fh_err, $cmd, @args;
+    my @stderr   = <$fh_err>;
+    my @stdout   = <$fh_out>;
 
     logger("stdout: @stdout");
     logger("stderr: @stderr");
 
-    close HIS_OUT or croak 'Failed to close stdout';
-    close HIS_ERR or croak 'Failed to close stderr';
+    close $fh_out or croak 'Failed to close stdout';
+    close $fh_err or croak 'Failed to close stderr';
 
     waitpid $childpid, 0;
     if ($CHILD_ERROR) {
