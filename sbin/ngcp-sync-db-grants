@@ -493,7 +493,7 @@ sub main {
 
     $dbh->begin_work or die "Cannot start transaction: $DBI::errstr\n";
 
-    eval {
+    try {
         my $rc = 0;
 
         create_protected_user($TEMP_GRANT_USER, $TEMP_GRANT_HOST);
@@ -520,11 +520,10 @@ sub main {
         if ($rc) {
             flush_privs();
         }
-    };
-    if ($@) {
+    } catch ($e) {
         $dbh->rollback if $dbh;
         $dbh->disconnect if $dbh;
-        die "Error: $@";
+        die "Error: $e";
     }
 
     $dbh->commit or die "Cannot commit transaction: $DBI::errstr\n";

@@ -332,7 +332,7 @@ sub do_sync_general_timezone {
     my $ok = 1;
     my ($sql_log_bin) = $dbh->selectrow_array('SELECT @@sql_log_bin');
 
-    eval {
+    try {
         die "Error: general.timezone value is not set\n" unless $tz;
 
         $dbh->do("SET sql_log_bin=0");
@@ -353,9 +353,8 @@ SQL
         if ($DBI::err) {
             die "Error: Could not insert into ngcp.timezone: $DBI::errstr\n";
         }
-    };
-    if ($@) {
-        print $@;
+    } catch ($e) {
+        print $e;
         $ok = 0;
     }
     $dbh->do("SET sql_log_bin=$sql_log_bin");
@@ -378,7 +377,7 @@ sub do_sync_db_timezones {
     chomp $tzinfo_version;
 
     my $sql = '';
-    eval {
+    try {
         $dbh->begin_work() or die "Cannot start tx: $DBI::errstr\n";
         my ($cur_tzinfo_version) = $dbh->selectrow_array(<<SQL)
 SELECT version
@@ -429,10 +428,8 @@ INSERT INTO ngcp.tzinfo_version SET version = ?
     ON DUPLICATE KEY UPDATE version = ?, modified_at = CURRENT_TIMESTAMP
 SQL
             or die "Cannot insert into ngcp.tzinfo_version: $DBI::errstr\n";
-    };
-    my $err = $EVAL_ERROR;
-    if ($err) {
-        print $err;
+    } catch ($e) {
+        print $e;
         $dbh->rollback();
         return;
     }
@@ -453,7 +450,7 @@ sub do_sync_timezone_version {
     }
 
     my $sql = '';
-    eval {
+    try {
         $dbh->begin_work() or die "Cannot start tx: $DBI::errstr\n";
         my ($cur_tz_version) = $dbh->selectrow_array(<<SQL)
 SELECT COALESCE(version,'')
@@ -486,10 +483,8 @@ SQL
 UPDATE ngcp.timezone SET version = ?
 SQL
             or die "Cannot update ngcp.timezone: $DBI::errstr\n";
-    };
-    my $err = $EVAL_ERROR;
-    if ($err) {
-        print $err;
+    } catch ($e) {
+        print $e;
         $dbh->rollback();
         return;
     }

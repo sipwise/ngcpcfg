@@ -284,10 +284,11 @@ sub flush_privs {
 }
 
 sub main {
-    eval {
+    try {
         $yml = YAML::XS::LoadFile($CONSTANTS_YML);
-    };
-    die "Can't read constants file: $EVAL_ERROR\n" if $EVAL_ERROR;
+    } catch ($e) {
+        die "Can't read constants file: $e\n";
+    }
 
     my ($dbhost, $dbport);
     if (my $db_cfg = Config::Tiny->read($DB_CFG)) {
@@ -315,8 +316,7 @@ sub main {
 
     $dbh->begin_work or die "Cannot start transaction: $DBI::errstr\n";
 
-    eval {
-
+    try {
         my $rc = sync_mysql_data();
 
         if ($rc) {
@@ -324,11 +324,10 @@ sub main {
         } else {
             log_debug("nothing to update");
         }
-    };
-    if ($@) {
+    } catch ($e) {
         $dbh->rollback if $dbh;
         $dbh->disconnect if $dbh;
-        die "Error: $@";
+        die "Error: $e";
     }
 
     $dbh->commit if $dbh;

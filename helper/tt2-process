@@ -211,14 +211,12 @@ sub process_input {
     # Assume safe defaults.
     umask 0077;
 
-    eval {
+    try {
         process_template($tt, $config, $input, $output);
-    };
-    if ($@) {
-        warn $@;
-        error("Generating $output based on $input: FAILED");
-    } else {
         info("Generating $output: OK");
+    } catch ($e) {
+        warn $e;
+        error("Generating $output based on $input: FAILED");
     }
 
     # Execute postbuild script.

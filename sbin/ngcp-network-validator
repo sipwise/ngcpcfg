@@ -261,12 +261,12 @@ if (defined $ENV{NGCP_KWALIFY_VERBOSE}) {
 
 my $errors = 0;
 
-eval {
+try {
     Kwalify::validate($schema, $yaml);
-} or do {
-    warn $@;
+} catch ($e) {
+    warn $e;
     $errors++;
-};
+}
 
 # Perform out-of-schema checks.
 $errors += miss_check(\%miss_peer, '[/hosts/<host>] Missing peer');
