@@ -14,6 +14,8 @@ mapping:
         mapping:
           "id":        { type: int, required: yes, range: { min: 1 },
                          desc: "Specify the site ID. Must be unique." }
+          "name":      { type: text, required: yes,
+                         desc: "Specify the site name. Used for user facing interfaces." }
           "role":      { type: str, required: yes,
                          desc: "Specify the site role." }
           "location":  { type: str, required: yes,
