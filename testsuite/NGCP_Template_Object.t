@@ -5,7 +5,7 @@ use v5.40;
 use Cwd;
 use Test::More;
 
-plan tests => 54;
+plan tests => 57;
 
 use_ok('NGCP::Template::Object');
 
@@ -47,8 +47,14 @@ my $cfg_pro = {
             status => 'offline',
         },
     },
+    # FIXME: Site definition in the config root node.
+    id => 1,
+    role => 'primary',
+    location => 'Nowhere Else',
 };
+$cfg_pro->{sites_enable} = 'yes';
 $cfg_pro->{sites}{current} = $cfg_pro;
+$cfg_pro->{sites}{wien} = $cfg_pro;
 
 my $cfg_carrier = {
     general => {
@@ -81,8 +87,16 @@ my $cfg_carrier = {
         },
 
     },
+    # FIXME: Site definition in the config root node.
+    id => 1,
+    name => 'wien',
+    role => 'primary',
+    location => 'Nowhere Else',
+
 };
+$cfg_carrier->{sites_enable} = 'yes';
 $cfg_carrier->{sites}{current} = $cfg_carrier;
+$cfg_carrier->{sites}{site1} = $cfg_carrier;
 
 
 my $obj_ce = NGCP::Template::Object->new($cfg_ce);
@@ -139,6 +153,11 @@ ok(!$obj_carrier->has_role('prx01a', 'li_dist'),
     ok($obj_carrier->has_role('prx01a', 'li_dist'),
         'host prx01a has li_dist virtual role (with cluster_sets as distributed)');
 }
+
+# Check get_site_name().
+is($obj_pro->get_site_name('wien'), 'wien', 'backwards compat site name');
+is($obj_carrier->get_site_name('wien'), 'wien', 'backwards compat site name');
+is($obj_carrier->get_site_name('site1'), 'wien', 'backwards compat site name');
 
 # Check get_peername().
 is($obj_ce->get_peername('self'), undef, 'host self has no peer');

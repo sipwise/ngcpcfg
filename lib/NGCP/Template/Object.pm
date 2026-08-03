@@ -143,6 +143,34 @@ sub get_version
     return $version;
 }
 
+=item $sitename = $t->get_site_name($site)
+
+Returns the site name of $site.
+
+This is used for backwards compatibility, from when we stored the site name
+as the sites hash key, where nowadays we store it in the "name" item in the
+hash.
+
+=cut
+
+sub get_site_name($self, $site_name)
+{
+    if (exists $self->{config}{sites}{$site_name}) {
+        if (exists $self->{config}{sites}{$site_name}{name}) {
+            return $self->{config}{sites}{$site_name}{name};
+        } else {
+            return $site_name;
+        }
+    } else {
+        foreach my $site_id (keys %{$self->{config}{sites}}) {
+            my $site = $self->{config}{sites}{$site_id};
+            return unless exists $site->{name};
+            return $site_name if $site_name eq $site->{name};
+        }
+    }
+    return;
+}
+
 =item $hostname = $t->get_hostname()
 
 Returns the hostname of the node calling this function.
