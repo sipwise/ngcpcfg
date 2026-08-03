@@ -326,7 +326,7 @@ sub do_sync_db_timezones {
 
     my $sql = '';
     eval {
-        $dbh->begin_work() or die "Cannot start tx: $DBI::errstr\n";
+        $dbh->begin_work() if $dbh->{AutoCommit};
         my ($cur_tzinfo_version) = $dbh->selectrow_array(<<SQL)
 SELECT version
   FROM ngcp.tzinfo_version
@@ -401,7 +401,7 @@ sub do_sync_timezone_version {
 
     my $sql = '';
     eval {
-        $dbh->begin_work() or die "Cannot start tx: $DBI::errstr\n";
+        $dbh->begin_work() if $dbh->{AutoCommit};
         my ($cur_tz_version) = $dbh->selectrow_array(<<SQL)
 SELECT COALESCE(version,'')
   FROM ngcp.timezone
