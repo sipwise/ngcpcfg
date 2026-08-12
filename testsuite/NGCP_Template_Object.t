@@ -5,7 +5,7 @@ use v5.40;
 use Cwd;
 use Test::More;
 
-plan tests => 57;
+plan tests => 71;
 
 use_ok('NGCP::Template::Object');
 
@@ -19,6 +19,7 @@ my $cfg_ce = {
     hosts => {
         self => {
             role => [ qw(db lb proxy rtp) ],
+            nodename => 'spce',
             status => 'online',
         },
     },
@@ -35,14 +36,17 @@ my $cfg_pro = {
     hosts => {
         sp1 => {
             role => [ qw(mgmt db lb proxy rtp storage) ],
+            nodename => 'sp1',
             peer => 'sp2',
             status => 'online',
         },
         sp2 => {
+            nodename => 'sp2',
             peer => 'sp3',
             status => 'inactive',
         },
         sp3 => {
+            nodename => 'sp3',
             peer => 'sp1',
             status => 'offline',
         },
@@ -69,20 +73,27 @@ my $cfg_carrier = {
     hosts => {
         prx01a => {
             role => [ qw(li proxy) ],
+            nodename => 'sp1',
             peer => 'prx01b',
             dbnode => 'db01',
             status => 'online',
         },
         web01a => {
             role => [ qw(mgmt) ],
+            nodename => 'sp1',
+            peer => 'web01a',
             status => 'online',
         },
         web01b => {
             role => [ qw(mgmt) ],
+            nodename => 'sp2',
+            peer => 'web01c',
             status => 'inactive',
         },
         web01c => {
             role => [ qw(mgmt) ],
+            nodename => 'sp3',
+            peer => 'web01a',
             status => 'offline',
         },
 
@@ -219,6 +230,38 @@ is_deeply([ $obj_carrier->get_hosts({ status => [ qw(online offline) ] }) ],
     [ qw(prx01a web01a web01c) ], 'host list for Carrier (online offline)');
 is_deeply([ $obj_carrier->get_hosts({ status => [ qw(inactive) ] }) ],
     [ qw(web01b) ], 'host list for Carrier (inactive)');
+
+# Check get_nodes().
+is_deeply([ $obj_ce->get_nodes() ],
+    [ qw(spce) ], 'node list for CE (default)');
+is_deeply([ $obj_pro->get_nodes() ],
+    [ qw(sp1 sp2) ], 'node list for PRO (default)');
+is_deeply([ $obj_pro->get_nodes({ status => [ qw(online offline) ] }) ],
+    [ qw(sp1 sp3) ], 'node list for PRO (online offline)');
+is_deeply([ $obj_pro->get_nodes({ status => [ qw(inactive) ] }) ],
+    [ qw(sp2) ], 'node list for PRO (inactive)');
+is_deeply([ $obj_carrier->get_nodes() ],
+    [ qw(sp1 sp2) ], 'node list for Carrier (default)');
+is_deeply([ $obj_carrier->get_nodes({ status => [ qw(online offline) ] }) ],
+    [ qw(sp1 sp3) ], 'node list for Carrier (online offline)');
+is_deeply([ $obj_carrier->get_nodes({ status => [ qw(inactive) ] }) ],
+    [ qw(sp2) ], 'node list for Carrier (inactive)');
+
+# Check get_pairs().
+is_deeply([ $obj_ce->get_pairs() ],
+    [ qw(spce) ], 'pair list for CE (default)');
+is_deeply([ $obj_pro->get_pairs() ],
+    [ qw(sp) ], 'pair list for PRO (default)');
+is_deeply([ $obj_pro->get_pairs({ status => [ qw(online offline) ] }) ],
+    [ qw(sp) ], 'pair list for PRO (online offline)');
+is_deeply([ $obj_pro->get_pairs({ status => [ qw(inactive) ] }) ],
+    [ qw(sp) ], 'pair list for PRO (inactive)');
+is_deeply([ $obj_carrier->get_pairs() ],
+    [ qw(prx01 web01) ], 'pair list for Carrier (default)');
+is_deeply([ $obj_carrier->get_pairs({ status => [ qw(online offline) ] }) ],
+    [ qw(prx01 web01) ], 'pair list for Carrier (online offline)');
+is_deeply([ $obj_carrier->get_pairs({ status => [ qw(inactive) ] }) ],
+    [ qw(web01) ], 'pair list for Carrier (inactive)');
 
 # Check net_ip_expand().
 is($obj_ce->net_ip_expand('1:2::5:20'),

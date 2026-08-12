@@ -20,7 +20,7 @@ package NGCP::Template::Object 1.000;
 
 use v5.40;
 
-use List::Util qw(any);
+use List::Util qw(any uniq);
 
 =head1 METHODS
 
@@ -429,6 +429,54 @@ sub get_hosts
     }
 
     my @res = sort @hosts;
+    return @res;
+}
+
+=item @hosts = $t->get_nodes([$filter])
+
+Returns an array of nodes that match the %filter criteria.
+If no %filter has been specified, it returns all nodes.
+
+The current filter options are the same as $t->get_hosts().
+
+=cut
+
+sub get_nodes($self, $filter //= {})
+{
+    my $site = $filter->{site} // 'current';
+    my @hosts = $self->get_hosts($filter);
+    my $hosts = $self->{config}{sites}{$site}{hosts};
+
+    my @nodes;
+    foreach my $host (@hosts) {
+        push @nodes, $hosts->{$host}{nodename};
+    }
+
+    my @res = uniq sort @nodes;
+    return @res;
+}
+
+=item @hosts = $t->get_pairs([$filter])
+
+Returns an array of pairs that match the %filter criteria.
+If no %filter has been specified, it returns all pairs.
+
+The current filter options are the same as $t->get_hosts().
+
+=cut
+
+sub get_pairs($self, $filter //= {})
+{
+    my $site = $filter->{site} // 'current';
+    my @hosts = $self->get_hosts($filter);
+    my $hosts = $self->{config}{sites}{$site}{hosts};
+
+    my @pairs;
+    foreach my $host (@hosts) {
+        push @pairs, $self->get_pairname($host);
+    }
+
+    my @res = uniq sort @pairs;
     return @res;
 }
 
