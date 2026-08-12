@@ -1,8 +1,39 @@
+=encoding UTF-8
+
+=head1 NAME
+
+NGCP::Template::Object - NGCP object variable for Template::Toolkit framework
+
+=head1 VERSION
+
+Version 1.000
+
+=head1 DESCRIPTION
+
+This module provides the methods for the ngcp object that can be used within
+the NGCP templates. This makes it easier to use instead of the old library
+of code executed via the C<PROCESS> directive.
+
+=cut
+
 package NGCP::Template::Object 1.000;
 
 use v5.40;
 
 use List::Util qw(any);
+
+=head1 METHODS
+
+=over 8
+
+=item $t = NGCP::Template::Object->new($config)
+
+Create a new object that can be used from within the Template Toolkit, via
+the B<ngcp> internal variable, such as C<ngcp.some_method(argument)>.
+
+The $config argument contains the deserialized ngcp-config YAML configuration.
+
+=cut
 
 sub new
 {
@@ -16,6 +47,15 @@ sub new
     return bless $self, $class;
 }
 
+=item $cpus = $t->get_online_cpus()
+
+Returns the number of online CPUs on the system.
+
+This can be used to compute values in templates that depend on the amount
+of cores.
+
+=cut
+
 sub get_online_cpus
 {
     my $self = shift;
@@ -26,6 +66,12 @@ sub get_online_cpus
 
     return $nproc // 1;
 }
+
+=item $bool = $t->get_supported_roles()
+
+Returns the list of roles supported by NGCP.
+
+=cut
 
 sub get_supported_roles
 {
@@ -40,6 +86,12 @@ sub get_supported_roles
         storage
     ) ];
 }
+
+=item $bool = $t->has_role($hostname, $role)
+
+Checks whether the $hostname node has the $role.
+
+=cut
 
 sub has_role
 {
@@ -67,6 +119,12 @@ sub has_role
     return 0;
 }
 
+=item $version = $t->get_version()
+
+Returns the NGCP version.
+
+=cut
+
 sub get_version
 {
     my $self = shift;
@@ -85,6 +143,12 @@ sub get_version
     return $version;
 }
 
+=item $hostname = $t->get_hostname()
+
+Returns the hostname of the node calling this function.
+
+=cut
+
 sub get_hostname
 {
     my $self = shift;
@@ -95,6 +159,13 @@ sub get_hostname
 
     return $hostname;
 }
+
+=item $nodename = $t->get_nodename([$hostname])
+
+Returns the nodename of the node calling this function, or of $hostname
+if specified.
+
+=cut
 
 sub get_nodename
 {
@@ -135,6 +206,13 @@ sub get_nodename
     return $nodename;
 }
 
+=item $pairname = $t->get_pairname($hostname)
+
+Returns the pair name for a given $hostname. This is the shared HA name for
+a pair of nodes (for example 'db01' for 'db01a').
+
+=cut
+
 sub get_pairname
 {
     my ($self, $hostname) = @_;
@@ -155,6 +233,12 @@ sub get_pairname
     die "Error: unknown hostname format $hostname for this host type\n";
 }
 
+=item $peername = $t->get_peername($hostname)
+
+Returns the peer name for a given $hostname.
+
+=cut
+
 sub get_peername
 {
     my ($self, $hostname) = @_;
@@ -165,6 +249,14 @@ sub get_peername
 
     return $self->{config}{hosts}{$hostname}{peer};
 }
+
+=item @sibnames = $t->get_sibnames($hostname)
+
+Returns a sorted list of sibling names for the pair of a given $hostname.
+This is all other hostnames that are part of the same pair, except for
+$hostname.
+
+=cut
 
 sub get_sibnames
 {
@@ -185,6 +277,13 @@ sub get_sibnames
     return @res;
 }
 
+=item $firstname = $t->get_firstname($hostname)
+
+Returns the (alphabetically) first hostname of a node pair for a given
+$hostname.
+
+=cut
+
 sub get_firstname
 {
     my ($self, $hostname) = @_;
@@ -198,6 +297,12 @@ sub get_firstname
     }
 }
 
+=item $dbname = $t->get_dbname($hostname)
+
+Returns the database name for this node.
+
+=cut
+
 sub get_dbnode
 {
     my ($self, $hostname) = @_;
@@ -207,6 +312,12 @@ sub get_dbnode
     }
     return $self->{config}{hosts}{$hostname}{dbnode};
 }
+
+=item $mgmtnode = $t->get_mgmt_pairname()
+
+Returns the NGCP management node pairname.
+
+=cut
 
 sub get_mgmt_pairname
 {
@@ -229,6 +340,13 @@ sub get_mgmt_pairname
     return;
 }
 
+=item $mgmtnode = $t->get_mgmt_node()
+
+This function is a deprecated alias for $t->get_mgmt_pairname(). It will be
+removed in the future.
+
+=cut
+
 sub get_mgmt_node
 {
     my $self = shift;
@@ -236,6 +354,29 @@ sub get_mgmt_node
     warnings::warnif('deprecated', 'deprecated alias for get_mgmt_pairname()');
     return $self->get_mgmt_pairname();
 }
+
+=item @hosts = $t->get_hosts($filter)
+
+Returns an array of hosts that match the %filter criteria.
+If no %filter has been specified, it returns all hosts.
+The current filter options are:
+
+=over
+
+=item B<site>
+
+This is a scalar that specifies the site name to use.
+It defaults to B<current>.
+
+=item B<status>
+
+This is an arrayref that contains a list of the status names to filter on,
+from one of B<online>, B<offline> and B<inactive>.
+The default status list is B<online> and B<inactive>.
+
+=back
+
+=cut
 
 sub get_hosts
 {
@@ -263,6 +404,13 @@ sub get_hosts
     return @res;
 }
 
+=item $ssh_pub_keye = $t->get_ssh_pub_key($key_type)
+
+Returns the SSH public key with $key_type ('rsa', 'ed25519', etc.) from
+the ngcpcfg shared-files storage.
+
+=cut
+
 sub get_ssh_pub_key
 {
     my ($self, $key_type) = @_;
@@ -278,6 +426,12 @@ sub get_ssh_pub_key
     return $ssh_pub_key;
 }
 
+=item $ip = $t->net_ip_expand($ipaddr)
+
+Returns the expanded form of the IP address. Supports IPv4 and IPv6.
+
+=cut
+
 sub net_ip_expand
 {
     my ($self, $ip) = @_;
@@ -291,6 +445,22 @@ sub net_ip_expand
 
     return $ip;
 }
+
+=item $str = $t->replace_metavars($str)
+
+Returns the string $str with the %-style meta-variables expanded.
+
+Current known meta-variables are:
+
+=over 4
+
+=item %v
+
+The NGCP version.
+
+=back
+
+=cut
 
 sub replace_metavars
 {
@@ -317,6 +487,37 @@ sub replace_metavars
 
     return $string;
 }
+
+=item %redis = $t->get_redis_info()
+
+Returns a hash ref containing Redis (Valkey) info, such as ports.
+
+=over
+
+=item B<%ports>
+
+A hash ref containing ports info.
+
+=over
+
+=item B<local>
+
+Local database port by default or HA port if mutli site is enabled and the node has 'db' role
+
+=item B<central>
+
+Central database port by default or HA port if multi site is enabled
+
+=item B<norep>
+
+No replication port, used when certain services configured to write concurrently on the pair of nodes.
+Defaults to redis.port + 1
+
+=back
+
+=back
+
+=cut
 
 sub get_redis_info
 {
@@ -361,169 +562,6 @@ sub get_redis_info
 
 1;
 
-__END__
-
-=encoding UTF-8
-
-=head1 NAME
-
-NGCP::Template::Object - NGCP object variable for Template::Toolkit framework
-
-=head1 VERSION
-
-Version 1.000
-
-=head1 DESCRIPTION
-
-This module provides the methods for the ngcp object that can be used within
-the NGCP templates. This makes it easier to use instead of the old library
-of code executed via the C<PROCESS> directive.
-
-=head1 METHODS
-
-=over 8
-
-=item $t = NGCP::Template::Object->new($config)
-
-Create a new object that can be used from within the Template Toolkit, via
-the B<ngcp> internal variable, such as C<ngcp.some_method(argument)>.
-
-The $config argument contains the deserialized ngcp-config YAML configuration.
-
-=item $cpus = $t->get_online_cpus()
-
-Returns the number of online CPUs on the system.
-
-This can be used to compute values in templates that depend on the amount
-of cores.
-
-=item $bool = $t->get_supported_roles()
-
-Returns the list of roles supported by NGCP.
-
-=item $bool = $t->has_role($hostname, $role)
-
-Checks whether the $hostname node has the $role.
-
-=item $version = $t->get_version()
-
-Returns the NGCP version.
-
-=item $hostname = $t->get_hostname()
-
-Returns the hostname of the node calling this function.
-
-=item $nodename = $t->get_nodename([$hostname])
-
-Returns the nodename of the node calling this function, or of $hostname
-if specified.
-
-=item $pairname = $t->get_pairname($hostname)
-
-Returns the pair name for a given $hostname. This is the shared HA name for
-a pair of nodes (for example 'db01' for 'db01a').
-
-=item $peername = $t->get_peername($hostname)
-
-Returns the peer name for a given $hostname.
-
-=item @sibnames = $t->get_sibnames($hostname)
-
-Returns a sorted list of sibling names for the pair of a given $hostname.
-This is all other hostnames that are part of the same pair, except for
-$hostname.
-
-=item $firstname = $t->get_firstname($hostname)
-
-Returns the (alphabetically) first hostname of a node pair for a given
-$hostname.
-
-=item $dbname = $t->get_dbname($hostname)
-
-Returns the database name for this node.
-
-=item $mgmtnode = $t->get_mgmt_pairname()
-
-Returns the NGCP management node pairname.
-
-=item $mgmtnode = $t->get_mgmt_node()
-
-This function is a deprecated alias for $t->get_mgmt_pairname(). It will be
-removed in the future.
-
-=item @hosts = $t->get_hosts($filter)
-
-Returns an array of hosts that match the %filter criteria.
-If no %filter has been specified, it returns all hosts.
-The current filter options are:
-
-=over
-
-=item B<site>
-
-This is a scalar that specifies the site name to use.
-It defaults to B<current>.
-
-=item B<status>
-
-This is an arrayref that contains a list of the status names to filter on,
-from one of B<online>, B<offline> and B<inactive>.
-The default status list is B<online> and B<inactive>.
-
-=back
-
-=item $ssh_pub_keye = $t->get_ssh_pub_key($key_type)
-
-Returns the SSH public key with $key_type ('rsa', 'ed25519', etc.) from
-the ngcpcfg shared-files storage.
-
-=item $ip = $t->net_ip_expand($ipaddr)
-
-Returns the expanded form of the IP address. Supports IPv4 and IPv6.
-
-=item $str = $t->replace_metavars($str)
-
-Returns the string $str with the %-style meta-variables expanded.
-
-=item %redis = $t->get_redis_info()
-
-Returns a hash ref containing Redis (Valkey) info, such as ports.
-
-=over
-
-=item B<%ports>
-
-A hash ref containing ports info.
-
-=over
-
-=item B<local>
-
-Local database port by default or HA port if mutli site is enabled and the node has 'db' role
-
-=item B<central>
-
-Central database port by default or HA port if multi site is enabled
-
-=item B<norep>
-
-No replication port, used when certain services configured to write concurrently on the pair of nodes.
-Defaults to redis.port + 1
-
-=back
-
-=back
-
-=back
-
-Current known meta-variables are:
-
-=over 4
-
-=item %v
-
-The NGCP version.
-
 =back
 
 =head1 AUTHOR
@@ -536,13 +574,11 @@ This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
-.
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
-.
+
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-=cut

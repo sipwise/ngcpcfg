@@ -1,3 +1,21 @@
+=encoding UTF-8
+
+=head1 NAME
+
+NGCP::Template - Custom NGCP Template Toolkit module
+
+=head1 VERSION
+
+Version 1.000
+
+=head1 DESCRIPTION
+
+This module provides a custom instance of the Template Toolkit so that it can
+be used to expose all the necessary functionality expected from within the NGCP
+template files, including our ngcp object variable.
+
+=cut
+
 package NGCP::Template 1.000;
 
 use v5.40;
@@ -6,6 +24,20 @@ use Carp;
 use NGCP::Template::Object;
 
 use parent qw(Template);
+
+=head1 METHODS
+
+=over 8
+
+=item $tt = NGCP::Template->new($config)
+
+Create a new Template compatible object that can be used in place of the stock
+Template module.
+
+The $config argument contains any additional arguments for the Template
+constructor.
+
+=cut
 
 sub new
 {
@@ -32,6 +64,13 @@ sub new
     return bless $self, $class;
 }
 
+=item $tt->process($input, \%vars, $output, %options)
+
+This method injects the ngcp object variable into the %vars, and calls the
+parent Template process() method.
+
+=cut
+
 sub process
 {
     my ($self, $template, $vars, $output, @opts) = @_;
@@ -46,41 +85,6 @@ sub process
 
 1;
 
-__END__
-
-=encoding UTF-8
-
-=head1 NAME
-
-NGCP::Template - Custom NGCP Template Toolkit module
-
-=head1 VERSION
-
-Version 1.000
-
-=head1 DESCRIPTION
-
-This module provides a custom instance of the Template Toolkit so that it can
-be used to expose all the necessary functionality expected from within the NGCP
-template files, including our ngcp object variable.
-
-=head1 METHODS
-
-=over 8
-
-=item $tt = NGCP::Template->new($config)
-
-Create a new Template compatible object that can be used in place of the stock
-Template module.
-
-The $config argument contains any additional arguments for the Template
-constructor.
-
-=item $tt->process($input, \%vars, $output, %options)
-
-This method injects the ngcp object variable into the %vars, and calls the
-parent Template process() method.
-
 =back
 
 =head1 AUTHOR
@@ -93,13 +97,11 @@ This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
-.
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
-.
+
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-=cut
