@@ -1,3 +1,10 @@
+ngcp-ngcpcfg (13.5.1.5+0~mr13.5.1.5) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [3f77832] MT#65645 sync-db fix $dbh->begin_work()
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 19 Aug 2026 11:56:16 +0200
+
 ngcp-ngcpcfg (13.5.1.4+0~mr13.5.1.4) unstable; urgency=medium
 
   [ Kirill Solomko ]
