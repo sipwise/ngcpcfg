@@ -273,10 +273,7 @@ sub generate_iofiles {
     my %filenames_scan;
 
     my $scan_regex = "(?:\.customtt)?\.tt2";
-    my $scan_host_regex;
-    foreach my $part (@tt2_hosts) {
-        $scan_host_regex .= "|\Q$part\E";
-    }
+    my $scan_host_regex = join '|', map { "\Q$_\E" } @tt2_hosts;
     $scan_regex .= "(?:$scan_host_regex)?" if defined $scan_host_regex;
     debug("Scan regex $scan_regex");
 
