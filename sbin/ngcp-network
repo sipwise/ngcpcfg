@@ -257,7 +257,7 @@ sub get_ip6_addrs {
     logger("get_ip6_addr for device $interface");
     logger("$cmd @args");
 
-    my $childpid = open3 my $fh_in, my $fh_out, my $fh_err, $cmd, @args;
+    my $childpid = open3(my $fh_in, my $fh_out, my $fh_err, $cmd, @args);
     my @stderr   = <$fh_err>;
     my @stdout   = <$fh_out>;
 
