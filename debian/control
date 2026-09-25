@@ -51,6 +51,7 @@ Description: NGCP subclass for Template Toolkit
 Package: ngcp-ngcpcfg
 Architecture: all
 Depends:
+ adduser,
  etckeeper,
  file,
  git (>= 1:1.7.2.5-3~),
