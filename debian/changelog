@@ -1,3 +1,10 @@
+ngcp-ngcpcfg (26.2.1.2+0~mr26.2.1.2) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [8862096] MT#66135 use mariadb-tzinfo-to-sql instead of mysql_tzinfo_to_sql
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 28 Sep 2026 19:02:18 +0200
+
 ngcp-ngcpcfg (26.2.1.1+0~mr26.2.1.1) unstable; urgency=medium
 
   * New release.
