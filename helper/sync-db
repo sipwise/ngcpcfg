@@ -340,7 +340,7 @@ SQL
         print "sync db timezones on host=$dbhost port=$dbport old=$cur_tzinfo_version new=$tzinfo_version\n";
 
         my ($out, $err, $rc) = capture {
-            system("/usr/bin/mysql_tzinfo_to_sql /usr/share/zoneinfo");
+            system("/usr/bin/mariadb-tzinfo-to-sql /usr/share/zoneinfo");
         };
 
         if ($rc) {
