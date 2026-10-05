@@ -1,3 +1,21 @@
+ngcp-ngcpcfg (26.3.1.0+0~mr26.3.1.0) unstable; urgency=medium
+
+  [ Guillem Jover ]
+  * [58b2324] MT#64956 Move POD from __END__ to be interspersed with the code
+  * [7ab8eea] MT#65635 NGCP::Template::Object: Add new get_site_name() method
+  * [8347d5b] MT#61800 ngcp-network: Add parenthesis around open3 function call
+  * [595f6f0] MT#65701 helper/tt2-process: Do not create an empty match part
+  * [c367d50] MT#65701 NGCP::Template::Object: Add new get_pair() and get_nodes() methods
+
+  [ Michael Prokop ]
+  * [5bb47d7] MT#63385 ngcp-ngcpcfg: depend on adduser for usage in maintainer scripts
+  * [b047b3f] MT#63385 lib/set_debian_info: use /etc/os-release + add support for forky
+
+  [ Kirill Solomko ]
+  * [cc7160f] MT#66135 use mariadb-tzinfo-to-sql instead of mysql_tzinfo_to_sql
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 05 Oct 2026 12:36:23 +0200
+
 ngcp-ngcpcfg (26.3.0.0+0~mr26.3.0.0) unstable; urgency=medium
 
   [ Guillem Jover ]
