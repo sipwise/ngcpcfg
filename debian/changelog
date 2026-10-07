@@ -1,3 +1,10 @@
+ngcp-ngcpcfg (26.0.1.5+0~mr26.0.1.5) unstable; urgency=medium
+
+  [ Jose Su ]
+  * [9cf3c1e] MT#66236 Set location variable as optional
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 07 Oct 2026 15:32:03 +0200
+
 ngcp-ngcpcfg (26.0.1.4+0~mr26.0.1.4) unstable; urgency=medium
 
   [ Kirill Solomko ]
