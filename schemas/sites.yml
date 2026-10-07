@@ -18,5 +18,5 @@ mapping:
                          desc: "Specify the site name. Used for user facing interfaces." }
           "role":      { type: str, required: yes,
                          desc: "Specify the site role." }
-          "location":  { type: str, required: yes,
+          "location":  { type: str, required: no,
                          desc: "Specify the site location." }
