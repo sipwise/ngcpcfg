@@ -20,7 +20,7 @@ fi
 . "${FUNCTIONS}"/main
 
 usage() {
-  printf "ngcpcfg build -- supported command line options:
+  printf "ngcpcfg check -- supported command line options:
 
 --ignore-branch-check         - do not fail build if branch doesn't match 'master'
 --ignore-shared-storage-check - skip check of shared storage\n\n"
