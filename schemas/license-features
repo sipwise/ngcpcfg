@@ -1,0 +1,16 @@
+aof b2b.sbc.aoc.enable yes
+batch_provisioning www_admin.batch_provisioning_features 1
+billing rateomat.enable yes
+call_recording rtpengine.recording.enable yes
+csc www_admin.http_csc.enable yes
+csta tpcc.enable yes
+external_lnp kamailio.proxy.lnp.enable yes
+fax faxserver.enable yes
+gpu-transcoding rtpengine.gpu_transcoding yes
+pbx pbx.enable yes
+prepaid-swrate b2b.prepaid.enable yes
+pushd pushd.enable yes
+tpcc tpcc.enable yes
+voisniff-homer voisniff.daemon.homer.enable yes
+voisniff-mysql_dump voisniff.daemon.mysql_dump.enable yes
+voisniff-x2x3 voisniff.daemon.li_x1x2x3.enable yes

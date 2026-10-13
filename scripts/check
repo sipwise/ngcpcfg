@@ -225,6 +225,48 @@ validate_config() {
   fi
 }
 
+check_feature_licenses() {
+  if [ -z "${NGCP_TYPE:-}" ]; then # SPCE
+    return
+  fi
+
+  local rc=0
+  log_debug "Checking enabled features against available licenses"
+
+  local flag field expected
+  while read -r flag field expected; do
+    if [[ "${field}" = "?" ]]; then
+      # not defined
+      continue
+    fi
+    local value
+    value=$(ngcpcfg get "${field}")
+    if ! [[ "${value}" = "${expected}" ]]; then
+      # feature not enabled
+      continue
+    fi
+    local available
+    available=$(</proc/ngcp/raw_flags/"${flag}") 2> /dev/null
+    if [[ "${available}" = "1" ]]; then
+      # feature enabled and licensed
+      continue
+    fi
+    log_error "Feature '${flag}' (config '${field}') is enabled but not licensed"
+    rc=1
+  done < "${SCHEMAS}"/license-features
+
+  if [ "$rc" = "0" ] ; then
+    log_info "License check succeeded"
+  else
+    if [ -n "${NO_LICENSE_CHECK:-}" ] ; then
+      log_info "DANGEROUS ZONE: detected unlicensed features, continue anyway due to option '--no-license-check'"
+    else
+      log_error "Aborted, please fix issue(s) above and repeat."
+      exit 1
+    fi
+  fi
+}
+
 check_configs_conflicts() {
   log_debug "Checking merge conflicts in ngcp configs:"
   if grep -rP --exclude-dir='.git' --exclude='*.dpkg-*' \
@@ -289,6 +331,9 @@ check_multi_site
 check_configs
 if "${VALIDATE_SCHEMA:-false}" || [ "${VALIDATE:-0}" = "1" ] ; then
   validate_config
+fi
+if "${CHECK_FEATURE_LICENSES:-false}" || [ "${LICENSE_CHECK:-0}" = "1" ] ; then
+  check_feature_licenses
 fi
 check_configs_conflicts
 

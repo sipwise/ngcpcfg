@@ -21,6 +21,7 @@ sbin/ngcp-network-validator usr/sbin/
 sbin/ngcp-sync-db-creds     usr/sbin/
 sbin/ngcp-sync-db-grants    usr/sbin/
 sbin/ngcpcfg                usr/sbin/
+schemas/license-features    usr/share/ngcp-ngcpcfg/schemas/
 schemas/sites.yml           usr/share/ngcp-ngcpcfg/schemas/
 scripts/apply               usr/share/ngcp-ngcpcfg/scripts/
 scripts/build               usr/share/ngcp-ngcpcfg/scripts/

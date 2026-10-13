@@ -192,6 +192,8 @@ case ${1:-} in
   --no-action-failure) export NO_ACTION_FAILURE=1; shift ; "$0" "$@" ;;
   --no-check-origin) export NO_CHECK_ORIGIN=1; shift ; "$0" "$@" ;;
   --validate)   export VALIDATE=1; shift ; "$0" "$@" ;;
+  --no-license-check) export NO_LICENSE_CHECK=1; shift ; "$0" "$@" ;;
+  --license-check) export LICENSE_CHECK=1; shift ; "$0" "$@" ;;
   --summary-only) export SUMMARY_ONLY=1; shift ; "$0" "$@" ;;
   -h|--help|help)       usage   ; exit 0;;
   -v|--version|version) version ; exit 0;;
