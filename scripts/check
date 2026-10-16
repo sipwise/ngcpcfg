@@ -226,7 +226,7 @@ validate_config() {
 }
 
 check_feature_licenses() {
-  if [ -z "${NGCP_TYPE:-}" ]; then # SPCE
+  if [ -z "${NGCP_TYPE:-}" ] || [ "${NGCP_TYPE:-}" = spce ]; then
     return
   fi
 
