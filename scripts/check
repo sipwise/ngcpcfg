@@ -226,7 +226,19 @@ validate_config() {
 }
 
 check_feature_licenses() {
+  # only run checks on fully deployed PRO or carrier: not on CE,
+  # not when no license key is present, not when the license
+  # isn't actually valid
   if [ -z "${NGCP_TYPE:-}" ] || [ "${NGCP_TYPE:-}" = spce ]; then
+    return
+  fi
+  if [ -z "$(ngcpcfg get general.license_key)" ]; then
+    return
+  fi
+  if ! [ -d /proc/ngcp ] || ! [ -f /proc/ngcp/valid ]; then
+    return
+  fi
+  if [ "$(</proc/ngcp/valid)" != 1 ]; then
     return
   fi
 
