@@ -246,7 +246,7 @@ check_feature_licenses() {
       continue
     fi
     local available
-    available=$(</proc/ngcp/raw_flags/"${flag}") 2> /dev/null
+    available=$(cat /proc/ngcp/raw_flags/"${flag}" 2>/dev/null || true)
     if [[ "${available}" = "1" ]]; then
       # feature enabled and licensed
       continue
