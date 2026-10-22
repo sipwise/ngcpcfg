@@ -265,9 +265,18 @@ sub get_hosts
 
 sub get_ssh_pub_key
 {
-    my ($self, $key_type) = @_;
+    my ($self, $key_type, $opts) = @_;
 
-    my $ssh_keys_dir = '/etc/ngcp-config/shared-files/ssh/';
+    my $sites_enable = $self->{config}{sites_enable} // '';
+    my $site = $opts->{site} // 'current';
+
+    my $ssh_keys_dir;
+    if ($sites_enable eq 'yes') {
+        $ssh_keys_dir = "/etc/ngcp-config/sites/$site/shared-files/ssh";
+    } else {
+        $ssh_keys_dir = '/etc/ngcp-config/shared-files/ssh';
+    }
+
     my $ssh_key_file = "$ssh_keys_dir/id_${key_type}.pub";
     open my $fh, '<', $ssh_key_file or do {
         # RSA keys are currently mandatory, this might change in the future,
@@ -487,10 +496,13 @@ The default status list is B<online> and B<inactive>.
 
 =back
 
-=item $ssh_pub_keye = $t->get_ssh_pub_key($key_type)
+=item $ssh_pub_key = $t->get_ssh_pub_key($key_type[, $opts])
 
 Returns the SSH public key with $key_type ('rsa', 'ed25519', etc.) from
 the ngcpcfg shared-files storage.
+
+The $opts argument is a hashref, that supports a B<site> key which defaults
+to 'current', to make it possible to select the site configuration to use.
 
 =item $ip = $t->net_ip_expand($ipaddr)
 
