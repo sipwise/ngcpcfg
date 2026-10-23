@@ -270,11 +270,26 @@ sub get_ssh_pub_key
 
     my $ssh_keys_dir = '/etc/ngcp-config/shared-files/ssh/';
     my $ssh_key_file = "$ssh_keys_dir/id_${key_type}.pub";
-    open my $fh, '<', $ssh_key_file or die "Error opening $ssh_key_file";
+    open my $fh, '<', $ssh_key_file or do {
+        # RSA keys are currently mandatory, this might change in the future,
+        # when we switch to some other key type being the mandatory one.
+        if ($key_type eq 'rsa') {
+            die "ERROR: Cannot open SSH public key $ssh_key_file";
+        } else {
+            warn "Warning: Missing SSH public key $ssh_key_file";
+            return;
+        }
+    };
     my $ssh_pub_key = <$fh>;
     close $fh;
     chomp $ssh_pub_key;
-    die "Fatal error retrieving SSH public key" unless length $ssh_pub_key;
+    if (! length $ssh_pub_key) {
+        if ($key_type eq 'rsa') {
+            die "ERROR: Cannot open SSH public key $ssh_key_file";
+        } else {
+            warn "Warning: Missing SSH public key $ssh_key_file";
+        }
+    }
 
     return $ssh_pub_key;
 }
