@@ -302,6 +302,45 @@ sub get_ssh_pub_key
     return $ssh_pub_key;
 }
 
+sub get_ssh_host_cert
+{
+    my ($self, $key_type, $opts) = @_;
+
+    my $sites_enable = $self->{config}{sites_enable} // '';
+    my $site = $opts->{site} // 'current';
+
+    my $ssh_host_dir;
+    if ($sites_enable eq 'yes') {
+        $ssh_host_dir = "/etc/ngcp-config/sites/$site/shared-files/sshd";
+    } else {
+        $ssh_host_dir = '/etc/ngcp-config/shared-files/sshd';
+    }
+
+    my $ssh_host_cert_file = "$ssh_host_dir/ssh_host_${key_type}_key.pub";
+    open my $fh, '<', $ssh_host_cert_file or do {
+        # RSA keys are currently mandatory, this might change in the future,
+        # when we switch to some other key type being the mandatory one.
+        if ($key_type eq 'rsa') {
+            die "ERROR: Cannot open SSH host certificate $ssh_host_cert_file";
+        } else {
+            warn "Warning: Missing SSH host certificate $ssh_host_cert_file";
+            return;
+        }
+    };
+    my $ssh_host_cert = <$fh>;
+    close $fh;
+    chomp $ssh_host_cert;
+    if (! length $ssh_host_cert) {
+        if ($key_type eq 'rsa') {
+            die "ERROR: Cannot open SSH host certificate $ssh_host_cert_file";
+        } else {
+            warn "Warning: Missing SSH host certificate $ssh_host_cert_file";
+        }
+    }
+
+    return $ssh_host_cert;
+}
+
 sub net_ip_expand
 {
     my ($self, $ip) = @_;
@@ -499,6 +538,14 @@ The default status list is B<online> and B<inactive>.
 =item $ssh_pub_key = $t->get_ssh_pub_key($key_type[, $opts])
 
 Returns the SSH public key with $key_type ('rsa', 'ed25519', etc.) from
+the ngcpcfg shared-files storage.
+
+The $opts argument is a hashref, that supports a B<site> key which defaults
+to 'current', to make it possible to select the site configuration to use.
+
+=item $ssh_host_cert = $t->get_ssh_host_cert($key_type[, $opts])
+
+Returns the SSH host certificate with $key_type ('rsa', 'ed25519', etc.) from
 the ngcpcfg shared-files storage.
 
 The $opts argument is a hashref, that supports a B<site> key which defaults
