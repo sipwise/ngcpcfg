@@ -318,24 +318,15 @@ sub get_ssh_host_cert
 
     my $ssh_host_cert_file = "$ssh_host_dir/ssh_host_${key_type}_key.pub";
     open my $fh, '<', $ssh_host_cert_file or do {
-        # RSA keys are currently mandatory, this might change in the future,
-        # when we switch to some other key type being the mandatory one.
-        if ($key_type eq 'rsa') {
-            die "ERROR: Cannot open SSH host certificate $ssh_host_cert_file";
-        } else {
-            warn "Warning: Missing SSH host certificate $ssh_host_cert_file";
-            return;
-        }
+        # During system bootstrapping we might have no certificate at all.
+        warn "Warning: Missing SSH host certificate $ssh_host_cert_file";
+        return;
     };
     my $ssh_host_cert = <$fh>;
     close $fh;
     chomp $ssh_host_cert;
     if (! length $ssh_host_cert) {
-        if ($key_type eq 'rsa') {
-            die "ERROR: Cannot open SSH host certificate $ssh_host_cert_file";
-        } else {
-            warn "Warning: Missing SSH host certificate $ssh_host_cert_file";
-        }
+        warn "Warning: Missing SSH host certificate $ssh_host_cert_file";
     }
 
     return $ssh_host_cert;
