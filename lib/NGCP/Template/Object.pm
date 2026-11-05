@@ -143,6 +143,47 @@ sub get_version
     return $version;
 }
 
+=item $debian = $t->get_debian_info()
+
+Get the Debian release information for the node calling this function.
+
+Returns a hashref with C<codename> and C<version> keys.
+
+=cut
+
+sub get_debian_info($self)
+{
+    my $os_release_file = $ENV{NGCPCFG_OS_RELEASE} // '/etc/os-release';
+    my $debian_codename;
+
+    open my $fh, '<', $os_release_file
+        or die "Error: cannot open $os_release_file: $!";
+    while (my $line = <$fh>) {
+        if ($line =~ m/^VERSION_CODENAME=(["']?)([[:alnum:]]+)\1\s*$/) {
+            $debian_codename = $2;
+            last;
+        }
+    }
+    close $fh;
+    die "Error: cannot retrieve VERSION_CODENAME from $os_release_file"
+        unless defined $debian_codename;
+
+    my %versions = (
+        bookworm => 12,
+        trixie   => 13,
+        forky    => 14,
+    );
+
+    my $debian_version_major = $versions{$debian_codename};
+    die "Error: unsupported Debian codename $debian_codename"
+        unless defined $debian_version_major;
+
+    return {
+        version => $debian_version_major,
+        codename => $debian_codename,
+    };
+}
+
 =item $sitename = $t->get_site_name($site)
 
 Returns the site name of $site.

@@ -6,37 +6,7 @@
 # This sets the global variables:
 #   debian.codename
 #   debian.version
+
+debian = ngcp.get_debian_info();
+
 -%]
-[% PERL -%]
-  my $os_release_file = '/etc/os-release';
-  my $debian_codename;
-
-  open my $fh, '<', $os_release_file
-    or die "Error opening $os_release_file: $!";
-  while (my $line = <$fh>) {
-    if ($line =~ m/^VERSION_CODENAME=(["']?)([[:alnum:]]+)\1\s*$/) {
-      $debian_codename = $2;
-      last;
-    }
-  }
-  close $fh;
-  die "Fatal error retrieving VERSION_CODENAME from $os_release_file"
-    unless defined $debian_codename;
-
-  my %versions = (
-    bookworm => 12,
-    trixie   => 13,
-    forky    => 14,
-  );
-
-  my $debian_version_major = $versions{$debian_codename};
-  die "Error: unsupported Debian codename $debian_codename"
-    unless defined $debian_version_major;
-
-  $stash->update({
-    debian => {
-      version  => $debian_version_major,
-      codename => $debian_codename,
-    }
-  });
-[% END -%]

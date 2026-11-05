@@ -5,7 +5,7 @@ use v5.40;
 use Cwd;
 use Test::More;
 
-plan tests => 71;
+plan tests => 73;
 
 use_ok('NGCP::Template::Object');
 
@@ -114,9 +114,28 @@ my $obj_ce = NGCP::Template::Object->new($cfg_ce);
 my $obj_pro = NGCP::Template::Object->new($cfg_pro);
 my $obj_carrier = NGCP::Template::Object->new($cfg_carrier);
 
+my $cwd = getcwd();
+
+# Check get_debian_info().
+{
+    local $ENV{NGCPCFG_OS_RELEASE} = "$cwd/fixtures/os-release-stable";
+
+    is_deeply($obj_ce->get_debian_info(), {
+        version => 13,
+        codename => 'trixie',
+    }, 'information from os-release for Debian stable');
+}
+{
+    local $ENV{NGCPCFG_OS_RELEASE} = "$cwd/fixtures/os-release-testing";
+
+    is_deeply($obj_ce->get_debian_info(), {
+        version => 14,
+        codename => 'forky',
+    }, 'information from os-release for Debian testing');
+}
+
 # Check get_online_cpus().
 {
-    my $cwd = getcwd();
     local $ENV{PATH} = "$cwd/mock-bin:$ENV{PATH}";
 
     is($obj_ce->get_online_cpus(), 8, 'number of online processors');
