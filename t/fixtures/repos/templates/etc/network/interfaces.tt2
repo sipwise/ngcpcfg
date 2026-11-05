@@ -3,8 +3,9 @@
 [%
 hostname = ngcp.get_hostname();
 
-#PROCESS '/usr/lib/ngcp-ngcpcfg/get_ngcp_version';
-#ngcp_version = out;
+# We cannot use ngcp.get_version(), as the required files are not available
+# during testing. Use an invented version instead.
+ngcp_version = 'mr100.0';
 
 # in SPCE there's no proper hostname, but "self", default to it
 UNLESS hosts.${hostname};
