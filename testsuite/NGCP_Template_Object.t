@@ -5,7 +5,7 @@ use v5.40;
 use Cwd;
 use Test::More;
 
-plan tests => 73;
+plan tests => 80;
 
 use_ok('NGCP::Template::Object');
 
@@ -249,6 +249,31 @@ is_deeply([ $obj_carrier->get_hosts({ status => [ qw(online offline) ] }) ],
     [ qw(prx01a web01a web01c) ], 'host list for Carrier (online offline)');
 is_deeply([ $obj_carrier->get_hosts({ status => [ qw(inactive) ] }) ],
     [ qw(web01b) ], 'host list for Carrier (inactive)');
+
+# Check get_neighbours().
+{
+    local $ENV{PATH} = "$cwd/mock-bin:$ENV{PATH}";
+
+    local $ENV{NGCPCFG_HOSTNAME} = 'self';
+    is_deeply([ $obj_ce->get_neighbours() ],
+        [ ], 'neighbours list for CE (default)');
+
+    local $ENV{NGCPCFG_HOSTNAME} = 'sp1';
+    is_deeply([ $obj_pro->get_neighbours() ],
+        [ qw(sp2) ], 'neighbours list for PRO (default)');
+    is_deeply([ $obj_pro->get_neighbours({ status => [ qw(online offline) ] }) ],
+        [ qw(sp3) ], 'neighbours list for PRO (online offline)');
+    is_deeply([ $obj_pro->get_neighbours({ status => [ qw(inactive) ] }) ],
+        [ qw(sp2) ], 'neighbours list for PRO (inactive)');
+
+    local $ENV{NGCPCFG_HOSTNAME} = 'web01a';
+    is_deeply([ $obj_carrier->get_neighbours() ],
+        [ qw(prx01a web01b) ], 'neighbours list for Carrier (default)');
+    is_deeply([ $obj_carrier->get_neighbours({ status => [ qw(online offline) ] }) ],
+        [ qw(prx01a web01c) ], 'neighbours list for Carrier (online offline)');
+    is_deeply([ $obj_carrier->get_neighbours({ status => [ qw(inactive) ] }) ],
+        [ qw(web01b) ], 'neighbours list for Carrier (inactive)');
+}
 
 # Check get_nodes().
 is_deeply([ $obj_ce->get_nodes() ],

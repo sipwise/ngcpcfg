@@ -473,6 +473,31 @@ sub get_hosts
     return @res;
 }
 
+=item @hosts = $t->get_neighbours([$filter])
+
+Returns an array of hosts for all neighbours (all nodes without self)
+that match the %filter criteria.
+If no %filter has been specified, it returns all neighbours.
+
+The current filter options are the same as $t->get_hosts().
+
+=cut
+
+sub get_neighbours($self, $filter //= {})
+{
+    my @hosts = $self->get_hosts($filter);
+    my $thishost = $self->get_hostname();
+
+    my @neighbours;
+    foreach my $host (@hosts) {
+        next if $host eq $thishost;
+        push @neighbours, $host;
+    }
+
+    my @res = uniq sort @neighbours;
+    return @res;
+}
+
 =item @hosts = $t->get_nodes([$filter])
 
 Returns an array of nodes that match the %filter criteria.

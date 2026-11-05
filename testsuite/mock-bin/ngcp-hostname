@@ -1,0 +1,5 @@
+#!/bin/bash
+
+: "${NGCPCFG_HOSTNAME:?unknown ngcp-hostname}"
+
+echo "${NGCPCFG_HOSTNAME}"
