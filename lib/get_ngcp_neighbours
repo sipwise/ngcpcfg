@@ -7,6 +7,10 @@
 #                         default value: ['online', 'inactive']
 # @return out           The array of fields "name", e.g.: [ 'sp1', 'sp2' ]
 
+IF ! argv.status;
+  argv.status = ['online', 'inactive'];
+END;
+
 out = ngcp.get_neighbours({ status = argv.status });
 
 -%]
